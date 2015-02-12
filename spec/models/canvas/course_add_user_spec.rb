@@ -165,31 +165,57 @@ describe Canvas::CourseAddUser do
   end
 
   context "when adding user to a course" do
-    let(:custom_role_id) { Settings.canvas_proxy.projects_owner_role_id }
     let(:enrollment_type) { 'TeacherEnrollment' }
     let(:canvas_course_id) { '864215' }
     let(:enrollment_state) { 'active' }
+    let(:owner_role_id) { Settings.canvas_proxy.projects_owner_role_id }
+    let(:teacher_role_id) { 5 }
+    let(:enroll_user_response) {
+      {
+        'id' => 20959,
+        'root_account_id' => 90242,
+        'user_id' => 1234567,
+        'course_id' => canvas_course_id,
+        'course_section_id' => 1311,
+        'enrollment_state' => 'active',
+        'role' => 'TeacherEnrollment',
+        'role_id' => teacher_role_id,
+        'sis_import_id' => nil,
+        'sis_course_id' => 'PROJ:18575b1ac394619a'
+      }
+    }
+    let(:enroll_user_with_role_id_response) { enroll_user_response.merge({'role' => 'Owner', 'role_id' => owner_role_id})}
     before do
       allow_any_instance_of(Canvas::SisUserProfile).to receive(:new).with(:user_id => ldap_uid).and_return(double(get: canvas_user_profile))
       allow_any_instance_of(Canvas::UserProvision).to receive(:import_users).with([ldap_uid]).and_return(true)
-      allow_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return(true)
+      allow_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return(enroll_user_response)
     end
 
     it "adds user to canvas" do
       expect_any_instance_of(Canvas::UserProvision).to receive(:import_users).with([ldap_uid]).and_return(true)
       result = Canvas::CourseAddUser.add_user_to_course(ldap_uid, enrollment_type, canvas_course_id)
+      expect(result).to be_an_instance_of Hash
+      expect(result['id']).to eq 20959
     end
 
     it "enrolls user to canvas course" do
-      expect_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return(true)
+      expect_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return(enroll_user_response)
       result = Canvas::CourseAddUser.add_user_to_course(ldap_uid, enrollment_type, canvas_course_id)
-      expect(result).to be_truthy
+      expect(result).to be_an_instance_of Hash
+      expect(result['id']).to eq 20959
+      expect(result['root_account_id']).to eq 90242
+      expect(result['enrollment_state']).to eq 'active'
+      expect(result['role']).to eq 'TeacherEnrollment'
+      expect(result['role_id']).to eq teacher_role_id
     end
 
     it "adds user to canvas with custom role id option" do
-      expect_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {:role_id => custom_role_id}).and_return(true)
-      result = Canvas::CourseAddUser.add_user_to_course(ldap_uid, enrollment_type, canvas_course_id, :role_id => custom_role_id)
-      expect(result).to be_truthy
+      expect_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {:role_id => owner_role_id}).and_return(enroll_user_with_role_id_response)
+      result = Canvas::CourseAddUser.add_user_to_course(ldap_uid, enrollment_type, canvas_course_id, :role_id => owner_role_id)
+      expect(result['root_account_id']).to eq 90242
+      expect(result['enrollment_state']).to eq 'active'
+      expect(result['role']).to eq 'Owner'
+      expect(result['role_id']).to eq owner_role_id
     end
   end
 

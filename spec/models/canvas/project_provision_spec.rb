@@ -33,6 +33,7 @@ describe Canvas::ProjectProvision do
   end
 
   describe '#create_project' do
+    let(:canvas_course_id) { 23 }
     let(:account_id) { Settings.canvas_proxy.projects_account_id }
     let(:term_id) { Settings.canvas_proxy.projects_term_id }
     let(:url_root) { Settings.canvas_proxy.url_root }
@@ -41,7 +42,7 @@ describe Canvas::ProjectProvision do
     let(:unique_sis_project_id) { '67f4b934525501cb' }
     let(:new_course) do
       {
-        "id"=>23,
+        "id"=>canvas_course_id,
         "account_id"=> account_id,
         "name"=> project_name,
         "course_code"=> project_name,
@@ -49,13 +50,27 @@ describe Canvas::ProjectProvision do
         "workflow_state"=>"unpublished"
       }
     end
+    let(:add_user_to_course_response) {
+      {
+        'id' => 20959,
+        'root_account_id' => 90242,
+        'user_id' => 1234567,
+        'course_id' => canvas_course_id,
+        'course_section_id' => 1311,
+        'enrollment_state' => 'active',
+        'role' => 'Owner',
+        'role_id' => custom_role_id,
+        'sis_import_id' => nil,
+        'sis_course_id' => 'PROJ:18575b1ac394619a'
+      }
+    }
     let(:success_response) { double(status: 200, body: new_course.to_json) }
     let(:failure_response) { double(status: 500, body: nil) }
 
     before do
       allow(subject).to receive(:unique_sis_project_id).and_return(unique_sis_project_id)
       allow_any_instance_of(Canvas::Course).to receive(:create).and_return(success_response)
-      allow(Canvas::CourseAddUser).to receive(:add_user_to_course).and_return(true)
+      allow(Canvas::CourseAddUser).to receive(:add_user_to_course).and_return(add_user_to_course_response)
     end
 
     it 'raises exception if error encountered with API request' do
@@ -72,8 +87,10 @@ describe Canvas::ProjectProvision do
     end
 
     it 'enrolls user in course site' do
-      expect(Canvas::CourseAddUser).to receive(:add_user_to_course).with(user_id, 'TeacherEnrollment', new_course['id'], {:role_id => custom_role_id}).and_return(true)
+      expect(Canvas::CourseAddUser).to receive(:add_user_to_course).with(user_id, 'TeacherEnrollment', new_course['id'], {:role_id => custom_role_id}).and_return(add_user_to_course_response)
       result = subject.create_project(project_name)
+      expect(result).to be_an_instance_of Hash
+      expect(result[:enrollment_id]).to eq 20959
     end
   end
 end
