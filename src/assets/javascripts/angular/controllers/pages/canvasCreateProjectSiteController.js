@@ -10,7 +10,12 @@
     $scope.accessDeniedError = 'This feature is only available to faculty and staff.';
     $scope.linkToSiteOverview = canvasSiteCreationService.linkToSiteOverview($route.current.isEmbedded);
 
+    $scope.disableSubmit = function() {
+      return !$scope.projectSiteName || $scope.creatingSite;
+    };
+
     $scope.createProjectSite = function() {
+      $scope.creatingSite = true;
       canvasProjectProvisionFactory.createProjectSite($scope.projectSiteName)
         .success(function(data) {
           angular.extend($scope, data);
@@ -26,6 +31,7 @@
         })
         .error(function() {
           $scope.displayError = 'failure';
+          $scope.creatingSite = false;
         });
     };
 
