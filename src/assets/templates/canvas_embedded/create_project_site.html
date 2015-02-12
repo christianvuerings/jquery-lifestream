@@ -3,6 +3,10 @@
   <div data-ng-show="!displayError">
     <h2 class="cc-page-site-provisioning-header cc-page-site-provisioning-header2">Create a Project Site</h2>
 
+    <div role="alert" id="cc-page-reader-alert" aria-live="polite" class="cc-visuallyhidden">
+      <span data-ng-bind="actionStatus"></span>
+    </div>
+
     <form class="cc-page-form bc-canvas-form">
       <div class="row cc-page-create-project-form-fields">
         <div class="small-12">
@@ -23,7 +27,7 @@
 
       <div class="cc-page-site-provisioning-form-actions">
         <a data-cc-disabled="creatingSite" data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button">Cancel</a>
-        <button data-ng-disabled="disableSubmit()" data-ng-click="createProjectSite()" class="bc-canvas-button bc-canvas-button-primary" type="submit">
+        <button data-ng-disabled="disableSubmit()" data-ng-click="createProjectSite()" class="bc-canvas-button bc-canvas-button-primary" aria-controls="cc-page-reader-alert" type="submit">
           <span data-ng-if="!creatingSite">Create a Project Site</span>
           <span data-ng-if="creatingSite"><i class="fa fa-spinner fa-spin"></i>Creating ...</span>
         </button>

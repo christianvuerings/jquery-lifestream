@@ -16,6 +16,7 @@
 
     $scope.createProjectSite = function() {
       $scope.creatingSite = true;
+      $scope.actionStatus = 'Project Site Creation in Progress';
       canvasProjectProvisionFactory.createProjectSite($scope.projectSiteName)
         .success(function(data) {
           angular.extend($scope, data);
