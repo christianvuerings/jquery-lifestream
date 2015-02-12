@@ -694,16 +694,17 @@ describe Canvas::ProvideCourseSite do
       expect(terms_feed[0][:name]).to eq 'Fall 2013'
       feed = terms_feed[0][:classes]
       expect(feed.length).to eq 2
-      bio1a = feed.select {|course| course[:listings].first[:course_code] == 'BIOLOGY 1A'}[0]
+      bio1a = feed.select {|course| course[:course_code] == 'BIOLOGY 1A'}[0]
       expect(bio1a.empty?).to be_falsey
       expect(bio1a[:title]).to eq 'General Biology Lecture'
       expect(bio1a[:role]).to eq 'Instructor'
+      expect(bio1a[:dept]).to eq 'BIOLOGY'
       expect(bio1a[:sections].length).to eq 3
       expect(bio1a[:sections][0][:is_primary_section]).to be_truthy
       expect(bio1a[:sections][1][:is_primary_section]).to be_falsey
       expect(bio1a[:sections][2][:is_primary_section]).to be_falsey
 
-      cogsci = feed.select {|course| course[:listings].first[:course_code] == 'COG SCI C147'}[0]
+      cogsci = feed.select {|course| course[:course_code] == 'COG SCI C147'}[0]
       expect(cogsci.empty?).to be_falsey
       expect(cogsci[:title]).to eq 'Language Disorders'
     end
@@ -1048,7 +1049,8 @@ describe Canvas::ProvideCourseSite do
       classes_list = semesters_list[0][:classes]
       expect(classes_list.length).to eq 2
       bio_class = classes_list[0]
-      expect(bio_class[:listings].first[:course_code]).to eq 'BIOLOGY 1A'
+      expect(bio_class[:course_code]).to eq 'BIOLOGY 1A'
+      expect(bio_class[:dept]).to eq 'BIOLOGY'
       sections = bio_class[:sections]
       expect(sections.length).to eq 2
       expect(sections[0][:ccn].to_i).to eq 7309
