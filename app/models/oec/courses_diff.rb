@@ -1,14 +1,26 @@
 module Oec
   class CoursesDiff < Export
 
+    COLUMN_LDAP_UID = 'ldap_uid'
+    COLUMN_COURSE_ID = 'course_id'
+
     # true if course data provided by dept representative differs from campus db data
     attr_reader :was_difference_found
 
-    def initialize(dept_name, data_corrected_by_dept, export_dir)
+    def initialize(dept_name, campus_data, data_from_dept, export_dir)
       super export_dir
-      @dept_name = dept_name
-      @data_corrected_by_dept = data_corrected_by_dept
       @was_difference_found = false
+      @instructor_columns = %w(first_name last_name email_address instructor_func)
+      @columns_to_compare = %w(course_name).concat @instructor_columns
+      @dept_name = dept_name
+      @data_from_dept = data_from_dept
+      @campus_data_hash = {}
+      campus_data.each do |campus_record|
+        course_id = campus_record[COLUMN_COURSE_ID]
+        ldap_id = campus_record[COLUMN_LDAP_UID]
+        @campus_data_hash[course_id] = campus_record
+        @campus_data_hash["#{course_id}-#{ldap_id}"] = campus_record unless ldap_id.blank?
+      end
     end
 
     def base_file_name
@@ -16,96 +28,82 @@ module Oec
     end
 
     def headers
-      '+/-,KEY,DB_COURSE_NAME,COURSE_NAME,DB_FIRST_NAME,FIRST_NAME,DB_LAST_NAME,LAST_NAME,DB_EMAIL_ADDRESS,EMAIL_ADDRESS,DB_INSTRUCTOR_FUNC,INSTRUCTOR_FUNC'
+      '+/-,KEY,LDAP_UID,DB_COURSE_NAME,COURSE_NAME,DB_FIRST_NAME,FIRST_NAME,DB_LAST_NAME,LAST_NAME,DB_EMAIL_ADDRESS,EMAIL_ADDRESS,DB_INSTRUCTOR_FUNC,INSTRUCTOR_FUNC'
     end
 
     def append_records(output)
-      campus_records = campus_data_to_hash @dept_name
-      length = campus_records.length
-      Rails.logger.warn "#{length} records in campus db for #{@dept_name}"
-      if length > 0
-        keys_matching = []
-        @data_corrected_by_dept.each do |edited_course|
-          course_id = edited_course['course_id'].split('_')[0]
-          ldap_uid = edited_course['ldap_uid']
-          primary_key = ldap_uid.blank? ? course_id : "#{course_id}-#{ldap_uid}"
-          if campus_records.has_key? primary_key
-            keys_matching << primary_key
-            db_record = campus_records[primary_key]
-            columns_to_compare.each do |column_name|
-              file_value = edited_course[column_name.downcase].to_s
-              db_value = db_record[column_name].to_s
-              if db_value.casecmp(file_value) != 0
-                diff = get_diff_row(primary_key, edited_course, db_record)
-                Rails.logger.info "Diff found: #{diff.to_s}"
-                output << get_csv_row(diff)
-                break
-              end
-            end
-          else
-            Rails.logger.warn "No campus data found for #{primary_key}"
-            diff = get_diff_row(primary_key, edited_course, nil)
-            output << get_csv_row(diff)
+      Rails.logger.warn "Diff the CSV confirmed by #{@dept_name} dept against latest campus data."
+      @aligned_rows = []
+      @data_from_dept.each do |data_from_dept_row|
+        ldap_uid = data_from_dept_row[COLUMN_LDAP_UID]
+        course_id = data_from_dept_row[COLUMN_COURSE_ID].split('_')[0]
+        key_with_ldap_uid = "#{course_id}-#{ldap_uid}" if ldap_uid
+        if ldap_uid.blank? && @campus_data_hash.has_key?(course_id)
+          output_diff(course_id, @campus_data_hash[course_id], data_from_dept_row, output)
+        elsif @campus_data_hash.has_key? key_with_ldap_uid
+          output_diff(key_with_ldap_uid, @campus_data_hash[key_with_ldap_uid], data_from_dept_row, output)
+        elsif @campus_data_hash.has_key? course_id
+          ignore_db_instructor = !@campus_data_hash[course_id][COLUMN_LDAP_UID].blank?
+          output_diff(key_with_ldap_uid, @campus_data_hash[course_id], data_from_dept_row, output, ignore_db_instructor)
+        else
+          Rails.logger.warn "No campus data found for #{course_id}"
+          output_diff(course_id, nil, data_from_dept_row, output)
+        end
+      end
+      @campus_data_hash.each do |key, db_record|
+        unless @aligned_rows.any? { |aligned_row| aligned_row.start_with?(key) }
+          # Ignore this campus_data_hash entry if key equals {course_id} and yet hash also includes {course_id}-{ldap_uid}
+          unless @campus_data_hash.has_key? "#{key}-#{db_record[COLUMN_LDAP_UID]}"
+            output_diff(db_record[COLUMN_COURSE_ID], db_record, nil, output)
+            Rails.logger.warn "dept_data does NOT contain course_id=#{key}"
           end
         end
-        campus_records.each do |course_id, db_record|
-          ldap_uid = db_record['ldap_uid'].to_s
-          primary_key = ldap_uid == '' ? "#{course_id}" : "#{course_id}-#{ldap_uid}"
-          unless keys_matching.include? primary_key
-            diff = get_diff_row(primary_key, nil, db_record)
-            output << get_csv_row(diff)
-            Rails.logger.warn "edited_course does NOT contain course_id=#{primary_key}"
-          end
-        end
-      else
-        Rails.logger.warn "No campus data where dept_name = #{@dept_name}"
       end
     end
 
-    def get_csv_row(diff)
-      @was_difference_found = true
-      record_to_csv_row diff
+    def output_diff(key, db_record, dept_data, output, ignore_db_instructor = false)
+      @aligned_rows << key
+      @columns_to_compare.each do |column_name|
+        file_value = dept_data ? dept_data[column_name].to_s : nil
+        db_value = db_record ? db_record[column_name].to_s : nil
+        if file_value.nil? || db_value.nil? || file_value.casecmp(db_value) != 0
+          row = {}
+          # Row unique to edited CSV is indicated by '+'. Rows removed, relative to database, are indicated by '-'.
+          diff_type_column = '+/-'
+          row[diff_type_column] = ' '
+          course_id = key
+          ldap_uid = db_record[COLUMN_LDAP_UID] unless db_record.nil? || ignore_db_instructor
+          if db_record
+            if dept_data.nil?
+              row[diff_type_column] = '-'
+            elsif ignore_db_instructor
+              row[diff_type_column] = '+'
+            end
+            @columns_to_compare.each do |column|
+              force_nil = ignore_db_instructor && @instructor_columns.include?(column)
+              db_value = db_record[column].to_s
+              row["DB_#{column.upcase}"] = force_nil || db_value.blank? ? nil : db_value
+            end
+          end
+          if dept_data
+            course_id = dept_data[COLUMN_COURSE_ID]
+            ldap_uid = dept_data[COLUMN_LDAP_UID] if ldap_uid.blank?
+            row[diff_type_column] = '+' if db_record.nil?
+            @columns_to_compare.each do |column|
+              edited_value = dept_data[column].to_s.strip
+              row[column.upcase] = edited_value.blank? ? nil : edited_value
+            end
+          end
+          row['KEY'] = course_id
+          row[COLUMN_LDAP_UID] = ldap_uid
+          output << record_to_csv_row(row)
+          @was_difference_found = true
+          break
+        end
+      end
     end
 
     private
-
-    def get_diff_row(primary_key, edited_course, db_record)
-      row = {}
-      # Row unique to edited CSV is indicated by '+'. Rows removed, relative to database, are indicated by '-'.
-      diff_type_column = '+/-'
-      row[diff_type_column] = ' '
-      row['KEY'] = primary_key
-      if db_record
-        row[diff_type_column] = '-' if edited_course.nil?
-        columns_to_compare.each do |column|
-          db_value = db_record[column].to_s
-          row["DB_#{column}"] = db_value == '' ? nil : db_value
-        end
-      end
-      if edited_course
-        row[diff_type_column] = '+' if db_record.nil?
-        columns_to_compare.each do |column|
-          edited_value = edited_course[column.downcase].to_s
-          edited_value.strip!
-          row[column] = edited_value == '' ? nil : edited_value
-        end
-      end
-      row
-    end
-
-    def campus_data_to_hash(dept_name)
-      campus_records = {}
-      database_records = []
-      Oec::Courses.new(dept_name, export_directory).append_records database_records
-      database_records.each do |campus_record|
-        course_id = campus_record['COURSE_ID']
-        ldap_id = campus_record['LDAP_UID']
-        empty_ldap_uid = ldap_id.to_s == ''
-        campus_records["#{course_id}"] = campus_record if empty_ldap_uid
-        campus_records["#{course_id}-#{ldap_id}"] = campus_record unless empty_ldap_uid
-      end
-      campus_records
-    end
 
     def to_evaluation(row)
       course_id = row[0]
@@ -137,10 +135,6 @@ module Oec
         'START_DATE' => row[20],
         'END_DATE' => row[21]
       }
-    end
-
-    def columns_to_compare
-      %w(COURSE_NAME FIRST_NAME LAST_NAME EMAIL_ADDRESS INSTRUCTOR_FUNC)
     end
 
   end

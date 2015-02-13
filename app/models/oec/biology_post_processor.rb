@@ -1,10 +1,13 @@
 module Oec
   class BiologyPostProcessor
 
+    attr_reader :csv_per_dept
+
     def initialize(src_dir, dest_dir, debug_mode = false)
       @src_dir = src_dir
       @dest_dir = dest_dir
       @debug_mode = debug_mode
+      @csv_per_dept = {}
     end
 
     def post_process
@@ -42,7 +45,9 @@ module Oec
           @debug_mode ? FileUtils.mv(path_to_csv, "#{path_to_csv}.OBSOLETE") : File.delete(path_to_csv)
           rows = sorted_dept_rows[next_dept_name]
           if rows && rows.length > 0
-            ExportWrapper.new(next_dept_name, biology.headers, rows, @dest_dir).export
+            wrapper = ExportWrapper.new(next_dept_name, biology.headers, rows, @dest_dir)
+            wrapper.export
+            @csv_per_dept[next_dept_name] = wrapper.output_filename
           end
         end
       else
