@@ -187,15 +187,7 @@ describe Canvas::CourseAddUser do
     let(:enroll_user_with_role_id_response) { enroll_user_response.merge({'role' => 'Owner', 'role_id' => owner_role_id})}
     before do
       allow_any_instance_of(Canvas::SisUserProfile).to receive(:new).with(:user_id => ldap_uid).and_return(double(get: canvas_user_profile))
-      allow_any_instance_of(Canvas::UserProvision).to receive(:import_users).with([ldap_uid]).and_return(true)
       allow_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return(enroll_user_response)
-    end
-
-    it "adds user to canvas" do
-      expect_any_instance_of(Canvas::UserProvision).to receive(:import_users).with([ldap_uid]).and_return(true)
-      result = Canvas::CourseAddUser.add_user_to_course(ldap_uid, enrollment_type, canvas_course_id)
-      expect(result).to be_an_instance_of Hash
-      expect(result['id']).to eq 20959
     end
 
     it "enrolls user to canvas course" do

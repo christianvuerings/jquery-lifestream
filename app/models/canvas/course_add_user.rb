@@ -45,7 +45,6 @@ module Canvas
 
     # Include 'role_id' option to specify custom roles (i.e. Waitlist Student, Owner, Maintainer, Member)
     def self.add_user_to_course(ldap_user_id, enrollment_type, canvas_course_id, options = {})
-      Canvas::UserProvision.new.import_users([ldap_user_id.to_s])
       canvas_user_profile = Canvas::SisUserProfile.new(user_id: ldap_user_id.to_s).get
       canvas_course_enrollments_proxy = Canvas::CourseEnrollments.new(:user_id => ldap_user_id.to_s, :canvas_course_id => canvas_course_id.to_i)
       canvas_course_enrollments_proxy.enroll_user(canvas_user_profile['id'], enrollment_type.to_s, 'active', false, options)
