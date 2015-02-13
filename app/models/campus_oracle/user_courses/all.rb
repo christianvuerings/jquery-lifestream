@@ -23,6 +23,8 @@ module CampusOracle
           # TODO Is this information useful for non-current terms?
           campus_classes.values.each do |semester|
             semester.each do |course|
+              # Remove any duplicates from campus data.
+              course[:sections].uniq!
               course[:sections].each do |section|
                 proxy = CampusOracle::CourseSections.new({term_yr: course[:term_yr],
                                                           term_cd: course[:term_cd],
