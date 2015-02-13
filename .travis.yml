@@ -1,3 +1,6 @@
+sudo: false
+git:
+  depth: 1
 language: ruby
 bundler_args: --without development testext production --deployment --jobs=4 --retry=5
 cache: bundler
