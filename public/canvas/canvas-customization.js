@@ -273,9 +273,18 @@
   var removeCreateSiteUserNav = function() {
     // run only on user profile settings page
     if (window.location.pathname === '/profile/settings') {
-      var $createSiteLink = $('nav ul#section-tabs li.section a:contains("Create a Site")');
-      if ($createSiteLink && $createSiteLink.length) {
-        $createSiteLink.parent().remove();
+      if (window.ENV.current_user_id) {
+        var userCanCreateSiteUrl = calcentralRootUrl() + '/api/academics/canvas/user_can_create_site?canvas_user_id=' + window.ENV.current_user_id;
+        $.get(userCanCreateSiteUrl, function(authResult) {
+          // if user cannot create site (not faculty or staff)
+          if (!(authResult.canCreateSite)) {
+            // remove the navigation link
+            var $createSiteLink = $('nav ul#section-tabs li.section a:contains("Create a Site")');
+            if ($createSiteLink && $createSiteLink.length) {
+              $createSiteLink.parent().remove();
+            }
+          }
+        });
       }
     }
   };
