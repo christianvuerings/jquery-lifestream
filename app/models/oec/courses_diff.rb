@@ -90,9 +90,8 @@ module Oec
             ldap_uid = dept_data[COLUMN_LDAP_UID] if ldap_uid.blank?
             row[diff_type_column] = '+' if db_record.nil?
             @columns_to_compare.each do |column|
-              edited_value = dept_data[column].to_s
-              edited_value.strip!
-              row[column.upcase] = edited_value == '' ? nil : edited_value
+              edited_value = dept_data[column].to_s.strip
+              row[column.upcase] = edited_value.blank? ? nil : edited_value
             end
           end
           row['KEY'] = course_id
