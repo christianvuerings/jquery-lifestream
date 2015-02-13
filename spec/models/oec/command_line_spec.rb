@@ -25,4 +25,16 @@ describe Oec::CommandLine do
     expect(Oec::CommandLine.new.is_debug_mode).to be_falsey
   end
 
+  it 'should reference logic of department-registry to pick up BIOLOGY-related relationships' do
+    ENV['departments'] = 'POL SCI, CHEM, INTEGBI'
+    departments = Oec::CommandLine.new.departments
+    departments.should match_array %w(BIOLOGY INTEGBI MCELLBI CHEM POL\ SCI)
+  end
+
+  it 'should not pull in BIOLOGY-related relationships' do
+    ENV['departments'] = 'POL SCI, CHEM'
+    departments = Oec::CommandLine.new.departments
+    departments.should match_array %w(CHEM POL\ SCI)
+  end
+
 end

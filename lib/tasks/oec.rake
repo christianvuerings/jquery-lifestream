@@ -31,16 +31,13 @@ namespace :oec do
   desc 'Spreadsheet from dept is compared with campus data'
   task :diff => :environment do
     args = Oec::CommandLine.new
-    departments = ENV['departments'].to_s.strip.upcase.split(/\s*,\s*/).reject &:empty?
-    # Registry accounts for unusual case of BIOLOGY
-    departments = Oec::DepartmentRegistry.new(departments).to_a unless departments.empty?
-    confirmed_data_per_dept = Oec::DeptConfirmedData.new(args.src_dir, departments).confirmed_data_per_dept
-
-    courses_group = Oec::CoursesGroup.new(confirmed_data_per_dept.keys)
+    # We generate CSV files from campus data to take advantage of post-processing logic.
+    Rails.logger.warn "Generating CSV files for #{args.departments}"
+    courses_group = Oec::CoursesGroup.new(args.departments)
     campus_data_per_dept = courses_group.campus_data_per_dept
-    File.delete courses_group.dest_dir
-
+    # Perform the diff op
     summaries = []
+    confirmed_data_per_dept = Oec::DeptConfirmedData.new(args.src_dir, args.departments).confirmed_data_per_dept
     confirmed_data_per_dept.each do |dept_name, confirmed_data|
       Rails.logger.warn "CSV from #{dept_name} contains #{confirmed_data.length} records"
       courses_diff = Oec::CoursesDiff.new(dept_name, campus_data_per_dept[dept_name], confirmed_data, args.dest_dir)
