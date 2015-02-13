@@ -9,18 +9,14 @@
 
     <form class="cc-page-form bc-canvas-form">
       <div class="row cc-page-create-project-form-fields">
-        <div class="small-12">
-          <div class="row">
-            <div class="small-12 medium-3 columns">
-              <div class="cc-page-create-project-site-form-area-container">
-                <label for="cc-page-create-project-site-name" class="cc-page-create-project-site-form-label">Project Site Name</label>
-              </div>
-            </div>
-            <div class="small-12 medium-4 columns end">
-              <div class="cc-page-create-project-site-form-area-container">
-                <input type="text" id="cc-page-create-project-site-name" name="projectSiteName" data-ng-model="projectSiteName" data-ng-disabled="creatingSite" placeholder="Enter a name for your site" class="bc-canvas-form-input-text">
-              </div>
-            </div>
+        <div class="small-12 medium-3 columns">
+          <div class="cc-page-create-project-site-form-area-container">
+            <label for="cc-page-create-project-site-name" class="cc-page-create-project-site-form-label">Project Site Name</label>
+          </div>
+        </div>
+        <div class="small-12 medium-4 columns end">
+          <div class="cc-page-create-project-site-form-area-container">
+            <input type="text" id="cc-page-create-project-site-name" name="projectSiteName" data-ng-model="projectSiteName" data-ng-disabled="creatingSite" placeholder="Enter a name for your site" class="bc-canvas-form-input-text">
           </div>
         </div>
       </div>
@@ -29,11 +25,10 @@
         <a data-cc-disabled="creatingSite" data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button">Cancel</a>
         <button data-ng-disabled="disableSubmit()" data-ng-click="createProjectSite()" class="bc-canvas-button bc-canvas-button-primary" aria-controls="cc-page-reader-alert" type="submit">
           <span data-ng-if="!creatingSite">Create a Project Site</span>
-          <span data-ng-if="creatingSite"><i class="fa fa-spinner fa-spin"></i>Creating ...</span>
+          <span data-ng-if="creatingSite"><i class="fa fa-spinner fa-spin"></i> Creating ...</span>
         </button>
       </div>
     </form>
-
   </div>
 
   <div data-ng-include src="'canvas_embedded/_shared/canvas_feed_error.html'"></div>
