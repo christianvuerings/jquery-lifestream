@@ -15,7 +15,7 @@ module CalCentralPages
     h2(:advising_card_heading, :xpath => '//h2[text()="L&S Advising"]')
     div(:advising_card_spinner, :xpath => '//h2[text()="L&S Advising"]/../following-sibling::div[@class="cc-spinner"]')
     paragraph(:make_appt_msg, :xpath => '//p[@data-ng-if="urlToMakeAppointment"]')
-    link(:make_appt_link, :xpath => '//a[@href="https://bhive.berkeley.edu/appointments/new"][contains(.,"new appointment")]')
+    link(:make_appt_link, :xpath => '//a[@href="https://bhive.berkeley.edu/appointments"][contains(.,"new appointment")]')
     span(:college_adviser_link, :xpath => '//h3[contains(.,"College Advisor")]/following-sibling::a/span')
 
     h3(:future_appts_heading, :xpath => '//h3[text()="Current Appointments"]')
