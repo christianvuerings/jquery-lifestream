@@ -30,7 +30,7 @@ if [ $CURR_USER != "$RUN_AS_USER" ]; then
   exit 1
 fi
 
-if [[ "${HOSTNAME}" = ets-calcentral-*-01\.ist.berkeley.edu ]]; then
+if [[ "${HOSTNAME}" = *calcentral-*-01\.ist.berkeley.edu ]]; then
   NODEONE="yes"
 fi
 
@@ -91,6 +91,7 @@ case "$1" in
         ;;
   restart)
         stop
+        sleep 10
         start
         ;;
   status)

@@ -4,7 +4,7 @@
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
 HOSTNAME=`uname -n`
-if [[ "${HOSTNAME}" = ets-calcentral-*-01\.ist.berkeley.edu ]]; then
+if [[ "${HOSTNAME}" = *calcentral-*-01\.ist.berkeley.edu ]]; then
   NODEONE="yes"
 fi
 
