@@ -83,34 +83,55 @@ describe Canvas::CourseUser do
   context "when checking if user is course admin" do
     context "if canvas user argument is blank" do
       it "returns false" do
-        expect(subject.class.is_course_admin?(nil)).to be_falsey
+        expect(subject.class.is_course_admin?(nil)).to eq false
       end
     end
 
     context "if canvas user has no matching admin role" do
       it "returns false" do
-        expect(subject.class.is_course_admin?(canvas_course_user)).to be_falsey
+        expect(subject.class.is_course_admin?(canvas_course_user)).to eq false
       end
     end
 
     context "if canvas user has teacher role" do
       before { canvas_course_user['enrollments'][1]['role'] = 'TeacherEnrollment' }
       it "returns true" do
-        expect(subject.class.is_course_admin?(canvas_course_user)).to be_truthy
+        expect(subject.class.is_course_admin?(canvas_course_user)).to eq true
       end
     end
 
     context "if canvas user has teacher assistant role" do
       before { canvas_course_user['enrollments'][1]['role'] = 'TaEnrollment' }
       it "returns true" do
-        expect(subject.class.is_course_admin?(canvas_course_user)).to be_truthy
+        expect(subject.class.is_course_admin?(canvas_course_user)).to eq true
       end
     end
 
     context "if canvas user has designer role" do
       before { canvas_course_user['enrollments'][1]['role'] = 'DesignerEnrollment' }
       it "returns true" do
-        expect(subject.class.is_course_admin?(canvas_course_user)).to be_truthy
+        expect(subject.class.is_course_admin?(canvas_course_user)).to eq true
+      end
+    end
+
+    context "if canvas user has owner role" do
+      before { canvas_course_user['enrollments'][1]['role'] = 'Owner' }
+      it "returns true" do
+        expect(subject.class.is_course_admin?(canvas_course_user)).to eq true
+      end
+    end
+
+    context "if canvas user has maintainer role" do
+      before { canvas_course_user['enrollments'][1]['role'] = 'Maintainer' }
+      it "returns true" do
+        expect(subject.class.is_course_admin?(canvas_course_user)).to eq true
+      end
+    end
+
+    context "if canvas user has member role" do
+      before { canvas_course_user['enrollments'][1]['role'] = 'Member' }
+      it "returns false" do
+        expect(subject.class.is_course_admin?(canvas_course_user)).to eq false
       end
     end
   end

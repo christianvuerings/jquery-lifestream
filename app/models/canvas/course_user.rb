@@ -3,7 +3,7 @@ module Canvas
 
     include SafeJsonParser
 
-    ADMIN_ROLES = ["TeacherEnrollment", "TaEnrollment", "DesignerEnrollment"]
+    ADMIN_ROLES = ["TeacherEnrollment", "TaEnrollment", "DesignerEnrollment", "Owner", "Maintainer"]
 
     def initialize(options = {})
       super(options)
