@@ -50,6 +50,7 @@ module Canvas
       canvas_course_enrollments_proxy.enroll_user(canvas_user_profile['id'], enrollment_type.to_s, 'active', false, options)
     end
 
+    # See output of Canvas::CourseUser#roles for course_user_roles argument
     def self.granting_roles(course_user_roles, global_admin = false)
       user_roles = course_user_roles.to_hash.select {|key,role| role }.keys
       granted_roles = []
@@ -62,8 +63,8 @@ module Canvas
         {'id' => 'TaEnrollment', 'name' => 'TA'},
         {'id' => 'TeacherEnrollment', 'name' => 'Teacher'},
       ]
-      granted_roles += ta_roles if user_roles.include?('ta') || user_roles.include?('teacher') || user_roles.include?('designer') || global_admin
-      granted_roles += privileged_roles if user_roles.include?('teacher') || user_roles.include?('designer') || global_admin
+      granted_roles += ta_roles if user_roles.include?('ta') || user_roles.include?('teacher') || user_roles.include?('maintainer') || user_roles.include?('owner') || user_roles.include?('designer') || global_admin
+      granted_roles += privileged_roles if user_roles.include?('teacher') || user_roles.include?('owner') || user_roles.include?('designer') || global_admin
       return granted_roles
     end
 
