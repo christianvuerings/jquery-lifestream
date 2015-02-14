@@ -146,8 +146,15 @@ describe Canvas::CourseUser do
   end
 
   context "when returning course user roles" do
+    let(:empty_course_user) { {'enrollments' => []} }
+    let(:student_enrollment) { {'role' => 'StudentEnrollment'} }
+    let(:designer_enrollment) { {'role' => 'DesignerEnrollment'} }
+    let(:owner_enrollment) { {'role' => 'Owner'} }
+    let(:maintainer_enrollment) { {'role' => 'Maintainer'} }
+
     context "if course user exists in canvas" do
-      before { expect_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return({'enrollments' => [{'role' => 'StudentEnrollment'},{'role' => 'DesignerEnrollment'}]}) }
+      let(:course_user) { {'enrollments' => [student_enrollment, designer_enrollment]} }
+      before { expect_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(course_user) }
       it "returns roles hash" do
         course_user_roles = subject.roles
         expect(course_user_roles).to be_an_instance_of Hash
@@ -156,6 +163,38 @@ describe Canvas::CourseUser do
         expect(course_user_roles['observer']).to eq false
         expect(course_user_roles['designer']).to eq true
         expect(course_user_roles['ta']).to eq false
+        expect(course_user_roles['waitlistStudent']).to eq false
+        expect(course_user_roles['owner']).to eq false
+        expect(course_user_roles['maintainer']).to eq false
+        expect(course_user_roles['member']).to eq false
+      end
+    end
+
+    context "if course user is owner" do
+      let(:course_user) { {'enrollments' => [owner_enrollment]} }
+      before { expect_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(course_user) }
+      it "returns roles with owner role indicated" do
+        course_user_roles = subject.roles
+        expect(course_user_roles).to be_an_instance_of Hash
+        expect(course_user_roles['waitlistStudent']).to eq false
+        expect(course_user_roles['owner']).to eq true
+        expect(course_user_roles['maintainer']).to eq false
+        expect(course_user_roles['member']).to eq false
+        expect(course_user_roles['student']).to eq false
+      end
+    end
+
+    context "if course user is maintainer" do
+      let(:course_user) { {'enrollments' => [maintainer_enrollment]} }
+      before { expect_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(course_user) }
+      it "returns roles with maintainer role indicated" do
+        course_user_roles = subject.roles
+        expect(course_user_roles).to be_an_instance_of Hash
+        expect(course_user_roles['waitlistStudent']).to eq false
+        expect(course_user_roles['owner']).to eq false
+        expect(course_user_roles['maintainer']).to eq true
+        expect(course_user_roles['member']).to eq false
+        expect(course_user_roles['student']).to eq false
       end
     end
 
@@ -173,7 +212,7 @@ describe Canvas::CourseUser do
     end
 
     context "if course user enrollments are empty" do
-      before { expect_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return({'enrollments' => []}) }
+      before { expect_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(empty_course_user) }
       it "returns roles hash" do
         course_user_roles = subject.roles
         expect(course_user_roles).to be_an_instance_of Hash

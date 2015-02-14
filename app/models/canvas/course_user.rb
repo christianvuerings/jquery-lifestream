@@ -52,7 +52,7 @@ module Canvas
 
     def roles
       profile = course_user
-      roles_hash = {'teacher' => false, 'student' => false, 'observer' => false, 'designer' => false, 'ta' => false}
+      roles_hash = {'teacher' => false, 'student' => false, 'waitlistStudent' => false, 'observer' => false, 'designer' => false, 'ta' => false, 'owner' => false, 'maintainer' => false, 'member' => false}
       return roles_hash if profile.nil? || profile['enrollments'].nil? || profile['enrollments'].empty?
       roles = profile['enrollments'].collect {|enrollment| enrollment['role'] }
       roles_hash['student'] = true if roles.include?('StudentEnrollment')
@@ -60,6 +60,10 @@ module Canvas
       roles_hash['observer'] = true if roles.include?('ObserverEnrollment')
       roles_hash['ta'] = true if roles.include?('TaEnrollment')
       roles_hash['designer'] = true if roles.include?('DesignerEnrollment')
+      roles_hash['waitlistStudent'] = true if roles.include?('Waitlist Student')
+      roles_hash['owner'] = true if roles.include?('Owner')
+      roles_hash['maintainer'] = true if roles.include?('Maintainer')
+      roles_hash['member'] = true if roles.include?('Member')
       roles_hash
     end
 
