@@ -5,16 +5,17 @@ module Oec
     attr_reader :csv_per_dept
     attr_reader :dest_dir
 
-    def initialize(departments, dest_dir = "tmp/oec-#{DateTime.now.strftime('%s')}", keep_csv_files = false, debug_mode = false)
+    def initialize(departments, dest_dir, keep_csv_files = false, debug_mode = false)
       @dest_dir = dest_dir
       @csv_per_dept = {}
-      departments.each do |dept_name|
+      registry = Oec::DepartmentRegistry.new departments
+      registry.each do |dept_name|
         courses = Oec::Courses.new(dept_name, dest_dir)
         courses.export
         @csv_per_dept[dept_name] = courses.output_filename
       end
-      biology = Oec::DepartmentRegistry.new.biology_dept_name
-      if departments.include? biology
+      biology = registry.biology_dept_name
+      if registry.include? biology
         Rails.logger.info 'Running biology post-processor logic.'
         post_processor = Oec::BiologyPostProcessor.new(dest_dir, dest_dir, debug_mode)
         post_processor.post_process

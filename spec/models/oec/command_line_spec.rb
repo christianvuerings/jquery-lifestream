@@ -37,4 +37,9 @@ describe Oec::CommandLine do
     departments.should match_array %w(CHEM POL\ SCI)
   end
 
+  it 'should pull all OEC departments when none specified' do
+    ENV['departments'] = nil
+    Oec::CommandLine.new.departments.should match_array Settings.oec.departments
+  end
+
 end
