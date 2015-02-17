@@ -177,7 +177,7 @@
     };
 
     var userIsAuthorized = function(courseUserRoles) {
-      if (courseUserRoles.globalAdmin || courseUserRoles.teacher || courseUserRoles.ta || courseUserRoles.designer) {
+      if (courseUserRoles.globalAdmin || courseUserRoles.teacher || courseUserRoles.ta || courseUserRoles.designer || courseUserRoles.owner || courseUserRoles.maintainer) {
         return true;
       }
       return false;

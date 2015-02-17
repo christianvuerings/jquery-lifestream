@@ -216,7 +216,9 @@ describe Canvas::CourseAddUser do
     let(:student_course_user_roles) { no_course_user_roles.merge({'student' => true}) }
     let(:observer_course_user_roles) { no_course_user_roles.merge({'observer' => true}) }
     let(:ta_course_user_roles) { no_course_user_roles.merge({'ta' => true}) }
+    let(:maintainer_course_user_roles) { no_course_user_roles.merge({'maintainer' => true}) }
     let(:teacher_course_user_roles) { no_course_user_roles.merge({'teacher' => true}) }
+    let(:owner_course_user_roles) { no_course_user_roles.merge({'owner' => true}) }
     let(:designer_course_user_roles) { no_course_user_roles.merge({'designer' => true}) }
     let(:privileged_roles) { [
       {'id' => 'StudentEnrollment', 'name' => 'Student'},
@@ -240,6 +242,11 @@ describe Canvas::CourseAddUser do
       expect(result).to eq privileged_roles
     end
 
+    it "returns all roles when the user is an owner" do
+      result = Canvas::CourseAddUser.granting_roles(owner_course_user_roles)
+      expect(result).to eq privileged_roles
+    end
+
     it "returns all roles when the user is a designer" do
       result = Canvas::CourseAddUser.granting_roles(designer_course_user_roles)
       expect(result).to eq privileged_roles
@@ -247,6 +254,11 @@ describe Canvas::CourseAddUser do
 
     it "returns only student and observer roles when the user is only a teachers assistant" do
       result = Canvas::CourseAddUser.granting_roles(ta_course_user_roles)
+      expect(result).to eq ta_roles
+    end
+
+    it "returns only student and observer roles when the user is only a maintainer" do
+      result = Canvas::CourseAddUser.granting_roles(maintainer_course_user_roles)
       expect(result).to eq ta_roles
     end
 
