@@ -21,7 +21,8 @@ module Finaid
     def request_internal(vcr_cassette)
       student_id = lookup_student_id
       if student_id.nil?
-        raise Errors::ProxyError.new("Lookup of student_id for uid #{@uid} failed, cannot call Myfinaid API", nil)
+        logger.info "Lookup of student_id for uid #{@uid} failed, cannot call Finaid API"
+        return nil
       else
         url = "#{@settings.base_url}/#{student_id}/finaid"
         vcr_opts = {:match_requests_on => [:method, :path, VCR.request_matchers.uri_without_params(:token, :app_id, :app_key)]}

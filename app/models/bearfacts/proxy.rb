@@ -35,7 +35,10 @@ module Bearfacts
     def request_internal(path, vcr_cassette, params = {})
       student_id = lookup_student_id
       if student_id.nil?
-        raise Errors::ProxyError.new("Lookup of student_id for uid #{@uid} failed, cannot call Bearfacts API path #{path}", {noStudentId: true})
+        logger.info "Lookup of student_id for uid #{@uid} failed, cannot call Bearfacts API path #{path}"
+        {
+          noStudentId: true
+        }
       else
         url = "#{Settings.bearfacts_proxy.base_url}#{path}"
         logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
