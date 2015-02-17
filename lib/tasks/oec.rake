@@ -31,16 +31,19 @@ namespace :oec do
   desc 'Spreadsheet from dept is compared with campus data'
   task :diff => :environment do
     args = Oec::CommandLine.new
-    # We generate CSV files from campus data to take advantage of post-processing logic.
-    Rails.logger.warn "Generating CSV files for #{args.departments}"
-    courses_group = Oec::CoursesGroup.new(args.departments)
-    campus_data_per_dept = courses_group.campus_data_per_dept
-    # Perform the diff op
+    # Load CSVs edited by departments
+    data_from_departments = Oec::DeptConfirmedData.new(args.src_dir, args.departments).confirmed_data_per_dept
+
+    # Query campus data and post-process BIOLOGY, if necessary.
+    Rails.logger.warn "Get campus data for #{args.departments}"
+    tmp_dir = "tmp/oec-#{DateTime.now.strftime('%s')}"
+    debug_mode = args.is_debug_mode
+    courses = Oec::CoursesGroup.new(data_from_departments.keys, tmp_dir, debug_mode, debug_mode)
+    # Do diff(s)
     summaries = []
-    confirmed_data_per_dept = Oec::DeptConfirmedData.new(args.src_dir, args.departments).confirmed_data_per_dept
-    confirmed_data_per_dept.each do |dept_name, confirmed_data|
-      Rails.logger.warn "CSV from #{dept_name} contains #{confirmed_data.length} records"
-      courses_diff = Oec::CoursesDiff.new(dept_name, campus_data_per_dept[dept_name], confirmed_data, args.dest_dir)
+    data_from_departments.each do |dept_name, data_from_dept|
+      campus_data = courses.campus_data_per_dept[dept_name]
+      courses_diff = Oec::CoursesDiff.new(dept_name, campus_data, data_from_dept, args.dest_dir)
       courses_diff.export
       if courses_diff.was_difference_found
         summaries << "#{dept_name}: #{courses_diff.output_filename}"

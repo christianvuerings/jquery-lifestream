@@ -10,9 +10,8 @@ module Oec
       @src_dir = get_path_arg 'src'
       @dest_dir = get_path_arg 'dest'
       @is_debug_mode = ENV['debug'].to_s =~ /true/i
-      departments_split = ENV['departments'].to_s.strip.upcase.split(/\s*,\s*/).reject { |s| s.nil? || s.empty? }
-      # Registry accounts for unusual case of BIOLOGY
-      @departments = departments_split.empty? ? nil : Oec::DepartmentRegistry.new(departments_split).to_a
+      split = ENV['departments'].to_s.strip.upcase.split(/\s*,\s*/).reject { |s| s.nil? || s.empty? }
+      @departments = Oec::DepartmentRegistry.new(split.empty? ? Settings.oec.departments : split).to_a
     end
 
     private
