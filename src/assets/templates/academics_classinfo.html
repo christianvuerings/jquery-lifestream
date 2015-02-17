@@ -36,7 +36,7 @@
           <h3>Class Title</h3>
           <div data-ng-bind="selectedCourse.title"></div>
 
-          <h3 data-ng-if="selectedCourse.listings.length > 1">Crosslisted As</h3>
+          <h3 data-ng-if="selectedCourse.listings.length > 1">Cross-listed As</h3>
           <div data-ng-if="selectedCourse.listings.length > 1" data-ng-repeat="listing in selectedCourse.listings">
             <span data-ng-bind="listing.course_code"></span>
           </div>
