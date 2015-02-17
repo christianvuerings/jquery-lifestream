@@ -104,13 +104,7 @@ module MyAcademics
         # If the cross-listed course is already in the feed, append section and listing data.
         if (existing_cross_listed_course = term.find { |course| course[:crossListingHash] == cross_listing_hash })
           existing_cross_listed_course[:listings].concat working_course[:listings]
-          working_course[:sections].each do |section|
-            schedule_info = section.except(:ccn, :courseCode)
-            if (co_scheduled_section = existing_cross_listed_course[:sections].find{|s| s.except(:ccn, :courseCode) == schedule_info})
-              section[:scheduledWithCcn] = co_scheduled_section[:ccn]
-            end
-          end
-          existing_cross_listed_course[:sections].concat working_course[:sections]
+          concat_sections_flagging_crosslistings(working_course, existing_cross_listed_course)
           #Since courses have only one slug and URL, keep consistent by using the first alphabetically.
           if working_course[:slug] < existing_cross_listed_course[:slug]
             existing_cross_listed_course[:slug] = working_course[:slug]
@@ -123,6 +117,17 @@ module MyAcademics
       else
         append_with_scheduled_section_count(term, working_course)
       end
+    end
+
+    def concat_sections_flagging_crosslistings(source_course, target_course)
+      source_course[:sections].each do |source_section|
+        if (target_section = target_course[:sections].find { |t| t[:section_label] == source_section[:section_label] })
+          source_section[:scheduledWithCcn] = target_section[:ccn]
+          target_section[:instructors] = target_section[:instructors] | source_section[:instructors]
+          target_section[:schedules] = target_section[:schedules] | source_section[:schedules]
+        end
+      end
+      target_course[:sections].concat source_course[:sections]
     end
 
     def append_with_scheduled_section_count(term, course_info)

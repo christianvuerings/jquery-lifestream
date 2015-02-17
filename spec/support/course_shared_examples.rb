@@ -23,6 +23,12 @@ shared_examples 'a feed including crosslisted courses' do
         expect(section[:scheduledWithCcn]).to eq crosslisted_sections[i-3][:ccn]
       end
     end
+    expect(crosslisted_sections[0][:schedules].size).to eq 1
+    expect(crosslisted_sections[0][:instructors].size).to eq 1
+    expect(crosslisted_sections[1][:schedules].size).to eq 1
+    expect(crosslisted_sections[1][:instructors].size).to eq 2
+    expect(crosslisted_sections[2][:schedules].size).to eq 1
+    expect(crosslisted_sections[2][:instructors].size).to eq 2
 
     expect(subject[0][:scheduledSectionCount]).to eq 3
     expect(subject[0][:scheduledSections]).to include({format: 'lecture', count: 1})
