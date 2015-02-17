@@ -31,8 +31,8 @@ describe Finaid::Proxy do
       #Never hits VCR so it should be fine for non-testext, but to make sure
       before(:each) { Finaid::Proxy.any_instance.stub(:lookup_student_id).and_return(nil) }
 
-      it 'should report failure on student ID lookup' do
-        expect { live_non_student }.to raise_error(Errors::ProxyError)
+      it 'should return empty feed on no student ID' do
+        expect(live_non_student).to be_blank
       end
     end
   end
