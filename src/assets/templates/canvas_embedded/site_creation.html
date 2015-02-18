@@ -16,7 +16,7 @@
         <div class="cc-page-site-creation-feature-details">
           <h3 class="cc-page-site-provisioning-header cc-page-site-provisioning-header3">Course Sites</h3>
           <h4 class="cc-page-site-provisioning-header cc-page-site-provisioning-header4" data-ng-if="authorizations.canCreateCourseSite">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do euismod tempor incididunt ut labore et dolore manga aliqua.
+            Setup course sites to communicate with and manage the work of students enrolled in your classes.
           </h4>
           <h4 class="cc-page-site-provisioning-header cc-page-site-provisioning-header4" data-ng-if="!authorizations.canCreateCourseSite">
             It appears that you do not have permissions to create a Course Site in the current or upcoming terms.
@@ -51,8 +51,13 @@
         <div class="cc-page-site-creation-feature-details">
           <h3 class="cc-page-site-provisioning-header cc-page-site-provisioning-header3">Project Sites</h3>
           <h4 class="cc-page-site-provisioning-header cc-page-site-provisioning-header4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do euismod tempor incididunt ut labore et dolore manga aliqua.
+            Share files and collaborate with your project or teaching team. Projects are best suited for instructors and GSIs who already use bCourses for their courses.
           </h4>
+          <p>
+            <a href="https://kb.berkeley.edu/page.php?id=44390">
+              Learn more about your online collaboration options
+            </a>
+          </p>
           <div class="cc-page-site-creation-feature-button-wrapper">
             <a data-cc-disabled="!authorizations.canCreateProjectSite" data-ng-href="{{linkToCreateProjectSite}}" class="bc-canvas-button bc-canvas-button-primary">Create a Project Site</a>
           </div>
