@@ -92,7 +92,7 @@ module CampusOracle
           }
         end
       end
-      feed.merge!({:instructors => instructors})
+      feed.merge!(instructors: instructors.uniq)
     end
 
     def strip_leading_zeros(str=nil)
