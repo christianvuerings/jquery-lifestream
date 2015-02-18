@@ -72,10 +72,11 @@ describe CampusOracle::UserCourses do
     expect(crosslisteds[0][:sections][0][:cross_listing_hash]).to eq crosslisteds[1][:sections][0][:cross_listing_hash]
   end
 
-  it 'removes duplicate sections', :if => CampusOracle::Connection.test_data? do
-    client = CampusOracle::UserCourses::All.new({user_id: '10388'})
+  it 'removes duplicate sections and instructors', :if => CampusOracle::Connection.test_data? do
+    client = CampusOracle::UserCourses::All.new({user_id: '322588'})
     courses = client.get_all_campus_courses['2013-D']
     expect(courses[0][:sections].count).to eq 1
+    expect(courses[0][:sections][0][:instructors].count).to eq 1
   end
 
   it 'prefixes short CCNs with zeroes', :if => CampusOracle::Connection.test_data? do
