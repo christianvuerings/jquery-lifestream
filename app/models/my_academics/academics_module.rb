@@ -145,6 +145,10 @@ module MyAcademics
           count: count
         }
       end
+      # For now, resolve discrepancies between the teachingSemesters feed (which splits data
+      # into listings) and the semesters feed (which doesn't) by merging the first listing
+      # into the top level.
+      course_info.merge! course_info[:listings].first
       term << course_info
     end
 
