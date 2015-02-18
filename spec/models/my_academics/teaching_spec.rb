@@ -21,6 +21,13 @@ describe 'MyAcademics::Teaching' do
     bio1a[:listings].count.should eq 1
     bio1a[:listings].first[:dept].should eq "BIOLOGY"
 
+    # Redundant fields to keep parity with student semesters feed structure
+    expect(bio1a[:courseCatalog]).to eq "1A"
+    expect(bio1a[:course_code]).to eq "BIOLOGY 1A"
+    expect(bio1a[:course_id]).to eq "biology-1a-2013-D"
+    expect(bio1a[:dept]).to eq "BIOLOGY"
+    expect(bio1a[:dept_desc]).to eq "Biology"
+
     bio1a[:scheduledSectionCount].should eq 3
     bio1a[:scheduledSections].should include({format: 'lecture', count: 1})
     bio1a[:scheduledSections].should include({format: 'discussion', count: 2})
