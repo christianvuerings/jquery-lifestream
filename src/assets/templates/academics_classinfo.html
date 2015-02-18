@@ -8,7 +8,7 @@
     <h1 class="cc-heading-page-title">
       <a href="/academics">My Academics</a> &raquo;
       <a data-ng-href="/academics/semester/{{selectedSemester.slug}}"><span data-ng-bind="selectedSemester.name"></span></a> &raquo;
-      <span data-ng-bind="selectedCourse.listings[0].course_code"></span>
+      <span data-ng-bind="selectedCourse.course_code"></span>
       <div class="cc-academics-teaching-button-group" data-ng-if="isInstructorOrGsi">
         <ul class="cc-button-group cc-even-{{selectOptions.length}}" role="tablist">
           <li data-ng-repeat="selectOption in selectOptions">
