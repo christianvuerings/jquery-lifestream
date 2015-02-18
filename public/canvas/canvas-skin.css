@@ -107,6 +107,10 @@ button#start_new_course.btn.button-sidebar-wide {
   margin-top: 10px;
 }
 
+.cc-alt-media-alert-button {
+  font-size: 13px;
+}
+
 /* Remove some problematic links from the Canvas "Help" popup list. */
 /* Copied from https://github.com/kajigga/canvas-contrib/blob/master/Branding/CSS/hide_help_links/hide_help_links.css */
 
