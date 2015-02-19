@@ -11,7 +11,7 @@ module Oec
       Dir[pattern].each do |filename|
         dept_name = filename.split('/')[-1].chomp(csv_filename_suffix).gsub(/_/, ' ').upcase
         Rails.logger.debug "Source directory contains #{filename} (owned by #{dept_name})"
-        if departments.empty? || departments.include?(dept_name)
+        if departments.include? dept_name
           corrected_data = []
           CSV.read(filename).each_with_index do |row, index|
             corrected_data << Oec::RowConverter.new(row).hashed_row if index > 0 && row.length > 0
