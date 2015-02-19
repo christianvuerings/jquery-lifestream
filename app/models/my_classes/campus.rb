@@ -43,7 +43,9 @@ module MyClasses
         if section[:is_primary_section]
           working_course = campus_course.deep_dup
           if split_primaries
-            working_course[:id] = "#{campus_course[:id]}-#{section[:section_number]}"
+            working_course[:listings].each do |listing|
+              listing[:id] = "#{listing[:id]}-#{section[:section_number]}"
+            end
             working_course[:listings].first[:courseCodeSection] = "#{section[:instruction_format]} #{section[:section_number]}"
           end
           if section[:waitlistPosition] && section[:waitlistPosition] > 0

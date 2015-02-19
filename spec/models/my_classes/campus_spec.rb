@@ -82,7 +82,7 @@ describe MyClasses::Campus do
       it_behaves_like 'a Classes list'
       its(:size) {should eq fake_sections.size}
       it 'treats them as two different classes with the same URL' do
-        expect(subject[0][:id]).to_not eq subject[1][:id]
+        expect(subject[0][:listings][0][:id]).to_not eq subject[1][:listings][0][:id]
         [subject, fake_sections].transpose.each do |course, enrollment|
           expect(course[:listings].first[:courseCodeSection]).to eq "#{enrollment[:instruction_format]} #{enrollment[:section_number]}"
           expect(course[:sections].size).to eq 1
