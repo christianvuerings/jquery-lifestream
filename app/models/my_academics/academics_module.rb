@@ -154,7 +154,9 @@ module MyAcademics
 
     def decode_instruction_format(format)
       case format
+        when 'CLC' then 'clinic'
         when 'COL' then 'colloquium'
+        when 'DEM' then 'demonstration'
         when 'DIS' then 'discussion'
         when 'FLD' then 'field study'
         when 'GRP' then 'group study'
@@ -168,7 +170,9 @@ module MyAcademics
         when 'STD' then 'studio'
         when 'SUP' then 'supplemental'
         when 'TUT' then 'tutorial'
+        when 'VOL' then 'voluntary'
         when 'WBL' then 'web-based lecture'
+        when 'WOR' then 'workshop'
         else format
       end
     end
