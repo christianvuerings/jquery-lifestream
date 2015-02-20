@@ -64,8 +64,7 @@ module Canvas
               logger.debug("404 status returned for URL '#{fetch_options[:uri]}', UID #{@uid}")
               return nil
             end
-            raise Errors::ProxyError.new(
-                    "Connection failed for URL '#{fetch_options[:uri]}', UID #{@uid}: #{response.status} #{response.body}", nil, nil)
+            raise Errors::ProxyError.new('Connection failed', response: response, url: fetch_options[:uri], uid: @uid)
           else
             response
           end

@@ -41,34 +41,24 @@ module Advising
       else
         url = "#{@settings.base_url}/student/#{student_id}"
         logger.info "Internal_get: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-        begin
-          response = get_response(
-            url,
-            basic_auth: {username: @settings.username, password: @settings.password}
-          )
-        rescue Timeout::Error
-          logger.error("Timeout error: url = #{url}, uid = #{@uid}")
-          raise Errors::ProxyError.new
-        end
+        response = get_response(
+          url,
+          basic_auth: {username: @settings.username, password: @settings.password},
+          on_error: {rescue_status: 404}
+        )
         status_code = response.code
-        if response.code >= 400 && response.code != 404
-          logger.error("Connection failed: #{response.code} #{response.body}; url = #{url}, uid = #{@uid}")
-          raise Errors::ProxyError.new
-        elsif response.code == 404
+        if status_code == 404
           logger.debug "404 response from advising API for user #{@uid}"
           parsed_json = {'body' => 'No advising data could be found for your account.'}
         else
           unless (parsed_json = safe_json(response.body))
-            logger.error("Empty response: #{response.code} #{response.body}; url = #{url}, uid = #{@uid}")
-            raise Errors::ProxyError.new
+            raise Errors::ProxyError.new('Empty response', response: response, url: url, uid: uid)
           end
         end
         logger.debug "Advising remote response: #{response.inspect}"
       end
 
-      {
-        statusCode: status_code
-      }.merge(HashConverter.camelize(parsed_json))
+      HashConverter.camelize(parsed_json).merge(statusCode: status_code)
     end
 
   end

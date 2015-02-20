@@ -40,9 +40,6 @@ module Finaid
           end
           get_response(url, request_options)
         }
-        if response.code >= 400
-          raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}", nil)
-        end
         logger.debug "Remote server status #{response.code}, Body = #{response.body}"
         response
       end

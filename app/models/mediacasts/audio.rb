@@ -24,9 +24,6 @@ module Mediacasts
         }
       end
       response = get_response(@audio_rss)
-      if response.code >= 400
-        raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}")
-      end
       logger.debug "Remote server status #{response.code}, Body = #{response.body}"
       {
         audio: filter_audio(response)

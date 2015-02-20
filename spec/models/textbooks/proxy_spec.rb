@@ -127,6 +127,18 @@ describe Textbooks::Proxy do
         expect(parsed['body']).to be_present
       end
     end
+
+    it_should_behave_like 'a proxy logging errors' do
+      subject do
+        Textbooks::Proxy.new({
+          course_catalog: '109G',
+          dept: 'POL SCI',
+          section_numbers: ['001'],
+          slug: 'fall-2014',
+          fake: false
+        }).get_as_json
+      end
+    end
   end
 
 end

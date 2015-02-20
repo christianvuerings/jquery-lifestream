@@ -26,8 +26,11 @@ describe Mediacasts::AllPlaylists do
     end
 
     context "on remote server errors" do
+      let! (:body) { 'An unknown error occurred.' }
+      let! (:status) { 506 }
+      include_context 'expecting logs from server errors'
       before(:each) {
-        stub_request(:any, /.*#{playlist_uri.hostname}.*/).to_return(status: 506)
+        stub_request(:any, /.*#{playlist_uri.hostname}.*/).to_return(status: status, body: body)
       }
       after(:each) { WebMock.reset! }
       it "should return the fetch error message" do

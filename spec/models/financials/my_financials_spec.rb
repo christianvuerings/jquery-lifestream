@@ -42,26 +42,25 @@ describe Financials::MyFinancials do
     it_behaves_like 'a feed with the common live-updates fields'
   end
 
+  context 'error on remote server' do
+    let! (:body) { 'An unknown error occurred.' }
+    let! (:status) { 506 }
+    include_context 'expecting logs from server errors'
+    before do
+      stub_request(:any, /.*#{Settings.financials_proxy.base_url}.*/).to_return(status: status, body: body)
+    end
+    it 'reports an error' do
+      expect(subject['body']).to eq('My Finances is currently unavailable. Please try again later.')
+      expect(@expires_in).to eq Settings.cache.expiration.failure
+      expect(subject['statusCode']).to eq 503
+    end
+  end
+
   context 'when working with a faked proxy' do
     let(:fake_proxy) { Financials::Proxy.new({user_id: uid, student_id: student_id, fake: true}) }
     before {
       allow(Financials::Proxy).to receive(:new).and_return(fake_proxy)
     }
-
-    context 'when the proxy throws an error' do
-      let(:student_id) { '11667051' }
-      before do
-        allow(fake_proxy).to receive(:get).and_return(double(
-          code: 500,
-          body: 'an error message'
-        ))
-      end
-      it 'should have an error message text and be a short-lived cache' do
-        expect(subject['body']).to eq 'My Finances is currently unavailable. Please try again later.'
-        expect(@expires_in).to eq Settings.cache.expiration.failure
-      end
-      it_behaves_like 'a feed with the common live-updates fields'
-    end
 
     context 'when a student whose data is missing gets the feed' do
       let(:uid) { '300940' }

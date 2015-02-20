@@ -23,9 +23,6 @@ module CalLink
           )
         }
       end
-      if response.code >= 400
-        raise Errors::ProxyError.new("Connection failed: #{response.code} #{response.body}; url = #{url}")
-      end
       Rails.logger.debug "#{self.class.name}: Remote server status #{response.code}, Body = #{response.body}"
       {
         :body => response.parsed_response,
