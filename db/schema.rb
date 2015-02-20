@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150211123814) do
+ActiveRecord::Schema.define(version: 20150212165014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,6 +138,24 @@ ActiveRecord::Schema.define(version: 20150211123814) do
   end
 
   add_index "oauth2_data", ["uid", "app_id"], name: "index_oauth2_data_on_uid_app_id", unique: true, using: :btree
+
+  create_table "recent_uids", force: true do |t|
+    t.string   "owner_id"
+    t.string   "stored_uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "recent_uids", ["owner_id"], name: "recent_uids_index", using: :btree
+
+  create_table "saved_uids", force: true do |t|
+    t.string   "owner_id"
+    t.string   "stored_uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "saved_uids", ["owner_id"], name: "saved_uids_index", using: :btree
 
   create_table "schema_migrations_backup", id: false, force: true do |t|
     t.string "version"
