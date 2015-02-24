@@ -1,7 +1,7 @@
 module EtsBlog
   class ReleaseNotes < BaseProxy
 
-    include ClassLogger
+    include ClassLogger, HtmlSanitizer
 
     def initialize(options = {})
       super(Settings.blog_latest_release_notes_feed_proxy, options)
@@ -17,14 +17,12 @@ module EtsBlog
                        #HTTParty won't parse automatically because the application/xml header is missing
                        MultiXml.parse get_response(@settings.feed_url)
                      end
-
           entry = response['rss']['channel']['item'].first
 
           d = Date.parse entry['pubDate']
-          snippet = ActionController::Base.helpers.strip_tags(entry['description'])
-          snippet = CGI.unescape_html(snippet).gsub('&nbsp;', ' ') #unescape_html doesn't convert spaces
-          snippet.squish!
-          snippet.gsub!(/read more$/, '') # Trim off text appended to description by Drupal
+          # Clean up description and trim off text appended by Drupal
+          snippet = sanitize_html(entry['description']).squish.gsub(/read more$/, '')
+
           {
             entries: [
               {

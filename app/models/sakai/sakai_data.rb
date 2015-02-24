@@ -48,10 +48,12 @@ module Sakai
       select xml from #{table_prefix}sakai_preferences
         where preferences_id = #{connection.quote(sakai_user_id)}
         SQL
-        if (xml = connection.select_one(sql))
-          xml = Nokogiri::XML::Document.parse(xml['xml'])
-          xml.xpath('preferences/prefs/properties/property[@name="exclude"]').each do |el|
-            sites.push(Base64.decode64(el['value']))
+        if (row = connection.select_one(sql))
+          doc = FeedWrapper.new MultiXml.parse(row['xml'])
+          doc['preferences']['prefs']['properties']['property'].as_collection.each do |p|
+            if p['name'].to_text == 'exclude'
+              sites.push Base64.decode64(p['value'].to_text)
+            end
           end
         end
       }

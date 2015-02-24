@@ -1,66 +1,36 @@
 require "spec_helper"
 
 describe "MyBadges::bMail" do
+
   before(:each) do
     @user_id = rand(999999).to_s
-    @fake_mail_list = GoogleApps::MailList.new(:fake => true)
+    allow(GoogleApps::Proxy).to receive(:access_granted?).and_return(true)
+    allow(GoogleApps::MailList).to receive(:new).and_return(GoogleApps::MailList.new(fake: true))
   end
 
-  it "OskiBear should have three unread bMail messages" do
-    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
-    GoogleApps::MailList.stub(:new).and_return(@fake_mail_list)
+  subject { MyBadges::GoogleMail.new(@user_id).fetch_counts }
 
-    unread = MyBadges::GoogleMail.new @user_id
-    unread.fetch_counts[:count].should == 3
+  shared_examples 'an empty result set' do
+    it { expect(subject[:count]).to eq 0 }
+    it { expect(subject[:items]).to eq [] }
   end
 
-  it "Unauthenticated users should have zero unread bMail messages" do
-    # Intentionally not authenticating before asking for MyBadges
-    GoogleApps::Proxy.stub(:access_granted?).and_return(false)
-    merged = MyBadges::Merged.new @user_id
-    unread = merged.get_feed
-    unread[:badges].each do |k,v|
-      unread[:badges][k][:count].should == 0
-      unread[:badges][k][:items].empty?.should be_truthy
+  it 'should find three unread messages' do
+    expect(subject[:count]).to eq 3
+    expect(subject[:items].count).to eq 3
+    subject[:items].each do |item|
+      [:editor, :link, :modifiedTime, :summary, :title].each { |key| expect(item[key]).to be_present }
     end
   end
 
-  it "Nokogiri parse failures should raise an exception" do
-    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
-    GoogleApps::MailList.stub(:new).and_return(@fake_mail_list)
-    Nokogiri::XML.stub(:parse).and_raise(StandardError)
-
-    results = MyBadges::GoogleMail.new(@user_id).fetch_counts
-    results[:count].should == 0
+  context 'when XML parsing fails' do
+    before { allow(MultiXml).to receive(:parse).and_raise(StandardError) }
+    it_should_behave_like 'an empty result set'
   end
 
-  it "should handle bad data on xml fields" do
-    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
-    GoogleApps::MailList.stub(:new).and_return(@fake_mail_list)
-    Nokogiri::XML::Document.any_instance.stub(:search).and_return(%w(potato))
-    suppress_rails_logging {
-      results = MyBadges::GoogleMail.new(@user_id).fetch_counts
-      results[:count].should == 0
-    }
-    Nokogiri::XML::Document.any_instance.stub(:search).and_return(%w(multi element bogus result))
-    suppress_rails_logging {
-      results = MyBadges::GoogleMail.new(@user_id).fetch_counts
-      results[:items].size.should == 0
-    }
-    Nokogiri::XML::Document.any_instance.unstub(:search)
-    Nokogiri::XML::NodeSet.any_instance.stub(:search).and_return(nil)
-    suppress_rails_logging {
-      results = MyBadges::GoogleMail.new(@user_id).fetch_counts
-      results[:items].size.should == 0
-    }
-    Nokogiri::XML::NodeSet.any_instance.unstub(:search)
-    DateTime.stub(:iso8601).and_raise(StandardError)
-    suppress_rails_logging {
-      results = MyBadges::GoogleMail.new(@user_id).fetch_counts
-      results[:items].size.should == 0
-    }
-
+  context 'when XML data is unexpected' do
+    before { allow(MultiXml).to receive(:parse).and_return(['multi', 'element', 'bogus', 'result']) }
+    it_should_behave_like 'an empty result set'
   end
-
 
 end

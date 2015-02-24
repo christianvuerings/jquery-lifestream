@@ -66,21 +66,22 @@ module Sakai
         end
         ann['message_date'] = DateTime.parse(ann_row['message_date'])
         ann['source_url'] = announcement_url(ann['message_id'])
-        doc = Nokogiri::XML::Document.parse(ann_row['xml']).at_xpath('message')
+        doc = FeedWrapper.new(MultiXml.parse ann_row['xml'])
+        message = doc['message']
         # The 'body-html' attribute contains the rich-text version of the announcement body, and this is what
         # is displayed by Sakai. CalCentral restricts itself to the HTML-stripped "body" attribute, which
         # is generally much smaller. The same basic encoding is used to store both.
-        message_text = doc['body'].split('&#xa;').collect { |enc|
+        message_text = message['body'].to_text.split('&#xa;').collect { |enc|
           Base64.decode64(enc).force_encoding('UTF-8')
         }.join
         ann['summary'] = message_text.squish.truncate(@message_max_length)
-        ann['title'] = doc.at_xpath('header')['subject']
+        ann['title'] = message['header']['subject'].to_text
 
         # Is the announcement site-wide or targeted at particular sections/groups?
-        if (doc.at_xpath('header')['access'] == 'grouped')
+        if message['header']['access'].to_text == 'grouped'
           group_ids = []
-          doc.xpath('header/group').each do |el|
-            authz_group = el['authzGroup']
+          message['header']['group'].as_collection.each do |el|
+            authz_group = el['authzGroup'].to_text
             if (group_id = %r{/site/.+/group/(.+)}.match(authz_group)[1])
               group_ids << group_id
             else
@@ -92,16 +93,16 @@ module Sakai
 
         # Relative-url '/content/attachment/XXX/Announcements/YYY/FILE NAME.EXT' becomes link
         # 'https://HOST/access/content/attachment/XXX/Announcements/YYY/FILE%20NAME.EXT'.
-        doc.xpath('header/attachment').each do |el|
+        message['header']['attachment'].as_collection.each do |el|
           ann['attachments'] ||= []
-          if (url = el['relative-url'])
+          if (url = el['relative-url'].to_text)
             ann['attachments'].push(attachment_url(url))
           else
             Rails.logger.warn("Unexpected attachment element: #{el}")
           end
         end
-        doc.xpath('properties/property').each do |prop|
-          name = prop['name']
+        message['properties']['property'].as_collection.each do |prop|
+          name = prop['name'].to_text
           case name
             # Notification levels: 'r' for required; 'n' for none; 'o' for optional
             #
@@ -109,10 +110,10 @@ module Sakai
             # shows as:
             # <a href="https://HOST/portal/directtool/37c2f61c-66f9-4abb-bb07-a9e6670d4bcd?assignmentId=/assignment/a/29fc31ae-ff14-419f-a132-5576cae2474e/7dc0c8e4-ec37-4457-ab15-97378e92fab5&panel=Main&sakai_action=doView_assignment">Do this then do that</a>
             when 'notificationLevel', 'assignmentReference'
-              ann[name] = Base64.decode64(prop['value'])
+              ann[name] = Base64.decode64(prop['value'].to_text)
             # Release and retract times are in the bizarre UTC format: '20130118060000000'
             when 'releaseDate', 'retractDate'
-              ann[name] = DateTime.strptime(Base64.decode64(prop['value']), '%Y%m%d%H%M%S%L')
+              ann[name] = DateTime.strptime(Base64.decode64(prop['value'].to_text), '%Y%m%d%H%M%S%L')
           end
         end
         ann
