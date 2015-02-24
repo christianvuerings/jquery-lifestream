@@ -11,21 +11,42 @@
     $scope.accessDeniedError = 'This feature is currently only available to instructors with course sections scheduled in the current or upcoming terms.';
     $scope.linkToSiteOverview = canvasSiteCreationService.linkToSiteOverview($route.current.isEmbedded);
 
-    var statusProcessor = function() {
+    /*
+     * Updates status of background job in $scope.
+     * Halts jobStatusLoader loop if job no longer in progress.
+     */
+    var statusProcessor = function(data) {
+      angular.extend($scope, data);
+      $scope.percentCompleteRounded = Math.round($scope.percent_complete * 100);
       if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
-        courseSiteJobStatusLoader();
+        jobStatusLoader();
       } else {
         delete $scope.percentCompleteRounded;
         $timeout.cancel(timeoutPromise);
       }
     };
 
+    /*
+     * Performs background job status request every 2000 miliseconds
+     * with result processed by statusProcessor.
+     */
     var timeoutPromise;
-    var courseSiteJobStatusLoader = function() {
-      $scope.currentWorkflowStep = 'monitoring_job';
+    var jobStatusLoader = function() {
       timeoutPromise = $timeout(function() {
-        fetchStatus(statusProcessor);
+        return canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id).
+          .success(statusProcessor).error(function() {
+            $scope.displayError = 'failure';
+          });
       }, 2000);
+    };
+
+    /*
+     * Saves background job ID to scope and begins background job monitoring loop
+     */
+    var courseSiteJobCreated = function(data) {
+      angular.extend($scope, data);
+      $scope.currentWorkflowStep = 'monitoring_job';
+      jobStatusLoader();
     };
 
     var setErrorText = function() {
@@ -44,19 +65,6 @@
       delete $scope.jobStatus;
       delete $scope.completed_steps;
       delete $scope.percent_complete;
-    };
-
-    var courseSiteJobCreated = function(data) {
-      angular.extend($scope, data);
-      courseSiteJobStatusLoader();
-    };
-
-    var fetchStatus = function(callback) {
-      canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id).success(function(data) {
-        angular.extend($scope, data);
-        $scope.percentCompleteRounded = Math.round($scope.percent_complete * 100);
-        callback();
-      });
     };
 
     var selectAllSections = function() {

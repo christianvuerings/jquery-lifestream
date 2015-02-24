@@ -5,82 +5,8 @@
   /**
    * Canvas Manage Official Sections LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseManageOfficialSectionsController', function(apiService, canvasCourseProvisionFactory, canvasSiteCreationService, $scope, $timeout) {
+  angular.module('calcentral.controllers').controller('CanvasCourseManageOfficialSectionsController', function(apiService, canvasCourseProvisionFactory, $routeParams, $scope, $timeout) {
     apiService.util.setTitle('Manage Official Sections');
-
-    var statusProcessor = function(data) {
-      angular.extend($scope, data);
-      $scope.percentCompleteRounded = Math.round($scope.percent_complete * 100);
-      if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
-        jobStatusLoader();
-      } else {
-        $timeout.cancel(timeoutPromise);
-        $scope.fetchFeed();
-      }
-    };
-
-    var timeoutPromise;
-    var jobStatusLoader = function() {
-      timeoutPromise = $timeout(function() {
-        fetchJobStatus().success(statusProcessor);
-      }, 2000);
-    };
-
-    var fetchJobStatus = function() {
-      return canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id);
-    };
-
-    var initState = function() {
-      setErrorText('generic');
-      $scope.tabs = {
-        existing: true,
-        available: false
-      };
-      $scope.currentWorkflowStep = 'selecting';
-    };
-
-    var monitorJob = function(data) {
-      angular.extend($scope, data);
-      jobStatusLoader();
-    };
-
-    var setErrorText = function(errorType) {
-      switch (errorType) {
-        case 'generic': {
-          $scope.errorConfig = {
-            header: 'Section Removal or Addition Failed',
-            supportAction: 'remove or add these sections from your course site',
-            supportInfo: [
-              'The website link to this course site',
-              'The rosters you would like to add or remove (e.g. BIOLOGY 1A LEC 001)'
-            ]
-          };
-          break;
-        }
-        case 'sectionRemoval': {
-          $scope.errorConfig = {
-            header: 'Section Removal Failed',
-            supportAction: 'remove these sections from your course site',
-            supportInfo: [
-              'The website link to this course site',
-              'The rosters you would like to remove (e.g. BIOLOGY 1A LEC 001)'
-            ]
-          };
-          break;
-        }
-        case 'sectionAddition': {
-          $scope.errorConfig = {
-            header: 'Section Addition Failed',
-            supportAction: 'add these sections from your course site',
-            supportInfo: [
-              'The website link to this course site',
-              'The rosters you would like to add (e.g. BIOLOGY 1A LEC 001)'
-            ]
-          };
-          break;
-        }
-      }
-    };
 
     /*
      * Return array of CCNs for sections present in the course site
@@ -94,87 +20,275 @@
     };
 
     /*
-     * Returns array of SIS Section IDs for sections selected in 'Course Sections' tab
+      Initializes application upon loading
      */
-    var currentSectionsSelectedSisIds = function() {
-      var selectedSisIds = [];
-      angular.forEach($scope.currentSectionsSelected(), function(section) {
-        selectedSisIds.push(section.sis_section_id);
-      });
-      return selectedSisIds;
-    };
-
-    /*
-     * Returns array of CCNs for sections selected in 'Available to Add' tab
-     */
-    var selectedSectionCcns = function() {
-      var selectedCcns = [];
-      angular.forEach($scope.selectedSections($scope.currentCourses), function(section) {
-        selectedCcns.push(section.ccn);
-      });
-      return selectedCcns;
+    var initState = function() {
+      $scope.accessDeniedError = 'This feature is currently only available to course administrators with course sections scheduled in the current or upcoming terms.';
+      $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
+      $scope.currentWorkflowStep = 'selecting';
+      $scope.jobStatus = null;
+      $scope.jobStatusMessage = '';
     };
 
     /*
      * Refreshes data displayed in 'selecting' workflow step
      */
     var refreshFromFeed = function(feedData) {
-      delete $scope.percentCompleteRounded;
+      // delete $scope.percentCompleteRounded;
       if (feedData.canvas_course) {
         $scope.canvasCourse = feedData.canvas_course;
       }
       if (feedData.teachingSemesters) {
-        setCurrentCourses(feedData.teachingSemesters);
+        loadCourseLists(feedData.teachingSemesters);
       }
       $scope.isAdmin = feedData.is_admin;
       $scope.adminActingAs = feedData.admin_acting_as;
       $scope.adminSemesters = feedData.admin_semesters;
-      $scope.classCount = feedData.classCount;
-      $scope.isCourseCreator = $scope.isAdmin || $scope.classCount > 0;
+      $scope.isCourseCreator = $scope.usersClassCount > 0;
       $scope.feedFetched = true;
-      $scope.currentWorkflowStep = 'selecting';
+      $scope.currentWorkflowStep = 'preview';
     };
 
     /*
      * Prepare data structure for currently available courses/sections
      */
-    var setCurrentCourses = function(teachingSemesters) {
-      var courseSemester = false;
+    var loadCourseLists = function(teachingSemesters) {
+      $scope.courseSemester = false;
       var currentSectionCcns = currentCcns();
 
       // identify semester matching current course site
       angular.forEach(teachingSemesters, function(semester) {
         if ((semester.termYear === $scope.canvasCourse.term.term_yr) && (semester.termCode === $scope.canvasCourse.term.term_cd)) {
-          courseSemester = semester;
+          $scope.courseSemester = semester;
         }
       });
 
-      // remove sections (ccns) already in existing course site
-      if (courseSemester) {
-        angular.forEach(courseSemester.classes, function(classItem, classIndex) {
-          var availableSections = [];
-          angular.forEach(classItem.sections, function(section) {
-            if (currentSectionCcns.indexOf(section.ccn) === -1) {
-              availableSections.push(section);
-            }
-          });
-          courseSemester.classes[classIndex].sections = availableSections;
+      if ($scope.courseSemester) {
+        // count classes only in course semester to determine authorization to use this tool
+        $scope.usersClassCount = $scope.courseSemester.classes.length;
 
-          // reset hasSites setting if all site sections gone
-          var hasSites = false;
-          angular.forEach(availableSections, function(section) {
-            if (section.sites && section.sites.length > 0) {
-              hasSites = true;
+        // generate list of existing course sections for preview table
+        // and flattened array of all sections for current sections staging table
+        $scope.existingCourseSections = [];
+        $scope.allSections = [];
+        angular.forEach($scope.courseSemester.classes, function(classItem) {
+          angular.forEach(classItem.sections, function(section) {
+            section.parentClass = classItem;
+            $scope.allSections.push(section);
+            section.stagedState = null;
+            if (currentSectionCcns.indexOf(section.ccn) !== -1) {
+              $scope.existingCourseSections.push(section);
             }
           });
-          courseSemester.classes[classIndex].hasSites = hasSites;
         });
-        $scope.currentCourses = courseSemester.classes;
       } else {
-        $scope.currentCourses = false;
+        $scope.usersClassCount = 0;
       }
     };
 
+    /*
+     * Updates status of background job in $scope.
+     * Halts jobStatusLoader loop if job no longer in progress.
+     */
+    var statusProcessor = function(data) {
+      angular.extend($scope, data);
+      $scope.percentCompleteRounded = Math.round($scope.percent_complete * 100);
+      if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
+        jobStatusLoader();
+      } else {
+        delete $scope.percentCompleteRounded;
+        $timeout.cancel(timeoutPromise);
+        $scope.lastJobStatus = angular.copy($scope.jobStatus);
+        $scope.jobStatusMessage = 'An error has occurred with your request. Please try again or contact bCourses support.'
+        if ($scope.lastJobStatus === 'Completed') {
+          $scope.jobStatusMessage = 'Your request was completed successfully.';
+        }
+        $scope.fetchFeed();
+      }
+    };
+
+    /*
+     * Performs background job status request every 2000 miliseconds
+     * with result processed by statusProcessor.
+     */
+    var timeoutPromise;
+    var jobStatusLoader = function() {
+      timeoutPromise = $timeout(function() {
+        return canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id)
+          .success(statusProcessor).error(function() {
+            $scope.displayError = 'failure';
+          });
+      }, 2000);
+    };
+
+    /*
+     * Saves background job ID to scope and begins background job monitoring loop
+     */
+    var sectionUpdateJobCreated = function(data) {
+      angular.extend($scope, data);
+      $scope.currentWorkflowStep = 'processing';
+      jobStatusLoader();
+    };
+
+    /*
+     * Returns staged sections for addition and deletion
+     */
+    var stagedSections = function() {
+      var sections = {addSections:[], deleteSections:[]}
+      if ($scope.courseSemester) {
+        angular.forEach($scope.courseSemester.classes, function(classItem) {
+          angular.forEach(classItem.sections, function(section) {
+            if (section.stagedState === 'add') {
+              sections.addSections.push(section.ccn);
+            }
+            if (section.stagedState === 'delete') {
+              sections.deleteSections.push(section.ccn);
+            }
+          });
+        });
+      }
+      return sections;
+    };
+
+    /*
+     * Switches workflow context
+     */
+    $scope.changeWorkflowStep = function(step) {
+      $scope.currentWorkflowStep = step;
+    };
+
+    /*
+     * Marks all sections in course as added
+     */
+    $scope.addAllSections = function(course) {
+      angular.forEach(course.sections, function(section) {
+        // if already in course simply unstage
+        if (section.isCourseSection) {
+          section.stagedState = null;
+        // if not already in course, then add
+        } else {
+          section.stagedState = 'add';
+        }
+      });
+    };
+
+    /*
+     * Provides a count of the sections staged for addition
+     * or deletion. Used to disable the 'Save Changes' button.
+     */
+    $scope.totalStagedCount = function() {
+      var stagedCount = 0;
+      angular.forEach($scope.allSections, function(section) {
+        if (section.stagedState !== null) {
+          stagedCount++;
+        }
+      });
+      return stagedCount;
+    };
+
+    /*
+     * Provides a count of the sections that should be displayed as
+     * either in the course site (not staged for deletion), or
+     * staged for addition to the course site.
+     */
+    $scope.currentStagedCount = function() {
+      var stagedCount = 0;
+      angular.forEach($scope.allSections, function(section) {
+        // if in course site and not staged for deletion
+        if (section.isCourseSection && section.stagedState === null) {
+          stagedCount++;
+        }
+        // if not in course site yet staged for addition
+        if (!section.isCourseSection && section.stagedState === 'add') {
+          stagedCount++;
+        }
+      });
+      return stagedCount;
+    };
+
+    /*
+     * Indicates if all sections in a course are staged for addition
+     */
+    $scope.allSectionsAdded = function(course) {
+      var allAdded = true;
+      angular.forEach(course.sections, function(section) {
+        if ((!section.isCourseSection && section.stagedState !== 'add') || (section.isCourseSection && section.stagedState === 'delete')) {
+          allAdded = false;
+        }
+      });
+      return allAdded;
+    };
+
+    /*
+     * Removes any staged status ('add' or 'delete') from section
+     */
+    $scope.unstage = function(section) {
+      // expand collapsed course if unstaging a section staged for addition
+      if (section.stagedState === 'add') {
+        expandParentClass(section);
+      }
+      section.stagedState = null;
+    };
+
+    /*
+     * Expands the display of the course
+     */
+    var expandParentClass = function(section) {
+      section.parentClass.collapsed = false;
+    };
+
+    /*
+     * Provides formatted section string for display
+     */
+    var sectionString = function(section) {
+      section.courseCode + ' ' + section.section_label + ' (CCN: ' + section.ccn + ')';
+    };
+
+    /*
+     * Stages section for deletion. Performs error checking to avoid buggy requests to back-end.
+     */
+    $scope.stageDelete = function(section) {
+      if (section.isCourseSection) {
+        // expand collapsed course if staging a section for deletion
+        if (section.stagedState === null) {
+          expandParentClass(section);
+        }
+        section.stagedState = 'delete';
+      } else {
+        $scope.displayError = 'invalidAction';
+        $scope.invalidActionError = 'Unable to delete CCN ' + sectionString(section) + ', as it already exists within the course site.';
+      }
+    };
+
+    /*
+     * Stages section for addition. Performs error checking to avoid buggy requests to back-end.
+     */
+    $scope.stageAdd = function(section) {
+      if (!section.isCourseSection) {
+        section.stagedState = 'add';
+      } else {
+        $scope.displayError = 'invalidAction';
+        $scope.invalidActionError = 'Unable to add ' + sectionString(section) + ', as it already exists within the course site.';
+      }
+    };
+
+    /*
+     * Returns true if no sections in a state for display in the current sections staging area
+     */
+    $scope.noCurrentSections = function() {
+      var sectionsShown = false;
+      angular.forEach($scope.allSections, function(section) {
+        if ((section.isCourseSection && section.stagedState !== 'delete') || (!section.isCourseSection && section.stagedState === 'add')) {
+          sectionsShown = true;
+        }
+      });
+      return !sectionsShown;
+    };
+
+    /*
+     * Obtains data feed containing courses associated with current user,
+     * in addition to data on the current course site.
+     */
     $scope.fetchFeed = function() {
       $scope.isLoading = true;
       var feedRequestOptions = {
@@ -187,91 +301,39 @@
       canvasCourseProvisionFactory.getSections(feedRequestOptions).then(function(sectionsFeed) {
         if (sectionsFeed.status !== 200) {
           $scope.isLoading = false;
-          $scope.feedFetchError = true;
+          $scope.displayError = 'failure';
         } else {
           if (sectionsFeed.data) {
             refreshFromFeed(sectionsFeed.data);
             apiService.util.iframeUpdateHeight();
+            if (!$scope.isCourseCreator) {
+              $scope.displayError = 'unauthorized';
+            }
           } else {
-            $scope.feedFetchError = true;
-            $scope.feedFetched = true;
+            $scope.displayError = 'failure';
           }
         }
       });
     };
 
-    $scope.currentSectionsSelected = function() {
-      var selectedSections = [];
-      if ($scope.canvasCourse && $scope.canvasCourse.officialSections) {
-        angular.forEach($scope.canvasCourse.officialSections, function(section) {
-          if (section.selected) {
-            selectedSections.push(section);
-          }
-        });
-      }
-      return selectedSections;
-    };
-
-    $scope.removeSections = function() {
-      setErrorText('sectionRemoval');
-      $scope.jobStatus = 'New';
-      $scope.currentWorkflowStep = 'monitoringRemovalJob';
-      canvasCourseProvisionFactory.removeSections(currentSectionsSelectedSisIds(), $scope.canvasCourse.canvasCourseId)
-        .success(monitorJob)
+    /*
+     * Sends request to back-end with CCNs of sections being added and/or deleted.
+     */
+    $scope.saveChanges = function() {
+      var canvasCourseId = $scope.canvasCourse.canvasCourseId;
+      $scope.changeWorkflowStep('processing');
+      var update = stagedSections();
+      canvasCourseProvisionFactory.updateSections(canvasCourseId, update.addSections, update.deleteSections)
+        .success(sectionUpdateJobCreated)
         .error(function() {
           angular.extend($scope, {
             percentCompleteRounded: 0,
-            currentWorkflowStep: 'selecting',
-            jobStatus: 'sectionRemovalError',
-            error: 'Failed to create section removal job.'
+            currentWorkflowStep: 'processing',
+            jobStatus: 'courseCreationError',
+            error: 'Failed to create course provisioning job.'
           });
         });
     };
-
-    $scope.addSections = function() {
-      setErrorText('sectionAddition');
-      $scope.jobStatus = 'New';
-      $scope.currentWorkflowStep = 'monitoringAdditionJob';
-      var newSections = {
-        canvasCourseId: $scope.canvasCourse.canvasCourseId,
-        termCode: $scope.canvasCourse.term.term_cd,
-        termYear: $scope.canvasCourse.term.term_yr,
-        ccns: selectedSectionCcns()
-      };
-      canvasCourseProvisionFactory.addSections(newSections)
-        .success(monitorJob)
-        .error(function() {
-          angular.extend($scope, {
-            percentCompleteRounded: 0,
-            currentWorkflowStep: 'selecting',
-            jobStatus: 'sectionAdditionError',
-            error: 'Failed to create section addition job.'
-          });
-        });
-    };
-
-    $scope.showDeleteConfirmation = function() {
-      $scope.currentWorkflowStep = 'deleteConfirmation';
-      apiService.util.iframeScrollToTop();
-    };
-
-    $scope.showAddConfirmation = function() {
-      $scope.currentWorkflowStep = 'addConfirmation';
-      apiService.util.iframeScrollToTop();
-    };
-
-    $scope.showSelecting = function() {
-      $scope.currentWorkflowStep = 'selecting';
-    };
-
-    $scope.showTab = function(requestedTabName) {
-      angular.forEach($scope.tabs, function(tabStatus, tabName) {
-        $scope.tabs[tabName] = (tabName === requestedTabName);
-      });
-    };
-
-    $scope.selectedSections = canvasSiteCreationService.selectedSections;
-    $scope.toggleCheckboxes = canvasSiteCreationService.toggleCheckboxes;
 
     // Wait until user profile is fully loaded before fetching section feed
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
