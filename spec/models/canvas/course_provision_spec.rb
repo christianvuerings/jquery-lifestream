@@ -5,7 +5,7 @@ describe Canvas::CourseProvision do
   let(:user_id) { rand(99999).to_s }
   let(:canvas_admin_id) { rand(99999).to_s }
   let(:canvas_course_id) { rand(999999).to_s }
-  let(:course_hash) { {'name' => 'JAVA for Minecraft Development', 'course_code' => 'COMPSCI 15B - SLF 001', 'term' => {'sis_term_id' => 'TERM:2014-D', 'name' => 'Fall 2014'}} }
+  let(:course_hash) { {'name' => 'JAVA for Minecraft Development', 'course_code' => 'COMPSCI 15B - SLF 001', 'term' => {'sis_term_id' => 'TERM:2013-D', 'name' => 'Fall 201'}} }
   let(:official_sections) { [{:term_yr=>'2013', :term_cd=>'C', :ccn=>'7309'}] }
   let(:superuser_id) { rand(99999).to_s }
   let(:teaching_semesters) {
@@ -85,6 +85,7 @@ describe Canvas::CourseProvision do
       before do
         allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
         allow_any_instance_of(Canvas::Course).to receive(:course).and_return(course_hash)
+        allow(subject).to receive(:group_by_used!) {|feed| feed}
       end
       subject { Canvas::CourseProvision.new(uid, canvas_course_id: canvas_course_id) }
       context 'when an instructor' do
@@ -98,6 +99,13 @@ describe Canvas::CourseProvision do
           expect(feed[:admin_semesters]).to be_nil
           expect(feed[:canvas_course]).to be_an_instance_of Hash
           expect(feed[:canvas_course][:officialSections]).to eq official_sections
+        end
+        it 'should use group_by_used! to sort feed with associated courses listed first' do
+          expect(subject).to receive(:group_by_used!) {|feed| feed}
+          feed = subject.get_feed
+          expect(feed[:is_admin]).to eq false
+          expect(feed[:admin_acting_as]).to be_nil
+          expect(feed[:teachingSemesters]).to eq teaching_semesters
         end
       end
     end
@@ -318,7 +326,7 @@ describe Canvas::CourseProvision do
         expect(result).to be_an_instance_of Hash
         expect(result[:term]).to be_an_instance_of Hash
         expect(result[:term][:name]).to eq course_hash['term']['name']
-        expect(result[:term][:term_yr]).to eq '2014'
+        expect(result[:term][:term_yr]).to eq '2013'
         expect(result[:term][:term_cd]).to eq 'D'
       end
 
@@ -328,6 +336,87 @@ describe Canvas::CourseProvision do
         expect(result).to be_an_instance_of Hash
         expect(result[:officialSections]).to eq official_sections
       end
+    end
+  end
+
+  describe '#group_by_used' do
+    # define courses with CCNs in each range
+    [
+      [:course_1, (25860..25863), 'Course One'],
+      [:course_2, (14930..14933), 'Course Two'],
+      [:course_3, (23720..23724), 'Course Three'],
+      [:course_4, (12420..12422), 'Course Four'],
+    ].each do |course_def|
+      let(course_def[0]) do
+        course = {:title => course_def[2], :sections => []}
+        course_def[1].each do |ccn|
+          course[:sections] << {:ccn => ccn.to_s}
+        end
+        course
+      end
+    end
+    let(:teachingSemesters) do
+      [
+        {
+          :name => 'Spring 2015',
+          :slug => 'spring-2015',
+          :termCode => 'B',
+          :termYear => '2015',
+          :timeBucket => 'current',
+          :gradingInProgress => nil,
+          :classes => [course_1, course_2, course_3],
+        },
+        {
+          :name => 'Summer 2015',
+          :slug => 'summer-2015',
+          :termCode => 'C',
+          :termYear => '2015',
+          :timeBucket => 'future',
+          :gradingInProgress => nil,
+          :classes => [course_4],
+        }
+      ]
+    end
+    let(:feed) do
+      {
+        :teachingSemesters => teachingSemesters,
+        :canvas_course => {
+          :term => {:term_yr => '2015', :term_cd => 'B', :name => "Spring 2015"},
+          :officialSections => [
+            {:term_yr=>"2015", :term_cd=>"B", :ccn=>"14932"},
+            {:term_yr=>"2015", :term_cd=>"B", :ccn=>"23722"},
+            {:term_yr=>"2015", :term_cd=>"B", :ccn=>"23723"},
+          ]
+        }
+      }
+    end
+    subject { Canvas::CourseProvision.new(user_id, canvas_course_id: canvas_course_id) }
+
+    it 'sorts courses with those associated with course site provided first' do
+      result = subject.group_by_used!(feed)
+      expect(result).to be_an_instance_of Hash
+      expect(result[:teachingSemesters]).to be_an_instance_of Array
+      expect(result[:teachingSemesters][0]).to be_an_instance_of Hash
+      expect(result[:teachingSemesters][1]).to be_an_instance_of Hash
+      expect(result[:teachingSemesters][0][:classes]).to be_an_instance_of Array
+      expect(result[:teachingSemesters][1][:classes]).to be_an_instance_of Array
+      expect(result[:teachingSemesters][0][:classes][0]).to be_an_instance_of Hash
+      expect(result[:teachingSemesters][0][:classes][1]).to be_an_instance_of Hash
+      expect(result[:teachingSemesters][0][:classes][2]).to be_an_instance_of Hash
+      expect(result[:teachingSemesters][1][:classes][0]).to be_an_instance_of Hash
+      expect(result[:teachingSemesters][0][:classes][0][:hasOfficialSections]).to eq true
+      expect(result[:teachingSemesters][0][:classes][1][:hasOfficialSections]).to eq true
+      expect(result[:teachingSemesters][0][:classes][2][:hasOfficialSections]).to eq false
+      expect(result[:teachingSemesters][0][:classes][0][:title]).to eq 'Course Two'
+      expect(result[:teachingSemesters][0][:classes][1][:title]).to eq 'Course Three'
+      expect(result[:teachingSemesters][0][:classes][2][:title]).to eq 'Course One'
+      expect(result[:teachingSemesters][1][:classes][0][:title]).to eq 'Course Four'
+      expect(result[:teachingSemesters][1][:classes][0][:hasOfficialSections]).to eq false
+    end
+
+    it 'should raise exception if official course section in feed does not match course term' do
+      feed[:canvas_course][:officialSections][1][:term_cd] = 'C'
+      expect { result = subject.group_by_used!(feed) }.to raise_error(RuntimeError, "Invalid term specified for official section with CCN '23722'")
     end
   end
 

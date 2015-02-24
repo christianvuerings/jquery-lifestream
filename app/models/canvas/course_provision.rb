@@ -24,7 +24,10 @@ module Canvas
           get_feed_internal
         end
       end
-      feed.merge!({:canvas_course => get_course_info}) if @canvas_course_id.present?
+      if @canvas_course_id.present?
+        feed.merge!({:canvas_course => get_course_info})
+        group_by_used!(feed)
+      end
       feed
     end
 
@@ -120,6 +123,52 @@ module Canvas
 
     def working_uid
       @admin_acting_as || @uid
+    end
+
+    # moves courses with used sections to top of course list
+    def group_by_used!(feed)
+      # prepare details of existing course site
+      course_term_year = feed[:canvas_course][:term][:term_yr]
+      course_term_code = feed[:canvas_course][:term][:term_cd]
+      course_ccns = []
+      feed[:canvas_course][:officialSections].each do |official_section|
+        section_term_match = (official_section[:term_cd] == course_term_code) && (official_section[:term_yr] == course_term_year)
+        raise RuntimeError, "Invalid term specified for official section with CCN '#{official_section[:ccn]}'" unless section_term_match
+        course_ccns << official_section[:ccn]
+      end
+
+      associatedCourses = []
+      unassociatedCourses = []
+
+      feed[:teachingSemesters].each do |semester|
+        semester_match = (semester[:termCode] == course_term_code) && (semester[:termYear] == course_term_year)
+        if semester_match
+          semester[:classes].each do |course|
+            # either iterate and count the matches
+            # or loop through and return the matches, then count that
+            course[:hasOfficialSections] = false
+            course[:sections].each do |section|
+              if course_ccns.include?(section[:ccn])
+                course[:hasOfficialSections] = true
+                section[:isOfficial] = true
+              else
+                section[:isOfficial] = false
+              end
+            end
+            if course[:hasOfficialSections]
+              associatedCourses << course
+            else
+              unassociatedCourses << course
+            end
+          end
+          semester[:classes] = associatedCourses + unassociatedCourses
+        else
+          semester[:classes].each do |course|
+            course[:hasOfficialSections] = false
+          end
+        end
+      end
+      feed
     end
 
   end
