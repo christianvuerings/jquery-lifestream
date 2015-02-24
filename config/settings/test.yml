@@ -7,6 +7,7 @@ application:
   layer: "test"
 canvas_proxy:
   fake: true
+  app_provider_host: 'https://cc-dev.example.com'
 ldap:
   host: 'nds-test.berkeley.edu'
 google_proxy:

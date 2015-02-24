@@ -2,14 +2,22 @@ require "spec_helper"
 
 describe Canvas::ExternalTools do
 
-  it "should use root canvas account by default" do
-    account_id = subject.instance_eval { @canvas_account_id }
-    expect(account_id).to eq Settings.canvas_proxy.account_id
-  end
-
-  it "supports alternative canvas account id" do
-    account_id = Canvas::ExternalTools.new(:canvas_account_id => '1234').instance_eval { @canvas_account_id }
-    expect(account_id).to eq '1234'
+  describe 'api_root' do
+    subject { Canvas::ExternalTools.new(options).instance_eval { @api_root } }
+    context 'default' do
+      let(:options) { {} }
+      it 'uses the root Canvas canvas account' do
+        is_expected.to eq "accounts/#{Settings.canvas_proxy.account_id}"
+      end
+    end
+    context 'specifying an account' do
+      let(:options) { {canvas_account_id: '123456'} }
+      it { is_expected.to eq 'accounts/123456' }
+    end
+    context 'specifying a course site' do
+      let(:options) { {canvas_course_id: '98765'} }
+      it { is_expected.to eq 'courses/98765' }
+    end
   end
 
   it "should return external tools list" do

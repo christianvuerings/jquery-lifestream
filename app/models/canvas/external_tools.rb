@@ -30,7 +30,12 @@ module Canvas
       super(options)
       default_options = {canvas_account_id: @settings.account_id }
       options.reverse_merge!(default_options)
-      @canvas_account_id = options[:canvas_account_id]
+
+      if (canvas_course_id = options[:canvas_course_id])
+        @api_root = "courses/#{canvas_course_id}"
+      else
+        @api_root = "accounts/#{options[:canvas_account_id]}"
+      end
 
       if (canvas_url_root = options[:url_root])
         @settings.url_root = canvas_url_root
@@ -43,7 +48,7 @@ module Canvas
       params = 'per_page=100'
       while params do
         response = request_uncached(
-          "accounts/#{@canvas_account_id}/external_tools?#{params}",
+          "#{@api_root}/external_tools?#{params}",
           "_external_tools"
         )
         break unless (response && response.status == 200 && list = safe_json(response.body))
@@ -53,11 +58,53 @@ module Canvas
       all_tools
     end
 
-    def reset_external_tool(tool_id, config_url)
-      canvas_url = "accounts/#{@canvas_account_id}/external_tools/#{tool_id}?config_type=by_url&config_url=#{config_url}"
+    def reset_external_tool_config_by_url(tool_id, config_url)
+      canvas_url = "#{@api_root}/external_tools/#{tool_id}?config_type=by_url&config_url=#{config_url}"
       request_uncached(canvas_url, '_reset_external_tool', {
         method: :put
       })
+    end
+
+    def create_external_tool_by_xml(tool_name, xml_string)
+      parameters = {
+          'name' => tool_name,
+          'config_type' => 'by_xml',
+          'config_xml' => xml_string,
+          'consumer_key' => Settings.canvas_proxy.lti_key,
+          'shared_secret' => Settings.canvas_proxy.lti_secret
+        }
+      canvas_url = "#{@api_root}/external_tools"
+      response = request_uncached(canvas_url, '_create_external_tool', {
+          method: :post,
+          body: parameters
+        })
+      response ? safe_json(response.body) : nil
+    end
+
+    def reset_external_tool_by_xml(tool_id, xml_string)
+      parameters = {
+          'config_type' => 'by_xml',
+          'config_xml' => xml_string,
+          'consumer_key' => Settings.canvas_proxy.lti_key,
+          'shared_secret' => Settings.canvas_proxy.lti_secret
+        }
+      canvas_url = "#{@api_root}/external_tools/#{tool_id}"
+      response = request_uncached(canvas_url, '_reset_external_tool_by_xml', {
+          method: :put,
+          body: parameters
+        })
+      response ? safe_json(response.body) : nil
+    end
+
+    # A simple pass-through utility method for one-off tests and fixes of
+    # LTI app configurations.
+    def modify_external_tool(tool_id, parameters)
+      canvas_url = "#{@api_root}/external_tools/#{tool_id}"
+      response = request_uncached(canvas_url, '_modify_external_tool', {
+          method: :put,
+          body: parameters
+        })
+      response ? safe_json(response.body) : nil
     end
 
   end

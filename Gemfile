@@ -55,6 +55,8 @@ gem 'ims-lti', :git => 'https://github.com/instructure/ims-lti.git'
 
 # for VCR http recording tool
 gem 'vcr', '~> 2.9.3'
+# Replace with this line for a new recording, if you truly must make a new recording.
+# gem 'vcr', :git => 'https://github.com/vcr/vcr.git'
 
 # for memcached connection
 gem 'dalli', '~> 2.7.2'

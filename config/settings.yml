@@ -62,12 +62,11 @@ oauth2:
 # Set "fake: true" for any inaccessible ones
 canvas_proxy:
   admin_access_token: "someMumboJumbo"
+  # URL for Canvas server
   url_root: "http://localhost:12345"
   fake: false
   account_id: '90242'
   official_courses_account_id: '129410'
-  lti_sub_accounts:
-    - '129410'
   projects_account_id: '129407'
   projects_term_id: '5494'
   projects_owner_role_id: '1766'
@@ -83,6 +82,8 @@ canvas_proxy:
   dry_run_import: <%= ENV['CANVAS_DRY_RUN_IMPORT'] || '' %>
   # Set to false to disable synchronization of obfuscated names in Dev/QA.
   maintain_user_names: true
+  # URL for scripts to point to CalCentral/Junction
+  app_provider_host: 'http://localhost:3000'
 ldap:
   host: 'nds.berkeley.edu'
   port: 636

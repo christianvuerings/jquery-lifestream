@@ -1,0 +1,147 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "put",
+        "uri": "https://ucberkeley.beta.instructure.com/api/v1/courses/767330/external_tools/40786",
+        "body": {
+          "encoding": "UTF-8",
+          "string": "course_navigation[text]=NoRosterNoPhoto"
+        },
+        "headers": {
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "max-age=0, private, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Fri, 13 Feb 2015 00:20:43 GMT"
+          ],
+          "etag": [
+            "\"460c6e43361295118c0eb3a67bbd5a02\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "_csrf_token=zzz; path=/; secure, canvas_session=zzz; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "a=90242;"
+          ],
+          "x-canvas-user-id": [
+            "190000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-rack-cache": [
+            "invalidate, pass"
+          ],
+          "x-request-context-id": [
+            "126cf5b0-9544-0132-7dbe-02f8856d54b5"
+          ],
+          "x-runtime": [
+            "0.319906"
+          ],
+          "x-session-id": [
+            "3281991c9e5cf1d4575898ea132fd1cb"
+          ],
+          "x-ua-compatible": [
+            "IE=Edge,chrome=1"
+          ],
+          "transfer-encoding": [
+            "chunked"
+          ],
+          "connection": [
+            "keep-alive"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "x-sakai-token": [
+
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "consumer_key": "someMumboJumbo",
+            "created_at": "2015-02-10T20:15:03Z",
+            "description": "Browse and search official roster photos",
+            "domain": null,
+            "id": 40782,
+            "name": "Course-site test roster",
+            "updated_at": "2015-02-10T20:16:56Z",
+            "url": "https://cc-dev.example.com/canvas/embedded/rosters",
+            "privacy_level": "public",
+            "custom_fields": {
+
+            },
+            "workflow_state": "public",
+            "vendor_help_link": null,
+            "user_navigation": null,
+            "course_navigation": {
+              "text": "NoRosterNoPhoto",
+              "label": "NoRosterNoPhoto",
+              "selection_width": 800,
+              "selection_height": 400,
+              "icon_url": ""
+            },
+            "account_navigation": null,
+            "resource_selection": null,
+            "editor_button": null,
+            "homework_submission": null,
+            "migration_selection": null,
+            "course_home_sub_navigation": null,
+            "course_settings_sub_navigation": null,
+            "global_navigation": null,
+            "assignment_menu": null,
+            "file_menu": null,
+            "discussion_topic_menu": null,
+            "module_menu": null,
+            "quiz_menu": null,
+            "wiki_page_menu": null,
+            "tool_configuration": null,
+            "icon_url": "",
+            "not_selectable": false
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Fri, 13 Feb 2015 00:20:43 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.9.3"
+}

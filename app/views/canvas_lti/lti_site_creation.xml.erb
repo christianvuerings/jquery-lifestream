@@ -11,12 +11,12 @@
   <blti:title>Create a Site</blti:title>
   <blti:description>Provides access to Course and Project site creation</blti:description>
   <blti:icon>NO ICO</blti:icon>
-  <blti:launch_url><%= launch_url('site_creation') %></blti:launch_url>
+  <blti:launch_url><%= @launch_url_for_app %></blti:launch_url>
   <blti:extensions platform="canvas.instructure.com">
     <lticm:property name="tool_id">calcentral_site_create_user_navigation</lticm:property>
     <lticm:property name="privacy_level">public</lticm:property>
     <lticm:options name="user_navigation">
-      <lticm:property name="url"><%= launch_url('site_creation') %></lticm:property>
+      <lticm:property name="url"><%= @launch_url_for_app %></lticm:property>
       <lticm:property name="text">Create a Site</lticm:property>
       <lticm:property name="enabled">true</lticm:property>
     </lticm:options>
