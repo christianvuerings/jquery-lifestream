@@ -54,7 +54,7 @@ module Berkeley
 
     # Most final grades should appear on the transcript by this date.
     def grades_entered
-      @end.advance(weeks: 3, days: 2)
+      @end.advance(weeks: 4)
     end
   end
 end

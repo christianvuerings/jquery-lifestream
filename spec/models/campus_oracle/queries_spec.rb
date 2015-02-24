@@ -98,6 +98,13 @@ describe CampusOracle::Queries do
     transcripts.should_not be_nil
     if CampusOracle::Queries.test_data?
       sections.length.should == 9
+      sections.each do |s|
+        if s['primary_secondary_cd'] == 'P' && s['term_yr'] < '2014'
+          expect(s['grade']).to be_present
+        else
+          expect(s['grade']).to be_blank
+        end
+      end
       transcripts.length.should == 4
       expected_grades = {5 => 'B', 6 => 'C+'}
       expected_grades.keys.each do |idx|

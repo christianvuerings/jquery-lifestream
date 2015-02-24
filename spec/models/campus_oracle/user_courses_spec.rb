@@ -33,6 +33,7 @@ describe CampusOracle::UserCourses do
           section[:instruction_format].blank?.should be_falsey
           section[:section_number].blank?.should be_falsey
           section[:is_primary_section].should be_truthy
+          section[:grade].should be_present
           section.should be_has_key(:cred_cd)
           section[:pnp_flag].should eq 'N '
           section[:unit].should eq 3
@@ -40,6 +41,10 @@ describe CampusOracle::UserCourses do
           section[:instructors][0][:name].present?.should be_truthy
           section[:schedules][0][:schedule].should == "TuTh 2:00P-3:30P"
           section[:schedules][0][:buildingName].should == "WHEELER"
+        end
+        if section[:ccn] == '7366'
+          section[:is_primary_section].should be_falsey
+          section[:grade].should be_nil
         end
       end
     end
@@ -138,7 +143,8 @@ describe CampusOracle::UserCourses do
             'pnp_flag' => 'Y ',
             'unit' => '3',
             'section_num' => '012',
-            'wait_list_seq_num' => BigDecimal.new(0)
+            'wait_list_seq_num' => BigDecimal.new(0),
+            'grade' => '  '
           }),
           base_enrollment.merge({
             'course_cntl_num' => '76392',
@@ -146,7 +152,8 @@ describe CampusOracle::UserCourses do
             'pnp_flag' => 'N ',
             'unit' => '2',
             'section_num' => '021',
-            'wait_list_seq_num' => BigDecimal.new(2)
+            'wait_list_seq_num' => BigDecimal.new(2),
+            'grade' => 'B '
           })
         ]
       }
@@ -179,6 +186,11 @@ describe CampusOracle::UserCourses do
           expect(section[:unit]).to eq enrollment['unit']
           expect(section[:waitlistPosition]).to eq enrollment['wait_list_seq_num'] if enrollment['enroll_status'] == 'W'
         end
+      end
+      it 'includes only non-blank grades' do
+        course = subject.first
+        expect(course[:sections][0]).not_to include(:grade)
+        expect(course[:sections][1][:grade]).to eq 'B'
       end
     end
   end

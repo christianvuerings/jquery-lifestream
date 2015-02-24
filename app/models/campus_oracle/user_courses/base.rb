@@ -171,11 +171,12 @@ module CampusOracle
           section_data[:cred_cd] = row['cred_cd']
           section_data[:cross_listed_flag] = row['cross_listed_flag']
         end
-        # This only applies to enrollment records and will be skipped for instructors.
+        # enroll_status and grade only apply to enrollment records and will be skipped for instructors.
         if row['enroll_status'] == 'W'
           section_data[:waitlistPosition] = row['wait_list_seq_num'].to_i
           section_data[:enroll_limit] = row['enroll_limit'].to_i
         end
+        section_data[:grade] = row['grade'].strip if row['grade'].present?
         section_data
       end
 

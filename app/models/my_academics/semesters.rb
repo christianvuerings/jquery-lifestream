@@ -24,7 +24,11 @@ module MyAcademics
               section[:units] = section[:unit]
             end
           end
-          class_item[:transcript] = find_transcript_data(transcripts, term_yr, term_cd, course[:dept], course[:catid])
+          if semester[:timeBucket] == 'current' || semester[:gradingInProgress]
+            class_item[:transcript] = transcript_from_enrollment class_item
+          elsif semester[:timeBucket] == 'past'
+            class_item[:transcript] = find_transcript_data(transcripts, term_yr, term_cd, course[:dept], course[:catid])
+          end
           semester[:classes] << class_item
         end
         semesters << semester unless semester[:classes].empty?
@@ -51,5 +55,20 @@ module MyAcademics
         nil
       end
     end
+
+    def transcript_from_enrollment(class_item)
+      matching_sections = class_item[:sections].select { |s| s[:is_primary_section] && s[:grade] }
+      if matching_sections.present?
+        matching_sections.collect do |s|
+          {
+            units: s[:unit],
+            grade: s[:grade]
+          }
+        end
+      else
+        nil
+      end
+    end
+
   end
 end
