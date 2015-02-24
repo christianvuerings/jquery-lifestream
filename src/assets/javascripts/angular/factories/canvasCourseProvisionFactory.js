@@ -113,7 +113,7 @@
       if (!feedResponse.data && !feedResponse.data.teachingSemesters) {
         return feedResponse;
       }
-      feedResponse.data.classCount = classCount(feedResponse.data.teachingSemesters);
+      feedResponse.data.usersClassCount = classCount(feedResponse.data.teachingSemesters);
       fillCourseSites(feedResponse.data.teachingSemesters);
       return feedResponse;
     };

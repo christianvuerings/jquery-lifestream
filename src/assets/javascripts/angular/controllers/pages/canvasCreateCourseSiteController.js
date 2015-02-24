@@ -162,7 +162,7 @@
             if ($scope.adminMode === 'by_ccn' && $scope.admin_by_ccns) {
               selectAllSections();
             }
-            if (!($scope.is_admin || $scope.classCount > 0)) {
+            if (!($scope.is_admin || $scope.usersClassCount > 0)) {
               $scope.displayError = 'unauthorized';
             }
           }
