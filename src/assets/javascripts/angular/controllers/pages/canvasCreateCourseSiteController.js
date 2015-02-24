@@ -61,13 +61,13 @@
 
     var selectAllSections = function() {
       var newSelectedCourses = [];
-      angular.forEach($scope.currentCourses, function(course) {
+      angular.forEach($scope.coursesList, function(course) {
         angular.forEach(course.sections, function(section) {
           section.selected = true;
         });
         newSelectedCourses.push(course);
       });
-      $scope.currentCourses = newSelectedCourses;
+      $scope.coursesList = newSelectedCourses;
       $scope.updateSelected();
     };
 
@@ -189,7 +189,7 @@
     $scope.switchSemester = function(semester) {
       angular.extend($scope, {
         currentSemester: semester.slug,
-        currentCourses: semester.classes,
+        coursesList: semester.classes,
         selectedSectionsList: []
       });
       $scope.updateSelected();
@@ -211,7 +211,7 @@
     };
 
     $scope.updateSelected = function() {
-      $scope.selectedSectionsList = $scope.selectedSections($scope.currentCourses);
+      $scope.selectedSectionsList = $scope.selectedSections($scope.coursesList);
     };
 
     $scope.selectedSections = canvasSiteCreationService.selectedSections;
