@@ -85,7 +85,7 @@ describe Canvas::CourseProvision do
       before do
         allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
         allow_any_instance_of(Canvas::Course).to receive(:course).and_return(course_hash)
-        allow(subject).to receive(:group_by_used!).and_return(true)
+        allow(subject).to receive(:group_by_used!) {|feed| feed}
       end
       subject { Canvas::CourseProvision.new(uid, canvas_course_id: canvas_course_id) }
       context 'when an instructor' do
