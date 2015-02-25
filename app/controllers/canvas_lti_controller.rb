@@ -1,5 +1,6 @@
 class CanvasLtiController < ApplicationController
   include ClassLogger
+  include Canvas::ExternalAppConfigurations
 
   # Since LTI provider views are in an iframe, we need to skip the iframe buster.
   # Since the LTI session is initiated by a POST, to receive the request we also need to skip the CSRF check.
@@ -46,42 +47,50 @@ class CanvasLtiController < ApplicationController
   end
 
   # If no query parameters are present, returns a URL corresponding to the app server.
-  # If 'app_host' is specified, then the URL points to the app_host server.
+  # If 'app_host' is specified, then the URL points to the app_host server, which is assumed
+  # to be a shared server behind https.
   # Example: https://calcentral.berkeley.edu/canvas/lti_roster_photos.xml?app_host=sometestsystem.berkeley.edu
   def launch_url(app_name)
-    if params["app_host"]
-      "https://#{params['app_host']}/canvas/embedded/#{app_name}"
+    if (app_host = params["app_host"])
+      launch_url_for_host_and_code("https://#{app_host}", app_name)
     else
       url_for(only_path: false, action: 'embedded', url: app_name)
     end
   end
 
-  def lti_roster_photos
+  def lti_xml_configuration
+    xml_name = request.filtered_parameters['action']
+    app_name = xml_name_to_app_code(xml_name)
+    @launch_url_for_app = launch_url(app_name)
     respond_to :xml
+  end
+
+  def lti_roster_photos
+    lti_xml_configuration
   end
 
   def lti_site_creation
-    respond_to :xml
+    lti_xml_configuration
   end
 
   def lti_user_provision
-    respond_to :xml
+    lti_xml_configuration
   end
 
   def lti_course_add_user
-    respond_to :xml
+    lti_xml_configuration
   end
 
   def lti_course_mediacasts
-    respond_to :xml
+    lti_xml_configuration
   end
 
   def lti_course_grade_export
-    respond_to :xml
+    lti_xml_configuration
   end
 
   def lti_course_manage_official_sections
-    respond_to :xml
+    lti_xml_configuration
   end
 
 end

@@ -45,8 +45,8 @@ namespace :canvas do
     end
   end
 
-  desc 'Reconfigure Canvas external apps (CALCENTRAL_XML_HOST="https://cc.example.com" CANVAS_HOSTS_TO_CALCENTRALS="https://ucb.beta.example.com=cc-dev.example.com,https://ucb.test.example.com=cc-qa.example.com")'
-  task :reconfigure_external_apps => :environment do
+  desc 'Reconfigure Canvas external apps on other servers (CALCENTRAL_XML_HOST="https://cc.example.com" CANVAS_HOSTS_TO_CALCENTRALS="https://ucb.beta.example.com=cc-dev.example.com,https://ucb.test.example.com=cc-qa.example.com")'
+  task :reset_external_app_hosts_by_url => :environment do
     reachable_xml_host = ENV["CALCENTRAL_XML_HOST"]
     canvas_hosts_to_calcentrals_string = ENV["CANVAS_HOSTS_TO_CALCENTRALS"]
     if reachable_xml_host.blank?
@@ -58,9 +58,15 @@ namespace :canvas do
       canvas_hosts_to_calcentrals_string.split(/=|,/).each_slice(2) {|pair|
         canvas_hosts_to_calcentrals.push({host: pair[0], calcentral: pair[1]})
       }
-      Canvas::ReconfigureExternalApps.reconfigure_external_apps(reachable_xml_host, canvas_hosts_to_calcentrals)
+      Canvas::ReconfigureExternalApps.new.reset_external_app_hosts_by_url(reachable_xml_host, canvas_hosts_to_calcentrals)
       Rails.logger.info("Reconfigured external apps from #{reachable_xml_host} for #{canvas_hosts_to_calcentrals_string}")
     end
+  end
+
+  desc 'Configure all default Canvas external apps provided by the current server'
+  task :configure_all_apps_from_current_host => :environment do
+    results = Canvas::ReconfigureExternalApps.new.configure_all_apps_from_current_host
+    Rails.logger.info("Configured external apps: #{results}")
   end
 
   desc 'Repair Canvas Course SIS IDs (TERM_ID=x)'

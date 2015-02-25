@@ -34,4 +34,4 @@ echo "`date`: About to run the external LTI application reconfiguration script..
 
 cd deploy
 
-bundle exec rake canvas:reconfigure_external_apps | $LOGIT
+bundle exec rake canvas:reset_external_app_hosts_by_url | $LOGIT

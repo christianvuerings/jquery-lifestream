@@ -11,12 +11,12 @@
     <blti:title>bCourses User Provisioning</blti:title>
     <blti:description>Automated user provisioning</blti:description>
     <blti:icon>NO ICO</blti:icon>
-    <blti:launch_url><%= launch_url('user_provision') %></blti:launch_url>
+    <blti:launch_url><%= @launch_url_for_app %></blti:launch_url>
     <blti:extensions platform="canvas.instructure.com">
       <lticm:property name="tool_id">calcentral_user_provision</lticm:property>
       <lticm:property name="privacy_level">public</lticm:property>
       <lticm:options name="account_navigation">
-        <lticm:property name="url"><%= launch_url('user_provision') %></lticm:property>
+        <lticm:property name="url"><%= @launch_url_for_app %></lticm:property>
         <lticm:property name="text">User Provisioning</lticm:property>
         <lticm:property name="visibility">admins</lticm:property>
         <lticm:property name="default">enabled</lticm:property>
