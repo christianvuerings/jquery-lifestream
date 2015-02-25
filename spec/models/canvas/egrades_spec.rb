@@ -314,8 +314,9 @@ describe Canvas::Egrades do
 
   context "when providing official section terms existing within course" do
     let(:section_identifiers) {[
-      {:term_yr => '2014', :term_cd => 'C', :ccn => '1299'},
-      {:term_yr => '2014', :term_cd => 'D', :ccn => '1028'}
+      {:term_yr => '2014', :term_cd => 'C', :ccn => '1298', :name => 'LAW 2081 LEC 002'},
+      {:term_yr => '2014', :term_cd => 'C', :ccn => '1299', :name => 'LAW 2081 LEC 001'},
+      {:term_yr => '2014', :term_cd => 'D', :ccn => '1028', :name => 'LAW 2081 DIS 101'}
     ]}
     before { allow(subject).to receive(:official_section_identifiers).and_return(section_identifiers) }
     it "it returns array of term hashes" do

@@ -229,7 +229,6 @@
   /**
    * Adds E-Grades Export to Canvas Gradebook feature
    */
-  /* jshint ignore:start */
   var addEGradeExportOption = function() {
     // obtain course context id
     if (window.ENV && window.ENV.GRADEBOOK_OPTIONS && window.ENV.GRADEBOOK_OPTIONS.context_id) {
@@ -248,7 +247,7 @@
                 // form link to external tool
                 var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
                 // add 'Download E-Grades (.csv)' option to gradebook drop down menu
-                var $downloadScoresListItem = $('a#download_csv').parent();
+                var $gradebookDropDownList = $('ul.gradebook_drop_down');
                 var downloadEGradesItem = [
                   '<li class="ui-menu-item" role="presentation">',
                   '<a id="download_egrades" href="' + linkUrl + '" class="ui-corner-all" tabindex="-1" role="menuitem">',
@@ -256,7 +255,7 @@
                   '</a>',
                   '</li>'
                 ].join('');
-                $downloadScoresListItem.after(downloadEGradesItem);
+                $gradebookDropDownList.prepend(downloadEGradesItem);
               }
             });
           }
@@ -264,7 +263,6 @@
       }
     }
   };
-  /* jshint ignore:end */
 
   /**
    * Removes 'Create a Site' option from the User Settings navigation menu
@@ -319,11 +317,9 @@
   /**
    * Provides URL for Official Course API
    */
-  /* jshint ignore:start */
   var officialCourseUrl = function(courseId) {
     return calcentralRootUrl() + '/api/academics/canvas/egrade_export/is_official_course.json?canvas_course_id=' + courseId;
   };
-  /* jshint ignore:end */
 
   /**
    * bCourses customizations
@@ -341,8 +337,7 @@
 
     authorizeViewAddSiteButton();
     addPeopleInfoAlert();
-    // Temporarily disable E-Grades customization due to change in Canvas layout (CLC-4833).
-    // addEGradeExportOption();
+    addEGradeExportOption();
     addAltMediaPanel();
     removeCreateSiteUserNav();
   });
