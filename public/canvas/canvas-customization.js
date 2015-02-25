@@ -337,7 +337,7 @@
     $('#footer span#footer-links').replaceWith($bcoursesLinks);
 
     // allowfullscreen for webcast videos
-    $('#tool_content').attr('allowfullscreen','');
+    $('#tool_content').attr('allowfullscreen', '');
 
     authorizeViewAddSiteButton();
     addPeopleInfoAlert();

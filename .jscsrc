@@ -118,6 +118,7 @@
     "catch"
   ],
   "requireSpaceBeforeObjectValues": true,
+  "requireSpaceBetweenArguments": true,
   "requireSpacesInAnonymousFunctionExpression": {
     "beforeOpeningCurlyBrace": true
   },
