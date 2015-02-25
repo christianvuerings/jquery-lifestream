@@ -1,5 +1,6 @@
 module CampusOracle
   class UserAttributes < BaseProxy
+    include Berkeley::UserRoles
     include Cache::UserCacheExpiry
 
     def initialize(options = {})
@@ -26,16 +27,7 @@ module CampusOracle
         }
         result[:education_level] = educ_level_translator.translate(result["educ_level"])
         result[:california_residency] = cal_residency_translator.translate(result["cal_residency_flag"])
-        result['affiliations'] ||= ""
-        result[:roles] = {
-          :student => result['affiliations'].include?("STUDENT-TYPE-"),
-          :registered => result['affiliations'].include?("STUDENT-TYPE-REGISTERED"),
-          :exStudent => result['affiliations'].include?("STUDENT-STATUS-EXPIRED"),
-          :faculty => result['affiliations'].include?("EMPLOYEE-TYPE-ACADEMIC"),
-          :staff => result['affiliations'].include?("EMPLOYEE-TYPE-STAFF"),
-          :guest => result['affiliations'].include?("GUEST-TYPE-COLLABORATOR"),
-          :concurrentEnrollmentStudent => result['affiliations'].include?("AFFILIATE-TYPE-CONCURR ENROLL")
-        }
+        result[:roles] = roles_from_campus_row(result)
         result
       else
         {}

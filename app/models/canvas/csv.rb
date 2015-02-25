@@ -4,14 +4,6 @@ module Canvas
   class Csv < CsvExport
     include ClassLogger
 
-    # Roles used with Canvas SIS Import API
-    ENROLL_STATUS_TO_CANVAS_SIS_ROLE = {
-      'E' => 'student',
-      'W' => 'Waitlist Student',
-      # Concurrent enrollment
-      'C' => 'student'
-    }
-
     def initialize
       super(Settings.canvas_proxy.export_directory)
     end
@@ -43,7 +35,9 @@ module Canvas
 
     def derive_sis_user_id(campus_user)
       if Settings.canvas_proxy.mixed_sis_user_id
-        if CampusOracle::Queries.is_student?(campus_user)
+        roles = Berkeley::UserRoles.roles_from_campus_row(campus_user)
+        if campus_user['student_id'].present? &&
+          (roles[:student] || roles[:concurrentEnrollmentStudent])
           campus_user['student_id'].to_s
         else
           "UID:#{campus_user['ldap_uid']}"

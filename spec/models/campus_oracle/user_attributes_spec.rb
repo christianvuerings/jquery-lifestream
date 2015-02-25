@@ -51,7 +51,6 @@ describe CampusOracle::UserAttributes do
       end
     end
 
-
   end
 
 
