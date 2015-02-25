@@ -177,6 +177,14 @@ describe Canvas::MaintainUsers do
         })).to eq(uid)
       end
     end
+    context 'when a concurrent enrollment student' do
+      let(:affiliations) { 'AFFILIATE-TYPE-CONCURR ENROLL' }
+      it 'uses the student ID' do
+        expect(subject.derive_sis_user_id({
+              'ldap_uid' => uid, 'student_id' => student_id, 'affiliations' => affiliations
+            })).to eq(student_id)
+      end
+    end
   end
 
   describe ".handle_changed_sis_user_ids" do

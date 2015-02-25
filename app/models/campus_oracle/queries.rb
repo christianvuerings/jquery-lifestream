@@ -419,11 +419,6 @@ module CampusOracle
       is_alive
     end
 
-    def self.is_student?(person_attributes)
-      !person_attributes['student_id'].blank? &&
-        /STUDENT-TYPE-/.match(person_attributes['affiliations'])
-    end
-
     def self.has_instructor_history?(ldap_uid, instructor_terms = nil)
       result = {}
       instructor_terms_clause = terms_query_clause('r', instructor_terms)

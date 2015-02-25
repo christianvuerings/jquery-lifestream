@@ -243,32 +243,6 @@ describe CampusOracle::Queries do
     end
   end
 
-  it "should use affiliations to decide whether the user is a student" do
-    CampusOracle::Queries.is_student?(
-        {
-            'student_id' => 1,
-            'affiliations' => 'AFFILIATE-TYPE-GENERAL,EMPLOYEE-STATUS-EXPIRED,STUDENT-STATUS-EXPIRED'
-        }
-    ).should be_falsey
-    CampusOracle::Queries.is_student?(
-        {
-            'student_id' => 2,
-            'affiliations' => 'STUDENT-TYPE-REGISTERED,EMPLOYEE-TYPE-STAFF'
-        }
-    ).should be_truthy
-    CampusOracle::Queries.is_student?(
-        {
-            'affiliations' => 'STUDENT-TYPE-REGISTERED,EMPLOYEE-TYPE-STAFF'
-        }
-    ).should be_falsey
-    CampusOracle::Queries.is_student?(
-        {
-            'student_id' => 3,
-            'affiliations' => 'EMPLOYEE-TYPE-STAFF,STUDENT-TYPE-NOT REGISTERED'
-        }
-    ).should be_truthy
-  end
-
   it "should find a grad student that used to be an undergrad", if: CampusOracle::Queries.test_data? do
     CampusOracle::Queries.is_previous_ugrad?("212388").should be_truthy
     CampusOracle::Queries.is_previous_ugrad?("212389").should be_truthy #grad student expired, previous ugrad
