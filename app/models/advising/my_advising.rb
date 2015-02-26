@@ -29,18 +29,18 @@ module Advising
       student_id = lookup_student_id
       if student_id.blank?
         # don't continue if student id can't be found.
-        logger.info "Lookup of student_id for uid #@uid failed, cannot call Advising API"
+        logger.info "Lookup of student_id for uid #{@uid} failed, cannot call Advising API"
         return {}
       end
 
       if @fake
-        logger.info "Fake = #@fake, getting data from JSON fixture file; user #{@uid}; cache expiration #{self.class.expires_in}"
+        logger.info "Fake = #{@fake}, getting data from JSON fixture file; user #{@uid}; cache expiration #{self.class.expires_in}"
         json = File.read(Rails.root.join('fixtures', 'json', 'advising.json').to_s)
         parsed_json = safe_json(json)
         status_code = 200
       else
         url = "#{@settings.base_url}/student/#{student_id}"
-        logger.info "Internal_get: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+        logger.info "Internal_get: Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
         response = get_response(
           url,
           basic_auth: {username: @settings.username, password: @settings.password},
@@ -58,7 +58,31 @@ module Advising
         logger.debug "Advising remote response: #{response.inspect}"
       end
 
-      HashConverter.camelize(parsed_json).merge(statusCode: status_code)
+      sanitize_response(parsed_json).merge(statusCode: status_code)
+    end
+
+    def sanitize_response(response)
+      appt_keys = %w|pastAppointments futureAppointments|
+      appt_keys.each do |key|
+        if response[key]
+          response[key].select!{ |appt| valid_appointment? appt }
+          response[key].sort_by!{ |appt| appt['dateTime'] }
+          response[key].reverse! if key == 'pastAppointments'
+        end
+      end
+      HashConverter.camelize response
+    end
+
+    def valid_appointment?(appt)
+      if appt['dateTime'].present? &&
+        appt['urlToEditAppointment'].present? &&
+        (appt['location'].present? || appt['method'].present?) &&
+        (appt['staff'].is_a?(Hash) && appt['staff']['name'].present?)
+        true
+      else
+        logger.warn "Received invalid appointment data for user #{@uid}: #{appt}"
+        false
+      end
     end
 
   end
