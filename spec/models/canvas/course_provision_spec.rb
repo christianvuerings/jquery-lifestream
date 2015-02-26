@@ -327,14 +327,36 @@ describe Canvas::CourseProvision do
       expect(result[:teachingSemesters][0][:classes][1]).to be_an_instance_of Hash
       expect(result[:teachingSemesters][0][:classes][2]).to be_an_instance_of Hash
       expect(result[:teachingSemesters][1][:classes][0]).to be_an_instance_of Hash
-      expect(result[:teachingSemesters][0][:classes][0][:hasOfficialSections]).to eq true
-      expect(result[:teachingSemesters][0][:classes][1][:hasOfficialSections]).to eq true
-      expect(result[:teachingSemesters][0][:classes][2][:hasOfficialSections]).to eq false
+      expect(result[:teachingSemesters][0][:classes][0][:containsCourseSections]).to eq true
+      expect(result[:teachingSemesters][0][:classes][1][:containsCourseSections]).to eq true
+      expect(result[:teachingSemesters][0][:classes][2][:containsCourseSections]).to eq false
       expect(result[:teachingSemesters][0][:classes][0][:title]).to eq 'Course Two'
       expect(result[:teachingSemesters][0][:classes][1][:title]).to eq 'Course Three'
       expect(result[:teachingSemesters][0][:classes][2][:title]).to eq 'Course One'
       expect(result[:teachingSemesters][1][:classes][0][:title]).to eq 'Course Four'
-      expect(result[:teachingSemesters][1][:classes][0][:hasOfficialSections]).to eq false
+      expect(result[:teachingSemesters][1][:classes][0][:containsCourseSections]).to eq false
+    end
+
+    it 'indicates if sections are in course site within course semester' do
+      result = subject.group_by_used!(feed)
+      expect(result).to be_an_instance_of Hash
+      expect(result[:teachingSemesters]).to be_an_instance_of Array
+      expect(result[:teachingSemesters][0]).to be_an_instance_of Hash
+      expect(result[:teachingSemesters][1]).to be_an_instance_of Hash
+      expect(result[:teachingSemesters][0][:classes]).to be_an_instance_of Array
+      expect(result[:teachingSemesters][0][:classes]).to be_an_instance_of Array
+      expect(result[:teachingSemesters][0][:classes][0]).to be_an_instance_of Hash
+      expect(result[:teachingSemesters][0][:classes][0][:sections]).to be_an_instance_of Array
+      expect(result[:teachingSemesters][0][:classes][0][:sections][0]).to be_an_instance_of Hash
+      expect(result[:teachingSemesters][0][:classes][0][:sections][0][:isCourseSection]).to eq false
+      expect(result[:teachingSemesters][0][:classes][0][:sections][1][:isCourseSection]).to eq false
+      expect(result[:teachingSemesters][0][:classes][0][:sections][2][:isCourseSection]).to eq true
+      expect(result[:teachingSemesters][0][:classes][0][:sections][3][:isCourseSection]).to eq false
+      expect(result[:teachingSemesters][0][:classes][1][:sections][0][:isCourseSection]).to eq false
+      expect(result[:teachingSemesters][0][:classes][1][:sections][1][:isCourseSection]).to eq false
+      expect(result[:teachingSemesters][0][:classes][1][:sections][2][:isCourseSection]).to eq true
+      expect(result[:teachingSemesters][0][:classes][1][:sections][3][:isCourseSection]).to eq true
+      expect(result[:teachingSemesters][0][:classes][1][:sections][4][:isCourseSection]).to eq false
     end
 
     it 'should raise exception if official course section in feed does not match course term' do
