@@ -96,6 +96,7 @@ describe CampusOracle::Queries do
     sections.should_not be_nil
     transcripts = CampusOracle::Queries.get_transcript_grades('300939')
     transcripts.should_not be_nil
+    expect(transcripts).to all(include 'memo_or_title')
     if CampusOracle::Queries.test_data?
       sections.length.should == 9
       transcripts.length.should == 4
