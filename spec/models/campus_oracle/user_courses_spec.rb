@@ -108,6 +108,13 @@ describe CampusOracle::UserCourses do
     client.has_instructor_history?.should be_truthy
   end
 
+  it 'returns transcript data excluding REMOVED or LAPSED notations', :if => CampusOracle::Connection.test_data? do
+    transcripts = CampusOracle::UserCourses::Transcripts.new(user_id: '61889').get_all_transcripts
+    expect(transcripts).to_not be_blank
+    expect(transcripts.select { |t| t['memo_or_title'].include? 'REMOVED'}).to be_blank
+    expect(transcripts.select { |t| t['memo_or_title'].include? 'LAPSED'}).to be_blank
+  end
+
   describe '#merge_enrollments' do
     let(:user_id) {rand(99999).to_s}
     let(:catalog_id) {"#{rand(999)}"}

@@ -254,7 +254,7 @@ module CampusOracle
       use_pooled_connection {
         sql = <<-SQL
       select t.term_yr, t.term_cd, trim(t.dept_cd) as dept_name, trim(t.course_num) as catalog_id,
-        trim(t.grade) as grade, t.unit as transcript_unit
+        trim(t.grade) as grade, t.unit as transcript_unit, t.memo_or_title
       from calcentral_transcript_vw t where
         t.student_ldap_uid = #{person_id.to_i}
           and t.unit != 0
