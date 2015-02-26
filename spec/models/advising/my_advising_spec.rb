@@ -92,8 +92,25 @@ describe Advising::MyAdvising do
 
     context 'fetching fake data feed' do
       subject { fake_oski_model.get_parsed_response }
+
       it 'has correctly parsed JSON' do
-        subject[:name].should == 'Oski Bear'
+        expect(subject[:sid]).to eq '11667051'
+        expect(subject[:pastAppointments]).to_not be_empty
+        expect(subject[:futureAppointments]).to_not be_empty
+      end
+
+      it 'filters out and logs bad data' do
+        expect(Rails.logger).to receive(:warn).at_least(4).times
+        all_appointments = subject[:pastAppointments].concat subject[:futureAppointments]
+        expect(all_appointments.select{ |appt| appt[:dateTime].blank? }).to be_empty
+        expect(all_appointments.select{ |appt| appt[:location].blank? && app[:method].blank? }).to be_empty
+        expect(all_appointments.select{ |appt| appt[:staff][:name].blank? }).to be_empty
+        expect(all_appointments.select{ |appt| appt[:urlToEditAppointment].blank? }).to be_empty
+      end
+
+      it 'orders appointments by date' do
+        expect(subject[:futureAppointments].sort_by { |appt| appt[:dateTime] }).to eq subject[:futureAppointments]
+        expect(subject[:pastAppointments].sort_by { |appt| appt[:dateTime] }.reverse).to eq subject[:pastAppointments]
       end
     end
 

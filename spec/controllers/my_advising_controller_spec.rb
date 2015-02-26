@@ -17,7 +17,7 @@ describe MyAdvisingController do
       session[:user_id] = '61889'
       get :get_feed
       json_response = JSON.parse(response.body)
-      json_response.size.should == 9
+      json_response.size.should == 8
       json_response["statusCode"].should == 200
     end
   end

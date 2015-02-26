@@ -1,153 +1,397 @@
 {
   "sid": "11667051",
-  "name": "Oski Bear",
-  "caseloadAdviser": "",
+  "urlToMakeAppointment": "https://bhive.berkeley.edu/appointments",
+  "caseloadAdviser": {
+    "firstName": "Chiron",
+    "lastName": "Kentauros",
+    "email": "chiron@berkeley.edu",
+    "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+    "name": "Chiron Kentauros",
+    "id": "314159"
+  },
   "pastAppointments": [
     {
+      "dateTime": 1424383200000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "visit",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/uALzRs9SeGxdDR6nw"
     },
     {
+      "dateTime": 1424383000000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "visit",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/z3iQBut4kQZxpN8yc"
     },
     {
+      "dateTime": 1410885000000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/3mCF3SBg6wbNuj7zB"
     },
     {
+      "dateTime": 1414771200000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/4dzEcKbPXowPM7DfM"
     },
     {
+      "dateTime": 1420492500000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/63snG2vuf5sAptTrr"
     },
     {
+      "dateTime": 1417820400000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@Berkeley.EDU",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "visit",
+      "duration": 15,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/7h4MfijJPcSvWu6bx"
     },
     {
+      "dateTime": 1408988700000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "visit",
+      "duration": 15,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/F4io4zTT8DZWu8m2Y"
     },
     {
+      "dateTime": 1416952800000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "visit",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/Hsg2or4HEQ9pjuE2o"
     },
     {
+      "dateTime": 1413477000000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "visit",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/JSDiaiPrXgEjgxKg9"
     },
     {
+      "dateTime": 1413478800000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "visit",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/PmKvRtnnegzDLEkQv"
     },
     {
+      "dateTime": 1413837000000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "visit",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/SWChwCukx5d33GsjD"
     },
     {
+      "dateTime": 1411079400000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/XHdMXK54kmP4FFdLh"
     },
     {
+      "dateTime": 1408379400000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/aLy64EmjupfjMzRkg"
     },
     {
+      "dateTime": 1409090400000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "visit",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/nWwBPZ3Hhy5NNcaxG"
     },
     {
+      "dateTime": 1418176800000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "visit",
+      "duration": 15,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/wGxq6zG2kYpsoyQX5"
     },
     {
+      "dateTime": 1419267600000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/yoto9wi3g6aSFWJme"
     },
     {
+      "dateTime": 1415899800000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "visit",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/zMQNPta52Wj33fdEC"
     },
     {
+      "dateTime": 1421433000000,
       "staff": {
-        "name": "Eva Rivas",
-        "position": "Associate Director"
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
       },
-      "location": "Room 206,  Evans Hall, L&S Office of Undergraduate Advising",
-      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/undefined"
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/TuP3kZPx9vBtCJjA4"
+    },
+    {
+      "dateTime": 1421962200000,
+      "staff": {
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
+      },
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/6emewZxxDnuWKepMb"
     }
   ],
-  "futureAppointments": [],
-  "urlToMakeAppointment": "https://bhive.berkeley.edu/appointments/new"
+  "futureAppointments": [
+    {
+      "dateTime": 1425409200000,
+      "staff": {
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
+      },
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/YQu4wQ5MG4dcDDJAz"
+    },
+    {
+      "dateTime": 1424409200000,
+      "staff": {
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
+      },
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/YQu4wQ5MG4dcDDJAz"
+    },
+    {
+      "filterOutThisAppointment": "date is missing",
+      "staff": {
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
+      },
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/YQu4wQ5MG4dcDDJAz"
+    },
+    {
+      "dateTime": 1425409200000,
+      "filterOutThisAppointment": "staff is blank",
+      "staff": " ",
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/YQu4wQ5MG4dcDDJAz"
+    },
+    {
+      "dateTime": 1425409200000,
+      "filterOutThisAppointment": "staff has no name",
+      "staff": {
+        "noName": true
+      },
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/YQu4wQ5MG4dcDDJAz"
+    },
+    {
+      "dateTime": 1425409200000,
+      "filterOutThisAppointment": "location and method are blank",
+      "staff": {
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
+      },
+      "location": "",
+      "method": "",
+      "duration": 30,
+      "urlToEditAppointment": "https://bhive.berkeley.edu/appointments/YQu4wQ5MG4dcDDJAz"
+    },
+    {
+      "dateTime": 1425409200000,
+      "filterOutThisAppointment": "url is missing",
+      "staff": {
+        "firstName": "Chiron",
+        "lastName": "Kentauros",
+        "email": "chiron@berkeley.edu",
+        "photoUrl": "http://upload.wikimedia.org/wikipedia/commons/7/7e/Chiron_and_Achilles_c1922-1925_John_Singer_Sargent.jpg",
+        "name": "Chiron Kentauros",
+        "id": "314159"
+      },
+      "location": "206 Evans Hall, L&S Office of Undergraduate Advising",
+      "method": "phone",
+      "duration": 30
+    }
+  ]
 }
