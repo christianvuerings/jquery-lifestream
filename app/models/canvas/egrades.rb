@@ -93,7 +93,7 @@ module Canvas
 
     # Returns array of terms associated with Canvas course site
     def section_terms
-      official_section_identifiers.collect {|sec_id| sec_id.delete(:ccn); sec_id }.uniq
+      official_section_identifiers.collect {|sect| sect.slice(:term_yr, :term_cd)}.uniq
     end
 
     # Provides official section identifiers for sections in Canvas course
