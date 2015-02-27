@@ -31,5 +31,8 @@
     </form>
   </div>
 
-  <div data-ng-include src="'canvas_embedded/_shared/canvas_feed_error.html'"></div>
+  <div data-ng-if="displayError" class="cc-page-error-notice">
+    <div data-ng-include src="'canvas_embedded/_shared/canvas_errors.html'"></div>
+  </div>
+
 </div>
