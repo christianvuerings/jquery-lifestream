@@ -22,6 +22,7 @@ describe MyActivities::RegBlocks do
         subject.each do |act|
           act[:emitter].should == 'Bear Facts'
           act[:source].to_s.downcase.should_not == 'bearfacts'
+          expect(act[:source]).to_not be_blank
           documented_types.include?(act[:type]).should be_truthy
         end
       end

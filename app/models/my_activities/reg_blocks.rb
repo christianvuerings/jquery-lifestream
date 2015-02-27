@@ -25,7 +25,7 @@ module MyActivities
         block.merge!(
           {
             id: '',
-            source: block[:short_description] || '',
+            source: block[:shortDescription],
             sourceUrl: "https://bearfacts.berkeley.edu/bearfacts/",
             url: "https://bearfacts.berkeley.edu/bearfacts/",
             emitter: "Bear Facts"
