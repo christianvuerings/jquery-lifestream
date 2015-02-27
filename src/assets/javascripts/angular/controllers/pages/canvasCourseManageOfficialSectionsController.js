@@ -151,6 +151,20 @@
     };
 
     /*
+     * Expands the display of the course
+     */
+    var expandParentClass = function(section) {
+      section.parentClass.collapsed = false;
+    };
+
+    /*
+     * Provides formatted section string for display
+     */
+    var sectionString = function(section) {
+      section.courseCode + ' ' + section.section_label + ' (CCN: ' + section.ccn + ')';
+    };
+
+    /*
      * Switches workflow context
      */
     $scope.changeWorkflowStep = function(step) {
@@ -228,20 +242,6 @@
         expandParentClass(section);
       }
       section.stagedState = null;
-    };
-
-    /*
-     * Expands the display of the course
-     */
-    var expandParentClass = function(section) {
-      section.parentClass.collapsed = false;
-    };
-
-    /*
-     * Provides formatted section string for display
-     */
-    var sectionString = function(section) {
-      section.courseCode + ' ' + section.section_label + ' (CCN: ' + section.ccn + ')';
     };
 
     /*
@@ -326,11 +326,12 @@
       canvasCourseProvisionFactory.updateSections(canvasCourseId, update.addSections, update.deleteSections)
         .success(sectionUpdateJobCreated)
         .error(function() {
+          $scope.fetchFeed();
           angular.extend($scope, {
             percentCompleteRounded: 0,
-            currentWorkflowStep: 'processing',
-            jobStatus: 'courseCreationError',
-            error: 'Failed to create course provisioning job.'
+            currentWorkflowStep: 'preview',
+            jobStatus: 'error',
+            jobStatusMessage: 'An error occurred processing your request. Please contact bCourses support for further assistance.'
           });
         });
     };

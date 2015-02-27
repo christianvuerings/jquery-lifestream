@@ -119,33 +119,21 @@
     };
 
     /*
-     * Sends request to delete sections from existing course site
+     * Sends request to add and/or delete sections from existing course site
      */
-    var removeSections = function(sisSectionIds, canvasCourseId) {
-      return $http.post('/api/academics/canvas/course_provision/delete_sections', {
+    var updateSections = function(canvasCourseId, addCcns, deleteCcns) {
+      return $http.post('/api/academics/canvas/course_provision/update_sections', {
         canvas_course_id: canvasCourseId,
-        sis_section_ids: sisSectionIds
-      });
-    };
-
-    /*
-     * Sends request to add sections to existing course site
-     */
-    var addSections = function(newSections) {
-      return $http.post('/api/academics/canvas/course_provision/add_sections', {
-        canvas_course_id: newSections.canvasCourseId,
-        term_code: newSections.termCode,
-        term_year: newSections.termYear,
-        ccns: newSections.ccns
+        ccns_to_delete: deleteCcns,
+        ccns_to_add: addCcns
       });
     };
 
     return {
-      addSections: addSections,
       courseCreate: courseCreate,
       courseProvisionJobStatus: courseProvisionJobStatus,
       getSections: getSections,
-      removeSections: removeSections
+      updateSections: updateSections
     };
   });
 }(window.angular));

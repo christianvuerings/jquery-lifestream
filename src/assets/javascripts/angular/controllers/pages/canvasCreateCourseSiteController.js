@@ -33,7 +33,7 @@
     var timeoutPromise;
     var jobStatusLoader = function() {
       timeoutPromise = $timeout(function() {
-        return canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id).
+        return canvasCourseProvisionFactory.courseProvisionJobStatus($scope.job_id)
           .success(statusProcessor).error(function() {
             $scope.displayError = 'failure';
           });
