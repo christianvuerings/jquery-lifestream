@@ -2,7 +2,8 @@
   <i class="fa fa-warning cc-notice-icon"></i>
   <div class="cc-notice-text-container">
     <h1 class="cc-notice-text-header">Access Denied</h1>
-    <p data-ng-bind="accessDeniedError"></p>
+    <p data-ng-if="accessDeniedError" data-ng-bind="accessDeniedError"></p>
+    <p data-ng-if="!accessDeniedError">You are unauthorized to use this feature. Please contact bCourses support for further assistance.</p>
   </div>
 </div>
 
