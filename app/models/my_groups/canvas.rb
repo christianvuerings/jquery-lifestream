@@ -24,14 +24,7 @@ module MyGroups
 
     def course_site_entry(course_site)
       if course_site[:term_yr].blank? && course_site[:term_cd].blank?
-        {
-          emitter: course_site[:emitter],
-          id: course_site[:id],
-          name: course_site[:name],
-          shortDescription: course_site[:short_description],
-          siteType: 'course',
-          site_url: course_site[:site_url]
-        }
+        course_site.slice(:emitter, :id, :name, :shortDescription, :site_url).merge( {siteType: 'course'} )
       else
         nil
       end

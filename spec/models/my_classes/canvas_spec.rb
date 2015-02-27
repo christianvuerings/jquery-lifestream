@@ -72,6 +72,7 @@ describe MyClasses::Canvas do
           expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:courses]).to eq [{id: course_id}]
           expect(site[:sections]).to be_nil
+          expect(site[:shortDescription]).to eq canvas_site_base[:shortDescription]
           expect(site[:siteType]).to eq 'course'
         end
       end
@@ -89,6 +90,7 @@ describe MyClasses::Canvas do
           expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:courses]).to eq [{id: course_id}]
           expect(site[:sections]).to be_nil
+          expect(site[:shortDescription]).to eq canvas_site_base[:shortDescription]
           expect(site[:siteType]).to eq 'course'
         end
       end

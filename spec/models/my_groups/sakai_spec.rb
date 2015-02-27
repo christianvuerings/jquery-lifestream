@@ -23,6 +23,7 @@ describe MyGroups::Sakai do
       expect(site[:emitter]).to eq Sakai::Proxy::APP_ID
       expect(site[:name]).to eq sakai_site_base[:name]
       expect(site[:site_url]).to eq sakai_site_base[:site_url]
+      expect(site[:shortDescription]).to eq sakai_site_base[:shortDescription]
     end
   end
   context 'when a Sakai course site' do
