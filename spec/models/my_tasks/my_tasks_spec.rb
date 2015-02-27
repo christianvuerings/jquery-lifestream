@@ -229,6 +229,34 @@ describe "MyTasks" do
     valid_feed["tasks"].length.should == 0
   end
 
+  it 'should include an updatedDate for unscheduled Canvas tasks' do
+    updated_at = '2015-02-22T00:47:33'
+    unscheduled_task_response = OpenStruct.new(status: 200, body: [{
+      'assignment' => {
+        'course_id' => 903842670,
+        'created_at' => '2015-02-15T18:55:44Z',
+        'description' => "\u003Cp\u003E\u003Cspan style=\"font-size: medium;\"\u003ETalk back to the book.\u003C/span\u003E\u003C/p\u003E",
+        'due_at' => nil,
+        'html_url' => 'https://ucberkeley.beta.instructure.com/courses/903842670/assignments/2587242',
+        'id' => 2587242,
+        'name' => 'Week 5 Reading Response',
+        'published' => true,
+        'updated_at' => "#{updated_at}Z"
+      },
+      'context_type' => 'Course',
+      'course_id' => 903842670,
+      'html_url' => 'https://ucberkeley.beta.instructure.com/courses/903842670/assignments/2587242#submit',
+      'type' => 'submitting'
+    }].to_json)
+    allow_any_instance_of(Canvas::Todo).to receive(:todo).and_return(unscheduled_task_response)
+
+    feed = MyTasks::Merged.new(@user_id).get_feed
+    unscheduled_canvas_task = feed['tasks'].find { |task| task['emitter'] == 'bCourses' && task['bucket'] == 'Unscheduled' }
+    expect(unscheduled_canvas_task['updatedDate']['epoch']).to be_present
+    expect(unscheduled_canvas_task['updatedDate']['dateTime']).to include(updated_at)
+    expect(unscheduled_canvas_task['updatedDate']['dateString']).to eq '2/22'
+  end
+
   it "should return valid course code for bCourses assignment tasks" do
     Canvas::Proxy.stub(:access_granted?).and_return(true)
     Canvas::UpcomingEvents.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)

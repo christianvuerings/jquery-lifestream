@@ -50,6 +50,11 @@ module MyTasks
                 bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
                 formatted_entry["bucket"] = bucket
 
+                if formatted_entry['bucket'] == 'Unscheduled'
+                  updated_date = convert_date(result['assignment']['updated_at'] || result['assignment']['created_at'])
+                  format_date_into_entry!(updated_date, formatted_entry, 'updatedDate')
+                end
+
                 if course_id_to_code_map
                   formatted_entry["course_code"] = course_id_to_code_map[result["course_id"]]
                 end
