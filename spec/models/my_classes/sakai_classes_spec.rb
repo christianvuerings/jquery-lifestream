@@ -47,6 +47,7 @@ describe MyClasses::SakaiClasses do
         expect(site[:emitter]).to eq Sakai::Proxy::APP_ID
         expect(site[:courses]).to eq [{id: course_id}]
         expect(site[:sections]).to be_nil
+        expect(site[:shortDescription]).to eq sakai_site_base[:shortDescription]
       end
     end
     context 'when Sakai course site does not match official campus enrollment' do
@@ -59,6 +60,7 @@ describe MyClasses::SakaiClasses do
         expect(site[:emitter]).to eq Sakai::Proxy::APP_ID
         expect(site[:courses]).to be_empty
         expect(site[:sections]).to be_nil
+        expect(site[:shortDescription]).to eq sakai_site_base[:shortDescription]
       end
     end
   end

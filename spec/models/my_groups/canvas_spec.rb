@@ -16,6 +16,7 @@ describe MyGroups::Canvas do
         id: site_id,
         site_url: "something/#{site_id}",
         name: "CODE #{site_id}",
+        shortDescription: "#{site_id} old fashioned recipes",
         emitter: Canvas::Proxy::APP_NAME
       }
     end
@@ -37,6 +38,7 @@ describe MyGroups::Canvas do
           expect(site[:id]).to eq site_id
           expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
           expect(site[:name]).to eq site_base[:name]
+          expect(site[:shortDescription]).to eq site_base[:shortDescription]
           expect(site[:site_url]).to eq site_base[:site_url]
         end
       end
@@ -79,6 +81,7 @@ describe MyGroups::Canvas do
             site = subject.select {|s| s[:id] == site_id}.first
             expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME
             expect(site[:name]).to eq site_base[:name]
+            expect(site[:shortDescription]).to eq site_base[:shortDescription]
             expect(site[:site_url]).to eq site_base[:site_url]
             site = subject.select {|s| s[:id] == group_id}.first
             expect(site[:emitter]).to eq Canvas::Proxy::APP_NAME

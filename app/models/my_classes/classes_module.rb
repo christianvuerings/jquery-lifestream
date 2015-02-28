@@ -27,17 +27,14 @@ module MyClasses::ClassesModule
           end
         end
       end
-      {
-        emitter: course_site[:emitter],
-        id: course_site[:id],
-        name: course_site[:name],
-        shortDescription: course_site[:short_description],
-        siteType: 'course',
-        site_url: course_site[:site_url],
-        term_cd: term_cd,
-        term_yr: term_yr,
-        courses: linked_campus
-      }
+      course_site.slice(:emitter, :id, :name, :shortDescription, :site_url).merge(
+        {
+          siteType: 'course',
+          term_cd: term_cd,
+          term_yr: term_yr,
+          courses: linked_campus
+        }
+      )
     else
       nil
     end
