@@ -1,10 +1,10 @@
 module Oec
   class Students < Export
 
-    def initialize(ccns, gsi_ccns, export_dir)
+    def initialize(ccn_set, annotated_ccn_hash, export_dir)
       super export_dir
-      @ccns = ccns
-      @gsi_ccns = gsi_ccns
+      # Annotations allow for categories within a given course-id. For example, instructor types: primary, GSI, etc.
+      @ccn_set = ccn_set.merge annotated_ccn_hash.keys
     end
 
     def base_file_name
@@ -16,14 +16,10 @@ module Oec
     end
 
     def append_records(output)
-      ccn_set = @ccns.to_set
-      ccn_set.merge @gsi_ccns
-      append_student_records(output, ccn_set) unless ccn_set.empty?
-    end
-
-    def append_student_records(output, ccns)
-      Oec::Queries.get_all_students(ccns).each do |student|
-        output << record_to_csv_row(student)
+      unless @ccn_set.empty?
+        Oec::Queries.get_all_students(@ccn_set).each do |student|
+          output << record_to_csv_row(student)
+        end
       end
     end
 

@@ -1,20 +1,23 @@
 module Oec
   class FileReader
 
-    attr_reader :ccns, :gsi_ccns
+    attr_reader :ccn_set, :annotated_ccn_hash
 
     def initialize(input_filename)
-      @ccns = []
-      @gsi_ccns = []
+      @ccn_set = Set.new
+      @annotated_ccn_hash = {}
       CSV.foreach(input_filename) do |row|
         if row[0]
-          val = row[0].split('-')
-          if val.length == 3
-            split_ccn = val[2].split('_')
-            if split_ccn.length == 2
-              @gsi_ccns << split_ccn[0].to_i
+          course_id = row[0].split('-')
+          if course_id.length == 3
+            # Annotation is text after underscore.
+            ccn_with_annotation = course_id[2].split('_')
+            if ccn_with_annotation.length == 2
+              ccn = ccn_with_annotation[0].to_i
+              @annotated_ccn_hash[ccn] ||= Set.new
+              @annotated_ccn_hash[ccn] << ccn_with_annotation[1]
             else
-              @ccns << val[2].to_i
+              @ccn_set << course_id[2].to_i
             end
           end
         end

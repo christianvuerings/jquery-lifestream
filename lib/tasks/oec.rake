@@ -16,7 +16,7 @@ namespace :oec do
     if File.exists? csv_file
       reader = Oec::FileReader.new csv_file
       [Oec::Students, Oec::CourseStudents].each do |klass|
-        klass.new(reader.ccns, reader.gsi_ccns, args.dest_dir).export
+        klass.new(reader.ccn_set, reader.annotated_ccn_hash, args.dest_dir).export
       end
       Rails.logger.warn "#{hr}Find CSV files in directory: #{args.dest_dir}#{hr}"
     else
