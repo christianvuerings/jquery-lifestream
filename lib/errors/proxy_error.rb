@@ -8,7 +8,11 @@ module Errors
       @uid = opts[:uid]
 
       if (response = opts[:response])
-        @status = response.code
+        @status = if response.respond_to? :code
+                    response.code
+                  elsif response.respond_to? :status
+                    response.status
+                  end
         @body = response.body
       end
 
