@@ -1,10 +1,11 @@
 module Oec
   class CourseStudents < Export
 
-    def initialize(ccns, gsi_ccns, export_dir)
+    def initialize(ccn_set, annotated_ccn_hash, export_dir)
       super export_dir
-      @ccns = ccns
-      @gsi_ccns = gsi_ccns
+      @ccn_set = ccn_set
+      # Maps ccn to annotations (GSI, A, B, etc) in courses.csv
+      @annotated_ccn_hash = annotated_ccn_hash
     end
 
     def base_file_name
@@ -16,19 +17,23 @@ module Oec
     end
 
     def append_records(output)
-      if @ccns.length > 0
-        Oec::Queries.get_all_course_students(@ccns).each do |record|
+      if @ccn_set.length > 0
+        Oec::Queries.get_all_course_students(@ccn_set).each do |record|
           row = record_to_csv_row record
           output << row
         end
       end
-
-      # now add in courses with _GSI suffix (might duplicate some of the ones already in the file, but that's ok.)
-      if @gsi_ccns.length > 0
-        Oec::Queries.get_all_course_students(@gsi_ccns).each do |record|
+      # Output must have the same annotations as in courses.csv
+      if @annotated_ccn_hash.length > 0
+        Oec::Queries.get_all_course_students(@annotated_ccn_hash.keys).each do |record|
           row = record_to_csv_row record
-          row['COURSE_ID'] = "#{row['COURSE_ID']}_GSI"
-          output << row
+          ccn = row['COURSE_ID'].split('-')[2].split('_')[0].to_i
+          @annotated_ccn_hash[ccn].each do |annotation|
+            # Do not alter row data because it will be referenced again
+            row_cloned = row.clone
+            row_cloned['COURSE_ID'] = "#{row_cloned['COURSE_ID']}_#{annotation}"
+            output << row_cloned
+          end
         end
       end
 
