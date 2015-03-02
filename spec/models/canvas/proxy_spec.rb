@@ -112,6 +112,22 @@ describe Canvas::Proxy do
     end
   end
 
+  context 'on server errors' do
+    before { stub_request(:any, /.*#{Settings.canvas_proxy.url_root}.*/).to_return(status: 404, body: 'Resource not found.') }
+    let(:course_students) { Canvas::CourseStudents.new(course_id: 767330, fake: false) }
+
+    it_should_behave_like 'a proxy logging errors' do
+      subject { course_students.full_students_list }
+    end
+
+    it 'should log DEBUG for 404 errors when existence_check is true' do
+      allow_any_instance_of(Canvas::CourseStudents).to receive(:existence_check).and_return(true)
+      expect(Rails.logger).not_to receive(:error)
+      expect(Rails.logger).to receive(:debug).at_least(2).times
+      course_students.full_students_list
+    end
+  end
+
   describe '#canvas_current_terms' do
     before { allow(Settings.terms).to receive(:fake_now).and_return(fake_now) }
     subject {Canvas::Proxy.canvas_current_terms}
