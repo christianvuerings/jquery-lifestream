@@ -122,9 +122,9 @@
      * Sends request to add and/or delete sections from existing course site
      */
     var updateSections = function(canvasCourseId, addCcns, deleteCcns) {
-      return $http.post('/api/academics/canvas/course_provision/update_sections', {
+      return $http.post('/api/academics/canvas/course_provision/edit_sections', {
         canvas_course_id: canvasCourseId,
-        ccns_to_delete: deleteCcns,
+        ccns_to_remove: deleteCcns,
         ccns_to_add: addCcns
       });
     };

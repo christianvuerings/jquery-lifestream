@@ -71,8 +71,7 @@ Calcentral::Application.routes.draw do
   get '/api/academics/canvas/course_provision' => 'canvas_course_provision#get_feed', :as => :canvas_course_provision, :defaults => { :format => 'json' }
   get '/api/academics/canvas/course_provision_as/:admin_acting_as' => 'canvas_course_provision#get_feed', :as => :canvas_course_provision_as, :defaults => { :format => 'json' }
   post '/api/academics/canvas/course_provision/create' => 'canvas_course_provision#create_course_site', :via => :post, :as => :canvas_course_create, :defaults => { :format => 'json' }
-  post '/api/academics/canvas/course_provision/delete_sections' => 'canvas_course_provision#delete_sections', :via => :post, :as => :canvas_course_delete_sections, :defaults => { :format => 'json' }
-  post '/api/academics/canvas/course_provision/add_sections' => 'canvas_course_provision#add_sections', :via => :post, :as => :canvas_course_add_sections, :defaults => { :format => 'json' }
+  post '/api/academics/canvas/course_provision/edit_sections' => 'canvas_course_provision#edit_sections', :via => :post, :as => :canvas_course_edit_sections, :defaults => { :format => 'json' }
   get '/api/academics/canvas/course_provision/status' => 'canvas_course_provision#job_status', :via => :get, :as => :canvas_course_job_status, :defaults => { :format => 'json' }
   post '/api/academics/canvas/project_provision/create' => 'canvas_project_provision#create_project_site', :via => :post, :as => :canvas_project_create, :defaults => { :format => 'json' }
   post '/api/academics/canvas/user_provision/user_import' => 'canvas_user_provision#user_import', :as => :canvas_user_provision_import, :defaults => { :format => 'json' }

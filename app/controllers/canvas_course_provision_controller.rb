@@ -26,17 +26,10 @@ class CanvasCourseProvisionController < ApplicationController
     render json: { job_request_status: "Success", job_id: job_id}.to_json
   end
 
-  # POST /api/academics/canvas/course_provision/delete_sections.json
-  def delete_sections
+  # POST /api/academics/canvas/course_provision/edit_sections.json
+  def edit_sections
     worker = Canvas::CourseProvision.new(session[:user_id], options_from_params)
-    job_id = worker.remove_sections(params[:sis_section_ids])
-    render json: { job_request_status: "Success", job_id: job_id}.to_json
-  end
-
-  # POST /api/academics/canvas/course_provision/add_sections.json
-  def add_sections
-    worker = Canvas::CourseProvision.new(session[:user_id], options_from_params)
-    job_id = worker.add_sections(params[:term_code], params[:term_year], params[:ccns])
+    job_id = worker.edit_sections(params[:ccns_to_remove], params[:ccns_to_add])
     render json: { job_request_status: "Success", job_id: job_id}.to_json
   end
 
