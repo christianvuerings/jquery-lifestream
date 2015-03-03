@@ -147,6 +147,7 @@ module Oec
       if errors.any?
         @errors_per_course_id[course_id] ||= []
         @errors_per_course_id[course_id].concat errors
+        Rails.logger.debug "Validation errors for #{@dept_name} per #{course_id}: #{errors.to_s}"
       end
     end
 
