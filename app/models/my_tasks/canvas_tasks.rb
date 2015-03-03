@@ -1,6 +1,6 @@
 module MyTasks
   class CanvasTasks
-    include MyTasks::TasksModule, SafeJsonParser
+    include MyTasks::TasksModule, HtmlSanitizer, SafeJsonParser
 
     def initialize(uid, starting_date)
       @uid = uid
@@ -42,9 +42,8 @@ module MyTasks
                   "sourceUrl" => result["assignment"]["html_url"],
                   "status" => "inprogress"
                 }
-                if result["assignment"]["description"] != ""
-                  formatted_entry["notes"] = ActionView::Base.full_sanitizer.sanitize(result["assignment"]["description"])
-                end
+                formatted_entry['notes'] = sanitize_html(result['assignment']['description']) if result['assignment']['description'].present?
+
                 due_date = convert_date(result["assignment"]["due_at"])
                 format_date_into_entry!(due_date, formatted_entry, "dueDate")
                 bucket = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)

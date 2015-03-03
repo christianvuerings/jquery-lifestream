@@ -67,6 +67,10 @@ class FeedWrapper
     Date.parse(self.to_text).in_time_zone.to_datetime rescue default
   end
 
+  def to_i(default=0)
+    @obj.try(:to_i) || default
+  end
+
   def to_text(default='')
     @obj.try(:to_s).try(:strip) || default
   end

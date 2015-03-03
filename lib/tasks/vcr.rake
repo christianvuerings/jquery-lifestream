@@ -1,4 +1,5 @@
 require 'json'
+require 'rexml/document'
 
 namespace :vcr do
 
@@ -45,7 +46,9 @@ namespace :vcr do
             begin
               interaction["response"]["body"]["debug_json"] = JSON.parse(original_string)
             rescue JSON::ParserError
-              interaction["response"]["body"]["debug_xml"] = Nokogiri::XML(original_string).to_xml(:indent=>2)
+              xml_doc = REXML::Document.new original_string
+              interaction['response']['body']['debug_xml'] = ''
+              REXML::Formatters::Pretty.new.write(xml_doc, interaction['response']['body']['debug_xml'])
             end
             interaction["response"]["body"]["string"] = ""
           end

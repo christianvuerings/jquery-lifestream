@@ -1,6 +1,6 @@
 module MyActivities
   class CanvasActivities
-    include DatedFeed, SafeJsonParser
+    include DatedFeed, HtmlSanitizer, SafeJsonParser
 
     def self.append!(uid, sites, activities)
       return unless Canvas::Proxy.access_granted?(uid)
@@ -92,22 +92,18 @@ module MyActivities
     end
 
     def self.process_message(entry)
-      message_partial = Nokogiri::HTML(entry["message"])
-      message_partial = message_partial.xpath("//text()").to_s.gsub(/\s+/, " ")
-
+      message_partial = entry['message'] ? sanitize_html(entry['message']) : ''
+      message_partial.squish!
       # Remove system-generated "Click here" strings, leaving instructor-added "Click here" strings intact
-      checkstrings = [
-        "Click here to view the assignment: http.*",
-        "You can view the submission here: http.*"
-      ]
-
-      checkstrings.each do |str|
-        if message_index = message_partial.rindex(/#{Regexp.new(str)}/)
-          message_partial = message_partial[0..message_index - 1]
+      [
+        /Click here to view the assignment: http.*/,
+        /You can view the submission here: http.*/
+      ].each do |regex|
+        if (rindex = message_partial.rindex(regex))
+          message_partial.slice!(rindex..-1)
         end
       end
-
-      message_partial = message_partial.strip
+      message_partial.strip!
 
       if entry["type"] == "Message"
         title_and_summary = split_title_and_summary entry["title"]

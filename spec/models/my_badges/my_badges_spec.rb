@@ -107,6 +107,12 @@ describe "MyBadges" do
     end
   end
 
+  it 'should return no badges when not authenticated' do
+    allow(GoogleApps::Proxy).to receive(:access_granted?).and_return(false)
+    badges = MyBadges::Merged.new(@user_id).get_feed[:badges]
+    expect(badges).to be_blank
+  end
+
   it "should ignore non png icons for bdrive" do
     proxy = MyBadges::GoogleDrive.new(@user_id)
     icon_class_result = proxy.send(:process_icon, "http://www.google.com/lol_cat.gif")
