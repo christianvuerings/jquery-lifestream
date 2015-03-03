@@ -134,12 +134,11 @@ module Oec
         errors << "INSTRUCTOR_FUNC is invalid: #{instructor_func}" unless (0..4).include? instructor_func.to_i
       end
 
-      errors_found = errors.length > 0
-      if errors_found
+      if errors.any?
         @errors_per_course_id[annotated_course_id] ||= []
         @errors_per_course_id[annotated_course_id].concat errors
       end
-      errors_found ? nil : id_hash
+      errors.any? ? nil : id_hash
     end
 
     def create_course_id_hash(annotated_course_id)

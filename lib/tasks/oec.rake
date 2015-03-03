@@ -52,16 +52,16 @@ namespace :oec do
         File.delete courses_diff.output_filename
         summaries << "#{dept_name}: Confirmed CSV matches campus data. No diff to report."
       end
-      if courses_diff.errors_per_course_id.length > 0
+      if courses_diff.errors_per_course_id.any?
         errors_per_dept[dept_name] = courses_diff.errors_per_course_id
       end
     end
-    if confirmed_csv_hash.length > 0
+    if confirmed_csv_hash.any?
       Rails.logger.warn "#{hr}#{summaries.join("\n")}#{hr}"
     else
       Rails.logger.warn "#{hr}No files matching {DEPT}_courses_confirmed.csv were found in #{args.src_dir}#{hr}"
     end
-    if errors_per_dept.length > 0
+    if errors_per_dept.any?
       Rails.logger.warn hr
       Rails.logger.warn 'VALIDATION ERROR(S)'
       errors_per_dept.each do |dept_name, errors_per_course_id|
