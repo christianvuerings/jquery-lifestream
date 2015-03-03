@@ -3,13 +3,16 @@ module Oec
 
     COLUMN_LDAP_UID = 'ldap_uid'
     COLUMN_COURSE_ID = 'course_id'
+    COLUMN_INSTRUCTOR_FUNC = 'instructor_func'
 
     # true if course data provided by dept representative differs from campus db data
     attr_reader :was_difference_found
+    attr_reader :errors_per_course_id
 
     def initialize(dept_name, campus_data, data_from_dept, export_dir)
       super export_dir
       @was_difference_found = false
+      @errors_per_course_id = {}
       @instructor_columns = %w(first_name last_name email_address instructor_func)
       @columns_to_compare = %w(course_name).concat @instructor_columns
       @dept_name = dept_name
@@ -35,19 +38,22 @@ module Oec
       Rails.logger.warn "Diff the CSV confirmed by #{@dept_name} dept against latest campus data."
       @aligned_rows = []
       @data_from_dept.each do |data_from_dept_row|
-        ldap_uid = data_from_dept_row[COLUMN_LDAP_UID]
-        course_id = data_from_dept_row[COLUMN_COURSE_ID].split('_')[0]
-        key_with_ldap_uid = "#{course_id}-#{ldap_uid}" if ldap_uid
-        if ldap_uid.blank? && @campus_data_hash.has_key?(course_id)
-          output_diff(course_id, @campus_data_hash[course_id], data_from_dept_row, output)
-        elsif @campus_data_hash.has_key? key_with_ldap_uid
-          output_diff(key_with_ldap_uid, @campus_data_hash[key_with_ldap_uid], data_from_dept_row, output)
-        elsif @campus_data_hash.has_key? course_id
-          ignore_db_instructor = !@campus_data_hash[course_id][COLUMN_LDAP_UID].blank?
-          output_diff(key_with_ldap_uid, @campus_data_hash[course_id], data_from_dept_row, output, ignore_db_instructor)
-        else
-          Rails.logger.warn "No campus data found for #{course_id}"
-          output_diff(course_id, nil, data_from_dept_row, output)
+        id_hash = create_id_hash data_from_dept_row
+        unless id_hash.nil?
+          course_id = "#{id_hash[:term_yr]}-#{id_hash[:term_cd]}-#{id_hash[:ccn]}"
+          ldap_uid = id_hash[:ldap_uid]
+          key_with_ldap_uid = "#{course_id}-#{ldap_uid}" unless ldap_uid.blank?
+          if ldap_uid.blank? && @campus_data_hash.has_key?(course_id)
+            output_diff(course_id, @campus_data_hash[course_id], data_from_dept_row, output)
+          elsif @campus_data_hash.has_key? key_with_ldap_uid
+            output_diff(key_with_ldap_uid, @campus_data_hash[key_with_ldap_uid], data_from_dept_row, output)
+          elsif @campus_data_hash.has_key? course_id
+            ignore_db_instructor = !@campus_data_hash[course_id][COLUMN_LDAP_UID].blank?
+            output_diff(key_with_ldap_uid, @campus_data_hash[course_id], data_from_dept_row, output, ignore_db_instructor)
+          else
+            Rails.logger.warn "No campus data found for #{course_id}"
+            output_diff(course_id, nil, data_from_dept_row, output)
+          end
         end
       end
       @campus_data_hash.each do |key, db_record|
@@ -105,36 +111,46 @@ module Oec
 
     private
 
-    def to_evaluation(row)
-      course_id = row[0]
-      split_course_id = course_id.split('-')
-      ccn = split_course_id[2].split('_')[0]
-      {
-        'TERM_YR' => split_course_id[0],
-        'TERM_CD' => split_course_id[1],
-        'COURSE_CNTL_NUM' => ccn,
-        'COURSE_ID' => course_id,
-        'COURSE_NAME' => row[1],
-        'CROSS_LISTED_FLAG' => row[2],
-        'CROSS_LISTED_NAME' => row[3],
-        'DEPT_NAME' => row[4],
-        'CATALOG_ID' => row[5],
-        'INSTRUCTION_FORMAT' => row[6],
-        'SECTION_NUM' => row[7],
-        'PRIMARY_SECONDARY_CD' => row[8],
-        'LDAP_UID' => row[9],
-        'FIRST_NAME' => row[10],
-        'LAST_NAME' => row[11],
-        'EMAIL_ADDRESS' => row[13],
-        'INSTRUCTOR_FUNC' => row[14],
-        'BLUE_ROLE' => row[15],
-        'EVALUATE' => row[16],
-        'DEPT_FORM' => row[17],
-        'EVALUATION_TYPE' => row[18],
-        'MODULAR_COURSE' => row[19],
-        'START_DATE' => row[20],
-        'END_DATE' => row[21]
-      }
+    def create_id_hash(row)
+      annotated_course_id = row[COLUMN_COURSE_ID]
+      id_hash = create_course_id_hash annotated_course_id
+      errors = []
+      term = Settings.oec.current_terms_codes[0]
+      errors << "YEAR is invalid: #{id_hash[:term_yr]}" if id_hash[:term_yr].to_i != term.year
+      errors << "TERM is invalid: #{id_hash[:term_cd]}" if id_hash[:term_cd] != term.code
+      errors << "CCN is invalid: #{id_hash[:ccn]}" unless id_hash[:ccn].to_i > 0
+      annotation = id_hash[:annotation]
+      if annotation
+        errors << "CCN annotation is invalid: #{annotation}" unless %w(A B GSI CHEM MCB).include? annotation
+      end
+      ldap_uid = row[COLUMN_LDAP_UID]
+      unless ldap_uid.blank?
+        id_hash[:ldap_uid] = ldap_uid
+        errors << "LDAP_UID is invalid: #{ldap_uid}" unless ldap_uid.to_i > 0
+      end
+      instructor_func = row[COLUMN_INSTRUCTOR_FUNC]
+      unless instructor_func.blank?
+        id_hash[:instructor_func] = instructor_func
+        errors << "INSTRUCTOR_FUNC is invalid: #{instructor_func}" unless (0..4).include? instructor_func.to_i
+      end
+
+      errors_found = errors.length > 0
+      if errors_found
+        @errors_per_course_id[annotated_course_id] ||= []
+        @errors_per_course_id[annotated_course_id].concat errors
+      end
+      errors_found ? nil : id_hash
+    end
+
+    def create_course_id_hash(annotated_course_id)
+      id_hash = {}
+      split_course_id = annotated_course_id.split '-'
+      id_hash[:term_yr] = split_course_id[0]
+      id_hash[:term_cd] = split_course_id[1]
+      ccn_annotated = split_course_id[2].split '_'
+      id_hash[:ccn] = ccn_annotated[0]
+      id_hash[:annotation] = ccn_annotated[1] if ccn_annotated.length == 2
+      id_hash
     end
 
   end
