@@ -89,7 +89,7 @@
           <h4 data-ng-if="selectedCourseCountSchedules">Section Schedules</h4>
 
           <div class="row collapse" data-ng-repeat="section in selectedCourse.sections" data-ng-if="!section.scheduledWithCcn">
-            <div class="small-3 columns" data-ng-if="section.schedules" data-ng-bind="section.section_label"></div>
+            <div class="small-3 columns" data-ng-if="section.schedules && section.schedules.length" data-ng-bind="section.section_label"></div>
             <div class="small-9 columns">
               <div data-ng-repeat="schedule in section.schedules" data-ng-if="section.schedules" class="cc-academics-schedule-room">
                 <span data-ng-bind="schedule.schedule"></span> |
