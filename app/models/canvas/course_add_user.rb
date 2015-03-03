@@ -19,10 +19,12 @@ module Canvas
           people = CampusOracle::Queries.find_people_by_uid(search_text)
       end
       people.collect! do |person|
-        person.delete('student_id')
-        HashConverter.camelize(person)
+        if person['affiliations'].include? '-TYPE-'
+          person.delete('student_id')
+          HashConverter.camelize(person)
+        end
       end
-      people
+      people.compact
     end
 
     def self.course_sections_list(course_id)

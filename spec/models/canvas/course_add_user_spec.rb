@@ -1,7 +1,56 @@
 require "spec_helper"
 
 describe Canvas::CourseAddUser do
-  let(:ldap_uid) { '1044850' }
+  let(:common_first_name) { 'Bryan' }
+  let(:common_last_name) { 'Cranston' }
+  let(:common_email) { 'bryan.cranston' }
+
+  let(:common_uid) { rand(99999).to_s }
+  let(:current_student_uid) { "#{common_uid}1" }
+  let(:current_employee_former_student_uid) { "#{common_uid}2" }
+  let(:former_employee_former_student_uid) { "#{common_uid}3" }
+
+  let(:current_student) do
+    {
+      'ldap_uid'=>current_student_uid,
+      'first_name'=>common_first_name,
+      'last_name'=>common_last_name,
+      'email_address'=>"#{common_email}@berkeley.edu",
+      'student_id'=>rand(999999),
+      'affiliations'=>'STUDENT-TYPE-REGISTERED'
+    }
+  end
+
+  let (:current_employee_former_student) do
+    {
+      'ldap_uid'=>current_employee_former_student_uid,
+      'first_name'=>common_first_name,
+      'last_name'=>common_last_name,
+      'email_address'=>"#{common_email}@media.berkeley.edu",
+      'student_id'=>rand(999999),
+      'affiliations'=>'EMPLOYEE-TYPE-STAFF,STUDENT-STATUS-EXPIRED'
+    }
+  end
+
+  let (:former_employee_former_student) do
+    {
+      'ldap_uid'=>former_employee_former_student_uid,
+      'first_name'=>common_first_name,
+      'last_name'=>common_last_name,
+      'email_address'=>"#{common_email}@example.com",
+      'student_id'=>rand(999999),
+      'affiliations'=>'EMPLOYEE-STATUS-EXPIRED,STUDENT-STATUS-EXPIRED'
+    }
+  end
+
+  let (:people_array) do
+    [
+      current_student,
+      current_employee_former_student,
+      former_employee_former_student
+    ]
+  end
+
   let(:canvas_user_id) { 3332221 }
   let(:canvas_user_profile) {
     {
@@ -9,9 +58,9 @@ describe Canvas::CourseAddUser do
       "name"=>"Bryanna D. Amerson",
       "short_name"=>"Bryanna Amerson",
       "sortable_name"=>"Amerson, Bryanna",
-      "sis_user_id"=>ldap_uid,
-      "sis_login_id"=>ldap_uid,
-      "login_id"=>ldap_uid,
+      "sis_user_id"=>current_student_uid,
+      "sis_login_id"=>current_student_uid,
+      "login_id"=>current_student_uid,
       "avatar_url"=>"https://secure.gravatar.com/avatar/1234567-avatar-50.png",
       "title"=>nil,
       "bio"=>nil,
@@ -25,23 +74,6 @@ describe Canvas::CourseAddUser do
       {"id" => "202113", "name" => "Section Two Name", "course_id" => 767330, "sis_section_id" => "SEC:2013-D-12345"}
     ]
   end
-
-  let(:person_hash) { {
-    "ldap_uid"=>ldap_uid,
-    "first_name"=>"Bryan",
-    "last_name"=>"Cranston",
-    "email_address"=>"bryan.cranston@example.com",
-    "student_id"=>"2212340",
-    "affiliations"=>"STUDENT-TYPE-REGISTERED"
-  } }
-
-  let(:people_array) {
-    people = []
-    (0...5).each do |num|
-      people << person_hash
-    end
-    people
-  }
 
   let(:canvas_course_sections_list_response) do
     sections_list_response = double()
@@ -67,58 +99,52 @@ describe Canvas::CourseAddUser do
       expect { Canvas::CourseAddUser.search_users('John Doe', 'phone_number') }.to raise_error(ArgumentError, "Search type argument 'phone_number' invalid. Must be name, email, or ldap_user_id")
     end
 
-    context "when searching by name" do
-      it "searches users by name" do
-        CampusOracle::Queries.should_receive(:find_people_by_name).with('John Doe', Canvas::CourseAddUser::SEARCH_LIMIT).and_return([])
-        people = Canvas::CourseAddUser.search_users('John Doe', 'name')
-        expect(people).to be_an_instance_of Array
+    shared_examples 'a filtered result set' do
+      it 'includes users' do
+        expect(subject).to_not be_empty
       end
 
-      it "does not include student id in the results" do
-        CampusOracle::Queries.should_receive(:find_people_by_name).with('John Doe', Canvas::CourseAddUser::SEARCH_LIMIT).and_return(people_array)
-        people = Canvas::CourseAddUser.search_users('John Doe', 'name')
-        people.each do |person|
-          expect(person).to be_an_instance_of Hash
-          expect(person.has_key?('student_id')).to be_falsey
+      it 'does not include student id' do
+        subject.each do |person|
+          expect(person).not_to include('student_id')
         end
+      end
+
+      it 'includes only current affiliations' do
+        expect(subject.select{ |n| n[:ldapUid] == current_student_uid }).to be_present
+        expect(subject.select{ |n| n[:ldapUid] == current_employee_former_student_uid }).to be_present
+        expect(subject.select{ |n| n[:ldapUid] == former_employee_former_student_uid }).to be_empty
       end
     end
 
-    context "when searching by email" do
-      it "searches users by email" do
-        CampusOracle::Queries.should_receive(:find_people_by_email).with('johndoe@ber', Canvas::CourseAddUser::SEARCH_LIMIT).and_return([])
-        people = Canvas::CourseAddUser.search_users('johndoe@ber', 'email')
-        expect(people).to be_an_instance_of Array
+    context 'when searching by name' do
+      before do
+        allow(CampusOracle::Queries).to(
+          receive(:find_people_by_name).
+          with("#{common_first_name} #{common_last_name}", Canvas::CourseAddUser::SEARCH_LIMIT).
+          and_return(people_array))
       end
-
-      it "does not include student id in the results" do
-        CampusOracle::Queries.should_receive(:find_people_by_email).with('johndoe@ber', Canvas::CourseAddUser::SEARCH_LIMIT).and_return([])
-        people = Canvas::CourseAddUser.search_users('johndoe@ber', 'email')
-        expect(people).to be_an_instance_of Array
-        people.each do |person|
-          expect(person).to be_an_instance_of Hash
-          expect(person.has_key?('student_id')).to be_falsey
-        end
-      end
+      subject { Canvas::CourseAddUser.search_users("#{common_first_name} #{common_last_name}", 'name') }
+      it_should_behave_like 'a filtered result set'
     end
 
-    context "when searching by LDAP user id" do
-      it "searches users by LDAP user id" do
-        CampusOracle::Queries.should_receive(:find_people_by_uid).with('100374').and_return([])
-        people = Canvas::CourseAddUser.search_users('100374', 'ldap_user_id')
-        expect(people).to be_an_instance_of Array
+    context 'when searching by email' do
+      before do
+        allow(CampusOracle::Queries).to(
+          receive(:find_people_by_email).
+          with(common_email, Canvas::CourseAddUser::SEARCH_LIMIT).
+          and_return(people_array))
       end
-
-      it "does not include student id in the results" do
-        CampusOracle::Queries.should_receive(:find_people_by_uid).with('100374').and_return([])
-        people = Canvas::CourseAddUser.search_users('100374', 'ldap_user_id')
-        expect(people).to be_an_instance_of Array
-        people.each do |person|
-          expect(person).to be_an_instance_of Hash
-          expect(person.has_key?('student_id')).to be_falsey
-        end
-      end
+      subject { Canvas::CourseAddUser.search_users(common_email, 'email') }
+      it_should_behave_like 'a filtered result set'
     end
+
+    context 'when searching by LDAP uid' do
+      before { allow(CampusOracle::Queries).to receive(:find_people_by_uid).with(common_uid).and_return(people_array) }
+      subject { Canvas::CourseAddUser.search_users(common_uid, 'ldap_user_id') }
+      it_should_behave_like 'a filtered result set'
+    end
+
   end
 
   context "when obtaining course sections list" do
@@ -186,13 +212,13 @@ describe Canvas::CourseAddUser do
     }
     let(:enroll_user_with_role_id_response) { enroll_user_response.merge({'role' => 'Owner', 'role_id' => owner_role_id})}
     before do
-      allow_any_instance_of(Canvas::SisUserProfile).to receive(:new).with(:user_id => ldap_uid).and_return(double(get: canvas_user_profile))
+      allow_any_instance_of(Canvas::SisUserProfile).to receive(:new).with(:user_id => current_student_uid).and_return(double(get: canvas_user_profile))
       allow_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return(enroll_user_response)
     end
 
     it "enrolls user to canvas course" do
       expect_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return(enroll_user_response)
-      result = Canvas::CourseAddUser.add_user_to_course(ldap_uid, enrollment_type, canvas_course_id)
+      result = Canvas::CourseAddUser.add_user_to_course(current_student_uid, enrollment_type, canvas_course_id)
       expect(result).to be_an_instance_of Hash
       expect(result['id']).to eq 20959
       expect(result['root_account_id']).to eq 90242
@@ -203,7 +229,7 @@ describe Canvas::CourseAddUser do
 
     it "adds user to canvas with custom role id option" do
       expect_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {:role_id => owner_role_id}).and_return(enroll_user_with_role_id_response)
-      result = Canvas::CourseAddUser.add_user_to_course(ldap_uid, enrollment_type, canvas_course_id, :role_id => owner_role_id)
+      result = Canvas::CourseAddUser.add_user_to_course(current_student_uid, enrollment_type, canvas_course_id, :role_id => owner_role_id)
       expect(result['root_account_id']).to eq 90242
       expect(result['enrollment_state']).to eq 'active'
       expect(result['role']).to eq 'Owner'
