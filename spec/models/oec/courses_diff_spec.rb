@@ -32,11 +32,14 @@ describe Oec::CoursesDiff do
         end
         diff = Oec::CoursesDiff.new(dept_name, campus_data_per_dept[dept_name], data_from_dept, 'tmp/oec')
         expect(diff.base_file_name).to include dept_name_path
-        # IO.read("#{src_dir}/expected_diff_#{dept_name_path}_courses.csv").should eq IO.read(diff.export[:filename])
         actual_diff = CSV.read diff.export[:filename]
         expected_diff = CSV.read "#{src_dir}/expected_diff_#{dept_name_path}_courses.csv"
         expect(expected_diff.length).to eq actual_diff.length
         expect(expected_diff.length > 0).to eq diff.was_difference_found
+        if dept_name == 'STAT'
+          # Bogus id in STAT_courses_confirmed.csv
+          expect(diff.errors_per_course_id['1999-E-BAD/CCN_X'].length).to eq 6
+        end
       end
     }
   end
