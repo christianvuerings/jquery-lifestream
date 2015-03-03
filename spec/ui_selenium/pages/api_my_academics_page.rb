@@ -149,7 +149,7 @@ class ApiMyAcademicsPage
     dates
   end
 
-# FINAL EXAMS
+  # FINAL EXAMS
 
   def exam_schedules
     @parsed['examSchedule']
@@ -200,7 +200,7 @@ class ApiMyAcademicsPage
     all_locations.sort
   end
 
-# TELE-BEARS
+  # TELE-BEARS
 
   def tele_bears
     @parsed['telebears']
