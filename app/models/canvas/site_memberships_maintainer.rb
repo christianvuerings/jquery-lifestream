@@ -45,6 +45,30 @@ module Canvas
       end
     end
 
+    def self.remove_memberships(sis_course_id, sis_section_ids, enrollments_csv_filename)
+      enrollments_rows = []
+      worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids, enrollments_rows, [], [])
+      sis_section_ids.each do |sis_section_id|
+        canvas_section_id = "sis_section_id:#{sis_section_id}"
+        existing_enrollment = Canvas::SectionEnrollments.new(section_id: canvas_section_id).list_enrollments
+        existing_enrollment.each do |enrollment|
+          worker.append_enrollment_deletion(sis_section_id, enrollment['role'], enrollment['user']['sis_user_id'])
+        end
+      end
+      if enrollments_rows.empty?
+        logger.warn("No memberships found for course site #{sis_course_id}, sections #{sis_section_ids}")
+        return
+      end
+      logger.warn("Importing #{enrollments_rows.size} membership deletions to course site #{sis_course_id}")
+      enrollments_csv = worker.make_enrollments_csv(enrollments_csv_filename, enrollments_rows)
+      response = Canvas::SisImport.new.import_enrollments(enrollments_csv, '&override_sis_stickiness=true')
+      if response.blank?
+        logger.error("Enrollment deletion import to course site #{sis_course_id} failed")
+      else
+        logger.info("Successfully imported enrollment deletions to course site #{sis_course_id}")
+      end
+    end
+
     def initialize(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, options = {})
       default_options = { :batch_mode => false, :cached_enrollments_provider => nil, :sis_user_id_changes => {} }
       options.reverse_merge!(default_options)
@@ -170,7 +194,7 @@ module Canvas
         if enrollment['sis_import_id'].present? && enrollment['enrollment_state'] == 'active'
           logger.info "No campus record for Canvas enrollment in Course ID: #{enrollment['course_id']}, Section ID: #{enrollment['course_section_id']} for user #{uid} with role #{enrollment['role']}"
           sis_user_id = enrollment['user']['sis_user_id'] unless sis_user_id = @sis_user_id_changes["sis_login_id:#{uid}"]
-          append_enrollment_deletion(section_id, api_role_to_csv_role(enrollment['role']), sis_user_id)
+          append_enrollment_deletion(section_id, enrollment['role'], sis_user_id)
         end
       end
     end
@@ -193,11 +217,11 @@ module Canvas
     end
 
     # Appends enrollment record for deletion
-    def append_enrollment_deletion(section_id, canvas_role, sis_user_id)
+    def append_enrollment_deletion(section_id, api_role, sis_user_id)
       @enrollments_csv_output << {
         'course_id' => @sis_course_id,
         'user_id' => sis_user_id,
-        'role' => canvas_role,
+        'role' => api_role_to_csv_role(api_role),
         'section_id' => section_id,
         'status' => 'deleted'
       }

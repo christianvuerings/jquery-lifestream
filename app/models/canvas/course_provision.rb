@@ -53,22 +53,12 @@ module Canvas
       cpcs.job_id
     end
 
-    def remove_sections(sis_section_ids)
+    def edit_sections(ccns_to_remove, ccns_to_add)
       return nil unless user_authorized?
       raise RuntimeError, "canvas_course_id option not present" if @canvas_course_id.blank?
       cpcs = Canvas::ProvideCourseSite.new(working_uid)
       cpcs.save
-      cpcs.background.remove_sections(@canvas_course_id, sis_section_ids)
-      self.class.expire instance_key unless @admin_by_ccns
-      cpcs.job_id
-    end
-
-    def add_sections(term_code, term_year, ccns)
-      return nil unless user_authorized?
-      raise RuntimeError, "canvas_course_id option not present" if @canvas_course_id.blank?
-      cpcs = Canvas::ProvideCourseSite.new(working_uid)
-      cpcs.save
-      cpcs.background.add_sections(@canvas_course_id, term_code, term_year, ccns)
+      cpcs.background.edit_sections(get_course_info, ccns_to_remove, ccns_to_add)
       self.class.expire instance_key unless @admin_by_ccns
       cpcs.job_id
     end

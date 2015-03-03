@@ -25,8 +25,8 @@ module Canvas
       import_with_check(csv_file_path, '_sis_import_courses')
     end
 
-    def import_enrollments(csv_file_path)
-      import_with_check(csv_file_path, '_sis_import_enrollments')
+    def import_enrollments(csv_file_path, extra_params = '')
+      import_with_check(csv_file_path, '_sis_import_enrollments', extra_params)
     end
 
     def import_sections(csv_file_path)

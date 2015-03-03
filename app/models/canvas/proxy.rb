@@ -128,7 +128,7 @@ module Canvas
       if (parsed = /TERM:(?<term_yr>\d+)-(?<term_cd>[[:upper:]])$/.match(sis_term_id))
         {
           term_yr: parsed[:term_yr],
-          term_cd: parsed[:term_cd],
+          term_cd: parsed[:term_cd]
         }
       end
     end
