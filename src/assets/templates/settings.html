@@ -26,100 +26,16 @@
 
   <a class="cc-settings-dashboard-link" href="/dashboard">&laquo; Take me to my Dashboard</a>
 
-  <div data-ng-show="api.user.profile.isViewer || api.user.profile.actingAsUid" data-ng-controller="AdminController">
+  <div data-ng-show="api.user.profile.isViewer || api.user.profile.actingAsUid">
     <h2>Admin</h2>
-    <h3>View as</h3>
-    <form data-ng-submit="admin.actAsUser()">
-      <div class="row">
-        <div class="small-3 columns">
-          <label for="cc-settings-act-as-uid">UID/SID</label>
-        </div>
-        <div class="small-9 columns">
-          <input id="cc-settings-act-as-uid" data-ng-model="admin.actAs.id" data-ng-pattern="api.util.uidPattern" placeholder="Enter UID or SID here" type="number" data-cc-select-on-click-directive />
-        </div>
-      </div>
-      <div class="row">
-        <div class="small-9 small-offset-3 columns">
-          <button
-            class="cc-button cc-button-blue"
-            data-ng-disabled="!admin.actAs.id"
-            type="submit">Submit</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="small-9 small-offset-3 columns">
-          <span data-ng-bind="admin.actAsErrorStatus"></span>
-        </div>
-      </div>
-      <div class="row" data-ng-if="admin.userPool">
-        <div class="small-9 small-offset-3 columns">
-          <ul data-ng-repeat="user in admin.userPool">
-            <li>
-              UID: <button class="cc-button-link" data-ng-bind="user.ldap_uid" data-ng-click="admin.actAsUser(user)"></button> (SID: {{user.student_id || "none"}})
-            </li>
-          </ul>
-        </div>
-      </div>
 
-      <div class="row cc-settings-recent-uids" data-ng-repeat="block in admin.userBlocks">
-        <div class="small-9 small-offset-3 columns" data-ng-if="supportsLocalStorage && block.users.length">
-          <h4>{{block.title}} (<button type="button" class="cc-button-link" data-ng-click="block.clearAllUsers()">clear all</button>)</h4>
-          <ul>
-            <li data-ng-repeat="user in block.users track by $index">
-              <span>
-              UID: <button type="submit" class="cc-button-link" data-ng-click="admin.updateIDField(user.ldap_uid)" data-ng-bind="user.ldap_uid"></button> (SID: {{user.student_id || "none"}})
-              </span>
-              <span data-ng-if="block.storeUser">(<button type="button" class="cc-button-link" data-ng-click="block.storeUser(user)">save</button>)</span>
-              <span data-ng-if="block.clearUser">(<button type="button" class="cc-button-link" data-ng-click="block.clearUser($index)">delete</button>)</span>
-            </li>
-          </ul>
+    <div class="row">
+      <div class="small-9 columns">
+        <div class="medium-4 columns cc-column-last">
+          <div data-ng-include="'widgets/student_lookup.html'"></div>
         </div>
       </div>
-
-    </form>
-    <form data-ng-if="api.user.profile.actingAsUid" data-ng-submit="admin.stopActAs()">
-      <button class="cc-button cc-button-blue" type="submit">Stop viewing as</button>
-    </form>
-
-    <h3>UID/SID Lookup</h3>
-    <form data-ng-submit="admin.lookupUser()">
-      <div class="row">
-        <div class="small-9 small-offset-3 columns">
-          <input id="cc-settings-id" data-ng-pattern="api.util.uidPattern" placeholder="Enter UID or SID here" data-ng-model="admin.id" type="number" data-cc-select-on-click-directive />
-        </div>
-      </div>
-      <div class="row">
-        <div class="small-9 small-offset-3 columns">
-          <button
-            class="cc-button cc-button-blue"
-            data-ng-disabled="!admin.id"
-            type="submit">Look Up</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="small-8 small-offset-3 columns">
-          <span data-ng-bind="admin.lookupErrorStatus"></span>
-        </div>
-      </div>
-      <div data-ng-if="admin.users" class="row">
-        <div class="small-6 small-offset-3 columns cc-table">
-          <table class="cc-settings-table">
-            <thead>
-              <tr>
-                <th width="50%" scope="col">UID</th>
-                <th width="50%" scope="col">SID</th>
-              </tr>
-            </thead>
-            <tbody data-ng-repeat="user in admin.users">
-              <tr>
-                <td data-ng-bind="user.ldap_uid"></td>
-                <td data-ng-bind="user.student_id || 'This user has no SID'"></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </form>
+    </div>
 
     <div data-ng-controller="ApiTestController" data-ng-show="apiTest.enabled">
       <h3>Api Test</h3>
