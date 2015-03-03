@@ -30,19 +30,22 @@ class ApiMyAcademicsPage
     time
   end
 
+  # STANDING
+
   def colleges_and_majors
     @parsed['collegeAndLevel']['colleges']
   end
 
   def colleges
     colleges = []
-    colleges_and_majors.each { |college| colleges.push(college['college'])}
+    colleges_and_majors.each { |college| colleges.push(college['college']) }
     colleges
   end
 
   def majors
     majors = []
     colleges_and_majors.each { |major| majors.push(major['major']) }
+    majors
   end
 
   def has_no_standing
