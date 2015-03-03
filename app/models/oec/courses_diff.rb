@@ -35,7 +35,8 @@ module Oec
     end
 
     def append_records(output)
-      Rails.logger.warn "Diff the CSV confirmed by #{@dept_name} dept against latest campus data."
+      courses_csv_file = "#{@dept_name}_courses_confirmed.csv"
+      Rails.logger.info "Start diff on #{courses_csv_file}"
       @aligned_rows = []
       @data_from_dept.each do |data_from_dept_row|
         id_hash = create_id_hash data_from_dept_row
@@ -51,7 +52,7 @@ module Oec
             ignore_db_instructor = !@campus_data_hash[course_id][COLUMN_LDAP_UID].blank?
             output_diff(key_with_ldap_uid, @campus_data_hash[course_id], data_from_dept_row, output, ignore_db_instructor)
           else
-            Rails.logger.warn "No campus data found for #{course_id}"
+            report_errors(course_id, ["Campus-db has NO record for #{course_id} (ldap_uid=#{ldap_uid}) as found in #{courses_csv_file}"])
             output_diff(course_id, nil, data_from_dept_row, output)
           end
         end
@@ -59,13 +60,19 @@ module Oec
       @campus_data_hash.each do |key, db_record|
         unless @aligned_rows.any? { |aligned_row| aligned_row.start_with?(key) }
           # Ignore this campus_data_hash entry if key equals {course_id} and yet hash also includes {course_id}-{ldap_uid}
-          unless @campus_data_hash.has_key? "#{key}-#{db_record[COLUMN_LDAP_UID]}"
-            output_diff(db_record[COLUMN_COURSE_ID], db_record, nil, output)
-            Rails.logger.warn "dept_data does NOT contain course_id=#{key}"
+          ldap_uid = db_record[COLUMN_LDAP_UID]
+          unless @campus_data_hash.has_key? "#{key}-#{ldap_uid}"
+            course_id = db_record[COLUMN_COURSE_ID]
+            output_diff(course_id, db_record, nil, output)
+            report_errors(course_id, ["#{courses_csv_file} does NOT contain course_id=#{course_id} with ldap_uid=#{ldap_uid}"])
           end
         end
       end
+      Rails.logger.info "Diff file generated per #{courses_csv_file}" if @was_difference_found
+      Rails.logger.info "No diff to report on #{courses_csv_file}" unless @was_difference_found
     end
+
+    private
 
     def output_diff(key, db_record, dept_data, output, ignore_db_instructor = false)
       @aligned_rows << key
@@ -109,8 +116,6 @@ module Oec
       end
     end
 
-    private
-
     def create_id_hash(row)
       annotated_course_id = row[COLUMN_COURSE_ID]
       id_hash = create_course_id_hash annotated_course_id
@@ -134,11 +139,16 @@ module Oec
         errors << "INSTRUCTOR_FUNC is invalid: #{instructor_func}" unless (0..4).include? instructor_func.to_i
       end
 
-      if errors.any?
-        @errors_per_course_id[annotated_course_id] ||= []
-        @errors_per_course_id[annotated_course_id].concat errors
-      end
+      report_errors(annotated_course_id, errors)
       errors.any? ? nil : id_hash
+    end
+
+    def report_errors(course_id, errors = [])
+      if errors.any?
+        @errors_per_course_id[course_id] ||= []
+        @errors_per_course_id[course_id].concat errors
+        Rails.logger.debug "Validation errors for #{@dept_name} per #{course_id}: #{errors.to_s}"
+      end
     end
 
     def create_course_id_hash(annotated_course_id)

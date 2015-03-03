@@ -24,7 +24,6 @@ describe Oec::CoursesDiff do
 
     it {
       dept_names.each do |dept_name|
-        Rails.logger.info "Evaluating diff where dept_name = #{dept_name}"
         dept_name_path = dept_name.gsub(/\s/, '_')
         data_from_dept = []
         CSV.read("#{src_dir}/#{dept_name_path}_courses_confirmed.csv").each_with_index do |row, index|
@@ -37,8 +36,11 @@ describe Oec::CoursesDiff do
         expect(expected_diff.length).to eq actual_diff.length
         expect(expected_diff.length > 0).to eq diff.was_difference_found
         if dept_name == 'STAT'
-          # Bogus id in STAT_courses_confirmed.csv
-          expect(diff.errors_per_course_id['1999-E-BAD/CCN_X'].length).to eq 6
+          # Bogus ids in STAT_courses_confirmed.csv
+          expected_error_counts = { '2015-B-666' => 1, '2015-B-55555' => 1, '1999-E-BAD/CCN_X' => 6, '2015-B-111' => 1, '2015-B-33333' => 1 }
+          expected_error_counts.each do |course_id, error_count|
+            expect(diff.errors_per_course_id[course_id].length).to eq error_count
+          end
         end
       end
     }

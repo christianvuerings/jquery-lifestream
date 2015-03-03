@@ -1,6 +1,7 @@
 namespace :oec do
 
-  hr = "\n" + '-------------------------------------------------------------' + "\n"
+  br = "\n"
+  hr = "#{br}-------------------------------------------------------------#{br}"
 
   desc 'Export courses.csv file'
   task :courses => :environment do
@@ -62,18 +63,17 @@ namespace :oec do
       Rails.logger.warn "#{hr}No files matching {DEPT}_courses_confirmed.csv were found in #{args.src_dir}#{hr}"
     end
     if errors_per_dept.any?
-      Rails.logger.warn hr
-      Rails.logger.warn 'VALIDATION ERROR(S)'
+      summary = "#{hr}VALIDATION ERROR(S)#{br}"
       errors_per_dept.each do |dept_name, errors_per_course_id|
-        Rails.logger.warn "#{dept_name}"
+        summary << "#{dept_name}#{br}"
         errors_per_course_id.each do |course_id, errors|
-          Rails.logger.warn "    #{course_id}"
+          summary << "    #{course_id}#{br}"
           errors.each do |error|
-            Rails.logger.warn "        #{error}"
+            summary << "        #{error}#{br}"
           end
         end
       end
-      Rails.logger.warn hr
+      Rails.logger.warn "#{br}#{summary}#{hr}"
     end
   end
 

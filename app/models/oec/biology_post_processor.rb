@@ -66,7 +66,7 @@ module Oec
       dept_names.each do |dept_name|
         dept_uids = pre_existing_uid[dept_name]
         if dept_uids && dept_uids.include?(uid)
-          Rails.logger.warn "#{dept_name}.csv already has #{uid}"
+          Rails.logger.debug "Skip row #{uid} in BIOLOGY data-set because #{dept_name} has accounted for that course."
           return true
         end
       end
