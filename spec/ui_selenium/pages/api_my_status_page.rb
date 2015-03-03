@@ -20,6 +20,10 @@ class ApiMyStatusPage
     @parsed['roles']['student']
   end
 
+  def is_registered?
+    @parsed['roles']['registered']
+  end
+
   def is_ex_student?
     @parsed['roles']['exStudent']
   end
@@ -34,6 +38,14 @@ class ApiMyStatusPage
 
   def is_guest?
     @parsed['roles']['guest']
+  end
+
+  def is_concurrent_enroll_student?
+    @parsed['roles']['concurrentEnrollmentStudent']
+  end
+
+  def has_student_history?
+    @parsed['hasStudentHistory']
   end
 
   def has_academics_tab?

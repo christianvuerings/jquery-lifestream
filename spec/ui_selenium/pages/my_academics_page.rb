@@ -44,7 +44,15 @@ module CalCentralPages
 
     def click_semester_link(driver, semester)
       logger.info("Clicking link for #{semester}")
+      wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
+      wait.until { driver.find_element(:link_text => semester) }
       driver.find_element(:link_text => semester).click
+    end
+
+    def click_class_link(driver, course_code)
+      wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
+      wait.until { driver.find_element(:link_text => course_code) }
+      driver.find_element(:link_text => course_code).click
     end
   end
 end
