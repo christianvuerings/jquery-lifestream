@@ -62,7 +62,6 @@ namespace :oec do
       Rails.logger.warn "#{hr}No files matching {DEPT}_courses_confirmed.csv were found in #{args.src_dir}#{hr}"
     end
     if errors_per_dept.any?
-      Rails.logger.warn hr
       Rails.logger.warn 'VALIDATION ERROR(S)'
       errors_per_dept.each do |dept_name, errors_per_course_id|
         Rails.logger.warn "#{dept_name}"
