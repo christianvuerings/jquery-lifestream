@@ -10,7 +10,7 @@
 
     <div data-ng-if="currentWorkflowStep === 'preview'">
 
-      <div data-ng-show="jobStatusMessage !== ''" class="cc-notice-box cc-radius" data-ng-class="{'cc-notice-error':(lastJobStatus !== 'Completed'), 'cc-notice-success':(lastJobStatus === 'Completed')}">
+      <div data-ng-show="jobStatusMessage !== ''" class="cc-notice-box cc-radius" data-ng-class="{'cc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'cc-notice-success':(lastJobStatus === 'sectionEditsCompleted')}">
         <span data-ng-bind="jobStatusMessage"></span>
         <div class="cc-notice-close-button">
           <button class="fa fa-times-circle button cc-close-button small" data-ng-click="jobStatusMessage=''" aria-label="Close"></button>
@@ -215,8 +215,8 @@
                             <th>Actions</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr data-ng-class="{'cc-page-course-official-sections-table-row':(!$last), 'cc-page-course-official-sections-table-row-last':($last), 'cc-page-course-official-sections-table-row-deleted':(section.stagedState === 'delete'), 'cc-page-course-official-sections-table-row-disabled':(section.isCourseSection && section.stagedState !== 'delete') || (section.stagedState === 'add')}" data-ng-repeat="section in course.sections">
+                        <tbody data-ng-repeat="section in course.sections">
+                          <tr data-ng-class="{'cc-page-course-official-sections-table-row':(!$last && !section.sites), 'cc-page-course-official-sections-table-row-last':($last || section.sites), 'cc-page-course-official-sections-table-row-deleted':(section.stagedState === 'delete'), 'cc-page-course-official-sections-table-row-disabled':(section.isCourseSection && section.stagedState !== 'delete') || (section.stagedState === 'add')}">
                             <td class="cc-page-course-official-sections-table-cell-course-code" data-ng-bind="section.courseCode"></td>
                             <td class="cc-page-course-official-sections-table-cell-section-label" data-ng-bind="section.section_label"></td>
                             <td class="cc-page-course-official-sections-table-cell-section-ccn" data-ng-bind="section.ccn"></td>
@@ -243,6 +243,14 @@
                               </div>
                             </td>
                           </tr>
+                          <tr data-ng-show="section.sites" data-ng-class="{'cc-page-course-official-sections-table-row':(!$last), 'cc-page-course-official-sections-table-row-last':($last)}">
+                            <td colspan="7" class="cc-page-course-official-sections-sites-cell">
+                              <div data-ng-repeat="site in section.sites" class="cc-page-course-official-sections-table-sites-container" data-ng-if="$parent.otherCourseSection(site)">
+                                <i class="fa fa-info-circle cc-page-course-official-sections-table-sited-icon"></i>
+                                This section is already in use by <a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a>
+                              </div>
+                            </td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>
@@ -262,14 +270,9 @@
     <!-- ################################################################################################################################ -->
 
     <div data-ng-if="currentWorkflowStep === 'processing'">
-      <div data-ng-hide="jobStatus" class="cc-page-course-official-sections-pending-request">
+      <div data-ng-show="jobStatus === 'sendingRequest" class="cc-page-course-official-sections-pending-request">
         <i class="fa fa-spinner fa-spin"></i>
         Sending request...
-      </div>
-
-      <div data-ng-if="jobStatus === 'New'" class="cc-page-course-official-sections-pending-request">
-        <i class="fa fa-spinner fa-spin"></i>
-        Section updates request sent. Awaiting processing....
       </div>
 
       <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>

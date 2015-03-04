@@ -140,6 +140,21 @@
     .cc-page-course-official-sections-table-cell-section-instructors {
       width: 190px;
     }
+
+    .cc-page-course-official-sections-table-sited-icon {
+      color: $bc-color-help-link-blue;
+      font-size: 15px;
+      margin-right: 4px;
+      margin-top: 2px;
+    }
+
+    .cc-page-course-official-sections-sites-cell {
+      padding: 0 10px;
+    }
+
+    .cc-page-course-official-sections-table-sites-container {
+      margin-bottom: 5px;
+    }
   }
 
   @media #{$small-only} {
