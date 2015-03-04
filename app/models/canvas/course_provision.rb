@@ -68,6 +68,7 @@ module Canvas
       course_info = {}
       course = Canvas::Course.new(:canvas_course_id => @canvas_course_id).course
       course_info[:canvasCourseId] = @canvas_course_id
+      course_info[:sisCourseId] = course['sis_course_id']
       course_info[:name] = course['name']
       course_info[:courseCode] = course['course_code']
       course_info[:term] = Canvas::Proxy.sis_term_id_to_term(course['term']['sis_term_id'])
