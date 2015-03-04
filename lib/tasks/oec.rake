@@ -41,40 +41,33 @@ namespace :oec do
     debug_mode = args.is_debug_mode
     courses = Oec::CoursesGroup.new(confirmed_csv_hash.keys, tmp_dir, debug_mode, debug_mode)
     # Do diff(s)
-    summaries = []
-    errors_per_dept = {}
+    messages_per_dept = {}
     confirmed_csv_hash.each do |dept_name, data_from_dept|
       campus_data = courses.campus_data_per_dept[dept_name]
       courses_diff = Oec::CoursesDiff.new(dept_name, campus_data, data_from_dept, args.dest_dir)
       courses_diff.export
-      if courses_diff.was_difference_found
-        summaries << "#{dept_name}: #{courses_diff.output_filename}"
-      else
-        File.delete courses_diff.output_filename
-        summaries << "#{dept_name}: Confirmed CSV matches campus data. No diff to report."
-      end
-      if courses_diff.errors_per_course_id.any?
-        errors_per_dept[dept_name] = courses_diff.errors_per_course_id
-      end
+      diff_found = courses_diff.was_difference_found
+      File.delete courses_diff.output_filename unless diff_found
+      messages_per_dept[dept_name] = {}
+      messages_per_dept[dept_name]['Diff report'] = diff_found ? "Created #{courses_diff.output_filename}" : 'No diff'
+      messages_per_dept[dept_name].merge! courses_diff.errors_per_course_id if courses_diff.errors_per_course_id.any?
     end
-    if confirmed_csv_hash.any?
-      Rails.logger.warn "#{hr}#{summaries.join("\n")}#{hr}"
-    else
-      Rails.logger.warn "#{hr}No files matching {DEPT}_courses_confirmed.csv were found in #{args.src_dir}#{hr}"
-    end
-    if errors_per_dept.any?
-      summary = "#{hr}VALIDATION ERROR(S)#{br}"
-      errors_per_dept.each do |dept_name, errors_per_course_id|
-        summary << "#{dept_name}#{br}"
-        errors_per_course_id.each do |course_id, errors|
-          summary << "    #{course_id}#{br}"
-          errors.each do |error|
-            summary << "        #{error}#{br}"
-          end
+    # Summarize for the user
+    summary = "#{hr}Summary#{br}"
+    summary << "No files found in #{args.src_dir}" if confirmed_csv_hash.empty?
+    messages_per_dept.each do |dept_name, message_hash|
+      summary << "  #{dept_name}#{br}"
+      indent_each = '      '
+      message_hash.each do |header, messages|
+        summary << "    #{header}#{br}"
+        if messages.is_a? Array
+          summary << indent_each + messages.join("#{br}#{indent_each}") + br
+        else
+          summary << "#{indent_each}#{messages.to_s}#{br}"
         end
       end
-      Rails.logger.warn "#{br}#{summary}#{hr}"
     end
+    Rails.logger.warn "#{summary}#{hr}" unless summary.blank?
   end
 
 end
