@@ -33,7 +33,7 @@ module Oec
         File.delete csv_file unless keep_csv_files
         @campus_data_per_dept[dept_name] = campus_data
       end
-      Dir.delete @dest_dir unless keep_csv_files
+      Dir.delete @dest_dir if File.exist?(@dest_dir) && !keep_csv_files
     end
 
   end
