@@ -98,7 +98,7 @@
         $timeout.cancel(timeoutPromise);
         $scope.lastJobStatus = angular.copy($scope.jobStatus);
         $scope.jobStatusMessage = 'An error has occurred with your request. Please try again or contact bCourses support.';
-        if ($scope.lastJobStatus === 'Completed') {
+        if ($scope.lastJobStatus === 'sectionEditsCompleted') {
           $scope.jobStatusMessage = 'Your request was completed successfully.';
         }
         fetchFeed();
@@ -124,7 +124,7 @@
      */
     var sectionUpdateJobCreated = function(data) {
       angular.extend($scope, data);
-      $scope.currentWorkflowStep = 'processing';
+      $scope.jobStatus = 'processing';
       jobStatusLoader();
     };
 
@@ -314,6 +314,7 @@
     $scope.saveChanges = function() {
       var canvasCourseId = $scope.canvasCourse.canvasCourseId;
       $scope.changeWorkflowStep('processing');
+      $scope.jobStatus = 'sendingRequest';
       var update = stagedSections();
       canvasCourseProvisionFactory.updateSections(canvasCourseId, update.addSections, update.deleteSections)
         .success(sectionUpdateJobCreated)
