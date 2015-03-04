@@ -38,28 +38,6 @@ describe Canvas::ProvideCourseSite do
     end
   end
 
-  describe '.canvas_sections_to_csv_rows' do
-    let(:canvas_sections) do
-      [
-        {"course_id"=>5, "end_at"=>nil, "id"=>7, "name"=>"COMPSCI 61B DIS 111", "nonxlist_course_id"=>nil, "start_at"=>nil, "sis_section_id"=>"SEC:2014-D-25932", "sis_course_id"=>"CRS:COMPSCI-61B-2014-D", "integration_id"=>nil, "sis_import_id"=>24},
-        {"course_id"=>5, "end_at"=>nil, "id"=>7, "name"=>"COMPSCI 61B DIS 112", "nonxlist_course_id"=>nil, "start_at"=>nil, "sis_section_id"=>"SEC:2014-D-25938", "sis_course_id"=>"CRS:COMPSCI-61B-2014-D", "integration_id"=>nil, "sis_import_id"=>24},
-      ]
-    end
-    it 'returns csv rows with status' do
-      result = subject.class.canvas_sections_to_csv_rows(canvas_sections, 'deleted')
-      expect(result).to be_an_instance_of Array
-      expect(result.count).to eq 2
-      expect(result[0]['section_id']).to eq 'SEC:2014-D-25932'
-      expect(result[0]['course_id']).to eq 'CRS:COMPSCI-61B-2014-D'
-      expect(result[0]['name']).to eq 'COMPSCI 61B DIS 111'
-      expect(result[0]['status']).to eq 'deleted'
-      expect(result[1]['section_id']).to eq 'SEC:2014-D-25938'
-      expect(result[1]['course_id']).to eq 'CRS:COMPSCI-61B-2014-D'
-      expect(result[1]['name']).to eq 'COMPSCI 61B DIS 112'
-      expect(result[1]['status']).to eq 'deleted'
-    end
-  end
-
   #####################################
   # Instance Methods
 
@@ -146,148 +124,6 @@ describe Canvas::ProvideCourseSite do
       subject.create_course_site(site_name, site_course_code, 'fall-2013', ['1136', '1204'])
       cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
       expect(cached_object.jobStatus).to eq 'courseCreationCompleted'
-    end
-  end
-
-  describe '#remove_sections' do
-    let(:sis_section_ids) { ['SEC:2014-D-25932', 'SEC:2014-D-25995'] }
-    let(:section_identifiers) do
-      [
-        {"course_id"=>5, "end_at"=>nil, "id"=>7, "name"=>"COMPSCI 61B DIS 111", "nonxlist_course_id"=>nil, "start_at"=>nil, "sis_section_id"=>"SEC:2014-D-25932", "sis_course_id"=>"CRS:COMPSCI-61B-2014-D", "integration_id"=>nil, "sis_import_id"=>24, :term_yr=>"2014", :term_cd=>"D", :ccn=>"25932"},
-        {"course_id"=>5, "end_at"=>nil, "id"=>32, "name"=>"COMPSCI 61B LAB 023", "nonxlist_course_id"=>nil, "start_at"=>nil, "sis_section_id"=>"SEC:2014-D-26001", "sis_course_id"=>"CRS:COMPSCI-61B-2014-D", "integration_id"=>nil, "sis_import_id"=>24, :term_yr=>"2014", :term_cd=>"D", :ccn=>"26001"},
-        {"course_id"=>5, "end_at"=>nil, "id"=>31, "name"=>"COMPSCI 61B LAB 022", "nonxlist_course_id"=>nil, "start_at"=>nil, "sis_section_id"=>"SEC:2014-D-25995", "sis_course_id"=>"CRS:COMPSCI-61B-2014-D", "integration_id"=>nil, "sis_import_id"=>24, :term_yr=>"2014", :term_cd=>"D", :ccn=>"25995"},
-        {"course_id"=>5, "end_at"=>nil, "id"=>35, "name"=>"COMPSCI 61B LAB 024", "nonxlist_course_id"=>nil, "start_at"=>nil, "sis_section_id"=>"SEC:2014-D-26002", "sis_course_id"=>"CRS:COMPSCI-61B-2014-D", "integration_id"=>nil, "sis_import_id"=>24, :term_yr=>"2014", :term_cd=>"D", :ccn=>"26002"},
-      ]
-    end
-    let(:csv_filename_prefix) { "tmp/canvas/course_provision_test-#{SecureRandom.hex(8)}" }
-    let(:expected_import_csv_filepath) { "#{csv_filename_prefix}-drop-sections.csv" }
-    before do
-      allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(section_identifiers)
-      allow(subject).to receive(:csv_filename_prefix).and_return(csv_filename_prefix)
-    end
-    after { delete_files_if_exists([expected_import_csv_filepath]) }
-
-    it 'intercepts raised exceptions and updates status' do
-      allow(Canvas::CourseSections).to receive(:new).and_raise(RuntimeError, 'Unable to retrieve sections')
-      expect { subject.remove_sections(canvas_course_id, sis_section_ids) }.to raise_error(RuntimeError, 'Unable to retrieve sections')
-      expect(subject.jobStatus).to eq 'sectionRemovalError'
-      errors = subject.instance_eval { @errors }
-      expect(errors).to be_an_instance_of Array
-      expect(errors[0]).to eq 'Unable to retrieve sections'
-    end
-
-    it 'performs sis import for sections specified' do
-      sis_import = double('Canvas::SisImport')
-      expect(sis_import).to receive(:import_sections).with(expected_import_csv_filepath)
-      allow(Canvas::SisImport).to receive(:new).and_return(sis_import)
-
-      subject.remove_sections(canvas_course_id, sis_section_ids)
-      expect(File.exists?(expected_import_csv_filepath)).to be_truthy
-      csv_array = CSV.read(expected_import_csv_filepath)
-      expect(csv_array).to be_an_instance_of Array
-      expect(csv_array.count).to eq 3
-      expect(csv_array[0]).to eq ['section_id', 'course_id', 'name', 'status', 'start_date', 'end_date']
-      expect(csv_array[1]).to eq ['SEC:2014-D-25932', 'CRS:COMPSCI-61B-2014-D', 'COMPSCI 61B DIS 111', 'deleted', nil, nil]
-      expect(csv_array[2]).to eq ['SEC:2014-D-25995', 'CRS:COMPSCI-61B-2014-D', 'COMPSCI 61B LAB 022', 'deleted', nil, nil]
-    end
-
-    it 'records completed steps and sets status' do
-      allow_any_instance_of(Canvas::SisImport).to receive(:import_sections).and_return(true)
-      subject.remove_sections(canvas_course_id, sis_section_ids)
-      subject_json = JSON.parse(subject.to_json)
-      expect(subject_json).to be_an_instance_of Hash
-      expect(subject_json['jobStatus']).to eq 'sectionRemovalCompleted'
-      expect(subject_json['percent_complete']).to eq 1.0
-      expect(subject_json['completed_steps'][0]).to eq 'Obtained course sections'
-      expect(subject_json['completed_steps'][1]).to eq 'Matched selected sections'
-      expect(subject_json['completed_steps'][2]).to eq 'Prepared CSV for import'
-      expect(subject_json['completed_steps'][3]).to eq 'Performed SIS Section Removal Import'
-    end
-  end
-
-  describe '#add_sections' do
-    let(:term_code) { 'D' }
-    let(:term_year) { '2014' }
-    let(:ccns) { ['25932', '25995'] }
-    let(:canvas_course) do
-      {
-        'id' => 1121,
-        'account_id' => 128847,
-        'sis_course_id' => 'CRS:COMPSCI-61B-2014-D',
-        'course_code' => 'COMPSCI 61B - LEC 001',
-        'name' => 'Data Structures',
-        'term' => {
-          'sis_term_id' => 'TERM:2014-D'
-        },
-        'enrollments' => [],
-        'workflow_state' => 'available'
-      }
-    end
-    before do
-      allow_any_instance_of(Canvas::Course).to receive(:course).and_return(canvas_course)
-      allow(subject).to receive(:current_terms).and_return(current_terms)
-      allow(subject).to receive(:prepare_users_courses_list) do
-        subject.instance_eval { complete_step('Prepared courses list') }
-      end
-      allow(subject).to receive(:prepare_section_definitions) do
-        subject.instance_eval { complete_step("Prepared section definitions") }
-      end
-      allow(subject).to receive(:import_sections) do
-        subject.instance_eval { complete_step("Imported sections") }
-      end
-      allow(subject).to receive(:refresh_sections_cache) do
-        subject.instance_eval { complete_step("Clearing bCourses course site cache") }
-      end
-    end
-    it 'intercepts raised exceptions and updates status' do
-      allow(Canvas::Course).to receive(:new).and_raise(RuntimeError, 'Something went wrong')
-      expect { subject.add_sections(canvas_course_id, term_code, term_year, ccns) }.to raise_error(RuntimeError, 'Something went wrong')
-      expect(subject.jobStatus).to eq 'sectionAdditionError'
-      errors = subject.instance_eval { @errors }
-      expect(errors).to be_an_instance_of Array
-      expect(errors[0]).to eq 'Something went wrong'
-    end
-
-    it 'raises error if term slug does not match current term' do
-      term_code = 'E' # invalid term code
-      expect { subject.add_sections(canvas_course_id, term_code, term_year, ccns) }.to raise_error(RuntimeError, 'term_code and term_year does not match a current term')
-      expect(subject.jobStatus).to eq 'sectionAdditionError'
-      errors = subject.instance_eval { @errors }
-      expect(errors[0]).to eq 'term_code and term_year does not match a current term'
-    end
-
-    it 'properly initializes state for section import' do
-      subject.add_sections(canvas_course_id, term_code, term_year, ccns)
-      initialized_ccns = subject.instance_eval { @import_data['ccns'] }
-      initialized_term_slug = subject.instance_eval { @import_data['term_slug'] }
-      initialized_term = subject.instance_eval { @import_data['term'] }
-      initialized_sis_course_id = subject.instance_eval { @import_data['sis_course_id'] }
-      expect(initialized_ccns).to eq ccns
-      expect(initialized_term_slug).to eq 'fall-2014'
-      expect(initialized_term).to eq({:yr=>"2014", :cd=>"D", :slug=>"fall-2014", :name=>"Fall 2014"})
-      expect(initialized_sis_course_id).to eq 'CRS:COMPSCI-61B-2014-D'
-    end
-
-    it 'relies on course preparation methods to import new sections' do
-      expect(subject).to receive(:prepare_users_courses_list).ordered.and_return(true)
-      expect(subject).to receive(:prepare_section_definitions).ordered.and_return(true)
-      expect(subject).to receive(:import_sections).ordered.and_return(true)
-      expect(subject).to receive(:refresh_sections_cache).ordered.and_return(true)
-      subject.add_sections(canvas_course_id, term_code, term_year, ccns)
-    end
-
-    it 'records completed steps and sets status' do
-      subject.add_sections(canvas_course_id, term_code, term_year, ccns)
-      subject_json = JSON.parse(subject.to_json)
-      expect(subject_json).to be_an_instance_of Hash
-      expect(subject_json['jobStatus']).to eq 'sectionAdditionCompleted'
-      expect(subject_json['completed_steps'][0]).to eq 'Initialized ccns and term'
-      expect(subject_json['completed_steps'][1]).to eq 'Obtained Canvas SIS Course ID'
-      expect(subject_json['completed_steps'][2]).to eq 'Prepared courses list'
-      expect(subject_json['completed_steps'][3]).to eq 'Prepared section definitions'
-      expect(subject_json['completed_steps'][4]).to eq 'Imported sections'
-      expect(subject_json['completed_steps'][5]).to eq 'Clearing bCourses course site cache'
-      expect(subject_json['percent_complete']).to eq 1.0
     end
   end
 
@@ -611,9 +447,14 @@ describe Canvas::ProvideCourseSite do
     let(:course_id) {random_id}
     let(:section_ids) {[random_id, random_id]}
     let(:section_definitions) {[{
-      'section_id' => section_ids[0]
+      'section_id' => section_ids[0],
+      'status' => 'active'
     }, {
-      'section_id' => section_ids[1]
+      'section_id' => random_id,
+      'status' => 'deleted'
+      }, {
+      'section_id' => section_ids[1],
+      'status' => 'active'
     }]}
     let(:maintainer) {double}
     it 'should forward to a background job handler' do
@@ -715,6 +556,7 @@ describe Canvas::ProvideCourseSite do
     before do
       @selected_cnns = [
         rand(99999).to_s,
+        rand(99999).to_s,
         rand(99999).to_s
       ]
       @candidate_courses_list = [
@@ -726,7 +568,7 @@ describe Canvas::ProvideCourseSite do
           :role => 'Instructor',
           :sections => [
             { :ccn => rand(99999).to_s, :instruction_format => 'LEC', :is_primary_section => true, :section_label => 'LEC 002', :section_number => '002' },
-            { :ccn => "#{@selected_cnns[1]}", :instruction_format => 'DIS', :is_primary_section => false, :section_label => 'DIS 102', :section_number => '102' }
+            { :ccn => "#{@selected_cnns[2]}", :instruction_format => 'DIS', :is_primary_section => false, :section_label => 'DIS 102', :section_number => '102' }
           ]
         },
         {
@@ -746,7 +588,7 @@ describe Canvas::ProvideCourseSite do
           :title => 'Honors Undergraduate Research',
           :role => 'Instructor',
           :sections => [
-            { :ccn => "#{@selected_cnns[0]}", :instruction_format => 'IND', :is_primary_section => true, :section_label => 'IND 015', :section_number => '015' }
+            { :ccn => "#{@selected_cnns[1]}", :instruction_format => 'IND', :is_primary_section => true, :section_label => 'IND 015', :section_number => '015' }
           ]
         },
         {
@@ -763,30 +605,47 @@ describe Canvas::ProvideCourseSite do
       @term_slug = 'fall-2013'
       @candidate_terms_list = [
           {
-              name: 'Fall 2013',
-              slug: @term_slug,
-              classes: @candidate_courses_list
+            name: 'Fall 2013',
+            slug: @term_slug,
+            termCode: 'D',
+            termYear: '2013',
+            classes: @candidate_courses_list
           }
       ]
     end
 
-    # TODO it "should show which sections already have Canvas course sites" do
-
-    it "should raise exception when term slug not found in courses list" do
-      expect { subject.filter_courses_by_ccns(@candidate_terms_list, 'summer-2011', @selected_cnns) }.to raise_error(ArgumentError, "No courses found!")
+    describe '#filter_courses_by_ccns' do
+      it "should raise exception when term slug not found in courses list" do
+        expect { subject.filter_courses_by_ccns(@candidate_terms_list, 'summer-2011', @selected_cnns) }.to raise_error(ArgumentError, "No courses found!")
+      end
+      it "should filter courses data by POSTed CCN selection" do
+        expect(@selected_cnns.length).to eq 3
+        filtered = subject.filter_courses_by_ccns(@candidate_terms_list, @term_slug, @selected_cnns)
+        expect(filtered.length).to eq 2
+        expect(filtered[0][:course_code]).to eq 'ENGIN 7'
+        expect(filtered[0][:dept]).to eq 'COMPSCI'
+        expect(filtered[0][:sections].length).to eq 1
+        expect(filtered[0][:sections][0][:section_label]).to eq "DIS 102"
+        expect(filtered[1][:course_code]).to eq 'MEC ENG H194'
+        expect(filtered[1][:dept]).to eq 'MEC ENG'
+        expect(filtered[1][:sections].length).to eq 1
+        expect(filtered[1][:sections][0][:section_label]).to eq "IND 015"
+      end
     end
 
-    it "should filter courses data by POSTed CCN selection" do
-      filtered = subject.filter_courses_by_ccns(@candidate_terms_list, @term_slug, @selected_cnns)
-      expect(filtered.length).to eq 2
-      expect(filtered[0][:course_code]).to eq 'ENGIN 7'
-      expect(filtered[0][:dept]).to eq 'COMPSCI'
-      expect(filtered[0][:sections].length).to eq 1
-      expect(filtered[0][:sections][0][:section_label]).to eq "DIS 102"
-      expect(filtered[1][:course_code]).to eq 'MEC ENG H194'
-      expect(filtered[1][:dept]).to eq 'MEC ENG'
-      expect(filtered[1][:sections].length).to eq 1
-      expect(filtered[1][:sections][0][:section_label]).to eq "IND 015"
+    describe '#filter_inaccessible_sections' do
+      it 'should remove Canvas section IDs that are not in the list of authorized campus sections' do
+        official_sections = @selected_cnns.collect do |ccn|
+          {
+            'sis_section_id' => "SEC:2013-D-#{ccn}",
+            term_yr: '2013',
+            term_cd: 'D',
+            ccn: ccn
+          }
+        end
+        filtered = subject.filter_inaccessible_sections(@candidate_terms_list, official_sections)
+        expect(filtered).to eq [official_sections[1], official_sections[2]]
+      end
     end
   end
 
@@ -995,40 +854,25 @@ describe Canvas::ProvideCourseSite do
       subject.stub(:current_terms).and_return(term_codes_array)
     end
 
-    it 'should return matching term code hashes' do
+    it 'should return matching term code hash' do
       result = subject.find_term(:slug => 'spring-3027')
-      expect(result).to be_an_instance_of Array
-      expect(result.count).to eq 1
-      expect(result[0]).to be_an_instance_of Hash
-      expect(result[0][:yr]).to eq '3027'
-      expect(result[0][:cd]).to eq 'B'
-      expect(result[0][:slug]).to eq 'spring-3027'
+      expect(result[:yr]).to eq '3027'
+      expect(result[:cd]).to eq 'B'
+      expect(result[:slug]).to eq 'spring-3027'
 
       result = subject.find_term(:yr => '3026')
-      expect(result).to be_an_instance_of Array
-      expect(result.count).to eq 2
-      expect(result[0]).to be_an_instance_of Hash
-      expect(result[0][:yr]).to eq '3026'
-      expect(result[0][:cd]).to eq 'C'
-      expect(result[0][:slug]).to eq 'summer-3026'
-      expect(result[1][:yr]).to eq '3026'
-      expect(result[1][:cd]).to eq 'D'
-      expect(result[1][:slug]).to eq 'fall-3026'
+      expect(result[:yr]).to eq '3026'
+      expect(result[:cd]).to eq 'C'
+      expect(result[:slug]).to eq 'summer-3026'
     end
 
-    it 'should return empty array when no match' do
+    it 'should return nil when no match' do
       result = subject.find_term(:yr => '3028')
-      expect(result).to be_an_instance_of Array
-      expect(result.count).to eq 0
+      expect(result).to be_nil
 
       result = subject.find_term(:meat => 'hotdog')
-      expect(result).to be_an_instance_of Array
-      expect(result.count).to eq 0
+      expect(result).to be_nil
     end
-
-    # it 'should raise exception when slug does not match a current term code' do
-    #   expect { subject.find_term('winter-3011') }.to raise_error(ArgumentError, 'term_slug does not match current term code')
-    # end
   end
 
   describe '#courses_list_from_ccns' do

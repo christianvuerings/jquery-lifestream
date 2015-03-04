@@ -16,18 +16,6 @@ module Canvas
       Rails.cache.fetch(cache_key)
     end
 
-    # Converts Canvas Course Sections from API into CSV rows for SIS Import
-    def self.canvas_sections_to_csv_rows(canvas_sections, status)
-      canvas_sections.collect do |s|
-        {
-          'section_id' => s['sis_section_id'],
-          'course_id' => s['sis_course_id'],
-          'name' => s['name'],
-          'status' => status
-        }
-      end
-    end
-
     #####################################
     # Instance Methods
 
@@ -52,7 +40,7 @@ module Canvas
       @import_data['site_name'] = site_name
       @import_data['site_course_code'] = site_course_code
       @import_data['term_slug'] = term_slug
-      @import_data['term'] = find_term(:slug => term_slug).first
+      @import_data['term'] = find_term(:slug => term_slug)
       raise RuntimeError, 'term_slug does not match a current term' if @import_data['term'].nil?
       @import_data['ccns'] = ccns
       @import_data['is_admin_by_ccns'] = is_admin_by_ccns
@@ -84,59 +72,66 @@ module Canvas
       raise error
     end
 
-    def remove_sections(canvas_course_id, sis_section_ids)
-      @total_steps = 5.0
+    def edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+      canvas_course_id = canvas_course_info[:canvasCourseId]
+      @import_data['sis_course_id'] = canvas_course_info[:sisCourseId]
+      @total_steps = 2.0  # Section CSV import, clearing course site cache
+      @total_steps += 2.0 if ccns_to_add.present?
+      @total_steps += 1.0 if ccns_to_remove.present?
       @jobStatus = 'Processing'
       save
-      logger.info("Section removal job started. Job state updated in cache key #{@cache_key}")
-      canvas_sections = Canvas::CourseSections.new(:course_id => canvas_course_id).official_section_identifiers
-      complete_step('Obtained course sections')
-      canvas_sections.reject! {|s| !sis_section_ids.include?(s['sis_section_id']) }
-      section_csv_rows = self.class.canvas_sections_to_csv_rows(canvas_sections, 'deleted')
-      complete_step('Matched selected sections')
-      sections_csv_file = make_sections_csv("#{csv_filename_prefix}-drop-sections.csv", section_csv_rows)
-      complete_step('Prepared CSV for import')
-      Canvas::SisImport.new.import_sections(sections_csv_file)
-      complete_step('Performed SIS Section Removal Import')
-
+      logger.info("Edit course site sections job started. Job state updated in cache key #{@cache_key}")
+      @import_data['term'] = find_term(yr: canvas_course_info[:term][:term_yr], cd: canvas_course_info[:term][:term_cd])
+      raise RuntimeError, "Course site #{canvas_course_id} does not match a current term" if @import_data['term'].nil?
+      @import_data['term_slug'] = @import_data['term'][:slug]
+      @import_data['ccns'] = ccns_to_add
+      if ccns_to_add.present?
+        prepare_users_courses_list
+        prepare_section_definitions
+      end
+      if ccns_to_remove.present?
+        prepare_section_deletions(canvas_course_info, ccns_to_remove)
+      end
+      raise RuntimeError, 'No changes to sections requested.' if @import_data['section_definitions'].blank?
+      import_sections(@import_data['section_definitions'])
+      # Add section enrollments.
       refresh_sections_cache(canvas_course_id)
-      @jobStatus = 'sectionRemovalCompleted'
+      @jobStatus = 'sectionEditsCompleted'
       save
+
+      # Start a background job to add current students and instructors to the new site.
+      import_enrollments_in_background(@import_data['sis_course_id'], @import_data['section_definitions'])
     rescue StandardError => error
       logger.error("ERROR: #{error.message}; Completed steps: #{@completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
-      @jobStatus = 'sectionRemovalError'
+      @jobStatus = 'sectionEditsError'
       @errors << error.message
       save
       raise error
     end
 
-    def add_sections(canvas_course_id, term_code, term_year, ccns)
-      @total_steps = 6.0
-      @jobStatus = 'Processing'
-      save
-      logger.info("Section addition job started. Job state updated in cache key #{@cache_key}")
-      @import_data['ccns'] = ccns
-      term = find_term(:yr => term_year, :cd => term_code).first
-      raise RuntimeError, 'term_code and term_year does not match a current term' if term.nil?
-      @import_data['term_slug'] = term[:slug]
-      @import_data['term'] = term
-      complete_step('Initialized ccns and term')
-      canvas_course = Canvas::Course.new(:user_id => @uid, :canvas_course_id => canvas_course_id).course
-      @import_data['sis_course_id'] = canvas_course['sis_course_id']
-      complete_step('Obtained Canvas SIS Course ID')
-      prepare_users_courses_list
-      prepare_section_definitions
-      import_sections(@import_data['section_definitions'])
-
-      refresh_sections_cache(canvas_course_id)
-      @jobStatus = 'sectionAdditionCompleted'
-      save
-    rescue StandardError => error
-      logger.error("ERROR: #{error.message}; Completed steps: #{@completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
-      @jobStatus = 'sectionAdditionError'
-      @errors << error.message
-      save
-      raise error
+    def prepare_section_deletions(course_info, ccns_to_remove)
+      sis_course_id = course_info[:sisCourseId]
+      sections_to_remove = course_info[:officialSections].select do |section|
+        (section[:term_yr] == course_info[:term][:term_yr]) &&
+          (section[:term_cd] == course_info[:term][:term_cd]) &&
+          ccns_to_remove.include?(section[:ccn])
+      end
+      sections_to_remove = filter_inaccessible_sections(candidate_courses_list, sections_to_remove)
+      if sections_to_remove.present?
+        @import_data['section_definitions'] ||= []
+        sis_section_ids_to_remove = sections_to_remove.collect {|s| s['sis_section_id']}
+        Canvas::SiteMembershipsMaintainer.remove_memberships(sis_course_id, sis_section_ids_to_remove,
+          "#{csv_filename_prefix}-delete-enrollments.csv")
+        complete_step('Deleted section enrollments')
+        sections_to_remove.each do |s|
+          @import_data['section_definitions'] << {
+            'section_id' => s['sis_section_id'],
+            'course_id' => s['sis_course_id'],
+            'name' => s['name'],
+            'status' => 'deleted'
+          }
+        end
+      end
     end
 
     def prepare_users_courses_list
@@ -240,8 +235,9 @@ module Canvas
     end
 
     def import_enrollments_in_background(sis_course_id, canvas_section_rows)
+      added_sections = canvas_section_rows.select {|row| row['status'] == 'active'}
       Canvas::SiteMembershipsMaintainer.background.import_memberships(sis_course_id,
-        canvas_section_rows.collect {|row| row['section_id']}, "#{csv_filename_prefix}-enrollments.csv")
+        added_sections.collect {|row| row['section_id']}, "#{csv_filename_prefix}-enrollments.csv")
     end
 
     def csv_filename_prefix
@@ -266,37 +262,38 @@ module Canvas
     end
 
     def find_term(search_hash = {})
-      matching_terms = current_terms.reject do |term|
-        mismatch = false
+      matching_terms = current_terms.select do |term|
+        match = true
         search_hash.each do |key, value|
-          mismatch = true if term[key] != value
+          match = false if term[key] != value
         end
-        mismatch
+        match
       end
-      matching_terms
+      matching_terms.first
     end
 
     def candidate_courses_list
       raise RuntimeError, 'User ID not found for candidate' if @uid.blank?
-
-      # Get all sections for which this user is an instructor, sorted in a useful fashion.
-      # Since this mostly matches what's shown by MyAcademics::Teaching for a given semester,
-      # we can simply re-use the academics feed (so long as course site provisioning is restricted to
-      # semesters supported by My Academics). Ideally, MyAcademics::Teaching would be efficiently cached
-      # by user_id + term_yr + term_cd. But since we currently only cache at the level of the full
-      # merged model, we're probably better off selecting the desired teaching-semester from that bigger feed.
-
-      semesters = []
-      academics_feed = MyAcademics::Merged.new(@uid).get_feed
-      if (teaching_semesters = academics_feed[:teachingSemesters])
-        current_terms.each do |term|
-          if (teaching_semester = teaching_semesters.find {|semester| semester[:slug] == term[:slug]})
-            teaching_semester[:classes].each { |course| course.merge! course[:listings].first }
-            semesters << teaching_semester
+      unless @candidate_courses_list
+        # Get all sections for which this user is an instructor, sorted in a useful fashion.
+        # Since this mostly matches what's shown by MyAcademics::Teaching for a given semester,
+        # we can simply re-use the academics feed (so long as course site provisioning is restricted to
+        # semesters supported by My Academics). Ideally, MyAcademics::Teaching would be efficiently cached
+        # by user_id + term_yr + term_cd. But since we currently only cache at the level of the full
+        # merged model, we're probably better off selecting the desired teaching-semester from that bigger feed.
+        semesters = []
+        academics_feed = MyAcademics::Merged.new(@uid).get_feed
+        if (teaching_semesters = academics_feed[:teachingSemesters])
+          current_terms.each do |term|
+            if (teaching_semester = teaching_semesters.find {|semester| semester[:slug] == term[:slug]})
+              teaching_semester[:classes].each { |course| course.merge! course[:listings].first }
+              semesters << teaching_semester
+            end
           end
         end
+        @candidate_courses_list = semesters
       end
-      semesters
+      @candidate_courses_list
     end
 
     # When an admin specifies CCNs directly, we cannot repurpose an existing MyAcademics::Teaching feed.
@@ -304,7 +301,7 @@ module Canvas
     def courses_list_from_ccns(term_slug, ccns)
       my_academics = MyAcademics::Teaching.new(@uid)
       courses_list = []
-      term = find_term(:slug => term_slug).first
+      term = find_term(:slug => term_slug)
       raise RuntimeError, 'term_slug does not match a current term' if term.nil?
       proxy = CampusOracle::UserCourses::SelectedSections.new({user_id: @uid})
       feed = proxy.get_selected_sections(term[:yr], term[:cd], ccns)
@@ -343,6 +340,22 @@ module Canvas
         end
       end
       logger.warn("User #{@uid} tried to provision inaccessible CCNs: #{ccns.inspect}") if ccns.any?
+      filtered
+    end
+
+    def filter_inaccessible_sections(courses_list, sections)
+      filtered = sections.select do |section|
+        if (term_idx = courses_list.index {|term| (term[:termCode] == section[:term_cd]) &&
+          (term[:termYear] == section[:term_yr]) })
+           courses_list[term_idx][:classes].index do |course|
+             course[:sections].index {|campus_section| campus_section[:ccn] == section[:ccn]}
+           end
+        end
+      end
+      if filtered != sections
+        removed_section_ids = (sections - filtered).collect {|s| s['sis_section_id']}
+        logger.warn("User #{uid} tried to change inaccessible sections with IDs: #{removed_section_ids}")
+      end
       filtered
     end
 
@@ -437,6 +450,7 @@ module Canvas
 
     def complete_step(step_text)
       @completed_steps << step_text
+      logger.info("Job #{@cache_key} has completed steps #{@completed_steps}")
       save
     end
 
