@@ -33,7 +33,9 @@ namespace :oec do
   task :diff => :environment do
     args = Oec::CommandLine.new
     # Load CSVs edited by departments
-    confirmed_csv_hash = Oec::DeptConfirmedData.new(args.src_dir, args.departments).confirmed_data_per_dept
+    confirmed_data = Oec::DeptConfirmedData.new(args.src_dir, args.departments)
+    confirmed_csv_hash = confirmed_data.confirmed_data_per_dept
+    messages_per_dept = confirmed_data.warnings_per_dept
 
     # Query campus data and post-process BIOLOGY, if necessary.
     Rails.logger.warn "Perform diff operation on confirmed CSVs provided by: #{confirmed_csv_hash.keys.to_a}"
@@ -41,7 +43,6 @@ namespace :oec do
     debug_mode = args.is_debug_mode
     courses = Oec::CoursesGroup.new(confirmed_csv_hash.keys, tmp_dir, debug_mode, debug_mode)
     # Do diff(s)
-    messages_per_dept = {}
     confirmed_csv_hash.each do |dept_name, data_from_dept|
       campus_data = courses.campus_data_per_dept[dept_name]
       courses_diff = Oec::CoursesDiff.new(dept_name, campus_data, data_from_dept, args.dest_dir)

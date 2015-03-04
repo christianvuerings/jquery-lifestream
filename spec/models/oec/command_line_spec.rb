@@ -39,7 +39,7 @@ describe Oec::CommandLine do
 
   it 'should pull all OEC departments when none specified' do
     ENV['departments'] = nil
-    Oec::CommandLine.new.departments.should match_array Settings.oec.departments
+    Oec::CommandLine.new.departments.should be_empty
   end
 
 end
