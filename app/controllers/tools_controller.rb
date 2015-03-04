@@ -5,7 +5,7 @@ class ToolsController < ApplicationController
     # consumption by the live style guide.
 
     colorvars = []
-    style_dir = Dir.glob(Rails.root.join('app', 'assets', 'stylesheets', '*'))
+    style_dir = Dir.glob(Rails.root.join('src', 'assets', 'stylesheets', '*'))
 
     style_dir.each do |filename|
       begin
