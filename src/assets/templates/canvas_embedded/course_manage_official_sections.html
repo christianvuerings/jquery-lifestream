@@ -245,7 +245,7 @@
                           </tr>
                           <tr data-ng-show="section.sites" data-ng-class="{'cc-page-course-official-sections-table-row':(!$last), 'cc-page-course-official-sections-table-row-last':($last)}">
                             <td colspan="7" class="cc-page-course-official-sections-sites-cell">
-                              <div data-ng-repeat="site in section.sites" class="cc-page-course-official-sections-table-sites-container">
+                              <div data-ng-repeat="site in section.sites" class="cc-page-course-official-sections-table-sites-container" data-ng-if="$parent.otherCourseSection(site)">
                                 <i class="fa fa-info-circle cc-page-course-official-sections-table-sited-icon"></i>
                                 This section is already in use by <a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a>
                               </div>

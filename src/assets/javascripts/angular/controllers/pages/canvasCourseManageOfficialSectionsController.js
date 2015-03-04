@@ -194,6 +194,13 @@
     };
 
     /*
+     * Returns true if site provided is not present in the current course site
+     */
+    $scope.otherCourseSection = function(site) {
+      return (site && (site.emitter === 'bCourses') && (site.id !== $scope.canvasCourse.canvasCourseId));
+    };
+
+    /*
      * Switches workflow context
      */
     $scope.changeWorkflowStep = function(step) {
