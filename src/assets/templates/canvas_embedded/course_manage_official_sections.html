@@ -270,7 +270,7 @@
     <!-- ################################################################################################################################ -->
 
     <div data-ng-if="currentWorkflowStep === 'processing'">
-      <div data-ng-show="jobStatus === 'sendingRequest" class="cc-page-course-official-sections-pending-request">
+      <div data-ng-if="jobStatus === 'sendingRequest'" class="cc-page-course-official-sections-pending-request">
         <i class="fa fa-spinner fa-spin"></i>
         Sending request...
       </div>
