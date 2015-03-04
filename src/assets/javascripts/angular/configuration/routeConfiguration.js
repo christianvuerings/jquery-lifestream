@@ -123,6 +123,10 @@
       templateUrl: 'canvas_embedded/create_project_site.html',
       controller: 'CanvasCreateProjectSiteController'
     }).
+    when('/canvas/course_manage_official_sections/:canvasCourseId', {
+      templateUrl: 'canvas_embedded/course_manage_official_sections.html',
+      controller: 'CanvasCourseManageOfficialSectionsController'
+    }).
     when('/canvas/user_provision', {
       templateUrl: 'canvas_embedded/user_provision.html',
       controller: 'CanvasUserProvisionController'

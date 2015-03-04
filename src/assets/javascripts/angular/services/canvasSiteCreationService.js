@@ -26,9 +26,9 @@
     /*
      * Returns currently selected sections
      */
-    var selectedSections = function(currentCourses) {
+    var selectedSections = function(coursesList) {
       var selectedSections = [];
-      angular.forEach(currentCourses, function(course) {
+      angular.forEach(coursesList, function(course) {
         angular.forEach(course.sections, function(section) {
           if (section.selected) {
             section.courseTitle = course.title;

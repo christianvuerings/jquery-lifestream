@@ -1,5 +1,5 @@
 {
   "job_id": "canvas.courseprovision.12345.1383330151057",
-  "status": "Error",
+  "jobStatus": "Error",
   "error": "Unable to find course provisioning job"
 }

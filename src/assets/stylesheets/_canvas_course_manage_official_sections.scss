@@ -1,62 +1,151 @@
 .cc-page-course-official-sections {
+  background-color: $bc-color-white;
   padding: 20px;
   .cc-button {
     padding: 10px;
   }
 
-  // Reset to avoid default Foundation form styling
-  .cc-page-course-official-form {
-    background: transparent;
-    border: 0;
-    padding: 0;
+  .cc-page-course-official-sections-courses-container {
+    margin: 10px 0;
   }
 
-  .cc-page-course-official-paragraph {
-    margin-bottom: 10px;
+  .cc-page-course-official-sections-course {
+    margin: 10px;
   }
 
-  .cc-page-course-official-sections-job-status {
-    margin-bottom: 15px;
+  .cc-page-course-official-sections-course-available {
+    background-color: $bc-color-off-white-background;
+    border: $bc-color-grey-area-border-light solid 1px;
+    margin: 0 0 20px;
   }
 
-  .cc-page-course-official-sections-form-actions {
+  .cc-page-course-official-sections-current-course {
+    margin-left: 10px;
+  }
+
+  .cc-page-course-official-sections-current-sections-grey-border {
+    border: $bc-color-grey-area-border-dark solid 1px;
+  }
+
+  .cc-page-course-official-sections-current-sections-white-border {
+    border: #fff solid 1px;
+  }
+
+  .cc-page-course-official-sections-sections-area {
+    padding: 18px;
+  }
+
+  .cc-page-course-official-sections-existing-sections-header-label {
+    font-size: 16px;
     margin-top: 10px;
   }
 
-  .cc-page-course-official-sections-form-button {
-    background: linear-gradient($bc-color-form-button-gradient1, $bc-color-form-button-gradient2);
+  .cc-page-course-official-sections-form-collapse-icon {
+    font-size: 18px;
+    margin-left: 2px;
   }
 
-  .cc-page-course-official-sections-label {
-    display: inline;
-    margin-left: 1em;
-    text-align: left;
+  .cc-page-course-official-sections-form-course-title {
+    margin-left: 10px;
   }
 
-  .cc-page-course-official-sections-labels-form {
-    margin-top: 10px;
+  .cc-page-course-official-sections-form-collapsible-container {
+    margin-top: 7px;
   }
 
-  .cc-page-course-official-sections-pending-request {
-    margin: 15px auto;
+  .cc-page-course-official-sections-form-select-all-option {
+    font-size: 12px;
+    margin: 6px 0 4px 2px;
   }
 
-  .cc-page-course-official-sections-tab-area {
-    padding: 10px 5px;
+  .cc-page-course-official-sections-form-select-all-option-button {
+    outline: none;
   }
 
-  .cc-page-course-official-sections-confirmation {
-    background: linear-gradient($bc-color-notice-yellow-bg-gradient1, $bc-color-notice-yellow-bg-gradient2);
-    border-radius: 5px;
-    padding: 20px;
-    .cc-page-course-official-sections-roster-list {
-      list-style-type: disc;
-      margin: 10px 0 0 39px;
+  // Course Sections Table
+  .cc-page-course-official-sections-table {
+    margin: 0;
+    width: 100%;
+
+    // disable alternating row color
+    tr:nth-of-type(even) {
+      background: inherit;
+    }
+
+    .cc-page-course-official-sections-table-row td {
+      border-bottom: $bc-color-grey-border-table-bottom solid 1px;
+      vertical-align: top;
+    }
+
+    .cc-page-course-official-sections-table-row-last td {
+      vertical-align: top;
+    }
+
+    .cc-page-course-official-sections-table-row-disabled td {
+      color: $bc-color-grey-disabled;
+    }
+
+    .cc-page-course-official-sections-table-row-added td {
+      background-color: $bc-color-yellow-row-highlighted;
+    }
+
+    .cc-page-course-official-sections-table-row-deleted td {
+      background-color: $bc-color-red-row-highlighted;
+    }
+
+    .cc-page-course-official-sections-table-cell-section-action-option {
+      height: 45px;
+      text-align: right;
+      width: 85px;
+    }
+
+    .cc-page-course-official-sections-button {
+      font-size: 12px;
+      margin: 0;
+      padding: 2px 4px;
+    }
+
+    .cc-page-course-official-sections-button-undo-add {
+      background-color: $bc-color-orange-button-bg;
+      border: $bc-color-orange-button-border solid 1px;
+    }
+
+    .cc-page-course-official-sections-button-undo-delete {
+      background-color: $bc-color-red-button-bg;
+      border: $bc-color-red-button-border solid 1px;
+      color: $bc-color-white;
+    }
+
+    .cc-page-course-official-sections-table-cell-course-code {
+      font-weight: bold;
+      width: 115px;
+    }
+
+    .cc-page-course-official-sections-table-cell-section-label {
+      width: 75px;
+    }
+
+    .cc-page-course-official-sections-table-cell-section-ccn {
+      width: 70px;
+    }
+
+    .cc-page-course-official-sections-table-cell-section-timestamps {
+      width: 155px;
+    }
+
+    .cc-page-course-official-sections-table-cell-section-locations {
+      width: 150px;
+    }
+
+    .cc-page-course-official-sections-table-cell-section-instructors {
+      width: 190px;
     }
   }
 
-  .cc-page-course-official-sections-step-options {
-    padding: 20px 0;
+  @media #{$small-only} {
+    .cc-page-course-official-sections-small-only-align-left {
+      text-align: left;
+    }
   }
 
 }

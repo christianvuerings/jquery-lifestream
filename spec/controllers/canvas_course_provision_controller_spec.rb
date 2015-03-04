@@ -90,40 +90,19 @@ describe CanvasCourseProvisionController do
     end
   end
 
-  describe '#delete_sections' do
+  describe '#edit_sections' do
     it_should_behave_like "an api endpoint" do
       before { allow(Canvas::CourseProvision).to receive(:new).and_raise(RuntimeError, "Something went wrong") }
-      let(:make_request) { post :delete_sections, canvas_course_id: canvas_course_id, sis_section_ids: ['SEC:2014-D-16171', 'SEC:2014-D-16109', 'SEC:2014-D-10287'] }
+      let(:make_request) { post :edit_sections, canvas_course_id: canvas_course_id, ccns_to_remove: ['16171', '16109', '10287'], ccns_to_add: ['16167', '16168', '16169'] }
     end
 
     it_should_behave_like "a user authenticated api endpoint" do
-      let(:make_request) { post :delete_sections, canvas_course_id: canvas_course_id, sis_section_ids: ['SEC:2014-D-16171', 'SEC:2014-D-16109', 'SEC:2014-D-10287'] }
+      let(:make_request) { post :edit_sections, canvas_course_id: canvas_course_id, ccns_to_remove: ['16171', '16109', '10287'], ccns_to_add: ['16167', '16168', '16169'] }
     end
 
     it 'responds with success when section removal job is created successful' do
-      allow_any_instance_of(Canvas::CourseProvision).to receive(:remove_sections).and_return('canvas.courseprovision.12345.1383330151057')
-      post :delete_sections, canvas_course_id: canvas_course_id, sis_section_ids: ['SEC:2014-D-16171', 'SEC:2014-D-16109', 'SEC:2014-D-10287']
-      assert_response :success
-      json_response = JSON.parse(response.body)
-      json_response['job_request_status'].should == 'Success'
-      json_response['job_id'].should == 'canvas.courseprovision.12345.1383330151057'
-    end
-  end
-
-  describe '#add_sections' do
-    let(:parameters) { {:canvas_course_id => canvas_course_id, :term_code => 'D', :term_year => '2014', :ccns => ['16171','16109', '10287'] } }
-    it_should_behave_like "an api endpoint" do
-      before { allow(Canvas::CourseProvision).to receive(:new).and_raise(RuntimeError, "Something went wrong") }
-      let(:make_request) { post :add_sections, parameters }
-    end
-
-    it_should_behave_like "a user authenticated api endpoint" do
-      let(:make_request) { post :add_sections, parameters }
-    end
-
-    it 'responds with success when section removal job is created successful' do
-      allow_any_instance_of(Canvas::CourseProvision).to receive(:add_sections).and_return('canvas.courseprovision.12345.1383330151057')
-      post :add_sections, parameters
+      allow_any_instance_of(Canvas::CourseProvision).to receive(:edit_sections).and_return('canvas.courseprovision.12345.1383330151057')
+      post :edit_sections, canvas_course_id: canvas_course_id, ccns_to_remove: ['16171', '16109', '10287'], ccns_to_add: ['16167', '16168', '16169']
       assert_response :success
       json_response = JSON.parse(response.body)
       json_response['job_request_status'].should == 'Success'

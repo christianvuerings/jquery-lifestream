@@ -131,21 +131,21 @@ module Canvas
       unassociatedCourses = []
 
       feed[:teachingSemesters].each do |semester|
-        semester_match = (semester[:termCode] == course_term_code) && (semester[:termYear] == course_term_year)
-        if semester_match
+        course_semester_match = (semester[:termCode] == course_term_code) && (semester[:termYear] == course_term_year)
+        if course_semester_match
           semester[:classes].each do |course|
             # either iterate and count the matches
             # or loop through and return the matches, then count that
-            course[:hasOfficialSections] = false
+            course[:containsCourseSections] = false
             course[:sections].each do |section|
               if course_ccns.include?(section[:ccn])
-                course[:hasOfficialSections] = true
-                section[:isOfficial] = true
+                course[:containsCourseSections] = true
+                section[:isCourseSection] = true
               else
-                section[:isOfficial] = false
+                section[:isCourseSection] = false
               end
             end
-            if course[:hasOfficialSections]
+            if course[:containsCourseSections]
               associatedCourses << course
             else
               unassociatedCourses << course
@@ -154,7 +154,7 @@ module Canvas
           semester[:classes] = associatedCourses + unassociatedCourses
         else
           semester[:classes].each do |course|
-            course[:hasOfficialSections] = false
+            course[:containsCourseSections] = false
           end
         end
       end

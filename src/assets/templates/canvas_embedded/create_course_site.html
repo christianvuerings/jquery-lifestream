@@ -114,7 +114,7 @@
 
                 <form data-ng-submit="showConfirmation()" class="cc-page-form">
 
-                  <div data-ng-include src="'canvas_embedded/canvas_course_sections_form.html'"></div>
+                  <div data-ng-include src="'canvas_embedded/canvas_users_courses_form.html'"></div>
 
                   <div class="cc-page-site-provisioning-form-actions">
                     <a data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button" type="reset">Cancel</a>
@@ -130,14 +130,14 @@
 
         <div data-ng-show="currentWorkflowStep === 'confirmation'">
           <div class="cc-page-create-course-site-confirmation">
-            <div data-ng-if="selectedSections(currentCourses).length === 1">
+            <div data-ng-if="selectedSections(coursesList).length === 1">
               <strong>You are about to create 1 course site with 1 section:</strong>
             </div>
-            <div data-ng-if="selectedSections(currentCourses).length > 1">
-              <strong>You are about to create 1 course site with these <span data-ng-bind="selectedSections(currentCourses).length"></span> sections:</strong>
+            <div data-ng-if="selectedSections(coursesList).length > 1">
+              <strong>You are about to create 1 course site with these <span data-ng-bind="selectedSections(coursesList).length"></span> sections:</strong>
             </div>
             <ul class="cc-page-create-course-site-section-list">
-              <li data-ng-repeat="section in selectedSections(currentCourses)">
+              <li data-ng-repeat="section in selectedSections(coursesList)">
                 <span data-ng-bind="section.courseTitle"></span> - <span data-ng-bind="section.courseCode"></span> <span data-ng-bind="section.section_label"></span> (<span data-ng-bind="section.ccn"></span>)
               </li>
             </ul>
@@ -234,6 +234,8 @@
     </div>
   </div>
 
-  <div data-ng-include src="'canvas_embedded/_shared/canvas_feed_error.html'"></div>
+  <div data-ng-if="displayError" class="cc-page-error-notice">
+    <div data-ng-include src="'canvas_embedded/_shared/canvas_errors.html'"></div>
+  </div>
 
 </div>
