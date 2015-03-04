@@ -7,11 +7,7 @@
           data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
         <strong class="cc-template-canvas-manage-sections-form-course-title" data-ng-bind="course.title"></strong>
         <span data-ng-if="course.sections">
-          (<span data-ng-pluralize count="course.sections.length"
-                   when="{'0': 'No sections',
-                       'one': '1 section',
-                       'other': '{{course.sections.length}} sections'}">
-          </span>)
+          (<span data-ng-pluralize count="course.sections.length" when="{'one': '1 section', 'other': '{{course.sections.length}} sections'}"></span>)
         </span>
       </div>
 

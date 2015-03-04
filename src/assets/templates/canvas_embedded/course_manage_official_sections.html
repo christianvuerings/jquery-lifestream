@@ -1,19 +1,19 @@
 <div class="cc-page-course-official-sections">
 
-  <div data-ng-hide="feedFetched" data-cc-spinner-directive></div>
+  <div data-ng-if="!feedFetched" data-cc-spinner-directive></div>
 
-  <div data-ng-show="feedFetched && !displayError">
+  <div data-ng-if="feedFetched && !displayError">
 
     <h2 class="cc-page-site-provisioning-header cc-page-site-provisioning-header2">Official Sections</h2>
 
     <!-- ################################################################################################################################ -->
 
-    <div data-ng-show="currentWorkflowStep === 'preview'">
+    <div data-ng-if="currentWorkflowStep === 'preview'">
 
       <div data-ng-show="jobStatusMessage !== ''" class="cc-notice-box cc-radius" data-ng-class="{'cc-notice-error':(lastJobStatus !== 'Completed'), 'cc-notice-success':(lastJobStatus === 'Completed')}">
         <span data-ng-bind="jobStatusMessage"></span>
         <div class="cc-notice-close-button">
-          <button class="fa fa-times-circle button cc-close-button small" data-ng-click="jobStatusMessage=''"></button>
+          <button class="fa fa-times-circle button cc-close-button small" data-ng-click="jobStatusMessage=''" aria-label="Close"></button>
         </div>
       </div>
 
@@ -25,8 +25,8 @@
               Sections in this Course Site
             </h3>
           </div>
-          <div class="medium-2 columns cc-page-course-official-sections-right-align">
-            <button data-ng-click="changeWorkflowStep('staging')" class="bc-canvas-button bc-canvas-button-primary" type="submit">
+          <div class="medium-2 columns cc-text-right">
+            <button data-ng-click="changeWorkflowStep('staging')" class="bc-canvas-button bc-canvas-button-primary">
               Edit Sections
             </button>
           </div>
@@ -39,8 +39,8 @@
                 <!-- *!*!*!*!*!*!* PREVIEW CURRENT SECTIONS *!*!*!*!*!*!* -->
                 <div data-ng-if="existingCourseSections.length > 0">
                   <table class="cc-page-course-official-sections-table" role="grid">
-                    <thead>
-                      <tr class="cc-visuallyhidden">
+                    <thead class="cc-visuallyhidden">
+                      <tr>
                         <th>Course Code</th>
                         <th>Section Label</th>
                         <th>Course Control Number</th>
@@ -64,7 +64,9 @@
                         <td class="cc-page-course-official-sections-table-cell-section-instructors show-for-large-up" >
                           <div data-ng-repeat="instructor in section.instructors" data-ng-bind="instructor.name"></div>
                         </td>
-                        <td class="cc-page-course-official-sections-table-cell-section-action-option">&nbsp;</td>
+                        <td class="cc-page-course-official-sections-table-cell-section-action-option">
+                          &nbsp;
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -80,7 +82,7 @@
 
     <!-- ################################################################################################################################ -->
 
-    <div data-ng-show="currentWorkflowStep === 'staging'">
+    <div data-ng-if="currentWorkflowStep === 'staging'">
 
       <!-- Current Sections Area -->
       <div class="cc-page-course-official-sections-sections-area cc-page-course-official-sections-current-sections-grey-border">
@@ -91,7 +93,7 @@
               Sections in this Course Site
             </h3>
           </div>
-          <div class="medium-3 columns cc-page-course-official-sections-right-align">
+          <div class="medium-3 columns cc-text-right">
             <button data-ng-click="changeWorkflowStep('preview')" class="bc-canvas-button" type="submit">
               Cancel
             </button>
@@ -108,8 +110,8 @@
                 <!-- *!*!*!*!*!*!* STAGING CURRENT SECTIONS *!*!*!*!*!*!* -->
                 <div data-ng-if="allSections.length > 0">
                   <table class="cc-page-course-official-sections-table" role="grid">
-                    <thead>
-                      <tr class="cc-visuallyhidden">
+                    <thead class="cc-visuallyhidden">
+                      <tr>
                         <th>Course Code</th>
                         <th>Section Label</th>
                         <th>Course Control Number</th>
@@ -142,7 +144,9 @@
                           </div>
                         </td>
                       </tr>
-                      <tr data-ng-if="noCurrentSections()"><td colspan="7">No sections to remain in course site</td></tr>
+                      <tr data-ng-if="noCurrentSections()">
+                        <td colspan="7">No sections to remain in course site</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -153,11 +157,11 @@
         </div>
 
         <div data-ng-if="currentStagedCount() > 12" class="row">
-          <div class="medium-12 columns cc-page-course-official-sections-right-align">
-            <button data-ng-click="changeWorkflowStep('preview')" class="bc-canvas-button" type="submit">
+          <div class="medium-12 columns cc-text-right">
+            <button data-ng-click="changeWorkflowStep('preview')" class="bc-canvas-button">
               Cancel
             </button>
-            <button data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" class="bc-canvas-button bc-canvas-button-primary" type="submit">
+            <button data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" class="bc-canvas-button bc-canvas-button-primary">
               Save Changes
             </button>
           </div>
@@ -175,9 +179,8 @@
           </div>
         </div>
 
-        <div data-ng-if="courseSemester.classes.length > 0" class="cc-page-course-official-sections-courses-container cc-page-course-official-sections-courses-container-available">
-
-          <div class="cc-page-course-official-sections-course-container" data-ng-repeat="course in courseSemester.classes">
+        <div data-ng-if="courseSemester.classes.length > 0" class="cc-page-course-official-sections-courses-container">
+          <div class="cc-page-course-official-sections-course-available" data-ng-repeat="course in courseSemester.classes">
 
             <div class="cc-page-course-official-sections-course">
               <div data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
@@ -185,16 +188,12 @@
                   data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
                 <strong class="cc-page-course-official-sections-form-course-title" data-ng-bind="course.title"></strong>
                 <span data-ng-if="course.sections">
-                  (<span data-ng-pluralize count="course.sections.length"
-                           when="{'0': 'No sections',
-                               'one': '1 section',
-                               'other': '{{course.sections.length}} sections'}">
-                  </span>)
+                  (<span data-ng-pluralize count="course.sections.length" when="{'one': '1 section', 'other': '{{course.sections.length}} sections'}"></span>)
                 </span>
               </div>
 
               <div data-ng-attr-id="{{course.course_id}}" class="cc-page-course-official-sections-form-collapsible-container" data-ng-if="!course.collapsed" data-ng-attr-aria-expanded="{{!course.collapsed}}" role="region">
-                <div class="cc-page-course-official-sections-form-select-all-option" data-ng-show="course.sections.length > 1">
+                <div class="cc-page-course-official-sections-form-select-all-option" data-ng-if="course.sections.length > 1">
                   <button class="cc-button-link cc-page-course-official-sections-form-select-all-option-button" type="button" data-ng-click="addAllSections(course)" data-ng-if="!allSectionsAdded(course)">Add All</button>
                   <span data-ng-if="allSectionsAdded(course)">All Added</span>
                 </div>
@@ -205,15 +204,15 @@
                     <!-- *!*!*!*!*!*!* STAGING AVAILABLE SECTIONS *!*!*!*!*!*!* -->
                     <div data-ng-if="course.sections.length > 0">
                       <table class="cc-page-course-official-sections-table" role="grid">
-                        <thead>
-                          <tr class="cc-visuallyhidden">
+                        <thead class="cc-visuallyhidden">
+                          <tr>
                             <th>Course Code</th>
                             <th>Section Label</th>
                             <th>Course Control Number</th>
                             <th>Schedule</th>
                             <th>Location</th>
                             <th>Instructors</th>
-                            <th>Action Options</th>
+                            <th>Actions</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -254,9 +253,7 @@
               </div>
             </div>
 
-            <hr class="cc-page-course-official-sections-form-course-divider" data-ng-if="(courseSemester.classes.length > 1) && !$last" />
           </div>
-
         </div>
       </div>
 
@@ -264,15 +261,15 @@
 
     <!-- ################################################################################################################################ -->
 
-    <div data-ng-show="currentWorkflowStep === 'processing'">
+    <div data-ng-if="currentWorkflowStep === 'processing'">
       <div data-ng-hide="jobStatus" class="cc-page-course-official-sections-pending-request">
         <i class="fa fa-spinner fa-spin"></i>
         Sending request...
       </div>
 
-      <div data-ng-show="jobStatus === 'New'" class="cc-page-course-official-sections-pending-request">
+      <div data-ng-if="jobStatus === 'New'" class="cc-page-course-official-sections-pending-request">
         <i class="fa fa-spinner fa-spin"></i>
-        Section removal request sent. Awaiting processing....
+        Section updates request sent. Awaiting processing....
       </div>
 
       <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>

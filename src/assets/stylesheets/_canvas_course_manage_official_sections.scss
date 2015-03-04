@@ -9,13 +9,14 @@
     margin: 10px 0;
   }
 
-  .cc-page-course-official-sections-courses-container-available {
-    border: #e0e1e3 solid 1px;
-    background-color: #f6f7f9;
-  }
-
   .cc-page-course-official-sections-course {
     margin: 10px;
+  }
+
+  .cc-page-course-official-sections-course-available {
+    background-color: $bc-color-off-white-background;
+    border: $bc-color-grey-area-border-light solid 1px;
+    margin: 0 0 20px;
   }
 
   .cc-page-course-official-sections-current-course {
@@ -23,7 +24,7 @@
   }
 
   .cc-page-course-official-sections-current-sections-grey-border {
-    border: #d5d5d5 solid 1px;
+    border: $bc-color-grey-area-border-dark solid 1px;
   }
 
   .cc-page-course-official-sections-current-sections-white-border {
@@ -37,10 +38,6 @@
   .cc-page-course-official-sections-existing-sections-header-label {
     font-size: 16px;
     margin-top: 10px;
-  }
-
-  .cc-page-course-official-sections-right-align {
-    text-align: right;
   }
 
   .cc-page-course-official-sections-form-collapse-icon {
@@ -58,17 +55,11 @@
 
   .cc-page-course-official-sections-form-select-all-option {
     font-size: 12px;
-    font-weight: normal;
     margin: 6px 0 4px 2px;
   }
 
   .cc-page-course-official-sections-form-select-all-option-button {
     outline: none;
-  }
-
-  .cc-page-course-official-sections-form-course-divider {
-    border-top: #c7c8cc dashed 1px;
-    margin: 0;
   }
 
   // Course Sections Table
@@ -82,7 +73,7 @@
     }
 
     .cc-page-course-official-sections-table-row td {
-      border-bottom: #efefef solid 1px;
+      border-bottom: $bc-color-grey-border-table-bottom solid 1px;
       vertical-align: top;
     }
 
@@ -91,21 +82,21 @@
     }
 
     .cc-page-course-official-sections-table-row-disabled td {
-      color: #aeaeae;
+      color: $bc-color-grey-disabled;
     }
 
     .cc-page-course-official-sections-table-row-added td {
-      background-color: #fefae4;
+      background-color: $bc-color-yellow-row-highlighted;
     }
 
     .cc-page-course-official-sections-table-row-deleted td {
-      background-color: #f2dddf;
+      background-color: $bc-color-red-row-highlighted;
     }
 
     .cc-page-course-official-sections-table-cell-section-action-option {
       height: 45px;
-      width: 85px;
       text-align: right;
+      width: 85px;
     }
 
     .cc-page-course-official-sections-button {
@@ -115,14 +106,14 @@
     }
 
     .cc-page-course-official-sections-button-undo-add {
-      background-color: #c88926;
-      border: #705012 solid 1px;
+      background-color: $bc-color-orange-button-bg;
+      border: $bc-color-orange-button-border solid 1px;
     }
 
     .cc-page-course-official-sections-button-undo-delete {
-      color: #fff;
-      background-color: #af333a;
-      border: #6c232b solid 1px;
+      background-color: $bc-color-red-button-bg;
+      border: $bc-color-red-button-border solid 1px;
+      color: $bc-color-white;
     }
 
     .cc-page-course-official-sections-table-cell-course-code {
