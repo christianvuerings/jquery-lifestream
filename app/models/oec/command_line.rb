@@ -11,7 +11,7 @@ module Oec
       @dest_dir = get_path_arg 'dest'
       @is_debug_mode = ENV['debug'].to_s =~ /true/i
       split = ENV['departments'].to_s.strip.upcase.split(/\s*,\s*/).reject { |s| s.nil? || s.empty? }
-      @departments = Oec::DepartmentRegistry.new(split.empty? ? Settings.oec.departments : split).to_a
+      @departments = split.empty? ? [] : Oec::DepartmentRegistry.new(split).to_a
     end
 
     private

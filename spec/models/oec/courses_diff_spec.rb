@@ -27,7 +27,8 @@ describe Oec::CoursesDiff do
         dept_name_path = dept_name.gsub(/\s/, '_')
         data_from_dept = []
         CSV.read("#{src_dir}/#{dept_name_path}_courses_confirmed.csv").each_with_index do |row, index|
-          data_from_dept << Oec::RowConverter.new(row).hashed_row if index > 0 && row.length > 0
+          row_with_deliberate_errors = row.length == 0 || row[0].blank?
+          data_from_dept << Oec::RowConverter.new(row).hashed_row if index > 0 && !row_with_deliberate_errors
         end
         diff = Oec::CoursesDiff.new(dept_name, campus_data_per_dept[dept_name], data_from_dept, 'tmp/oec')
         expect(diff.base_file_name).to include dept_name_path
