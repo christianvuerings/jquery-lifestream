@@ -26,7 +26,7 @@ describe 'My Finances landing page', :testui => true do
       @cal_net_prod_page.login(UserUtils.oski_username, UserUtils.oski_password)
       splash_page = CalCentralPages::SplashPage.new(@driver)
       splash_page.load_page(@driver)
-      splash_page.click_sign_in_button(@driver)
+      splash_page.click_sign_in_button
       @cal_net_page = CalNetPages::CalNetAuthPage.new(@driver)
       @cal_net_page.login(UserUtils.oski_username, UserUtils.oski_password)
       @my_finances_page = CalCentralPages::MyFinancesPages::MyFinancesLandingPage.new(@driver)

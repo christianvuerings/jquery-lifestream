@@ -4,8 +4,6 @@ require 'page-object'
 require_relative '../util/web_driver_utils'
 require_relative '../util/user_utils'
 
-module CalNetPages
-
   class CalNetAuthPage
 
     include PageObject
@@ -36,5 +34,3 @@ module CalNetPages
     end
 
   end
-
-end

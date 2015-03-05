@@ -48,6 +48,10 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     names
   end
 
+  def semester_slug(semester)
+    semester['slug']
+  end
+
   # COURSES
 
   def semester_courses(semester)
@@ -72,6 +76,10 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     titles = []
     courses.each { |course| titles.push(course_title(course)) }
     titles
+  end
+
+  def course_url(course)
+    course['url']
   end
 
   def course_transcript(course)

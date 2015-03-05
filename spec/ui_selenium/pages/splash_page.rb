@@ -18,10 +18,9 @@ module CalCentralPages
       driver.get(WebDriverUtils.base_url)
     end
 
-    def click_sign_in_button(driver)
+    def click_sign_in_button
       logger.info('Clicking the sign in button')
-      wait_for_sign_in_button = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
-      wait_for_sign_in_button.until { driver.find_element(:xpath => '//button[@data-ng-click="api.user.signIn()"]').displayed? }
+      sign_in_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       sign_in
     end
 

@@ -22,7 +22,7 @@ module CalCentralPages
 
     def load_page(driver)
       logger.info('Loading My Dashboard page')
-      driver.get(WebDriverUtils.base_url + '/dashboard')
+      driver.get("#{WebDriverUtils.base_url}/dashboard")
     end
 
     def click_live_update_button(timeout)
