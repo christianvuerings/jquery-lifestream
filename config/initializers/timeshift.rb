@@ -14,6 +14,8 @@ Rails.application.config.after_initialize do
     end_of_week_utc = today.sunday.to_date.to_datetime
     next_week_utc = end_of_week_utc.advance(days: 2)
     far_future_utc = next_week_utc.advance(days: 7)
+    # Second Sunday in March
+    utc_23_hour_day = today.end_of_year.advance(months: 2, days: 1).sunday.advance(weeks: 1)
 
     # Bearfacts XML often specifies dates as midnight with no timezone
     yesterday_no_tz = today.advance(:days => -1).to_date.to_datetime
@@ -47,6 +49,7 @@ Rails.application.config.after_initialize do
         ":::UTC_LATER_IN_WEEK:::" => end_of_week_utc.strftime('%FT%T.000Z'),
         ":::UTC_NEXT_WEEK:::" => next_week_utc.strftime('%FT%T.000Z'),
         ":::UTC_FAR_FUTURE:::" => far_future_utc.strftime('%FT%T.000Z'),
+        ":::UTC_23_HOUR_DAY:::" => utc_23_hour_day.strftime('%FT%T.000Z'),
         ":::TODAY:::" => today.rfc3339,
         ":::TOMORROW:::" => today.advance(days: 1).rfc3339,
         ":::TOMORROW_NO_TIME:::" => today.advance(days: 1).strftime("%Y-%m-%d"),

@@ -135,8 +135,9 @@ module MyTasks
         # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Stripping off the false
         # accuracy so the application will apply the proper timezone when needed.
         due_date = Date.parse(due_date.to_s)
-        # Tasks are not overdue until the end of the day.
-        due_date = due_date.in_time_zone.to_datetime.advance(:hours => 23, :minutes => 59, :seconds => 59)
+        # Tasks are not overdue until the end of the day. Advance forward one day and back one second to cover
+        # the possibility of daylight savings transitions.
+        due_date = Time.at((due_date + 1).in_time_zone.to_datetime.to_i - 1).to_datetime
       end
       formatted_entry["bucket"] = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
 
