@@ -140,6 +140,18 @@
                 "notes": "Submit a signed Emergency Loan promissory note",
                 "status": "needsAction",
                 "due": ":::UTC_NEXT_WEEK:::"
+              },
+              {
+                "kind": "tasks#task",
+                "id": "MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDExNDM2NjM6",
+                "etag": "\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTIxMTgxMzQyMDR\"",
+                "title": "Set Clocks Forward",
+                "updated": "2012-11-28T20:22:52.000Z",
+                "selfLink": "https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDExNDM2NjM6",
+                "position": "00000000002147483648",
+                "notes": "Expect to be sleepy",
+                "status": "needsAction",
+                "due": ":::UTC_23_HOUR_DAY:::"
               }
             ]
           }

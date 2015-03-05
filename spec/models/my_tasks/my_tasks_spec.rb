@@ -41,10 +41,10 @@ describe "MyTasks" do
       # some "Future" tasks to "Today", more total tasks will be in the feed on Sunday.
       if Time.zone.today.sunday?
         today_counter = 7
-        future_counter = 8
+        future_counter = 9
       else
         today_counter = 2
-        future_counter = 13
+        future_counter = 14
       end
       unscheduled_counter = 2
 
@@ -255,6 +255,20 @@ describe "MyTasks" do
     expect(unscheduled_canvas_task['updatedDate']['epoch']).to be_present
     expect(unscheduled_canvas_task['updatedDate']['dateTime']).to include(updated_at)
     expect(unscheduled_canvas_task['updatedDate']['dateString']).to eq '2/22'
+  end
+
+  it 'should set proper date for Google tasks even during timezone transitions' do
+    Time.zone = 'America/Los_Angeles'
+    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
+    Canvas::Proxy.stub(:access_granted?).and_return(true)
+    GoogleApps::TasksList.stub(:new).and_return(@fake_google_tasks_list_proxy)
+    Canvas::UpcomingEvents.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
+    Canvas::Todo.stub(:new).and_return(@fake_canvas_todo_proxy)
+
+    feed = MyTasks::Merged.new(@user_id).get_feed
+    task_for_23_hour_day = feed['tasks'].find { |task| task['emitter'] == 'Google' && task['title'] == 'Set Clocks Forward' }
+    epoch = task_for_23_hour_day['dueDate']['epoch']
+    expect(Time.at(epoch).strftime('%-m/%d')).to eq task_for_23_hour_day['dueDate']['dateString']
   end
 
   it "should return valid course code for bCourses assignment tasks" do
