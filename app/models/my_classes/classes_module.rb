@@ -32,7 +32,7 @@ module MyClasses::ClassesModule
           siteType: 'course',
           term_cd: term_cd,
           term_yr: term_yr,
-          courses: linked_campus
+          courses: linked_campus.uniq
         }
       )
     else
