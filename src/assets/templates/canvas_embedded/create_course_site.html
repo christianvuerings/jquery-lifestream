@@ -2,25 +2,25 @@
 
   <div data-ng-hide="feedFetched" data-cc-spinner-directive></div>
 
-  <div data-ng-show="feedFetched && !displayError">
-    <div data-ng-show="is_admin">
+  <div data-ng-if="feedFetched && !displayError">
+    <div data-ng-if="is_admin">
 
       <div class="cc-widget">
         <button class="cc-button cc-page-create-course-site-admin-mode-switch"
                 data-ng-click="toggleAdminMode()">
-          <span data-ng-show="adminMode !== 'by_ccn'">Switch to CCN input</span>
-          <span data-ng-show="adminMode === 'by_ccn'">Switch to acting as instructor</span>
+          <span data-ng-if="adminMode !== 'by_ccn'">Switch to CCN input</span>
+          <span data-ng-if="adminMode === 'by_ccn'">Switch to acting as instructor</span>
         </button>
       </div>
 
-      <form data-ng-show="adminMode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-form cc-page-create-course-site-actas-form">
+      <form data-ng-if="adminMode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-form cc-page-create-course-site-actas-form">
         <label for="people-search" class="cc-visuallyhidden">Search People</label>
         <input class="cc-left" placeholder="Instructor UID" data-ng-model="admin_acting_as" type="text" role="search" id="people-search" />
         <button class="cc-button cc-button-blue" type="submit">As instructor</button>
       </form>
 
-      <div data-ng-show="adminMode === 'by_ccn'">
-        <div data-ng-show="admin_semesters && admin_semesters.length > 0">
+      <div data-ng-if="adminMode === 'by_ccn'">
+        <div data-ng-if="admin_semesters && admin_semesters.length > 0">
           <div class="row collapse">
             <div class="medium-5 columns">
               <ul role="tablist">
@@ -54,12 +54,12 @@
 
       <div class="cc-page-create-course-site-select-sections">
 
-        <div data-ng-show="currentWorkflowStep === 'selecting'">
+        <div data-ng-if="currentWorkflowStep === 'selecting'">
           <div data-cc-spinner-directive>
             <div data-ng-hide="teachingSemesters && teachingSemesters.length > 0" class="cc-page-create-course-site-no-courses">
               You are currently not listed as the instructor of record for any courses, so you cannot create a course site in bCourses.
             </div>
-            <div data-ng-show="teachingSemesters && teachingSemesters.length > 0">
+            <div data-ng-if="teachingSemesters && teachingSemesters.length > 0">
               <div class="row collapse">
 
                 <h3>1. Select Term:</h3>
@@ -92,7 +92,7 @@
                     <button class="cc-button-link cc-page-help-notice-toggle-button" data-ng-click="toggle.displayHelp = !toggle.displayHelp" aria-controls="section-selection-help">
                       Need help deciding which rosters to select?
                     </button>
-                    <div id="section-selection-help" class="cc-page-help-notice-content" data-ng-show="toggle.displayHelp" data-ng-attr-aria-expanded="{{toggle.displayHelp}}" role="region">
+                    <div id="section-selection-help" class="cc-page-help-notice-content" data-ng-if="toggle.displayHelp" data-ng-attr-aria-expanded="{{toggle.displayHelp}}" role="region">
                       <p>If you have a course with multiple sections, you will need to decide whether you want to:</p>
                       <ol class="cc-page-create-course-site-help-notice-ordered-list">
                         <li>Create one, single course site which includes official sections for both your primary and secondary sections, or</li>
@@ -121,7 +121,7 @@
           </div>
         </div>
 
-        <div data-ng-show="currentWorkflowStep === 'confirmation'">
+        <div data-ng-if="currentWorkflowStep === 'confirmation'">
           <div class="cc-page-create-course-site-confirmation">
             <div data-ng-if="selectedSections(coursesList).length === 1">
               <strong>You are about to create 1 course site with 1 section:</strong>
@@ -174,23 +174,23 @@
           </form>
         </div>
 
-        <div data-ng-show="currentWorkflowStep === 'monitoring_job'">
+        <div data-ng-if="currentWorkflowStep === 'monitoring_job'">
 
           <div data-ng-hide="jobStatus" class="cc-page-create-course-site-pending-request">
             <i class="fa fa-spinner fa-spin"></i>
             Sending request...
           </div>
 
-          <div data-ng-show="jobStatus === 'New'" class="cc-page-create-course-site-pending-request">
+          <div data-ng-if="jobStatus === 'New'" class="cc-page-create-course-site-pending-request">
             <i class="fa fa-spinner fa-spin"></i>
             Course provisioning request sent. Awaiting processing....
           </div>
 
-          <div data-ng-show="jobStatus">
+          <div data-ng-if="jobStatus">
 
             <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>
 
-            <div data-ng-show="jobStatus === 'courseCreationError' || jobStatus === 'jobNotFoundError'">
+            <div data-ng-if="jobStatus === 'courseCreationError' || jobStatus === 'jobNotFoundError'">
               <div data-ng-include src="'canvas_embedded/_shared/background_job_error.html'"></div>
               <div class="row cc-page-create-course-site-step-options">
                 <div class="medium-12 columns">
@@ -200,7 +200,7 @@
               </div>
             </div>
 
-            <div data-ng-show="jobStatus === 'courseCreationCompleted'">
+            <div data-ng-if="jobStatus === 'courseCreationCompleted'">
 
               <div class="cc-notice-box cc-notice-success cc-radius">
                 Success : <span data-ng-bind="course_site.short_name"></span> site created
