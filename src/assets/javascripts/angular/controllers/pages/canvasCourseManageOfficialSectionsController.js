@@ -5,7 +5,7 @@
   /**
    * Canvas Manage Official Sections LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseManageOfficialSectionsController', function(apiService, canvasCourseProvisionFactory, $routeParams, $scope, $timeout) {
+  angular.module('calcentral.controllers').controller('CanvasCourseManageOfficialSectionsController', function(apiService, canvasCourseAddUserFactory, canvasCourseProvisionFactory, $routeParams, $scope, $timeout) {
     apiService.util.setTitle('Manage Official Sections');
 
     /*
@@ -23,19 +23,17 @@
       Initializes application upon loading
      */
     var initState = function() {
-      $scope.accessDeniedError = 'This feature is currently only available to course administrators with course sections scheduled in the current or upcoming terms.';
+      $scope.accessDeniedError = 'This feature is currently only available to instructors with course sections scheduled in the current or upcoming terms.';
       $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
       $scope.jobStatus = null;
       $scope.jobStatusMessage = '';
+      $scope.isTeacher = false;
     };
 
     /*
      * Refreshes data displayed in 'preview' and 'staging' workflow steps
      */
     var refreshFromFeed = function(feedData) {
-      if (feedData.canvas_course) {
-        $scope.canvasCourse = feedData.canvas_course;
-      }
       if (feedData.teachingSemesters) {
         loadCourseLists(feedData.teachingSemesters);
       }
@@ -180,11 +178,23 @@
           $scope.isLoading = false;
           $scope.displayError = 'failure';
         } else {
+          // get users feed
           if (sectionsFeed.data) {
-            refreshFromFeed(sectionsFeed.data);
-            apiService.util.iframeUpdateHeight();
-            if (!$scope.isCourseCreator) {
-              $scope.displayError = 'unauthorized';
+            if (sectionsFeed.data && sectionsFeed.data.canvas_course) {
+              $scope.canvasCourse = sectionsFeed.data.canvas_course;
+              // get user course roles feed for authorization
+              canvasCourseAddUserFactory.courseUserRoles($scope.canvasCourse.canvasCourseId).then(function(rolesFeed) {
+                if (rolesFeed.data.roles.teacher) {
+                  $scope.isTeacher = true;
+                }
+                refreshFromFeed(sectionsFeed.data);
+                apiService.util.iframeUpdateHeight();
+                if (!$scope.isCourseCreator) {
+                  $scope.displayError = 'unauthorized';
+                }
+              });
+            } else {
+              $scope.displayError = 'failure';
             }
           } else {
             $scope.displayError = 'failure';
