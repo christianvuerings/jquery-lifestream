@@ -122,7 +122,6 @@
      */
     var sectionUpdateJobCreated = function(data) {
       angular.extend($scope, data);
-      $scope.jobStatus = 'processing';
       jobStatusLoader();
     };
 
