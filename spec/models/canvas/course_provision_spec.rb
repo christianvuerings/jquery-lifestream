@@ -218,7 +218,38 @@ describe Canvas::CourseProvision do
       expect(cpcs).to receive(:save).ordered.and_return(true)
       expect(cpcs).to receive(:background).ordered.and_return(cpcs)
       expect(cpcs).to receive(:job_id).ordered.and_return('canvas.courseprovision.1234.1383330151057')
-      result = subject.create_course_site('Intro to Biomedicine', 'BIOENG 101 LEC', 'fall-2013', ['1136', '1204'])
+      subject.create_course_site('Intro to Biomedicine', 'BIOENG 101 LEC', 'fall-2013', ['1136', '1204'])
+    end
+  end
+
+  describe '#edit_sections' do
+    let(:ccns_to_remove) { [random_id] }
+    let(:ccns_to_add) { [random_id] }
+    subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
+    context 'when user is unauthorized' do
+      before do
+        expect(subject).to receive(:user_authorized?).and_return(false)
+      end
+      it 'returns nil' do
+        expect(subject.edit_sections(ccns_to_remove, ccns_to_add)).to be_nil
+      end
+    end
+    context 'when user is authorized' do
+      let(:cpcs) { double }
+      let(:course_info) { {canvasCourseId: canvas_course_id} }
+      let(:job_id) { "canvas.courseprovision.#{ccns_to_add.first}" }
+      before do
+        expect(subject).to receive(:user_authorized?).and_return(true)
+        expect(subject).to receive(:get_course_info).and_return(course_info)
+        expect(Canvas::ProvideCourseSite).to receive(:new).and_return(cpcs)
+        expect(cpcs).to receive(:save).ordered
+        expect(cpcs).to receive(:background).ordered.and_return(cpcs)
+        expect(cpcs).to receive(:edit_sections).ordered
+        expect(cpcs).to receive(:job_id).ordered.and_return(job_id)
+      end
+      it 'saves the state of the job' do
+        expect(subject.edit_sections(ccns_to_remove, ccns_to_add)).to eq job_id
+      end
     end
   end
 

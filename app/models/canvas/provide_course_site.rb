@@ -3,7 +3,7 @@ module Canvas
     include TorqueBox::Messaging::Backgroundable
     include ClassLogger
 
-    attr_reader :uid, :jobStatus, :cache_key
+    attr_reader :uid, :jobStatus, :cache_key, :errors, :section_definitions
 
     #####################################
     # Class Methods
@@ -30,6 +30,7 @@ module Canvas
       @total_steps = 0.0
       @import_data = {}
       @cache_key = "canvas.courseprovision.#{@uid}.#{Canvas::ProvideCourseSite.unique_job_id}"
+      @section_definitions = []
     end
 
     def create_course_site(site_name, site_course_code, term_slug, ccns, is_admin_by_ccns = false)
@@ -53,8 +54,8 @@ module Canvas
       # TODO Upload ZIP archives instead and do more detailed parsing of the import status.
       import_course_site(@import_data['course_site_definition'])
       retrieve_course_site_details
-      import_sections(@import_data['section_definitions'])
-      add_instructor_to_sections(@import_data['section_definitions']) unless is_admin_by_ccns
+      import_sections(section_definitions)
+      add_instructor_to_sections(section_definitions) unless is_admin_by_ccns
 
       expire_instructor_sites_cache
 
@@ -63,7 +64,7 @@ module Canvas
       save
 
       # Start a background job to add current students and instructors to the new site.
-      import_enrollments_in_background(@import_data['sis_course_id'], @import_data['section_definitions'])
+      import_enrollments_in_background(@import_data['sis_course_id'], section_definitions)
     rescue StandardError => error
       logger.error("ERROR: #{error.message}; Completed steps: #{@completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
       @jobStatus = 'courseCreationError'
@@ -92,15 +93,15 @@ module Canvas
       if ccns_to_remove.present?
         prepare_section_deletions(canvas_course_info, ccns_to_remove)
       end
-      raise RuntimeError, 'No changes to sections requested.' if @import_data['section_definitions'].blank?
-      import_sections(@import_data['section_definitions'])
+      raise RuntimeError, 'No changes to sections requested' if section_definitions.blank?
+      import_sections(section_definitions)
       # Add section enrollments.
       refresh_sections_cache(canvas_course_id)
       @jobStatus = 'sectionEditsCompleted'
       save
 
       # Start a background job to add current students and instructors to the new site.
-      import_enrollments_in_background(@import_data['sis_course_id'], @import_data['section_definitions'])
+      import_enrollments_in_background(@import_data['sis_course_id'], section_definitions)
     rescue StandardError => error
       logger.error("ERROR: #{error.message}; Completed steps: #{@completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
       @jobStatus = 'sectionEditsError'
@@ -118,13 +119,12 @@ module Canvas
       end
       sections_to_remove = filter_inaccessible_sections(candidate_courses_list, sections_to_remove)
       if sections_to_remove.present?
-        @import_data['section_definitions'] ||= []
         sis_section_ids_to_remove = sections_to_remove.collect {|s| s['sis_section_id']}
         Canvas::SiteMembershipsMaintainer.remove_memberships(sis_course_id, sis_section_ids_to_remove,
           "#{csv_filename_prefix}-delete-enrollments.csv")
         complete_step('Deleted section enrollments')
         sections_to_remove.each do |s|
-          @import_data['section_definitions'] << {
+          @section_definitions << {
             'section_id' => s['sis_section_id'],
             'course_id' => s['sis_course_id'],
             'name' => s['name'],
@@ -183,7 +183,7 @@ module Canvas
 
       # Add Canvas course sections to match the source sections.
       # We could use the "Create course section" API, but to reduce API usage we instead use CSV import.
-      @import_data['section_definitions'] = generate_section_definitions(@import_data['term'][:yr], @import_data['term'][:cd], @import_data['sis_course_id'], @import_data['courses'])
+      @section_definitions = generate_section_definitions(@import_data['term'][:yr], @import_data['term'][:cd], @import_data['sis_course_id'], @import_data['courses'])
       complete_step("Prepared section definitions")
     end
 

@@ -54,7 +54,7 @@ describe Canvas::ProvideCourseSite do
     end
 
     it 'initializes the error array' do
-      expect(subject.instance_eval { @errors }).to eq []
+      expect(subject.errors).to eq []
     end
 
     it 'initializes the import data hash' do
@@ -85,7 +85,7 @@ describe Canvas::ProvideCourseSite do
     it 'raises error if term slug does not match current term' do
       expect { subject.create_course_site(site_name, site_course_code, 'fall-5429', ['1136', '1204']) }.to raise_error(RuntimeError, 'term_slug does not match a current term')
       expect(subject.jobStatus).to eq 'courseCreationError'
-      errors = subject.instance_eval { @errors }
+      errors = subject.errors
       expect(errors[0]).to eq 'term_slug does not match a current term'
     end
 
@@ -93,7 +93,7 @@ describe Canvas::ProvideCourseSite do
       allow(subject).to receive(:import_course_site).and_raise(RuntimeError, 'Course site could not be created!')
       expect { subject.create_course_site(site_name, site_course_code, 'fall-2013', ['1136', '1204']) }.to raise_error(RuntimeError, 'Course site could not be created!')
       expect(subject.jobStatus).to eq 'courseCreationError'
-      errors = subject.instance_eval { @errors }
+      errors = subject.errors
       expect(errors).to be_an_instance_of Array
       expect(errors[0]).to eq 'Course site could not be created!'
     end
@@ -124,6 +124,69 @@ describe Canvas::ProvideCourseSite do
       subject.create_course_site(site_name, site_course_code, 'fall-2013', ['1136', '1204'])
       cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
       expect(cached_object.jobStatus).to eq 'courseCreationCompleted'
+    end
+  end
+
+  describe '#edit_sections' do
+    let(:course_site_term) { {term_yr: '2015', term_cd: 'B'} }
+    let(:canvas_course_info) do
+      {
+        canvasCourseId: canvas_course_id,
+        term: course_site_term,
+        'sis_course_id' => random_id
+      }
+    end
+    let(:ccns_to_remove) { [random_id] }
+    let(:ccns_to_add) { [random_id] }
+    let(:task_steps){ [:prepare_users_courses_list, :prepare_section_definitions, :prepare_section_deletions, :import_sections, :refresh_sections_cache, :import_enrollments_in_background] }
+    before do
+      allow(subject).to receive(:current_terms).and_return(current_terms)
+      task_steps.each do |step|
+        allow(subject).to receive(step)
+      end
+    end
+    context 'when all goes well' do
+      before do
+        # The class isn't particularly test-friendly.
+        allow(subject).to receive(:section_definitions).and_return(ccns_to_add)
+        task_steps.each do |step|
+          expect(subject).to receive(step).ordered
+        end
+      end
+      it 'executes all steps in order' do
+        subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+        cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
+        expect(cached_object.jobStatus).to eq 'sectionEditsCompleted'
+      end
+    end
+    context 'on unexpected error' do
+      before do
+        allow(subject).to receive(:prepare_section_deletions).and_raise(RuntimeError, 'Unable to remove memberships')
+      end
+      it 'returns a proper message' do
+        expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, 'Unable to remove memberships')
+        cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
+        expect(cached_object.jobStatus).to eq 'sectionEditsError'
+        expect(cached_object.errors).to eq ['Unable to remove memberships']
+      end
+    end
+    context 'when no changes would be made' do
+      before do
+        allow(subject).to receive(:section_definitions).and_return([])
+      end
+      it 'reports an error' do
+        expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, 'No changes to sections requested')
+        cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
+        expect(cached_object.jobStatus).to eq 'sectionEditsError'
+      end
+    end
+    context 'if the course site is not in a current term' do
+      let(:course_site_term) { {term_yr: '2014', term_cd: 'B'} }
+      it 'reports an error' do
+        expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, "Course site #{canvas_course_id} does not match a current term")
+        cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
+        expect(cached_object.jobStatus).to eq 'sectionEditsError'
+      end
     end
   end
 
@@ -320,7 +383,7 @@ describe Canvas::ProvideCourseSite do
 
     it 'populates the section definitions' do
       subject.prepare_section_definitions
-      section_definitions = subject.instance_eval { @import_data['section_definitions'] }
+      section_definitions = subject.section_definitions
       expect(section_definitions).to be_an_instance_of Array
       expect(section_definitions[0]['status']).to eq 'active'
       expect(section_definitions[0]['name']).to eq 'MEC ENG 98 GRP 015'
