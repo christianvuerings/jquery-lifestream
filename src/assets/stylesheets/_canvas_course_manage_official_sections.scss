@@ -62,8 +62,13 @@
     outline: none;
   }
 
+  .cc-page-course-official-sections-pending-request {
+    margin: 10px 0;
+  }
+
   // Course Sections Table
   .cc-page-course-official-sections-table {
+    border-spacing: 0;
     margin: 0;
     width: 100%;
 
@@ -108,6 +113,7 @@
     .cc-page-course-official-sections-button-undo-add {
       background-color: $bc-color-orange-button-bg;
       border: $bc-color-orange-button-border solid 1px;
+      color: $bc-color-white;
     }
 
     .cc-page-course-official-sections-button-undo-delete {
