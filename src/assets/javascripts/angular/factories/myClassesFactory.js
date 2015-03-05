@@ -11,10 +11,11 @@
       for (var j = 0; j < classesHash.otherClasses.length; j++) {
         for (var k = 0; k < classesHash.otherClasses[j].courses.length; k++) {
           var course = classesHash.otherClasses[j].courses[k];
-          if (!classesHash.campusClassesById[course.id].subclasses) {
-            classesHash.campusClassesById[course.id].subclasses = [];
+          for (var l = 0; l < classesHash.campusClassesById[course.id].length; l++) {
+            var campusClass = classesHash.campusClassesById[course.id][l];
+            campusClass.subclasses = campusClass.subclasses || [];
+            campusClass.subclasses.push(classesHash.otherClasses[j]);
           }
-          classesHash.campusClassesById[course.id].subclasses.push(classesHash.otherClasses[j]);
         }
       }
       return classesHash;
@@ -28,7 +29,9 @@
         if (classes[i].emitter === 'Campus') {
           campusClasses.push(classes[i]);
           for (var j = 0; j < classes[i].listings.length; j++) {
-            campusClassesById[classes[i].listings[j].id] = classes[i];
+            var listing = classes[i].listings[j];
+            campusClassesById[listing.id] = campusClassesById[listing.id] || [];
+            campusClassesById[listing.id].push(classes[i]);
           }
         } else {
           otherClasses.push(classes[i]);
