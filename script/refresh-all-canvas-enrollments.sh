@@ -18,7 +18,7 @@ source .rvmrc
 export RAILS_ENV=production
 export LOGGER_STDOUT=only
 export LOGGER_LEVEL=INFO
-export JRUBY_OPTS="-Xcext.enabled=true -J-client -X-C"
+export JRUBY_OPTS="-Xcext.enabled=true -J-XX:+UseConcMarkSweepGC -J-XX:+CMSPermGenSweepingEnabled -J-XX:+CMSClassUnloadingEnabled -J-XX:MaxPermSize=512m -J-Xmx1024m"
 
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
