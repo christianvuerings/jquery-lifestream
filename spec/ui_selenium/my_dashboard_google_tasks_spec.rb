@@ -25,7 +25,7 @@ describe 'The My Dashboard task manager', :testui => true do
       splash_page = CalCentralPages::SplashPage.new(@driver)
       splash_page.load_page(@driver)
       splash_page.click_sign_in_button
-      cal_net_auth_page = CalNetPages::CalNetAuthPage.new(@driver)
+      cal_net_auth_page = CalNetAuthPage.new(@driver)
       cal_net_auth_page.login(UserUtils.qa_username, UserUtils.qa_password)
       settings_page = CalCentralPages::SettingsPage.new(@driver)
       settings_page.load_page(@driver)
