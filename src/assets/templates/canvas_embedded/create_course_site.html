@@ -48,14 +48,7 @@
 
     <div>
 
-      <div class="cc-maintenance-notice">
-        <i class="fa fa-exclamation-triangle cc-notice-icon"></i>
-        <div class="cc-notice-text-container">
-          <p class="cc-notice-text-header">Daily Scheduled Maintenance from 8 - 9 AM</p>
-          During our daily scheduled maintenance, Instructors may experience delays of up to 10 minutes before sites are created.
-          <br>For more information, go to <a href="http://ets.berkeley.edu/bcourses/system-status">bCourses System Status.</a>
-        </div>
-      </div>
+      <div data-ng-include src="'canvas_embedded/_shared/maintenance_notice.html'"></div>
 
       <h2 class="cc-page-site-provisioning-header cc-page-site-provisioning-header2">Create a Course Site</h2>
 
@@ -154,7 +147,7 @@
                   <div class="medium-8 columns">
                     <input type="text" name="siteName" id="siteName" data-ng-model="siteName" data-ng-required="true">
                     <div ng-if="createCourseSiteForm.siteName.$error.required" class="cc-notice-box cc-notice-error cc-radius">
-                      <i class="cc-left fa fa-exclamation-circle cc-icon-red"></i>
+                      <i class="cc-left fa fa-exclamation-circle cc-icon-red cc-canvas-notice-icon"></i>
                       Please fill out a site name.
                     </div>
                   </div>
@@ -211,7 +204,7 @@
 
               <div class="cc-notice-box cc-notice-success cc-radius">
                 Success : <span data-ng-bind="course_site.short_name"></span> site created
-                <i class="cc-left fa fa-check-circle cc-icon-green"></i>
+                <i class="cc-left fa fa-check-circle cc-icon-green cc-canvas-notice-icon"></i>
               </div>
 
               <div class="cc-page-create-course-site-success-intro">
@@ -234,7 +227,7 @@
     </div>
   </div>
 
-  <div data-ng-if="displayError" class="cc-page-error-notice">
+  <div data-ng-if="displayError" class="cc-notice-error-container">
     <div data-ng-include src="'canvas_embedded/_shared/canvas_errors.html'"></div>
   </div>
 

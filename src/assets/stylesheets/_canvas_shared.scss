@@ -4,39 +4,6 @@
   padding: 0;
 }
 
-// Maintenance Notice
-.cc-maintenance-notice {
-  color: $bc-color-off-black;
-  font-size: 13px;
-  margin: 8px 6px;
-  min-height: 20px;
-}
-
-.cc-notice-text-container {
-  line-height: 18px;
-  margin-left: 45px;
-}
-
-.cc-notice-text-header {
-  color: #333;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 20px;
-  margin: 4px 0;
-}
-
-.cc-notice-icon {
-  color: $bc-color-gold;
-  float: left;
-  font-size: 36px;
-  line-height: 44px;
-}
-
-// Error / Notices
-.cc-page-error-notice {
-  margin: 10px 0;
-}
-
 // Site Provisioning Headers
 .cc-page-site-provisioning-header {
   color: $bc-color-off-black;
@@ -144,6 +111,92 @@
     background: linear-gradient($bc-color-progressbar-fg-gradient1, $bc-color-progressbar-fg-gradient2);
     height: 100%;
   }
+}
+
+// Notices
+.cc-notice-text-container {
+  line-height: 18px;
+  margin-left: 45px;
+}
+
+.cc-notice-text-header {
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  margin: 4px 0;
+}
+
+.cc-canvas-notice-icon {
+  font-size: 20px;
+  line-height: 20px;
+  margin-right: 5px;
+}
+
+.cc-notice-box {
+  background-color: $bc-color-notice-default;
+  border: 0;
+  color: $bc-color-white;
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  padding: 10px;
+  .cc-close-button {
+    background-color: transparent;
+    font-size: 20px;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .cc-notice-close-button {
+    display: inline-block;
+    float: right;
+    .small {
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+.cc-notice-success {
+  background-color: $bc-color-success-background;
+  border: 1px solid $bc-color-success-border;
+  color: $bc-color-success-foreground;
+}
+
+.cc-notice-warning {
+  background-color: $bc-color-warning-background;
+  border: 1px solid $bc-color-warning-border;
+  color: $bc-color-warning-foreground;
+}
+
+.cc-notice-error {
+  background-color: $bc-color-error-background;
+  border: 1px solid $bc-color-error-border;
+  color: $bc-color-error-foreground;
+}
+
+.cc-notice-error-container {
+  margin: 10px 0;
+}
+
+.cc-radius {
+  border-radius: 3px;
+}
+
+// Maintenance Notice
+.cc-template-canvas-maintenance-notice-text {
+  font-weight: normal;
+}
+
+.cc-template-canvas-maintenance-notice-collapse-icon {
+  font-size: 18px;
+  margin: 0 11px 0 5px;
+}
+
+.cc-template-canvas-maintenance-notice-details {
+  margin: 10px 26px 0;
 }
 
 // Styling for Sections Form used by Course Provisioning and Official Sections LTI tools

@@ -23,6 +23,10 @@
       Initializes application upon loading
      */
     var initState = function() {
+      // initialize maintenance notice settings
+      $scope.courseActionVerb = 'site is updated';
+      $scope.maintenanceCollapsed = true;
+
       $scope.accessDeniedError = 'This feature is currently only available to instructors with course sections scheduled in the current or upcoming terms.';
       $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
       $scope.jobStatus = null;
