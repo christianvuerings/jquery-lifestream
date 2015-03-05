@@ -14,7 +14,7 @@ module Berkeley
 
     def self.colleges
       @colleges ||= {
-        "GRAD DIV" => "Graduate School",
+        "GRAD DIV" => "College of Letters & Science",
         "NAT RES" => "College of Natural Resources",
         "CONCURNT" => "Concurrent Enrollment",
         "UNAFFIL" => "Unaffiliated",
