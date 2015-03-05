@@ -95,10 +95,10 @@
     <div class="cc-page-help-notice">
       <i class="fa fa-question-circle cc-left cc-page-help-notice-icon"></i>
       <div class="cc-page-help-notice-left-margin">
-        <button class="cc-button-link cc-page-help-notice-toggle-button" data-ng-click="toggle.displayHelp = !toggle.displayHelp">
+        <button class="cc-button-link cc-page-help-notice-toggle-button" data-ng-click="toggle.displayHelp = !toggle.displayHelp" aria-controls="cc-page-help-notice">
           Need help finding someone?
         </button>
-        <div class="cc-page-help-notice-content bc-user-search-notice" data-ng-show="toggle.displayHelp">
+        <div id="cc-page-help-notice" class="cc-page-help-notice-content bc-user-search-notice" data-ng-show="toggle.displayHelp" data-ng-attr-aria-expanded="{{toggle.displayHelp}}" role="region">
           <!-- Note: This help text content is also maintained in the public/canvas/canvas-customization.js script -->
           <dl class="bc-user-search-notice-description-list">
             <dt class="bc-user-search-notice-description-term">UC Berkeley Faculty, Staff and Students</dt>
