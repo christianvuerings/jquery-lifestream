@@ -49,7 +49,7 @@ namespace :oec do
       courses_diff.export
       diff_found = courses_diff.was_difference_found
       File.delete courses_diff.output_filename unless diff_found
-      messages_per_dept[dept_name] = {}
+      messages_per_dept[dept_name] ||= {}
       messages_per_dept[dept_name]['Diff report'] = diff_found ? "Created #{courses_diff.output_filename}" : 'No diff'
       messages_per_dept[dept_name].merge! courses_diff.errors_per_course_id if courses_diff.errors_per_course_id.any?
     end

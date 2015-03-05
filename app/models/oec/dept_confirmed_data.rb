@@ -18,23 +18,39 @@ module Oec
         if csv_file_hash.has_key? dept_name
           corrected_data = []
           filename = csv_file_hash[dept_name]
+          uid_per_index = {}
           CSV.read(filename).each_with_index do |row, index|
             if row.empty? || row[0].blank?
-              put_warning(dept_name, "#{dept_name}#{csv_filename_suffix} has corrupt or missing data at row #{index + 1}")
+              warn(dept_name, "#{dept_name}#{csv_filename_suffix} has corrupt or missing data at row #{index + 1}")
             elsif index > 0
-              corrected_data << Oec::RowConverter.new(row).hashed_row
+              hashed_row = Oec::RowConverter.new(row).hashed_row
+              ldap_uid = hashed_row['ldap_uid']
+              course_id = hashed_row['course_id']
+              row_uid = ldap_uid.blank? ? course_id : "#{course_id}-#{ldap_uid}"
+              corrected_data << hashed_row unless uid_per_index.has_key? row_uid
+              put(uid_per_index, row_uid, index)
             end
+          end
+          uid_per_index.each do |uid, indices|
+            warn(dept_name, "#{uid} is duplicated in rows #{indices.join(', ')}") if indices.length > 1
           end
           @confirmed_data_per_dept[dept_name] = corrected_data
         elsif !departments.empty?
-          put_warning(dept_name, "The file #{dept_name}#{csv_filename_suffix} was not found in #{src_dir}")
+          warn(dept_name, "#{dept_name}#{csv_filename_suffix} not found in #{src_dir}")
         end
       end
     end
 
-    def put_warning(dept_name, message)
-      @warnings_per_dept[dept_name] ||= []
-      @warnings_per_dept[dept_name] << message
+    private
+
+    def warn(dept_name, message)
+      @warnings_per_dept[dept_name] ||= {}
+      put(@warnings_per_dept[dept_name], 'WARN', message)
+    end
+
+    def put(hash, key, value)
+      hash[key] ||= []
+      hash[key] << value
     end
 
   end
