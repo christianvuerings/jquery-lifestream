@@ -1,13 +1,6 @@
 <div class="bc-page-course-add-user">
 
-  <div class="cc-maintenance-notice">
-    <i class="fa fa-exclamation-triangle cc-icon-gold fa-lg cc-left"></i>
-    <div class="cc-notice-text">
-      <h4>Daily Scheduled Maintenance from 8 - 9 AM</h4>
-      Instructors may experience delays and in some cases an error may occur.
-      For more information, go to <a href="http://ets.berkeley.edu/bcourses/system-status">bCourses System Status.</a>
-    </div>
-  </div>
+  <div data-ng-include src="'canvas_embedded/_shared/maintenance_notice.html'"></div>
 
   <h2>Find a Person to Add</h2>
 
@@ -54,7 +47,7 @@
         </div>
 
         <div data-ng-show="additionFailureMessage" class="cc-notice-box cc-notice-error cc-radius">
-          <i class="fa fa-exclamation-triangle cc-icon-red"></i>
+          <i class="fa fa-exclamation-triangle cc-icon-red cc-canvas-notice-icon"></i>
           <span data-ng-bind="errorStatus"></span>
           <div class="cc-notice-close-button">
             <button class="fa fa-times-circle button cc-close-button small" data-ng-click="additionFailureMessage=''"></button>
@@ -102,10 +95,10 @@
     <div class="cc-page-help-notice">
       <i class="fa fa-question-circle cc-left cc-page-help-notice-icon"></i>
       <div class="cc-page-help-notice-left-margin">
-        <button class="cc-button-link cc-page-help-notice-toggle-button" data-ng-click="toggle.displayHelp = !toggle.displayHelp">
+        <button class="cc-button-link cc-page-help-notice-toggle-button" data-ng-click="toggle.displayHelp = !toggle.displayHelp" aria-controls="cc-page-help-notice">
           Need help finding someone?
         </button>
-        <div class="cc-page-help-notice-content bc-user-search-notice" data-ng-show="toggle.displayHelp">
+        <div id="cc-page-help-notice" class="cc-page-help-notice-content bc-user-search-notice" data-ng-show="toggle.displayHelp" data-ng-attr-aria-expanded="{{toggle.displayHelp}}" role="region">
           <!-- Note: This help text content is also maintained in the public/canvas/canvas-customization.js script -->
           <dl class="bc-user-search-notice-description-list">
             <dt class="bc-user-search-notice-description-term">UC Berkeley Faculty, Staff and Students</dt>
@@ -196,7 +189,7 @@
   </div>
 
   <p data-ng-show="showError">
-    <i class="fa fa-exclamation-triangle cc-icon-red"></i>
+    <i class="fa fa-exclamation-triangle cc-icon-red cc-canvas-notice-icon"></i>
     <span data-ng-bind="errorStatus"></span>
   </p>
 
