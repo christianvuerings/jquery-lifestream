@@ -23,6 +23,14 @@ class UserUtils
     Settings.ui_selenium.oski_password
   end
 
+  def self.oski_gmail_username
+    Settings.ui_selenium.oski_gmail_username
+  end
+
+  def self.oski_gmail_password
+    Settings.ui_selenium.oski_gmail_password
+  end
+
   def self.test_password
     Settings.ui_selenium.test_user_password
   end
@@ -41,6 +49,10 @@ class UserUtils
 
   def self.qa_gmail_password
     Settings.ui_selenium.ets_qa_gmail_password
+  end
+
+  def self.admin_uid
+    Settings.ui_selenium.admin_uid
   end
 
   def self.initialize_output_csv(spec)

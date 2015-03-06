@@ -13,7 +13,6 @@ module CalCentralPages
     include ClassLogger
 
     # TO DO
-    h2(:to_do_heading, :xpath => '//h2[contains(.,"To Do")]')
     button(:completed_tasks_tab, :xpath => '//button[contains(.,"completed")]')
     paragraph(:no_tasks_message, :xpath => '//p[contains(.,"You have no tasks and assignments.")]')
     button(:scheduled_tasks_tab, :xpath => '//button[contains(.,"scheduled")]')

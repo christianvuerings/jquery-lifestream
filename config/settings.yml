@@ -303,7 +303,7 @@ ui_selenium:
   # Alternative browsers for Selenium tests: chrome, safari, ie
   webDriver: firefox
 
-  googleOauthTimeout: 20
+  googleOauthTimeout: 10
   googleTaskTimeout: 12
   pageEventTimeout: 3
   pageLoadTimeout: 12
@@ -315,10 +315,13 @@ ui_selenium:
   test_user_password: secret
   oski_username: secret
   oski_password: secret
+  oski_gmail_username: secret
+  oski_gmail_password: secret
   ets_qa_ldap_username: secret
   ets_qa_ldap_password: secret
   ets_qa_gmail_username: secret
   ets_qa_gmail_password: secret
+  admin_uid: secret
 
 advising_proxy:
   fake: false

@@ -23,8 +23,8 @@ describe 'My Finances details page', :testui => true do
       @driver = WebDriverUtils.driver
       splash_page = CalCentralPages::SplashPage.new(@driver)
       splash_page.load_page(@driver)
-      splash_page.click_sign_in_button(@driver)
-      @cal_net_page = CalNetPages::CalNetAuthPage.new(@driver)
+      splash_page.click_sign_in_button
+      @cal_net_page = CalNetAuthPage.new(@driver)
       @cal_net_page.login(UserUtils.oski_username, UserUtils.oski_password)
       @my_dashboard_page = CalCentralPages::MyDashboardPage.new(@driver)
       @my_dashboard_page.my_finances_link_element.when_visible(WebDriverUtils.page_load_timeout)
