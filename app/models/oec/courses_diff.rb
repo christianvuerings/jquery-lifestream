@@ -9,7 +9,7 @@ module Oec
     attr_reader :was_difference_found
     attr_reader :errors_per_course_id
 
-    def initialize(dept_name, campus_data, data_from_dept, export_dir)
+    def initialize(dept_name, campus_data, data_from_dept, export_dir, diff_yes_rows_only = false)
       super export_dir
       @was_difference_found = false
       @errors_per_course_id = {}
@@ -17,6 +17,7 @@ module Oec
       @columns_to_compare = %w(course_name).concat @instructor_columns
       @dept_name = dept_name
       @data_from_dept = data_from_dept
+      @diff_yes_rows_only = diff_yes_rows_only
       @campus_data_hash = {}
       campus_data.each do |campus_record|
         course_id = campus_record[COLUMN_COURSE_ID]
@@ -76,42 +77,46 @@ module Oec
 
     def output_diff(key, db_record, dept_data, output, ignore_db_instructor = false)
       @aligned_rows << key
-      @columns_to_compare.each do |column_name|
-        file_value = dept_data ? dept_data[column_name].to_s : nil
-        db_value = db_record ? db_record[column_name].to_s : nil
-        if file_value.nil? || db_value.nil? || file_value.casecmp(db_value) != 0
-          row = {}
-          # Row unique to edited CSV is indicated by '+'. Rows removed, relative to database, are indicated by '-'.
-          diff_type_column = '+/-'
-          row[diff_type_column] = ' '
-          course_id = key
-          ldap_uid = db_record[COLUMN_LDAP_UID] unless db_record.nil? || ignore_db_instructor
-          if db_record
-            if dept_data.nil?
-              row[diff_type_column] = '-'
-            elsif ignore_db_instructor
-              row[diff_type_column] = '+'
+      evaluate_yes = dept_data.nil? ? true : dept_data['evaluate'].to_s.upcase.include?('Y')
+      skip_this_row = @diff_yes_rows_only && !evaluate_yes
+      unless skip_this_row
+        @columns_to_compare.each do |column_name|
+          file_value = dept_data ? dept_data[column_name].to_s : nil
+          db_value = db_record ? db_record[column_name].to_s : nil
+          if file_value.nil? || db_value.nil? || file_value.casecmp(db_value) != 0
+            row = {}
+            # Row unique to edited CSV is indicated by '+'. Rows removed, relative to database, are indicated by '-'.
+            diff_type_column = '+/-'
+            row[diff_type_column] = ' '
+            course_id = key
+            ldap_uid = db_record[COLUMN_LDAP_UID] unless db_record.nil? || ignore_db_instructor
+            if db_record
+              if dept_data.nil?
+                row[diff_type_column] = '-'
+              elsif ignore_db_instructor
+                row[diff_type_column] = '+'
+              end
+              @columns_to_compare.each do |column|
+                force_nil = ignore_db_instructor && @instructor_columns.include?(column)
+                db_value = db_record[column].to_s
+                row["DB_#{column.upcase}"] = force_nil || db_value.blank? ? nil : db_value
+              end
             end
-            @columns_to_compare.each do |column|
-              force_nil = ignore_db_instructor && @instructor_columns.include?(column)
-              db_value = db_record[column].to_s
-              row["DB_#{column.upcase}"] = force_nil || db_value.blank? ? nil : db_value
+            if dept_data
+              course_id = dept_data[COLUMN_COURSE_ID]
+              ldap_uid = dept_data[COLUMN_LDAP_UID] if ldap_uid.blank?
+              row[diff_type_column] = '+' if db_record.nil?
+              @columns_to_compare.each do |column|
+                edited_value = dept_data[column].to_s.strip
+                row[column.upcase] = edited_value.blank? ? nil : edited_value
+              end
             end
+            row['KEY'] = course_id
+            row[COLUMN_LDAP_UID] = ldap_uid
+            output << record_to_csv_row(row)
+            @was_difference_found = true
+            break
           end
-          if dept_data
-            course_id = dept_data[COLUMN_COURSE_ID]
-            ldap_uid = dept_data[COLUMN_LDAP_UID] if ldap_uid.blank?
-            row[diff_type_column] = '+' if db_record.nil?
-            @columns_to_compare.each do |column|
-              edited_value = dept_data[column].to_s.strip
-              row[column.upcase] = edited_value.blank? ? nil : edited_value
-            end
-          end
-          row['KEY'] = course_id
-          row[COLUMN_LDAP_UID] = ldap_uid
-          output << record_to_csv_row(row)
-          @was_difference_found = true
-          break
         end
       end
     end

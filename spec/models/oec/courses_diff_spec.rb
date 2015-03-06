@@ -25,7 +25,8 @@ describe Oec::CoursesDiff do
     it {
       data_per_dept = Oec::DeptConfirmedData.new(src_dir, departments).confirmed_data_per_dept
       data_per_dept.each do |dept_name, dept_data|
-        diff = Oec::CoursesDiff.new(dept_name, campus_data_per_dept[dept_name], dept_data, 'tmp/oec')
+        diff_yes_rows_only = dept_name == 'STAT'
+        diff = Oec::CoursesDiff.new(dept_name, campus_data_per_dept[dept_name], dept_data, 'tmp/oec', diff_yes_rows_only)
         expect(diff.base_file_name).to include dept_name
         actual_diff = CSV.read diff.export[:filename]
         expected_diff = CSV.read "#{src_dir}/expected_diff_#{dept_name}_courses.csv"

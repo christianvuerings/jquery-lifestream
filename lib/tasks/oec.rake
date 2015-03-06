@@ -45,7 +45,7 @@ namespace :oec do
     # Do diff(s)
     confirmed_csv_hash.each do |dept_name, data_from_dept|
       campus_data = courses.campus_data_per_dept[dept_name]
-      courses_diff = Oec::CoursesDiff.new(dept_name, campus_data, data_from_dept, args.dest_dir)
+      courses_diff = Oec::CoursesDiff.new(dept_name, campus_data, data_from_dept, args.dest_dir, args.is_limited_diff)
       courses_diff.export
       diff_found = courses_diff.was_difference_found
       File.delete courses_diff.output_filename unless diff_found
@@ -56,6 +56,7 @@ namespace :oec do
     # Summarize for the user
     summary = "#{hr}Summary#{br}"
     summary << "No files found in #{args.src_dir}" if confirmed_csv_hash.empty?
+    summary << 'Diff is limited to CSV rows where evaluate=Y' if args.is_limited_diff
     messages_per_dept.each do |dept_name, message_hash|
       summary << "  #{dept_name}#{br}"
       indent_each = '      '

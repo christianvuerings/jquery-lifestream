@@ -9,7 +9,7 @@ describe Oec::DeptConfirmedData do
     warnings = confirmed_data.warnings_per_dept
     warnings.length.should eq 4
     warnings['POL SCI']['WARN'].length.should eq 4
-    warnings['STAT']['WARN'].length.should eq 3
+    warnings['STAT']['WARN'].length.should eq 4
   end
 
   it 'should not load the STAT_courses_confirmed.csv because it was not requested' do
