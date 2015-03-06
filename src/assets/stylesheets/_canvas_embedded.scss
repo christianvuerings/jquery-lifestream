@@ -60,6 +60,7 @@ $bc-color-white: #fff;
 $bc-color-yellow-row-highlighted: #fefae4;
 $bc-color-gold: #f1a91e;
 
+
 // bCourses Fonts
 $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
@@ -75,6 +76,57 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     overflow-x: auto;
     table-layout: auto;
     width: auto;
+  }
+
+  .cc-notice-box {
+    background-color: $bc-color-notice-default;
+    border: 0;
+    color: $bc-color-white;
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    padding: 10px;
+    i {
+      margin-right: 5px;
+    }
+    .cc-close-button {
+      background-color: transparent;
+      font-size: 20px;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    .cc-notice-close-button {
+      display: inline-block;
+      float: right;
+      .small {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  .cc-notice-success {
+    background-color: $bc-color-success-background;
+    border: 1px solid $bc-color-success-border;
+    color: $bc-color-success-foreground;
+  }
+
+  .cc-notice-warning {
+    background-color: $bc-color-warning-background;
+    border: 1px solid $bc-color-warning-border;
+    color: $bc-color-warning-foreground;
+  }
+
+  .cc-notice-error {
+    background-color: $bc-color-error-background;
+    border: 1px solid $bc-color-error-border;
+    color: $bc-color-error-foreground;
+  }
+
+  .cc-radius {
+    border-radius: 3px;
   }
 
 }

@@ -7,10 +7,6 @@
   angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function(apiService, canvasCourseAddUserFactory, $routeParams, $scope) {
     apiService.util.setTitle('Find a Person to Add');
 
-    // initialize maintenance notice settings
-    $scope.courseActionVerb = 'user is added';
-    $scope.maintenanceCollapsed = true;
-
     var resetSearchState = function() {
       $scope.selectedUser = null;
       $scope.showUsersArea = false;
