@@ -345,6 +345,14 @@
         });
     };
 
+    /*
+     * Cancel current edit session and start from scratch.
+     */
+    $scope.cancel = function() {
+      $scope.changeWorkflowStep('preview');
+      fetchFeed();
+    };
+
     // Wait until user profile is fully loaded before fetching section feed
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
       if (isAuthenticated) {
