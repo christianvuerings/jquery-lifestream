@@ -66,8 +66,8 @@ describe Canvas::CourseSections do
         sis_section_ids = subject.official_section_identifiers
         expect(sis_section_ids).to be_an_instance_of Array
         expect(sis_section_ids.count).to eq 2
-        expect(sis_section_ids[0]).to eq course_sections[0].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'7309'})
-        expect(sis_section_ids[1]).to eq course_sections[1].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'6211'})
+        expect(sis_section_ids[0]).to eq course_sections[0].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'07309'})
+        expect(sis_section_ids[1]).to eq course_sections[1].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'06211'})
       end
 
       context 'when course sections returned includes invalid section ids' do
@@ -82,8 +82,8 @@ describe Canvas::CourseSections do
           sis_section_ids = subject.official_section_identifiers
           expect(sis_section_ids).to be_an_instance_of Array
           expect(sis_section_ids.count).to eq 2
-          expect(sis_section_ids[0]).to eq course_sections[0].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'7309'})
-          expect(sis_section_ids[1]).to eq course_sections[2].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'6211'})
+          expect(sis_section_ids[0]).to eq course_sections[0].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'07309'})
+          expect(sis_section_ids[1]).to eq course_sections[2].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'06211'})
         end
       end
 

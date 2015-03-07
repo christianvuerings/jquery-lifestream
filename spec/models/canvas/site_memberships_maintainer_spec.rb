@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Canvas::SiteMembershipsMaintainer do
   let(:users_maintainer) {double}
-  let(:course_id) { random_id }
+  let(:course_id) { random_ccn }
   let(:enrollments_csv)  { [] }
   let(:users_csv)  { [] }
   let(:known_users) { [] }
@@ -96,20 +96,20 @@ describe Canvas::SiteMembershipsMaintainer do
     end
 
     describe 'teacher roles based on section types' do
-      let(:ccn_to_uid) { {rand(9999).to_s => random_id, random_id => random_id} }
-      # CCNs in sis_section_ids are often zero-padded.
+      # CCNs in sis_section_ids may or may not be zero-padded, but the browser always shows CCNs of length 5.
+      let(:ccn_to_uid) { {rand(9999).to_s => random_id, rand(9999).to_s => random_id} }
+      let(:padded_ccns) { ccn_to_uid.keys.collect {|ccn| sprintf('%05d', ccn)} }
       let(:sis_section_ids) { ["SEC:2014-B-0#{ccn_to_uid.keys[0]}", "SEC:2014-B-#{ccn_to_uid.keys[1]}"] }
       before do
         allow(CampusOracle::Queries).to receive(:get_enrolled_students).and_return([])
         allow(CampusOracle::Queries).to receive(:get_section_instructors) do |term_yr, term_cd, ccn|
           if term_yr == '2014' && term_cd == 'B'
-            [{'ldap_uid' => ccn_to_uid[ccn]}]
+            [{'ldap_uid' => ccn_to_uid[ccn.to_i.to_s]}]
           end
         end
-        allow(CampusOracle::Queries).to receive(:get_sections_from_ccns).with('2014', 'B',
-          [ccn_to_uid.keys[0], ccn_to_uid.keys[1]]).and_return([
-          {'course_cntl_num' => ccn_to_uid.keys[0], 'primary_secondary_cd' => first_section_type},
-          {'course_cntl_num' => ccn_to_uid.keys[1], 'primary_secondary_cd' => 'S'}
+        allow(CampusOracle::Queries).to receive(:get_sections_from_ccns).with('2014', 'B', padded_ccns).and_return([
+          {'course_cntl_num' => padded_ccns[0], 'primary_secondary_cd' => first_section_type},
+          {'course_cntl_num' => padded_ccns[1], 'primary_secondary_cd' => 'S'}
         ])
       end
       context 'when a mix of primary and secondary sections' do

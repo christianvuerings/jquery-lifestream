@@ -29,11 +29,11 @@ describe Canvas::MergedUserSites do
     }}
     subject { Canvas::MergedUserSites.new(uid).merge_course_with_sections(canvas_course, [canvas_section]) }
     context 'when a Canvas section has a possible SIS link' do
-      let(:ccn) { rand(9999) }
+      let(:ccn) { random_ccn }
       let(:canvas_section) {canvas_section_base.merge({ 'sis_section_id' => "SEC:2013-D-#{ccn}" })}
       its([:term_yr]) {should eq('2013')}
       its([:term_cd]) {should eq('D')}
-      its([:sections]) {should eq([{ccn: ccn.to_s}])}
+      its([:sections]) {should eq([{ccn: ccn}])}
     end
     context 'when a Canvas section is not associated with a campus section' do
       let(:canvas_section) {canvas_section_base.merge({ 'sis_section_id' => "Something Else" })}
