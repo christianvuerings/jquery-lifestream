@@ -119,7 +119,7 @@ module Canvas
         {
           term_yr: parsed[:term_yr],
           term_cd: parsed[:term_cd],
-          ccn: parsed[:ccn].to_i.to_s
+          ccn: sprintf('%05d', parsed[:ccn].to_i)
         }
       end
     end

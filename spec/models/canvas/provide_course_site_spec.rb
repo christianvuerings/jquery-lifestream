@@ -793,9 +793,9 @@ describe Canvas::ProvideCourseSite do
       term_yr = '2013'
       term_cd = 'D'
       ccns = [
-          rand(99999).to_s,
-          rand(99999).to_s,
-          rand(99999).to_s
+        random_ccn,
+        random_ccn,
+        random_ccn
       ]
       courses_list = [
           {:course_code => 'ENGIN 7',
