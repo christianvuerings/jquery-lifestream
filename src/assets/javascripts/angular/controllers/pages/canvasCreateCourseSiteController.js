@@ -8,6 +8,10 @@
   angular.module('calcentral.controllers').controller('CanvasCreateCourseSiteController', function(apiService, canvasCourseProvisionFactory, canvasSiteCreationService, $route, $scope, $timeout) {
     apiService.util.setTitle('Create a Course Site');
 
+    // initialize maintenance notice settings
+    $scope.courseActionVerb = 'site is created';
+    $scope.maintenanceCollapsed = true;
+
     $scope.accessDeniedError = 'This feature is currently only available to instructors with course sections scheduled in the current or upcoming terms.';
     $scope.linkToSiteOverview = canvasSiteCreationService.linkToSiteOverview($route.current.isEmbedded);
 
