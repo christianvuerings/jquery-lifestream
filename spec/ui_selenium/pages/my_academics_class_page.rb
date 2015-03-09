@@ -27,6 +27,21 @@ module CalCentralPages
     elements(:section_schedule, :div, :xpath => '//h4[text()="Section Schedules"]/following-sibling::div[@data-ng-repeat="section in selectedCourse.sections"]//div[@data-ng-repeat="schedule in section.schedules"]')
     elements(:section_instructors_heading, :h3, :xpath => '//h3[@data-ng-bind="section.section_label"]')
 
+    # WEBCAST
+    h2(:webcast_heading, :xpath => '//h2[text()="Webcasts"]')
+    div(:webcast_spinner, :xpath => '//h2[contains(text(),"Webcasts")]/../following-sibling::div/div[@class="cc-spinner"]')
+    button(:video_tab, :xpath => '//button[text()="Video"]')
+    div(:no_video_msg, :xpath => '//div[contains(.,"No video content available.")]')
+    select(:video_select, :xpath => '//select[@data-ng-model="selectedVideo"]')
+    button(:video_thumbnail, :xpath => '//button[@id="cc-youtube-image-placeholder"]/img')
+    element(:video_iframe, 'iframe')
+    button(:audio_tab, :xpath => '//button[text()="Audio"]')
+    div(:no_audio_msg, :xpath => '//div[contains(.,"No audio content available.")]')
+    select(:audio_select, :xpath => '//select[@data-ng-model="selectedAudio"]')
+    audio(:audio, :xpath => '//audio')
+    audio(:audio_source, :xpath => '//audio/source')
+    div(:no_webcast_msg, :xpath => '//div[contains(.,"There are no webcasts available.")]')
+
     def all_student_section_labels
       labels = []
       student_section_label_elements.each { |label| labels.push(label.text) }
@@ -76,6 +91,15 @@ module CalCentralPages
         instructors.push(all_section_instructors(driver, section))
       end
       instructors
+    end
+
+    def you_tube_video_auto_plays?(driver)
+      video_thumbnail_element.click
+      wait_until(timeout=WebDriverUtils.page_event_timeout) { driver.find_element(:xpath, '//iframe') }
+      driver.switch_to.frame driver.find_element(:xpath, '//iframe')
+      auto_play = driver.find_element(:xpath, '//div[@class="ytp-button ytp-button-pause"]').displayed?
+      driver.switch_to.default_content
+      auto_play
     end
   end
 end
