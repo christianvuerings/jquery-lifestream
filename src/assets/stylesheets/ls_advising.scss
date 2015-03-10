@@ -1,4 +1,7 @@
 .cc-widget-lsadvising {
+  .cc-widget-lsadvising-advisor {
+    margin-bottom: 20px;
+  }
   .cc-widget-lsadvising-current {
     padding: 0;
     .cc-widget-lsadvising-current-content {
@@ -12,6 +15,13 @@
     .cc-widget-lsadvising-current-more {
       margin: 10px 5px 0;
     }
+  }
+  .cc-widget-lsadvising-heading {
+    font-size: 14px;
+  }
+  .cc-widget-lsadvising-picture {
+    margin: 0 10px 10px 0;
+    max-width: 72px;
   }
   .cc-widget-lsadvising-previous {
     tr {
