@@ -1,0 +1,68 @@
+<div class="my-custom-template-container" data-ng-if="sectionsList.length > 0">
+  <table class="cc-page-course-official-sections-table" role="grid">
+    <thead class="cc-visuallyhidden">
+      <tr>
+        <th>Course Code</th>
+        <th>Section Label</th>
+        <th>Course Control Number</th>
+        <th>Schedule</th>
+        <th>Location</th>
+        <th>Instructors</th>
+        <th>
+          <span data-ng-if="listMode === 'preview'">&nbsp;</span>
+          <span data-ng-if="listMode !== 'preview'">Actions</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody data-ng-repeat="section in sectionsList">
+      <tr data-ng-class="{'cc-page-course-official-sections-table-row':((listMode !== 'availableStaging' && !$last) || (listMode === 'availableStaging' && !$last && !section.sites)), 'cc-page-course-official-sections-table-row-last':((listMode !== 'availableStaging' && $last) || (listMode === 'availableStaging') && ($last || section.sites)), 'cc-page-course-official-sections-table-row-added':(listMode === 'currentStaging' && section.stagedState === 'add'), 'cc-page-course-official-sections-table-row-deleted':(listMode === 'availableStaging' && section.stagedState === 'delete'), 'cc-page-course-official-sections-table-row-disabled':(listMode === 'availableStaging' && section.isCourseSection && (section.stagedState !== 'delete') || (section.stagedState === 'add'))}" data-ng-if="(listMode === 'preview') || (listMode === 'availableStaging') || (listMode === 'currentStaging' && section.isCourseSection && section.stagedState !== 'delete') || (listMode === 'currentStaging' && !section.isCourseSection && section.stagedState === 'add')">
+        <td class="cc-page-course-official-sections-table-cell-course-code" data-ng-bind="section.courseCode"></td>
+        <td class="cc-page-course-official-sections-table-cell-section-label" data-ng-bind="section.section_label"></td>
+        <td class="cc-page-course-official-sections-table-cell-section-ccn" data-ng-bind="section.ccn"></td>
+        <td class="cc-page-course-official-sections-table-cell-section-timestamps show-for-medium-up" >
+          <div data-ng-repeat="schedule in section.schedules" data-ng-bind="schedule.schedule"></div>
+        </td>
+        <td class="cc-page-course-official-sections-table-cell-section-locations show-for-medium-up" >
+          <div data-ng-repeat="schedule in section.schedules" data-ng-bind-template="{{schedule.buildingName}} {{schedule.roomNumber}}"></div>
+         </td>
+        <td class="cc-page-course-official-sections-table-cell-section-instructors show-for-large-up" >
+          <div data-ng-repeat="instructor in section.instructors" data-ng-bind="instructor.name"></div>
+        </td>
+        <td class="cc-page-course-official-sections-table-cell-section-action-option">
+          <span data-ng-if="listMode === 'preview'">&nbsp;</span>
+
+          <!-- Current Staging Actions -->
+          <div data-ng-if="listMode === 'currentStaging' && section.isCourseSection">
+            <button class="bc-canvas-button cc-page-course-official-sections-button" data-ng-click="stageDeleteAction({section: section})">Delete</button>
+          </div>
+
+          <div data-ng-if="listMode === 'currentStaging' && !section.isCourseSection">
+            <button class="bc-canvas-button cc-page-course-official-sections-button cc-page-course-official-sections-button-undo-add" data-ng-click="unstageAction({section: section})">Undo Add</button>
+          </div>
+
+          <!-- Available Staging Actions -->
+          <div data-ng-if="listMode === 'availableStaging' && section.isCourseSection && section.stagedState === 'delete'">
+            <button class="bc-canvas-button cc-page-course-official-sections-button cc-page-course-official-sections-button-undo-delete" data-ng-click="unstageAction({section: section})">Undo Delete</button>
+          </div>
+
+          <div data-ng-if="listMode === 'availableStaging' && !section.isCourseSection && section.stagedState === 'add'">
+            Added
+          </div>
+
+          <div data-ng-if="listMode === 'availableStaging' && !section.isCourseSection && section.stagedState === null">
+            <button class="bc-canvas-button bc-canvas-button-primary cc-page-course-official-sections-button" data-ng-class="{'cc-page-course-official-sections-button-undo-add':(section.stagedState === 'add')}" data-ng-click="stageAddAction({section: section})">
+              Add
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tbody data-ng-if="listMode === 'currentStaging' && noCurrentSections()">
+      <tr>
+        <td colspan="7">No sections to remain in course site</td>
+      </tr>
+    </tbody>
+
+
+  </table>
+</div>
