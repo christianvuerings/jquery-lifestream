@@ -277,6 +277,7 @@ features:
   regstatus: true
   advising: false
   background_jobs_check: true
+  course_manage_official_sections: false
 
 youtube_splash_id: 'EQ-a7xrfVag'
 

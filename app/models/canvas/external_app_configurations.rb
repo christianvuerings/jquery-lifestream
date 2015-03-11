@@ -33,7 +33,7 @@ module Canvas
         'course_manage_official_sections' => {
           xml_name: 'lti_course_manage_official_sections',
           app_name: 'Official Sections',
-          account: official_courses_account_id
+          account: Settings.features.course_manage_official_sections ? official_courses_account_id : nil
         },
         'course_grade_export' => {
           xml_name: 'lti_course_grade_export',
