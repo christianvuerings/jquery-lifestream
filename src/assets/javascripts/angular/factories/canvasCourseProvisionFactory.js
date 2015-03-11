@@ -40,7 +40,6 @@
      */
     var fillCourseSites = function(semestersFeed) {
       angular.forEach(semestersFeed, function(semester) {
-        semester.classes.sort(compareCourseTitle);
         angular.forEach(semester.classes, function(course) {
           course.collapsed = true;
           course.allSelected = false;
@@ -69,20 +68,6 @@
           }
         });
       });
-    };
-
-    /*
-     * Used to sort courses by title in fillCourseSites method
-     */
-    var compareCourseTitle = function(a, b) {
-      if (a.title < b.title) {
-        return -1;
-      }
-      if (a.title > b.title) {
-        return 1;
-      }
-      // a must be equal to b
-      return 0;
     };
 
     var getSections = function(feedRequestOptions) {
