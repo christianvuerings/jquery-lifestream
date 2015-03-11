@@ -41,7 +41,7 @@
     var fillCourseSites = function(semestersFeed) {
       angular.forEach(semestersFeed, function(semester) {
         angular.forEach(semester.classes, function(course) {
-          course.collapsed = true;
+          course.collapsed = !course.containsCourseSections;
           course.allSelected = false;
           course.selectToggleText = 'All';
           var hasSites = false;
