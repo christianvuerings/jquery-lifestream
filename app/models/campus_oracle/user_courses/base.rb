@@ -166,7 +166,7 @@ module CampusOracle
           section_number: row['section_num']
         }
         if row['primary_secondary_cd'] == 'P'
-          section_data[:unit] = row['unit']
+          section_data[:units] = row['unit']
           section_data[:pnp_flag] = row['pnp_flag']
           section_data[:cred_cd] = row['cred_cd']
           section_data[:cross_listed_flag] = row['cross_listed_flag']

@@ -20,7 +20,7 @@ describe Berkeley::CoursePolicy do
           :emitter=>"Campus",
           :name=>"General Chemistry",
           :sections=>[
-            {:ccn=>"11003", :instruction_format=>"LEC", :is_primary_section=>true, :section_label=>"LEC 001", :section_number=>"001", :unit=>nil, :pnp_flag=>nil, :cred_cd=>nil, :schedules=>[{:buildingName=>"PIMENTEL", :roomNumber=>"1", :schedule=>"MWF 9:00A-10:00A"}], :instructors=>[{:name=>"John Smith", :uid=>user_id}]},
+            {:ccn=>"11003", :instruction_format=>"LEC", :is_primary_section=>true, :section_label=>"LEC 001", :section_number=>"001", :units=>nil, :pnp_flag=>nil, :cred_cd=>nil, :schedules=>[{:buildingName=>"PIMENTEL", :roomNumber=>"1", :schedule=>"MWF 9:00A-10:00A"}], :instructors=>[{:name=>"John Smith", :uid=>user_id}]},
             {:ccn=>"11012", :instruction_format=>"DIS", :is_primary_section=>false, :section_label=>"DIS 101", :section_number=>"101", :schedules=>[{:buildingName=>"HILDEBRAND", :roomNumber=>"100D", :schedule=>"M 10:00A-11:00A"}], :instructors=>[]},
             {:ccn=>"11015", :instruction_format=>"DIS", :is_primary_section=>false, :section_label=>"DIS 102", :section_number=>"102", :schedules=>[{:buildingName=>"HILDEBRAND", :roomNumber=>"100F", :schedule=>"M 10:00A-11:00A"}], :instructors=>[]},
             {:ccn=>"11018", :instruction_format=>"DIS", :is_primary_section=>false, :section_label=>"DIS 103", :section_number=>"103", :schedules=>[{:buildingName=>"HILDEBRAND", :roomNumber=>"100D", :schedule=>"M 12:00P-1:00P"}], :instructors=>[]},
@@ -43,7 +43,7 @@ describe Berkeley::CoursePolicy do
           :emitter=>"Campus",
           :name=>"Special Laboratory Study",
           :sections=>[
-            {:ccn=>"22795",:instruction_format=>"IND", :is_primary_section=>true, :section_label=>"IND 003", :section_number=>"003", :unit=>nil, :pnp_flag=>nil, :cred_cd=>nil, :schedules=>[], :instructors=>[{:name=>"John Smith", :uid=>user_id}]}
+            {:ccn=>"22795",:instruction_format=>"IND", :is_primary_section=>true, :section_label=>"IND 003", :section_number=>"003", :units=>nil, :pnp_flag=>nil, :cred_cd=>nil, :schedules=>[], :instructors=>[{:name=>"John Smith", :uid=>user_id}]}
           ],
           :course_option=>"A1",
           :role=>"Instructor"
@@ -68,7 +68,7 @@ describe Berkeley::CoursePolicy do
           :emitter=>"Campus",
           :name=>"General Chemistry",
           :sections=>[
-            {:ccn=>"11003", :instruction_format=>"LEC", :is_primary_section=>true, :section_label=>"LEC 001", :section_number=>"001", :unit=>nil, :pnp_flag=>nil, :cred_cd=>nil, :schedules=>[{:buildingName=>"PIMENTEL", :roomNumber=>"1", :schedule=>"MWF 9:00A-10:00A"}], :instructors=>[{:name=>"John Smith", :uid=>user_id}]},
+            {:ccn=>"11003", :instruction_format=>"LEC", :is_primary_section=>true, :section_label=>"LEC 001", :section_number=>"001", :units=>nil, :pnp_flag=>nil, :cred_cd=>nil, :schedules=>[{:buildingName=>"PIMENTEL", :roomNumber=>"1", :schedule=>"MWF 9:00A-10:00A"}], :instructors=>[{:name=>"John Smith", :uid=>user_id}]},
             {:ccn=>"11015", :instruction_format=>"DIS", :is_primary_section=>false, :section_label=>"DIS 102", :section_number=>"102", :schedules=>[{:buildingName=>"HILDEBRAND", :roomNumber=>"100F", :schedule=>"M 10:00A-11:00A"}], :instructors=>[]},
           ],
           :role=>"Student"
@@ -88,7 +88,7 @@ describe Berkeley::CoursePolicy do
           :emitter=>"Campus",
           :name=>"Machine Structures",
           :sections=>[
-            {:ccn=>"28730", :instruction_format=>"LEC", :is_primary_section=>true, :section_label=>"LEC 001", :section_number=>"001", :unit=>nil, :pnp_flag=>"N ", :cred_cd=>nil, :schedules=>[{:buildingName=>"LEWIS", :roomNumber=>"100", :schedule=>"MTuWTh 9:30A-11:00A"}], :instructors=>[{:name=>"Alfred Watson", :uid=>"875321"}]},
+            {:ccn=>"28730", :instruction_format=>"LEC", :is_primary_section=>true, :section_label=>"LEC 001", :section_number=>"001", :units=>nil, :pnp_flag=>"N ", :cred_cd=>nil, :schedules=>[{:buildingName=>"LEWIS", :roomNumber=>"100", :schedule=>"MTuWTh 9:30A-11:00A"}], :instructors=>[{:name=>"Alfred Watson", :uid=>"875321"}]},
             {:ccn=>"28745", :instruction_format=>"DIS", :is_primary_section=>false, :section_label=>"DIS 102", :section_number=>"102", :schedules=>[{:buildingName=>"HEARST MIN", :roomNumber=>"310", :schedule=>"MW 2:00P-3:00P"}], :instructors=>[]},
             {:ccn=>"28750", :instruction_format=>"LAB", :is_primary_section=>false, :section_label=>"LAB 102", :section_number=>"102", :schedules=>[{:buildingName=>"SUTARDJA DAI", :roomNumber=>"200", :schedule=>"TuTh 1:00P-3:00P"}], :instructors=>[]}
           ],

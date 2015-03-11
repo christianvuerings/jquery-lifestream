@@ -197,7 +197,6 @@
           }
         }
       }
-
       return count;
     };
 
@@ -274,6 +273,9 @@
       if (data.semesters) {
         $scope.pastSemestersCount = pastSemestersCount(data.semesters);
         $scope.pastSemestersLimit = data.semesters.length - $scope.pastSemestersCount + 1;
+        if (data.additionalCredits) {
+          $scope.pastSemestersCount++;
+        }
       }
 
       $scope.isLSStudent = isLSStudent($scope.collegeAndLevel);

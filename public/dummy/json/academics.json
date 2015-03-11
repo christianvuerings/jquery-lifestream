@@ -1,4 +1,18 @@
 {
+  "additionalCredits": [
+    {
+      "title": "AP ENGL C/L, 05-10",
+      "units": "5.3"
+    },
+    {
+      "title": "AP BIO, 05-11",
+      "units": "5.3"
+    },
+    {
+      "title": "AP MATH AB, 05-10",
+      "units": "2.7"
+    }
+  ],
   "collegeAndLevel": {
     "empty": "false",
     "errored": false,
@@ -461,10 +475,14 @@
       "termCode": "B",
       "termYear": "2014",
       "timeBucket": "future",
+      "hasEnrollmentData": true,
       "classes": [
         {
+          "courseCatalog": "1A",
           "course_code": "BIOLOGY 1A",
+          "course_id": "biology-1a-2014-B",
           "dept": "BIOLOGY",
+          "dept_desc": "Biology",
           "slug": "biology-1a",
           "title": "General Biology Lecture",
           "sections": [
@@ -512,10 +530,14 @@
       "termCode": "D",
       "termYear": "2013",
       "timeBucket": "current",
+      "hasEnrollmentData": true,
       "classes": [
         {
+          "courseCatalog": "1A",
           "course_code": "BIOLOGY 1A",
+          "course_id": "biology-1a-2013-D",
           "dept": "BIOLOGY",
+          "dept_desc": "Biology",
           "slug": "biology-1a",
           "title": "General Biology Lecture",
           "sections": [
@@ -570,8 +592,11 @@
           "url": "/academics/semester/fall-2013/class/biology-1a"
         },
         {
+          "courseCatalog": "C147",
           "course_code": "COG SCI C147",
+          "course_id": "cog_sci-c147-2013-D",
           "dept": "COG SCI",
+          "dept_desc": "Cognitive Science",
           "slug": "cog_sci-c147",
           "title": "Language Disorders",
           "sections": [
@@ -606,8 +631,11 @@
           "url": "/academics/semester/fall-2013/class/cog_sci-c147"
         },
         {
+          "courseCatalog": "1",
           "course_code": "PHYS ED 1",
+          "course_id": "phys_ed-1-2013-d",
           "dept": "PHYS ED",
+          "dept_desc": "Physical Education",
           "slug": "phys_ed-1",
           "title": "Physical Education Activities",
           "sections": [
@@ -662,15 +690,66 @@
       ]
     },
     {
+      "name": "Spring 2013",
+      "notation": "Education Abroad",
+      "slug": "spring-2013",
+      "termCode": "B",
+      "termYear": "2013",
+      "timeBucket": "past",
+      "hasEnrollmentData": false,
+      "classes": [
+        {
+          "courseCatalog": "105",
+          "course_code": "EGYPT 105",
+          "dept": "EGYPT",
+          "title": "MIDDLE KINGDOM HIST & CULT",
+          "transcript": [
+            {
+              "units": "5.0",
+              "grade": "A-"
+            }
+          ]
+        },
+        {
+          "courseCatalog": "50B",
+          "course_code": "ARABIC 50B",
+          "dept": "ARABIC",
+          "title": "INT MOD ARABIC",
+          "transcript": [
+            {
+              "units": "4.5",
+              "grade": "A"
+            }
+          ]
+        },
+        {
+          "courseCatalog": "399",
+          "course_code": "ARCH 399",
+          "dept": "ARCH",
+          "title": "FIELD EXCAVATION",
+          "transcript": [
+            {
+              "units": "3.9",
+              "grade": "P"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "Spring 2012",
       "slug": "spring-2012",
       "termCode": "B",
       "termYear": "2012",
       "timeBucket": "past",
+      "hasEnrollmentData": true,
       "classes": [
         {
+          "courseCatalog": "1A",
           "course_code": "BIOLOGY 1A",
+          "course_id": "biology-1a-2012-B",
           "dept": "BIOLOGY",
+          "dept_desc": "Biology",
           "slug": "biology-1a",
           "title": "General Biology Lecture",
           "class_sites": [
@@ -715,8 +794,11 @@
           "url": "/academics/semester/spring-2012/class/biology-1a"
         },
         {
+          "courseCatalog": "C147",
           "course_code": "COG SCI C147",
+          "course_id": "cog_sci-c147-2012-B",
           "dept": "COG SCI",
+          "dept_desc": "Cognitive Science",
           "slug": "cog_sci-c147",
           "title": "Language Disorders",
           "sections": [
@@ -746,8 +828,11 @@
           "url": "/academics/semester/spring-2012/class/cog_sci-c147"
         },
         {
+          "courseCatalog": "297",
           "course_code": "PB HLTH 297",
+          "course_id": "pb_hlth-297-2012-B",
           "dept": "PB HLTH",
+          "dept_desc": "Public Health",
           "slug": "pb_hlth-297",
           "title": "Field Study in Public Health",
           "sections": [
