@@ -5,7 +5,10 @@
       <div data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
         <i class="fa cc-left cc-template-canvas-manage-sections-form-collapse-icon"
           data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
-        <strong class="cc-template-canvas-manage-sections-form-course-title" data-ng-bind="course.title"></strong>
+        <strong class="cc-template-canvas-manage-sections-form-course-title">
+          <span data-ng-bind="course.course_code"></span>
+          <span data-ng-if="course.title" data-ng-bind-template=" : {{course.title}}"></span>
+        </strong>
         <span data-ng-if="course.sections">
           (<span data-ng-pluralize count="course.sections.length" when="{'one': '1 section', 'other': '{{course.sections.length}} sections'}"></span>)
         </span>
