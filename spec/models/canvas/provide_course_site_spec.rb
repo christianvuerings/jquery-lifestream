@@ -113,15 +113,15 @@ describe Canvas::ProvideCourseSite do
     end
 
     it 'sets term and ccns for import' do
-      subject.create_course_site(site_name, site_course_code, 'fall-2013', ['1136', '1204'])
+      subject.create_course_site(site_name, site_course_code, 'fall-2013', ['21136', '21204'])
       expect(subject.instance_eval { @import_data['term_slug'] }).to eq 'fall-2013'
       expect(subject.instance_eval { @import_data['term'][:yr] }).to eq '2013'
       expect(subject.instance_eval { @import_data['term'][:cd] }).to eq 'D'
-      expect(subject.instance_eval { @import_data['ccns'] }).to eq ['1136', '1204']
+      expect(subject.instance_eval { @import_data['ccns'] }).to eq ['21136', '21204']
     end
 
     it 'sets status as completed and saves' do
-      subject.create_course_site(site_name, site_course_code, 'fall-2013', ['1136', '1204'])
+      subject.create_course_site(site_name, site_course_code, 'fall-2013', ['21136', '21204'])
       cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
       expect(cached_object.jobStatus).to eq 'courseCreationCompleted'
     end
@@ -136,8 +136,8 @@ describe Canvas::ProvideCourseSite do
         'sis_course_id' => random_id
       }
     end
-    let(:ccns_to_remove) { [random_id] }
-    let(:ccns_to_add) { [random_id] }
+    let(:ccns_to_remove) { [random_ccn] }
+    let(:ccns_to_add) { [random_ccn] }
     let(:task_steps){ [:prepare_users_courses_list, :prepare_section_definitions, :prepare_section_deletions, :import_sections, :refresh_sections_cache, :import_enrollments_in_background] }
     before do
       allow(subject).to receive(:current_terms).and_return(current_terms)
@@ -194,7 +194,7 @@ describe Canvas::ProvideCourseSite do
     before do
       subject.instance_eval do
         @import_data['term_slug'] = 'fall-2013'
-        @import_data['ccns'] = ['1136', '1204']
+        @import_data['ccns'] = ['21136', '21204']
       end
       @filtered_courses_list = [
         {
@@ -204,8 +204,8 @@ describe Canvas::ProvideCourseSite do
           :title=>'The Beauty and Joy of Computing',
           :role=>'Instructor',
           :sections=>[
-            {:ccn=>'1136', :instruction_format=>'DIS', :is_primary_section=>false, :section_label=>'DIS 102', :section_number=>'102', :schedules=>[{:buildingName=>'SODA', :room_number=>'0320', :schedule=>'M 8:00A-9:00A'}], :instructors=>[{:name=>'Seth Mark Beckley', :uid=>'937403'}]},
-            {:ccn=>'1204', :instruction_format=>'DIS', :is_primary_section=>false, :section_label=>'DIS 109', :section_number=>'109', :schedules=>[{:buildingName=>'SODA', :room_number=>'0320', :schedule=>'M 12:00P-1:00P'}], :instructors=>[{:name=>'Seth Mark Beckley', :uid=>'937403'}]}
+            {:ccn=>'21136', :instruction_format=>'DIS', :is_primary_section=>false, :section_label=>'DIS 102', :section_number=>'102', :schedules=>[{:buildingName=>'SODA', :room_number=>'0320', :schedule=>'M 8:00A-9:00A'}], :instructors=>[{:name=>'Seth Mark Beckley', :uid=>'937403'}]},
+            {:ccn=>'21204', :instruction_format=>'DIS', :is_primary_section=>false, :section_label=>'DIS 109', :section_number=>'109', :schedules=>[{:buildingName=>'SODA', :room_number=>'0320', :schedule=>'M 12:00P-1:00P'}], :instructors=>[{:name=>'Seth Mark Beckley', :uid=>'937403'}]}
           ]
         }
       ]
@@ -357,7 +357,7 @@ describe Canvas::ProvideCourseSite do
             :title => 'Supervised Independent Group Studies',
             :role => 'Instructor',
             :sections => [
-              { :ccn => 12345.to_s, :instruction_format => 'GRP', :is_primary_section => true, :section_label => 'GRP 015', :section_number => '015'}
+              { :ccn => '12345', :instruction_format => 'GRP', :is_primary_section => true, :section_label => 'GRP 015', :section_number => '015'}
             ]
           }
         ]
@@ -618,9 +618,9 @@ describe Canvas::ProvideCourseSite do
   describe '#filter_courses_by_ccns' do
     before do
       @selected_cnns = [
-        rand(99999).to_s,
-        rand(99999).to_s,
-        rand(99999).to_s
+        random_ccn,
+        random_ccn,
+        random_ccn
       ]
       @candidate_courses_list = [
         {
@@ -630,7 +630,7 @@ describe Canvas::ProvideCourseSite do
           :title => 'Introduction to Computer Programming for Scientists and Engineers',
           :role => 'Instructor',
           :sections => [
-            { :ccn => rand(99999).to_s, :instruction_format => 'LEC', :is_primary_section => true, :section_label => 'LEC 002', :section_number => '002' },
+            { :ccn => random_ccn, :instruction_format => 'LEC', :is_primary_section => true, :section_label => 'LEC 002', :section_number => '002' },
             { :ccn => "#{@selected_cnns[2]}", :instruction_format => 'DIS', :is_primary_section => false, :section_label => 'DIS 102', :section_number => '102' }
           ]
         },
@@ -641,7 +641,7 @@ describe Canvas::ProvideCourseSite do
           :title => 'Supervised Independent Group Studies',
           :role => 'Instructor',
           :sections => [
-            { :ccn => rand(99999).to_s, :instruction_format => 'GRP', :is_primary_section => true, :section_label => 'GRP 015', :section_number => '015' }
+            { :ccn => random_ccn, :instruction_format => 'GRP', :is_primary_section => true, :section_label => 'GRP 015', :section_number => '015' }
           ]
         },
         {
@@ -661,7 +661,7 @@ describe Canvas::ProvideCourseSite do
           :title => 'Engineering Field Studies',
           :role => 'Instructor',
           :sections => [
-            { :ccn => rand(99999).to_s, :instruction_format => 'IND', :is_primary_section => true, :section_label => 'IND 024', :section_number => '024' }
+            { :ccn => random_ccn, :instruction_format => 'IND', :is_primary_section => true, :section_label => 'IND 024', :section_number => '024' }
           ]
         }
       ]
@@ -848,7 +848,7 @@ describe Canvas::ProvideCourseSite do
     it 'should generate a unique parsable Section SIS ID for the selected sections' do
       term_yr = '2013'
       term_cd = 'D'
-      ccn = rand(99999).to_s
+      ccn = random_ccn
       courses_list = [
           {:course_code => 'ENGIN 7',
            :dept => 'ENGIN',
