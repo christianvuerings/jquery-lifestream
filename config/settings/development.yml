@@ -84,6 +84,7 @@ features:
   reauthentication: false
   audio: true
   advising: true
+  course_manage_official_sections: true
 
 advising_proxy:
   fake: true

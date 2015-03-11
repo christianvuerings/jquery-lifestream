@@ -184,6 +184,23 @@ describe Canvas::ReconfigureExternalApps do
       expect(official_courses_account[:received_resets]).to eq [egrades_id]
       expect(official_courses_account[:received_creates]).to include 'Roster Photos'
     end
+    describe 'feature-flag Official Sections' do
+      before do
+        allow(Settings.features).to receive(:course_manage_official_sections).and_return(feature_flag)
+      end
+      subject do
+        Canvas::ReconfigureExternalApps.new.configure_all_apps_from_current_host
+        accounts_mocks[Settings.canvas_proxy.official_courses_account_id][:received_creates]
+      end
+      context 'enabled' do
+        let(:feature_flag) {true}
+        it { should include 'Official Sections' }
+      end
+      context 'disabled' do
+        let(:feature_flag) {false}
+        it { should_not include 'Official Sections' }
+      end
+    end
   end
 
 end
