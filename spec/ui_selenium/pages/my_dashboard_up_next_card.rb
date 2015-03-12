@@ -19,11 +19,21 @@ module CalCentralPages
     elements(:event_summary, :div, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]/li//strong[@data-ng-bind="item.summary"]')
     elements(:event_location, :div, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]/li//div[@data-ng-bind="item.location"]')
     elements(:event_detail_toggle, :div, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]/li//div[@data-ng-click="api.widget.toggleShow($event, items, item, \'Up Next\')"]')
+    div(:event_expanded_detail, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]/li//div[@data-ng-if="item.show"]')
     div(:hangout_link, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]/li//a[contains(.,"Join Hangout")]')
     div(:event_start_time, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]//div[@data-ng-bind="item.start.epoch * 1000 | date:\'short\' | lowercase"]')
     div(:event_end_time, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]//div[@data-ng-bind="item.end.epoch * 1000 | date:\'short\' | lowercase"]')
     paragraph(:event_organizer, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]//p[@data-ng-bind="item.organizer"]')
     link(:view_in_bcal_button, :xpath => '//ul[@class="cc-widget-list cc-widget-mycalendar-datelist"]//a[contains(.,"View in bCal")]')
+
+    def expand_event_detail(toggle_element)
+      begin
+        toggle_element.click
+        event_expanded_detail_element.when_present(timeout=WebDriverUtils.page_event_timeout)
+      rescue
+        retry
+      end
+    end
 
     def all_event_times
       times = []
@@ -46,7 +56,7 @@ module CalCentralPages
     def hangout_link_count
       links = []
       event_detail_toggle_elements.each do |toggle|
-        toggle.click
+        expand_event_detail(toggle)
         hangout_link_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
         links.push(hangout_link)
         toggle.click
@@ -58,7 +68,7 @@ module CalCentralPages
     def all_event_start_times
       start_times = []
       event_detail_toggle_elements.each do |toggle|
-        toggle.click
+        expand_event_detail(toggle)
         event_start_time_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
         start_times.push(event_start_time.gsub('  ', ' '))
         toggle.click
@@ -70,7 +80,7 @@ module CalCentralPages
     def all_event_end_times
       end_times = []
       event_detail_toggle_elements.each do |toggle|
-        toggle.click
+        expand_event_detail(toggle)
         event_end_time_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
         end_times.push(event_end_time.gsub('  ', ' '))
         toggle.click
@@ -82,7 +92,7 @@ module CalCentralPages
     def all_event_organizers
       organizers = []
       event_detail_toggle_elements.each do |toggle|
-        toggle.click
+        expand_event_detail(toggle)
         event_organizer_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
         organizers.push(event_organizer)
         toggle.click
