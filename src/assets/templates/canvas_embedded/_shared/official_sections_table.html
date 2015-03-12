@@ -1,4 +1,4 @@
-<div class="my-custom-template-container" data-ng-if="sectionsList.length > 0">
+<div class="cc-template-official-sections-table-container" data-ng-if="sectionsList.length > 0">
   <table class="cc-page-course-official-sections-table" role="grid">
     <thead class="cc-visuallyhidden">
       <tr>
@@ -15,7 +15,7 @@
       </tr>
     </thead>
     <tbody data-ng-repeat="section in sectionsList">
-      <tr data-ng-class="{'cc-page-course-official-sections-table-row':((listMode !== 'availableStaging' && !$last) || (listMode === 'availableStaging' && !$last && !section.sites)), 'cc-page-course-official-sections-table-row-last':((listMode !== 'availableStaging' && $last) || (listMode === 'availableStaging') && ($last || section.sites)), 'cc-page-course-official-sections-table-row-added':(listMode === 'currentStaging' && section.stagedState === 'add'), 'cc-page-course-official-sections-table-row-deleted':(listMode === 'availableStaging' && section.stagedState === 'delete'), 'cc-page-course-official-sections-table-row-disabled':(listMode === 'availableStaging' && section.isCourseSection && (section.stagedState !== 'delete') || (section.stagedState === 'add'))}" data-ng-if="(listMode === 'preview') || (listMode === 'availableStaging') || (listMode === 'currentStaging' && section.isCourseSection && section.stagedState !== 'delete') || (listMode === 'currentStaging' && !section.isCourseSection && section.stagedState === 'add')">
+      <tr data-ng-class="rowClassLogic(listMode, section.stagedState, section.isCourseSection, sections.sites, $last)" data-ng-if="(listMode === 'preview') || (listMode === 'availableStaging') || (listMode === 'currentStaging' && section.isCourseSection && section.stagedState !== 'delete') || (listMode === 'currentStaging' && !section.isCourseSection && section.stagedState === 'add')">
         <td class="cc-page-course-official-sections-table-cell-course-code" data-ng-bind="section.courseCode"></td>
         <td class="cc-page-course-official-sections-table-cell-section-label" data-ng-bind="section.section_label"></td>
         <td class="cc-page-course-official-sections-table-cell-section-ccn" data-ng-bind="section.ccn"></td>
@@ -62,7 +62,5 @@
         <td colspan="7">No sections to remain in course site</td>
       </tr>
     </tbody>
-
-
   </table>
 </div>
