@@ -121,6 +121,7 @@ class GooglePage
     self.to = recipient
     self.subject = subject
     self.body = body
+    sleep(WebDriverUtils.page_event_timeout)
     send_email_button
     mail_sent_link_element.when_present(timeout=WebDriverUtils.page_event_timeout)
   end
@@ -132,9 +133,11 @@ class GooglePage
     event_title_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     event_title
     self.event_title = event_name
+    sleep(WebDriverUtils.page_event_timeout)
     event_location_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     event_location
     self.event_location = location
+    sleep(WebDriverUtils.page_event_timeout)
     add_video_link
     sleep(WebDriverUtils.page_event_timeout)
     start_time = Time.strptime(event_start_time, "%l:%M%P")
