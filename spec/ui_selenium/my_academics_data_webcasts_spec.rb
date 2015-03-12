@@ -20,6 +20,7 @@ describe 'My Academics webcasts card', :testui => true do
       driver = WebDriverUtils.driver
 
       test_users = UserUtils.load_test_users
+      testable_users = []
       test_users.each do |user|
         unless user['webcast'].nil?
           uid = user['uid'].to_s
@@ -35,6 +36,8 @@ describe 'My Academics webcasts card', :testui => true do
             splash_page.basic_auth(driver, uid)
             my_academics = CalCentralPages::MyAcademicsClassPage.new(driver)
             my_academics.load_class_page(driver, class_page)
+            my_academics.wait_for_webcasts
+            testable_users.push(uid)
 
             if !you_tube_video_id.nil?
               my_academics.video_thumbnail_element.when_present(timeout=WebDriverUtils.academics_timeout)
@@ -100,9 +103,13 @@ describe 'My Academics webcasts card', :testui => true do
                 expect(has_no_webcast_message).to be true
               end
             end
-
+          rescue => e
+            logger.error e.message + "\n" + e.backtrace.join("\n ")
           end
         end
+      end
+      it 'has a webcast UI for at least one of the test users' do
+        expect(testable_users.length).to be > 0
       end
     rescue => e
       logger.error e.message + "\n" + e.backtrace.join("\n ")
