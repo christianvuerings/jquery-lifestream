@@ -41,7 +41,7 @@
             <div class="row">
               <div class="medium-12 columns">
                 <!-- *!*!*!*!*!*!* PREVIEW CURRENT SECTIONS *!*!*!*!*!*!* -->
-                <div data-bc-official-sections-table data-list-mode="'preview'" data-sections-list="existingCourseSections"></div>
+                <div data-bc-official-sections-table data-list-mode="'preview'" data-sections-list="existingCourseSections" data-row-class-logic="rowClassLogic(listMode, section, $last)" data-row-display-logic="rowDisplayLogic(listMode, section)"></div>
                 <!-- *!*!*!*!*!*!* END PREVIEW CURRENT SECTIONS *!*!*!*!*!*!* -->
               </div>
             </div>
@@ -79,7 +79,7 @@
             <div class="row">
               <div class="medium-12 columns">
                 <!-- *!*!*!*!*!*!* STAGING CURRENT SECTIONS *!*!*!*!*!*!* -->
-                <div data-bc-official-sections-table data-list-mode="'currentStaging'" data-sections-list="allSections" data-unstage-action="unstage(section)" data-stage-delete-action="stageDelete(section)" data-no-current-sections="noCurrentSections()"></div>
+                <div data-bc-official-sections-table data-list-mode="'currentStaging'" data-sections-list="allSections" data-unstage-action="unstage(section)" data-stage-delete-action="stageDelete(section)" data-no-current-sections="noCurrentSections()" data-row-class-logic="rowClassLogic(listMode, section, $last)" data-row-display-logic="rowDisplayLogic(listMode, section)"></div>
                 <!-- *!*!*!*!*!*!* END STAGING CURRENT SECTIONS *!*!*!*!*!*!* -->
               </div>
             </div>
@@ -131,7 +131,7 @@
                 <div class="row">
                   <div class="medium-12 columns">
                     <!-- *!*!*!*!*!*!* STAGING AVAILABLE SECTIONS *!*!*!*!*!*!* -->
-                    <div data-bc-official-sections-table data-list-mode="'availableStaging'" data-sections-list="course.sections" data-unstage-action="unstage(section)" data-stage-add-action="stageAdd(section)"></div>
+                    <div data-bc-official-sections-table data-list-mode="'availableStaging'" data-sections-list="course.sections" data-unstage-action="unstage(section)" data-stage-add-action="stageAdd(section)" data-row-class-logic="rowClassLogic(listMode, section, $last)" data-row-display-logic="rowDisplayLogic(listMode, section)"></div>
                     <!-- *!*!*!*!*!*!* END STAGING AVAILABLE SECTIONS *!*!*!*!*!*!* -->
                   </div>
                 </div>

@@ -15,7 +15,7 @@
       </tr>
     </thead>
     <tbody data-ng-repeat="section in sectionsList">
-      <tr data-ng-class="rowClassLogic(listMode, section.stagedState, section.isCourseSection, sections.sites, $last)" data-ng-if="(listMode === 'preview') || (listMode === 'availableStaging') || (listMode === 'currentStaging' && section.isCourseSection && section.stagedState !== 'delete') || (listMode === 'currentStaging' && !section.isCourseSection && section.stagedState === 'add')">
+      <tr data-ng-class="rowClassLogic({listMode: listMode, section: section, last: $last})" data-ng-if="rowDisplayLogic({listMode: listMode, section: section})">
         <td class="cc-page-course-official-sections-table-cell-course-code" data-ng-bind="section.courseCode"></td>
         <td class="cc-page-course-official-sections-table-cell-section-label" data-ng-bind="section.section_label"></td>
         <td class="cc-page-course-official-sections-table-cell-section-ccn" data-ng-bind="section.ccn"></td>
@@ -53,6 +53,14 @@
             <button class="bc-canvas-button bc-canvas-button-primary cc-page-course-official-sections-button" data-ng-class="{'cc-page-course-official-sections-button-undo-add':(section.stagedState === 'add')}" data-ng-click="stageAddAction({section: section})">
               Add
             </button>
+          </div>
+        </td>
+      </tr>
+      <tr data-ng-if="(listMode === 'availableStaging' && section.sites)" data-ng-class="{'cc-page-course-official-sections-table-row':(!$last), 'cc-page-course-official-sections-table-row-last':($last)}">
+        <td colspan="7" class="cc-page-course-official-sections-sites-cell">
+          <div data-ng-repeat="site in section.sites" class="cc-page-course-official-sections-table-sites-container">
+            <i class="fa fa-info-circle cc-page-course-official-sections-table-sited-icon"></i>
+            This section is already in use by <a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a>
           </div>
         </td>
       </tr>

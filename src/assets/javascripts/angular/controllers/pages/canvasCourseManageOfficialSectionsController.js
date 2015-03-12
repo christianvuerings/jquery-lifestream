@@ -283,6 +283,32 @@
     };
 
     /*
+     * Returns classes to be applied to section row.
+     * Default table row style with bottom border only applied when not the last row displayed, or when an associated sites row is not present.
+     */
+    $scope.rowClassLogic = function(listMode, section, last) {
+      return {
+        'cc-page-course-official-sections-table-row': (!last && !section.sites),
+        'cc-page-course-official-sections-table-row-last': ((listMode !== 'availableStaging' && last) || (listMode === 'availableStaging') && (last || section.sites)),
+        'cc-page-course-official-sections-table-row-added': (listMode === 'currentStaging' && section.stagedState === 'add'),
+        'cc-page-course-official-sections-table-row-deleted': (listMode === 'availableStaging' && section.stagedState === 'delete'),
+        'cc-page-course-official-sections-table-row-disabled': (listMode === 'availableStaging' && section.isCourseSection && (section.stagedState !== 'delete') || (section.stagedState === 'add'))
+      };
+    };
+
+    /*
+     * Returns boolean determining if row in sections display table is displayed.
+     * Always displayed in preview mode or available staging area. Only displayed in current staging
+     * area when not yet deleted, or when staged for addition to the current course site.
+     */
+    $scope.rowDisplayLogic = function(listMode, section) {
+      return (listMode === 'preview') ||
+        (listMode === 'availableStaging') ||
+        (listMode === 'currentStaging' && section && section.isCourseSection && section.stagedState !== 'delete') ||
+        (listMode === 'currentStaging' && section && !section.isCourseSection && section.stagedState === 'add');
+    };
+
+    /*
      * Removes any staged status ('add' or 'delete') from section
      */
     $scope.unstage = function(section) {
