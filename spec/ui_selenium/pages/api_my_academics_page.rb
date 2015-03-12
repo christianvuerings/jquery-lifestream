@@ -190,7 +190,7 @@ class ApiMyAcademicsPage
   def exam_locations(exam)
     locations = exam['locations']
     raw_locations = []
-    locations.each { |location| raw_locations.push(location['raw'].gsub("  ", " ")) }
+    locations.each { |location| raw_locations.push(location['raw'].gsub("  ", " ").strip) }
     raw_locations
   end
 

@@ -56,8 +56,8 @@ module CalCentralPages
   # Footer
   div(:toggle_footer_link, :xpath => '//div[@class=\'cc-footer-berkeley\']')
   button(:opt_out_button, :xpath => '//button[text()="Opt out of CalCentral"]')
-  button(:opt_out_yes, :xpath => '//button[text()="Yes"]')
-  button(:out_out_no, :xpath => '//button[text()="No"]')
+  button(:opt_out_yes, :xpath => '//button[@data-ng-click="api.user.optOut()"]')
+  button(:out_out_no, :xpath => '//button[@data-ng-click="deleteSelf=false"]')
   text_field(:basic_auth_uid_input, :name => 'email')
   text_field(:basic_auth_password_input, :name => 'password')
   button(:basic_auth_login_button, :xpath => '//button[contains(text(),"Login")]')
