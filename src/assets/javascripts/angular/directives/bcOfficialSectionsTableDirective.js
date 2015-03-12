@@ -3,19 +3,17 @@
 
   angular.module('calcentral.directives').directive('bcOfficialSectionsTable', function() {
     var rowClassLogic = function(listMode, stagedState, isCourseSection, sites, $last) {
-      var result = {
+      return {
         'cc-page-course-official-sections-table-row': ((listMode !== 'availableStaging' && !$last) || (listMode === 'availableStaging' && !$last && !sites)),
         'cc-page-course-official-sections-table-row-last': ((listMode !== 'availableStaging' && $last) || (listMode === 'availableStaging') && ($last || sites)),
         'cc-page-course-official-sections-table-row-added': (listMode === 'currentStaging' && stagedState === 'add'),
         'cc-page-course-official-sections-table-row-deleted': (listMode === 'availableStaging' && stagedState === 'delete'),
         'cc-page-course-official-sections-table-row-disabled': (listMode === 'availableStaging' && isCourseSection && (stagedState !== 'delete') || (stagedState === 'add'))
       };
-      console.log(result);
-      return result;
     };
 
     return {
-      restrict: 'E',
+      restrict: 'AE',
       templateUrl: 'canvas_embedded/_shared/official_sections_table.html', // Markup for template
       scope: {
         sectionsList: '=',      // Attribute used to pass an array of sections to render via the template: data-sections-list="sections"
