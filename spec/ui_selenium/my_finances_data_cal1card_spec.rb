@@ -66,7 +66,7 @@ describe 'My Finances Cal1Card', :testui => true do
                 end
                 api_balance = cal1card_api.debit_balance
                 my_finances_balance = my_finances_page.debit_balance.delete('$, ')
-                has_manage_debit_link = WebDriverUtils.verify_external_link(driver, my_finances_page.manage_debit_card_element, 'Cal 1 Card: Home')
+                has_manage_debit_link = my_finances_page.manage_debit_card?
                 it "shows the debit account balance for UID #{uid}" do
                   expect(my_finances_balance).to eql(api_balance)
                 end
@@ -75,7 +75,7 @@ describe 'My Finances Cal1Card', :testui => true do
                 end
               else
                 my_finances_balance = my_finances_page.debit_balance?
-                has_learn_about_debit = WebDriverUtils.verify_external_link(driver, my_finances_page.learn_about_debit_card_element, 'Cal 1 Card: Home')
+                has_learn_about_debit = my_finances_page.learn_about_debit_card?
                 it "shows no debit account balance for UID #{uid}" do
                   expect(my_finances_balance).to be false
                 end
@@ -98,7 +98,7 @@ describe 'My Finances Cal1Card', :testui => true do
                 api_plan = cal1card_api.meal_points_plan
                 my_finances_points = my_finances_page.meal_points_balance.delete(', ')
                 my_finances_plan = my_finances_page.meal_points_plan
-                has_manage_points_link = WebDriverUtils.verify_external_link(driver, my_finances_page.manage_meal_card_element, 'Caldining')
+                has_manage_points_link = my_finances_page.manage_meal_card?
                 it "shows the meal point balance for UID #{uid}" do
                   expect(my_finances_points).to eql(api_points)
                 end
@@ -111,14 +111,14 @@ describe 'My Finances Cal1Card', :testui => true do
               else
                 my_finances_points = my_finances_page.meal_points_balance?
                 my_finances_plan = my_finances_page.meal_points_plan?
-                has_learn_about_meals = WebDriverUtils.verify_external_link(driver, my_finances_page.learn_about_meal_plan_element, 'Caldining')
+                has_learn_about_meals = my_finances_page.learn_about_meal_plan?
                 it "shows no meal point balance for UID #{uid}" do
                   expect(my_finances_points).to be false
                 end
                 it "shows no meal plan type for UID #{uid}" do
                   expect(my_finances_plan).to be false
                 end
-                it "shows a link to learn about meal lans at Cal 1 Card for UID #{uid}" do
+                it "shows a link to learn about meal plans at Cal 1 Card for UID #{uid}" do
                   expect(has_learn_about_meals).to be true
                 end
               end

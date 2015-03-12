@@ -23,11 +23,14 @@ describe 'User authentication', :testui => true do
 
     before(:each) do
       @driver = WebDriverUtils.driver
-      @cal_net_auth_page = CalNetAuthPage.new(@driver)
     end
 
     after(:each) do
       @driver.quit
+    end
+
+    before(:example) do
+      @cal_net_auth_page = CalNetAuthPage.new(@driver)
     end
 
     context 'when logging into CalCentral' do
@@ -151,7 +154,7 @@ describe 'User authentication', :testui => true do
         dashboard_page = CalCentralPages::MyDashboardPage.new(@driver)
         dashboard_page.opt_out(@driver)
         @splash_page.wait_for_expected_title?
-        expect(@splash_page.sign_in_element.visible?).to be true
+        @splash_page.sign_in_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
         @splash_page.click_sign_in_button
         @cal_net_auth_page.page_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
         expect(@cal_net_auth_page.username_element.visible?).to be true

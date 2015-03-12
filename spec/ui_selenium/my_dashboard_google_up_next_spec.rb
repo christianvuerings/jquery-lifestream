@@ -22,7 +22,13 @@ describe 'My Dashboard Up Next card', :testui => true do
 
     before(:all) do
       @driver = WebDriverUtils.driver
+    end
 
+    after(:all) do
+      @driver.quit
+    end
+
+    before(:context) do
       splash_page = CalCentralPages::SplashPage.new(@driver)
       splash_page.load_page(@driver)
       splash_page.click_sign_in_button
@@ -76,72 +82,68 @@ describe 'My Dashboard Up Next card', :testui => true do
       end
     end
 
-    after(:all) do
-      @driver.quit
+    it 'shows the current date' do
+      expect(@up_next_card.day).to eql(today.strftime("%A"))
+      expect(@up_next_card.date).to eql(today.strftime("%^b %-d"))
     end
 
-    context 'for Google calendar events' do
+    it 'shows event times' do
+      logger.info("#{@up_next_card.all_event_times}")
+      expect(@up_next_card.all_event_times).to eql(@initial_event_times.push(@event_time).sort)
+    end
 
-      it 'shows the current date' do
-        expect(@up_next_card.day).to eql(today.strftime("%A"))
-        expect(@up_next_card.date).to eql(today.strftime("%^b %-d"))
+    it 'shows event summaries' do
+      logger.info("#{@up_next_card.all_event_summaries}")
+      expect(@up_next_card.all_event_summaries).to eql(@initial_event_summaries.push(@event_title).sort)
+    end
+
+    it 'shows event locations' do
+      logger.info("#{@up_next_card.all_event_locations}")
+      expect(@up_next_card.all_event_locations).to eql(@initial_event_locations.push(@event_location).sort)
+    end
+
+    context 'when expanded' do
+
+      it 'shows event video hangout links' do
+        expect(@up_next_card.hangout_link_count).to eql(@initial_hangout_link_count + 1)
       end
 
-      it 'shows event times' do
-        logger.info("#{@up_next_card.all_event_times}")
-        expect(@up_next_card.all_event_times).to eql(@initial_event_times.push(@event_time).sort)
+      it 'shows event start times' do
+        logger.info("#{@up_next_card.all_event_start_times}")
+        expect(@up_next_card.all_event_start_times).to eql(@initial_event_start_times.push(@event_start_time).sort)
       end
 
-      it 'shows event summaries' do
-        logger.info("#{@up_next_card.all_event_summaries}")
-        expect(@up_next_card.all_event_summaries).to eql(@initial_event_summaries.push(@event_title).sort)
+      it 'shows event end times' do
+        logger.info("#{@up_next_card.all_event_end_times}")
+        expect(@up_next_card.all_event_end_times).to eql(@initial_event_end_times.push(@event_end_time).sort)
       end
 
-      it 'shows event locations' do
-        logger.info("#{@up_next_card.all_event_locations}")
-        expect(@up_next_card.all_event_locations).to eql(@initial_event_locations.push(@event_location).sort)
+      it 'shows event organizers' do
+        logger.info("#{@up_next_card.all_event_organizers}")
+        expect(@up_next_card.all_event_organizers).to eql(@initial_event_organizers.push('ETS Quality').sort)
       end
 
-      context 'when expanded' do
+    end
 
-        it 'shows event video hangout links' do
-          expect(@up_next_card.hangout_link_count).to eql(@initial_hangout_link_count + 1)
-        end
+    context 'when opening an event in bCal' do
 
-        it 'shows event start times' do
-          logger.info("#{@up_next_card.all_event_start_times}")
-          expect(@up_next_card.all_event_start_times).to eql(@initial_event_start_times.push(@event_start_time).sort)
-        end
-
-        it 'shows event end times' do
-          logger.info("#{@up_next_card.all_event_end_times}")
-          expect(@up_next_card.all_event_end_times).to eql(@initial_event_end_times.push(@event_end_time).sort)
-        end
-
-        it 'shows event organizers' do
-          logger.info("#{@up_next_card.all_event_organizers}")
-          expect(@up_next_card.all_event_organizers).to eql(@initial_event_organizers.push('ETS Quality').sort)
-        end
-
+      before(:example) do
+        @up_next_card.click_bcal_link(@driver, id)
+        @driver.switch_to.window(@driver.window_handles.last)
+        @google.event_title_displayed_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       end
 
-      context 'when opening an event in bCal' do
-
-        before(:all) do
-          @up_next_card.click_bcal_link(@driver, id)
-          @driver.switch_to.window(@driver.window_handles.last)
-          @google.event_title_displayed_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-        end
-
-        it 'shows the event detail in Google calendar' do
-          expect(@google.event_title_displayed).to eql(@event_title)
-        end
-
-        after(:all) do
-          @driver.switch_to.window(@driver.window_handles.first)
-        end
-
+      it 'shows the event detail in Google calendar' do
+        expect(@google.event_title_displayed).to eql(@event_title)
       end
+
+      after(:example) do
+        if @driver.window_handles.length > 1 && @driver.title.include?('Google Calendar')
+          @driver.close
+        end
+        @driver.switch_to.window(@driver.window_handles.first)
+      end
+
     end
   end
 end

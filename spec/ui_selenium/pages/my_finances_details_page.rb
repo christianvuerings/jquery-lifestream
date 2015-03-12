@@ -49,7 +49,7 @@ module CalCentralPages
       div(:trans_due_date, :xpath => '//div[@data-ng-if="item.transDueDateShow && !(item.transStatus === \'Closed\' && item.transType === \'Refund\')"]')
       div(:trans_dept, :xpath => '//div[@data-ng-if="item.transDept"]')
       div(:trans_term, :xpath => '//div[@data-ng-if="item.transTerm"]')
-      div(:trans_disburse_date, :xpath => 'div[@data-ng-if="item.transPotentialDisbursementDate"]')
+      div(:trans_disburse_date, :xpath => '//div[@data-ng-if="item.transPotentialDisbursementDate"]')
       div(:trans_ref_method, :xpath => '//div[@data-ng-if="item.transPaymentMethod"]')
       div(:trans_ref_date, :xpath => '//div[@data-ng-if="item.transPaymentLastActionDate"]')
       div(:trans_ref_action, :xpath => '//div[@data-ng-if="item.transPaymentLastAction"]')

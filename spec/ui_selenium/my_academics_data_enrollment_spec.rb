@@ -231,9 +231,20 @@ describe 'My Academics enrollments', :testui => true do
                         it "shows the student role on the #{semester_name} #{api_course_code} class page for UID #{uid}" do
                           expect(class_page_course_role).to eql('Student')
                         end
-                        it "shows the enrolled section labels on the #{semester_name} #{api_course_code} class page for UID #{uid}" do
-                          expect(class_page_section_labels).to eql(api_section_labels)
-                          expect(class_page_section_labels.all? &:blank?).to be false
+                        if api_section_labels.length == api_section_schedules.length
+                          it "shows the enrolled section labels on the #{semester_name} #{api_course_code} class page for UID #{uid}" do
+                            expect(class_page_section_labels).to eql(api_section_labels)
+                            expect(class_page_section_labels.all? &:blank?).to be false
+                          end
+                        elsif api_section_labels.length < api_section_schedules.length
+                          it "shows no duplicate enrolled section labels on #{semester_name} #{api_course_code} class page for UID #{uid}" do
+                            expect(class_page_section_labels.length).to be < class_page_section_schedules.length
+                            expect(class_page_section_labels).to eql(class_page_section_labels.uniq)
+                          end
+                        else
+                          it "shows no enrolled section labels without schedules on the #{semester_name} #{api_course_code} class page for UID #{uid}" do
+                            expect(class_page_section_labels.length).to eql(class_page_section_schedules.length)
+                          end
                         end
                         it "shows the enrolled section CCNs on the #{semester_name} #{api_course_code} class page for UID #{uid}" do
                           expect(class_page_section_ccns).to eql(api_section_ccns)

@@ -16,10 +16,15 @@ describe 'My Finances landing page', :testui => true do
 
   if ENV["UI_TEST"] && Settings.ui_selenium.layer != 'production'
 
-    wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
-
     before(:all) do
       @driver = WebDriverUtils.driver
+    end
+
+    after(:all) do
+      @driver.quit
+    end
+
+    before(:context) do
       # Log into Production CalNet, since a couple links require Prod authentication
       @driver.get("#{Settings.cas_server}")
       @cal_net_prod_page = CalNetAuthPage.new(@driver)
@@ -33,19 +38,6 @@ describe 'My Finances landing page', :testui => true do
       @my_finances_page.load_page(@driver)
       @my_finances_page.wait_for_billing_summary(@driver)
       @my_finances_page.wait_for_fin_resources_links
-    end
-
-    after(:all) do
-      @driver.quit
-    end
-
-    context 'card headings' do
-      it 'include Cal 1 Card' do
-        expect(@my_finances_page.cal_1_card_heading?).to be true
-      end
-      it 'include Financial Aid Messages' do
-        expect(@my_finances_page.fin_messages_heading?).to be true
-      end
     end
 
     context 'Billing Summary card' do
@@ -70,6 +62,15 @@ describe 'My Finances landing page', :testui => true do
         unless @my_finances_page.account_balance_element == '  $ 0.00'
           expect(WebDriverUtils.verify_external_link(@driver, @my_finances_page.make_payment_link_element, 'CARS Payment Options')).to be true
         end
+      end
+    end
+
+    context 'Cal 1 Card card' do
+      it 'includes a link to Cal 1 Card' do
+        WebDriverUtils.verify_external_link(@driver, @my_finances_page.cal_1_card_link_element, 'Cal 1 Card: Home')
+      end
+      it 'includes a link to Cal Dining' do
+        WebDriverUtils.verify_external_link(@driver, @my_finances_page.cal_dining_link_element, 'Caldining')
       end
     end
 

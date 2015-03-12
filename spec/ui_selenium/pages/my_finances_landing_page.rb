@@ -22,10 +22,12 @@ module CalCentralPages
       list_item(:card_found_msg, :xpath => '//li[@data-ng-if="cal1cardLost === \'Lost\'"]')
       div(:debit_account_header, :xpath => '//div[@class="cc-cal1card-header"]')
       span(:debit_balance, :xpath => '//span[@data-ng-bind="debit + \'\' | currency"]')
+      link(:cal_1_card_link, :xpath => '//a[@href="http://cal1card.berkeley.edu"]')
       link(:manage_debit_card, :xpath => '//div[contains(.,"Debit Account")]/following-sibling::a[contains(.,"Manage Your Card")]')
       link(:learn_about_debit_card, :xpath => '//div[contains(.,"You don\'t have a debit account")]/following-sibling::a[contains(.,"Learn more about Cal 1 Card")]')
       span(:meal_points_plan, :xpath => '//span[@data-ng-bind="mealpointsPlan"]')
       span(:meal_points_balance, :xpath => '//span[@data-ng-bind="mealpoints | number"]')
+      link(:cal_dining_link, :xpath => '//a[@href="http://caldining.berkeley.edu"]')
       link(:manage_meal_card, :xpath => '//div[contains(.,"Meal Plan")]/following-sibling::a[contains(.,"Manage Your Points")]')
       link(:learn_about_meal_plan, :xpath => '//div[contains(.,"You don\'t have a meal plan")]/following-sibling::a[contains(.,"Learn more about Meal Plans")]')
 
@@ -98,16 +100,17 @@ module CalCentralPages
         icons =[]
         finaid_message_icon_elements.each do |msg|
           icon_type = msg.attribute('class')
-          if icon_type == 'fa fa-exclamation-circle cc-left'
-            icon = 'alert'
-          elsif icon_type == 'fa fa-info-circle cc-left'
-            icon = 'info'
-          elsif icon_type == 'fa fa-check-circle cc-left'
-            icon = 'message'
-          elsif icon_type == 'fa fa-usd cc-left'
-            icon = 'financial'
-          else
-            icon = nil
+          case icon_type
+            when 'fa fa-exclamation-circle cc-left'
+              icon = 'alert'
+            when 'fa fa-info-circle cc-left'
+              icon = 'info'
+            when 'fa fa-check-circle cc-left'
+              icon = 'message'
+            when 'fa fa-usd cc-left'
+              icon = 'financial'
+            else
+              icon = nil
           end
           icons.push(icon)
         end
