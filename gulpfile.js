@@ -254,7 +254,9 @@
       transform: function(filePath, file) {
         // Return file contents as string
         return file.contents.toString('utf8');
-      }
+      },
+      // Remove the tags after injection
+      removeTags: true
     };
 
     // Run the 2 index & bCourses stream in parallell
