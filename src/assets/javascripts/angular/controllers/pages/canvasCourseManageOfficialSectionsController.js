@@ -291,7 +291,7 @@
      *  - in the current site and not staged for deletion,
      *  - staged for addition
      */
-    $scope.rowClassLogic = function(listMode, section, last) {
+    $scope.rowClassLogic = function(listMode, section) {
       return {
         'cc-page-course-official-sections-table-row-added': (listMode === 'currentStaging' && section.stagedState === 'add'),
         'cc-page-course-official-sections-table-row-deleted': (listMode === 'availableStaging' && section.stagedState === 'delete'),
