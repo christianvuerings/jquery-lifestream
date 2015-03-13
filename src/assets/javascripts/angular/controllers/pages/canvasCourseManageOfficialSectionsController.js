@@ -283,16 +283,23 @@
     };
 
     /*
-     * Returns classes to be applied to section row.
-     * Default table row style with bottom border only applied when not the last row displayed, or when an associated sites row is not present.
+     * Returns object indicating classes to be applied to section row.
+     *
+     * Rows in the current staging area that are staged for addition will have a yellow background.
+     * Rows in the available staging area that are staged for deletion will have a red background.
+     * Rows appear as disabled when in the available staging area that are either:
+     *  - in the current site and not staged for deletion,
+     *  - staged for addition
      */
     $scope.rowClassLogic = function(listMode, section, last) {
       return {
-        'cc-page-course-official-sections-table-row': (!last && !section.sites),
-        'cc-page-course-official-sections-table-row-last': ((listMode !== 'availableStaging' && last) || (listMode === 'availableStaging') && (last || section.sites)),
         'cc-page-course-official-sections-table-row-added': (listMode === 'currentStaging' && section.stagedState === 'add'),
         'cc-page-course-official-sections-table-row-deleted': (listMode === 'availableStaging' && section.stagedState === 'delete'),
-        'cc-page-course-official-sections-table-row-disabled': (listMode === 'availableStaging' && section.isCourseSection && (section.stagedState !== 'delete') || (section.stagedState === 'add'))
+        'cc-page-course-official-sections-table-row-disabled': (
+          listMode === 'availableStaging' &&
+          (section.stagedState === 'add') ||
+          (section.isCourseSection && section.stagedState !== 'delete')
+        )
       };
     };
 

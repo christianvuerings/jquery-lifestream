@@ -3,7 +3,7 @@
 
   angular.module('calcentral.directives').directive('bcOfficialSectionsTable', function() {
     return {
-      restrict: 'AE',
+      restrict: 'A',
       templateUrl: 'canvas_embedded/_shared/official_sections_table.html', // Markup for template
       scope: {
         sectionsList: '=',      // Attribute used to pass an array of sections to render via the template: data-sections-list="sections"
