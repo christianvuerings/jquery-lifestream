@@ -25,10 +25,14 @@ describe 'My Academics webcasts card', :testui => true do
         unless user['webcast'].nil?
           uid = user['uid'].to_s
           logger.info("UID is #{uid}")
+          course = user['webcast']['course']
           class_page = user['webcast']['classPagePath']
           lecture_count = user['webcast']['lectures']
-          you_tube_video_id = user['webcast']['video']
+          video_you_tube_id = user['webcast']['video']
+          video_itunes = user['webcast']['itunesVideo']
           audio_url = user['webcast']['audio']
+          audio_download = user['webcast']['audioDownload']
+          audio_itunes = user['webcast']['itunesAudio']
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
@@ -39,7 +43,7 @@ describe 'My Academics webcasts card', :testui => true do
             my_academics.wait_for_webcasts
             testable_users.push(uid)
 
-            if you_tube_video_id.nil? && !audio_url.nil?
+            if video_you_tube_id.nil? && !audio_url.nil?
               my_academics.audio_source_element.when_present(timeout=WebDriverUtils.academics_timeout)
               has_right_default_tab = my_academics.audio_element.visible?
               it "shows the audio tab by default for UID #{uid}" do
@@ -50,12 +54,12 @@ describe 'My Academics webcasts card', :testui => true do
               it "shows a 'no video' message for UID #{uid}" do
                 expect(has_no_video_message).to be true
               end
-            elsif you_tube_video_id.nil? && audio_url.nil?
+            elsif video_you_tube_id.nil? && audio_url.nil?
               has_no_webcast_message = my_academics.no_webcast_msg?
               it "shows a 'no webcasts' message for UID #{uid}" do
                 expect(has_no_webcast_message).to be true
               end
-            elsif audio_url.nil? && !you_tube_video_id.nil?
+            elsif audio_url.nil? && !video_you_tube_id.nil?
               my_academics.video_thumbnail_element.when_present(timeout=WebDriverUtils.academics_timeout)
               has_right_default_tab = my_academics.video_thumbnail_element.visible?
               it "shows the video tab by default for UID #{uid}" do
@@ -74,11 +78,11 @@ describe 'My Academics webcasts card', :testui => true do
               end
             end
 
-            unless you_tube_video_id.nil?
+            unless video_you_tube_id.nil?
               my_academics.video_tab_element.when_present(timeout=WebDriverUtils.page_event_timeout)
               my_academics.video_tab
               all_visible_video_lectures = my_academics.video_select_element.options.length
-              thumbnail_present = my_academics.video_thumbnail_element.attribute('src').include? you_tube_video_id
+              thumbnail_present = my_academics.video_thumbnail_element.attribute('src').include? video_you_tube_id
               auto_play = my_academics.you_tube_video_auto_plays?(driver)
               it "shows all the available lecture videos for UID #{uid}" do
                 expect(all_visible_video_lectures).to eql(lecture_count)
@@ -88,6 +92,12 @@ describe 'My Academics webcasts card', :testui => true do
               end
               it "plays the video automatically when clicked for UID #{uid}" do
                 expect(auto_play).to be true
+              end
+              unless video_itunes.nil?
+                itunes_video_link_present = WebDriverUtils.verify_external_link(driver, my_academics.itunes_video_link_element, "#{course} - Download free content from UC Berkeley on iTunes")
+                it "shows an iTunes video URL for UID #{uid}" do
+                  expect(itunes_video_link_present).to be true
+                end
               end
             end
 
@@ -101,6 +111,18 @@ describe 'My Academics webcasts card', :testui => true do
               end
               it "shows the right audio player content for UID #{uid}" do
                 expect(audio_player_present).to be true
+              end
+              unless audio_download.nil?
+                audio_download_link_present = my_academics.audio_download_link_element.attribute('href').eql? audio_download
+                it "shows an audio download link for UID #{uid}" do
+                  expect(audio_download_link_present).to be true
+                end
+              end
+              unless audio_itunes.nil?
+                itunes_audio_link_present = WebDriverUtils.verify_external_link(driver, my_academics.itunes_audio_link_element, "#{course} - Download free content from UC Berkeley on iTunes")
+                it "shows an iTunes audio URL for UID #{uid}" do
+                  expect(itunes_audio_link_present).to be true
+                end
               end
             end
 
