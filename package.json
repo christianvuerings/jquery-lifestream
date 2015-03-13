@@ -46,11 +46,11 @@
     "js-natural-sort": "^0.7.0",
     "jscs": "^1.11.3",
     "jshint": "^2.6.0",
-    "minimist": "^1.1.0",
+    "minimist": "^1.1.1",
     "moment": "^2.8.3",
     "pikaday": "^1.2.0",
     "raven-js-temp": "^1.1.1-6.1",
     "run-sequence": "^1.0.2",
-    "streamqueue": "^0.1.1"
+    "streamqueue": "^0.1.3"
   }
 }
