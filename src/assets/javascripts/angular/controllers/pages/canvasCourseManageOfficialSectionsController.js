@@ -283,6 +283,39 @@
     };
 
     /*
+     * Returns object indicating classes to be applied to section row.
+     *
+     * Rows in the current staging area that are staged for addition will have a yellow background.
+     * Rows in the available staging area that are staged for deletion will have a red background.
+     * Rows appear as disabled when in the available staging area that are either:
+     *  - in the current site and not staged for deletion,
+     *  - staged for addition
+     */
+    $scope.rowClassLogic = function(listMode, section) {
+      return {
+        'cc-page-course-official-sections-table-row-added': (listMode === 'currentStaging' && section.stagedState === 'add'),
+        'cc-page-course-official-sections-table-row-deleted': (listMode === 'availableStaging' && section.stagedState === 'delete'),
+        'cc-page-course-official-sections-table-row-disabled': (
+          listMode === 'availableStaging' &&
+          (section.stagedState === 'add') ||
+          (section.isCourseSection && section.stagedState !== 'delete')
+        )
+      };
+    };
+
+    /*
+     * Returns boolean determining if row in sections display table is displayed.
+     * Always displayed in preview mode or available staging area. Only displayed in current staging
+     * area when not yet deleted, or when staged for addition to the current course site.
+     */
+    $scope.rowDisplayLogic = function(listMode, section) {
+      return (listMode === 'preview') ||
+        (listMode === 'availableStaging') ||
+        (listMode === 'currentStaging' && section && section.isCourseSection && section.stagedState !== 'delete') ||
+        (listMode === 'currentStaging' && section && !section.isCourseSection && section.stagedState === 'add');
+    };
+
+    /*
      * Removes any staged status ('add' or 'delete') from section
      */
     $scope.unstage = function(section) {

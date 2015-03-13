@@ -10,7 +10,7 @@
 
     <h2 class="cc-page-site-provisioning-header cc-page-site-provisioning-header2">Official Sections</h2>
 
-    <!-- ################################################################################################################################ -->
+    <!-- ############################################################################################# -->
 
     <div data-ng-if="currentWorkflowStep === 'preview'">
 
@@ -41,40 +41,7 @@
             <div class="row">
               <div class="medium-12 columns">
                 <!-- *!*!*!*!*!*!* PREVIEW CURRENT SECTIONS *!*!*!*!*!*!* -->
-                <div data-ng-if="existingCourseSections.length > 0">
-                  <table class="cc-page-course-official-sections-table" role="grid">
-                    <thead class="cc-visuallyhidden">
-                      <tr>
-                        <th>Course Code</th>
-                        <th>Section Label</th>
-                        <th>Course Control Number</th>
-                        <th>Schedule</th>
-                        <th>Location</th>
-                        <th>Instructors</th>
-                        <th>&nbsp;</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr data-ng-class="{'cc-page-course-official-sections-table-row':(!$last), 'cc-page-course-official-sections-table-row-last':($last)}" data-ng-repeat="section in existingCourseSections">
-                        <td class="cc-page-course-official-sections-table-cell-course-code" data-ng-bind="section.courseCode"></td>
-                        <td class="cc-page-course-official-sections-table-cell-section-label" data-ng-bind="section.section_label"></td>
-                        <td class="cc-page-course-official-sections-table-cell-section-ccn" data-ng-bind="section.ccn"></td>
-                        <td class="cc-page-course-official-sections-table-cell-section-timestamps show-for-medium-up" >
-                          <div data-ng-repeat="schedule in section.schedules" data-ng-bind="schedule.schedule"></div>
-                        </td>
-                        <td class="cc-page-course-official-sections-table-cell-section-locations show-for-medium-up" >
-                          <div data-ng-repeat="schedule in section.schedules" data-ng-bind-template="{{schedule.buildingName}} {{schedule.roomNumber}}"></div>
-                         </td>
-                        <td class="cc-page-course-official-sections-table-cell-section-instructors show-for-large-up" >
-                          <div data-ng-repeat="instructor in section.instructors" data-ng-bind="instructor.name"></div>
-                        </td>
-                        <td class="cc-page-course-official-sections-table-cell-section-action-option">
-                          &nbsp;
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <div data-bc-official-sections-table data-list-mode="'preview'" data-sections-list="existingCourseSections" data-row-class-logic="rowClassLogic(listMode, section)" data-row-display-logic="rowDisplayLogic(listMode, section)"></div>
                 <!-- *!*!*!*!*!*!* END PREVIEW CURRENT SECTIONS *!*!*!*!*!*!* -->
               </div>
             </div>
@@ -84,7 +51,7 @@
 
     </div>
 
-    <!-- ################################################################################################################################ -->
+    <!-- ############################################################################################# -->
 
     <div data-ng-if="currentWorkflowStep === 'staging'">
 
@@ -112,48 +79,7 @@
             <div class="row">
               <div class="medium-12 columns">
                 <!-- *!*!*!*!*!*!* STAGING CURRENT SECTIONS *!*!*!*!*!*!* -->
-                <div data-ng-if="allSections.length > 0">
-                  <table class="cc-page-course-official-sections-table" role="grid">
-                    <thead class="cc-visuallyhidden">
-                      <tr>
-                        <th>Course Code</th>
-                        <th>Section Label</th>
-                        <th>Course Control Number</th>
-                        <th>Schedule</th>
-                        <th>Location</th>
-                        <th>Instructors</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr data-ng-class="{'cc-page-course-official-sections-table-row':(!$last), 'cc-page-course-official-sections-table-row-last':($last), 'cc-page-course-official-sections-table-row-added':(section.stagedState === 'add')}" data-ng-repeat="section in allSections" data-ng-if="(section.isCourseSection && section.stagedState !== 'delete') || (!section.isCourseSection && section.stagedState === 'add')">
-                        <td class="cc-page-course-official-sections-table-cell-course-code" data-ng-bind="section.courseCode"></td>
-                        <td class="cc-page-course-official-sections-table-cell-section-label" data-ng-bind="section.section_label"></td>
-                        <td class="cc-page-course-official-sections-table-cell-section-ccn" data-ng-bind="section.ccn"></td>
-                        <td class="cc-page-course-official-sections-table-cell-section-timestamps show-for-medium-up" >
-                          <div data-ng-repeat="schedule in section.schedules" data-ng-bind="schedule.schedule"></div>
-                        </td>
-                        <td class="cc-page-course-official-sections-table-cell-section-locations show-for-medium-up" >
-                          <div data-ng-repeat="schedule in section.schedules" data-ng-bind-template="{{schedule.buildingName}} {{schedule.roomNumber}}"></div>
-                         </td>
-                        <td class="cc-page-course-official-sections-table-cell-section-instructors show-for-large-up" >
-                          <div data-ng-repeat="instructor in section.instructors" data-ng-bind="instructor.name"></div>
-                        </td>
-                        <td class="cc-page-course-official-sections-table-cell-section-action-option">
-                          <div data-ng-if="section.isCourseSection">
-                            <button class="bc-canvas-button cc-page-course-official-sections-button" data-ng-click="stageDelete(section)">Delete</button>
-                          </div>
-                          <div data-ng-if="!section.isCourseSection">
-                            <button class="bc-canvas-button cc-page-course-official-sections-button cc-page-course-official-sections-button-undo-add" data-ng-click="unstage(section)">Undo Add</button>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr data-ng-if="noCurrentSections()">
-                        <td colspan="7">No sections to remain in course site</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <div data-bc-official-sections-table data-list-mode="'currentStaging'" data-sections-list="allSections" data-unstage-action="unstage(section)" data-stage-delete-action="stageDelete(section)" data-no-current-sections="noCurrentSections()" data-row-class-logic="rowClassLogic(listMode, section)" data-row-display-logic="rowDisplayLogic(listMode, section)"></div>
                 <!-- *!*!*!*!*!*!* END STAGING CURRENT SECTIONS *!*!*!*!*!*!* -->
               </div>
             </div>
@@ -207,62 +133,9 @@
 
                 <div class="row">
                   <div class="medium-12 columns">
-
                     <!-- *!*!*!*!*!*!* STAGING AVAILABLE SECTIONS *!*!*!*!*!*!* -->
-                    <div data-ng-if="course.sections.length > 0">
-                      <table class="cc-page-course-official-sections-table" role="grid">
-                        <thead class="cc-visuallyhidden">
-                          <tr>
-                            <th>Course Code</th>
-                            <th>Section Label</th>
-                            <th>Course Control Number</th>
-                            <th>Schedule</th>
-                            <th>Location</th>
-                            <th>Instructors</th>
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody data-ng-repeat="section in course.sections">
-                          <tr data-ng-class="{'cc-page-course-official-sections-table-row':(!$last && !section.sites), 'cc-page-course-official-sections-table-row-last':($last || section.sites), 'cc-page-course-official-sections-table-row-deleted':(section.stagedState === 'delete'), 'cc-page-course-official-sections-table-row-disabled':(section.isCourseSection && section.stagedState !== 'delete') || (section.stagedState === 'add')}">
-                            <td class="cc-page-course-official-sections-table-cell-course-code" data-ng-bind="section.courseCode"></td>
-                            <td class="cc-page-course-official-sections-table-cell-section-label" data-ng-bind="section.section_label"></td>
-                            <td class="cc-page-course-official-sections-table-cell-section-ccn" data-ng-bind="section.ccn"></td>
-                            <td class="cc-page-course-official-sections-table-cell-section-timestamps show-for-medium-up" >
-                              <div data-ng-repeat="schedule in section.schedules" data-ng-bind="schedule.schedule"></div>
-                            </td>
-                            <td class="cc-page-course-official-sections-table-cell-section-locations show-for-medium-up" >
-                              <div data-ng-repeat="schedule in section.schedules" data-ng-bind-template="{{schedule.buildingName}} {{schedule.roomNumber}}"></div>
-                             </td>
-                            <td class="cc-page-course-official-sections-table-cell-section-instructors show-for-large-up" >
-                              <div data-ng-repeat="instructor in section.instructors" data-ng-bind="instructor.name"></div>
-                            </td>
-                            <td class="cc-page-course-official-sections-table-cell-section-action-option">
-                              <div data-ng-if="section.isCourseSection && section.stagedState === 'delete'">
-                                <button class="bc-canvas-button cc-page-course-official-sections-button cc-page-course-official-sections-button-undo-delete" data-ng-click="unstage(section)">Undo Delete</button>
-                              </div>
-
-                              <div data-ng-if="!section.isCourseSection && section.stagedState === 'add'">
-                                Added
-                              </div>
-
-                              <div data-ng-if="!section.isCourseSection && section.stagedState === null">
-                                <button class="bc-canvas-button bc-canvas-button-primary cc-page-course-official-sections-button" data-ng-class="{'cc-page-course-official-sections-button-undo-add':(section.stagedState === 'add')}" data-ng-click="stageAdd(section)">Add</button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr data-ng-show="section.sites" data-ng-class="{'cc-page-course-official-sections-table-row':(!$last), 'cc-page-course-official-sections-table-row-last':($last)}">
-                            <td colspan="7" class="cc-page-course-official-sections-sites-cell">
-                              <div data-ng-repeat="site in section.sites" class="cc-page-course-official-sections-table-sites-container" data-ng-if="$parent.otherCourseSection(site)">
-                                <i class="fa fa-info-circle cc-page-course-official-sections-table-sited-icon"></i>
-                                This section is already in use by <a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                    <div data-bc-official-sections-table data-list-mode="'availableStaging'" data-sections-list="course.sections" data-unstage-action="unstage(section)" data-stage-add-action="stageAdd(section)" data-row-class-logic="rowClassLogic(listMode, section)" data-row-display-logic="rowDisplayLogic(listMode, section)"></div>
                     <!-- *!*!*!*!*!*!* END STAGING AVAILABLE SECTIONS *!*!*!*!*!*!* -->
-
                   </div>
                 </div>
               </div>
@@ -274,7 +147,7 @@
 
     </div>
 
-    <!-- ################################################################################################################################ -->
+    <!-- ############################################################################################# -->
 
     <div data-ng-if="currentWorkflowStep === 'processing'">
       <div class="cc-page-course-official-sections-sections-area cc-page-course-official-sections-current-sections-grey-border">

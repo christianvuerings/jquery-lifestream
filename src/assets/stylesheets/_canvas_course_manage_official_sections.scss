@@ -77,12 +77,13 @@
       background: inherit;
     }
 
-    .cc-page-course-official-sections-table-row td {
+    tbody tr:last-child td {
       border-bottom: $bc-color-grey-border-table-bottom solid 1px;
       vertical-align: top;
     }
 
-    .cc-page-course-official-sections-table-row-last td {
+    tbody:last-child tr:last-child td {
+      border-bottom: 0;
       vertical-align: top;
     }
 
