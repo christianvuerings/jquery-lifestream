@@ -39,16 +39,37 @@ describe 'My Academics webcasts card', :testui => true do
             my_academics.wait_for_webcasts
             testable_users.push(uid)
 
-            if !you_tube_video_id.nil?
+            if you_tube_video_id.nil? && !audio_url.nil?
+              my_academics.audio_source_element.when_present(timeout=WebDriverUtils.academics_timeout)
+              has_right_default_tab = my_academics.audio_element.visible?
+              it "shows the audio tab by default for UID #{uid}" do
+                expect(has_right_default_tab).to be true
+              end
+              my_academics.video_tab
+              has_no_video_message = my_academics.no_video_msg?
+              it "shows a 'no video' message for UID #{uid}" do
+                expect(has_no_video_message).to be true
+              end
+            elsif you_tube_video_id.nil? && audio_url.nil?
+              has_no_webcast_message = my_academics.no_webcast_msg?
+              it "shows a 'no webcasts' message for UID #{uid}" do
+                expect(has_no_webcast_message).to be true
+              end
+            elsif audio_url.nil? && !you_tube_video_id.nil?
               my_academics.video_thumbnail_element.when_present(timeout=WebDriverUtils.academics_timeout)
               has_right_default_tab = my_academics.video_thumbnail_element.visible?
               it "shows the video tab by default for UID #{uid}" do
                 expect(has_right_default_tab).to be true
               end
-            elsif you_tube_video_id.nil? && !audio_url.nil?
-              my_academics.audio_source_element.when_present(timeout=WebDriverUtils.academics_timeout)
-              has_right_default_tab = my_academics.audio_element.visible?
-              it "shows the audio tab by default for UID #{uid}" do
+              my_academics.audio_tab
+              has_no_audio_message = my_academics.no_audio_msg?
+              it "shows a 'no audio' message for UID #{uid}" do
+                expect(has_no_audio_message).to be true
+              end
+            else
+              my_academics.video_thumbnail_element.when_present(timeout=WebDriverUtils.academics_timeout)
+              has_right_default_tab = my_academics.video_thumbnail_element.visible?
+              it "shows the video tab by default for UID #{uid}" do
                 expect(has_right_default_tab).to be true
               end
             end
@@ -83,26 +104,6 @@ describe 'My Academics webcasts card', :testui => true do
               end
             end
 
-            if you_tube_video_id.nil? && !audio_url.nil?
-              my_academics.video_tab
-              has_no_video_message = my_academics.no_video_msg?
-              it "shows a 'no video' message for UID #{uid}" do
-                expect(has_no_video_message).to be true
-              end
-            end
-            if !you_tube_video_id.nil? && audio_url.nil?
-              my_academics.audio_tab
-              has_no_audio_message = my_academics.no_audio_msg?
-              it "shows a 'no audio' message for UID #{uid}" do
-                expect(has_no_audio_message).to be true
-              end
-            end
-            if you_tube_video_id.nil? && audio_url.nil?
-              has_no_webcast_message = my_academics.no_webcast_msg?
-              it "shows a 'no webcasts' message for UID #{uid}" do
-                expect(has_no_webcast_message).to be true
-              end
-            end
           rescue => e
             logger.error e.message + "\n" + e.backtrace.join("\n ")
           end
