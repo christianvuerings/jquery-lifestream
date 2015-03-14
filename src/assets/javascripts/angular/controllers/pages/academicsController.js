@@ -298,6 +298,8 @@
           $scope.widgetSemesterName = $scope.selectedTeachingSemester.name;
         }
       }
+      $scope.gpaUnits.cumulativeGpaFloat = $scope.gpaUnits.cumulativeGpa; // cumulativeGpa is passed as a string to maintain two significant digits
+      $scope.gpaUnits.cumulativeGpa =  parseFloat($scope.gpaUnits.cumulativeGpa); // converted to Float to be processed regularly
     };
 
     $scope.currentSelection = 'Class Info';
