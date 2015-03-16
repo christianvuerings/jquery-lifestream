@@ -23,7 +23,7 @@ export RAILS_ENV=production
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
 echo "`date`: Starting CalCentral..." | $LOGIT
-OPTS=${CALCENTRAL_JRUBY_OPTS:="-Xcext.enabled=true -J-Djruby.thread.pool.enabled=true"}
+OPTS=${CALCENTRAL_JRUBY_OPTS:="-Xcext.enabled=true -J-Djruby.thread.pool.enabled=true -J-Djava.io.tmpdir=./tmp"}
 export JRUBY_OPTS=$OPTS
 JVM_OPTS=${CALCENTRAL_JVM_OPTS:="\-server \-verbose:gc \-XX:+PrintGCTimeStamps \-XX:+PrintGCDetails \-XX:+UseConcMarkSweepGC \-Xms3000m \-Xmx3000m \-Xmn500m \-XX:PermSize=400m \-XX:MaxPermSize=400m \-XX:ReservedCodeCacheSize=128m \-XX:+UseCodeCacheFlushing"}
 LOG_DIR=${CALCENTRAL_LOG_DIR:=`pwd`"/log"}
