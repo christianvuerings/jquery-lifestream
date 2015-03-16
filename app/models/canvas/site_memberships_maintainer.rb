@@ -254,7 +254,7 @@ module Canvas
         ccns = sections.collect {|sec| sec[:ccn]}
         data_rows = CampusOracle::Queries.get_sections_from_ccns(term[:term_yr], term[:term_cd], ccns)
         data_rows.each do |row|
-          sec = term.merge(ccn: row['course_cntl_num'].to_s)
+          sec = term.merge(ccn: sprintf('%05d', row['course_cntl_num'].to_i))
           sections_map[sec] = row['primary_secondary_cd']
         end
       end
