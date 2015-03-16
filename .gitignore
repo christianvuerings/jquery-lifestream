@@ -13,7 +13,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /log/*.gz
-/tmp
+/tmp/*
 
 # Ignore local settings.
 *.local.yml
