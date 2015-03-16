@@ -107,9 +107,10 @@ describe Canvas::SiteMembershipsMaintainer do
             [{'ldap_uid' => ccn_to_uid[ccn.to_i.to_s]}]
           end
         end
+        # Low-level Oracle query methods do not yet pad CCNs: CLC-4992
         allow(CampusOracle::Queries).to receive(:get_sections_from_ccns).with('2014', 'B', padded_ccns).and_return([
-          {'course_cntl_num' => padded_ccns[0], 'primary_secondary_cd' => first_section_type},
-          {'course_cntl_num' => padded_ccns[1], 'primary_secondary_cd' => 'S'}
+          {'course_cntl_num' => padded_ccns[0].to_i.to_s, 'primary_secondary_cd' => first_section_type},
+          {'course_cntl_num' => padded_ccns[1].to_i.to_s, 'primary_secondary_cd' => 'S'}
         ])
       end
       context 'when a mix of primary and secondary sections' do
