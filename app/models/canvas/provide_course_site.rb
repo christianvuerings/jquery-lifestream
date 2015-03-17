@@ -306,8 +306,7 @@ module Canvas
       proxy = CampusOracle::UserCourses::SelectedSections.new({user_id: @uid})
       feed = proxy.get_selected_sections(term[:yr], term[:cd], ccns)
       feed.keys.each do |term_key|
-        (term_yr, term_cd) = term_key.split("-")
-        semester = my_academics.semester_info(term_yr, term_cd)
+        semester = my_academics.semester_info term_key
         feed[term_key].each do |course|
           course_info = my_academics.course_info course
           course_info[:sections].each { |section| section[:courseCode] = course_info[:course_code] }

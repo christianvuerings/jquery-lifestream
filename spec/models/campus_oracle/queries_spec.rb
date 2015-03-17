@@ -93,10 +93,11 @@ describe CampusOracle::Queries do
 
   it "should find where a person is enrolled, with grades where available" do
     sections = CampusOracle::Queries.get_enrolled_sections('300939')
-    sections.should_not be_nil
+    expect(sections).to_not be_nil
     transcripts = CampusOracle::Queries.get_transcript_grades('300939')
-    transcripts.should_not be_nil
-    expect(transcripts).to all(include 'memo_or_title')
+    %w(term_yr term_cd dept_name catalog_id grade transcript_unit line_type memo_or_title).each do |column|
+      expect(transcripts).to all(include column)
+    end
     if CampusOracle::Queries.test_data?
       sections.length.should == 9
       sections.each do |s|
@@ -110,12 +111,12 @@ describe CampusOracle::Queries do
       expected_grades = {5 => 'B', 6 => 'C+'}
       expected_grades.keys.each do |idx|
         section = sections[idx]
-        transcript = transcripts.select {|t|
+        transcript = transcripts.find do |t|
           t['term_yr'] == section['term_yr'] &&
-              t['term_cd'] == section['term_cd'] &&
-              t['dept_name'] == section['dept_name'] &&
-              t['catalog_id'] == section['catalog_id']
-        }[0]
+            t['term_cd'] == section['term_cd'] &&
+            t['dept_name'] == section['dept_name'] &&
+            t['catalog_id'] == section['catalog_id']
+        end
         transcript.should_not be_nil
         transcript['grade'].should == expected_grades[idx]
       end

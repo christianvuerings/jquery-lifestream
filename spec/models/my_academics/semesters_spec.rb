@@ -1,99 +1,231 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe MyAcademics::Semesters do
-  context 'when using fake Oracle MV', if: CampusOracle::Queries.test_data? do
-    let(:feed_semesters) { feed = {}; MyAcademics::Semesters.new("300939").merge(feed); feed[:semesters] }
-    subject { feed_semesters }
 
-    describe "should get properly formatted data" do
-      it { subject.length.should eq(4) }
-      it { subject[0][:name].should eq "Summer 2014" }
-      it { subject[0][:termCode].should eq "C" }
-      it { subject[0][:termYear].should eq "2014" }
-      it { subject[0][:timeBucket].should eq 'future'}
-      it { subject[0][:classes].length.should eq 1 }
-      it { subject[0][:classes][0][:course_code].should eq "BIOLOGY 1A" }
-      it { subject[0][:classes][0][:dept].should eq "BIOLOGY" }
-      it { subject[0][:classes][0][:sections].length.should eq 1 }
-      it { subject[0][:classes][0][:sections][0][:ccn].should eq "07309" }
-      it { subject[0][:classes][0][:sections][0][:waitlistPosition].should eq 42 }
-      it { subject[0][:classes][0][:sections][0][:enroll_limit].should eq 5000 }
-      it { subject[0][:classes][0][:sections][0][:gradeOption].should eq "P/NP" }
-      it { subject[0][:classes][0][:url].should eq '/academics/semester/summer-2014/class/biology-1a' }
-      it { subject[1][:name].should eq "Spring 2014" }
-      it { subject[1][:timeBucket].should eq 'future'}
-      it { subject[2][:name].should eq "Fall 2013"}
-      it { subject[2][:timeBucket].should eq 'current' }
-      it { subject[3][:name].should eq "Spring 2012" }
-      it { subject[3][:timeBucket].should eq 'past' }
-      it { subject[2][:classes].length.should eq 2 }
-      it { subject[2][:classes][0][:course_code].should eq "BIOLOGY 1A" }
-      it { subject[2][:classes][0][:dept].should eq "BIOLOGY" }
-      it { subject[2][:classes][0][:sections].length.should eq 2 }
-      it { subject[2][:classes][0][:sections][0][:ccn].should eq "07309" }
-      it { subject[2][:classes][0][:sections][0][:schedules][0][:schedule].should eq "M 4:00P-5:00P" }
-      it { subject[2][:classes][0][:slug].should eq "biology-1a" }
-      it { subject[2][:classes][0][:title].should eq "General Biology Lecture" }
-      it { subject[2][:classes][0][:url].should eq '/academics/semester/fall-2013/class/biology-1a' }
-      it { subject[2][:classes][0][:sections][0][:gradeOption].should eq "Letter" }
-      it { subject[2][:classes][0][:sections][0][:instruction_format].should eq "LEC" }
-      it { subject[2][:classes][0][:sections][0][:section_number].should eq "003" }
-      it { subject[2][:classes][0][:sections][0][:section_label].should eq "LEC 003" }
-      it { subject[2][:classes][0][:sections][0][:instructors][0][:name].present?.should be_truthy }
-      it { subject[2][:classes][0][:sections][0][:is_primary_section].should be_truthy }
-      it { subject[2][:classes][0][:sections][0][:units].to_s.should eq "5.0" }
-      it { subject[3][:classes][0][:transcript][0][:grade].should eq "B" }
-      it { subject[3][:classes][0][:transcript][0][:units].to_s.should eq "4.0" }
-      it { subject[3][:classes][1][:transcript][0][:grade].should eq "C+" }
-      it { subject[3][:classes][1][:transcript][0][:units].to_s.should eq "3.0" }
-    end
+  let(:feed) { feed = {}; MyAcademics::Semesters.new(random_id).merge(feed); feed }
 
-    context 'with constrained semester range' do
-      before {Settings.terms.stub(:oldest).and_return('fall-2013')}
-      its(:length) {expect eq 3}
-    end
-
-    describe 'grading_in_progress' do
-      before { allow(Settings.terms).to receive(:fake_now).and_return(fake_now) }
-      let(:fall_2013) { feed_semesters.find { |s| s[:name] == "Fall 2013" } }
-      let(:transcript) { fall_2013[:classes][0][:transcript] }
-
-      shared_examples 'returns enrollment grades' do
-        it { expect(transcript[0][:units].to_s).to eq '5.0' }
-        it { expect(transcript[0][:grade]).to eq 'NP' }
-      end
-
-      shared_examples 'returns transcript grades' do
-        it { expect(transcript[0][:units].to_s).to eq '4.0' }
-        it { expect(transcript[0][:grade]).to eq 'B' }
-      end
-
-      shared_examples 'grading in progress' do
-        it { expect(fall_2013[:gradingInProgress]).to be_truthy }
-      end
-
-      shared_examples 'grading not in progress' do
-        it { expect(fall_2013[:gradingInProgress]).to be_nil }
-      end
-
-      context 'current semester' do
-        let(:fake_now) {DateTime.parse('2013-10-10')}
-        include_examples 'returns enrollment grades'
-        include_examples 'grading not in progress'
-      end
-
-      context 'semester just ended' do
-        let(:fake_now) {DateTime.parse('2013-12-30')}
-        include_examples 'returns enrollment grades'
-        include_examples 'grading in progress'
-      end
-
-      context 'past semester' do
-        let(:fake_now) {DateTime.parse('2014-01-20')}
-        include_examples 'returns transcript grades'
-        include_examples 'grading not in progress'
-      end
-    end
-    
+  before do
+    allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return enrollment_data
+    allow_any_instance_of(CampusOracle::UserCourses::Transcripts).to receive(:get_all_transcripts).and_return transcript_data
   end
+
+  let(:term_keys) { ['2013-B', '2013-D', '2014-B', '2014-C'] }
+  let(:enrollment_data) { Hash[term_keys.map{|key| [key, enrollment_term(key)]}] }
+  let(:transcript_data) do
+    {
+      semesters: Hash[term_keys.map{|key| [key, transcript_term(key)]}],
+      additional_credits: rand(3..6).times.map { additional_credit }
+    }
+  end
+
+  def enrollment_term(key)
+    rand(2..4).times.map { course_enrollment(key) }
+  end
+
+  def transcript_term(key)
+    {
+      courses: enrollment_data[key].map { |e| course_transcript_matching_enrollment(e) },
+      notations: []
+    }
+  end
+
+  def course_enrollment(term_key)
+    term_yr, term_cd = term_key.split('-')
+    dept = random_string(5)
+    catid = rand(999).to_s
+    {
+      id: "#{dept}-#{catid}-#{term_key}",
+      slug: "#{dept}-#{catid}",
+      course_code: "#{dept.upcase} #{catid}",
+      term_yr: term_yr,
+      term_cd: term_cd,
+      dept: dept.upcase,
+      dept_desc: dept,
+      catid: catid,
+      course_catalog: catid,
+      emitter: 'Campus',
+      name: random_string(15).capitalize,
+      sections: rand(1..3).times.map{ course_enrollment_section },
+      role: 'Student'
+    }
+  end
+
+  def course_enrollment_section
+    format = ['LEC', 'DIS', 'SEM'].sample
+    section_number = "00#{rand(9)}"
+    {
+      ccn: random_ccn,
+      instruction_format: format,
+      is_primary_section: true,
+      section_label: "#{format} #{section_number}",
+      section_number: section_number,
+      units: rand(1.0..5.0).round(1),
+      pnp_flag: 'N ',
+      cred_cd: nil,
+      grade: random_grade,
+      cross_listed_flag: nil,
+      schedules: [{
+        buildingName: random_string(10),
+        roomNumber: rand(9).to_s,
+        schedule: 'MWF 11:00A-12:00P'
+      }],
+      instructors: [{name: random_name, uid: random_id}]
+    }
+  end
+
+  def course_transcript_matching_enrollment(enrollment)
+    {
+      dept: enrollment[:dept],
+      courseCatalog: enrollment[:catid],
+      title: enrollment[:name].upcase,
+      units: rand(1.0..5.0).round(1),
+      grade: random_grade
+    }
+  end
+
+  def additional_credit
+    {
+      title: "AP #{random_string(8).upcase}",
+      units: rand(1.0..5.0).round(1),
+    }
+  end
+
+  it 'should include the expected semesters in reverse order' do
+    expect(feed[:semesters].length).to eq 4
+    term_keys.sort.reverse.each_with_index do |key, index|
+      term_year, term_code = key.split('-')
+      expect(feed[:semesters][index]).to include({
+        termCode: term_code,
+        termYear: term_year,
+        name: Berkeley::TermCodes.to_english(term_year, term_code)
+      })
+    end
+  end
+
+  it 'should place semesters in the right buckets' do
+    current_term = Berkeley::Terms.fetch.current
+    current_term_key = "#{current_term.year}-#{current_term.code}"
+    feed[:semesters].each do |s|
+      semester_key = "#{s[:termYear]}-#{s[:termCode]}"
+      if semester_key < current_term_key
+        expect(s[:timeBucket]).to eq 'past'
+      elsif semester_key > current_term_key
+        expect(s[:timeBucket]).to eq 'future'
+      else
+        expect(s[:timeBucket]).to eq 'current'
+      end
+    end
+  end
+
+  it 'should preserve structure of enrollment data' do
+    feed[:semesters].each do |s|
+      expect(s[:hasEnrollmentData]).to eq true
+      enrollment_semester = enrollment_data["#{s[:termYear]}-#{s[:termCode]}"]
+      expect(s[:classes].length).to eq enrollment_semester.length
+      s[:classes].each do |course|
+        matching_enrollment = enrollment_semester.find { |e| e[:id] == course[:course_id] }
+        expect(course[:sections].count).to eq matching_enrollment[:sections].count
+        expect(course[:title]).to eq matching_enrollment[:name]
+        expect(course[:courseCatalog]).to eq matching_enrollment[:course_catalog]
+        expect(course[:url]).to include matching_enrollment[:slug]
+        [:course_code, :dept, :dept_desc, :role, :slug].each do |key|
+          expect(course[key]).to eq matching_enrollment[key]
+        end
+      end
+    end
+  end
+
+  it 'should include additional credits' do
+    expect(feed[:additionalCredits]).to eq transcript_data[:additional_credits]
+  end
+
+  context 'when enrollment data for a term is unavailable' do
+    let(:term_yr) { '2013' }
+    let(:term_cd) { 'D' }
+    let(:feed_semester) { feed[:semesters].find { |s| s[:name] == Berkeley::TermCodes.to_english(term_yr, term_cd) } }
+    let(:transcript_semester) { transcript_data[:semesters]["#{term_yr}-#{term_cd}"] }
+
+    let(:sparse_enrollment_data) { enrollment_data.except "#{term_yr}-#{term_cd}" }
+    before { allow_any_instance_of(CampusOracle::UserCourses::All).to receive(:get_all_campus_courses).and_return sparse_enrollment_data }
+
+    it 'should include transcript data' do
+      expect(feed_semester[:hasEnrollmentData]).to eq false
+      expect(feed_semester[:classes].length).to eq transcript_semester[:courses].length
+      feed_semester[:classes].each do |course|
+        transcript_match = transcript_semester[:courses].find { |c| c[:title] == course[:title] }
+        expect(course[:courseCatalog]).to eq transcript_match[:courseCatalog]
+        expect(course[:dept]).to eq transcript_match[:dept]
+        expect(course[:courseCatalog]).to eq transcript_match[:courseCatalog]
+        expect(course[:course_code]).to eq "#{transcript_match[:dept]} #{transcript_match[:courseCatalog]}"
+        expect(course[:transcript]).to eq [{
+                units: transcript_match[:units],
+                grade: transcript_match[:grade]
+              }]
+      end
+    end
+
+    it 'should translate extension notations' do
+      transcript_semester[:notations] << 'extension'
+      expect(feed_semester[:notation]).to eq 'UC Extension'
+    end
+
+    it 'should translate education abroad notations' do
+      transcript_semester[:notations] << 'abroad'
+      expect(feed_semester[:notation]).to eq 'Education Abroad'
+    end
+
+    it 'should not insert notation when none provided' do
+      expect(feed_semester[:notation]).to be_nil
+    end
+  end
+
+  describe 'merging grade data' do
+    before { allow(Settings.terms).to receive(:fake_now).and_return(fake_now) }
+
+    let(:term_yr) { '2013' }
+    let(:term_cd) { 'D' }
+    let(:feed_semester) { feed[:semesters].find { |s| s[:name] == Berkeley::TermCodes.to_english(term_yr, term_cd) } }
+    let(:feed_semester_grades) { feed_semester[:classes].map { |course| course[:transcript] } }
+
+    shared_examples 'grades from enrollment' do
+      it 'returns enrollment grades' do
+        grades_from_enrollment = enrollment_data["#{term_yr}-#{term_cd}"].map { |e| e[:sections].map{ |s| s.slice(:units, :grade) } }
+        expect(feed_semester_grades).to match_array grades_from_enrollment
+      end
+    end
+
+    shared_examples 'grades from transcript' do
+      it 'returns transcript grades' do
+        grades_from_transcript = transcript_data[:semesters]["#{term_yr}-#{term_cd}"][:courses].map { |t| [ t.slice(:units, :grade) ] }
+        expect(feed_semester_grades).to match_array grades_from_transcript
+      end
+    end
+
+    shared_examples 'grading in progress' do
+      it { expect(feed_semester[:gradingInProgress]).to be_truthy }
+    end
+
+    shared_examples 'grading not in progress' do
+      it { expect(feed_semester[:gradingInProgress]).to be_nil }
+    end
+
+    context 'current semester' do
+      let(:fake_now) {DateTime.parse('2013-10-10')}
+      include_examples 'grades from enrollment'
+      include_examples 'grading not in progress'
+    end
+
+    context 'semester just ended' do
+      let(:fake_now) {DateTime.parse('2013-12-30')}
+      include_examples 'grades from enrollment'
+      include_examples 'grading in progress'
+    end
+
+    context 'past semester' do
+      let(:fake_now) {DateTime.parse('2014-01-20')}
+      include_examples 'grades from transcript'
+      include_examples 'grading not in progress'
+    end
+  end
+
 end

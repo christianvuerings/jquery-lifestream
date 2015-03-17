@@ -19,12 +19,25 @@ module SpecHelperModule
     proxy
   end
 
+  def random_ccn
+    sprintf('%05d', rand(99999))
+  end
+
+  def random_grade
+    ['A', 'B', 'C'].sample + ['+', '-', ''].sample
+  end
+
   def random_id
     rand(99999).to_s
   end
 
-  def random_ccn
-    sprintf('%05d', rand(99999))
+  def random_name
+    "#{random_string(6).capitalize} #{random_string(10).capitalize}"
+  end
+
+  def random_string(length)
+    range = ('a'..'z').to_a
+    length.times.map { range.sample }.join
   end
 
   def delete_files_if_exists(filepaths)

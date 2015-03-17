@@ -12,7 +12,8 @@ module MyAcademics
       "/academics/#{teaching_str}semester/#{Berkeley::TermCodes.to_slug(campus_course[:term_yr], campus_course[:term_cd])}/class/#{campus_course[:slug]}"
     end
 
-    def semester_info(term_yr, term_cd)
+    def semester_info(term_key)
+      term_yr, term_cd = term_key.split '-'
       slug = Berkeley::TermCodes.to_slug(term_yr, term_cd)
       {
         name: Berkeley::TermCodes.to_english(term_yr, term_cd),
