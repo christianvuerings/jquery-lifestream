@@ -29,9 +29,16 @@
 
       $scope.accessDeniedError = 'This feature is currently only available to instructors with course sections scheduled in the current or upcoming terms.';
       $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
+      $scope.isTeacher = false;
+      initJobState();
+    };
+
+    /*
+     * Initializes background job request state
+     */
+    var initJobState = function() {
       $scope.jobStatus = null;
       $scope.jobStatusMessage = '';
-      $scope.isTeacher = false;
     };
 
     /*
@@ -217,6 +224,9 @@
      * Switches workflow context
      */
     $scope.changeWorkflowStep = function(step) {
+      if (step === 'staging') {
+        initJobState();
+      }
       $scope.currentWorkflowStep = step;
     };
 
