@@ -157,6 +157,7 @@ describe MyAcademics::Semesters do
         expect(course[:dept]).to eq transcript_match[:dept]
         expect(course[:courseCatalog]).to eq transcript_match[:courseCatalog]
         expect(course[:course_code]).to eq "#{transcript_match[:dept]} #{transcript_match[:courseCatalog]}"
+        expect(course[:sections]).to eq []
         expect(course[:transcript]).to eq [{
                 units: transcript_match[:units],
                 grade: transcript_match[:grade]
