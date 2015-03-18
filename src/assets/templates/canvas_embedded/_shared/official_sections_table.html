@@ -1,4 +1,4 @@
-<div class="cc-template-official-sections-table-container" data-ng-if="sectionsList.length > 0">
+<div class="cc-template-official-sections-table-container">
   <table class="cc-page-course-official-sections-table" role="grid">
     <thead class="cc-visuallyhidden">
       <tr>
@@ -65,9 +65,14 @@
         </td>
       </tr>
     </tbody>
+    <tbody data-ng-if="listMode === 'preview' && sectionsList.length < 1">
+      <tr>
+        <td colspan="7">There are no official sections in this course site</td>
+      </tr>
+    </tbody>
     <tbody data-ng-if="listMode === 'currentStaging' && noCurrentSections()">
       <tr>
-        <td colspan="7">No sections to remain in course site</td>
+        <td colspan="7">No official sections will remain in course site</td>
       </tr>
     </tbody>
   </table>
