@@ -24,9 +24,9 @@
      */
     var initState = function() {
       // initialize maintenance notice settings
+      $scope.allSections = [];
       $scope.courseActionVerb = 'site is updated';
       $scope.maintenanceCollapsed = true;
-
       $scope.accessDeniedError = 'This feature is currently only available to instructors with course sections scheduled in the current or upcoming terms.';
       $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
       $scope.isTeacher = false;
@@ -154,6 +154,19 @@
         });
       }
       return sections;
+    };
+
+    /*
+     * Unstages all sections
+     */
+    var unstageAll = function() {
+      if ($scope.courseSemester) {
+        angular.forEach($scope.courseSemester.classes, function(classItem) {
+          angular.forEach(classItem.sections, function(section) {
+            section.stagedState = null;
+          });
+        });
+      }
     };
 
     /*
@@ -307,8 +320,10 @@
         'cc-page-course-official-sections-table-row-deleted': (listMode === 'availableStaging' && section.stagedState === 'delete'),
         'cc-page-course-official-sections-table-row-disabled': (
           listMode === 'availableStaging' &&
-          (section.stagedState === 'add') ||
-          (section.isCourseSection && section.stagedState !== 'delete')
+          (
+            section.stagedState === 'add' ||
+            (section.isCourseSection && section.stagedState !== 'delete')
+          )
         )
       };
     };
@@ -366,6 +381,9 @@
      * Returns true if no sections in a state for display in the current sections staging area
      */
     $scope.noCurrentSections = function() {
+      if ($scope.allSections.length < 1) {
+        return true;
+      }
       return !$scope.allSections.some(function(section) {
         return ((section.isCourseSection && section.stagedState !== 'delete') || (!section.isCourseSection && section.stagedState === 'add'));
       });
@@ -397,7 +415,7 @@
      */
     $scope.cancel = function() {
       $scope.changeWorkflowStep('preview');
-      fetchFeed();
+      unstageAll();
     };
 
     // Wait until user profile is fully loaded before fetching section feed
