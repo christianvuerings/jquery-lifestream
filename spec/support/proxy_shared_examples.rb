@@ -36,7 +36,7 @@ shared_examples 'a student data proxy' do
     end
   end
 
-  it 'should get Oski data from fake vcr recordings' do
+  it 'should get fake data for Oski' do
     response = fake_proxy('61889').get
     expect_feed(response, feed_key)
   end
@@ -53,7 +53,7 @@ shared_examples 'a student data proxy' do
   end
 
   context 'connection failure' do
-    before(:each) { stub_request(:any, /#{Regexp.quote(Settings.bearfacts_proxy.base_url)}.*/).to_raise(Errno::EHOSTUNREACH) }
+    before(:each) { stub_request(:any, /.*/).to_raise(Errno::EHOSTUNREACH) }
     after(:each) { WebMock.reset! }
     it 'returns an error status and a nil feed' do
       response = real_proxy('61889').get
