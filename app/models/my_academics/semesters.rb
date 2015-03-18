@@ -48,6 +48,7 @@ module MyAcademics
       transcript_courses.map do |course|
         course.slice(:title, :dept, :courseCatalog).merge({
           course_code: [course[:dept], course[:courseCatalog]].select(&:present?).join(' '),
+          sections: [],
           transcript: [course.slice(:units, :grade)]
         })
       end
