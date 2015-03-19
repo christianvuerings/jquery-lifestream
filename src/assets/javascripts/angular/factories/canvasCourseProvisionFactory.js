@@ -70,6 +70,13 @@
       });
     };
 
+    var getCourseSections = function(canvasCourseId) {
+      var feedUrl = '/api/academics/canvas/course_provision/sections_feed/' + canvasCourseId;
+      return $http.get(feedUrl).then(function(response) {
+        return parseSectionsFeed(response);
+      }).catch(errorResponseHandler);
+    };
+
     var getSections = function(feedRequestOptions) {
       var feedUrl = '/api/academics/canvas/course_provision';
       var feedParams = {};
@@ -107,8 +114,7 @@
      * Sends request to add and/or delete sections from existing course site
      */
     var updateSections = function(canvasCourseId, addCcns, deleteCcns) {
-      return $http.post('/api/academics/canvas/course_provision/edit_sections', {
-        canvas_course_id: canvasCourseId,
+      return $http.post('/api/academics/canvas/course_provision/edit_sections/' + canvasCourseId, {
         ccns_to_remove: deleteCcns,
         ccns_to_add: addCcns
       });
@@ -117,6 +123,7 @@
     return {
       courseCreate: courseCreate,
       courseProvisionJobStatus: courseProvisionJobStatus,
+      getCourseSections: getCourseSections,
       getSections: getSections,
       updateSections: updateSections
     };

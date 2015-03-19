@@ -81,31 +81,46 @@ describe Canvas::CourseProvision do
   end
 
   context 'when manging existing course sections' do
-    context 'when not admin acting as a user' do
+    before do
+      allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
+      allow_any_instance_of(Canvas::Course).to receive(:course).and_return(course_hash)
+      allow(subject).to receive(:group_by_used!) {|feed| feed}
+    end
+    let(:uid) { instructor_id }
+    subject { Canvas::CourseProvision.new(uid, canvas_course_id: canvas_course_id) }
+    its(:user_authorized?) { should eq true }
+    it 'should provide sections feed with canvas course info included' do
+      feed = subject.get_feed
+      expect(feed[:is_admin]).to eq false
+      expect(feed[:admin_acting_as]).to be_nil
+      expect(feed[:teachingSemesters]).to eq teaching_semesters
+      expect(feed[:admin_semesters]).to be_nil
+      expect(feed[:canvas_course]).to be_an_instance_of Hash
+      expect(feed[:canvas_course][:officialSections]).to eq official_sections
+    end
+    it 'should use group_by_used! to sort feed with associated courses listed first' do
+      expect(subject).to receive(:group_by_used!) {|feed| feed}
+      feed = subject.get_feed
+      expect(feed[:is_admin]).to eq false
+      expect(feed[:admin_acting_as]).to be_nil
+      expect(feed[:teachingSemesters]).to eq teaching_semesters
+    end
+    describe 'tells the front-end whether to show the edit button' do
       before do
-        allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
-        allow_any_instance_of(Canvas::Course).to receive(:course).and_return(course_hash)
-        allow(subject).to receive(:group_by_used!) {|feed| feed}
+        allow_any_instance_of(Canvas::CoursePolicy).to receive(:can_edit_official_sections?).and_return(fake_can_edit)
       end
-      subject { Canvas::CourseProvision.new(uid, canvas_course_id: canvas_course_id) }
-      context 'when an instructor' do
-        let(:uid) { instructor_id }
-        its(:user_authorized?) { should eq true }
-        it 'should provide sections feed with canvas course info included' do
+      context 'can only view sections' do
+        let(:fake_can_edit) { false }
+        it 'should not show Edit' do
           feed = subject.get_feed
-          expect(feed[:is_admin]).to eq false
-          expect(feed[:admin_acting_as]).to be_nil
-          expect(feed[:teachingSemesters]).to eq teaching_semesters
-          expect(feed[:admin_semesters]).to be_nil
-          expect(feed[:canvas_course]).to be_an_instance_of Hash
-          expect(feed[:canvas_course][:officialSections]).to eq official_sections
+          expect(feed[:canvas_course][:canEdit]).to be_falsey
         end
-        it 'should use group_by_used! to sort feed with associated courses listed first' do
-          expect(subject).to receive(:group_by_used!) {|feed| feed}
+      end
+      context 'can edit sections' do
+        let(:fake_can_edit) { true }
+        it 'should  show Edit' do
           feed = subject.get_feed
-          expect(feed[:is_admin]).to eq false
-          expect(feed[:admin_acting_as]).to be_nil
-          expect(feed[:teachingSemesters]).to eq teaching_semesters
+          expect(feed[:canvas_course][:canEdit]).to be_truthy
         end
       end
     end
@@ -194,7 +209,7 @@ describe Canvas::CourseProvision do
 
   describe '#create_course_site' do
     subject     { Canvas::CourseProvision.new(instructor_id) }
-    let(:cpcs)  { double() }
+    let(:cpcs)  { instance_double(Canvas::ProvideCourseSite) }
     before do
       allow(cpcs).to receive(:background).and_return(cpcs)
       allow(cpcs).to receive(:save).and_return(true)
@@ -223,8 +238,8 @@ describe Canvas::CourseProvision do
   end
 
   describe '#edit_sections' do
-    let(:ccns_to_remove) { [random_id] }
-    let(:ccns_to_add) { [random_id] }
+    let(:ccns_to_remove) { [random_ccn] }
+    let(:ccns_to_add) { [random_ccn] }
     subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
     context 'when user is unauthorized' do
       before do
@@ -235,7 +250,7 @@ describe Canvas::CourseProvision do
       end
     end
     context 'when user is authorized' do
-      let(:cpcs) { double }
+      let(:cpcs) { instance_double(Canvas::ProvideCourseSite) }
       let(:course_info) { {canvasCourseId: canvas_course_id} }
       let(:job_id) { "canvas.courseprovision.#{ccns_to_add.first}" }
       before do

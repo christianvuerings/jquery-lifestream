@@ -19,6 +19,14 @@ module Canvas
       is_canvas_course_teacher_or_assistant?
     end
 
+    def can_edit_official_sections?
+      is_canvas_course_teacher? && can_add_current_official_sections?
+    end
+
+    def can_view_official_sections?
+      is_canvas_course_admin? || is_canvas_account_admin?
+    end
+
     def is_canvas_user?
       if canvas_user_profile.blank?
         logger.warn "UID #{@user.user_id} not found in Canvas, attempting authorization for Canvas Course ID #{@record.canvas_course_id}"
