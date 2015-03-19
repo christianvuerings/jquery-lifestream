@@ -18,7 +18,7 @@ describe RoutesListController do
 
   it "should not list any routes for non-superusers" do
     User::Auth.stub(:where).and_return([User::Auth.new(uid: @user_id, is_superuser: false, active: true)])
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     get :smoke_test_routes
     expect(response.status).to eq(403)
     expect(response.body.blank?).to be_truthy
@@ -34,8 +34,8 @@ describe RoutesListController do
         User::Auth.new(uid: uid, is_superuser: false, active: true)
       end
     end
-    session[:user_id] = @user_id
-    session[:original_user_id] = viewer_id
+    session['user_id'] = @user_id
+    session['original_user_id'] = viewer_id
     get :smoke_test_routes
     expect(response.status).to eq(403)
     expect(response.body.blank?).to be_truthy
@@ -43,7 +43,7 @@ describe RoutesListController do
 
   it "should list some /api/ routes for superusers" do
     User::Auth.stub(:where).and_return([User::Auth.new(uid: @user_id, is_superuser: true, active: true)])
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     get :smoke_test_routes
     assert_response :success
     json_response = JSON.parse(response.body)

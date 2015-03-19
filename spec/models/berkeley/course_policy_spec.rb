@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Berkeley::CoursePolicy do
   let(:user_id)     { rand(99999).to_s }
-  let(:user)        { AuthenticationState.new(user_id: user_id) }
+  let(:user)        { AuthenticationState.new('user_id' => user_id) }
   let(:course)      { Berkeley::Course.new(:course_id => "chem-1a-2014-D") }
   let(:instructor_courses) do
     {

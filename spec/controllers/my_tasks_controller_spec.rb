@@ -17,7 +17,7 @@ describe MyTasksController do
   end
 
   it "should be an non-empty task feed on authenticated user" do
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     get :get_feed
     json_response = JSON.parse(response.body)
     json_response.should_not == {}
@@ -28,7 +28,7 @@ describe MyTasksController do
   end
 
   it "should return a valid json object on a successful task update" do
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     hash = {"someKey" => "someValue"}
     MyTasks::Merged.any_instance.stub(:update_task).and_return(hash)
     post :update_task, {key: "value"}
@@ -38,7 +38,7 @@ describe MyTasksController do
   end
 
   it "should return a valid truthy json object when successfully clearing completed google tasks" do
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     user_payload = {"emitter" => "Google"}
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::ClearTaskList.stub(:new).and_return(@fake_google_clear_tasks_proxy)
@@ -49,7 +49,7 @@ describe MyTasksController do
   end
 
   it "should successfully delete a google task" do
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::DeleteTask.stub(:new).and_return(@fake_google_delete_tasks_proxy)
     pre_recorded_tasklist_id = "MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA"
@@ -63,7 +63,7 @@ describe MyTasksController do
   end
 
   it "should fail on deleting a canvas task" do
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     Canvas::Proxy.stub(:access_granted?).and_return(true)
     hash = {"task_id" => "gobblygook", "emitter" => "bCourses"}
     post :delete_task, hash
@@ -72,7 +72,7 @@ describe MyTasksController do
   end
 
   it "should return a 400 error on some ArgumentError with the task model object" do
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     error_msg = "some fatal issue"
     MyTasks::Merged.any_instance.stub(:update_task).and_raise(ArgumentError, error_msg)
     post :update_task, {key: "value"}
@@ -86,17 +86,17 @@ describe MyTasksController do
     let(:user_id) { rand(99999).to_s }
     let(:original_user_id) { rand(99999).to_s }
     before do
-      session[:user_id] = user_id
+      session['user_id'] = user_id
       allow(Settings.google_proxy).to receive(:fake).at_least(:once).and_return(true)
       allow(Settings.canvas_proxy).to receive(:fake).at_least(:once).and_return(true)
     end
     context 'with real-user data cached' do
       it 'should not give a real user a cached censored feed' do
-        session[:original_user_id] = original_user_id
+        session['original_user_id'] = original_user_id
         get :get_feed
         feed = JSON.parse(response.body)
         expect(feed['tasks'].index {|t| t['emitter'] == 'Google'}).to be_nil
-        session[:original_user_id] = nil
+        session['original_user_id'] = nil
         get :get_feed
         feed = JSON.parse(response.body)
         expect(feed['tasks'].index {|t| t['emitter'] == 'Google'}).to_not be_nil
@@ -106,7 +106,7 @@ describe MyTasksController do
         feed = JSON.parse(response.body)
         expect(feed['tasks'].index {|t| t['emitter'] == 'bCourses'}).to_not be_nil
         expect(feed['tasks'].index {|t| t['emitter'] == 'Google'}).to_not be_nil
-        session[:original_user_id] = original_user_id
+        session['original_user_id'] = original_user_id
         get :get_feed
         feed = JSON.parse(response.body)
         expect(feed['tasks'].index {|t| t['emitter'] == 'bCourses'}).to_not be_nil
@@ -114,7 +114,7 @@ describe MyTasksController do
       end
     end
     it 'should not add a Google task to the real user account' do
-      session[:original_user_id] = original_user_id
+      session['original_user_id'] = original_user_id
       expect_any_instance_of(MyTasks::GoogleTasks).to receive(:insert_task).never
       hash = {
         'emitter' => 'Google',

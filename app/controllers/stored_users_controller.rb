@@ -40,7 +40,7 @@ class StoredUsersController < ApplicationController
 
   def numeric_uid?
     begin
-      Integer(params[:uid], 10)
+      Integer(params['uid'], 10)
     rescue ArgumentError
       error_response
     end

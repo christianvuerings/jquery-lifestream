@@ -13,8 +13,8 @@ class CanvasProjectProvisionController < ApplicationController
 
   # POST /api/academics/canvas/project_provision/create.json
   def create_project_site
-    worker = Canvas::ProjectProvision.new(session[:user_id])
-    course_details = worker.create_project(params[:name])
+    worker = Canvas::ProjectProvision.new(session['user_id'])
+    course_details = worker.create_project(params['name'])
     render json: course_details.to_json
   end
 end

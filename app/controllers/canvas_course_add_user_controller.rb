@@ -10,7 +10,7 @@ class CanvasCourseAddUserController < ApplicationController
   def authorize_adding_user
     course_id = canvas_course_id
     raise Pundit::NotAuthorizedError, "Canvas Course ID not present" if course_id.blank?
-    canvas_course = Canvas::Course.new(:user_id => session[:user_id], :canvas_course_id => course_id)
+    canvas_course = Canvas::Course.new(:user_id => session['user_id'], :canvas_course_id => course_id)
     authorize canvas_course, :can_add_users?
   end
 
@@ -38,8 +38,8 @@ class CanvasCourseAddUserController < ApplicationController
   # POST /api/academics/canvas/course_add_user/add_user.json
   def add_user
     authorize_granted_role
-    Canvas::CourseAddUser.add_user_to_course_section(params[:ldapUserId], params[:roleId], params[:sectionId])
-    user_added = { :ldapUserId => params[:ldapUserId], :roleId => params[:roleId], :sectionId => params[:sectionId] }
+    Canvas::CourseAddUser.add_user_to_course_section(params['ldapUserId'], params['roleId'], params['sectionId'])
+    user_added = { :ldapUserId => params['ldapUserId'], :roleId => params['roleId'], :sectionId => params['sectionId'] }
     render json: { userAdded: user_added }.to_json
   end
 
@@ -48,13 +48,13 @@ class CanvasCourseAddUserController < ApplicationController
   def authorize_granted_role
     granted_role_ids = []
     user_profile[:grantingRoles].each {|role| granted_role_ids << role['id']}
-    raise Pundit::NotAuthorizedError, "Role specified is unauthorized" unless granted_role_ids.include?(params[:roleId])
+    raise Pundit::NotAuthorizedError, "Role specified is unauthorized" unless granted_role_ids.include?(params['roleId'])
   end
 
   def user_profile
-    canvas_user_profile = Canvas::SisUserProfile.new(user_id: session[:user_id]).get
+    canvas_user_profile = Canvas::SisUserProfile.new(user_id: session['user_id']).get
     course_user_roles = Canvas::CourseUser.new(:user_id => canvas_user_profile['id'], :course_id => canvas_course_id).roles
-    global_admin = Canvas::Admins.new.admin_user?(session[:user_id])
+    global_admin = Canvas::Admins.new.admin_user?(session['user_id'])
     granting_roles = Canvas::CourseAddUser.granting_roles(course_user_roles, global_admin)
     { roles: course_user_roles.merge({'globalAdmin' => global_admin}), grantingRoles: granting_roles }
   end

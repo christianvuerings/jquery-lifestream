@@ -5,14 +5,14 @@ describe ActAsController do
   def it_succeeds
     post :start, uid: target_uid
     expect(response).to be_success
-    expect(session[:user_id]).to eq target_uid
-    expect(session[:original_user_id]).to eq real_user_id
+    expect(session['user_id']).to eq target_uid
+    expect(session['original_user_id']).to eq real_user_id
   end
   def it_fails
     post :start, uid: target_uid
     expect(response).to_not be_success
-    expect(session[:user_id]).to_not eq target_uid
-    expect(session[:original_user_id]).to be_nil
+    expect(session['user_id']).to_not eq target_uid
+    expect(session['original_user_id']).to be_nil
   end
 
   describe '#start' do
@@ -29,12 +29,12 @@ describe ActAsController do
     end
     shared_examples 'successful view-as' do
       it 'works the first time' do
-        session[:user_id] = real_user_id
+        session['user_id'] = real_user_id
         it_succeeds
       end
       it 'switches targets' do
-        session[:user_id] = '211159'
-        session[:original_user_id] = real_user_id
+        session['user_id'] = '211159'
+        session['original_user_id'] = real_user_id
         it_succeeds
       end
     end
@@ -56,8 +56,8 @@ describe ActAsController do
         allow(User::Auth).to receive(:get).with(nil).and_call_original
       end
       it 'is denied' do
-        session[:user_id] = real_user_id
-        session[:lti_authenticated_only] = true
+        session['user_id'] = real_user_id
+        session['lti_authenticated_only'] = true
         it_fails
       end
     end
@@ -65,7 +65,7 @@ describe ActAsController do
       let(:real_superuser) {false}
       let(:real_viewer) {false}
       it 'is denied' do
-        session[:user_id] = real_user_id
+        session['user_id'] = real_user_id
         it_fails
       end
     end

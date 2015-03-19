@@ -6,22 +6,22 @@ class ActAsController < ApplicationController
 
   def start
     authorize current_user, :can_view_as?
-    return redirect_to root_path unless valid_params?(params[:uid])
-    logger.warn "ACT-AS: User #{current_user.real_user_id} acting as #{params[:uid]} begin"
-    session[:original_user_id] = session[:user_id] unless session[:original_user_id]
-    session[:user_id] = params[:uid]
+    return redirect_to root_path unless valid_params?(params['uid'])
+    logger.warn "ACT-AS: User #{current_user.real_user_id} acting as #{params['uid']} begin"
+    session['original_user_id'] = session['user_id'] unless session['original_user_id']
+    session['user_id'] = params['uid']
 
     render :nothing => true, :status => 204
   end
 
   def stop
-    return redirect_to root_path unless session[:user_id] && session[:original_user_id]
+    return redirect_to root_path unless session['user_id'] && session['original_user_id']
 
     #To avoid any potential stale data issues, we might have to be aggressive with cache invalidation.
-    Cache::UserCacheExpiry.notify session[:user_id]
-    logger.warn "ACT-AS: User #{session[:original_user_id]} acting as #{session[:user_id]} ends"
-    session[:user_id] = session[:original_user_id]
-    session[:original_user_id] = nil
+    Cache::UserCacheExpiry.notify session['user_id']
+    logger.warn "ACT-AS: User #{session['original_user_id']} acting as #{session['user_id']} ends"
+    session['user_id'] = session['original_user_id']
+    session['original_user_id'] = nil
 
     render :nothing => true, :status => 204
   end

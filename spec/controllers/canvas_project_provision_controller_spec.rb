@@ -17,7 +17,7 @@ describe CanvasProjectProvisionController do
     }
   end
   before do
-    session[:user_id] = uid
+    session['user_id'] = uid
     allow_any_instance_of(AuthenticationStatePolicy).to receive(:can_create_canvas_project_site?).and_return(true)
   end
 

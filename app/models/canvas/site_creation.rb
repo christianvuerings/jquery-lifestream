@@ -7,7 +7,7 @@ module Canvas
     end
 
     def authorizations
-      policy = AuthenticationState.new(user_id: @uid).policy
+      policy = AuthenticationState.new('user_id' => @uid).policy
       {
         :authorizations => {
           :canCreateCourseSite => policy.can_create_canvas_course_site?,

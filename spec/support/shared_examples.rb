@@ -11,7 +11,7 @@
 # for the method that is being tested. For exapmle, see spec/controllers/my_academics_controller_spec.rb
 shared_examples "a user authenticated api endpoint" do
   context "when no user session present" do
-    before { session[:user_id] = nil }
+    before { session['user_id'] = nil }
     it "returns empty json hash" do
       make_request
       assert_response :success
@@ -23,7 +23,7 @@ end
 
 shared_examples "an authenticated endpoint" do
   context "when no user session present" do
-    before { session[:user_id] = nil }
+    before { session['user_id'] = nil }
     it "returns empty response" do
       make_request
       expect(response.status).to eq(401)

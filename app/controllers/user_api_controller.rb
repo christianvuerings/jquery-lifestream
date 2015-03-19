@@ -12,7 +12,7 @@ class UserApiController < ApplicationController
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "-1"
     render :json => {
-      :amILoggedIn => !!session[:user_id]
+      :amILoggedIn => !!session['user_id']
     }.to_json
   end
 
@@ -20,10 +20,10 @@ class UserApiController < ApplicationController
     ActiveRecordHelper.clear_stale_connections
     status = {}
 
-    if session[:user_id]
+    if session['user_id']
       # wrap User::Visit.record_session inside a cache lookup so that we have to write User::Visit records less often.
-      self.class.fetch_from_cache session[:user_id] do
-        User::Visit.record session[:user_id] if current_user.directly_authenticated?
+      self.class.fetch_from_cache session['user_id'] do
+        User::Visit.record session['user_id'] if current_user.directly_authenticated?
         true
       end
       status.merge!({
@@ -52,8 +52,8 @@ class UserApiController < ApplicationController
   end
 
   def delete
-    if session[:user_id] && current_user.directly_authenticated?
-      User::Api.delete(session[:user_id])
+    if session['user_id'] && current_user.directly_authenticated?
+      User::Api.delete(session['user_id'])
       render :nothing => true, :status => 204
     else
       render :nothing => true, :status => 403
@@ -62,8 +62,8 @@ class UserApiController < ApplicationController
 
   def calendar_opt_in
     expire_current_user
-    if session[:user_id] && current_user.directly_authenticated?
-      Calendar::User.where(uid: session[:user_id]).first_or_create
+    if session['user_id'] && current_user.directly_authenticated?
+      Calendar::User.where(uid: session['user_id']).first_or_create
       render :nothing => true, :status => 204
     else
       render :nothing => true, :status => 403
@@ -72,8 +72,8 @@ class UserApiController < ApplicationController
 
   def calendar_opt_out
     expire_current_user
-    if session[:user_id] && current_user.directly_authenticated?
-      Calendar::User.where(uid: session[:user_id]).delete_all
+    if session['user_id'] && current_user.directly_authenticated?
+      Calendar::User.where(uid: session['user_id']).delete_all
       render :nothing => true, :status => 204
     else
       render :nothing => true, :status => 403

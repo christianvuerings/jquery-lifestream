@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe AuthenticationStatePolicy do
   let(:session_state) do
-    {user_id: user_id, original_user_id: original_user_id, lti_authenticated_only: lti_authenticated_only}
+    {'user_id' => user_id, 'original_user_id' => original_user_id, 'lti_authenticated_only' => lti_authenticated_only}
   end
   let(:original_user_id) {nil}
   let(:lti_authenticated_only) {nil}

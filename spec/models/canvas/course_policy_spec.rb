@@ -3,7 +3,7 @@ require "set"
 
 describe Canvas::CoursePolicy do
   let(:user_id)             { Settings.canvas_proxy.test_user_id }
-  let(:user)                { AuthenticationState.new(user_id: user_id) }
+  let(:user)                { AuthenticationState.new('user_id' => user_id) }
   let(:super_user)          { User::Auth.new(uid: user_id, is_superuser: true, active: true) }
   let(:canvas_course_id)    { 1121 }
   let(:course)              { Canvas::Course.new(:user_id => user.user_id, :canvas_course_id => canvas_course_id) }

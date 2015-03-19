@@ -12,9 +12,9 @@ describe CanvasCourseGradeExportController do
   end
 
   before do
-    session[:user_id] = "4868640"
-    session[:canvas_user_id] = "43232321"
-    session[:canvas_course_id] = "1164764"
+    session['user_id'] = "4868640"
+    session['canvas_user_id'] = "43232321"
+    session['canvas_course_id'] = "1164764"
     allow_any_instance_of(Canvas::CoursePolicy).to receive(:can_export_grades?).and_return(true)
     allow_any_instance_of(Canvas::CourseUsers).to receive(:course_grades).and_return(course_grades)
   end
@@ -99,7 +99,7 @@ describe CanvasCourseGradeExportController do
     end
 
     context 'when the canvas course id is not present in the session' do
-      before { session[:canvas_course_id] = nil }
+      before { session['canvas_course_id'] = nil }
       it 'returns 403 error' do
         get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234'
         expect(response.status).to eq(403)
@@ -180,7 +180,7 @@ describe CanvasCourseGradeExportController do
 
   describe 'when indicating if a course site has official sections' do
     before do
-      session[:user_id] = nil
+      session['user_id'] = nil
       allow_any_instance_of(Canvas::Egrades).to receive(:is_official_course?).and_return(true)
     end
     it_should_behave_like 'an endpoint' do

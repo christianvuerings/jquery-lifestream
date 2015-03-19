@@ -20,7 +20,7 @@ describe MyBadgesController do
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::DriveList.stub(:new).and_return(@fake_drive_list)
     GoogleApps::EventsRecentItems.stub(:new).and_return(@fake_events_list)
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     get :get_feed
     json_response = JSON.parse(response.body)
 
@@ -47,19 +47,19 @@ describe MyBadgesController do
     let(:user_id) { rand(99999).to_s }
     let(:original_user_id) { rand(99999).to_s }
     before do
-      session[:user_id] = user_id
+      session['user_id'] = user_id
       expect(Settings.google_proxy).to receive(:fake).at_least(:once).and_return(true)
       expect(Settings.app_alerts_proxy).to receive(:fake).at_least(:once).and_return(true)
       expect(Settings.bearfacts_proxy).to receive(:fake).at_least(:once).and_return(true)
     end
     it 'should not give a real user a cached censored feed' do
-      session[:original_user_id] = original_user_id
+      session['original_user_id'] = original_user_id
       get :get_feed
       feed = JSON.parse(response.body)
       ['bcal', 'bdrive', 'bmail'].each do |service|
         expect(feed['badges'][service]['count']).to eq 0
       end
-      session[:original_user_id] = nil
+      session['original_user_id'] = nil
       get :get_feed
       feed = JSON.parse(response.body)
       ['bcal', 'bdrive', 'bmail'].each do |service|
@@ -74,7 +74,7 @@ describe MyBadgesController do
       ['bcal', 'bdrive', 'bmail'].each do |service|
         expect(feed['badges'][service]['count']).to be > 0
       end
-      session[:original_user_id] = original_user_id
+      session['original_user_id'] = original_user_id
       get :get_feed
       feed = JSON.parse(response.body)
       expect(feed['alert']['title']).to be_present

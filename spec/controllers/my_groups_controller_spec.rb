@@ -15,7 +15,7 @@ describe MyGroupsController do
 
   it "should check for valid fields on the my groups feed" do
     #needs to be updated afterwards
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     get :get_feed
     json_response = JSON.parse(response.body)
     json_response["groups"].is_a?(Array).should == true

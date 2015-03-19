@@ -48,8 +48,8 @@ describe CanvasRostersController do
 
   before do
     # emulate user authenticated via LTI Launch from a Canvas Course
-    session[:user_id] = user_id
-    session[:canvas_course_id] = canvas_course_id
+    session['user_id'] = user_id
+    session['canvas_course_id'] = canvas_course_id
     allow_any_instance_of(Canvas::CoursePolicy).to receive(:is_canvas_course_teacher_or_assistant?).and_return(true)
     allow_any_instance_of(Canvas::CanvasRosters).to receive(:get_feed).and_return(roster_feed)
   end
@@ -65,7 +65,7 @@ describe CanvasRostersController do
     end
 
     context 'when canvas course roster csv requested via non-embedded session' do
-      before { session[:canvas_course_id] = nil }
+      before { session['canvas_course_id'] = nil }
       it 'should response with roster csv' do
         get :get_csv, canvas_course_id: canvas_course_id, :format => :csv
         assert_response :success
@@ -98,7 +98,7 @@ describe CanvasRostersController do
     end
 
     context "when canvas course id not present" do
-      before { session[:canvas_course_id] = nil }
+      before { session['canvas_course_id'] = nil }
       it "should respond with empty http 403" do
         get :get_csv, canvas_course_id: 'embedded', :format => :csv
         expect(response.status).to eq 403
@@ -119,7 +119,7 @@ describe CanvasRostersController do
     end
 
     context 'when canvas course requested via non-embedded session' do
-      before { session[:canvas_course_id] = nil }
+      before { session['canvas_course_id'] = nil }
       it 'should response with roster feed' do
         get :get_feed, canvas_course_id: canvas_course_id
         assert_response :success
@@ -157,7 +157,7 @@ describe CanvasRostersController do
     end
 
     context "when canvas course id not present" do
-      before { session[:canvas_course_id] = nil }
+      before { session['canvas_course_id'] = nil }
       it "should respond with empty http 403" do
         get :get_feed, canvas_course_id: 'embedded'
         expect(response.status).to eq 403
@@ -230,7 +230,7 @@ describe CanvasRostersController do
     end
 
     context 'when Canvas course ID is not present' do
-      before { session[:canvas_course_id] = nil }
+      before { session['canvas_course_id'] = nil }
       it 'should respond with an empty HTTP 403' do
         get :profile, canvas_course_id: 'embedded', person_id: student_id
         expect(response.status).to eq 403

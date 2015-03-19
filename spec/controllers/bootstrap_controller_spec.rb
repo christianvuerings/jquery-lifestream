@@ -12,7 +12,7 @@ describe BootstrapController do
 
   context 'when authenticated' do
     before do
-      session[:user_id] = user_id
+      session['user_id'] = user_id
     end
     it 'makes a warmup request' do
       expect(LiveUpdatesWarmer).to receive(:warmup_request).with(user_id).once
@@ -24,8 +24,8 @@ describe BootstrapController do
     let(:original_user_id) {nil}
     before do
       expect(Settings.features).to receive(:reauthentication).and_return(true)
-      session[:user_id] = user_id
-      session[:original_user_id] = original_user_id
+      session['user_id'] = user_id
+      session['original_user_id'] = original_user_id
     end
     context 'when viewing as' do
       let(:original_user_id) {random_id}
