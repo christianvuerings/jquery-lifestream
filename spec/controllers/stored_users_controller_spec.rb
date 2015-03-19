@@ -3,7 +3,7 @@ require 'spec_helper'
 describe StoredUsersController do
 
   before do
-    session[:user_id] = '1234'
+    session['user_id'] = '1234'
     User::Auth.stub(:where).and_return([User::Auth.new(uid: '1234', is_superuser: true, active: true)])
   end
 

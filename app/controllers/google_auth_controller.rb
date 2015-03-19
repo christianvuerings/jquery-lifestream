@@ -9,25 +9,25 @@ class GoogleAuthController < ApplicationController
 
   def request_authorization
     expire
-    final_redirect = params[:final_redirect] || '/'
-    if params[:force_domain].present? && params[:force_domain] == 'false'
+    final_redirect = params['final_redirect'] || '/'
+    if params['force_domain'].present? && params['force_domain'] == 'false'
       client = get_client(final_redirect, force_domain = false)
     end
     client ||= get_client final_redirect
     url = client.authorization_uri(approval_prompt: 'force').to_s
-    logger.debug "Initiating Oauth2 authorization request for user #{session[:user_id]} - redirecting to #{url}"
+    logger.debug "Initiating Oauth2 authorization request for user #{session['user_id']} - redirecting to #{url}"
     redirect_to url
   end
 
   def handle_callback
     client = get_client
-    logger.debug "Handling Oauth2 authorization callback for user #{session[:user_id]}"
-    if params[:code] && params[:error].blank?
-      client.code = params[:code]
+    logger.debug "Handling Oauth2 authorization callback for user #{session['user_id']}"
+    if params['code'] && params['error'].blank?
+      client.code = params['code']
       client.fetch_access_token!
-      logger.warn "Saving #{app_id} access token for user #{session[:user_id]}"
+      logger.warn "Saving #{app_id} access token for user #{session['user_id']}"
       User::Oauth2Data.new_or_update(
-        session[:user_id],
+        session['user_id'],
         app_id,
         client.access_token.to_s,
         client.refresh_token,
@@ -37,15 +37,15 @@ class GoogleAuthController < ApplicationController
           client.issued_at.to_i + client.expires_in
         end
       )
-      User::Oauth2Data.update_google_email! session[:user_id]
+      User::Oauth2Data.update_google_email! session['user_id']
     else
-      logger.warn "Deleting #{app_id} access token for user #{session[:user_id]} because auth callback had an error. Error: #{params[:error]}"
-      User::Oauth2Data.remove(session[:user_id], app_id)
+      logger.warn "Deleting #{app_id} access token for user #{session['user_id']} because auth callback had an error. Error: #{params['error']}"
+      User::Oauth2Data.remove(session['user_id'], app_id)
     end
 
     expire
 
-    if (final_redirect = params[:state])
+    if (final_redirect = params['state'])
       redirect_to Base64.decode64(final_redirect)
     else
       redirect_to url_for_path('/')
@@ -53,25 +53,25 @@ class GoogleAuthController < ApplicationController
   end
 
   def remove_authorization
-    logger.warn "Deleting #{app_id} access token for user #{session[:user_id]} at the user's request."
-    GoogleApps::Revoke.new(user_id: session[:user_id]).revoke
-    Calendar::User.delete_all({uid: session[:user_id]})
-    User::Oauth2Data.remove(session[:user_id], app_id)
+    logger.warn "Deleting #{app_id} access token for user #{session['user_id']} at the user's request."
+    GoogleApps::Revoke.new(user_id: session['user_id']).revoke
+    Calendar::User.delete_all({uid: session['user_id']})
+    User::Oauth2Data.remove(session['user_id'], app_id)
     expire
     render :nothing => true, :status => 204
   end
 
   def dismiss_reminder
     result = false
-    if (!GoogleApps::Proxy.access_granted? session[:user_id])
-      result = User::Oauth2Data.dismiss_google_reminder(session[:user_id])
+    if (!GoogleApps::Proxy.access_granted? session['user_id'])
+      result = User::Oauth2Data.dismiss_google_reminder(session['user_id'])
     end
-    User::Api.expire(session[:user_id])
+    User::Api.expire(session['user_id'])
     render json: {:result => result}
   end
 
   def expire
-    Cache::UserCacheExpiry.notify session[:user_id]
+    Cache::UserCacheExpiry.notify session['user_id']
   end
 
   def app_id

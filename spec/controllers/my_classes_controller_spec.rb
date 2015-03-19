@@ -18,7 +18,7 @@ describe MyClassesController do
       [{course_code: "PLEO 22",
       id: "750027",
       emitter: Canvas::Proxy::APP_NAME}])
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     get :get_feed
     json_response = JSON.parse(response.body)
     json_response.size.should == 1

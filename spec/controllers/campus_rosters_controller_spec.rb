@@ -22,7 +22,7 @@ describe CampusRostersController do
   let(:photo_file) { {:data => '\xFF\xD8\xFF\xE0\x00\x10JFIF\x00\x01\x01'} }
 
   before do
-    session[:user_id] = user_id
+    session['user_id'] = user_id
     allow_any_instance_of(Berkeley::CoursePolicy).to receive(:can_view_roster_photos?).and_return(true)
     allow_any_instance_of(Rosters::Campus).to receive(:get_feed).and_return(roster_feed)
   end

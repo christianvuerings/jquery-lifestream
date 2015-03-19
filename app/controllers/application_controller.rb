@@ -12,20 +12,20 @@ class ApplicationController < ActionController::Base
   skip_before_filter :set_csp_header, :set_hsts_header, :set_x_content_type_options_header, :set_x_xss_protection_header
 
   def authenticate(force = false)
-    redirect_to url_for_path('/auth/cas') unless !force && session[:user_id]
+    redirect_to url_for_path('/auth/cas') unless !force && session['user_id']
   end
 
   # TODO see if we can standardize empty responses. We have 2 forms: This one, which returns empty JSON and
   # an HTTP 200 status, and another form that returns empty body with 401 status.
   def api_authenticate
-    if session[:user_id].blank?
+    if session['user_id'].blank?
       Rails.logger.warn "Authenticated user absent in request to #{controller_name}\##{action_name}"
       render :json => {}.to_json
     end
   end
 
   def api_authenticate_401
-    if session[:user_id].blank?
+    if session['user_id'].blank?
       Rails.logger.warn "Authenticated user absent in request to #{controller_name}\##{action_name}"
       render :nothing => true, :status => 401
     end
@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   # This method does not handle the reauthentication check for "ccadmin" authoring. That is
   # enforced by "config/initializers/rails_admin.rb".
   def check_reauthentication
-    unless !!session[:user_id]
+    unless !!session['user_id']
       delete_reauth_cookie
       return
     end
@@ -83,17 +83,17 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized(error)
-    Rails.logger.warn "Unauthorized request made by UID: #{session[:user_id]} to #{controller_name}\##{action_name}: #{error.message}"
+    Rails.logger.warn "Unauthorized request made by UID: #{session['user_id']} to #{controller_name}\##{action_name}: #{error.message}"
     render :nothing => true, :status => 403
   end
 
   def handle_api_exception(error)
-    Rails.logger.error "#{error.class} raised with UID: #{session[:user_id]} in #{controller_name}\##{action_name}: #{error.message}"
+    Rails.logger.error "#{error.class} raised with UID: #{session['user_id']} in #{controller_name}\##{action_name}: #{error.message}"
     render json: { :error => error.message }.to_json, status: 500
   end
 
   def handle_exception(error)
-    Rails.logger.error "#{error.class} raised with UID: #{session[:user_id]} in #{controller_name}\##{action_name}: #{error.message}"
+    Rails.logger.error "#{error.class} raised with UID: #{session['user_id']} in #{controller_name}\##{action_name}: #{error.message}"
     render text: error.message, status: 500
   end
 
@@ -115,7 +115,7 @@ class ApplicationController < ActionController::Base
   end
 
   def initialize_calcentral_config
-    @uid = session[:user_id] ? session[:user_id].to_s : ''
+    @uid = session['user_id'] ? session['user_id'].to_s : ''
     @calcentral_config ||= {
       applicationVersion: ServerRuntime.get_settings['versions']['application'],
       clientHostname: ServerRuntime.get_settings['hostname'],
@@ -129,10 +129,10 @@ class ApplicationController < ActionController::Base
     # HTTP_X_FORWARDED_FOR is the client's IP when we're behind Apache; REMOTE_ADDR otherwise
     remote = request.env["HTTP_X_FORWARDED_FOR"] || request.env["REMOTE_ADDR"]
     line = "ACCESS_LOG #{remote} #{request.request_method} #{request.filtered_path} #{status}"
-    if session[:original_user_id]
-      line += " uid=#{session[:original_user_id]}_acting_as_uid=#{session[:user_id]}"
+    if session['original_user_id']
+      line += " uid=#{session['original_user_id']}_acting_as_uid=#{session['user_id']}"
     else
-      line += " uid=#{session[:user_id]}"
+      line += " uid=#{session['user_id']}"
     end
     line += " class=#{self.class.name} action=#{params["action"]} view=#{view_runtime}ms db=#{db_runtime}ms"
     logger.warn line

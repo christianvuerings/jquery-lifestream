@@ -14,7 +14,7 @@ describe MyAdvisingController do
       Settings.advising_proxy.stub(:fake).and_return(true)
     end
     it 'should be an non-empty advising feed based on fake Oski recorded data' do
-      session[:user_id] = '61889'
+      session['user_id'] = '61889'
       get :get_feed
       json_response = JSON.parse(response.body)
       json_response.size.should == 8

@@ -30,14 +30,14 @@ describe MyEventsController do
     context 'authenticated' do
       let(:random_id) { rand(99999).to_s }
       before do
-        session[:user_id] = random_id
+        session['user_id'] = random_id
       end
 
       context "failure scenarios" do
 
         # TODO fixing this test requires rspec 3, see CLC-3565 for details.
         #context "request type HTML, authenticated" do
-        #  before(:each) { session[:user_id] = random_id }
+        #  before(:each) { session['user_id'] = random_id }
         #
         #  subject { post :create, { format: 'html'} }
         #
@@ -78,7 +78,7 @@ describe MyEventsController do
 
         context 'viewing as another user' do
           before do
-            session[:original_user_id] = rand(99999).to_s
+            session['original_user_id'] = rand(99999).to_s
             allow(GoogleApps::Proxy).to receive(:access_granted?).with(random_id).and_return(true)
           end
           subject do

@@ -6,7 +6,7 @@ describe CanvasUserProvisionController do
     let(:user_id_string)     { "1234,1235" }
 
     context "if session user not present" do
-      before { session[:user_id] = nil }
+      before { session['user_id'] = nil }
       it "returns empty hash" do
         post :user_import, user_ids: user_id_string
         expect(response.status).to eq(200)
@@ -16,7 +16,7 @@ describe CanvasUserProvisionController do
 
     context "if session user is not an admin" do
       before do
-        session[:user_id] = "2050"
+        session['user_id'] = "2050"
         User::Auth.stub(:where).and_return([User::Auth.new(uid: "2050", is_superuser: false, active: true)])
       end
 
@@ -29,7 +29,7 @@ describe CanvasUserProvisionController do
 
     context "if admin user authenticated" do
       before do
-        session[:user_id] = "2050"
+        session['user_id'] = "2050"
         User::Auth.stub(:where).and_return([User::Auth.new(uid: "2050", is_superuser: true, active: true)])
         Canvas::UserProvision.any_instance.stub(:import_users).and_return(true)
       end

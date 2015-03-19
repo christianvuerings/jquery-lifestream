@@ -19,7 +19,7 @@ describe PhotoController do
     end
 
     context "when user is not logged in" do
-      before { session[:user_id] = nil }
+      before { session['user_id'] = nil }
       it "returns 401 error with no body" do
         get :my_photo
         expect(response.status).to eq 401

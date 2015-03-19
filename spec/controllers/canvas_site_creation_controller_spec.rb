@@ -11,7 +11,7 @@ describe CanvasSiteCreationController do
 
   describe '#authorizations' do
     before do
-      session[:user_id] = uid
+      session['user_id'] = uid
       allow_any_instance_of(Canvas::SiteCreation).to receive(:authorizations).and_return(authorizations_hash)
     end
 

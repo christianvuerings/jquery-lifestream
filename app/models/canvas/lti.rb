@@ -23,15 +23,15 @@ module Canvas
       params = request.request_parameters
       logger.debug("LTI params = #{params.inspect}")
       current_time = Time.new
-      timestamp = params[:oauth_timestamp]
+      timestamp = params['oauth_timestamp']
       if !timestamp.blank?
         timestamp = Time.at(timestamp.to_i)
         if timestamp > (current_time - 300) && timestamp < (current_time + 300)
-          nonce_check = params[:oauth_nonce]
+          nonce_check = params['oauth_nonce']
           if !nonce_check.blank?
             if !self.class.in_cache?(nonce_check)
               Rails.cache.write(self.class.cache_key(nonce_check), timestamp, expires_id: self.class.expires_in)
-              request_key = params[:oauth_consumer_key]
+              request_key = params['oauth_consumer_key']
               if @lti_key == request_key
                 lti = IMS::LTI::ToolProvider.new(request_key, @lti_secret, params)
                 lti.extend IMS::LTI::Extensions::OutcomeData::ToolProvider
@@ -46,11 +46,11 @@ module Canvas
                 logger.warn("LTI unrecognized consumer key")
               end
             else
-              logger.warn("LTI repeated nonce = #{params[:oauth_nonce]}")
+              logger.warn("LTI repeated nonce = #{params['oauth_nonce']}")
             end
           end
         else
-          logger.warn("LTI timestamp outdated: raw = #{params[:oauth_timestamp]}, parsed = #{timestamp}")
+          logger.warn("LTI timestamp outdated: raw = #{params['oauth_timestamp']}, parsed = #{timestamp}")
         end
       end
       nil

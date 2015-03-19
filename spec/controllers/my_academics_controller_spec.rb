@@ -9,7 +9,7 @@ describe MyAcademicsController do
     end
 
     it "should get a non-empty feed for an authenticated (but fake) user" do
-      session[:user_id] = "0"
+      session['user_id'] = "0"
       get :get_feed
       json_response = JSON.parse(response.body)
       json_response["regblocks"]["noStudentId"].should be_truthy

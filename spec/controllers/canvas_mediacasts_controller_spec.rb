@@ -3,7 +3,7 @@ require "spec_helper"
 shared_examples 'a protected controller' do
   let(:user_id) { rand(99999).to_s }
   before do
-    session[:user_id] = user_id
+    session['user_id'] = user_id
     allow_any_instance_of(Canvas::SisUserProfile).to receive(:get).and_return({
       'id' => user_id
     })

@@ -11,7 +11,7 @@ module Canvas
         authorization = false
         campus_uid = Canvas::UserProfile.new(:canvas_user_id => @canvas_user_id).login_id
         if campus_uid
-          user = AuthenticationState.new(user_id: campus_uid)
+          user = AuthenticationState.new('user_id' => campus_uid)
           policy = user.policy
           # if you cannot create a project site (i.e. you are not affiliated as a staff or faculty member),
           # then you surely will not have official sections available to create a course site

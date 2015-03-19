@@ -3,7 +3,7 @@ require "spec_helper"
 describe GoogleAuthController do
   let(:user_id) { random_id }
   before do
-    session[:user_id] = user_id
+    session['user_id'] = user_id
   end
 
   describe '#dismiss_reminder' do
@@ -34,13 +34,13 @@ describe GoogleAuthController do
     end
     context 'viewing as' do
       before do
-        session[:original_user_id] = random_id
+        session['original_user_id'] = random_id
       end
       it { should_not be_success }
     end
     context 'LTI embedded' do
       before do
-        session[:lti_authenticated_only] = true
+        session['lti_authenticated_only'] = true
       end
       it { should_not be_success }
     end

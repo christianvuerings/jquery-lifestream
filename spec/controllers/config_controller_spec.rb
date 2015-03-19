@@ -26,7 +26,7 @@ describe ConfigController do
     let(:random_id) { rand(99999).to_s }
 
     before do
-      session[:user_id] = random_id
+      session['user_id'] = random_id
 
       get :get
       @json_response = JSON.parse(response.body)

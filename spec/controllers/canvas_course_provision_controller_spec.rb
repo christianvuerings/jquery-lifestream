@@ -16,7 +16,7 @@ describe CanvasCourseProvisionController do
     }
   end
   before do
-    session[:user_id] = uid
+    session['user_id'] = uid
   end
 
   describe '#get_feed' do
@@ -50,7 +50,7 @@ describe CanvasCourseProvisionController do
 
     it 'should use canvas course id option when present as a parameter' do
       fake_course_provision_worker = double('canvas_course_provision', :get_feed => {:canvas_course => {}})
-      expect(Canvas::CourseProvision).to receive(:new).with(session[:user_id], canvas_course_id: canvas_course_id).and_return(fake_course_provision_worker)
+      expect(Canvas::CourseProvision).to receive(:new).with(session['user_id'], canvas_course_id: canvas_course_id).and_return(fake_course_provision_worker)
       get :get_feed, canvas_course_id: canvas_course_id
       assert_response :success
       json_response = JSON.parse(response.body)
@@ -163,7 +163,7 @@ describe CanvasCourseProvisionController do
     end
 
     it "returns canvas_course_id parameter if present in session" do
-      subject.session[:canvas_course_id] = canvas_course_id
+      subject.session['canvas_course_id'] = canvas_course_id
       subject.params['controller'] = 'canvas_course_provision'
       subject.params['action'] = 'get_feed'
       subject.params['admin_acting_as'] = admin_acting_as

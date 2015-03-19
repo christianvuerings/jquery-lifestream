@@ -16,7 +16,7 @@ class BootstrapController < ApplicationController
   # chance to become fully authenticated on the browser's initial visit to a CalCentral page.
   # If the user's CAS login state is still active, no visible redirect will occur.
   def check_lti_only
-    if session[:lti_authenticated_only]
+    if session['lti_authenticated_only']
       authenticate(true)
     end
   end
@@ -35,7 +35,7 @@ class BootstrapController < ApplicationController
   end
 
   def warmup_live_updates
-    LiveUpdatesWarmer.warmup_request session[:user_id] if session[:user_id]
+    LiveUpdatesWarmer.warmup_request session['user_id'] if session['user_id']
   end
 
 end

@@ -16,8 +16,8 @@ describe SessionsController do
       expect(controller).to receive(:cookies).and_return cookie_hash
       :create_reauth_cookie
       different_user_id = "some_other_#{user_id}"
-      session[:original_user_id] = different_user_id
-      session[:user_id] = different_user_id
+      session['original_user_id'] = different_user_id
+      session['user_id'] = different_user_id
 
       get :lookup, renew: 'true'
 
@@ -28,7 +28,7 @@ describe SessionsController do
     end
     it 'will create reauth cookie if original user_id not found in session' do
       expect(controller).to receive(:cookies).and_return cookie_hash
-      session[:user_id] = user_id
+      session['user_id'] = user_id
 
       get :lookup, renew: 'true'
 
@@ -37,13 +37,13 @@ describe SessionsController do
       reauth_cookie[:value].should be_truthy
       (reauth_cookie[:expires] > Date.today).should be_truthy
       session.empty?.should be_falsey
-      session[:user_id].should eql user_id
+      session['user_id'].should eql user_id
     end
     it 'will reset session when CAS uid does not match uid in session' do
       expect(controller).to receive(:cookies).and_return cookie_hash
       :create_reauth_cookie
-      session[:original_user_id] = user_id
-      session[:user_id] = user_id
+      session['original_user_id'] = user_id
+      session['user_id'] = user_id
 
       get :lookup, renew: 'true'
 
@@ -52,12 +52,12 @@ describe SessionsController do
       reauth_cookie[:value].should be_truthy
       (reauth_cookie[:expires] > Date.today).should be_truthy
       session.empty?.should be_falsey
-      session[:user_id].should eql user_id
+      session['user_id'].should eql user_id
     end
     it 'will redirect to CAS logout, despite LTI user session, when CAS user_id is an unexpected value' do
       expect(controller).to receive(:cookies).and_return cookie_hash
-      session[:lti_authenticated_only] = true
-      session[:user_id] = "some_other_#{user_id}"
+      session['lti_authenticated_only'] = true
+      session['user_id'] = "some_other_#{user_id}"
 
       # No 'renew' param
       get :lookup

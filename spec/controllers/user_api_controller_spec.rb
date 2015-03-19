@@ -3,7 +3,7 @@ require 'spec_helper'
 describe UserApiController do
   let (:user_id) { random_id }
   before do
-    session[:user_id] = user_id
+    session['user_id'] = user_id
     allow(CampusOracle::UserAttributes).to receive(:new).with(user_id: user_id).and_return(double(get_feed: {
       'person_name' => 'Joe Test',
       :roles => {
@@ -36,7 +36,7 @@ describe UserApiController do
       expect(json_response['uid']).to eq user_id
       expect(json_response['preferred_name']).to be_present
       expect(json_response['features']).to be_present
-      visit = User::Visit.where(:uid => session[:user_id])[0]
+      visit = User::Visit.where(:uid => session['user_id'])[0]
       expect(visit.last_visit_at).to be_present
     end
   end
@@ -64,18 +64,18 @@ describe UserApiController do
     end
     context 'when viewing as' do
       let(:original_user_id) { random_id }
-      before { session[:original_user_id] = original_user_id }
+      before { session['original_user_id'] = original_user_id }
       it { should eq original_user_id }
     end
     context 'when authenticated by LTI' do
-      before { session[:lti_authenticated_only] = true }
+      before { session['lti_authenticated_only'] = true }
       it { should eq 'Authenticated through LTI' }
     end
   end
 
   describe 'superuser status' do
     before do
-      session[:original_user_id] = original_user_id
+      session['original_user_id'] = original_user_id
       allow(User::Auth).to receive(:get) do |uid|
         case uid
           when user_id
@@ -100,7 +100,7 @@ describe UserApiController do
       end
       context 'when authenticated by LTI' do
         let(:original_user_id) { nil }
-        before { session[:lti_authenticated_only] = true }
+        before { session['lti_authenticated_only'] = true }
         it { should be_falsey }
       end
     end
@@ -117,7 +117,7 @@ describe UserApiController do
           end
           context 'when authenticated by LTI' do
             let(:original_user_id) { nil }
-            before { session[:lti_authenticated_only] = true }
+            before { session['lti_authenticated_only'] = true }
             it { should eq 403 }
           end
         end
@@ -135,7 +135,7 @@ describe UserApiController do
         end
         context 'when authenticated by LTI' do
           let(:original_user_id) { nil }
-          before { session[:lti_authenticated_only] = true }
+          before { session['lti_authenticated_only'] = true }
           it { should eq 403 }
         end
       end
@@ -152,7 +152,7 @@ describe UserApiController do
         end
         context 'when authenticated by LTI' do
           let(:original_user_id) { nil }
-          before { session[:lti_authenticated_only] = true }
+          before { session['lti_authenticated_only'] = true }
           it { should eq 403 }
         end
       end
@@ -171,7 +171,7 @@ describe UserApiController do
         end
         context 'when authenticated by LTI' do
           let(:original_user_id) { nil }
-          before { session[:lti_authenticated_only] = true }
+          before { session['lti_authenticated_only'] = true }
           it { should eq 403 }
         end
       end

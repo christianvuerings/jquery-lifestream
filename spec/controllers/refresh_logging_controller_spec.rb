@@ -6,7 +6,7 @@ describe RefreshLoggingController do
   end
 
   it "should not allow non-admin users to do anything to the logging level" do
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     User::Auth.stub(:where).and_return([User::Auth.new(uid: @user_id, is_superuser: false, active: true)])
     Rails.env.stub(:production?).and_return(true)
     CalcentralLogging.should_not_receive(:refresh_logging_level)
@@ -16,7 +16,7 @@ describe RefreshLoggingController do
   end
 
   it "should not attempt to change log settings to a new bad config value" do
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     Rails.env.stub(:production?).and_return(true)
     User::Auth.stub(:where).and_return([User::Auth.new(uid: @user_id, is_superuser: true, active: true)])
     CalcentralConfig.stub(:load_settings).and_return(OpenStruct.new({logger: OpenStruct.new({level: 'fooz'})}))
@@ -28,7 +28,7 @@ describe RefreshLoggingController do
   end
 
   it "should do nothing when the log level has not changed" do
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     Rails.env.stub(:production?).and_return(true)
     User::Auth.stub(:where).and_return([User::Auth.new(uid: @user_id, is_superuser: true, active: true)])
     CalcentralConfig.stub(:load_settings).and_return(OpenStruct.new({logger: OpenStruct.new({level: Rails.logger.level})}))
@@ -37,7 +37,7 @@ describe RefreshLoggingController do
   end
 
   it "should succeed in changing the log level" do
-    session[:user_id] = @user_id
+    session['user_id'] = @user_id
     Rails.env.stub(:production?).and_return(true)
     User::Auth.stub(:where).and_return([User::Auth.new(uid: @user_id, is_superuser: true, active: true)])
     Rails.logger.stub(:level).and_return(1)

@@ -3,10 +3,10 @@ class AuthenticationState
 
   LTI_AUTHENTICATED_ONLY = 'Authenticated through LTI'
 
-  def initialize(session_state)
-    @user_id = session_state[:user_id]
-    @original_user_id = session_state[:original_user_id]
-    @lti_authenticated_only = session_state[:lti_authenticated_only]
+  def initialize(session)
+    @user_id = session['user_id']
+    @original_user_id = session['original_user_id']
+    @lti_authenticated_only = session['lti_authenticated_only']
   end
 
   def directly_authenticated?
