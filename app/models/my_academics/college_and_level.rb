@@ -87,12 +87,15 @@ module MyAcademics
         end
       end
 
+      termName = "#{feed['studentProfile']['termName'].to_text} #{feed['studentProfile']['termYear'].to_text}"
+
       {
         standing: standing,
         level: level,
         nonApLevel: nonAPLevel,
         futureTelebearsLevel: futureTBLevel,
-        colleges: colleges
+        colleges: colleges,
+        termName: termName
       }
     end
   end
