@@ -55,7 +55,8 @@ module Canvas
       import_course_site(@import_data['course_site_definition'])
       retrieve_course_site_details
       import_sections(section_definitions)
-      add_instructor_to_sections(section_definitions) unless is_admin_by_ccns
+      enroll_instructor unless is_admin_by_ccns
+      # add_instructor_to_sections(section_definitions) unless is_admin_by_ccns
 
       expire_instructor_sites_cache
 
@@ -244,9 +245,15 @@ module Canvas
       @export_filename_prefix ||= "#{@export_dir}/course_provision-#{DateTime.now.strftime('%F')}-#{SecureRandom.hex(8)}"
     end
 
-    def course_site_url(sis_course_id)
-      course = Canvas::SisCourse.new(sis_course_id: sis_course_id).course
-      raise RuntimeError, "Unexpected error obtaining course site URL for #{sis_course_id}!" if course.blank?
+    def course_details
+      return @import_data['course_site'] if @import_data['course_site'].present?
+      raise RuntimeError, 'Unable to load course details. SIS Course ID not present.' if @import_data['sis_course_id'].blank?
+      @import_data['course_site'] = Canvas::SisCourse.new(sis_course_id: @import_data['sis_course_id']).course
+      raise RuntimeError, "Unexpected error obtaining course site URL for #{@import_data['sis_course_id']}!" if @import_data['course_site'].blank?
+      @import_data['course_site']
+    end
+
+    def course_site_url
       "#{Settings.canvas_proxy.url_root}/courses/#{course['id']}"
     end
 

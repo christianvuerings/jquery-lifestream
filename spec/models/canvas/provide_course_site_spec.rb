@@ -10,6 +10,7 @@ describe Canvas::ProvideCourseSite do
     {:yr=>"2014", :cd=>"D", :slug=>"fall-2014", :name=>"Fall 2014"},
     {:yr=>"2015", :cd=>"B", :slug=>"spring-2015", :name=>"Spring 2015"},
   ] }
+  let(:course_details_hash) { {'id' => 1253733} }
   subject     { Canvas::ProvideCourseSite.new(uid) }
 
   #####################################
@@ -527,18 +528,43 @@ describe Canvas::ProvideCourseSite do
     end
   end
 
-  describe '#course_site_url' do
-    it 'should raise exception if no response from Canvas::SisCourse' do
-      allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(nil)
-      expect do
-        subject.course_site_url('CRS:COMPSCI-9A-2013-D')
-      end.to raise_error(RuntimeError, 'Unexpected error obtaining course site URL for CRS:COMPSCI-9A-2013-D!')
+  describe '#course_details' do
+    before { subject.instance_eval { @import_data['sis_course_id'] = 'CRS:COMPSCI-9A-2013-D' } }
+    it 'should raise exception if sis_course_id not present in import data hash' do
+      subject.instance_eval { @import_data['sis_course_id'] = nil }
+      expect { subject.course_details }.to raise_error(RuntimeError, 'Unable to load course details. SIS Course ID not present.')
     end
 
+    it 'should raise exception if no response from Canvas::SisCourse' do
+      allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(nil)
+      expect { subject.course_details }.to raise_error(RuntimeError, 'Unexpected error obtaining course site URL for CRS:COMPSCI-9A-2013-D!')
+    end
+
+    context 'when course details are not present' do
+      it 'should assign course details to shared import data hash' do
+        allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(course_details_hash)
+        subject.course_details
+        loaded_course = subject.instance_eval { @import_data['course_site'] }
+        expect(loaded_course['id']).to eq 1253733
+      end
+    end
+
+    context 'when course details already present' do
+      it 'should return the existing course details' do
+        subject.instance_eval { @import_data['course_site'] = {'id' => 1253733} }
+        expect_any_instance_of(Canvas::SisCourse).to_not receive(:course)
+        result = subject.course_details
+        expect(result['id']).to eq 1253733
+      end
+    end
+  end
+
+  describe '#course_site_url' do
+    before { subject.instance_eval { @import_data['sis_course_id'] = 'CRS:COMPSCI-9A-2013-D' } }
     it 'should return course site URL when provided with valid sis id' do
+      allow(subject).to receive(:course).and_return({'id' => 1253733})
       allow(Settings.canvas_proxy).to receive(:url_root).and_return('https://berkeley.instructure.com')
-      allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return({'id' => 1253733})
-      expect(subject.course_site_url('CRS:COMPSCI-9A-2013-D')).to eq 'https://berkeley.instructure.com/courses/1253733'
+      expect(subject.course_site_url).to eq 'https://berkeley.instructure.com/courses/1253733'
     end
   end
 
