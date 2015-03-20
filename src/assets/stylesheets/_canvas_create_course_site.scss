@@ -124,4 +124,48 @@
     width: 140px;
   }
 
+  //////////////////////////////////////////////////////
+  // Form with Expandable Courses & Sections
+
+  .cc-page-create-course-site-section-margin {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .cc-page-create-course-site-form-course {
+    background: $bc-color-roster-background;
+    border: 1px solid $bc-color-roster-background;
+    cursor: pointer;
+    margin: 0 0 20px;
+    padding: 15px;
+  }
+
+  .cc-page-create-course-site-form-course-button {
+    color: $bc-color-body-black;
+    outline:0;
+  }
+
+  .cc-page-create-course-site-form-collapse-icon {
+    font-size: 18px;
+    margin-left: 2px;
+  }
+
+  .cc-page-create-course-site-form-course-title {
+    margin-left: 10px;
+  }
+
+  .cc-page-create-course-site-form-collapsible-container {
+    margin-top: 7px;
+  }
+
+  .cc-page-create-course-site-form-select-all-option {
+    font-size: 12px;
+    font-weight: normal;
+    margin: 6px 0 4px 2px;
+  }
+
+  .cc-page-create-course-site-form-select-all-option-button {
+    outline: none;
+  }
+
 }

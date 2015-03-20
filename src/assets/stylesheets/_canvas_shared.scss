@@ -223,51 +223,10 @@
     }
   }
 
-  .cc-template-canvas-manage-sections-margin {
-    margin: 0;
-    overflow: hidden;
-  }
-
-  .cc-template-canvas-manage-sections-form-course {
-    background: $bc-color-roster-background;
-    border: 1px solid $bc-color-roster-background;
-    cursor: pointer;
-    margin: 0 0 20px;
-    padding: 15px;
-  }
-
-  .cc-template-canvas-manage-sections-form-select-all-option {
-    font-size: 12px;
-    font-weight: normal;
-    margin: 6px 0 4px 2px;
-  }
-
-  .cc-template-canvas-manage-sections-form-select-all-option-button {
-    outline: none;
-  }
-
   .cc-template-canvas-manage-sections-checkbox {
     float: left;
     text-align: center;
     width: 30px;
-  }
-
-  .cc-template-canvas-manage-sections-form-collapse-icon {
-    font-size: 18px;
-    margin-left: 2px;
-  }
-
-  .cc-template-canvas-manage-sections-form-collapsible-container {
-    margin-top: 7px;
-  }
-
-  .cc-template-canvas-manage-sections-form-course-button {
-    color: $bc-color-body-black;
-    outline:0;
-  }
-
-  .cc-template-canvas-manage-sections-form-course-title {
-    margin-left: 10px;
   }
 
   .cc-template-canvas-manage-sections-course-code {

@@ -107,7 +107,31 @@
 
                 <form data-ng-submit="showConfirmation()" class="cc-page-form">
 
-                  <div data-ng-include src="'canvas_embedded/canvas_users_courses_form.html'"></div>
+                  <ul class="cc-page-create-course-site-section-margin">
+                    <li data-ng-repeat="course in coursesList" class="cc-page-create-course-site-form-course">
+
+                      <button type="button" class="cc-button-link cc-page-create-course-site-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
+                        <i class="fa cc-left cc-page-create-course-site-form-collapse-icon"
+                          data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
+                        <strong class="cc-page-create-course-site-form-course-title">
+                          <span data-ng-bind="course.course_code"></span>
+                          <span data-ng-if="course.title" data-ng-bind-template=" : {{course.title}}"></span>
+                        </strong>
+                        <span data-ng-if="course.sections">
+                          (<span data-ng-pluralize count="course.sections.length" when="{'one': '1 section', 'other': '{{course.sections.length}} sections'}"></span>)
+                        </span>
+                      </button>
+
+                      <div data-ng-attr-id="{{course.course_id}}" class="cc-page-create-course-site-form-collapsible-container" data-ng-if="!course.collapsed" data-ng-attr-aria-expanded="{{!course.collapsed}}" role="region">
+                        <div class="cc-page-create-course-site-form-select-all-option" data-ng-show="course.sections.length > 1">
+                          Select: <button class="cc-button-link cc-page-create-course-site-form-select-all-option-button" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCourseSectionsWithUpdate(course)"></button>
+                        </div>
+
+                        <div data-ng-include src="'canvas_embedded/canvas_users_courses_form.html'"></div>
+                      </div>
+
+                    </li>
+                  </ul>
 
                   <div class="cc-page-site-provisioning-form-actions">
                     <a data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button" type="reset">Cancel</a>
