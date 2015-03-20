@@ -2,7 +2,7 @@
   <ul class="cc-template-canvas-manage-sections-margin">
 
     <li data-ng-repeat="course in coursesList" class="cc-template-canvas-manage-sections-form-course">
-      <div data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
+      <button type="button" class="cc-button-link cc-template-canvas-manage-sections-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
         <i class="fa cc-left cc-template-canvas-manage-sections-form-collapse-icon"
           data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
         <strong class="cc-template-canvas-manage-sections-form-course-title">
@@ -12,7 +12,7 @@
         <span data-ng-if="course.sections">
           (<span data-ng-pluralize count="course.sections.length" when="{'one': '1 section', 'other': '{{course.sections.length}} sections'}"></span>)
         </span>
-      </div>
+      </button>
 
       <div data-ng-attr-id="{{course.course_id}}" class="cc-template-canvas-manage-sections-form-collapsible-container" data-ng-if="!course.collapsed" data-ng-attr-aria-expanded="{{!course.collapsed}}" role="region">
         <div class="cc-template-canvas-manage-sections-form-select-all-option" data-ng-show="course.sections.length > 1">
