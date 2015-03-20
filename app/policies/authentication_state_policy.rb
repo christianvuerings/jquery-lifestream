@@ -44,7 +44,11 @@ class AuthenticationStatePolicy
   end
 
   def can_create_canvas_course_site?
-    can_administrate_canvas? || Canvas::CurrentTeacher.new(@user.user_id).user_currently_teaching?
+    can_administrate_canvas? || can_add_current_official_sections?
+  end
+
+  def can_add_current_official_sections?
+    Canvas::CurrentTeacher.new(@user.user_id).user_currently_teaching?
   end
 
   def can_refresh_log_settings?

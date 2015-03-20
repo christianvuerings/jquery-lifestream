@@ -4,7 +4,6 @@ require "set"
 describe Canvas::CoursePolicy do
   let(:user_id)             { Settings.canvas_proxy.test_user_id }
   let(:user)                { AuthenticationState.new('user_id' => user_id) }
-  let(:super_user)          { User::Auth.new(uid: user_id, is_superuser: true, active: true) }
   let(:canvas_course_id)    { 1121 }
   let(:course)              { Canvas::Course.new(:user_id => user.user_id, :canvas_course_id => canvas_course_id) }
   let(:course_user_hash) do
@@ -44,9 +43,13 @@ describe Canvas::CoursePolicy do
   let(:course_ta_hash)        { course_user_hash.merge({'enrollments' => [{'type' => 'TaEnrollment', 'role' => 'TaEnrollment'}]}) }
   let(:course_observer_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'ObserverEnrollment', 'role' => 'ObserverEnrollment'}]}) }
   let(:course_designer_hash)  { course_user_hash.merge({'enrollments' => [{'type' => 'DesignerEnrollment', 'role' => 'DesignerEnrollment'}]}) }
+  let(:user_is_admin) { false }
   let(:invariable_course_user_hash) { course_user_hash }
   subject { Canvas::CoursePolicy.new(user, course) }
-  before  { allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(invariable_course_user_hash) }
+  before do
+    allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(invariable_course_user_hash)
+    allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(user_is_admin)
+  end
 
   shared_examples "a canvas user requirement" do
     context "when no canvas user found for current user" do
@@ -158,6 +161,78 @@ describe Canvas::CoursePolicy do
       it "returns false" do
         expect(subject.can_view_course_roster_photos?).to be_falsey
       end
+    end
+  end
+
+  describe '#can_view_official_sections?' do
+    subject { Canvas::CoursePolicy.new(user, course).can_view_official_sections? }
+    context 'student' do
+      it { should be_falsey }
+    end
+    context 'teacher' do
+      let(:invariable_course_user_hash) { course_teacher_hash }
+      it { should be_truthy }
+    end
+    context 'ta' do
+      let(:invariable_course_user_hash) { course_ta_hash }
+      it { should be_truthy }
+    end
+    context 'designer' do
+      let(:invariable_course_user_hash) { course_designer_hash }
+      it { should be_truthy }
+    end
+    context 'observer' do
+      let(:invariable_course_user_hash) { course_observer_hash }
+      it { should be_falsey }
+    end
+    context 'admin' do
+      let(:invariable_course_user_hash) { nil }
+      let(:user_is_admin) { true }
+      it { should be_truthy }
+    end
+    context 'non-member' do
+      let(:invariable_course_user_hash) { nil }
+      it { should be_falsey }
+    end
+  end
+
+  describe '#can_edit_official_sections?' do
+    subject { Canvas::CoursePolicy.new(user, course).can_edit_official_sections? }
+    context 'student' do
+      it { should be_falsey }
+    end
+    context 'teacher' do
+      before { allow_any_instance_of(Canvas::CurrentTeacher).to receive(:user_currently_teaching?).and_return(has_sections) }
+      let(:invariable_course_user_hash) { course_teacher_hash }
+      context 'with assigned sections in the term' do
+        let(:has_sections) { true }
+        it { should be_truthy }
+      end
+      context 'with no campus sections in the term' do
+        let(:has_sections) { false }
+        it { should be_falsey }
+      end
+    end
+    context 'ta' do
+      let(:invariable_course_user_hash) { course_ta_hash }
+      it { should be_falsey }
+    end
+    context 'designer' do
+      let(:invariable_course_user_hash) { course_designer_hash }
+      it { should be_falsey }
+    end
+    context 'observer' do
+      let(:invariable_course_user_hash) { course_observer_hash }
+      it { should be_falsey }
+    end
+    context 'admin' do
+      let(:invariable_course_user_hash) { nil }
+      let(:user_is_admin) { true }
+      it { should be_falsey }
+    end
+    context 'non-member' do
+      let(:invariable_course_user_hash) { nil }
+      it { should be_falsey }
     end
   end
 

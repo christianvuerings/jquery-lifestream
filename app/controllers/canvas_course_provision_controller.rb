@@ -1,11 +1,30 @@
 class CanvasCourseProvisionController < ApplicationController
   include ClassLogger
+  include SpecificToCourseSite
 
-  before_filter :api_authenticate
-  before_filter :validate_admin_mode, :only => [:get_feed, :create_course_site]
+  before_action :api_authenticate
+  before_action :validate_admin_mode, :only => [:get_feed, :create_course_site]
+  before_action :authorize_course_site_creation, only: [:get_feed, :create_course_site]
+  before_action :authorize_official_sections_feed, only: [:get_sections_feed]
+  before_action :authorize_official_sections_edit, only: [:edit_sections]
   rescue_from StandardError, with: :handle_api_exception
   rescue_from Errors::ClientError, with: :handle_client_error
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  def authorize_course_site_creation
+    raise ArgumentError, 'Unexpected Canvas Course ID in request' if canvas_course_id.present?
+    authorize current_user, :can_create_canvas_course_site?
+  end
+  def authorize_official_sections_feed
+    raise ArgumentError, 'No Canvas Course ID in request' if canvas_course_id.blank?
+    course = Canvas::Course.new(canvas_course_id: params['canvas_course_id'].to_i)
+    authorize course, :can_view_official_sections?
+  end
+  def authorize_official_sections_edit
+    raise ArgumentError, 'No Canvas Course ID in request' if canvas_course_id.blank?
+    course = Canvas::Course.new(:course_id => params['canvas_course_id'].to_i)
+    authorize course, :can_edit_official_sections?
+  end
 
   # GET /api/academics/canvas/course_provision.json
   # GET /api/academics/canvas/course_provision_as/:instructor_id.json
@@ -17,6 +36,11 @@ class CanvasCourseProvisionController < ApplicationController
     end
   end
 
+  # GET /api/academics/canvas/course_provision/sections_feed/:canvas_course_id.json
+  def get_sections_feed
+    get_feed
+  end
+
   # POST /api/academics/canvas/course_provision/create.json
   def create_course_site
     worker = Canvas::CourseProvision.new(session['user_id'], options_from_params)
@@ -26,7 +50,7 @@ class CanvasCourseProvisionController < ApplicationController
     render json: { job_request_status: "Success", job_id: job_id}.to_json
   end
 
-  # POST /api/academics/canvas/course_provision/edit_sections.json
+  # POST /api/academics/canvas/course_provision/edit_sections/:canvas_course_id?ccns_to_add=:ccns_to_add&ccns_to_remove=:ccns_to_remove
   def edit_sections
     worker = Canvas::CourseProvision.new(session['user_id'], options_from_params)
     job_id = worker.edit_sections(params['ccns_to_remove'], params['ccns_to_add'])
@@ -41,14 +65,14 @@ class CanvasCourseProvisionController < ApplicationController
   end
 
   def options_from_params
-    params['canvas_course_id'] ||= session['canvas_course_id']
-    params.select {|k, v| [
+    options = params.select {|k, v| [
       'admin_acting_as',
       'admin_by_ccns',
       'admin_term_slug',
-      'canvas_course_id',
       'sis_section_ids'
     ].include?(k)}.symbolize_keys
+    options[:canvas_course_id] = canvas_course_id
+    options
   end
 
   def validate_admin_mode

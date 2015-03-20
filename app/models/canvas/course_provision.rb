@@ -66,7 +66,8 @@ module Canvas
     def get_course_info
       raise RuntimeError, "canvas_course_id option not present" if @canvas_course_id.blank?
       course_info = {}
-      course = Canvas::Course.new(:canvas_course_id => @canvas_course_id).course
+      course_record = Canvas::Course.new(canvas_course_id: @canvas_course_id.to_i)
+      course = course_record.course
       course_info[:canvasCourseId] = @canvas_course_id
       course_info[:sisCourseId] = course['sis_course_id']
       course_info[:name] = course['name']
@@ -74,6 +75,8 @@ module Canvas
       course_info[:term] = Canvas::Proxy.sis_term_id_to_term(course['term']['sis_term_id'])
       course_info[:term][:name] = course['term']['name']
       course_info[:officialSections] = Canvas::CourseSections.new(:course_id => @canvas_course_id).official_section_identifiers
+      policy = Canvas::CoursePolicy.new(AuthenticationState.new('user_id' => @uid), course_record)
+      course_info[:canEdit] = policy.can_edit_official_sections?
       course_info
     end
 
@@ -104,11 +107,11 @@ module Canvas
 
     def user_authorized?
       @uid.present? && (
-      user_admin? || (
-      @admin_acting_as.nil? &&
-        @admin_by_ccns.nil? &&
-        @admin_term_slug.nil?
-      )
+        user_admin? || (
+          @admin_acting_as.nil? &&
+          @admin_by_ccns.nil? &&
+          @admin_term_slug.nil?
+        )
       )
     end
 

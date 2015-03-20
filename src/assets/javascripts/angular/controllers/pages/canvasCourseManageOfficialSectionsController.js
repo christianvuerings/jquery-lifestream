@@ -189,14 +189,7 @@
      */
     var fetchFeed = function() {
       $scope.isLoading = true;
-      var feedRequestOptions = {
-        isAdmin: false,
-        adminMode: false,
-        adminActingAs: false,
-        adminByCcns: [],
-        currentAdminSemester: false
-      };
-      canvasCourseProvisionFactory.getSections(feedRequestOptions).then(function(sectionsFeed) {
+      canvasCourseProvisionFactory.getCourseSections($scope.canvasCourseId).then(function(sectionsFeed) {
         if (sectionsFeed.status !== 200) {
           $scope.isLoading = false;
           $scope.displayError = 'failure';
@@ -205,17 +198,9 @@
           if (sectionsFeed.data) {
             if (sectionsFeed.data && sectionsFeed.data.canvas_course) {
               $scope.canvasCourse = sectionsFeed.data.canvas_course;
-              // get user course roles feed for authorization
-              canvasCourseAddUserFactory.courseUserRoles($scope.canvasCourse.canvasCourseId).then(function(rolesFeed) {
-                if (rolesFeed.data.roles.teacher) {
-                  $scope.isTeacher = true;
-                }
-                refreshFromFeed(sectionsFeed.data);
-                apiService.util.iframeUpdateHeight();
-                if (!$scope.isCourseCreator) {
-                  $scope.displayError = 'unauthorized';
-                }
-              });
+              $scope.isTeacher = $scope.canvasCourse.canEdit;
+              refreshFromFeed(sectionsFeed.data);
+              apiService.util.iframeUpdateHeight();
             } else {
               $scope.displayError = 'failure';
             }
