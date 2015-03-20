@@ -4,12 +4,60 @@ describe Canvas::ProvideCourseSite do
 
   let(:uid)   { rand(99999).to_s }
   let(:site_name) { 'Introduction to Computer Programming for Scientists and Engineers' }
-  let(:site_course_code) { 'ENGIN 7' }
+  let(:site_course_code) { 'ENGIN 7 - LEC 001' }
+  let(:sis_course_id) { 'CRS:ENGIN-7-2015-B' }
   let(:canvas_course_id) { rand(99999).to_s }
   let(:current_terms) { [
-    {:yr=>"2014", :cd=>"D", :slug=>"fall-2014", :name=>"Fall 2014"},
-    {:yr=>"2015", :cd=>"B", :slug=>"spring-2015", :name=>"Spring 2015"},
+    {:yr=>'2014', :cd=>'D', :slug=>'fall-2014', :name=>'Fall 2014'},
+    {:yr=>'2015', :cd=>'B', :slug=>'spring-2015', :name=>'Spring 2015'},
   ] }
+  let(:course_details_hash) {
+    {
+      'id'=>1253733,
+      'account_id'=>53,
+      'course_code'=>site_course_code,
+      'name'=>site_name,
+      'sis_course_id'=>sis_course_id,
+      'enrollment_term_id'=>7,
+      'default_view'=>'feed',
+      'storage_quota_mb'=>1024,
+      'is_public'=>nil,
+      'start_at'=>nil,
+      'end_at'=>nil,
+      'public_syllabus'=>false,
+      'is_public_to_auth_users'=>false,
+      'hide_final_grades'=>false,
+      'apply_assignment_group_weights'=>false,
+      'integration_id'=>nil,
+      'enrollments'=>[],
+      'workflow_state'=>'unpublished',
+      'calendar'=>{
+        'ics'=>'http://ucb.beta.example.com/feeds/calendars/course_6LKKnEp73Z2gPT2EA.ics'
+      },
+      'term'=>{
+        'id'=>7,
+        'name'=>"Spring 2015",
+        'start_at'=>nil,
+        'end_at'=>nil,
+        'sis_term_id'=>'TERM:2015-B',
+        'workflow_state'=>'active',
+      },
+    }
+  }
+  let(:section_details_hash) {
+    {
+      "id"=>119433,
+      "sis_section_id"=>nil,
+      "name"=>"Data Structures",
+      "course_id"=>5,
+      "sis_course_id"=>'CRS:COMPSCI-61B-2014-D',
+      "nonxlist_course_id"=>nil,
+      "start_at"=>nil,
+      "end_at"=>nil,
+      "integration_id"=>nil,
+      "sis_import_id"=>nil
+    }
+  }
   subject     { Canvas::ProvideCourseSite.new(uid) }
 
   #####################################
@@ -77,7 +125,7 @@ describe Canvas::ProvideCourseSite do
       allow(subject).to receive(:import_course_site).and_return(true)
       allow(subject).to receive(:retrieve_course_site_details).and_return(true)
       allow(subject).to receive(:import_sections).and_return(true)
-      allow(subject).to receive(:add_instructor_to_sections).and_return(true)
+      allow(subject).to receive(:enroll_instructor).and_return(true)
       allow(subject).to receive(:expire_instructor_sites_cache).and_return(true)
       allow(subject).to receive(:import_enrollments_in_background).and_return(true)
     end
@@ -106,7 +154,7 @@ describe Canvas::ProvideCourseSite do
       expect(subject).to receive(:import_course_site).ordered.and_return(true)
       expect(subject).to receive(:retrieve_course_site_details).ordered.and_return(true)
       expect(subject).to receive(:import_sections).ordered.and_return(true)
-      expect(subject).to receive(:add_instructor_to_sections).ordered.and_return(true)
+      expect(subject).to receive(:enroll_instructor).ordered.and_return(true)
       expect(subject).to receive(:expire_instructor_sites_cache).ordered.and_return(true)
       expect(subject).to receive(:import_enrollments_in_background).ordered.and_return(true)
       subject.create_course_site(site_name, site_course_code, 'fall-2013', ['1136', '1204'])
@@ -456,19 +504,34 @@ describe Canvas::ProvideCourseSite do
     end
   end
 
-  describe '#add_instructor_to_sections' do
-    let(:section_ids) {[random_id, random_id]}
-    let(:section_definitions) {[{
-      'section_id' => section_ids[0]
-    }, {
-      'section_id' => section_ids[1]
-    }]}
-    it 'adds teacher enrollments to each new section' do
-      expect(Canvas::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment',
-        "sis_section_id:#{section_ids[0]}").ordered.and_return({'type' => 'TeacherEnrollment'})
-      expect(Canvas::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment',
-        "sis_section_id:#{section_ids[1]}").ordered.and_return({'type' => 'TeacherEnrollment'})
-      subject.add_instructor_to_sections(section_definitions)
+  describe '#enroll_instructor' do
+    before do
+      course_site_name = site_name
+      subject.instance_eval { @import_data['site_name'] = course_site_name }
+      allow(subject).to receive(:course_details).and_return(course_details_hash)
+      allow_any_instance_of(Canvas::CourseSections).to receive(:create).with(site_name, "DEFSEC:#{course_details_hash['id']}").and_return(section_details_hash)
+      allow(Canvas::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(true)
+    end
+
+    it 'establishes a default section with SIS Section ID' do
+      expect_any_instance_of(Canvas::CourseSections).to receive(:create).with(site_name, "DEFSEC:#{course_details_hash['id']}").and_return(section_details_hash)
+      subject.enroll_instructor
+    end
+
+    it 'enrolls user as teacher in default section' do
+      expect(Canvas::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(true)
+      subject.enroll_instructor
+    end
+
+    it 'raises exception if user enrollment fails' do
+      allow(Canvas::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(false)
+      expect { subject.enroll_instructor }.to raise_error(RuntimeError, 'Course site was created but the teacher could not be added!')
+    end
+
+    it 'updates completed steps list' do
+      subject.enroll_instructor
+      completed_steps = subject.instance_eval { @completed_steps }
+      expect(completed_steps).to eq ['Added instructor to course site']
     end
   end
 
@@ -527,18 +590,43 @@ describe Canvas::ProvideCourseSite do
     end
   end
 
-  describe '#course_site_url' do
-    it 'should raise exception if no response from Canvas::SisCourse' do
-      allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(nil)
-      expect do
-        subject.course_site_url('CRS:COMPSCI-9A-2013-D')
-      end.to raise_error(RuntimeError, 'Unexpected error obtaining course site URL for CRS:COMPSCI-9A-2013-D!')
+  describe '#course_details' do
+    before { subject.instance_eval { @import_data['sis_course_id'] = 'CRS:COMPSCI-9A-2013-D' } }
+    it 'should raise exception if sis_course_id not present in import data hash' do
+      subject.instance_eval { @import_data['sis_course_id'] = nil }
+      expect { subject.course_details }.to raise_error(RuntimeError, 'Unable to load course details. SIS Course ID not present.')
     end
 
+    it 'should raise exception if no response from Canvas::SisCourse' do
+      allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(nil)
+      expect { subject.course_details }.to raise_error(RuntimeError, 'Unexpected error obtaining course site URL for CRS:COMPSCI-9A-2013-D!')
+    end
+
+    context 'when course details are not present' do
+      it 'should assign course details to shared import data hash' do
+        allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(course_details_hash)
+        subject.course_details
+        loaded_course = subject.instance_eval { @import_data['course_site'] }
+        expect(loaded_course['id']).to eq 1253733
+      end
+    end
+
+    context 'when course details already present' do
+      it 'should return the existing course details' do
+        subject.instance_eval { @import_data['course_site'] = {'id' => 1253733} }
+        expect_any_instance_of(Canvas::SisCourse).to_not receive(:course)
+        result = subject.course_details
+        expect(result['id']).to eq 1253733
+      end
+    end
+  end
+
+  describe '#course_site_url' do
+    before { subject.instance_eval { @import_data['sis_course_id'] = 'CRS:COMPSCI-9A-2013-D' } }
     it 'should return course site URL when provided with valid sis id' do
+      allow(subject).to receive(:course_details).and_return({'id' => 1253733})
       allow(Settings.canvas_proxy).to receive(:url_root).and_return('https://berkeley.instructure.com')
-      allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return({'id' => 1253733})
-      expect(subject.course_site_url('CRS:COMPSCI-9A-2013-D')).to eq 'https://berkeley.instructure.com/courses/1253733'
+      expect(subject.course_site_url).to eq 'https://berkeley.instructure.com/courses/1253733'
     end
   end
 
@@ -730,7 +818,7 @@ describe Canvas::ProvideCourseSite do
       canvas_course = subject.generate_course_site_definition(site_name, site_course_code, term_yr, term_cd, subaccount, campus_course_slug)
       expect(canvas_course['course_id'].present?).to be_truthy
       expect(canvas_course['course_id']).to eq 'CRS:ENGIN-7-2013-D'
-      expect(canvas_course['short_name']).to eq 'ENGIN 7'
+      expect(canvas_course['short_name']).to eq 'ENGIN 7 - LEC 001'
       expect(canvas_course['long_name']).to eq 'Introduction to Computer Programming for Scientists and Engineers'
       expect(canvas_course['account_id']).to eq 'ACCT:ENGIN'
       expect(canvas_course['term_id']).to eq 'TERM:2013-D'

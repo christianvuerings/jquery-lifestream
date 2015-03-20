@@ -42,7 +42,6 @@ describe Canvas::CourseSections do
     end
   end
 
-
   context 'when providing official section identifiers existing within course' do
     let(:course_sections) do
       [
@@ -87,6 +86,23 @@ describe Canvas::CourseSections do
         end
       end
 
+    end
+  end
+
+  context 'when creating new section within course' do
+    it 'returns section details with id' do
+      result = subject.create('Data Structures', '')
+      expect(result).to be_an_instance_of Hash
+      expect(result['id']).to eq 160
+      expect(result['course_id']).to eq 5
+      expect(result['name']).to eq 'Data Structures'
+      expect(result['sis_course_id']).to eq "CRS:COMPSCI-61B-2014-D"
+      expect(result['sis_section_id']).to eq nil
+      expect(result['start_at']).to eq nil
+      expect(result['end_at']).to eq nil
+      expect(result['integration_id']).to eq nil
+      expect(result['sis_import_id']).to eq nil
+      expect(result['nonxlist_course_id']).to eq nil
     end
   end
 

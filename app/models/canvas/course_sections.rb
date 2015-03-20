@@ -23,6 +23,24 @@ module Canvas
       course_sections.compact
     end
 
+    def create(name, sis_section_id)
+      request_params = {
+        'course_section' => {
+          'name' => name,
+          'sis_section_id' => sis_section_id,
+          'start_at' => nil,
+          'end_at' => nil,
+          'restrict_enrollments_to_section_dates' => nil,
+        }
+      }
+      request_options = {
+        :method => :post,
+        :body => request_params,
+      }
+      response = request_uncached("courses/#{@course_id}/sections", "_course_create_section", request_options)
+      JSON.parse(response.body)
+    end
+
   end
 end
 
