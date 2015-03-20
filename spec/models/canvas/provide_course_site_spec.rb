@@ -46,7 +46,7 @@ describe Canvas::ProvideCourseSite do
   }
   let(:section_details_hash) {
     {
-      "id"=>1253733,
+      "id"=>119433,
       "sis_section_id"=>nil,
       "name"=>"Data Structures",
       "course_id"=>5,
@@ -506,12 +506,15 @@ describe Canvas::ProvideCourseSite do
 
   describe '#enroll_instructor' do
     before do
+      course_site_name = site_name
+      subject.instance_eval { @import_data['site_name'] = course_site_name }
       allow(subject).to receive(:course_details).and_return(course_details_hash)
-      allow_any_instance_of(Canvas::CourseSections).to receive(:create).and_return(section_details_hash)
+      allow_any_instance_of(Canvas::CourseSections).to receive(:create).with(site_name, "DEFSEC:#{course_details_hash['id']}").and_return(section_details_hash)
       allow(Canvas::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(true)
     end
-    it 'establishes a default section' do
-      expect_any_instance_of(Canvas::CourseSections).to receive(:create).and_return(section_details_hash)
+
+    it 'establishes a default section with SIS Section ID' do
+      expect_any_instance_of(Canvas::CourseSections).to receive(:create).with(site_name, "DEFSEC:#{course_details_hash['id']}").and_return(section_details_hash)
       subject.enroll_instructor
     end
 

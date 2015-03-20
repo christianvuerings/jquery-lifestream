@@ -208,7 +208,7 @@ module Canvas
     end
 
     def enroll_instructor
-      default_section = Canvas::CourseSections.new(:course_id => course_details['id']).create(@import_data['site_name'], '')
+      default_section = Canvas::CourseSections.new(:course_id => course_details['id']).create(@import_data['site_name'], "DEFSEC:#{course_details['id']}")
       response = Canvas::CourseAddUser.add_user_to_course_section(@uid, 'TeacherEnrollment', default_section['id'])
       if response.blank?
         logger.error("Imported course from #{@import_data['courses_csv_file']} but could not add #{@uid} as teacher to section #{default_section['id']}")
