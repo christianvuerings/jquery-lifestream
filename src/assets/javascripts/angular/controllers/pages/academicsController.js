@@ -281,6 +281,9 @@
       $scope.isLSStudent = isLSStudent($scope.collegeAndLevel);
       $scope.isUndergraduate = ($scope.collegeAndLevel && $scope.collegeAndLevel.standing === 'Undergraduate');
 
+      $scope.isAcademicInfoAvailable = !!($scope.semesters.length || $scope.requirements.length || $scope.studentInfo.regStatus.code !== null);
+      $scope.showProfileMessage = (!$scope.collegeAndLevel.standing || $scope.transitionRegStatus);
+
       $scope.hasTeachingClasses = hasTeachingClasses(data.teachingSemesters);
       if (data.teachingSemesters) {
         $scope.pastSemestersTeachingCount = pastSemestersCount(data.teachingSemesters);

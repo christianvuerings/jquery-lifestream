@@ -3,39 +3,58 @@
     <h2>Profile</h2>
   </div>
 
-  <div class="cc-widget-padding cc-academics-nocontent-container" data-ng-if="!collegeAndLevel.standing">
+  <div data-ng-if="showProfileMessage" class="cc-widget-profile-message">
     <div data-ng-if="collegeAndLevel.errored">
       There was a problem reaching campus services.
       Please try again later, or check <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>.
     </div>
     <div data-ng-if="collegeAndLevel.empty || collegeAndLevel.noStudentId">
-      <h3>Standing</h3>
-      <div data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.exStudent">
-        <p>
+      <div data-ng-if="!api.user.profile.roles.student">
+        <h3>Standing</h3>
+        <div data-ng-if="api.user.profile.roles.exStudent" class="cc-widget-profile-message-text">
           You are not currently considered an active student.
-        </p>
-      </div>
-      <div data-ng-if="!api.user.profile.roles.student && api.user.profile.roles.concurrentEnrollmentStudent">
-        <p>
-          You are a concurrent enrollment student.
-        </p>
-        <ul class="cc-list-bullets">
-          <li>If you are a UC Extension student, more information is available at <a href="http://extension.berkeley.edu/static/studentservices/concurrent/">UC Berkeley Extension</a>.</li>
-          <li>If you are an EAP student, more information is available at the <a href="http://internationaloffice.berkeley.edu/students/exchange/main">Berkeley International Office</a>.</li>
-        </ul>
+        </div>
+        <div data-ng-if="api.user.profile.roles.concurrentEnrollmentStudent">
+          <div class="cc-widget-profile-message-text">
+            You are a concurrent enrollment student.
+          </div>
+          <ul class="cc-list-bullets">
+            <li>If you are a UC Extension student, more information is available at <a href="http://extension.berkeley.edu/static/studentservices/concurrent/">UC Berkeley Extension</a>.</li>
+            <li>If you are an EAP student, more information is available at the <a href="http://internationaloffice.berkeley.edu/students/exchange/main">Berkeley International Office</a>.</li>
+          </ul>
+        </div>
       </div>
       <div data-ng-if="api.user.profile.roles.student">
-        <p data-ng-if="api.user.profile.roles.registered">
-          You are registered as a student but not currently considered active by all campus services.
-        </p>
-        <p data-ng-if="!api.user.profile.roles.registered">
-          You are not currently officially registered as a student.
-        </p>
-        <p data-ng-if="semesters.length || studentInfo.regStatus.code !== null || requirements.length">
-          Please try again later, or check <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>.
-        </p>
-        <div class="cc-academics-nocontent" data-ng-if="!semesters.length && studentInfo.regStatus.code === null && !requirements.length">
-          <p>More information will display here when your academic status changes. Check back often for information about:</p>
+        <div data-ng-if="transitionRegStatus">
+          <div data-ng-if="transitionRegStatus.registered" class="cc-widget-profile-message-text">
+            You are registered for the <span data-ng-bind="transitionRegStatus.termName"></span> term, but updated profile information is not yet available. Please check
+            <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>
+            for the most current information.
+          </div>
+          <div data-ng-if="!transitionRegStatus.registered" class="cc-widget-profile-message-text">
+            You are not officially registered for the <span ng-bind="transitionRegStatus.termName"></span> term.
+          </div>
+        </div>
+        <div data-ng-if="!transitionRegStatus">
+          <div data-ng-if="api.user.profile.roles.registered" class="cc-widget-profile-message-text">
+            You are registered as a student but not currently considered active by all campus services. Please try again later, or check
+            <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>
+            for the most current information.
+          </div>
+          <div data-ng-if="!api.user.profile.roles.registered" class="cc-widget-profile-message-text">
+            You are not currently registered as a student.
+          </div>
+        </div>
+        <div class="cc-academics-nocontent-container" data-ng-if="!isAcademicInfoAvailable">
+          <div class="cc-widget-profile-message-text">
+            <span data-ng-if="api.user.profile.roles.registered || transitionRegStatus.registered">
+              More information will display here when available.
+            </span>
+            <span data-ng-if="!api.user.profile.roles.registered && !transitionRegStatus.registered">
+              More information will display here when your academic status changes.
+            </span>
+            Check back for:
+          </div>
           <ul class="cc-list-bullets">
             <li>Class enrollments, including waitlist information.</li>
             <li>Your academic status, including standing, GPA, units, major, college, and more.</li>
@@ -48,6 +67,8 @@
   </div>
 
   <div class="cc-widget-padding">
+    <h3 data-ng-if="transitionRegStatus && collegeAndLevel.termName">Academic status as of <span data-ng-bind="collegeAndLevel.termName"></span></h3>
+    <div data-ng-if="showProfileMessage" class="cc-table-top-border"></div>
 
     <div class="cc-left cc-widget-profile-picture">
       <div data-ng-if="api.user.profile.hasPhoto">
