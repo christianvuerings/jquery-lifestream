@@ -17,12 +17,12 @@ class CanvasCourseProvisionController < ApplicationController
   end
   def authorize_official_sections_feed
     raise ArgumentError, 'No Canvas Course ID in request' if canvas_course_id.blank?
-    course = Canvas::Course.new(canvas_course_id: params['canvas_course_id'].to_i)
+    course = Canvas::Course.new(canvas_course_id: canvas_course_id)
     authorize course, :can_view_official_sections?
   end
   def authorize_official_sections_edit
     raise ArgumentError, 'No Canvas Course ID in request' if canvas_course_id.blank?
-    course = Canvas::Course.new(:course_id => params['canvas_course_id'].to_i)
+    course = Canvas::Course.new(canvas_course_id: canvas_course_id)
     authorize course, :can_edit_official_sections?
   end
 
