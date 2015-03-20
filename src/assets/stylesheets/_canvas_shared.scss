@@ -206,6 +206,110 @@
   margin: 10px 26px 0;
 }
 
+
+// Styling for Sections Form used by Course Provisioning and Official Sections LTI tools
+.cc-template-sections-table-container {
+
+  .cc-template-sections-table {
+    border-spacing: 0;
+    margin: 0;
+    width: 100%;
+
+    // disable alternating row color
+    tr:nth-of-type(even) {
+      background: inherit;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: $bc-color-grey-border-table-bottom solid 1px;
+      vertical-align: top;
+    }
+
+    tbody:last-child tr:last-child td {
+      border-bottom: 0;
+      vertical-align: top;
+    }
+
+    .cc-page-course-official-sections-table-row-disabled td {
+      color: $bc-color-grey-disabled;
+    }
+
+    .cc-page-course-official-sections-table-row-added td {
+      background-color: $bc-color-yellow-row-highlighted;
+    }
+
+    .cc-page-course-official-sections-table-row-deleted td {
+      background-color: $bc-color-red-row-highlighted;
+    }
+
+    .cc-template-sections-table-cell-section-action-option {
+      height: 45px;
+      text-align: right;
+      width: 85px;
+    }
+
+    .cc-template-sections-table-button {
+      font-size: 12px;
+      margin: 0;
+      padding: 2px 4px;
+    }
+
+    .cc-template-sections-table-button-undo-add {
+      background-color: $bc-color-orange-button-bg;
+      border: $bc-color-orange-button-border solid 1px;
+      color: $bc-color-white;
+    }
+
+    .cc-template-sections-table-button-undo-delete {
+      background-color: $bc-color-red-button-bg;
+      border: $bc-color-red-button-border solid 1px;
+      color: $bc-color-white;
+    }
+
+    .cc-template-sections-table-cell-course-code {
+      font-weight: bold;
+      width: 115px;
+    }
+
+    .cc-template-sections-table-cell-section-label {
+      width: 75px;
+    }
+
+    .cc-template-sections-table-cell-section-ccn {
+      width: 70px;
+    }
+
+    .cc-template-sections-table-cell-section-timestamps {
+      width: 155px;
+    }
+
+    .cc-template-sections-table-cell-section-locations {
+      width: 150px;
+    }
+
+    .cc-template-sections-table-cell-section-instructors {
+      width: 190px;
+    }
+
+    .cc-template-sections-table-sited-icon {
+      color: $bc-color-help-link-blue;
+      font-size: 15px;
+      margin-right: 4px;
+      margin-top: 2px;
+    }
+
+    .cc-template-sections-table-sites-cell {
+      padding: 0 10px;
+    }
+
+    .cc-template-sections-table-sites-container {
+      margin-bottom: 5px;
+    }
+  }
+
+}
+
+// THIS IS DEPRECATED IN FAVOR OF TABLE BASED SECTION DISPLAY
 // Styling for Sections Form used by Course Provisioning and Official Sections LTI tools
 .cc-template-canvas-manage-sections {
 
