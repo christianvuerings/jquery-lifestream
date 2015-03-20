@@ -140,7 +140,6 @@ Spork.prefork do
   Capybara.default_host = 'http://localhost:3000'
   OmniAuth.config.test_mode = true
   WebMock.enable!
-  WebMock.allow_net_connect!
 
 end
 
