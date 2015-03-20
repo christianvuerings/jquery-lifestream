@@ -4,7 +4,7 @@ module Oec
     def initialize(ccn_set, annotated_ccn_hash, export_dir)
       super export_dir
       # Annotations allow for categories within a given course-id. For example, instructor types: primary, GSI, etc.
-      @ccn_set = ccn_set.merge annotated_ccn_hash.keys
+      @ccn_set = ccn_set | annotated_ccn_hash.keys
     end
 
     def base_file_name
