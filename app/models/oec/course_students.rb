@@ -4,7 +4,7 @@ module Oec
     def initialize(ccn_set, annotated_ccn_hash, export_dir)
       super export_dir
       @ccn_set = ccn_set
-      # Maps ccn to annotations (GSI, A, B, etc) in courses.csv
+      # Maps ccn to GSI, A, B, etc. (described as annotations)
       @annotated_ccn_hash = annotated_ccn_hash
     end
 
@@ -18,6 +18,7 @@ module Oec
 
     def append_records(output)
       if @ccn_set.length > 0
+        Rails.logger.warn 'Get students of non-annotated CCN set'
         Oec::Queries.get_all_course_students(@ccn_set).each do |record|
           row = record_to_csv_row record
           output << row
@@ -25,6 +26,7 @@ module Oec
       end
       # Output must have the same annotations as in courses.csv
       if @annotated_ccn_hash.length > 0
+        Rails.logger.warn 'Get students of annotated CCN set'
         Oec::Queries.get_all_course_students(@annotated_ccn_hash.keys).each do |record|
           row = record_to_csv_row record
           ccn = row['COURSE_ID'].split('-')[2].split('_')[0].to_i
