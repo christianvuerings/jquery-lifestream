@@ -229,6 +229,13 @@
     $scope.selectedSections = canvasSiteCreationService.selectedSections;
     $scope.toggleCheckboxes = canvasSiteCreationService.toggleCheckboxes;
 
+    /*
+     * Used with bc-official-sections-table directive to ensure every section is displayed
+     */
+    $scope.displayRow = function() {
+      return true;
+    };
+
     // Wait until user profile is fully loaded before fetching section feed
     $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
       if (isAuthenticated) {

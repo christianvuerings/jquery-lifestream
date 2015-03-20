@@ -127,7 +127,11 @@
                           Select: <button class="cc-button-link cc-page-create-course-site-form-select-all-option-button" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCourseSectionsWithUpdate(course)"></button>
                         </div>
 
-                        <div data-ng-include src="'canvas_embedded/canvas_users_courses_form.html'"></div>
+                        <div class="row">
+                          <div class="medium-12 columns">
+                            <div data-bc-official-sections-table data-list-mode="'createCourseForm'" data-sections-list="course.sections" data-row-display-logic="displayRow()"></div>
+                          </div>
+                        </div>
                       </div>
 
                     </li>
