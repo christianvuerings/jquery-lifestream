@@ -1,10 +1,10 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('bcOfficialSectionsTable', function() {
+  angular.module('calcentral.directives').directive('bcSectionsTable', function() {
     return {
       restrict: 'A',
-      templateUrl: 'canvas_embedded/_shared/official_sections_table.html', // Markup for template
+      templateUrl: 'canvas_embedded/_shared/sections_table.html', // Markup for template
       scope: {
         sectionsList: '=',      // Attribute used to pass an array of sections to render via the template: data-sections-list="sections"
         listMode: '=',          // Attribute used to specify the mode of display: data-list-mode="preview"
