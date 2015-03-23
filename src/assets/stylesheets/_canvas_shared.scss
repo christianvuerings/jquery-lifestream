@@ -184,6 +184,16 @@
   color: $bc-color-warning-foreground;
 }
 
+.cc-notice-warning-button {
+  color: $bc-color-warning-foreground;
+  text-decoration: none;
+
+  &:hover,&:focus {
+    color: $bc-color-warning-foreground-selected;
+    text-decoration: none;
+  }
+}
+
 .cc-notice-error {
   background-color: $bc-color-error-background;
   border: 1px solid $bc-color-error-border;
