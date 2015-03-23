@@ -64,82 +64,6 @@ describe CanvasCourseProvisionController do
     end
   end
 
-  describe '#get_sections_feed' do
-    let(:fake_sections_feed) do
-      fake_provisioning_feed.merge('canvas_course' => {'canvasCourseId' => canvas_course_id.to_i, 'canEdit' => fake_can_edit})
-    end
-    let(:fake_can_edit) { false }
-    let(:fake_course_provision) { instance_double(Canvas::CourseProvision, get_feed: fake_sections_feed) }
-    let(:fake_policy) { instance_double(Canvas::CoursePolicy) }
-    it_should_behave_like 'a user authenticated api endpoint' do
-      let(:make_request) { get :get_sections_feed, canvas_course_id: canvas_course_id }
-    end
-    context 'when user authenticated' do
-      before do
-        allow(Canvas::CourseProvision).to receive(:new) do |uid_arg, options|
-          if (uid_arg == uid) && (options[:canvas_course_id] == canvas_course_id.to_i)
-            fake_course_provision
-          end
-        end
-        allow(Canvas::CoursePolicy).to receive(:new).and_return(fake_policy)
-        allow(fake_policy).to receive(:can_view_official_sections?).and_return(fake_authorized)
-        allow(fake_policy).to receive(:can_edit_official_sections?).and_return(fake_can_edit)
-      end
-      context 'allowed to view course site official sections' do
-        let(:fake_authorized) { true }
-        it 'should return sections feed' do
-          get :get_sections_feed, canvas_course_id: canvas_course_id
-          assert_response :success
-          expect(JSON.parse(response.body)).to eq fake_sections_feed
-        end
-        context 'in LTI context' do
-          before do
-            session['canvas_course_id'] = canvas_course_id
-          end
-          it 'uses the session-stored course ID' do
-            get :get_sections_feed, canvas_course_id: 'embedded'
-            assert_response :success
-            expect(JSON.parse(response.body)).to eq fake_sections_feed
-          end
-        end
-        context 'allowed to edit official sections' do
-          let(:fake_can_edit) { true }
-          it 'should return sections feed' do
-            get :get_sections_feed, canvas_course_id: canvas_course_id
-            assert_response :success
-            expect(JSON.parse(response.body)).to eq fake_sections_feed
-          end
-        end
-        it 'requires a canvas_course_id parameter' do
-          get :get_sections_feed, canvas_course_id: ''
-          assert_response 500
-          json_response = JSON.parse(response.body)
-          expect(json_response['error']).to be_present
-        end
-        it_should_behave_like "an api endpoint" do
-          before { allow(fake_course_provision).to receive(:get_feed).and_raise(RuntimeError, "Something went wrong") }
-          let(:make_request) { get :get_sections_feed, canvas_course_id: canvas_course_id }
-        end
-        context 'when feed is empty' do
-          let(:fake_sections_feed) {nil}
-          it 'should respond with empty 401' do
-            get :get_sections_feed, canvas_course_id: canvas_course_id
-            assert_response 401
-            expect(response.body).to eq " "
-          end
-        end
-      end
-      context 'not allowed to view official sections' do
-        let(:fake_authorized) {false}
-        it 'responds with empty 403' do
-          get :get_sections_feed, canvas_course_id: canvas_course_id
-          assert_response 403
-          expect(response.body).to be_blank
-        end
-      end
-    end
-  end
-
   describe '#create_course_site' do
     let(:instructor_id) { '1234' }      # represents UID for instructor / teacher creating courses
     let(:ccns) { ['12345', '12348'] }   # represents the course control numbers associated with each course section
@@ -171,43 +95,6 @@ describe CanvasCourseProvisionController do
       json_response = JSON.parse(response.body)
       json_response['job_request_status'].should == 'Success'
       json_response['job_id'].should == 'canvas.courseprovision.12345.1383330151057'
-    end
-  end
-
-  describe '#edit_sections' do
-    let(:fake_can_edit) { false }
-    let(:ccns_to_remove) { ['16171', '16109', '10287'] }
-    let(:ccns_to_add) { ['16167', '16168', '16169'] }
-    it_should_behave_like 'a user authenticated api endpoint' do
-      let(:make_request) { post :edit_sections, canvas_course_id: canvas_course_id, ccns_to_remove: ccns_to_remove, ccns_to_add:  ccns_to_add }
-    end
-    context 'when user authenticated' do
-      before do
-        allow_any_instance_of(Canvas::CourseProvision).to receive(:edit_sections).and_return('canvas.courseprovision.12345.1383330151057')
-        allow_any_instance_of(Canvas::CoursePolicy).to receive(:can_edit_official_sections?).and_return(fake_can_edit)
-      end
-      context 'allowed to edit official sections' do
-        let(:fake_can_edit) { true }
-        it 'responds with success when section removal job is created' do
-          post :edit_sections, canvas_course_id: canvas_course_id, ccns_to_remove: ccns_to_remove, ccns_to_add:  ccns_to_add
-          assert_response :success
-          json_response = JSON.parse(response.body)
-          json_response['job_request_status'].should == 'Success'
-          json_response['job_id'].should == 'canvas.courseprovision.12345.1383330151057'
-        end
-        it_should_behave_like 'an api endpoint' do
-          before { allow_any_instance_of(Canvas::CourseProvision).to receive(:edit_sections).and_raise(RuntimeError, "Something went wrong") }
-          let(:make_request) { post :edit_sections, canvas_course_id: canvas_course_id, ccns_to_remove: ccns_to_remove, ccns_to_add:  ccns_to_add }
-        end
-      end
-      context 'not allowed to edit official sections' do
-        let(:fake_can_edit) {false}
-        it 'responds with empty 403' do
-          post :edit_sections, canvas_course_id: canvas_course_id, ccns_to_remove: ccns_to_remove, ccns_to_add:  ccns_to_add
-          assert_response 403
-          expect(response.body).to be_blank
-        end
-      end
     end
   end
 
@@ -274,6 +161,139 @@ describe CanvasCourseProvisionController do
       expect(result).to be_an_instance_of Hash
       expect(result[:admin_acting_as]).to eq admin_acting_as
       expect(result[:canvas_course_id]).to eq canvas_course_id.to_i
+    end
+  end
+
+
+  describe 'site-specific actions' do
+    let(:fake_can_view) { false }
+    let(:fake_can_edit) { false }
+    before do
+      allow(Canvas::CoursePolicy).to receive(:new) do |auth_state, course_record|
+        course_matches = (course_record.canvas_course_id == canvas_course_id.to_i)
+        fake_policy = instance_double(Canvas::CoursePolicy)
+        allow(fake_policy).to receive(:can_view_official_sections?) { course_matches && fake_can_view }
+        allow(fake_policy).to receive(:can_edit_official_sections?) { course_matches && fake_can_edit }
+        fake_policy
+      end
+    end
+
+    describe '#get_sections_feed' do
+      let(:fake_sections_feed) do
+        fake_provisioning_feed.merge('canvas_course' => {'canvasCourseId' => canvas_course_id.to_i, 'canEdit' => fake_can_edit})
+      end
+      let(:fake_course_provision) { instance_double(Canvas::CourseProvision, get_feed: fake_sections_feed) }
+      it_should_behave_like 'a user authenticated api endpoint' do
+        let(:make_request) { get :get_sections_feed, canvas_course_id: canvas_course_id }
+      end
+      context 'when user authenticated' do
+        before do
+          allow(Canvas::CourseProvision).to receive(:new) do |uid_arg, options|
+            if (uid_arg == uid) && (options[:canvas_course_id] == canvas_course_id.to_i)
+              fake_course_provision
+            end
+          end
+        end
+        context 'allowed to view course site official sections' do
+          let(:fake_can_view) { true }
+          it 'should return sections feed' do
+            get :get_sections_feed, canvas_course_id: canvas_course_id
+            assert_response :success
+            expect(JSON.parse(response.body)).to eq fake_sections_feed
+          end
+          context 'in LTI context' do
+            before do
+              session['canvas_course_id'] = canvas_course_id
+            end
+            it 'uses the session-stored course ID' do
+              get :get_sections_feed, canvas_course_id: 'embedded'
+              assert_response :success
+              expect(JSON.parse(response.body)).to eq fake_sections_feed
+            end
+          end
+          context 'allowed to edit official sections' do
+            let(:fake_can_edit) { true }
+            it 'should return sections feed' do
+              get :get_sections_feed, canvas_course_id: canvas_course_id
+              assert_response :success
+              expect(JSON.parse(response.body)).to eq fake_sections_feed
+            end
+          end
+          it 'requires a canvas_course_id parameter' do
+            get :get_sections_feed, canvas_course_id: ''
+            assert_response 500
+            json_response = JSON.parse(response.body)
+            expect(json_response['error']).to be_present
+          end
+          it_should_behave_like "an api endpoint" do
+            before { allow(fake_course_provision).to receive(:get_feed).and_raise(RuntimeError, "Something went wrong") }
+            let(:make_request) { get :get_sections_feed, canvas_course_id: canvas_course_id }
+          end
+          context 'when feed is empty' do
+            let(:fake_sections_feed) {nil}
+            it 'should respond with empty 401' do
+              get :get_sections_feed, canvas_course_id: canvas_course_id
+              assert_response 401
+              expect(response.body).to eq " "
+            end
+          end
+        end
+        context 'not allowed to view official sections' do
+          let(:fake_can_view) {false}
+          it 'responds with empty 403' do
+            get :get_sections_feed, canvas_course_id: canvas_course_id
+            assert_response 403
+            expect(response.body).to be_blank
+          end
+        end
+      end
+    end
+
+    describe '#edit_sections' do
+      let(:ccns_to_remove) { ['16171', '16109', '10287'] }
+      let(:ccns_to_add) { ['16167', '16168', '16169'] }
+      it_should_behave_like 'a user authenticated api endpoint' do
+        let(:make_request) { post :edit_sections, canvas_course_id: canvas_course_id, ccns_to_remove: ccns_to_remove, ccns_to_add:  ccns_to_add }
+      end
+      context 'when user authenticated' do
+        before do
+          allow_any_instance_of(Canvas::CourseProvision).to receive(:edit_sections).and_return('canvas.courseprovision.12345.1383330151057')
+        end
+        context 'allowed to edit official sections' do
+          let(:fake_can_edit) { true }
+          it 'responds with success when section removal job is created' do
+            post :edit_sections, canvas_course_id: canvas_course_id, ccns_to_remove: ccns_to_remove, ccns_to_add:  ccns_to_add
+            assert_response :success
+            json_response = JSON.parse(response.body)
+            json_response['job_request_status'].should == 'Success'
+            json_response['job_id'].should == 'canvas.courseprovision.12345.1383330151057'
+          end
+          it_should_behave_like 'an api endpoint' do
+            before { allow_any_instance_of(Canvas::CourseProvision).to receive(:edit_sections).and_raise(RuntimeError, "Something went wrong") }
+            let(:make_request) { post :edit_sections, canvas_course_id: canvas_course_id, ccns_to_remove: ccns_to_remove, ccns_to_add:  ccns_to_add }
+          end
+          context 'in LTI context' do
+            before do
+              session['canvas_course_id'] = canvas_course_id
+            end
+            it 'uses the session-stored course ID' do
+              get :edit_sections, canvas_course_id: 'embedded'
+              assert_response :success
+              json_response = JSON.parse(response.body)
+              json_response['job_request_status'].should == 'Success'
+              json_response['job_id'].should == 'canvas.courseprovision.12345.1383330151057'
+            end
+          end
+        end
+        context 'not allowed to edit official sections' do
+          let(:fake_can_edit) {false}
+          it 'responds with empty 403' do
+            post :edit_sections, canvas_course_id: canvas_course_id, ccns_to_remove: ccns_to_remove, ccns_to_add:  ccns_to_add
+            assert_response 403
+            expect(response.body).to be_blank
+          end
+        end
+      end
     end
   end
 end
