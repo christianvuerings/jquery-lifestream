@@ -54,7 +54,7 @@
 
       <div class="cc-page-create-course-site-select-sections">
 
-        <div data-ng-show="currentWorkflowStep === 'selecting'">
+        <div id="cc-page-create-course-site-selecting-step" data-ng-show="currentWorkflowStep === 'selecting'" data-ng-aria-expanded="{{currentWorkflowStep === 'selecting'}}" role="region">
           <div data-cc-spinner-directive>
             <div data-ng-hide="teachingSemesters && teachingSemesters.length > 0" class="cc-page-create-course-site-no-courses">
               You are currently not listed as the instructor of record for any courses, so you cannot create a course site in bCourses.
@@ -140,7 +140,8 @@
                   <div class="cc-page-site-provisioning-form-actions">
                     <a data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button" type="reset">Cancel</a>
                     <button class="bc-canvas-button bc-canvas-button-primary"
-                      type="submit" data-ng-disabled="selectedSectionsList.length == 0">Next &gt;&gt;</button>
+                      type="submit" data-ng-disabled="selectedSectionsList.length == 0" aria-controls="cc-page-create-course-site-confirmation-step"
+                      aria-label="Continue to confirm selected sections and provide course name" role="button">Next &gt;&gt;</button>
                   </div>
 
                 </form>
@@ -149,7 +150,7 @@
           </div>
         </div>
 
-        <div data-ng-show="currentWorkflowStep === 'confirmation'">
+        <div id="cc-page-create-course-site-confirmation-step" data-ng-show="currentWorkflowStep === 'confirmation'" data-ng-aria-expanded="{{currentWorkflowStep === 'confirmation'}}" role="region">
           <div class="cc-page-create-course-site-confirmation">
             <div data-ng-if="selectedSections(coursesList).length === 1">
               <strong>You are about to create 1 course site with 1 section:</strong>
@@ -191,7 +192,8 @@
 
                 <div class="row">
                   <div class="medium-offset-4 medium-8 columns">
-                    <button ng-disabled="createCourseSiteForm.$invalid" class="bc-canvas-button bc-canvas-button-primary" type="submit">Create Course Site</button>
+                    <button ng-disabled="createCourseSiteForm.$invalid" class="bc-canvas-button bc-canvas-button-primary" type="submit"
+                    role="button" aria-label="Create Course Site" aria-controls="cc-page-create-course-site-monitor-step">Create Course Site</button>
                     <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showSelecting()">Go Back</button>
                   </div>
                 </div>
@@ -202,7 +204,7 @@
           </form>
         </div>
 
-        <div data-ng-show="currentWorkflowStep === 'monitoring_job'">
+        <div id="cc-page-create-course-site-monitor-step" data-ng-show="currentWorkflowStep === 'monitoring_job'" data-ng-aria-expanded="{{currentWorkflowStep === 'monitoring_job'}}" role="region">
 
           <div data-ng-hide="jobStatus" class="cc-page-create-course-site-pending-request">
             <i class="fa fa-spinner fa-spin"></i>
@@ -222,13 +224,13 @@
               <div data-ng-include src="'canvas_embedded/_shared/background_job_error.html'"></div>
               <div class="row cc-page-create-course-site-step-options">
                 <div class="medium-12 columns">
-                  <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showConfirmation()">&lt;&lt; Back</button>
-                  <button class="bc-canvas-button bc-canvas-button-primary" type="button" data-ng-click="fetchFeed()">Start Over</button>
+                  <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showConfirmation()" type="button" aria-control="cc-page-create-course-site-confirmation-step">&lt;&lt; Back</button>
+                  <button class="bc-canvas-button bc-canvas-button-primary" type="button" data-ng-click="fetchFeed()" type="button" aria-control="cc-page-create-course-site-selecting-step">Start Over</button>
                 </div>
               </div>
             </div>
 
-            <div data-ng-if="jobStatus === 'courseCreationCompleted'">
+            <div data-ng-if="jobStatus === 'courseCreationCompleted'" data-ng-aria-expanded="{{jobStatus === 'courseCreationCompleted'}}" role="region">
 
               <div class="cc-notice-box cc-notice-success cc-radius">
                 Success : <span data-ng-bind="course_site.short_name"></span> site created
@@ -243,7 +245,7 @@
                 <li>Access your sites anytime at: <a href="http://bcourses.berkeley.edu">http://bcourses.berkeley.edu</a></li>
               </ul>
               <div>
-                <button class="cc-button cc-button-blue" type="button" data-ng-click="fetchFeed()">Create another Course Site</button>
+                <button class="cc-button cc-button-blue" type="button" data-ng-click="fetchFeed()" type="button" aria-control="cc-page-create-course-site-selecting-step">Create another Course Site</button>
               </div>
             </div>
 
