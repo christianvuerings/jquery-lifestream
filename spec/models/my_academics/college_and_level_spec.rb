@@ -20,6 +20,7 @@ describe "MyAcademics::CollegeAndLevel" do
     oski_college[:colleges][1][:major].should == "Rhetoric"
     oski_college[:colleges][2][:major].should == "Business Administration"
     oski_college[:standing].should == "Undergraduate"
+    expect(oski_college[:termName]).to eq 'Summer 2013'
   end
 
   it "should get test-300940's multiple college enrollments" do

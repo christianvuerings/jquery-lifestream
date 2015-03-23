@@ -11,6 +11,7 @@ module MyAcademics
       # be merged before course sites.
       [
         CollegeAndLevel,
+        TransitionRegStatus,
         GpaUnits,
         Requirements,
         Regblocks,

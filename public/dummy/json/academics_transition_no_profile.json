@@ -1,0 +1,554 @@
+{
+  "collegeAndLevel": {
+    "empty": true
+  },
+  "gpaUnits": {
+    "cumulativeGpa": null,
+    "totalUnits": null,
+    "totalUnitsAttempted": null
+  },
+  "requirements": [],
+  "regblocks": {
+    "errored": false,
+    "activeBlocks": [
+      {
+        "status": "Active",
+        "type": "FINAN",
+        "blockedDate": {
+          "epoch": 1366614000,
+          "dateTime": "2013-04-22T00:00:00-07:00",
+          "dateString": "4/22/2013"
+        },
+        "clearedDate": {
+          "epoch": null,
+          "dateTime": null,
+          "dateString": null
+        },
+        "reason": "CARS",
+        "office": "BPS"
+      }
+    ],
+    "inactiveBlocks": [
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 1366527600,
+          "dateTime": "2013-04-21T00:00:00-07:00",
+          "dateString": "4/21/2013"
+        },
+        "clearedDate": {
+          "epoch": 1366614000,
+          "dateTime": "2013-04-22T00:00:00-07:00",
+          "dateString": "4/22/2013"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blockedDate": {
+          "epoch": 1332201600,
+          "dateTime": "2012-03-20T00:00:00+00:00",
+          "dateString": "3/20/2012"
+        },
+        "clearedDate": {
+          "epoch": 1332201600,
+          "dateTime": "2012-03-20T00:00:00+00:00",
+          "dateString": "3/20/2012"
+        },
+        "reason": "STAT LAPSE",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blockedDate": {
+          "epoch": 1296691200,
+          "dateTime": "2011-02-03T00:00:00+00:00",
+          "dateString": "2/03/2011"
+        },
+        "clearedDate": {
+          "epoch": 1296691200,
+          "dateTime": "2011-02-03T00:00:00+00:00",
+          "dateString": "2/03/2011"
+        },
+        "reason": "MISC",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "FINAN",
+        "blockedDate": {
+          "epoch": 1296000000,
+          "dateTime": "2011-01-26T00:00:00+00:00",
+          "dateString": "1/26/2011"
+        },
+        "clearedDate": {
+          "epoch": 1296000000,
+          "dateTime": "2011-01-26T00:00:00+00:00",
+          "dateString": "1/26/2011"
+        },
+        "reason": "LIBRARY",
+        "office": ""
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 1245110400,
+          "dateTime": "2009-06-16T00:00:00+00:00",
+          "dateString": "6/16/2009"
+        },
+        "clearedDate": {
+          "epoch": 1245110400,
+          "dateTime": "2009-06-16T00:00:00+00:00",
+          "dateString": "6/16/2009"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 1231891200,
+          "dateTime": "2009-01-14T00:00:00+00:00",
+          "dateString": "1/14/2009"
+        },
+        "clearedDate": {
+          "epoch": 1231891200,
+          "dateTime": "2009-01-14T00:00:00+00:00",
+          "dateString": "1/14/2009"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 1173139200,
+          "dateTime": "2007-03-06T00:00:00+00:00",
+          "dateString": "3/06/2007"
+        },
+        "clearedDate": {
+          "epoch": 1173139200,
+          "dateTime": "2007-03-06T00:00:00+00:00",
+          "dateString": "3/06/2007"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 1134345600,
+          "dateTime": "2005-12-12T00:00:00+00:00",
+          "dateString": "12/12/2005"
+        },
+        "clearedDate": {
+          "epoch": 1134345600,
+          "dateTime": "2005-12-12T00:00:00+00:00",
+          "dateString": "12/12/2005"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 1133827200,
+          "dateTime": "2005-12-06T00:00:00+00:00",
+          "dateString": "12/06/2005"
+        },
+        "clearedDate": {
+          "epoch": 1133827200,
+          "dateTime": "2005-12-06T00:00:00+00:00",
+          "dateString": "12/06/2005"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 1133222400,
+          "dateTime": "2005-11-29T00:00:00+00:00",
+          "dateString": "11/29/2005"
+        },
+        "clearedDate": {
+          "epoch": 1133222400,
+          "dateTime": "2005-11-29T00:00:00+00:00",
+          "dateString": "11/29/2005"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 1133222400,
+          "dateTime": "2005-11-29T00:00:00+00:00",
+          "dateString": "11/29/2005"
+        },
+        "clearedDate": {
+          "epoch": 1133222400,
+          "dateTime": "2005-11-29T00:00:00+00:00",
+          "dateString": "11/29/2005"
+        },
+        "reason": "",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "FINAN",
+        "blockedDate": {
+          "epoch": 1083801600,
+          "dateTime": "2004-05-06T00:00:00+00:00",
+          "dateString": "5/06/2004"
+        },
+        "clearedDate": {
+          "epoch": 1083801600,
+          "dateTime": "2004-05-06T00:00:00+00:00",
+          "dateString": "5/06/2004"
+        },
+        "reason": "CARS",
+        "office": "BPS"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blockedDate": {
+          "epoch": 1074038400,
+          "dateTime": "2004-01-14T00:00:00+00:00",
+          "dateString": "1/14/2004"
+        },
+        "clearedDate": {
+          "epoch": 1074038400,
+          "dateTime": "2004-01-14T00:00:00+00:00",
+          "dateString": "1/14/2004"
+        },
+        "reason": "MISCONDUCT",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 1073606400,
+          "dateTime": "2004-01-09T00:00:00+00:00",
+          "dateString": "1/09/2004"
+        },
+        "clearedDate": {
+          "epoch": 1073606400,
+          "dateTime": "2004-01-09T00:00:00+00:00",
+          "dateString": "1/09/2004"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 1073606400,
+          "dateTime": "2004-01-09T00:00:00+00:00",
+          "dateString": "1/09/2004"
+        },
+        "clearedDate": {
+          "epoch": 1073606400,
+          "dateTime": "2004-01-09T00:00:00+00:00",
+          "dateString": "1/09/2004"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blockedDate": {
+          "epoch": 1021852800,
+          "dateTime": "2002-05-20T00:00:00+00:00",
+          "dateString": "5/20/2002"
+        },
+        "clearedDate": {
+          "epoch": 1022112000,
+          "dateTime": "2002-05-23T00:00:00+00:00",
+          "dateString": "5/23/2002"
+        },
+        "reason": "MISC",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blockedDate": {
+          "epoch": 1021852800,
+          "dateTime": "2002-05-20T00:00:00+00:00",
+          "dateString": "5/20/2002"
+        },
+        "clearedDate": {
+          "epoch": 1021852800,
+          "dateTime": "2002-05-20T00:00:00+00:00",
+          "dateString": "5/20/2002"
+        },
+        "reason": "STAT LAPSE",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 955497600,
+          "dateTime": "2000-04-12T00:00:00+00:00",
+          "dateString": "4/12/2000"
+        },
+        "clearedDate": {
+          "epoch": 955584000,
+          "dateTime": "2000-04-13T00:00:00+00:00",
+          "dateString": "4/13/2000"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 922233600,
+          "dateTime": "1999-03-24T00:00:00+00:00",
+          "dateString": "3/24/1999"
+        },
+        "clearedDate": {
+          "epoch": 945648000,
+          "dateTime": "1999-12-20T00:00:00+00:00",
+          "dateString": "12/20/1999"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 922233600,
+          "dateTime": "1999-03-24T00:00:00+00:00",
+          "dateString": "3/24/1999"
+        },
+        "clearedDate": {
+          "epoch": 922233600,
+          "dateTime": "1999-03-24T00:00:00+00:00",
+          "dateString": "3/24/1999"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "ACAD",
+        "blockedDate": {
+          "epoch": 921801600,
+          "dateTime": "1999-03-19T00:00:00+00:00",
+          "dateString": "3/19/1999"
+        },
+        "clearedDate": {
+          "epoch": 955324800,
+          "dateTime": "2000-04-10T00:00:00+00:00",
+          "dateString": "4/10/2000"
+        },
+        "reason": "ACADEMIC",
+        "office": "LNS"
+      },
+      {
+        "status": "Released",
+        "type": "FINAN",
+        "blockedDate": {
+          "epoch": 918086400,
+          "dateTime": "1999-02-04T00:00:00+00:00",
+          "dateString": "2/04/1999"
+        },
+        "clearedDate": {
+          "epoch": 919123200,
+          "dateTime": "1999-02-16T00:00:00+00:00",
+          "dateString": "2/16/1999"
+        },
+        "reason": "CUBS",
+        "office": "BPS"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blockedDate": {
+          "epoch": 916963200,
+          "dateTime": "1999-01-22T00:00:00+00:00",
+          "dateString": "1/22/1999"
+        },
+        "clearedDate": {
+          "epoch": 916963200,
+          "dateTime": "1999-01-22T00:00:00+00:00",
+          "dateString": "1/22/1999"
+        },
+        "reason": "STAT LAPSE",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blockedDate": {
+          "epoch": 881020800,
+          "dateTime": "1997-12-02T00:00:00+00:00",
+          "dateString": "12/02/1997"
+        },
+        "clearedDate": {
+          "epoch": 884044800,
+          "dateTime": "1998-01-06T00:00:00+00:00",
+          "dateString": "1/06/1998"
+        },
+        "reason": "MISC",
+        "office": "OR"
+      },
+      {
+        "status": "Released",
+        "type": "ADMIN",
+        "blockedDate": {
+          "epoch": 853891200,
+          "dateTime": "1997-01-22T00:00:00+00:00",
+          "dateString": "1/22/1997"
+        },
+        "clearedDate": {
+          "epoch": 856396800,
+          "dateTime": "1997-02-20T00:00:00+00:00",
+          "dateString": "2/20/1997"
+        },
+        "reason": "STAT LAPSE",
+        "office": "OR"
+      }
+    ]
+  },
+  "semesters": [],
+  "otherSiteMemberships": [
+    {
+      "name": "Summer 2013",
+      "slug": "summer-2013",
+      "termCode": "C",
+      "termYear": "2013",
+      "sites": [
+        {
+          "id": "1093166",
+          "shortDescription": "Psych GSI hangout",
+          "name": "Monitor Psych 1A",
+          "emitter": "bCourses",
+          "site_url": "https://ucberkeley.beta.instructure.com/courses/1093166"
+        }
+      ]
+    }
+  ],
+  "exam_schedule": [
+    {
+      "date": {
+        "epoch": 1387324800,
+        "dateTime": "2013-12-18T00:00:00+00:00",
+        "dateString": "Wed December 18"
+      },
+      "time": "8:00A",
+      "location": {
+        "rawLocation": "390 HEARST MIN",
+        "display": "Hearst Memorial Mining Building",
+        "lat": "37.874459999999999",
+        "lon": "-122.25727000000001",
+        "roomNumber": "390"
+      },
+      "course_code": "Psychology C120"
+    },
+    {
+      "date": {
+        "epoch": 1387324800,
+        "dateTime": "2013-12-18T00:00:00+00:00",
+        "dateString": "Wed December 18"
+      },
+      "time": "3:00P",
+      "location": {
+        "rawLocation": "100 GPB",
+        "display": "Genetics & Plant Biology Building",
+        "lat": "37.873429999999999",
+        "lon": "-122.26473",
+        "roomNumber": "100"
+      },
+      "course_code": "Psychology 133"
+    },
+    {
+      "date": {
+        "epoch": 1387324800,
+        "dateTime": "2013-12-18T00:00:00+00:00",
+        "dateString": "Wed December 18"
+      },
+      "time": "3:00P",
+      "location": {
+        "rawLocation": "2060 VALLEY LSB",
+        "display": "Valley Life Sciences Building",
+        "lat": "37.871479999999998",
+        "lon": "-122.26211000000001",
+        "roomNumber": "2060"
+      },
+      "course_code": "Education 140"
+    }
+  ],
+  "telebears": [
+    {
+      "term": "Spring",
+      "year": 2014,
+      "slug": "spring-2014",
+      "adviserCodeRequired": {
+        "required": true,
+        "type": "revoked"
+      },
+      "phases": [
+        {
+          "period": "Tele-BEARS Phase I",
+          "startTime": {
+            "epoch": 1365442200,
+            "dateTime": "2013-10-13T09:30:00-08:00",
+            "dateString": "10/13"
+          },
+          "endTime": {
+            "epoch": 1365528600,
+            "dateTime": "2013-10-14T09:30:00-08:00",
+            "dateString": "10/14"
+          }
+        },
+        {
+          "period": "Tele-BEARS Phase II",
+          "startTime": {
+            "epoch": 1373389200,
+            "dateTime": "2014-02-09T09:00:00-08:00",
+            "dateString": "2/09"
+          },
+          "endTime": {
+            "epoch": 1373475600,
+            "dateTime": "2014-02-10T09:00:00-08:00",
+            "dateString": "2/10"
+          }
+        }
+      ],
+      "url": "http://registrar.berkeley.edu/tbfaqs.html"
+    }
+  ],
+  "transitionRegStatus": {
+    "termName": "Spring 2014",
+    "registered": true
+  },
+  "lastModified": {
+    "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
+    "timestamp": {
+      "epoch": 1383947240,
+      "dateTime": "2013-11-08T13:47:20-08:00",
+      "dateString": "11/08"
+    }
+  }
+}
