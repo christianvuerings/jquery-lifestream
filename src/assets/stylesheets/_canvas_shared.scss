@@ -264,12 +264,20 @@
       background-color: $bc-color-orange-button-bg;
       border: $bc-color-orange-button-border solid 1px;
       color: $bc-color-white;
+      &:hover, &:active, &:focus, &:link {
+        background: $bc-color-orange-button-bg-selected;
+        border-color: $bc-color-orange-button-border-selected;
+      }
     }
 
     .cc-template-sections-table-button-undo-delete {
       background-color: $bc-color-red-button-bg;
       border: $bc-color-red-button-border solid 1px;
       color: $bc-color-white;
+      &:hover, &:active, &:focus, &:link {
+        background: $bc-color-red-button-bg-selected;
+        border-color: $bc-color-red-button-border-selected;
+      }
     }
 
     .cc-template-sections-table-cell-checkbox {
