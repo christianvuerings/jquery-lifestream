@@ -65,10 +65,10 @@
             </h3>
           </div>
           <div class="medium-3 columns cc-text-right">
-            <button class="bc-canvas-button cc-canvas-no-decoration" data-ng-click="cancel()" type="submit">
+            <button class="bc-canvas-button cc-canvas-no-decoration" data-ng-click="cancel()" type="submit" aria-label="Cancel section modifications for this course site">
               Cancel
             </button>
-            <button class="bc-canvas-button bc-canvas-button-primary cc-canvas-no-decoration" data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" type="submit">
+            <button class="bc-canvas-button bc-canvas-button-primary cc-canvas-no-decoration" data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" type="submit" aria-label="Apply pending modifications to this course site">
               Save Changes
             </button>
           </div>
@@ -88,10 +88,10 @@
 
         <div data-ng-if="currentStagedCount() > 12" class="row">
           <div class="medium-12 columns cc-text-right">
-            <button data-ng-click="changeWorkflowStep('preview')" class="bc-canvas-button">
+            <button data-ng-click="changeWorkflowStep('preview')" class="bc-canvas-button" aria-label="Cancel section modifications for this course site">
               Cancel
             </button>
-            <button data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" class="bc-canvas-button bc-canvas-button-primary">
+            <button data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" class="bc-canvas-button bc-canvas-button-primary" aria-label="Apply pending modifications to this course site">
               Save Changes
             </button>
           </div>
@@ -127,7 +127,7 @@
 
               <div data-ng-attr-id="{{course.course_id}}" class="cc-page-course-official-sections-form-collapsible-container" data-ng-if="!course.collapsed" data-ng-attr-aria-expanded="{{!course.collapsed}}" role="region">
                 <div class="cc-page-course-official-sections-form-select-all-option" data-ng-if="course.sections.length > 1">
-                  <button class="cc-button-link cc-page-course-official-sections-form-select-all-option-button" type="button" data-ng-click="addAllSections(course)" data-ng-if="!allSectionsAdded(course)">Add All</button>
+                  <button class="cc-button-link cc-page-course-official-sections-form-select-all-option-button" type="button" data-ng-click="addAllSections(course)" data-ng-if="!allSectionsAdded(course)" aria-label="Add all sections for this course to the list of sections to be added">Add All</button>
                   <span data-ng-if="allSectionsAdded(course)">All Added</span>
                 </div>
 
