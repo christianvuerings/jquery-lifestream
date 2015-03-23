@@ -13,7 +13,8 @@
         stageAddAction: '&',    // Attribute used to tie add calls to add method: data-stage-add-action="stageAdd(section)"
         noCurrentSections: '&', // Attribute used to tie no current sections call: data-no-current-sections="noCurrentSections()"
         rowClassLogic: '&',     // Attribute used to tie row class logic call: data-row-class-logic="rowClassLogic(listMode, section, $last)"
-        rowDisplayLogic: '&'    // Attribute used to tie row display logic call: data-row-display-logic="rowDisplayLogic(listMode, section)"
+        rowDisplayLogic: '&',   // Attribute used to tie row display logic call: data-row-display-logic="rowDisplayLogic(listMode, section)"
+        updateSelected: '&'     // Attribute used to associate internal onclick for section checkboxes: data-update-selected="updateSelected()"
       }
     };
   });

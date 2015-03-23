@@ -2,13 +2,14 @@
   <table class="cc-template-sections-table" role="grid">
     <thead class="cc-visuallyhidden">
       <tr>
+        <th data-ng-if="listMode === 'createCourseForm'">Action</th>
         <th>Course Code</th>
         <th>Section Label</th>
         <th>Course Control Number</th>
         <th>Schedule</th>
         <th>Location</th>
         <th>Instructors</th>
-        <th>
+        <th data-ng-if="listMode !== 'createCourseForm'">
           <span data-ng-if="listMode === 'preview'">&nbsp;</span>
           <span data-ng-if="listMode !== 'preview'">Actions</span>
         </th>
@@ -16,6 +17,11 @@
     </thead>
     <tbody data-ng-repeat="section in sectionsList" data-ng-if="rowDisplayLogic({listMode: listMode, section: section})">
       <tr data-ng-class="rowClassLogic({listMode: listMode, section: section})">
+        <td class="cc-template-sections-table-cell-checkbox" data-ng-if="listMode === 'createCourseForm'">
+          <input type="checkbox"
+            id="cc-template-canvas-manage-sections-checkbox-{{section.courseCode}}-{{section.ccn}}"
+            data-ng-model="section.selected" data-ng-click="updateSelected()">
+        </td>
         <td class="cc-template-sections-table-cell-course-code" data-ng-bind="section.courseCode"></td>
         <td class="cc-template-sections-table-cell-section-label" data-ng-bind="section.section_label"></td>
         <td class="cc-template-sections-table-cell-section-ccn" data-ng-bind="section.ccn"></td>
@@ -28,7 +34,7 @@
         <td class="cc-template-sections-table-cell-section-instructors show-for-large-up" >
           <div data-ng-repeat="instructor in section.instructors" data-ng-bind="instructor.name"></div>
         </td>
-        <td class="cc-template-sections-table-cell-section-action-option">
+        <td class="cc-template-sections-table-cell-section-action-option" data-ng-if="listMode !== 'createCourseForm'">
           <span data-ng-if="listMode === 'preview'">&nbsp;</span>
 
           <!-- Current Staging Actions -->
