@@ -142,7 +142,10 @@
 
   .cc-page-create-course-site-form-course-button {
     color: $bc-color-body-black;
-    outline:0;
+
+    &:focus, &:hover {
+      text-decoration: none;
+    }
   }
 
   .cc-page-create-course-site-form-collapse-icon {
