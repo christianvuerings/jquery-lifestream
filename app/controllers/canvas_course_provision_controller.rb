@@ -29,30 +29,28 @@ class CanvasCourseProvisionController < ApplicationController
   # GET /api/academics/canvas/course_provision.json
   # GET /api/academics/canvas/course_provision_as/:instructor_id.json
   def get_feed
-    if (feed = Canvas::CourseProvision.new(session['user_id'], options_from_params).get_feed)
-      render json: feed.to_json
-    else
-      render nothing: true, status: 401
-    end
-  end
-
-  # GET /api/academics/canvas/course_provision/sections_feed/:canvas_course_id.json
-  def get_sections_feed
-    get_feed
+    feed = Canvas::CourseProvision.new(session['user_id'], create_options_from_params).get_feed
+    render json: feed.to_json
   end
 
   # POST /api/academics/canvas/course_provision/create.json
   def create_course_site
-    worker = Canvas::CourseProvision.new(session['user_id'], options_from_params)
+    worker = Canvas::CourseProvision.new(session['user_id'], create_options_from_params)
     # Since we expect the CCNs to have been provided by our own code rather than a human being,
     # we don't worry so much about invalid numbers.
     job_id = worker.create_course_site(params['siteName'], params['siteAbbreviation'], params['termSlug'], params['ccns'])
     render json: { job_request_status: "Success", job_id: job_id}.to_json
   end
 
+  # GET /api/academics/canvas/course_provision/sections_feed/:canvas_course_id.json
+  def get_sections_feed
+    feed = Canvas::CourseProvision.new(session['user_id'], canvas_course_id: canvas_course_id).get_feed
+    render json: feed.to_json
+  end
+
   # POST /api/academics/canvas/course_provision/edit_sections/:canvas_course_id?ccns_to_add=:ccns_to_add&ccns_to_remove=:ccns_to_remove
   def edit_sections
-    worker = Canvas::CourseProvision.new(session['user_id'], options_from_params)
+    worker = Canvas::CourseProvision.new(session['user_id'], canvas_course_id: canvas_course_id)
     job_id = worker.edit_sections(params['ccns_to_remove'], params['ccns_to_add'])
     render json: { job_request_status: "Success", job_id: job_id}.to_json
   end
@@ -64,21 +62,21 @@ class CanvasCourseProvisionController < ApplicationController
     render json: { job_id: params['job_id'], jobStatus: "jobNotFoundError", error: "Unable to find course management job" }.to_json
   end
 
-  def options_from_params
-    options = params.select {|k, v| [
+  def create_options_from_params
+    params.select {|k, v| [
       'admin_acting_as',
       'admin_by_ccns',
-      'admin_term_slug',
-      'sis_section_ids'
+      'admin_term_slug'
     ].include?(k)}.symbolize_keys
-    options[:canvas_course_id] = canvas_course_id
-    options
   end
 
   def validate_admin_mode
-    if params['admin_acting_as'] && (params['admin_by_ccns'] || params['admin_term_slug'])
-      logger.warn("Conflicting request parameters sent to Canvas Course Provision: session user = #{session['user_id']}, params = #{params.inspect}")
-      raise ArgumentError, "Conflicting request parameters sent to Canvas Course Provision"
+    if params['admin_acting_as'] || params['admin_by_ccns'] || params['admin_term_slug']
+      authorize current_user, :can_administrate_canvas?
+      if params['admin_acting_as'] && (params['admin_by_ccns'] || params['admin_term_slug'])
+        logger.warn("Conflicting request parameters sent to Canvas Course Provision: session user = #{session['user_id']}, params = #{params.inspect}")
+        raise ArgumentError, "Conflicting request parameters sent to Canvas Course Provision"
+      end
     end
   end
 end

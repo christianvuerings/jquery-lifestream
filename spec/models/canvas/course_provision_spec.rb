@@ -74,12 +74,6 @@ describe Canvas::CourseProvision do
     end
   end
 
-  context 'when uid is not present' do
-    subject { Canvas::CourseProvision.new(nil) }
-    its(:user_authorized?) { should eq false }
-    its(:user_admin?) { should eq false }
-  end
-
   context 'when manging existing course sections' do
     before do
       allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
@@ -88,7 +82,6 @@ describe Canvas::CourseProvision do
     end
     let(:uid) { instructor_id }
     subject { Canvas::CourseProvision.new(uid, canvas_course_id: canvas_course_id) }
-    its(:user_authorized?) { should eq true }
     it 'should provide sections feed with canvas course info included' do
       feed = subject.get_feed
       expect(feed[:is_admin]).to eq false
@@ -130,12 +123,14 @@ describe Canvas::CourseProvision do
     subject { Canvas::CourseProvision.new(uid, admin_acting_as: instructor_id) }
     context 'when a mischiefmaker' do
       let(:uid) { user_id }
-      its(:user_authorized?) { should be_falsey }
-      its(:get_feed) { should be_nil }
+      it 'should not succeed' do
+        feed = subject.get_feed
+        expect(feed[:is_admin]).to be_falsey
+        expect(feed[:teachingSemesters]).to be_empty
+      end
     end
     context 'when a Canvas admin' do
       let(:uid) { canvas_admin_id }
-      its(:user_authorized?) { should be_truthy }
       it 'should find courses' do
         feed = subject.get_feed
         expect(feed[:is_admin]).to be_truthy
@@ -143,17 +138,12 @@ describe Canvas::CourseProvision do
         expect(feed[:teachingSemesters]).to eq teaching_semesters
       end
     end
-    context 'when a superuser' do
-      let(:uid) { superuser_id }
-      its(:user_authorized?) { should be_truthy }
-    end
   end
 
   context 'when not admin acting as a user' do
     subject { Canvas::CourseProvision.new(uid) }
     context 'when a normal user' do
       let(:uid) {user_id}
-      its(:user_authorized?) { should be_truthy }
       it 'should have empty feed' do
         feed = subject.get_feed
         expect(feed[:is_admin]).to eq false
@@ -164,7 +154,6 @@ describe Canvas::CourseProvision do
     end
     context 'when an instructor' do
       let(:uid) { instructor_id }
-      its(:user_authorized?) { should eq true }
       it 'should have courses' do
         feed = subject.get_feed
         expect(feed[:is_admin]).to eq false
@@ -175,7 +164,6 @@ describe Canvas::CourseProvision do
     end
     context 'when a Canvas admin' do
       let(:uid) { canvas_admin_id }
-      its(:user_authorized?) { should be_truthy }
       it 'provides all available semesters' do
         feed = subject.get_feed
         expect(feed[:admin_semesters]).to eq current_terms
@@ -187,12 +175,14 @@ describe Canvas::CourseProvision do
     subject { Canvas::CourseProvision.new(uid, admin_by_ccns: by_ccns, admin_term_slug: by_ccns_semester) }
     context 'when a mischiefmaker' do
       let(:uid) { user_id }
-      its(:user_authorized?) { should be_falsey }
-      its(:get_feed) { should be_nil }
+      it 'should find nothing useful' do
+        feed = subject.get_feed
+        expect(feed[:is_admin]).to be_falsey
+        expect(feed[:teachingSemesters]).to be_empty
+      end
     end
     context 'when a Canvas admin' do
       let(:uid) { canvas_admin_id }
-      its(:user_authorized?) { should be_truthy }
       it 'should find courses' do
         feed = subject.get_feed
         expect(feed[:is_admin]).to be_truthy
@@ -200,10 +190,6 @@ describe Canvas::CourseProvision do
         expect(feed[:teachingSemesters]).to eq by_ccns_course_list
         expect(feed[:admin_semesters]).to eq current_terms
       end
-    end
-    context 'when a superuser' do
-      let(:uid) { superuser_id }
-      its(:user_authorized?) { should be_truthy }
     end
   end
 
@@ -218,13 +204,7 @@ describe Canvas::CourseProvision do
       allow(Canvas::ProvideCourseSite).to receive(:new).and_return(cpcs)
     end
 
-    it 'returns nil if instructor does not have access to CCNs' do
-      expect(subject).to receive(:user_authorized?).and_return(false)
-      expect(subject.create_course_site('Intro to Biomedicine', 'BIOENG 101 LEC', 'fall-2013', ['1136', '1204'])).to be_nil
-    end
-
     it 'returns canvas course provision job id' do
-      expect(subject).to receive(:user_authorized?).and_return(true)
       result = subject.create_course_site('Intro to Biomedicine', 'BIOENG 101 LEC', 'fall-2013', ['1136', '1204'])
       expect(result).to eq 'canvas.courseprovision.1234.1383330151057'
     end
@@ -241,20 +221,11 @@ describe Canvas::CourseProvision do
     let(:ccns_to_remove) { [random_ccn] }
     let(:ccns_to_add) { [random_ccn] }
     subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
-    context 'when user is unauthorized' do
-      before do
-        expect(subject).to receive(:user_authorized?).and_return(false)
-      end
-      it 'returns nil' do
-        expect(subject.edit_sections(ccns_to_remove, ccns_to_add)).to be_nil
-      end
-    end
     context 'when user is authorized' do
       let(:cpcs) { instance_double(Canvas::ProvideCourseSite) }
       let(:course_info) { {canvasCourseId: canvas_course_id} }
       let(:job_id) { "canvas.courseprovision.#{ccns_to_add.first}" }
       before do
-        expect(subject).to receive(:user_authorized?).and_return(true)
         expect(subject).to receive(:get_course_info).and_return(course_info)
         expect(Canvas::ProvideCourseSite).to receive(:new).and_return(cpcs)
         expect(cpcs).to receive(:save).ordered

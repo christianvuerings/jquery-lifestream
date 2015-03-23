@@ -14,11 +14,9 @@ module Canvas
       @canvas_course_id = options[:canvas_course_id]
     end
 
-    # Must be protected by a call to "user_authorized?"!
     def get_feed(force_write = false)
-      return nil unless user_authorized?
       feed = self.class.fetch_from_cache(instance_key, force_write) do
-        if @admin_term_slug && @admin_by_ccns
+        if @admin_term_slug && @admin_by_ccns && user_admin?
           get_feed_by_ccns_internal
         else
           get_feed_internal
@@ -45,7 +43,6 @@ module Canvas
     end
 
     def create_course_site(site_name, site_course_code, term_slug, ccns)
-      return nil unless user_authorized?
       cpcs = Canvas::ProvideCourseSite.new(working_uid)
       cpcs.save
       cpcs.background.create_course_site(site_name, site_course_code, term_slug, ccns, @admin_by_ccns.present?)
@@ -54,7 +51,6 @@ module Canvas
     end
 
     def edit_sections(ccns_to_remove, ccns_to_add)
-      return nil unless user_authorized?
       raise RuntimeError, "canvas_course_id option not present" if @canvas_course_id.blank?
       cpcs = Canvas::ProvideCourseSite.new(working_uid)
       cpcs.save
@@ -105,18 +101,8 @@ module Canvas
       @is_admin ||= @uid.present? && AuthenticationState.new('user_id' => @uid).policy.can_administrate_canvas?
     end
 
-    def user_authorized?
-      @uid.present? && (
-        user_admin? || (
-          @admin_acting_as.nil? &&
-          @admin_by_ccns.nil? &&
-          @admin_term_slug.nil?
-        )
-      )
-    end
-
     def working_uid
-      @admin_acting_as || @uid
+      (user_admin? && @admin_acting_as) || @uid
     end
 
     # moves courses with used sections to top of course list
