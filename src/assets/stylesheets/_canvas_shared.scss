@@ -4,6 +4,12 @@
   padding: 0;
 }
 
+.cc-canvas-no-decoration {
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+}
+
 // Site Provisioning Headers
 .cc-page-site-provisioning-header {
   color: $bc-color-off-black;

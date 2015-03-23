@@ -40,16 +40,16 @@
 
           <!-- Current Staging Actions -->
           <div data-ng-if="listMode === 'currentStaging' && section.isCourseSection">
-            <button class="bc-canvas-button cc-template-sections-table-button" data-ng-click="stageDeleteAction({section: section})">Delete</button>
+            <button class="bc-canvas-button cc-template-sections-table-button cc-canvas-no-decoration" data-ng-click="stageDeleteAction({section: section})">Delete</button>
           </div>
 
           <div data-ng-if="listMode === 'currentStaging' && !section.isCourseSection">
-            <button class="bc-canvas-button cc-template-sections-table-button cc-template-sections-table-button-undo-add" data-ng-click="unstageAction({section: section})">Undo Add</button>
+            <button class="bc-canvas-button cc-template-sections-table-button cc-template-sections-table-button-undo-add cc-canvas-no-decoration" data-ng-click="unstageAction({section: section})">Undo Add</button>
           </div>
 
           <!-- Available Staging Actions -->
           <div data-ng-if="listMode === 'availableStaging' && section.isCourseSection && section.stagedState === 'delete'">
-            <button class="bc-canvas-button cc-template-sections-table-button cc-template-sections-table-button-undo-delete" data-ng-click="unstageAction({section: section})">Undo Delete</button>
+            <button class="bc-canvas-button cc-template-sections-table-button cc-template-sections-table-button-undo-delete cc-canvas-no-decoration" data-ng-click="unstageAction({section: section})">Undo Delete</button>
           </div>
 
           <div data-ng-if="listMode === 'availableStaging' && !section.isCourseSection && section.stagedState === 'add'">
@@ -57,7 +57,7 @@
           </div>
 
           <div data-ng-if="listMode === 'availableStaging' && !section.isCourseSection && section.stagedState === null">
-            <button class="bc-canvas-button bc-canvas-button-primary cc-template-sections-table-button" data-ng-class="{'cc-template-sections-table-button-undo-add':(section.stagedState === 'add')}" data-ng-click="stageAddAction({section: section})">
+            <button class="bc-canvas-button bc-canvas-button-primary cc-template-sections-table-button cc-canvas-no-decoration" data-ng-class="{'cc-template-sections-table-button-undo-add':(section.stagedState === 'add')}" data-ng-click="stageAddAction({section: section})">
               Add
             </button>
           </div>
