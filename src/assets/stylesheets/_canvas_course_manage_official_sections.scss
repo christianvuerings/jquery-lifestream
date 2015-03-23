@@ -40,6 +40,14 @@
     margin-top: 10px;
   }
 
+  .cc-page-course-official-sections-form-course-button {
+    color: $bc-color-body-black;
+
+    &:focus, &:hover {
+      text-decoration: none;
+    }
+  }
+
   .cc-page-course-official-sections-form-collapse-icon {
     font-size: 18px;
     margin-left: 2px;
