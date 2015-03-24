@@ -5,6 +5,14 @@
   <div data-ng-show="feedFetched && !displayError">
     <div data-ng-show="is_admin">
 
+      <p role="alert" id="cc-page-reader-alert-ccn-mode" aria-live="polite" data-ng-if="adminMode === 'by_ccn'">
+        Mode Activated: Create Site using Course Creation Numbers
+      </p>
+
+      <p role="alert" id="cc-page-reader-alert-act-instructor-mode" aria-live="polite" data-ng-if="adminMode !== 'by_ccn'">
+        Mode Activated: Acting as instructor
+      </p>
+
       <div class="cc-widget">
         <button class="cc-button cc-page-create-course-site-admin-mode-switch"
                 data-ng-click="toggleAdminMode()">
@@ -30,7 +38,7 @@
                           data-ng-class="{'cc-button-selected':(currentAdminSemester==semester.slug)}"
                           aria-selected="{{currentAdminSemester==semester.slug}}"
                           role="tab"
-                          data-ng-bind="semester.name" aria-label="Load sections for {{semester.name}} term">
+                          data-ng-bind="semester.name" aria-label="Select {{semester.name}} term for site created by CCN">
                   </button>
                 </li>
               </ul>
