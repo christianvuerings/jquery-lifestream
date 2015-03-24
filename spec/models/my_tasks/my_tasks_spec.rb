@@ -23,74 +23,71 @@ describe "MyTasks" do
 
   end
 
-  it "should load nicely with the pre-recorded fake Google and Canvas proxy feeds using the server's timezone" do
-    original_time_zone = Time.zone
-    begin
+  context 'pre-recorded fake Google and Canvas proxy feeds using the server\'s timezone' do
+    before do
+      @original_time_zone = Time.zone
       Time.zone = 'America/Los_Angeles'
-      GoogleApps::Proxy.stub(:access_granted?).and_return(true)
-      Canvas::Proxy.stub(:access_granted?).and_return(true)
-      GoogleApps::TasksList.stub(:new).and_return(@fake_google_tasks_list_proxy)
-      Canvas::UpcomingEvents.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
-      Canvas::Todo.stub(:new).and_return(@fake_canvas_todo_proxy)
-      my_tasks_model = MyTasks::Merged.new(@user_id)
-      valid_feed = my_tasks_model.get_feed
+      allow(GoogleApps::Proxy).to receive(:access_granted?).and_return(true)
+      allow(Canvas::Proxy).to receive(:access_granted?).and_return(true)
+      allow(GoogleApps::TasksList).to receive(:new).and_return(@fake_google_tasks_list_proxy)
+      allow(Canvas::UpcomingEvents).to receive(:new).and_return(@fake_canvas_upcoming_events_proxy)
+      allow(Canvas::Todo).to receive(:new).and_return(@fake_canvas_todo_proxy)
+    end
 
-      # Counts for task types in VCR recording
-      overdue_counter = 5
+    after do
+      Time.zone = @original_time_zone
+    end
+
+    let(:my_tasks_model) { MyTasks::Merged.new(@user_id) }
+    let(:tasks) { my_tasks_model.get_feed['tasks'] }
+
+    it 'should sort tasks into the right buckets' do
+      expect(tasks.count{|task| task['bucket'] == 'Overdue'}).to eq 5
+      expect(tasks.count{|task| task['bucket'] == 'Unscheduled'}).to eq 2
+
       # On Sundays, no "later in the week" tasks can escape the "Today" bucket. Since this moves
       # some "Future" tasks to "Today", more total tasks will be in the feed on Sunday.
       if Time.zone.today.sunday?
-        today_counter = 7
-        future_counter = 9
+        expect(tasks.count{|task| task['bucket'] == 'Today'}).to eq 7
+        expect(tasks.count{|task| task['bucket'] == 'Future'}).to eq 9
       else
-        today_counter = 2
-        future_counter = 14
-      end
-      unscheduled_counter = 2
-
-      valid_feed["tasks"].each do |task|
-        task["title"].blank?.should == false
-        task["sourceUrl"].blank?.should == false
-
-        # Whitelist allowed property strings
-        whitelist = task["bucket"] =~ (/(Overdue|Today|Future|Unscheduled)$/i)
-        whitelist.should_not be_nil
-
-        case task["bucket"]
-          when "Overdue"
-            overdue_counter -= 1
-          when "Today"
-            today_counter -= 1
-          when "Future"
-            future_counter -= 1
-          when "Unscheduled"
-            unscheduled_counter -= 1
-        end
-
-        if task["emitter"] == GoogleApps::Proxy::APP_ID
-          task["linkUrl"].should == "https://mail.google.com/tasks/canvas?pli=1"
-          if task["dueDate"]
-            task["dueDate"]["dateString"] =~ /\d\d\/\d\d/
-            task["dueDate"]["epoch"].should >= 1351641600
-          end
-        end
-        if task["emitter"] == Canvas::Proxy::APP_NAME
-          task["linkUrl"].should =~ /https:\/\/ucberkeley.instructure.com\/courses/
-          task["linkUrl"].should == task["sourceUrl"]
-          if task["dueDate"]
-            task["dueDate"]["dateString"] =~ /\d\d\/\d\d/
-            task["dueDate"]["epoch"].should >= 1351641600
-          end
-        end
+        expect(tasks.count{|task| task['bucket'] == 'Today'}).to eq 2
+        expect(tasks.count{|task| task['bucket'] == 'Future'}).to eq 14
       end
 
-      overdue_counter.should == 0
-      today_counter.should == 0
-      future_counter.should == 0
-      unscheduled_counter.should == 0
-    ensure
-      Time.zone = original_time_zone
+      expect(tasks.count{|task| %w(Overdue Today Future Unscheduled).exclude? task['bucket']}).to eq 0
     end
+
+    it 'should include title and sourceUrl fields' do
+      expect(tasks.count{|task| task['title'].blank? || task['sourceUrl'].blank?}).to eq 0
+    end
+
+    it 'should include correctly formatted due dates' do
+      tasks.each do |task|
+        next if task['dueDate'].blank?
+        expect(task['dueDate']['dateString']).to match(/\A\d{1,2}\/\d{2}\Z/)
+        expect(task['dueDate']['epoch']).to be >=(1351641600)
+      end
+    end
+
+    it 'should include sensible link URLs and descriptions' do
+      canvas_tasks = tasks.select { |task| task['emitter'] == Canvas::Proxy::APP_NAME }
+      canvas_tasks.each do |task|
+        expect(task['linkUrl']).to start_with('https://ucberkeley.instructure.com/courses/')
+        expect(task['sourceUrl']).to eq task['linkUrl']
+      end
+
+      google_tasks = tasks.select { |task| task['emitter'] == GoogleApps::Proxy::APP_ID }
+      email_tasks = google_tasks.select { |task| task['linkDescription'] == 'View related email'}
+      expect(email_tasks.count).to eq 1
+      expect(email_tasks[0]['linkUrl']).to start_with('https://mail.google.com/mail/#all/')
+
+      (google_tasks - email_tasks).each do |task|
+        expect(task['linkDescription']).to be_nil
+        expect(task['linkUrl']).to be_nil
+      end
+    end
+
   end
 
   it "should fail general update_tasks param validation, missing required parameters" do

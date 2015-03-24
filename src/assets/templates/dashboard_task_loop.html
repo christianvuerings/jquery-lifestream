@@ -73,10 +73,10 @@
 
       <div class="cc-clearfix">
         <a class="cc-button"
-        data-ng-show="task.emitter=='bCourses'"
+        data-ng-show="task.linkDescription"
         data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', task.emitter, task.linkUrl)"
         data-ng-href="{{task.linkUrl}}">
-          View in {{task.emitter}}
+          <span data-ng-bind="task.linkDescription">
           <span class="cc-visuallyhidden" data-ng-bind-template="- {{ task.title }}"></span>
         </a>
 

@@ -127,7 +127,14 @@
                 "updated": "2012-11-30T08:59:46.000Z",
                 "selfLink": "https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDAxOTIxNjM1",
                 "position": "00000000001073741823",
-                "status": "needsAction"
+                "status": "needsAction",
+                "links": [
+                  {
+                    "type": "email",
+                    "description": "CLARIFICATION: No one gets near the sodium without goggles",
+                    "link": "https://mail.google.com/mail/#all/14c471d405b7b"
+                  }
+                ]
               },
               {
                 "kind": "tasks#task",
