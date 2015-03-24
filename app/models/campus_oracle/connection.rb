@@ -38,26 +38,27 @@ module CampusOracle
     end
 
     def self.stringify_ints!(results, additional_columns=[])
-      columns = ["ldap_uid", "student_id", "term_yr", "catalog_root", "course_cntl_num", "student_ldap_uid"] + additional_columns
+      columns = %w(ldap_uid student_id term_yr catalog_root course_cntl_num student_ldap_uid) + additional_columns
       if results.respond_to?(:to_ary)
-        result_array = results.to_ary
-        result_array.each do |row|
-          stringify_row!(row, columns)
-        end
-        return result_array
+        results.to_ary.each { |row| stringify_row!(row, columns) }
       else
-        return stringify_row!(results, columns)
+        stringify_row!(results, columns)
       end
     end
 
     def self.stringify_row!(row, columns)
-      return row unless row
-      columns.each do |column|
-        if row[column]
+      columns.each { |column| stringify_column!(row, column) }
+      row
+    end
+
+    def self.stringify_column!(row, column)
+      if row && row[column]
+        if column == 'course_cntl_num'
+          row[column] = '%05d' % row[column].to_i
+        else
           row[column] = row[column].to_i.to_s
         end
       end
-      row
     end
 
     # Oracle and H2 have no timestamp formatting function in common.
