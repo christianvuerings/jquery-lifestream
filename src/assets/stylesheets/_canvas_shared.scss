@@ -4,11 +4,23 @@
   padding: 0;
 }
 
+.cc-canvas-no-decoration {
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+}
+
 // Site Provisioning Headers
 .cc-page-site-provisioning-header {
   color: $bc-color-off-black;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: normal;
+}
+
+.cc-page-site-provisioning-header1 {
+  font-size: 24px;
+  line-height: 30px;
+  margin: 15px 0 16px;
 }
 
 .cc-page-site-provisioning-header2 {
@@ -178,6 +190,16 @@
   color: $bc-color-warning-foreground;
 }
 
+.cc-notice-warning-button {
+  color: $bc-color-warning-foreground;
+  text-decoration: none;
+
+  &:hover,&:focus {
+    color: $bc-color-warning-foreground-selected;
+    text-decoration: none;
+  }
+}
+
 .cc-notice-error {
   background-color: $bc-color-error-background;
   border: 1px solid $bc-color-error-border;
@@ -206,6 +228,128 @@
   margin: 10px 26px 0;
 }
 
+
+// Styling for Sections Form used by Course Provisioning and Official Sections LTI tools
+.cc-template-sections-table-container {
+
+  .cc-template-sections-table {
+    border-spacing: 0;
+    margin: 0;
+    width: 100%;
+
+    // disable alternating row color
+    tr:nth-of-type(even) {
+      background: inherit;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: $bc-color-grey-border-table-bottom solid 1px;
+      vertical-align: top;
+    }
+
+    tbody:last-child tr:last-child td {
+      border-bottom: 0;
+      vertical-align: top;
+    }
+
+    .cc-page-course-official-sections-table-row-disabled td {
+      color: $bc-color-grey-disabled;
+    }
+
+    .cc-page-course-official-sections-table-row-added td {
+      background-color: $bc-color-yellow-row-highlighted;
+    }
+
+    .cc-page-course-official-sections-table-row-deleted td {
+      background-color: $bc-color-red-row-highlighted;
+    }
+
+    .cc-template-sections-table-cell-section-action-option {
+      height: 45px;
+      text-align: right;
+      width: 85px;
+    }
+
+    .cc-template-sections-table-button {
+      font-size: 12px;
+      margin: 0;
+      padding: 2px 4px;
+    }
+
+    .cc-template-sections-table-button-undo-add {
+      background-color: $bc-color-orange-button-bg;
+      border: $bc-color-orange-button-border solid 1px;
+      color: $bc-color-white;
+      &:hover, &:active, &:focus, &:link {
+        background: $bc-color-orange-button-bg-selected;
+        border-color: $bc-color-orange-button-border-selected;
+      }
+    }
+
+    .cc-template-sections-table-button-undo-delete {
+      background-color: $bc-color-red-button-bg;
+      border: $bc-color-red-button-border solid 1px;
+      color: $bc-color-white;
+      &:hover, &:active, &:focus, &:link {
+        background: $bc-color-red-button-bg-selected;
+        border-color: $bc-color-red-button-border-selected;
+      }
+    }
+
+    .cc-template-sections-table-cell-checkbox {
+      width: 30px;
+    }
+
+    .cc-template-sections-table-cell-course-code {
+      font-weight: bold;
+      width: 115px;
+    }
+
+    .cc-template-sections-table-cell-section-label {
+      width: 75px;
+    }
+
+    .cc-template-sections-table-cell-section-ccn {
+      width: 70px;
+    }
+
+    .cc-template-sections-table-cell-section-timestamps {
+      width: 155px;
+    }
+
+    .cc-template-sections-table-cell-section-locations {
+      width: 150px;
+    }
+
+    .cc-template-sections-table-cell-section-instructors {
+      width: 190px;
+    }
+
+    .cc-template-sections-table-cell-section-label-label {
+      font-size: 13px;
+      margin: 0;
+      text-align: left;
+    }
+
+    .cc-template-sections-table-sited-icon {
+      color: $bc-color-help-link-blue;
+      font-size: 15px;
+      margin-right: 4px;
+      margin-top: 2px;
+    }
+
+    .cc-template-sections-table-sites-cell {
+      padding: 0 10px;
+    }
+
+    .cc-template-sections-table-sites-container {
+      margin-bottom: 5px;
+    }
+  }
+
+}
+
+// THIS IS DEPRECATED IN FAVOR OF TABLE BASED SECTION DISPLAY
 // Styling for Sections Form used by Course Provisioning and Official Sections LTI tools
 .cc-template-canvas-manage-sections {
 
@@ -223,46 +367,10 @@
     }
   }
 
-  .cc-template-canvas-manage-sections-margin {
-    margin: 0;
-    overflow: hidden;
-  }
-
-  .cc-template-canvas-manage-sections-form-course {
-    background: $bc-color-roster-background;
-    border: 1px solid $bc-color-roster-background;
-    cursor: pointer;
-    margin: 0 0 20px;
-    padding: 15px;
-  }
-
-  .cc-template-canvas-manage-sections-form-select-all-option {
-    font-size: 12px;
-    font-weight: normal;
-    margin: 6px 0 4px 2px;
-  }
-
-  .cc-template-canvas-manage-sections-form-select-all-option-button {
-    outline: none;
-  }
-
   .cc-template-canvas-manage-sections-checkbox {
     float: left;
     text-align: center;
     width: 30px;
-  }
-
-  .cc-template-canvas-manage-sections-form-collapse-icon {
-    font-size: 18px;
-    margin-left: 2px;
-  }
-
-  .cc-template-canvas-manage-sections-form-collapsible-container {
-    margin-top: 7px;
-  }
-
-  .cc-template-canvas-manage-sections-form-course-title {
-    margin-left: 10px;
   }
 
   .cc-template-canvas-manage-sections-course-code {

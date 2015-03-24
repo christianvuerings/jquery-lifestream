@@ -30,7 +30,7 @@
             </h3>
           </div>
           <div class="medium-2 columns cc-text-right">
-            <button data-ng-click="changeWorkflowStep('staging')" class="bc-canvas-button bc-canvas-button-primary" data-ng-if="isTeacher">
+            <button data-ng-click="changeWorkflowStep('staging')" class="bc-canvas-button bc-canvas-button-primary cc-canvas-no-decoration" data-ng-if="isTeacher">
               Edit Sections
             </button>
           </div>
@@ -41,7 +41,7 @@
             <div class="row">
               <div class="medium-12 columns">
                 <!-- *!*!*!*!*!*!* PREVIEW CURRENT SECTIONS *!*!*!*!*!*!* -->
-                <div data-bc-official-sections-table data-list-mode="'preview'" data-sections-list="existingCourseSections" data-row-class-logic="rowClassLogic(listMode, section)" data-row-display-logic="rowDisplayLogic(listMode, section)" data-no-current-sections="noCurrentSections()"></div>
+                <div data-bc-sections-table data-list-mode="'preview'" data-sections-list="existingCourseSections" data-row-class-logic="rowClassLogic(listMode, section)" data-row-display-logic="rowDisplayLogic(listMode, section)" data-no-current-sections="noCurrentSections()"></div>
                 <!-- *!*!*!*!*!*!* END PREVIEW CURRENT SECTIONS *!*!*!*!*!*!* -->
               </div>
             </div>
@@ -65,10 +65,10 @@
             </h3>
           </div>
           <div class="medium-3 columns cc-text-right">
-            <button data-ng-click="cancel()" class="bc-canvas-button" type="submit">
+            <button class="bc-canvas-button cc-canvas-no-decoration" data-ng-click="cancel()" type="submit" aria-label="Cancel section modifications for this course site">
               Cancel
             </button>
-            <button data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" class="bc-canvas-button bc-canvas-button-primary" type="submit">
+            <button class="bc-canvas-button bc-canvas-button-primary cc-canvas-no-decoration" data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" type="submit" aria-label="Apply pending modifications to this course site">
               Save Changes
             </button>
           </div>
@@ -79,7 +79,7 @@
             <div class="row">
               <div class="medium-12 columns">
                 <!-- *!*!*!*!*!*!* STAGING CURRENT SECTIONS *!*!*!*!*!*!* -->
-                <div data-bc-official-sections-table data-list-mode="'currentStaging'" data-sections-list="allSections" data-unstage-action="unstage(section)" data-stage-delete-action="stageDelete(section)" data-no-current-sections="noCurrentSections()" data-row-class-logic="rowClassLogic(listMode, section)" data-row-display-logic="rowDisplayLogic(listMode, section)"></div>
+                <div data-bc-sections-table data-list-mode="'currentStaging'" data-sections-list="allSections" data-unstage-action="unstage(section)" data-stage-delete-action="stageDelete(section)" data-no-current-sections="noCurrentSections()" data-row-class-logic="rowClassLogic(listMode, section)" data-row-display-logic="rowDisplayLogic(listMode, section)"></div>
                 <!-- *!*!*!*!*!*!* END STAGING CURRENT SECTIONS *!*!*!*!*!*!* -->
               </div>
             </div>
@@ -88,10 +88,10 @@
 
         <div data-ng-if="currentStagedCount() > 12" class="row">
           <div class="medium-12 columns cc-text-right">
-            <button data-ng-click="changeWorkflowStep('preview')" class="bc-canvas-button">
+            <button data-ng-click="changeWorkflowStep('preview')" class="bc-canvas-button" aria-label="Cancel section modifications for this course site">
               Cancel
             </button>
-            <button data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" class="bc-canvas-button bc-canvas-button-primary">
+            <button data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" class="bc-canvas-button bc-canvas-button-primary" aria-label="Apply pending modifications to this course site">
               Save Changes
             </button>
           </div>
@@ -113,7 +113,7 @@
           <div class="cc-page-course-official-sections-course-available" data-ng-repeat="course in courseSemester.classes">
 
             <div class="cc-page-course-official-sections-course">
-              <div data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
+              <button type="button" class="cc-button-link cc-page-course-official-sections-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
                 <i class="fa cc-left cc-page-course-official-sections-form-collapse-icon"
                   data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
                 <strong class="cc-page-course-official-sections-form-course-title">
@@ -123,18 +123,18 @@
                 <span data-ng-if="course.sections">
                   (<span data-ng-pluralize count="course.sections.length" when="{'one': '1 section', 'other': '{{course.sections.length}} sections'}"></span>)
                 </span>
-              </div>
+              </button>
 
               <div data-ng-attr-id="{{course.course_id}}" class="cc-page-course-official-sections-form-collapsible-container" data-ng-if="!course.collapsed" data-ng-attr-aria-expanded="{{!course.collapsed}}" role="region">
                 <div class="cc-page-course-official-sections-form-select-all-option" data-ng-if="course.sections.length > 1">
-                  <button class="cc-button-link cc-page-course-official-sections-form-select-all-option-button" type="button" data-ng-click="addAllSections(course)" data-ng-if="!allSectionsAdded(course)">Add All</button>
+                  <button class="cc-button-link cc-page-course-official-sections-form-select-all-option-button" type="button" data-ng-click="addAllSections(course)" data-ng-if="!allSectionsAdded(course)" aria-label="Add all sections for this course to the list of sections to be added">Add All</button>
                   <span data-ng-if="allSectionsAdded(course)">All Added</span>
                 </div>
 
                 <div class="row">
                   <div class="medium-12 columns">
                     <!-- *!*!*!*!*!*!* STAGING AVAILABLE SECTIONS *!*!*!*!*!*!* -->
-                    <div data-bc-official-sections-table data-list-mode="'availableStaging'" data-sections-list="course.sections" data-unstage-action="unstage(section)" data-stage-add-action="stageAdd(section)" data-row-class-logic="rowClassLogic(listMode, section)" data-row-display-logic="rowDisplayLogic(listMode, section)"></div>
+                    <div data-bc-sections-table data-list-mode="'availableStaging'" data-sections-list="course.sections" data-unstage-action="unstage(section)" data-stage-add-action="stageAdd(section)" data-row-class-logic="rowClassLogic(listMode, section)" data-row-display-logic="rowDisplayLogic(listMode, section)"></div>
                     <!-- *!*!*!*!*!*!* END STAGING AVAILABLE SECTIONS *!*!*!*!*!*!* -->
                   </div>
                 </div>
