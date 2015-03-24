@@ -159,7 +159,7 @@ module CampusOracle
 
       def row_to_section_data(row)
         section_data = {
-          ccn: get_ccn(row['course_cntl_num'].to_s),
+          ccn: row['course_cntl_num'].to_s,
           instruction_format: row['instruction_format'],
           is_primary_section: (row['primary_secondary_cd'] == 'P'),
           section_label: "#{row['instruction_format']} #{row['section_num']}",
@@ -178,11 +178,6 @@ module CampusOracle
         end
         section_data[:grade] = row['grade'].strip if row['grade'].present?
         section_data
-      end
-
-      def get_ccn(ccn)
-        return ccn unless ccn.length < 5
-        "0" * (5 - ccn.length) + ccn
       end
 
     end
