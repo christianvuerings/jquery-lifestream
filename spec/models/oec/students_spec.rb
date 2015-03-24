@@ -12,9 +12,10 @@ describe Oec::Students do
         if index > 0
           all_students_query << {
             'ldap_uid' => row[0],
-            'first_name' => row[1],
-            'last_name' => row[2],
-            'email_address' => row[3]
+            'sis_id' => row[1],
+            'first_name' => row[2],
+            'last_name' => row[3],
+            'email_address' => row[4]
           }
         end
       end
