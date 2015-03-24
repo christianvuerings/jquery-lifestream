@@ -5,11 +5,11 @@
   <div data-ng-show="feedFetched && !displayError">
     <div data-ng-show="is_admin">
 
-      <p role="alert" id="cc-page-reader-alert-ccn-mode" aria-live="polite" data-ng-if="adminMode === 'by_ccn'">
-        Mode Activated: Create Site using Course Creation Numbers
+      <p id="cc-page-reader-alert-ccn-mode" class="cc-visuallyhidden" role="alert" aria-live="polite" aria-relevant="text" data-ng-if="adminMode === 'by_ccn'">
+        Mode Activated: Create Site using a list of CCNs
       </p>
 
-      <p role="alert" id="cc-page-reader-alert-act-instructor-mode" aria-live="polite" data-ng-if="adminMode !== 'by_ccn'">
+      <p id="cc-page-reader-alert-act-instructor-mode" class="cc-visuallyhidden" role="alert" aria-live="polite" aria-relevant="text" data-ng-if="adminMode !== 'by_ccn'">
         Mode Activated: Acting as instructor
       </p>
 
@@ -22,9 +22,9 @@
       </div>
 
       <form data-ng-show="adminMode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-form cc-page-create-course-site-actas-form">
-        <label for="people-search" class="cc-visuallyhidden">Search People</label>
-        <input class="cc-left" placeholder="Instructor UID" data-ng-model="admin_acting_as" type="text" role="search" id="people-search" />
-        <button class="cc-button cc-button-blue" type="submit" aria-label="Act as instructor">As instructor</button>
+        <label for="instructor-uid" class="cc-visuallyhidden">Instructor UID</label>
+        <input class="cc-left" placeholder="Instructor UID" data-ng-model="admin_acting_as" type="text" role="search" id="instructor-uid" />
+        <button class="cc-button cc-button-blue" type="submit" aria-label="Load official sections for instructor">As instructor</button>
       </form>
 
       <div data-ng-show="adminMode === 'by_ccn'">
@@ -38,7 +38,7 @@
                           data-ng-class="{'cc-button-selected':(currentAdminSemester==semester.slug)}"
                           aria-selected="{{currentAdminSemester==semester.slug}}"
                           role="tab"
-                          data-ng-bind="semester.name" aria-label="Select {{semester.name}} term for site created by CCN">
+                          data-ng-bind="semester.name" aria-label="Select {{semester.name}} term">
                   </button>
                 </li>
               </ul>
