@@ -69,7 +69,11 @@ module Oec
       use_pooled_connection {
         sql = <<-SQL
         select distinct person.first_name, person.last_name,
-          person.email_address, person.ldap_uid, '' || person.student_id AS sis_id
+          person.email_address, person.ldap_uid,
+          CASE WHEN person.student_id IS NULL
+                 THEN 'UID:' || person.ldap_uid
+                 ELSE '' || person.student_id
+          END AS sis_id
         from calcentral_class_roster_vw r
         left outer join calcentral_person_info_vw person ON (person.ldap_uid = r.student_ldap_uid)
         left outer join calcentral_course_info_vw c ON (r.course_cntl_num = c.course_cntl_num)
@@ -124,9 +128,9 @@ module Oec
         c.section_num,
         c.primary_secondary_cd,
         c.course_title_short,
-        CASE WHEN p.student_id IS NOT NULL
-               THEN 'UID:' || p.student_id
-               ELSE NULL
+        CASE WHEN p.student_id IS NULL
+               THEN 'UID:' || p.ldap_uid
+               ELSE '' || p.student_id
         END AS sis_id,
         p.first_name,
         p.last_name,
