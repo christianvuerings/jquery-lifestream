@@ -117,7 +117,6 @@ module Canvas
           (section[:term_cd] == course_info[:term][:term_cd]) &&
           ccns_to_remove.include?(section[:ccn])
       end
-      sections_to_remove = filter_inaccessible_sections(candidate_courses_list, sections_to_remove)
       if sections_to_remove.present?
         sis_section_ids_to_remove = sections_to_remove.collect {|s| s['sis_section_id']}
         Canvas::SiteMembershipsMaintainer.remove_memberships(sis_course_id, sis_section_ids_to_remove,
@@ -135,12 +134,13 @@ module Canvas
     end
 
     def prepare_users_courses_list
-      raise RuntimeError, 'Unable to prepare course list. Term code not present.' if @import_data['term_slug'].blank?
+      raise RuntimeError, 'Unable to prepare course list. Term code not present.' if @import_data['term'].blank?
       raise RuntimeError, 'Unable to prepare course list. CCNs not present.' if @import_data['ccns'].blank?
 
       if @import_data['is_admin_by_ccns']
         # Admins can specify semester and CCNs directly, without access checks.
-        semester_wrapped_list = courses_list_from_ccns(@import_data['term_slug'], @import_data['ccns'])
+        data_formatter = MyAcademics::Teaching.new(@uid)
+        semester_wrapped_list = data_formatter.courses_list_from_ccns(@import_data['term'][:yr], @import_data['term'][:cd], @import_data['ccns'])
         courses_list = semester_wrapped_list.present? ?
           semester_wrapped_list[0][:classes] :
           []
@@ -301,27 +301,6 @@ module Canvas
       @candidate_courses_list
     end
 
-    # When an admin specifies CCNs directly, we cannot repurpose an existing MyAcademics::Teaching feed.
-    # Instead, mimic its data structure.
-    def courses_list_from_ccns(term_slug, ccns)
-      my_academics = MyAcademics::Teaching.new(@uid)
-      courses_list = []
-      term = find_term(:slug => term_slug)
-      raise RuntimeError, 'term_slug does not match a current term' if term.nil?
-      proxy = CampusOracle::UserCourses::SelectedSections.new({user_id: @uid})
-      feed = proxy.get_selected_sections(term[:yr], term[:cd], ccns)
-      feed.keys.each do |term_key|
-        semester = my_academics.semester_info term_key
-        feed[term_key].each do |course|
-          course_info = my_academics.course_info course
-          course_info[:sections].each { |section| section[:courseCode] = course_info[:course_code] }
-          semester[:classes] << course_info
-        end
-        courses_list << semester unless semester[:classes].empty?
-      end
-      courses_list
-    end
-
     def filter_courses_by_ccns(courses_list, term_slug, ccns)
       filtered = []
       idx = courses_list.index { |term| term[:slug] == term_slug }
@@ -344,22 +323,6 @@ module Canvas
         end
       end
       logger.warn("User #{@uid} tried to provision inaccessible CCNs: #{ccns.inspect}") if ccns.any?
-      filtered
-    end
-
-    def filter_inaccessible_sections(courses_list, sections)
-      filtered = sections.select do |section|
-        if (term_idx = courses_list.index {|term| (term[:termCode] == section[:term_cd]) &&
-          (term[:termYear] == section[:term_yr]) })
-           courses_list[term_idx][:classes].index do |course|
-             course[:sections].index {|campus_section| campus_section[:ccn] == section[:ccn]}
-           end
-        end
-      end
-      if filtered != sections
-        removed_section_ids = (sections - filtered).collect {|s| s['sis_section_id']}
-        logger.warn("User #{uid} tried to change inaccessible sections with IDs: #{removed_section_ids}")
-      end
       filtered
     end
 

@@ -5,14 +5,17 @@ describe Canvas::CourseProvision do
   let(:user_id) { rand(99999).to_s }
   let(:canvas_admin_id) { rand(99999).to_s }
   let(:canvas_course_id) { rand(999999).to_s }
-  let(:course_hash) { {'name' => 'JAVA for Minecraft Development', 'course_code' => 'COMPSCI 15B - SLF 001', 'term' => {'sis_term_id' => 'TERM:2013-D', 'name' => 'Fall 201'}} }
-  let(:official_sections) { [{:term_yr=>'2013', :term_cd=>'C', :ccn=>'7309'}] }
+  let(:course_hash) { {'name' => 'JAVA for Minecraft Development', 'course_code' => 'COMPSCI 15B - SLF 001', 'term' => {'sis_term_id' => 'TERM:2013-D', 'name' => 'Fall 2013'}} }
+  let(:teaching_ccn) { random_ccn }
+  let(:official_sections) { [{:term_yr=>'2013', :term_cd=>'D', :ccn=>teaching_ccn}] }
   let(:superuser_id) { rand(99999).to_s }
   let(:teaching_semesters) {
     [
       {
         :name => 'Fall 2013',
         :slug => 'fall-2013',
+        :termCode => 'D',
+        :termYear => '2013',
         :classes => [
           {
             :course_code => 'ENGIN 7',
@@ -21,7 +24,7 @@ describe Canvas::CourseProvision do
             :title => 'Introduction to Computer Programming for Scientists and Engineers',
             :role => 'Instructor',
             :sections => [
-              { :ccn => "#{rand(99999)}", :instruction_format => 'DIS', :is_primary_section => false, :section_label => 'DIS 102', :section_number => '102' }
+              { :ccn => teaching_ccn, :instruction_format => 'DIS', :is_primary_section => false, :section_label => 'DIS 102', :section_number => '102' }
             ]
           }
         ]
@@ -69,12 +72,15 @@ describe Canvas::CourseProvision do
       double(
         candidate_courses_list: (uid == instructor_id) ? teaching_semesters : [],
         current_terms: current_terms,
-        courses_list_from_ccns: by_ccns_course_list
+        find_term: {yr: '2014', cd: 'B'}
       )
     end
+    allow(MyAcademics::Teaching).to receive(:new).and_return(
+      instance_double(MyAcademics::Teaching, {courses_list_from_ccns: by_ccns_course_list})
+    )
   end
 
-  context 'when manging existing course sections' do
+  context 'when managing existing course sections' do
     before do
       allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
       allow_any_instance_of(Canvas::Course).to receive(:course).and_return(course_hash)
@@ -246,6 +252,7 @@ describe Canvas::CourseProvision do
         expect { subject.get_course_info }.to raise_error(RuntimeError, 'canvas_course_id option not present')
       end
     end
+
     context 'when managing sections for existing course site' do
       subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
       before do
@@ -271,11 +278,24 @@ describe Canvas::CourseProvision do
       end
 
       it 'should return official sections' do
-        allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
         result = subject.get_course_info
         expect(result).to be_an_instance_of Hash
         expect(result[:officialSections]).to eq official_sections
       end
+    end
+  end
+
+  describe '#find_nonteaching_site_sections' do
+    subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
+    it 'should return Canvas section IDs that are not in the list of authorized campus sections' do
+      missing_sections = [{term_yr: '2013', term_cd: 'C', ccn: random_ccn}]
+      fake_formatter = instance_double(MyAcademics::Teaching)
+      expect(fake_formatter).to receive(:courses_list_from_ccns).with('2013', 'C', [missing_sections[0][:ccn]]).and_return(missing_sections)
+      allow(MyAcademics::Teaching).to receive(:new).and_return(fake_formatter)
+      bigger_site_sections = official_sections + missing_sections
+      course_info = {term: {term_yr: '2013', term_cd: 'C'}, officialSections: bigger_site_sections}
+      inaccessible = subject.find_nonteaching_site_sections(teaching_semesters, course_info)
+      expect(inaccessible).to eq missing_sections
     end
   end
 
