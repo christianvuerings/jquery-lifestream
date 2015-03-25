@@ -246,4 +246,38 @@ describe Canvas::CourseUser do
     end
   end
 
+  context "when returning course user role types" do
+    before { allow(subject).to receive(:course_user).and_return(canvas_course_user) }
+    context 'when profile not available' do
+      before { allow(subject).to receive(:course_user).and_return(nil) }
+      it 'returns empty array' do
+        course_user_role_types = subject.role_types
+        expect(course_user_role_types).to eq []
+      end
+    end
+
+    context 'when enrollments not available in profile' do
+      before { canvas_course_user['enrollments'] = nil }
+      it 'returns empty array' do
+        course_user_role_types = subject.role_types
+        expect(course_user_role_types).to eq []
+      end
+    end
+
+    context 'when no enrollments present' do
+      before { canvas_course_user['enrollments'] = [] }
+      it 'returns empty array' do
+        course_user_role_types = subject.role_types
+        expect(course_user_role_types).to eq []
+      end
+    end
+
+    it 'returns array of role types' do
+      course_user_role_types = subject.role_types
+      expect(course_user_role_types).to be_an_instance_of Array
+      expect(course_user_role_types[0]).to eq 'StudentEnrollment'
+      expect(course_user_role_types[1]).to eq 'ObserverEnrollment'
+    end
+  end
+
 end
