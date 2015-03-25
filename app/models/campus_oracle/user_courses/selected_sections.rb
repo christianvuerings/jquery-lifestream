@@ -3,6 +3,8 @@ module CampusOracle
     class SelectedSections < Base
 
       def get_selected_sections(term_yr, term_cd, ccns)
+        # Sort to get canonical cache key.
+        ccns = ccns.sort
         self.class.fetch_from_cache "selected_sections-#{term_yr}-#{term_cd}-#{ccns.join(',')}" do
           campus_classes = {}
           sections = CampusOracle::Queries.get_sections_from_ccns(term_yr, term_cd, ccns)
@@ -15,6 +17,7 @@ module CampusOracle
               previous_item = item
             end
           end
+          merge_detailed_section_data(campus_classes)
           campus_classes
         end
       end

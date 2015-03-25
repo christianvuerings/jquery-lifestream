@@ -74,4 +74,36 @@ describe 'MyAcademics::Teaching' do
     it_should_behave_like 'a feed including crosslisted courses'
   end
 
+  describe '#courses_list_from_ccns' do
+    # Lock down to a known set of sections, either in the test DB or in real campus data.
+    let(:term) {
+      CampusOracle::Connection.test_data? ?  {yr: '2013', cd: 'D'} : {yr: '2013', cd: 'B'}
+    }
+    let(:good_ccns) { ['07309', '07366', '16171'] }
+    let(:bad_ccns) { ['919191'] }
+    subject do
+      MyAcademics::Teaching.new(random_id).courses_list_from_ccns(term[:yr], term[:cd], (good_ccns + bad_ccns))
+    end
+    it 'formats section information for known CCNs' do
+      expect(subject.length).to eq 1
+      classes_list = subject[0][:classes]
+      expect(classes_list.length).to eq 2
+      bio_class = classes_list[0]
+      expect(bio_class[:course_code]).to eq 'BIOLOGY 1A'
+      expect(bio_class[:sections].first[:courseCode]).to eq 'BIOLOGY 1A'
+      expect(bio_class[:dept]).to eq 'BIOLOGY'
+      sections = bio_class[:sections]
+      expect(sections.length).to eq 2
+      expect(sections[0][:ccn].to_i).to eq 7309
+      expect(sections[0][:section_label]).to eq 'LEC 003'
+      expect(sections[0][:is_primary_section]).to be_truthy
+      expect(sections[1][:ccn].to_i).to eq 7366
+      expect(sections[1][:is_primary_section]).to be_falsey
+      cog_sci_class = classes_list[1]
+      sections = cog_sci_class[:sections]
+      expect(sections.length).to eq 1
+      expect(sections[0][:ccn].to_i).to eq 16171
+    end
+  end
+
 end

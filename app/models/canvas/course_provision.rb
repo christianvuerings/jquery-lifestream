@@ -22,10 +22,18 @@ module Canvas
           get_feed_internal
         end
       end
-      if @canvas_course_id.present?
-        feed.merge!({:canvas_course => get_course_info})
-        group_by_used!(feed)
+      merge_site_sections_into_feed(feed) if @canvas_course_id.present?
+      feed
+    end
+
+    def merge_site_sections_into_feed(feed)
+      teaching_semesters = feed[:teachingSemesters]
+      course_info = get_course_info
+      feed[:canvas_course] = course_info
+      if (additional_site_sections = find_nonteaching_site_sections(teaching_semesters, course_info))
+        merge_non_teaching_site_sections(teaching_semesters, additional_site_sections)
       end
+      group_by_used!(feed)
       feed
     end
 
@@ -76,6 +84,55 @@ module Canvas
       course_info
     end
 
+    def find_nonteaching_site_sections(teachingSemesters, course_info)
+      term_year = course_info[:term][:term_yr]
+      term_code = course_info[:term][:term_cd]
+      teaching_semester_idx = teachingSemesters.index do |semester|
+        semester[:termYear] == term_year &&
+          semester[:termCode] == term_code
+      end
+      teaching_classes = teaching_semester_idx ? teachingSemesters[teaching_semester_idx][:classes] : []
+      missing_sections = course_info[:officialSections].select do |site_section|
+        if site_section[:term_yr] == term_year && site_section[:term_cd] == term_code
+          found_it = teaching_classes.index do |course|
+            course[:sections].index {|campus_section| campus_section[:ccn] == site_section[:ccn]}
+          end
+          !found_it
+        end
+      end
+      if missing_sections.present?
+        missing_ccns = missing_sections.collect {|s| s[:ccn]}
+        MyAcademics::Teaching.new(@uid).courses_list_from_ccns(term_year, term_code, missing_ccns)
+      end
+    end
+
+    def merge_non_teaching_site_sections(teaching_semesters, missing_sections_feed)
+      missing_sections_feed.each do |missing_sections_semester|
+        teaching_semester_idx = teaching_semesters.index do |semester|
+          semester[:termYear] == missing_sections_semester[:termYear] &&
+            semester[:termCode] == missing_sections_semester[:termCode]
+        end
+        if teaching_semester_idx
+          teaching_semester_classes = teaching_semesters[teaching_semester_idx][:classes]
+          missing_sections_semester[:classes].each do |missing_sections_course|
+            missing_course_code = missing_sections_course[:course_code]
+            teaching_class_idx = teaching_semester_classes.index do |teaching_course|
+              teaching_course[:listings].index {|l| l[:course_code] == missing_course_code}
+            end
+            if teaching_class_idx
+              teaching_sections = teaching_semester_classes[teaching_class_idx][:sections]
+              # TODO Make the ordering match normal logic.
+              teaching_semester_classes[teaching_class_idx][:sections] = missing_sections_course[:sections] + teaching_sections
+            else
+              teaching_semester_classes << missing_sections_course
+            end
+          end
+        else
+          teaching_semesters << missing_sections_semester
+        end
+      end
+    end
+
     def get_feed_internal
       worker = Canvas::ProvideCourseSite.new(working_uid)
       feed = {
@@ -89,10 +146,12 @@ module Canvas
 
     def get_feed_by_ccns_internal
       worker = Canvas::ProvideCourseSite.new(@uid)
+      term = worker.find_term(slug: @admin_term_slug)
+      courses = MyAcademics::Teaching.new(@uid).courses_list_from_ccns(term[:yr], term[:cd], @admin_by_ccns)
       feed = {
         is_admin: user_admin?,
         admin_semesters: worker.current_terms,
-        teachingSemesters: worker.courses_list_from_ccns(@admin_term_slug, @admin_by_ccns)
+        teachingSemesters: courses
       }
       feed
     end

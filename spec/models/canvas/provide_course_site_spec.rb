@@ -242,6 +242,7 @@ describe Canvas::ProvideCourseSite do
     before do
       subject.instance_eval do
         @import_data['term_slug'] = 'fall-2013'
+        @import_data['term'] = {yr: '2013', cd: 'D'}
         @import_data['ccns'] = ['21136', '21204']
       end
       @filtered_courses_list = [
@@ -260,7 +261,10 @@ describe Canvas::ProvideCourseSite do
     end
 
     it 'raises exception if term slug not present in import data set' do
-      subject.instance_eval { @import_data['term_slug'] = nil }
+      subject.instance_eval do
+        @import_data['term_slug'] = nil
+        @import_data['term'] = nil
+      end
       expect { subject.prepare_users_courses_list }.to raise_error(RuntimeError, 'Unable to prepare course list. Term code not present.')
     end
 
@@ -281,10 +285,12 @@ describe Canvas::ProvideCourseSite do
     end
 
     it 'lets admins specify CCNs directly' do
+      fake_formatter = instance_double(MyAcademics::Teaching)
+      expect(MyAcademics::Teaching).to receive(:new).with(uid).and_return(fake_formatter)
+      expect(fake_formatter).to receive(:courses_list_from_ccns).and_return(@filtered_courses_list)
       subject.instance_eval { @import_data['is_admin_by_ccns'] = true }
       expect(subject).to_not receive(:candidate_courses_list)
       expect(subject).to_not receive(:filter_courses_by_ccns)
-      expect(subject).to receive(:courses_list_from_ccns).and_return(@filtered_courses_list)
       subject.prepare_users_courses_list
     end
 
@@ -784,20 +790,6 @@ describe Canvas::ProvideCourseSite do
       end
     end
 
-    describe '#filter_inaccessible_sections' do
-      it 'should remove Canvas section IDs that are not in the list of authorized campus sections' do
-        official_sections = @selected_cnns.collect do |ccn|
-          {
-            'sis_section_id' => "SEC:2013-D-#{ccn}",
-            term_yr: '2013',
-            term_cd: 'D',
-            ccn: ccn
-          }
-        end
-        filtered = subject.filter_inaccessible_sections(@candidate_terms_list, official_sections)
-        expect(filtered).to eq [official_sections[1], official_sections[2]]
-      end
-    end
   end
 
   describe '#generate_course_site_definition' do
@@ -1023,42 +1015,6 @@ describe Canvas::ProvideCourseSite do
 
       result = subject.find_term(:meat => 'hotdog')
       expect(result).to be_nil
-    end
-  end
-
-  describe '#courses_list_from_ccns' do
-    # Lock down to a known set of sections, either in the test DB or in real campus data.
-    let(:term_codes_array) {
-      CampusOracle::Connection.test_data? ?
-          [{yr: '2013', cd: 'D', slug: 'fall-2013'}] :
-          [{yr: '2013', cd: 'B', slug: 'spring-2013'}]
-    }
-    let(:good_ccns) { [7309, 7366, 16171] }
-    before { subject.stub(:current_terms).and_return(term_codes_array)}
-    it 'raises exception if term slug does not match current term' do
-      expect { subject.courses_list_from_ccns('summer-5469', good_ccns) }.to raise_error(RuntimeError, 'term_slug does not match a current term')
-    end
-    it 'formats section information for known CCNs' do
-      bad_ccns = [919191]
-      semesters_list = subject.courses_list_from_ccns(term_codes_array[0][:slug], (good_ccns + bad_ccns))
-      expect(semesters_list.length).to eq 1
-      classes_list = semesters_list[0][:classes]
-      expect(classes_list.length).to eq 2
-      bio_class = classes_list[0]
-      expect(bio_class[:course_code]).to eq 'BIOLOGY 1A'
-      expect(bio_class[:sections].first[:courseCode]).to eq 'BIOLOGY 1A'
-      expect(bio_class[:dept]).to eq 'BIOLOGY'
-      sections = bio_class[:sections]
-      expect(sections.length).to eq 2
-      expect(sections[0][:ccn].to_i).to eq 7309
-      expect(sections[0][:section_label]).to eq 'LEC 003'
-      expect(sections[0][:is_primary_section]).to be_truthy
-      expect(sections[1][:ccn].to_i).to eq 7366
-      expect(sections[1][:is_primary_section]).to be_falsey
-      cog_sci_class = classes_list[1]
-      sections = cog_sci_class[:sections]
-      expect(sections.length).to eq 1
-      expect(sections[0][:ccn].to_i).to eq 16171
     end
   end
 

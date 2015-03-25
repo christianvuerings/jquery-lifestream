@@ -180,6 +180,21 @@ module CampusOracle
         section_data
       end
 
+      def merge_detailed_section_data(campus_classes)
+        campus_classes.values.each do |semester|
+          semester.each do |course|
+            # Remove any duplicates from campus data.
+            course[:sections].uniq!
+            course[:sections].each do |section|
+              proxy = CampusOracle::CourseSections.new({term_yr: course[:term_yr],
+                  term_cd: course[:term_cd],
+                  ccn: section[:ccn]})
+              section.merge!(proxy.get_section_data)
+            end
+          end
+        end
+      end
+
     end
   end
 end
