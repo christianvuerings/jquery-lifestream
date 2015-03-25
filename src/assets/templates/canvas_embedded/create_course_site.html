@@ -118,7 +118,7 @@
                   <ul class="cc-page-create-course-site-section-margin">
                     <li data-ng-repeat="course in coursesList" class="cc-page-create-course-site-form-course">
 
-                      <button type="button" class="cc-button-link cc-page-create-course-site-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}" aria-label="Toggle course sections list">
+                      <button type="button" class="cc-button-link cc-page-create-course-site-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}" aria-label="Toggle course sections list for {{course.course_code}} {{course.title}}">
                         <i class="fa cc-left cc-page-create-course-site-form-collapse-icon"
                           data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
                         <strong class="cc-page-create-course-site-form-course-title">
@@ -160,10 +160,10 @@
 
         <div id="cc-page-create-course-site-confirmation-step" data-ng-show="currentWorkflowStep === 'confirmation'" data-ng-aria-expanded="{{currentWorkflowStep === 'confirmation'}}" role="region">
           <div class="cc-page-create-course-site-confirmation">
-            <div data-ng-if="selectedSections(coursesList).length === 1">
+            <div data-ng-if="selectedSections(coursesList).length === 1" aria-live="polite" region="alert">
               <strong>You are about to create 1 course site with 1 section:</strong>
             </div>
-            <div data-ng-if="selectedSections(coursesList).length > 1">
+            <div data-ng-if="selectedSections(coursesList).length > 1" aria-live="polite" region="alert">
               <strong>You are about to create 1 course site with these <span data-ng-bind="selectedSections(coursesList).length"></span> sections:</strong>
             </div>
             <ul class="cc-page-create-course-site-section-list">
