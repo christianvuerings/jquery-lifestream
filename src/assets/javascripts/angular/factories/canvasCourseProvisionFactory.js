@@ -38,7 +38,7 @@
     /*
      * Initializes selected and course site association states in semesters feed
      */
-    var fillCourseSites = function(semestersFeed) {
+    var fillCourseSites = function(semestersFeed, canvasCourseId) {
       angular.forEach(semestersFeed, function(semester) {
         angular.forEach(semester.classes, function(course) {
           course.collapsed = !course.containsCourseSections;
@@ -48,13 +48,15 @@
           var ccnToSites = {};
           angular.forEach(course.class_sites, function(site) {
             if (site.emitter === 'bCourses') {
-              angular.forEach(site.sections, function(siteSection) {
-                hasSites = true;
-                if (!ccnToSites[siteSection.ccn]) {
-                  ccnToSites[siteSection.ccn] = [];
-                }
-                ccnToSites[siteSection.ccn].push(site);
-              });
+              if (site.id !== canvasCourseId) {
+                angular.forEach(site.sections, function(siteSection) {
+                  hasSites = true;
+                  if (!ccnToSites[siteSection.ccn]) {
+                    ccnToSites[siteSection.ccn] = [];
+                  }
+                  ccnToSites[siteSection.ccn].push(site);
+                });
+              }
             }
           });
           if (hasSites) {
@@ -106,7 +108,13 @@
         return feedResponse;
       }
       feedResponse.data.usersClassCount = classCount(feedResponse.data.teachingSemesters);
-      fillCourseSites(feedResponse.data.teachingSemesters);
+      var canvasCourseId;
+      if (feedResponse.data.canvas_course) {
+        canvasCourseId = '' + feedResponse.data.canvas_course.canvasCourseId;
+      } else {
+        canvasCourseId = '';
+      }
+      fillCourseSites(feedResponse.data.teachingSemesters, canvasCourseId);
       return feedResponse;
     };
 
