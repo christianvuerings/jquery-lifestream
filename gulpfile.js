@@ -14,7 +14,7 @@
   // Rename files
   var rename = require('gulp-rename');
 
- // Base options for the command line
+  // Base options for the command line
   var baseOptions = {
     string: 'env',
     default: {
@@ -329,11 +329,12 @@
         }
       }))
       .pipe(gulp.dest('public/assets/'));
-      // Keep the following lines for debugging purposes
-      // This puts out a manifest file with the links to all the resources
-      // e.g. "fonts/FontAwesome.otf": "/fonts/FontAwesome.4f97a8a6.otf",
-      // .pipe(revall.manifest())
-      // .pipe(gulp.dest('public/assets/'));
+
+    // Keep the following lines for debugging purposes
+    // This puts out a manifest file with the links to all the resources
+    // e.g. "fonts/FontAwesome.otf": "/fonts/FontAwesome.4f97a8a6.otf",
+    // .pipe(revall.manifest())
+    // .pipe(gulp.dest('public/assets/'));
   });
 
   /**

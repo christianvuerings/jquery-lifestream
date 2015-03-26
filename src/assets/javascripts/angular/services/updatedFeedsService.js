@@ -71,8 +71,8 @@
     };
 
     var polling = function(autoRefresh) {
-      $http.get('/api/my/updated_feeds').success(function(data) {
       // $http.get('/dummy/json/updated_feeds.json').success(function(data) {
+      $http.get('/api/my/updated_feeds').success(function(data) {
         parseUpdatedFeeds(data, autoRefresh);
         $timeout(polling, getPollInterval() * 1000);
       }).error(function(data, responseCode) {
