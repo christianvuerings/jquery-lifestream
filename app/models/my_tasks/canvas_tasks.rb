@@ -65,15 +65,15 @@ module MyTasks
           formatted_entry = entry_from_result(result['assignment'], result['assignment']['name'], result['course_id'])
           formatted_entry['notes'] = sanitize_html(result['assignment']['description']) if result['assignment']['description'].present?
 
-          due_date = convert_date result['assignment']['due_at']
+          due_date = convert_datetime_or_date result['assignment']['due_at']
           format_date_and_bucket(formatted_entry, due_date)
           # All scheduled assignments come back from Canvas with a timestamp, even if none selected. Ferret out untimed assignments.
           if due_date
-            formatted_entry['dueDate']['hasTime'] = !(due_date.hour.zero? && due_date.minute.zero? && due_date.second.zero?)
+            formatted_entry['dueDate']['hasTime'] = due_date.is_a?(DateTime)
           end
 
           if formatted_entry['bucket'] == 'Unscheduled'
-            updated_date = convert_date(result['assignment']['updated_at'] || result['assignment']['created_at'])
+            updated_date = convert_datetime_or_date(result['assignment']['updated_at'] || result['assignment']['created_at'])
             format_date_into_entry!(updated_date, formatted_entry, 'updatedDate')
           end
 
@@ -89,7 +89,7 @@ module MyTasks
         # Skip assignments shown to graders (as opposed to students).
         if result['assignment']['needs_grading_count'].nil?
           formatted_entry = entry_from_result(result, result['title'], result['assignment']['course_id'])
-          format_date_and_bucket(formatted_entry, convert_date(result['start_at']))
+          format_date_and_bucket(formatted_entry, convert_datetime_or_date(result['start_at']))
           formatted_entry
         end
       end

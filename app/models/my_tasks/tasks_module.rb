@@ -60,5 +60,17 @@ module MyTasks
       end
     end
 
+    def convert_datetime_or_date(date)
+      if date.blank?
+        d = nil
+      else
+        d = DateTime.parse(date.to_s)
+      end
+      if d && d.hour.zero? && d.minute.zero? && d.second.zero?
+        d = Date.parse(date.to_s)
+      end
+      d
+    end
+
   end
 end
