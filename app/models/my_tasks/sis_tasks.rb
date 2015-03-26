@@ -51,10 +51,10 @@ module MyTasks
 
     def format_checklist(result)
       formatted_entry = entry_from_result result
-      due_date = convert_date result['PERSON_CHKLST_ITEM']['DUE_DT']
+      due_date = convert_datetime_or_date result['PERSON_CHKLST_ITEM']['DUE_DT']
       format_date_and_bucket(formatted_entry, due_date)
       if due_date
-        formatted_entry['dueDate']['hasTime'] = !(due_date.hour.zero? && due_date.minute.zero? && due_date.second.zero?)
+        formatted_entry['dueDate']['hasTime'] = due_date.is_a?(DateTime)
       end
       formatted_entry
     end
