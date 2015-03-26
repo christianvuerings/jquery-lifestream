@@ -1,0 +1,25 @@
+<SCC_GET_CHKLST_RESP xmlns="http://xmlns.oracle.com/Enterprise/HCM/services">
+  <PERSON_CHKLST_ITEM>
+    <EMPLID>AD1000</EMPLID>
+    <SEQ_3C>1</SEQ_3C>
+    <CHECKLIST_SEQ>100</CHECKLIST_SEQ>
+    <CHKLST_ITEM_CD>TOEFL</CHKLST_ITEM_CD>
+    <ITEM_STATUS>I</ITEM_STATUS>
+    <ITEM_STATUS_LOVDescr>Initiated</ITEM_STATUS_LOVDescr>
+    <CHECKLIST_CD_DESCR>Test of Engl as a Foreign Lang</CHECKLIST_CD_DESCR>
+    <INFORMATION>All international applicants for whom English is not a native language must have their results from the
+      Test of English as a Foreign Language (TOEFL) submitted directly to us from the testing agency.
+    </INFORMATION>
+    <DUE_DT>2015-05-01</DUE_DT>
+    <ADMIN_FUNCTION>ADMA</ADMIN_FUNCTION>
+    <ADMIN_FUNCTION_DESCR>Admissions Application</ADMIN_FUNCTION_DESCR>
+    <INSTITUTION>PSUNV</INSTITUTION>
+    <INSTITUTION_DESCR>PeopleSoft University</INSTITUTION_DESCR>
+    <RESPONSIBLE_ID>KU0007</RESPONSIBLE_ID>
+    <EMAIL_ADDR/>
+    <VAR_DATA_SEQ>1</VAR_DATA_SEQ>
+    <ASSOC_ID/>
+    <NAME/>
+    <RESPONSIBLE_NAME>Locherty,Betty</RESPONSIBLE_NAME>
+  </PERSON_CHKLST_ITEM>
+</SCC_GET_CHKLST_RESP>

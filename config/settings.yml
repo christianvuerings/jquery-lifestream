@@ -335,3 +335,9 @@ advising_proxy:
   base_url: 'https://bhive.berkeley.edu/api'
   username: secret
   password: secret
+
+checklist_proxy:
+  fake: true
+  base_url: 'http://sis-demo-02.is.berkeley.edu/PSIGW/PeopleSoftServiceListeningConnector/SCC_CONSTITUENT.1.wsdl'
+  username: secret
+  password: secret
