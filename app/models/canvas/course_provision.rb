@@ -22,19 +22,24 @@ module Canvas
           get_feed_internal
         end
       end
-      merge_site_sections_into_feed(feed) if @canvas_course_id.present?
-      feed
+      if @canvas_course_id.present?
+        get_site_sections_feed(feed)
+      else
+        feed
+      end
     end
 
-    def merge_site_sections_into_feed(feed)
-      teaching_semesters = feed[:teachingSemesters]
+    def get_site_sections_feed(feed)
+      # Do not modify the cached non-site-specific feed.
+      site_sections_feed = feed.deep_dup
+      teaching_semesters = site_sections_feed[:teachingSemesters]
       course_info = get_course_info
-      feed[:canvas_course] = course_info
+      site_sections_feed[:canvas_course] = course_info
       if (additional_site_sections = find_nonteaching_site_sections(teaching_semesters, course_info))
         merge_non_teaching_site_sections(teaching_semesters, additional_site_sections)
       end
-      group_by_used!(feed)
-      feed
+      group_by_used!(site_sections_feed)
+      site_sections_feed
     end
 
     def instance_key
