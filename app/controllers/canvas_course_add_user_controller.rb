@@ -18,7 +18,7 @@ class CanvasCourseAddUserController < ApplicationController
   # GET /api/academics/canvas/course_user_roles
   def course_user_roles
     profile = user_profile
-    render json: { courseId: canvas_course_id, roles: profile[:roles], grantingRoles: profile[:grantingRoles] }.to_json
+    render json: { courseId: canvas_course_id, roles: profile[:roles], roleTypes: profile[:roleTypes], grantingRoles: profile[:grantingRoles] }.to_json
   end
 
   # GET /api/academics/canvas/course_add_user/search_users.json
@@ -53,10 +53,12 @@ class CanvasCourseAddUserController < ApplicationController
 
   def user_profile
     canvas_user_profile = Canvas::SisUserProfile.new(user_id: session['user_id']).get
-    course_user_roles = Canvas::CourseUser.new(:user_id => canvas_user_profile['id'], :course_id => canvas_course_id).roles
+    course_user_worker = Canvas::CourseUser.new(:user_id => canvas_user_profile['id'], :course_id => canvas_course_id)
+    course_user_roles = course_user_worker.roles
+    course_user_role_types = course_user_worker.role_types
     global_admin = Canvas::Admins.new.admin_user?(session['user_id'])
     granting_roles = Canvas::CourseAddUser.granting_roles(course_user_roles, global_admin)
-    { roles: course_user_roles.merge({'globalAdmin' => global_admin}), grantingRoles: granting_roles }
+    { roles: course_user_roles.merge({'globalAdmin' => global_admin}), roleTypes: course_user_role_types, grantingRoles: granting_roles }
   end
 
 end

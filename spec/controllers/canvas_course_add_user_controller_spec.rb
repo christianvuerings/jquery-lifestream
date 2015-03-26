@@ -77,6 +77,11 @@ describe CanvasCourseAddUserController do
             expect(roles['observer']).to be_falsey
             expect(roles['designer']).to be_falsey
             expect(roles['ta']).to be_falsey
+
+            role_types = response_json['roleTypes']
+            expect(role_types).to be_an_instance_of Array
+            expect(role_types.count).to eq 1
+            expect(role_types[0]).to eq 'StudentEnrollment'
           end
 
           it "returns no granting roles" do
@@ -107,6 +112,11 @@ describe CanvasCourseAddUserController do
             expect(roles['observer']).to be_falsey
             expect(roles['designer']).to be_falsey
             expect(roles['ta']).to be_truthy
+
+            role_types = response_json['roleTypes']
+            expect(role_types).to be_an_instance_of Array
+            expect(role_types.count).to eq 1
+            expect(role_types[0]).to eq 'TaEnrollment'
           end
 
           it "returns student and observer granting roles" do
@@ -121,7 +131,6 @@ describe CanvasCourseAddUserController do
             expect(response_json['grantingRoles']).to include({'id' => "StudentEnrollment", "name" => "Student"})
             expect(response_json['grantingRoles']).to include({'id' => "ObserverEnrollment", "name" => "Observer"})
           end
-
         end
 
         context "when user is canvas course teacher" do
@@ -144,6 +153,11 @@ describe CanvasCourseAddUserController do
             expect(roles['observer']).to be_falsey
             expect(roles['designer']).to be_falsey
             expect(roles['ta']).to be_falsey
+
+            role_types = response_json['roleTypes']
+            expect(role_types).to be_an_instance_of Array
+            expect(role_types.count).to eq 1
+            expect(role_types[0]).to eq 'TeacherEnrollment'
           end
 
           it "returns all granting roles" do
@@ -169,6 +183,7 @@ describe CanvasCourseAddUserController do
             expect(response.status).to eq(200)
             response_json = JSON.parse(response.body)
             expect(response_json['roles']).to be_an_instance_of Hash
+
             roles = response_json['roles']
             expect(roles).to be_an_instance_of Hash
             expect(roles['globalAdmin']).to be_truthy
@@ -177,6 +192,9 @@ describe CanvasCourseAddUserController do
             expect(roles['observer']).to be_falsey
             expect(roles['designer']).to be_falsey
             expect(roles['ta']).to be_falsey
+
+            role_types = response_json['roleTypes']
+            expect(role_types).to eq []
           end
 
           it "returns all granting roles" do
