@@ -14,7 +14,7 @@ describe CampusSolutions::Checklist do
     let(:feed) { fake_proxy.get[:feed] }
 
     it 'returns JSON fixture data by default' do
-      expect(feed['PERSON_CHKLST_ITEM']['EMPLID']).to eq 'AD1000'
+      expect(feed['PERSON_CHKLST_ITEM'][0]['EMPLID']).to eq '3030000004'
     end
     it 'can be overridden to return errors' do
       fake_proxy.set_response(status: 506, body: '')

@@ -19,16 +19,17 @@ module MyTasks
     private
 
     def collect_results(response)
-      results = []
-      if (response && response[:feed] && result = response[:feed])
-        logger.info "Sorting SIS Checklist feed into buckets with starting_date #{@starting_date}; #{result}"
-        # TODO add handling for multiple results when we have mock data that has multiple examples.
-        if (formatted_entry = yield result)
-          logger.debug "Adding Checklist task with dueDate: #{formatted_entry['dueDate']} in bucket '#{formatted_entry['bucket']}': #{formatted_entry}"
-          results << formatted_entry
+      collected_results = []
+      if (response && response[:feed] && results = response[:feed]['PERSON_CHKLST_ITEM'])
+        logger.info "Sorting SIS Checklist feed into buckets with starting_date #{@starting_date}; #{results}"
+        results.each do |result|
+          if (formatted_entry = yield result)
+            logger.debug "Adding Checklist task with dueDate: #{formatted_entry['dueDate']} in bucket '#{formatted_entry['bucket']}': #{formatted_entry}"
+            collected_results << formatted_entry
+          end
         end
       end
-      results
+      collected_results
     end
 
     def entry_from_result(result)
@@ -38,8 +39,8 @@ module MyTasks
         'linkUrl' => 'http://sisproject.berkeley.edu',
         'sourceUrl' => 'http://sisproject.berkeley.edu',
         'status' => 'inprogress',
-        'title' => result['PERSON_CHKLST_ITEM']['CHECKLIST_CD_DESCR'],
-        'notes' => result['PERSON_CHKLST_ITEM']['INFORMATION'],
+        'title' => result['CHECKLIST_CD_DESCR'],
+        'notes' => result['INFORMATION'],
         'type' => 'task'
       }
     end
@@ -51,7 +52,7 @@ module MyTasks
 
     def format_checklist(result)
       formatted_entry = entry_from_result result
-      due_date = convert_datetime_or_date result['PERSON_CHKLST_ITEM']['DUE_DT']
+      due_date = convert_datetime_or_date result['DUE_DT']
       format_date_and_bucket(formatted_entry, due_date)
       if due_date
         formatted_entry['dueDate']['hasTime'] = due_date.is_a?(DateTime)
