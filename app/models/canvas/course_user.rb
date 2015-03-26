@@ -67,6 +67,12 @@ module Canvas
       roles_hash
     end
 
+    def role_types
+      profile = course_user
+      return [] if profile.nil? || profile['enrollments'].nil? || profile['enrollments'].empty?
+      role_types = profile['enrollments'].collect {|enrollment| enrollment['type'] }
+    end
+
     # Do not need to log a stack trace when the user is not a course site member.
     def existence_check
       true

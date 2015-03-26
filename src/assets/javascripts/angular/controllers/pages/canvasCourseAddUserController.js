@@ -144,10 +144,11 @@
     var checkAuthorization = function() {
       canvasCourseAddUserFactory.courseUserRoles($scope.canvasCourseId).success(function(data) {
         $scope.courseUserRoles = data.roles;
+        $scope.courseUserRoleTypes = data.roleTypes;
         $scope.grantingRoles = data.grantingRoles;
         $scope.selectedRole = $scope.grantingRoles[0];
 
-        $scope.userAuthorized = userIsAuthorized($scope.courseUserRoles);
+        $scope.userAuthorized = userIsAuthorized($scope.courseUserRoleTypes) || $scope.courseUserRoles.globalAdmin;
         if ($scope.userAuthorized) {
           getCourseSections();
           $scope.showSearchForm = true;
@@ -180,11 +181,11 @@
       });
     };
 
-    var userIsAuthorized = function(courseUserRoles) {
-      if (courseUserRoles.globalAdmin || courseUserRoles.teacher || courseUserRoles.ta || courseUserRoles.designer || courseUserRoles.owner || courseUserRoles.maintainer) {
-        return true;
-      }
-      return false;
+    var userIsAuthorized = function(courseUserRoleTypes) {
+      var authorizedTypes = ['TeacherEnrollment', 'TaEnrollment'];
+      return authorizedTypes.some(function(authorizedType) {
+        return courseUserRoleTypes.indexOf(authorizedType) > -1;
+      });
     };
 
     apiService.util.iframeUpdateHeight();
