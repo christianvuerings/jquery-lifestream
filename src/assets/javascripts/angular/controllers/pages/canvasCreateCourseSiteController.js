@@ -232,7 +232,7 @@
     /*
      * Used with bc-official-sections-table directive to ensure every section is displayed
      */
-    $scope.displayRow = function() {
+    $scope.rowDisplayLogic = function() {
       return true;
     };
 
