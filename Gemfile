@@ -34,10 +34,7 @@ gem 'json', '~> 1.8.0'
 gem 'omniauth-cas', '~> 1.1.0'
 
 # LDAP
-# Upgrade to >0.10.1 because of
-# https://github.com/ruby-ldap/ruby-net-ldap/issues/175
-# https://jira.ets.berkeley.edu/jira/browse/CLC-4726
-gem 'net-ldap', '~> 0.9.0'
+gem 'net-ldap', '~> 0.11.0'
 
 # secure_headers provides x-frame, csp and other http headers
 gem 'secure_headers', '~> 1.4.0'
