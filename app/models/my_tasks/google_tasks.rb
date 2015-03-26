@@ -118,10 +118,10 @@ module MyTasks
       end
 
       due_date = if entry['due']
-        # Google task dates have misleading datetime accuracy. There is no way to record a specific due time
-        # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Stripping off the false
-        # accuracy so the application will apply the proper timezone when needed.
-        parsed_date = Date.parse(entry['due'].to_s)
+        # Google task datetimes have misleading datetime accuracy. There is no way to record a specific due time
+        # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Calling convert_datetime_or_date
+        # will strip off the false accuracy and return a plain old Date. 
+        parsed_date = convert_datetime_or_date entry['due']
         # Tasks are not overdue until the end of the day. Advance forward one day and back one second to cover
         # the possibility of daylight savings transitions.
         Time.at((parsed_date + 1).in_time_zone.to_datetime.to_i - 1).to_datetime
