@@ -148,7 +148,7 @@
         $scope.grantingRoles = data.grantingRoles;
         $scope.selectedRole = $scope.grantingRoles[0];
 
-        $scope.userAuthorized = userIsAuthorized($scope.courseUserRoleTypes);
+        $scope.userAuthorized = userIsAuthorized($scope.courseUserRoleTypes) || $scope.courseUserRoles.globalAdmin;
         if ($scope.userAuthorized) {
           getCourseSections();
           $scope.showSearchForm = true;
