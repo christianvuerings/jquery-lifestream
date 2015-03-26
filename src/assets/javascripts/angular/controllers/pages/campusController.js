@@ -11,7 +11,7 @@
       angular.extend($scope, data);
 
       if (data.currentTopCategory) {
-         // Set the page title
+        // Set the page title
         var title = 'Campus - ' + data.currentTopCategory;
         apiService.util.setTitle(title);
       }
