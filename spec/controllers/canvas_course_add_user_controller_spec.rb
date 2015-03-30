@@ -236,13 +236,15 @@ describe CanvasCourseAddUserController do
       it "returns error if searchText parameter is blank" do
         get :search_users, request_params.merge(searchText: "", searchType: "name")
         expect(response.status).to eq(400)
-        expect(response.body).to eq "Parameter 'searchText' is blank"
+        json_response = JSON.parse(response.body)
+        expect(json_response['error']).to eq "Parameter 'searchText' is blank"
       end
 
       it "returns error if searchType parameter is not valid" do
         get :search_users, request_params.merge(searchText: "John Doe", searchType: "weight")
         expect(response.status).to eq(400)
-        expect(response.body).to eq "Parameter 'searchType' is invalid"
+        json_response = JSON.parse(response.body)
+        expect(json_response['error']).to eq "Parameter 'searchType' is invalid"
       end
 
       it "returns user search results" do
