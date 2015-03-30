@@ -113,10 +113,29 @@ describe "MyBadges" do
     expect(badges).to be_blank
   end
 
-  it "should ignore non png icons for bdrive" do
-    proxy = MyBadges::GoogleDrive.new(@user_id)
-    icon_class_result = proxy.send(:process_icon, "http://www.google.com/lol_cat.gif")
-    icon_class_result.present?.should_not be_truthy
-  end
+  context 'css classes for bdrive icons' do
+    let (:proxy) { MyBadges::GoogleDrive.new(@user_id) }
+    let (:icon_class_result) { proxy.send(:process_icon, image_url) }
 
+    context 'when icon is an expected png file' do
+      let (:image_url) { 'https://ssl.gstatic.com/docs/doclist/images/icon_11_document_list.png' }
+      it 'should return the file basename' do
+        expect(icon_class_result).to eq 'icon_11_document_list'
+      end
+    end
+
+    context 'when icon is an unexpected png file' do
+      let (:image_url) { 'https://ssl.gstatic.com/docs/doclist/images/icon_11_cuneiform_list.png' }
+      it 'should return nothing' do
+        expect(icon_class_result).to be_blank
+      end
+    end
+
+    context 'when icon is not a png file' do
+      let (:image_url) { 'http://www.google.com/lol_cat.gif' }
+      it 'should return nothing' do
+        expect(icon_class_result).to be_blank
+      end
+    end
+  end
 end
