@@ -76,7 +76,7 @@
         data-ng-show="task.linkDescription"
         data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Tasks', task.emitter, task.linkUrl)"
         data-ng-href="{{task.linkUrl}}">
-          <span data-ng-bind="task.linkDescription">
+          {{task.linkDescription}}
           <span class="cc-visuallyhidden" data-ng-bind-template="- {{ task.title }}"></span>
         </a>
 
