@@ -76,7 +76,7 @@ module MyBadges
         file_baseclass = File.basename(URI.parse(icon_link).path, '.png')
         raise TypeError, 'Not a png file' if file_baseclass.index('.').present?
         drive_icons_list = Rails.cache.fetch('drive_icons', expires_in: Settings.cache.maximum_expires_in) {
-          raw_list = Dir.glob(File.join(Rails.root, 'app/assets/images/drive_icons/', '*.png'))
+          raw_list = Dir.glob(File.join(Rails.root, 'src/assets/images/drive_icons/', '*.png'))
           raw_list.select! {|filename| File.basename(filename).rindex('.png').present? }
           raw_list.map {|filename| File.basename(filename, ".png")}
         }

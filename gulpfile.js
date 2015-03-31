@@ -67,9 +67,7 @@
           // Human Sorting in JavaScript
           'node_modules/js-natural-sort/dist/naturalSort.js',
           // Remote JavaScript error logging
-          // TODO - update to official version when
-          // https://github.com/getsentry/raven-js/issues/197 is resolved
-          'node_modules/raven-js-temp/dist/raven.js',
+          'node_modules/raven-js/dist/raven.js',
           // Datepicker
           'node_modules/pikaday/pikaday.js',
           // Angular
