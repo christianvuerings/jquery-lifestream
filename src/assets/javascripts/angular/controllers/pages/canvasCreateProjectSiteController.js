@@ -30,8 +30,13 @@
             $scope.displayError = 'failure';
           }
         })
-        .error(function() {
-          $scope.displayError = 'failure';
+        .error(function(data, status) {
+          if (status === 400) {
+            $scope.displayError = 'badRequest';
+            $scope.badRequestError = data.error;
+          } else {
+            $scope.displayError = 'failure';
+          }
           $scope.creatingSite = false;
         });
     };

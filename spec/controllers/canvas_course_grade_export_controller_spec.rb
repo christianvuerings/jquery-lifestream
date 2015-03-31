@@ -122,25 +122,29 @@ describe CanvasCourseGradeExportController do
       it 'raises exception if term code not provided' do
         get :download_egrades_csv, :format => :csv, :term_yr => '2014', :ccn => '1234', :type => 'final'
         expect(response.status).to eq(400)
-        expect(response.body).to eq 'term_cd required'
+        json_response = JSON.parse(response.body)
+        expect(json_response['error']).to eq 'term_cd required'
       end
 
       it 'raises exception if term year not provided' do
         get :download_egrades_csv, :format => :csv, :term_cd => 'D', :ccn => '1234', :type => 'final'
         expect(response.status).to eq(400)
-        expect(response.body).to eq 'term_yr required'
+        json_response = JSON.parse(response.body)
+        expect(json_response['error']).to eq 'term_yr required'
       end
 
       it 'raises exception if course control number not provided' do
         get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :type => 'final'
         expect(response.status).to eq(400)
-        expect(response.body).to eq 'ccn required'
+        json_response = JSON.parse(response.body)
+        expect(json_response['error']).to eq 'ccn required'
       end
 
       it 'raises exception if type not provided' do
         get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234'
         expect(response.status).to eq(400)
-        expect(response.body).to eq 'type required'
+        json_response = JSON.parse(response.body)
+        expect(json_response['error']).to eq 'type required'
       end
 
       it 'serves egrades csv file download' do
