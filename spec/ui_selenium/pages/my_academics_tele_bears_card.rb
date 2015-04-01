@@ -17,7 +17,7 @@ module CalCentralPages
     elements(:more_info_link, :link, :xpath => '//h3[contains(text(),"Tele-BEARS for")]//a[contains(text(),"More Info")][@href="http://registrar.berkeley.edu/tbfaqs.html"]')
     link(:more_info_semester_link, :xpath => '//a[contains(text(),"More Info")][@href="http://registrar.berkeley.edu/tbfaqs.html"]')
     elements(:adviser_code_icon, :image, :xpath => '//div[@class="cc-clearfix cc-academics-adviser-message-container ng-scope"]//i')
-    elements(:adviser_code_msg, :div, :xpath => '//div[@data-ng-bind="telebears.adviserCodeRequired.message"]')
+    elements(:adviser_code_msg, :div, :xpath => '//div[@data-ng-switch="telebears.adviserCodeRequired.type"]')
     elements(:phase_start_time, :div, :xpath => '//h4[contains(.,"Tele-BEARS Phase ")]/following-sibling::ul//div[@data-ng-bind="phase.startTime.epoch * 1000 | dateUnlessNoonFilter:\'EEE MMM d | h:mm a\'"]')
     elements(:phase_end_time, :div, :xpath => '//h4[contains(.,"Tele-BEARS Phase ")]/following-sibling::ul//div[@data-ng-bind="phase.endTime.epoch * 1000 | dateUnlessNoonFilter:\'EEE MMM d | h:mm a\'"]')
 

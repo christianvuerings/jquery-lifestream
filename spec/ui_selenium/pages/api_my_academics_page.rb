@@ -235,15 +235,27 @@ class ApiMyAcademicsPage
     semester['slug']
   end
 
+  def tele_bears_adviser_code_req?(semester)
+    semester['adviserCodeRequired']['required']
+  end
+
   def tele_bears_adviser_codes(semesters)
     code_reqts = []
-    semesters.each { |semester| code_reqts.push(semester['adviserCodeRequired']['required']) }
+    semesters.each { |semester| code_reqts.push(tele_bears_adviser_code_req?(semester)) }
     code_reqts
   end
 
   def tele_bears_adviser_code_msgs(semesters)
     code_msgs = []
-    semesters.each { |semester| code_msgs.push(semester['adviserCodeRequired']['message']) }
+    semesters.each do |semester|
+      if tele_bears_adviser_code_req?(semester)
+        # Deliberately ignore calso and revoked messages, which will therefore trigger a test failure if either turns up in test data.
+        # These messages rarely appear, so QA would like to hear about them when they do.
+        code_msgs.push('Before your Tele-BEARS appointment you need to get a code from your adviser.')
+      else
+        code_msgs.push('You do not need an adviser code for this semester.')
+      end
+    end
     code_msgs
   end
 
