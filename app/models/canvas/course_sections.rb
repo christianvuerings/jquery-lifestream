@@ -11,8 +11,8 @@ module Canvas
       end
     end
 
-    def official_section_identifiers
-      sections = sections_list.clone
+    def official_section_identifiers(force_write = false)
+      sections = sections_list(force_write).clone
       return [] unless sections && sections.status == 200
       course_sections = JSON.parse(sections.body)
       course_sections.reject! {|s| !s.include?('sis_section_id') || s['sis_section_id'].blank? }

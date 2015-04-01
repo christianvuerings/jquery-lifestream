@@ -2,16 +2,22 @@ require "spec_helper"
 
 describe Canvas::SiteMembershipsMaintainer do
   let(:users_maintainer) {double}
-  let(:course_id) { random_ccn }
+  let(:sis_course_id) { random_ccn }
   let(:enrollments_csv)  { [] }
   let(:users_csv)  { [] }
   let(:known_users) { [] }
   let(:uid) { random_id }
-  let(:sis_section_id) {"SEC:2014-B-#{course_id}"}
+  let(:sis_section_id) {"SEC:2014-B-#{sis_course_id}"}
   let(:sis_section_ids) { [sis_section_id, "2014-D-04124", 'bababooey'] }
   let(:sis_user_id_changes) { Hash.new }
+  let(:into_canvas_course_id) { nil }
   subject {
-    Canvas::SiteMembershipsMaintainer.process(course_id, sis_section_ids, enrollments_csv, users_csv, known_users, batch_mode, cached_enrollments_provider, sis_user_id_changes)
+    worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids, enrollments_csv, users_csv, known_users,
+      :batch_mode => batch_mode,
+      :cached_enrollments_provider => cached_enrollments_provider,
+      :sis_user_id_changes => sis_user_id_changes,
+      :into_canvas_course_id => into_canvas_course_id)
+    worker.refresh_sections_in_course
     enrollments_csv
   }
 
@@ -21,7 +27,7 @@ describe Canvas::SiteMembershipsMaintainer do
 
   def it_adds_the_new_membership
     expect(enrollments_for(uid)).to eq [{
-      'course_id' => course_id,
+      'course_id' => sis_course_id,
       'user_id' => "UID:#{uid}",
       'role' => csv_role,
       'section_id' => sis_section_id,
@@ -53,7 +59,7 @@ describe Canvas::SiteMembershipsMaintainer do
       } }
 
       let(:invariable_enrollment_data) { {
-        'course_id' => course_id,
+        'course_id' => sis_course_id,
         'user_id' => uid,
         'section_id' => sis_section_id,
         'status' => 'active'
@@ -107,27 +113,72 @@ describe Canvas::SiteMembershipsMaintainer do
             [{'ldap_uid' => ccn_to_uid[ccn.to_i.to_s]}]
           end
         end
-        allow(CampusOracle::Queries).to receive(:get_sections_from_ccns).with('2014', 'B', padded_ccns).and_return([
-          {'course_cntl_num' => padded_ccns[0], 'primary_secondary_cd' => first_section_type},
-          {'course_cntl_num' => padded_ccns[1], 'primary_secondary_cd' => 'S'}
-        ])
       end
-      context 'when a mix of primary and secondary sections' do
-        let(:first_section_type) {'P'}
-        it 'assigns TA role for secondary sections' do
-          expect(subject.length).to eq(2)
-          expect(enrollments_for(ccn_to_uid.values[0]).first['role']).to eq 'teacher'
-          expect(enrollments_for(ccn_to_uid.values[1]).first['role']).to eq 'ta'
-          expect(known_users.length).to eq 2
-          expect(users_csv.length).to eq 2
+      context 'when all course site sections are in the refresh list' do
+        before do
+          allow(CampusOracle::Queries).to receive(:get_sections_from_ccns).with('2014', 'B', padded_ccns).and_return([
+            {'course_cntl_num' => padded_ccns[0], 'primary_secondary_cd' => first_section_type},
+            {'course_cntl_num' => padded_ccns[1], 'primary_secondary_cd' => 'S'}
+          ])
+        end
+        context 'when a mix of primary and secondary sections' do
+          let(:first_section_type) {'P'}
+          it 'assigns TA role for secondary sections' do
+            expect(subject.length).to eq(2)
+            expect(enrollments_for(ccn_to_uid.values[0]).first['role']).to eq 'teacher'
+            expect(enrollments_for(ccn_to_uid.values[1]).first['role']).to eq 'ta'
+            expect(known_users.length).to eq 2
+            expect(users_csv.length).to eq 2
+          end
+        end
+        context 'when all secondary sections' do
+          let(:first_section_type) {'S'}
+          it 'assigns teacher role for secondary sections' do
+            expect(subject.length).to eq(2)
+            expect(enrollments_for(ccn_to_uid.values[0]).first['role']).to eq 'teacher'
+            expect(enrollments_for(ccn_to_uid.values[1]).first['role']).to eq 'teacher'
+            expect(known_users.length).to eq 2
+            expect(users_csv.length).to eq 2
+          end
         end
       end
-      context 'when all secondary sections' do
-        let(:first_section_type) {'S'}
-        it 'assigns teacher role for secondary sections' do
+      context 'when the course site primary section is not in the refresh list' do
+        let(:existing_ccn) { random_ccn }
+        let(:site_ccns) { Array.new(padded_ccns).push(existing_ccn) }
+        let(:into_canvas_course_id) { random_id }
+        before do
+          allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(
+            [
+              {
+                sis_section_id: sis_section_ids[0],
+                term_yr: "2014",
+                term_cd: "B",
+                ccn: padded_ccns[0]
+              },
+              {
+                sis_section_id: sis_section_ids[1],
+                term_yr: "2014",
+                term_cd: "B",
+                ccn: padded_ccns[1]
+              },
+              {
+                sis_section_id: "SEC:2014-B-#{existing_ccn}",
+                term_yr: "2014",
+                term_cd: "B",
+                ccn: existing_ccn
+              }
+            ]
+          )
+          allow(CampusOracle::Queries).to receive(:get_sections_from_ccns).with('2014', 'B', site_ccns).and_return([
+            {'course_cntl_num' => padded_ccns[0], 'primary_secondary_cd' => 'S'},
+            {'course_cntl_num' => padded_ccns[1], 'primary_secondary_cd' => 'S'},
+            {'course_cntl_num' => existing_ccn, 'primary_secondary_cd' => 'P'}
+          ])
+        end
+        it 'assigns TA role for secondary sections' do
           expect(subject.length).to eq(2)
-          expect(enrollments_for(ccn_to_uid.values[0]).first['role']).to eq 'teacher'
-          expect(enrollments_for(ccn_to_uid.values[1]).first['role']).to eq 'teacher'
+          expect(enrollments_for(ccn_to_uid.values[0]).first['role']).to eq 'ta'
+          expect(enrollments_for(ccn_to_uid.values[1]).first['role']).to eq 'ta'
           expect(known_users.length).to eq 2
           expect(users_csv.length).to eq 2
         end
@@ -159,7 +210,7 @@ describe Canvas::SiteMembershipsMaintainer do
 
     before do
       expect(CampusOracle::Queries).to receive(:get_enrolled_students).
-        with(course_id, '2014', 'B').and_return([campus_data_row])
+        with(sis_course_id, '2014', 'B').and_return([campus_data_row])
       allow(CampusOracle::Queries).to receive(:get_section_instructors).and_return([])
     end
 

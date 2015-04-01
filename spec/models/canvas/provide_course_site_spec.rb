@@ -591,7 +591,7 @@ describe Canvas::ProvideCourseSite do
     let(:maintainer) {double}
     it 'should forward to a background job handler' do
       expect(Canvas::SiteMembershipsMaintainer).to receive(:background).and_return(maintainer)
-      expect(maintainer).to receive(:import_memberships).with(course_id, section_ids, anything)
+      expect(maintainer).to receive(:import_memberships).with(course_id, section_ids, anything, anything)
       subject.import_enrollments_in_background(course_id, section_definitions)
     end
   end
