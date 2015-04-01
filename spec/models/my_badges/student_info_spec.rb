@@ -44,6 +44,10 @@ describe 'MyBadges::StudentInfo' do
     before do
       Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(99999997)
       Bearfacts::Profile.stub(:new).and_return(law_proxy)
+      Bearfacts::Regblocks.stub(:new).and_return(double(get: {
+        activeBlocks: [],
+        inactiveBlocks: []
+      }))
     end
 
     subject { MyBadges::StudentInfo.new('212381').get }
@@ -54,24 +58,12 @@ describe 'MyBadges::StudentInfo' do
     end
   end
 
-  context 'offline bearfacts isLawStudent' do
+  context 'offline bearfacts' do
     before do
-      stub_request(:any, /.+regblocks.*/).to_raise(Faraday::Error::ConnectionFailed)
+      stub_request(:any, /.+bearfacts.*/).to_raise(Faraday::Error::ConnectionFailed)
       Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
     end
 
-    subject { MyBadges::StudentInfo.new(random_uid).get }
-
-    it 'should default isLawStudent to false' do
-      subject[:isLawStudent].should be_falsey
-    end
-  end
-
-  context 'offline bearfacts regblock' do
-    before do
-      stub_request(:any, /.+regblocks.*/).to_raise(Faraday::Error::ConnectionFailed)
-      Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
-    end
     subject { MyBadges::StudentInfo.new(random_uid).get }
 
     it 'should have no active blocks' do
@@ -87,12 +79,18 @@ describe 'MyBadges::StudentInfo' do
     it 'needsAction should be false' do
       subject[:regBlock][:needsAction].should be_falsey
     end
+
+    it 'should default isLawStudent to false' do
+      subject[:isLawStudent].should be_falsey
+    end
   end
 
   context 'valid bearfacts regblocks' do
+    let! (:oski_profile_proxy) { Bearfacts::Profile.new({user_id: '61889', fake: true}) }
     let! (:oski_blocks_proxy) { Bearfacts::Regblocks.new({user_id: '61889', fake: true}) }
     before do
       Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
+      Bearfacts::Profile.stub(:new).and_return(oski_profile_proxy)
       Bearfacts::Regblocks.stub(:new).and_return(oski_blocks_proxy)
     end
 
