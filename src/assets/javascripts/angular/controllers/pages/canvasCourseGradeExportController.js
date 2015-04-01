@@ -97,7 +97,7 @@
     };
 
     var getExportOptions = function() {
-      canvasCourseGradeExportFactory.exportOptions().success(function(data) {
+      canvasCourseGradeExportFactory.exportOptions($scope.canvasCourseId).success(function(data) {
         if ($scope.appState !== 'error') {
           loadSectionTerms(data.sectionTerms);
         }
