@@ -14,8 +14,11 @@ module Oec
         dept_name = filename.split('/')[-1].chomp(csv_filename_suffix).gsub(/_/, ' ').upcase
         csv_file_hash[dept_name] = filename
       end
+      biology_dept = 'BIOLOGY'
       (departments.empty? ? Settings.oec.departments : departments).each do |dept_name|
-        if csv_file_hash.has_key? dept_name
+        if dept_name.casecmp(biology_dept) == 0
+          warn(dept_name, "#{biology_dept}#{csv_filename_suffix} is not allowed. #{biology_dept} data is expected in the INTEGBI and MCELLBI files.")
+        elsif csv_file_hash.has_key? dept_name
           corrected_data = []
           filename = csv_file_hash[dept_name]
           uid_per_index = {}
