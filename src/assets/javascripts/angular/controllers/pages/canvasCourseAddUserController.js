@@ -4,7 +4,7 @@
   /**
    * Canvas Add User to Course LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function(apiService, canvasCourseAddUserFactory, $routeParams, $scope) {
+  angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function(apiService, canvasCourseAddUserFactory, canvasSharedFactory, $routeParams, $scope) {
     apiService.util.setTitle('Find a Person to Add');
 
     // initialize maintenance notice settings
@@ -142,7 +142,7 @@
     };
 
     var checkAuthorization = function() {
-      canvasCourseAddUserFactory.courseUserRoles($scope.canvasCourseId).success(function(data) {
+      canvasSharedFactory.courseUserRoles($scope.canvasCourseId).success(function(data) {
         $scope.courseUserRoles = data.roles;
         $scope.courseUserRoleTypes = data.roleTypes;
         $scope.grantingRoles = data.grantingRoles;
