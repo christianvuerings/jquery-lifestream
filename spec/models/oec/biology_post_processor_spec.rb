@@ -8,7 +8,7 @@ describe Oec::BiologyPostProcessor do
     expect(Settings.oec).to receive(:departments).at_least(:once).and_return dept_names
     dept_names.each do |dept_name|
       courses_query = []
-      CSV.read('fixtures/oec/courses_wrapper.csv').each_with_index do |row, index|
+      CSV.read('fixtures/oec/db_MCELLBI_courses.csv').each_with_index do |row, index|
         if index > 0 && row[4] == dept_name
           courses_query << Oec::RowConverter.new(row).hashed_row
         end
