@@ -12,20 +12,18 @@
         <h3 data-ng-if="semester.hasEnrollmentData"><a class="cc-left" data-ng-href="/academics/semester/{{semester.slug}}" data-ng-bind="semester.name"></a></h3>
         <h3 data-ng-if="!semester.hasEnrollmentData" data-ng-bind="semester.name"></h3>
         <h4 data-ng-if="semester.notation" data-ng-bind="semester.notation"></h4>
-        <a class="cc-right cc-academics-semester-title-link" data-ng-href="/academics/booklist/{{semester.slug}}" data-ng-if="semester.timeBucket === 'current' || semester.timeBucket === 'future'">Book List</a>
+        <a class="cc-right cc-academics-semester-title-link" data-ng-href="/academics/booklist/{{semester.slug}}" data-ng-if="semester.hasEnrollmentData && semester.timeBucket !== 'past'">Book List</a>
         <table>
           <thead>
             <tr>
               <th width="30%" scope="col">Class</th>
               <th width="40%" scope="col">Title</th>
-              <th width="20%" scope="col" class="cc-table-right" data-ng-class="{'cc-table-right-spacing':(semester.timeBucket === 'past')}">
-                <span data-ng-if="semester.timeBucket !== 'past'">Units</span>
-                <span data-ng-if="semester.timeBucket === 'past'" title="Units">Un.</span>
-              </th>
-              <th width="10%" scope="col" data-ng-if="semester.timeBucket === 'past'" title="Grades">Gr.</th>
+              <th data-ng-if="!semester.summaryFromTranscript" width="20%" scope="col" class="cc-table-right">Units</th>
+              <th data-ng-if="semester.summaryFromTranscript" width="20%" scope="col" title="Units" class="cc-table-right cc-table-right-spacing">Un.</th>
+              <th data-ng-if="semester.summaryFromTranscript" width="10%" scope="col" title="Grades">Gr.</th>
             </tr>
           </thead>
-          <tbody data-ng-if="semester.timeBucket !== 'past'" data-ng-repeat="class in semester.classes">
+          <tbody data-ng-if="!semester.summaryFromTranscript" data-ng-repeat="class in semester.classes">
             <tr data-ng-repeat="section in class.sections" data-ng-if="section.is_primary_section">
               <td data-ng-if="class.url"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a>
               <td data-ng-if="!class.url" data-ng-bind="class.course_code"></td>
@@ -33,13 +31,13 @@
               <td data-ng-bind="section.units | number:1" class="cc-table-right"></td>
             </tr>
           </tbody>
-          <tbody data-ng-if="semester.timeBucket === 'past'" data-ng-repeat="class in semester.classes">
+          <tbody data-ng-if="semester.summaryFromTranscript" data-ng-repeat="class in semester.classes">
             <tr data-ng-if="class.transcript" data-ng-repeat="transcript in class.transcript">
               <td data-ng-if="class.url"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a>
               <td data-ng-if="!class.url" data-ng-bind="class.course_code"></td>
               <td data-ng-bind="class.title"></td>
               <td data-ng-bind="transcript.units | number:1" class="cc-table-right cc-table-right-spacing"></td>
-              <td data-ng-bind="transcript.grade" data-ng-if="semester.timeBucket === 'past'"></td>
+              <td data-ng-bind="transcript.grade"></td>
             </tr>
             <tr data-ng-if="!class.transcript && section.is_primary_section" data-ng-repeat="section in class.sections">
               <td data-ng-if="class.url"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a>

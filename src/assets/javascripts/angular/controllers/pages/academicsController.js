@@ -193,7 +193,10 @@
       if (semesters && semesters.length) {
         for (var i = 0; i < semesters.length; i++) {
           if (semesters[i].timeBucket === 'past') {
+            semesters[i].summaryFromTranscript = true;
             count++;
+          } else {
+            semesters[i].summaryFromTranscript = !semesters[i].hasEnrollmentData;
           }
         }
       }
