@@ -36,7 +36,7 @@ module Oec
       @warnings = []
       put_valid_i(row, 'term_yr', split_course_id[0], '2\d{3}')
       put_valid_i(row, 'course_cntl_num', split_course_id[2].split('_')[0], '[1-9]\d{3,4}')
-      put_valid_i(row, 'ldap_uid', row[9], '\d{3,6}')
+      put_valid_i(row, 'ldap_uid', row[9], '\d{3,10}')
       put_valid_i(row, 'instructor_func', row[13], '[1-4]')
     end
 
