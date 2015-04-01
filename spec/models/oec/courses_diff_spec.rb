@@ -1,6 +1,6 @@
 describe Oec::CoursesDiff do
 
-  let!(:departments) { %w{STAT BIOLOGY POL_SCI} }
+  let!(:departments) { %w{STAT INTEGBI POL_SCI} }
   let!(:data_corrected_by_dept) { {} }
   let!(:campus_data_per_dept) { {} }
   let!(:src_dir) { 'fixtures/oec' }

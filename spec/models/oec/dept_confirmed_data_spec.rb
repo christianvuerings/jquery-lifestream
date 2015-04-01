@@ -1,7 +1,7 @@
 describe Oec::DeptConfirmedData do
 
   it 'should load all courses_confirmed.csv files when no departments specified' do
-    actual_csv_files = %w(BIOLOGY POL\ SCI STAT)
+    actual_csv_files = %w(INTEGBI POL\ SCI STAT)
     missing_csv_files = %w(FOO BAZ)
     confirmed_data = Oec::DeptConfirmedData.new('fixtures/oec', actual_csv_files + missing_csv_files)
     confirmed_data_hash = confirmed_data.confirmed_data_per_dept
@@ -13,7 +13,7 @@ describe Oec::DeptConfirmedData do
   end
 
   it 'should not load the STAT_courses_confirmed.csv because it was not requested' do
-    csv_files = %w(BIOLOGY POL\ SCI)
+    csv_files = %w(INTEGBI POL\ SCI)
     dept_set = Oec::DepartmentRegistry.new csv_files
     confirmed_data = Oec::DeptConfirmedData.new('fixtures/oec', dept_set)
     confirmed_data.confirmed_data_per_dept.keys.should match_array csv_files
@@ -24,5 +24,12 @@ describe Oec::DeptConfirmedData do
     warnings[3] =~ /2015-B-71419 (.*)duplicate/
   end
 
-end
+  it 'should disallow BIOLOGY' do
+    dept_set = Oec::DepartmentRegistry.new %w(BIOLOGY)
+    confirmed_data = Oec::DeptConfirmedData.new('fixtures/oec', dept_set)
+    warnings = confirmed_data.warnings_per_dept['BIOLOGY']['WARN']
+    warnings.length.should eq 1
+    warnings[0] =~ /BIOLOGY(.*)is not allowed(.*)/
+  end
 
+end
