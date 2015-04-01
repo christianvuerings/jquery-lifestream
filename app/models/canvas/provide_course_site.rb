@@ -100,8 +100,8 @@ module Canvas
       @jobStatus = 'sectionEditsCompleted'
       save
 
-      # Start a background job to add current students and instructors to the new site.
-      import_enrollments_in_background(@import_data['sis_course_id'], section_definitions)
+      # Start a background job to add students and instructors to the new sections in the site.
+      import_enrollments_in_background(@import_data['sis_course_id'], section_definitions, canvas_course_id)
     rescue StandardError => error
       logger.error("ERROR: #{error.message}; Completed steps: #{@completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
       @jobStatus = 'sectionEditsError'
@@ -233,10 +233,12 @@ module Canvas
       complete_step('Clearing bCourses course site cache')
     end
 
-    def import_enrollments_in_background(sis_course_id, canvas_section_rows)
+    def import_enrollments_in_background(sis_course_id, canvas_section_rows, into_canvas_course_id = nil)
       added_sections = canvas_section_rows.select {|row| row['status'] == 'active'}
       Canvas::SiteMembershipsMaintainer.background.import_memberships(sis_course_id,
-        added_sections.collect {|row| row['section_id']}, "#{csv_filename_prefix}-enrollments.csv")
+        added_sections.collect {|row| row['section_id']}, "#{csv_filename_prefix}-enrollments.csv",
+        into_canvas_course_id
+      )
     end
 
     def csv_filename_prefix
