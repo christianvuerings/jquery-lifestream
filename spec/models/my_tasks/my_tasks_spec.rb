@@ -76,16 +76,6 @@ describe "MyTasks" do
         expect(task['linkUrl']).to start_with('https://ucberkeley.instructure.com/courses/')
         expect(task['sourceUrl']).to eq task['linkUrl']
       end
-
-      google_tasks = tasks.select { |task| task['emitter'] == GoogleApps::Proxy::APP_ID }
-      email_tasks = google_tasks.select { |task| task['linkDescription'] == 'View related email'}
-      expect(email_tasks.count).to eq 1
-      expect(email_tasks[0]['linkUrl']).to start_with('https://mail.google.com/mail/#all/')
-
-      (google_tasks - email_tasks).each do |task|
-        expect(task['linkDescription']).to be_nil
-        expect(task['linkUrl']).to be_nil
-      end
     end
 
   end
