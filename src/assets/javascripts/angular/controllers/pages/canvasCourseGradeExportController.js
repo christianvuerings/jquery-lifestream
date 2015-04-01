@@ -5,10 +5,11 @@
   /**
    * Canvas Add User to Course LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseGradeExportController', function(apiService, canvasCourseGradeExportFactory, $http, $scope) {
+  angular.module('calcentral.controllers').controller('CanvasCourseGradeExportController', function(apiService, canvasCourseGradeExportFactory, canvasSharedFactory, $http, $routeParams, $scope) {
     apiService.util.setTitle('E-Grade Export');
 
     $scope.appState = 'initializing';
+    $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
 
     /**
      * Sends message to parent window to switch to gradebook
@@ -30,7 +31,7 @@
      * Performs authorization check on user to control interface presentation
      */
     var checkAuthorization = function() {
-      canvasCourseGradeExportFactory.checkAuthorization().success(function(data) {
+      canvasSharedFactory.courseUserRoles($scope.canvasCourseId).success(function(data) {
         $scope.courseUserRoles = data.roles;
         $scope.canvasCourseId = data.courseId;
 

@@ -5,16 +5,11 @@
    * Canvas Course Add User Factory - Interface for 'Find a Person to Add' tool API endpoints
    */
   angular.module('calcentral.factories').factory('canvasCourseGradeExportFactory', function($http) {
-    var checkAuthorization = function() {
-      return $http.get('/api/academics/canvas/course_user_roles/embedded');
-    };
-
     var exportOptions = function() {
       return $http.get('/api/academics/canvas/egrade_export/options');
     };
 
     return {
-      checkAuthorization: checkAuthorization,
       exportOptions: exportOptions
     };
   });
