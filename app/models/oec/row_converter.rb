@@ -36,8 +36,10 @@ module Oec
       @warnings = []
       put_valid_i(row, 'term_yr', split_course_id[0], '2\d{3}')
       put_valid_i(row, 'course_cntl_num', split_course_id[2].split('_')[0], '[1-9]\d{3,4}')
-      put_valid_i(row, 'ldap_uid', row[9], '\d{3,10}')
-      put_valid_i(row, 'instructor_func', row[13], '[1-4]')
+      ldap_uid = row[9]
+      instructor_func = row[13]
+      put_valid_i(row, 'ldap_uid', ldap_uid, '\d{3,10}') unless ldap_uid.blank?
+      put_valid_i(row, 'instructor_func', instructor_func, '[1-4]') unless instructor_func.blank?
     end
 
     def put_valid_i(row, column_name, value, regex)

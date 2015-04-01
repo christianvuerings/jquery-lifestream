@@ -2,7 +2,7 @@ describe Oec::RowConverter do
 
   it 'should load valid row data to hash, despite warnings' do
     row = %w(2015-B-22303 COURSE_NAME CROSS_LISTED_FLAG CROSS_LISTED_NAME\ (4567,\ 9876) DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM PRIMARY_SECONDARY_CD LDAP_UID FIRST_NAME LAST_NAME EMAIL_ADDRESS INSTRUCTOR_FUNC BLUE_ROLE EVALUATE DEPT_FORM EVALUATION_TYPE MODULAR_COURSE START_DATE END_DATE)
-    c = Oec::RowConverter.new(row)
+    c = Oec::RowConverter.new row
     h = c.hashed_row
     expect(h['term_yr']).to eq 2015
     expect(h['term_cd']).to eq 'B'
@@ -34,14 +34,19 @@ describe Oec::RowConverter do
   end
 
   it 'should report invalid year, ccn, ldap and instructor_func' do
-    row = %w(1999-B-1234567 COURSE_NAME CROSS_LISTED_FLAG CROSS_LISTED_NAME\ (4567,\ 9876) DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM PRIMARY_SECONDARY_CD \  FIRST_NAME LAST_NAME EMAIL_ADDRESS 5 BLUE_ROLE EVALUATE DEPT_FORM EVALUATION_TYPE MODULAR_COURSE START_DATE END_DATE)
-    c = Oec::RowConverter.new(row)
+    row = %w(1999-B-1234567 COURSE_NAME CROSS_LISTED_FLAG CROSS_LISTED_NAME\ (4567,\ 9876) DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM PRIMARY_SECONDARY_CD 21 FIRST_NAME LAST_NAME EMAIL_ADDRESS 5 BLUE_ROLE EVALUATE DEPT_FORM EVALUATION_TYPE MODULAR_COURSE START_DATE END_DATE)
+    c = Oec::RowConverter.new row
     expect(c.warnings).to have(4).items
     expect(c.warnings[0]).to include('term_yr', '1999')
     expect(c.warnings[1]).to include('course_cntl_num', '1234567')
-    # LDAP_UID is blank in row above
-    expect(c.warnings[2]).to include('ldap_uid')
+    expect(c.warnings[2]).to include('ldap_uid', '21')
     expect(c.warnings[3]).to include('instructor_func', '5')
+  end
+
+  it 'should not consider blank ldap and instructor_func as invalid' do
+    row = %w(2015-B-12345 COURSE_NAME CROSS_LISTED_FLAG CROSS_LISTED_NAME\ (4567,\ 9876) DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM PRIMARY_SECONDARY_CD \  FIRST_NAME LAST_NAME EMAIL_ADDRESS \  BLUE_ROLE EVALUATE DEPT_FORM EVALUATION_TYPE MODULAR_COURSE START_DATE END_DATE)
+    c = Oec::RowConverter.new row
+    expect(c.warnings).to be_empty
   end
 
 end
