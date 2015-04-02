@@ -14,7 +14,6 @@ describe Slate::Checklist do
     let(:feed) { fake_proxy.get[:feed] }
 
     it 'returns JSON fixture data by default' do
-      p "Feed = #{feed.inspect}"
       expect(feed['PERSON_CHKLST_ITEM'][0]['EmplID']).to eq '7777'
       expect(feed['PERSON_CHKLST_ITEM'][0]['NAME']).to eq 'Cheangy, Billy'
     end
