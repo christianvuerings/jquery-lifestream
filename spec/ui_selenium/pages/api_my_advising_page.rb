@@ -16,11 +16,11 @@ class ApiMyAdvisingPage
     @parsed = JSON.parse(body)
   end
 
-  def college_adviser
-    if @parsed['caseloadAdviser'] == ''
+  def college_advisor
+    if @parsed['caseloadAdvisor'] == ''
       nil
     else
-      @parsed['caseloadAdviser']['firstName'].to_s + ' ' + @parsed['caseloadAdviser']['lastName'].to_s
+      @parsed['caseloadAdvisor']['firstName'].to_s + ' ' + @parsed['caseloadAdvisor']['lastName'].to_s
     end
   end
 
@@ -54,10 +54,10 @@ class ApiMyAdvisingPage
     times
   end
 
-  def all_future_appt_advisers
-    advisers = []
-    all_future_appts.each { |appt| advisers.push(appt['staff']['name']) }
-    advisers
+  def all_future_appt_advisors
+    advisors = []
+    all_future_appts.each { |appt| advisors.push(appt['staff']['name']) }
+    advisors
   end
 
   def all_future_appt_methods
@@ -82,7 +82,7 @@ class ApiMyAdvisingPage
     dates
   end
 
-  def all_prev_appt_advisers
+  def all_prev_appt_advisors
     names = []
     all_prev_appts.each { |name| names.push(name['staff']['name']) }
     names

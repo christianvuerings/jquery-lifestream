@@ -178,7 +178,7 @@ module Notifications
       enrolled in classes, you will not be an officially registered student. You must be an officially registered student to use
       campus services (e.g. libraries, health services, recreational sports facilities, Class Pass bus travel, Career Center, etc.),
       receive final grades, or obtain official campus transcripts.</p>
-      <p>For more information, meet with an adviser in 250 Wurster Hall. For adviser contact information, see
+      <p>For more information, meet with an advisor in 250 Wurster Hall. For advisor contact information, see
       <a href="http://ced.berkeley.edu/ced/students/undergraduate-advising/">http://ced.berkeley.edu/ced/students/undergraduate-advising/.</a></p>
       EOS
 
@@ -303,10 +303,10 @@ module Notifications
       <li>If you are unable to declare at this time, contact your intended major department immediately and fill out the
       <a href="http://ls-advise.berkeley.edu/fp/09Intent_Declare.pdf">Conditions to Declare form</a>. Once you have completed this
       form visit us in <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to discuss your continued
-      enrollment with a college adviser.</li>
+      enrollment with a college advisor.</li>
       <li>If you are having difficulty deciding on a major, please contact our office at
       <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> to discuss your situation with a college
-      adviser.</li>
+      advisor.</li>
       <li>If you believe that our information is incorrect, please call (510) 642-1483 or visit
       <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> so that your record may be updated.</li>
       <p><a href="http://ls-advise.berkeley.edu/OUAhome.html">View hours of operation and advising options &raquo;</a></p>
@@ -357,7 +357,7 @@ module Notifications
       <ul>
       <li>If you intend to graduate at the end of this term, please visit
       <a href="http://www.berkeley.edu/map/3dmap/3dmap.shtml?evans">206 Evans Hall</a> and declare your candidacy.</li>
-      <li>Contact us if you would like to meet with an adviser to discuss the options you have to complete your degree.</li>
+      <li>Contact us if you would like to meet with an advisor to discuss the options you have to complete your degree.</li>
       </ul>
       <p>If you believe our records are inaccurate, please call us at (510) 642-1483.</p>
       EOS

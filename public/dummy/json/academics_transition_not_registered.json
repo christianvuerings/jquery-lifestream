@@ -1135,7 +1135,7 @@
       "term": "Spring",
       "year": 2014,
       "slug": "spring-2014",
-      "adviserCodeRequired": {
+      "advisorCodeRequired": {
         "required": true,
         "type": "revoked"
       },

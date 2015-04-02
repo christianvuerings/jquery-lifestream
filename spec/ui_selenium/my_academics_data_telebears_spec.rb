@@ -23,7 +23,7 @@ describe 'My Academics Tele-BEARS card', :testui => true do
       test_output = UserUtils.initialize_output_csv(self)
 
       CSV.open(test_output, 'wb') do |user_info_csv|
-        user_info_csv << ['UID', 'Has Tele-BEARS', 'Adviser Messages', 'Phase Starts', 'Phase Endings', 'Error Occurred']
+        user_info_csv << ['UID', 'Has Tele-BEARS', 'Advisor Messages', 'Phase Starts', 'Phase Endings', 'Error Occurred']
       end
 
       test_users.each do |user|
@@ -31,7 +31,7 @@ describe 'My Academics Tele-BEARS card', :testui => true do
           uid = user['uid'].to_s
           logger.info("UID is #{uid}")
           has_tele_bears = false
-          api_adviser_code_msgs = nil
+          api_advisor_code_msgs = nil
           api_phase_starts = nil
           api_phase_endings = nil
           threw_error = false
@@ -49,23 +49,23 @@ describe 'My Academics Tele-BEARS card', :testui => true do
             if api_all_appts.length > 0
               has_tele_bears = true
               testable_users.push(uid)
-              api_adviser_code_reqts = academics_api.tele_bears_adviser_codes(api_all_appts)
-              api_adviser_code_msgs = academics_api.tele_bears_adviser_code_msgs(api_all_appts)
+              api_advisor_code_reqts = academics_api.tele_bears_advisor_codes(api_all_appts)
+              api_advisor_code_msgs = academics_api.tele_bears_advisor_code_msgs(api_all_appts)
               api_phase_starts = academics_api.tele_bears_phase_starts(api_all_appts)
               api_phase_endings = academics_api.tele_bears_phase_endings(api_all_appts)
 
               # Appointments on main My Academics page
               my_academics_page.tele_bears_card_heading_element.when_visible(WebDriverUtils.academics_timeout)
               acad_has_more_info_link = my_academics_page.more_info_link_elements.length
-              acad_adviser_code_reqts = my_academics_page.all_telebears_adviser_icons
-              acad_adviser_code_msgs = my_academics_page.all_telebears_adviser_msgs
+              acad_advisor_code_reqts = my_academics_page.all_telebears_advisor_icons
+              acad_advisor_code_msgs = my_academics_page.all_telebears_advisor_msgs
               acad_phase_starts = my_academics_page.all_phase_start_times
               acad_phase_endings = my_academics_page.all_phase_end_times
               it "shows the right code-required icons on My Academics for UID #{uid}" do
-                expect(acad_adviser_code_reqts.sort).to eql(api_adviser_code_reqts.sort)
+                expect(acad_advisor_code_reqts.sort).to eql(api_advisor_code_reqts.sort)
               end
               it "shows the right code-required messages on My Academics for UID #{uid}" do
-                expect(acad_adviser_code_msgs.sort).to eql(api_adviser_code_msgs.sort)
+                expect(acad_advisor_code_msgs.sort).to eql(api_advisor_code_msgs.sort)
               end
               it "shows the right phase start dates and times on My Academics for #{uid}" do
                 expect(acad_phase_starts.sort).to eql(api_phase_starts.sort)
@@ -85,14 +85,14 @@ describe 'My Academics Tele-BEARS card', :testui => true do
                 if my_academics_page.has_student_semester_link(driver, term_year)
                   my_academics_page.load_semester_page(driver, academics_api.tele_bears_semester_slug(term))
                   my_academics_page.tele_bears_card_heading_element.when_visible WebDriverUtils.academics_timeout
-                  api_semester_adv_code_reqts = academics_api.tele_bears_adviser_codes(term_appts)
-                  api_semester_adv_code_msg = academics_api.tele_bears_adviser_code_msgs(term_appts)
+                  api_semester_adv_code_reqts = academics_api.tele_bears_advisor_codes(term_appts)
+                  api_semester_adv_code_msg = academics_api.tele_bears_advisor_code_msgs(term_appts)
                   api_semester_phase_starts = academics_api.tele_bears_phase_starts(term_appts)
                   api_semester_phase_endings = academics_api.tele_bears_phase_endings(term_appts)
 
                   acad_semester_more_info_link = my_academics_page.more_info_semester_link?
-                  acad_semester_adv_code_reqts = my_academics_page.all_telebears_adviser_icons
-                  acad_semester_adv_code_msgs = my_academics_page.all_telebears_adviser_msgs
+                  acad_semester_adv_code_reqts = my_academics_page.all_telebears_advisor_icons
+                  acad_semester_adv_code_msgs = my_academics_page.all_telebears_advisor_msgs
                   acad_semester_phase_starts = my_academics_page.all_phase_start_times
                   acad_semester_phase_endings = my_academics_page.all_phase_end_times
                   it "shows the right code-required icons on My Academics for UID #{uid}" do
@@ -123,7 +123,7 @@ describe 'My Academics Tele-BEARS card', :testui => true do
             threw_error = true
           ensure
             CSV.open(test_output, 'a+') do |user_info_csv|
-              user_info_csv << [uid, has_tele_bears, api_adviser_code_msgs, api_phase_starts, api_phase_endings, threw_error]
+              user_info_csv << [uid, has_tele_bears, api_advisor_code_msgs, api_phase_starts, api_phase_endings, threw_error]
             end
           end
         end
