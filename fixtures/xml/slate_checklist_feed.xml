@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <PERSON_CHKLST>
   <PERSON_CHKLST_ITEM>
     <REF>498965170</REF>
     <NAME>Cheangy, Billy</NAME>
     <CPID>1234567</CPID>
-    <EmplID>7777</EmplID>
+    <EMPL_ID>7777</EMPL_ID>
     <CHKLST_ITEM_CD>Form</CHKLST_ITEM_CD>
     <CHECKLIST_CD_DESCR>Inquiry Form</CHECKLIST_CD_DESCR>
     <ACTIVE>1</ACTIVE>
@@ -110,7 +110,14 @@
   </PERSON_CHKLST_ITEM>
   <PERSON_CHKLST_ITEM>
     <REF>472390148</REF>
-    <NAME>Mlinton, Michael (Mlinton,Michael,,)</NAME>
+    <NAME>Mlinton2, Michelle (Mlinton,Michael,,)</NAME>
+    <ACTIVE>1</ACTIVE>
+    <TEST>TOEFL</TEST>
+    <TEST2>IB</TEST2>
+  </PERSON_CHKLST_ITEM>
+  <PERSON_CHKLST_ITEM>
+    <REF>472390148</REF>
+    <NAME>Mlinton2, Michelle (Mlinton,Michael,,)</NAME>
     <CHKLST_ITEM_CD>Form</CHKLST_ITEM_CD>
     <CHECKLIST_CD_DESCR>Inquiry Form</CHECKLIST_CD_DESCR>
     <ACTIVE>1</ACTIVE>
@@ -219,6 +226,13 @@
     <CHKLST_ITEM_CD>Transcript</CHKLST_ITEM_CD>
     <CHECKLIST_CD_DESCR>Berkeley High School</CHECKLIST_CD_DESCR>
     <ACTIVE>1</ACTIVE>
+  </PERSON_CHKLST_ITEM>
+  <PERSON_CHKLST_ITEM>
+    <REF>483748230</REF>
+    <NAME>Loren, Williams</NAME>
+    <ACTIVE>1</ACTIVE>
+    <TEST>TOEFL</TEST>
+    <TEST2>IB</TEST2>
   </PERSON_CHKLST_ITEM>
   <PERSON_CHKLST_ITEM>
     <REF>503943556</REF>
