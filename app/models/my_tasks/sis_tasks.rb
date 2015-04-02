@@ -57,6 +57,11 @@ module MyTasks
       if due_date
         formatted_entry['dueDate']['hasTime'] = due_date.is_a?(DateTime)
       end
+      if formatted_entry['bucket'] == 'Unscheduled'
+        # TODO front-end code needs an updated_date for sorting. See if we can get that from the CS feed somehow.
+        updated_date = DateTime.now
+        format_date_into_entry!(updated_date, formatted_entry, 'updatedDate')
+      end
       formatted_entry
     end
 

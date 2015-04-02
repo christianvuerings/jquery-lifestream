@@ -50,11 +50,17 @@ module MyTasks
     end
 
     def format_checklist(result)
+      return nil if result['CHKLST_ITEM_CD'].blank? || result['CHECKLIST_CD_DESCR'].blank?
       formatted_entry = entry_from_result result
       due_date = convert_datetime_or_date result['DUE_DT']
       format_date_and_bucket(formatted_entry, due_date)
       if due_date
         formatted_entry['dueDate']['hasTime'] = due_date.is_a?(DateTime)
+      end
+      if formatted_entry['bucket'] == 'Unscheduled'
+        # TODO front-end code needs an updated_date for sorting. See if we can get that from the Slate feed somehow.
+        updated_date = DateTime.now
+        format_date_into_entry!(updated_date, formatted_entry, 'updatedDate')
       end
       formatted_entry
     end
