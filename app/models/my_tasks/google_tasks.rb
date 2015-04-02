@@ -110,13 +110,6 @@ module MyTasks
         format_date_into_entry!(convert_date(entry['completed']), formatted_entry, 'completedDate')
       end
 
-      if entry['links'].present?
-        formatted_entry['linkUrl'] = entry['links'][0]['link']
-        if entry['links'][0]['type'] == 'email'
-          formatted_entry['linkDescription'] = 'View related email'
-        end
-      end
-
       due_date = if entry['due']
         # Google task datetimes have misleading datetime accuracy. There is no way to record a specific due time
         # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Calling convert_datetime_or_date

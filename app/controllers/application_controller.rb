@@ -101,7 +101,7 @@ class ApplicationController < ActionController::Base
     case error.class.to_s
       when 'Errors::BadRequestError'
         Rails.logger.debug "Bad request made to #{controller_name}\##{action_name}: #{error.message}"
-        render text: error.message, status: 400 and return
+        render json: {:error => error.message}.to_json, status: 400 and return
       else
         Rails.logger.error "Unknown Error::ClientError handled in #{controller_name}\##{action_name}: #{error.class} - #{error.message}"
         render json: {:error => error.message}.to_json, status: 500 and return

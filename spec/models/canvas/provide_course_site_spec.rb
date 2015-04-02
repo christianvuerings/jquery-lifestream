@@ -591,7 +591,7 @@ describe Canvas::ProvideCourseSite do
     let(:maintainer) {double}
     it 'should forward to a background job handler' do
       expect(Canvas::SiteMembershipsMaintainer).to receive(:background).and_return(maintainer)
-      expect(maintainer).to receive(:import_memberships).with(course_id, section_ids, anything)
+      expect(maintainer).to receive(:import_memberships).with(course_id, section_ids, anything, anything)
       subject.import_enrollments_in_background(course_id, section_definitions)
     end
   end
@@ -687,6 +687,7 @@ describe Canvas::ProvideCourseSite do
     end
 
     it 'should get properly formatted candidate course list from fake Oracle MV', :if => CampusOracle::Connection.test_data? do
+      Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(nil)
       terms_feed = Canvas::ProvideCourseSite.new('238382').candidate_courses_list
       expect(terms_feed.length).to eq 1
       expect(terms_feed[0][:name]).to eq 'Fall 2013'

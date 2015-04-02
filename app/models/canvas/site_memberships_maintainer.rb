@@ -25,11 +25,12 @@ module Canvas
     end
 
     # Self-contained method suitable for running as a background job.
-    def self.import_memberships(sis_course_id, sis_section_ids, enrollments_csv_filename)
+    def self.import_memberships(sis_course_id, sis_section_ids, enrollments_csv_filename, into_canvas_course_id = nil)
       enrollments_rows = []
       users_rows = []
       known_users = []
-      worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids, enrollments_rows, users_rows, known_users, :batch_mode => true)
+      worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids, enrollments_rows, users_rows, known_users,
+        :batch_mode => true, :into_canvas_course_id => into_canvas_course_id)
       worker.refresh_sections_in_course
       if enrollments_rows.empty?
         logger.warn("No memberships found for course site #{sis_course_id}")
@@ -70,9 +71,13 @@ module Canvas
     end
 
     def initialize(sis_course_id, sis_section_ids, enrollments_csv_output, users_csv_output, known_users, options = {})
-      default_options = { :batch_mode => false, :cached_enrollments_provider => nil, :sis_user_id_changes => {} }
+      default_options = {
+        :batch_mode => false,
+        :cached_enrollments_provider => nil,
+        :sis_user_id_changes => {},
+        :into_canvas_course_id => nil
+      }
       options.reverse_merge!(default_options)
-
       super()
       @sis_course_id = sis_course_id
       @sis_sections = filter_sections(sis_section_ids)
@@ -82,6 +87,14 @@ module Canvas
       @batch_mode = options[:batch_mode]
       @term_enrollments_csv_worker = options[:cached_enrollments_provider]
       @sis_user_id_changes = options[:sis_user_id_changes]
+      @all_site_sections = Set.new(@sis_sections.collect {|s| s.slice(:term_yr, :term_cd, :ccn) })
+      if (existing_canvas_course_id = options[:into_canvas_course_id])
+        # We are populating new sections in an existing course site, which may contain other untouched
+        # sections already. All course site sections need to be taken into account when determining
+        # instructor roles.
+        existing_site_sections = Canvas::CourseSections.new(course_id: existing_canvas_course_id).official_section_identifiers(true)
+        @all_site_sections.merge(existing_site_sections.collect {|s| s.slice(:term_yr, :term_cd, :ccn) })
+      end
     end
 
     def filter_sections(sis_section_ids)
@@ -99,7 +112,7 @@ module Canvas
 
     def refresh_sections_in_course
       logger.debug("Refreshing sections: #{sis_section_ids.to_sentence}")
-      section_to_instructor_role = instructor_role_for_sections(@sis_sections)
+      section_to_instructor_role = instructor_role_for_sections(@all_site_sections)
       @sis_sections.each do |sis_section|
         sis_section_id = sis_section['sis_section_id']
         if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_section_id))
