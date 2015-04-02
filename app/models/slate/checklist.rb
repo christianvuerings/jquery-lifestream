@@ -57,7 +57,7 @@ module Slate
 
     def mock_json
       xml = MultiXml.parse File.read(Rails.root.join('fixtures', 'xml', 'slate_checklist_feed.xml'))
-      xml['PERSON_CHKLST'].to_json
+      xml.to_json
     end
 
     def mock_request

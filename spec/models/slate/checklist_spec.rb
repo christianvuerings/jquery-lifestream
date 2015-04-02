@@ -4,7 +4,7 @@ describe Slate::Checklist do
 
   it_should_behave_like 'a student data proxy' do
     let(:proxy_class) { Slate::Checklist }
-    let(:feed_key) { 'PERSON_CHKLST_ITEM' }
+    let(:feed_key) { 'PERSON_CHKLST' }
   end
 
   context 'mock proxy' do
@@ -14,8 +14,8 @@ describe Slate::Checklist do
     let(:feed) { fake_proxy.get[:feed] }
 
     it 'returns JSON fixture data by default' do
-      expect(feed['PERSON_CHKLST_ITEM'][0]['EMPL_ID']).to eq '7777'
-      expect(feed['PERSON_CHKLST_ITEM'][0]['NAME']).to eq 'Cheangy, Billy'
+      expect(feed['PERSON_CHKLST']['PERSON_CHKLST_ITEM'][0]['EMPLID']).to eq '7777'
+      expect(feed['PERSON_CHKLST']['PERSON_CHKLST_ITEM'][0]['NAME']).to eq 'Cheangy, Billy'
     end
     it 'can be overridden to return errors' do
       fake_proxy.set_response(status: 506, body: '')
