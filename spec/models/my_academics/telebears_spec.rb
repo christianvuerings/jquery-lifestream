@@ -72,8 +72,8 @@ describe MyAcademics::Telebears do
         expect(telebears[:term]).to eq 'Fall'
         expect(telebears[:year]).to eq 2013
         expect(telebears[:slug]).to eq 'fall-2013'
-        expect(telebears[:adviserCodeRequired][:required]).to be_truthy
-        expect(telebears[:adviserCodeRequired][:type]).to eq 'adviser'
+        expect(telebears[:advisorCodeRequired][:required]).to be_truthy
+        expect(telebears[:advisorCodeRequired][:type]).to eq 'advisor'
         expect(telebears[:phases].length).to eq 2
         expect(telebears[:url]).to be_present
       end
@@ -91,46 +91,46 @@ describe MyAcademics::Telebears do
       end
     end
 
-    describe 'adviserCodeRequired translation' do
+    describe 'advisorCodeRequired translation' do
       before do
         @fake_feed_body['telebearsAppointment'].unwrap['authReleaseCode'] = fake_code
         allow_any_instance_of(Bearfacts::Telebears).to receive(:get).and_return({feed: @fake_feed_body})
       end
-      let(:adviser_code_required) { subject[:telebears][0][:adviserCodeRequired] }
+      let(:advisor_code_required) { subject[:telebears][0][:advisorCodeRequired] }
       context 'default' do
         let(:fake_code) {'P'}
         it 'describes the code' do
-          expect(adviser_code_required[:required]).to eq false
-          expect(adviser_code_required[:type]).to eq 'none'
+          expect(advisor_code_required[:required]).to eq false
+          expect(advisor_code_required[:type]).to eq 'none'
         end
       end
       context 'CalSO' do
         let(:fake_code) {'C'}
         it 'describes the code' do
-          expect(adviser_code_required[:required]).to eq true
-          expect(adviser_code_required[:type]).to eq 'calso'
+          expect(advisor_code_required[:required]).to eq true
+          expect(advisor_code_required[:type]).to eq 'calso'
         end
       end
       context 'required' do
         let(:fake_code) {'A'}
         it 'describes the code' do
-          expect(adviser_code_required[:required]).to eq true
-          expect(adviser_code_required[:type]).to eq 'adviser'
+          expect(advisor_code_required[:required]).to eq true
+          expect(advisor_code_required[:type]).to eq 'advisor'
         end
       end
       context 'access revoked' do
         let(:fake_code) {'N'}
         it 'describes the code' do
-          expect(adviser_code_required[:required]).to eq true
-          expect(adviser_code_required[:type]).to eq 'revoked'
+          expect(advisor_code_required[:required]).to eq true
+          expect(advisor_code_required[:type]).to eq 'revoked'
         end
       end
       context 'unknown code' do
         let(:fake_code) {'foo'}
         it 'returns the default' do
           expect(Rails.logger).to receive(:warn).at_least(1).times
-          expect(adviser_code_required[:required]).to eq false
-          expect(adviser_code_required[:type]).to eq 'none'
+          expect(advisor_code_required[:required]).to eq false
+          expect(advisor_code_required[:type]).to eq 'none'
         end
       end
     end

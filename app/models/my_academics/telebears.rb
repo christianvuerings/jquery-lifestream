@@ -24,7 +24,7 @@ module MyAcademics
 
       auth_release_code = feed['telebearsAppointment']['authReleaseCode'].to_text
       return if auth_release_code.blank?
-      adviser_code_required = decode_adviser_code_required auth_release_code
+      advisor_code_required = decode_advisor_code_required auth_release_code
 
       phases = parse_appointment_phases feed['telebearsAppointment']['telebearsAppointmentPhase'].to_a
 
@@ -32,7 +32,7 @@ module MyAcademics
         term: term,
         year: year,
         slug: slug,
-        adviserCodeRequired: adviser_code_required,
+        advisorCodeRequired: advisor_code_required,
         phases: phases.compact,
         url: "http://registrar.berkeley.edu/tbfaqs.html"
       }
@@ -79,7 +79,7 @@ module MyAcademics
       end
     end
 
-    def decode_adviser_code_required(code)
+    def decode_advisor_code_required(code)
       default = {
         required: false,
         type: 'none'
@@ -91,7 +91,7 @@ module MyAcademics
       when 'A'
         {
           required: true,
-          type: 'adviser'
+          type: 'advisor'
         }
       when 'C'
         {
@@ -104,7 +104,7 @@ module MyAcademics
           type: 'revoked'
         }
       else
-        logger.warn "Unidentified adviser code value for UID #{@uid}: #{code}"
+        logger.warn "Unidentified advisor code value for UID #{@uid}: #{code}"
         default
       end
     end

@@ -25,7 +25,7 @@ describe 'My Academics L&S Advising card', :testui => true do
       test_output = UserUtils.initialize_output_csv(self)
 
       CSV.open(test_output, 'wb') do |user_info_csv|
-        user_info_csv << ['UID', 'L&S', 'Has Current Appt', 'Has Past Appt', 'Has Adviser', 'No Data', 'Error?']
+        user_info_csv << ['UID', 'L&S', 'Has Current Appt', 'Has Past Appt', 'Has Advisor', 'No Data', 'Error?']
       end
 
       test_users.each do |user|
@@ -35,7 +35,7 @@ describe 'My Academics L&S Advising card', :testui => true do
           is_l_and_s = false
           has_future_appt = false
           has_past_appt = false
-          has_adviser = false
+          has_advisor = false
           no_data = false
           threw_error = false
 
@@ -73,12 +73,12 @@ describe 'My Academics L&S Advising card', :testui => true do
                     testable_users.push(uid)
                     acad_future_appt_dates = my_academics.all_future_appt_dates
                     acad_future_appt_times = my_academics.all_future_appt_times
-                    acad_future_appt_advisers = my_academics.all_future_appt_advisers
+                    acad_future_appt_advisors = my_academics.all_future_appt_advisors
                     acad_future_appt_methods = my_academics.all_future_appt_methods
                     acad_future_appt_locations = my_academics.all_future_appt_locations
                     api_future_appt_dates = advising_api.all_future_appt_dates
                     api_future_appt_times = advising_api.all_future_appt_times
-                    api_future_appt_advisers = advising_api.all_future_appt_advisers
+                    api_future_appt_advisors = advising_api.all_future_appt_advisors
                     api_future_appt_methods = advising_api.all_future_appt_methods
                     api_future_appt_locations = advising_api.all_future_appt_locations
                     it "shows a Current Appointments heading for UID #{uid}" do
@@ -90,8 +90,8 @@ describe 'My Academics L&S Advising card', :testui => true do
                     it "shows the right future appointment times for UID #{uid}" do
                       expect(acad_future_appt_times).to eql(api_future_appt_times)
                     end
-                    it "shows the right future appointment advisers for UID #{uid}" do
-                      expect(acad_future_appt_advisers).to eql(api_future_appt_advisers)
+                    it "shows the right future appointment advisors for UID #{uid}" do
+                      expect(acad_future_appt_advisors).to eql(api_future_appt_advisors)
                     end
                     it "shows the right future appointment methods for UID #{uid}" do
                       expect(acad_future_appt_methods).to eql(api_future_appt_methods)
@@ -151,9 +151,9 @@ describe 'My Academics L&S Advising card', :testui => true do
                     prev_appt_heading_revealed = my_academics.prev_appts_heading?
                     show_prev_button_revealed = my_academics.show_prev_appts_button?
                     acad_prev_appt_dates = my_academics.all_prev_appt_dates
-                    acad_prev_appt_advisers = my_academics.all_prev_appt_advisers
+                    acad_prev_appt_advisors = my_academics.all_prev_appt_advisors
                     api_prev_appt_dates = advising_api.all_prev_appt_dates
-                    api_prev_appt_advisers = advising_api.all_prev_appt_advisers
+                    api_prev_appt_advisors = advising_api.all_prev_appt_advisors
                     context 'when previous appointments are revealed' do
                       it "shows a Previous Appointments heading for UID #{uid}" do
                         expect(prev_appt_heading_revealed).to be true
@@ -165,7 +165,7 @@ describe 'My Academics L&S Advising card', :testui => true do
                         expect(acad_prev_appt_dates).to eql(api_prev_appt_dates)
                       end
                       it "shows the right previous appointments advisors for UID #{uid}" do
-                        expect(acad_prev_appt_advisers).to eql(api_prev_appt_advisers)
+                        expect(acad_prev_appt_advisors).to eql(api_prev_appt_advisors)
                       end
                     end
                     my_academics.hide_prev_appts_button
@@ -188,12 +188,12 @@ describe 'My Academics L&S Advising card', :testui => true do
                       expect(hide_prev_button_visible).to be false
                     end
                   end
-                  unless advising_api.college_adviser.nil?
-                    has_adviser = true
-                    acad_adviser = my_academics.college_adviser_link
-                    api_adviser = advising_api.college_adviser
-                    it "shows a college adviser link for UID #{uid}" do
-                      expect(acad_adviser).to eql(api_adviser)
+                  unless advising_api.college_advisor.nil?
+                    has_advisor = true
+                    acad_advisor = my_academics.college_advisor_link
+                    api_advisor = advising_api.college_advisor
+                    it "shows a college advisor link for UID #{uid}" do
+                      expect(acad_advisor).to eql(api_advisor)
                     end
                   end
                   has_new_appt_link = my_academics.make_appt_link?
@@ -212,7 +212,7 @@ describe 'My Academics L&S Advising card', :testui => true do
             threw_error = true
           ensure
             CSV.open(test_output, 'a+') do |user_info_csv|
-              user_info_csv << [uid, is_l_and_s, has_future_appt, has_past_appt, has_adviser, no_data, threw_error]
+              user_info_csv << [uid, is_l_and_s, has_future_appt, has_past_appt, has_advisor, no_data, threw_error]
             end
           end
         end
