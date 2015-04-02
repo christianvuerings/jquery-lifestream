@@ -35,7 +35,7 @@ module Oec
       # Validate certain fields
       @warnings = []
       put_valid_i(row, 'term_yr', split_course_id[0], '2\d{3}')
-      put_valid_i(row, 'course_cntl_num', split_course_id[2].split('_')[0], '[1-9]\d{3,4}')
+      put_valid_i(row, 'course_cntl_num', split_course_id[2].split('_')[0], '\d{4,5}')
       ldap_uid = row[9]
       instructor_func = row[13]
       put_valid_i(row, 'ldap_uid', ldap_uid, '\d{3,10}') unless ldap_uid.blank?
