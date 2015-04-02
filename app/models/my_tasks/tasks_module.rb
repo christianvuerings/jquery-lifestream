@@ -48,7 +48,7 @@ module MyTasks
 
     def format_date_into_entry!(date, formatted_entry, field_name)
       if !date.blank?
-        formatted_entry[field_name] = format_date(date).stringify_keys
+        formatted_entry[field_name] = format_date(date)
       end
     end
 

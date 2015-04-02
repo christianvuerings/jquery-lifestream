@@ -41,20 +41,20 @@ module MyTasks
 
     def entry_from_result(result, title, course_id)
       {
-        'course_code' => @course_code_map[course_id],
-        'emitter' => Canvas::Proxy::APP_NAME,
-        'linkDescription' => "View in #{Canvas::Proxy::APP_NAME}",
-        'linkUrl' => result['html_url'],
-        'sourceUrl' => result['html_url'],
-        'status' => 'inprogress',
-        'title' => title,
-        'type' => 'assignment'
+        course_code: @course_code_map[course_id],
+        emitter: Canvas::Proxy::APP_NAME,
+        linkDescription: "View in #{Canvas::Proxy::APP_NAME}",
+        linkUrl: result['html_url'],
+        sourceUrl: result['html_url'],
+        status: 'inprogress',
+        title: title,
+        type: 'assignment'
       }
     end
 
     def format_date_and_bucket(formatted_entry, date)
-      format_date_into_entry!(date, formatted_entry, 'dueDate')
-      formatted_entry['bucket'] = determine_bucket(date, formatted_entry, @now_time, @starting_date)
+      format_date_into_entry!(date, formatted_entry, :dueDate)
+      formatted_entry[:bucket] = determine_bucket(date, formatted_entry, @now_time, @starting_date)
     end
 
     def format_todo(result)
@@ -63,18 +63,18 @@ module MyTasks
         # Skip a teacher's "overdue for grading" assignments since they don't call for a red alert.
         if result['type'] != 'grading'
           formatted_entry = entry_from_result(result['assignment'], result['assignment']['name'], result['course_id'])
-          formatted_entry['notes'] = sanitize_html(result['assignment']['description']) if result['assignment']['description'].present?
+          formatted_entry[:notes] = sanitize_html(result['assignment']['description']) if result['assignment']['description'].present?
 
           due_date = convert_datetime_or_date result['assignment']['due_at']
           format_date_and_bucket(formatted_entry, due_date)
           # All scheduled assignments come back from Canvas with a timestamp, even if none selected. Ferret out untimed assignments.
           if due_date
-            formatted_entry['dueDate']['hasTime'] = due_date.is_a?(DateTime)
+            formatted_entry[:dueDate][:hasTime] = due_date.is_a?(DateTime)
           end
 
-          if formatted_entry['bucket'] == 'Unscheduled'
+          if formatted_entry[:bucket] == 'Unscheduled'
             updated_date = convert_datetime_or_date(result['assignment']['updated_at'] || result['assignment']['created_at'])
-            format_date_into_entry!(updated_date, formatted_entry, 'updatedDate')
+            format_date_into_entry!(updated_date, formatted_entry, :updatedDate)
           end
 
           formatted_entry
