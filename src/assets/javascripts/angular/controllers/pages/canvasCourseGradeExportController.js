@@ -5,16 +5,17 @@
   /**
    * Canvas Add User to Course LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseGradeExportController', function(apiService, canvasCourseGradeExportFactory, $http, $scope) {
+  angular.module('calcentral.controllers').controller('CanvasCourseGradeExportController', function(apiService, canvasCourseGradeExportFactory, canvasSharedFactory, $http, $routeParams, $scope, $window) {
     apiService.util.setTitle('E-Grade Export');
 
     $scope.appState = 'initializing';
+    $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
 
     /**
      * Sends message to parent window to switch to gradebook
      */
     $scope.goToGradebook = function() {
-      var gradebookUrl = $scope.parentHostUrl + '/courses/' + $scope.canvasCourseId + '/grades';
+      var gradebookUrl = $scope.canvasRootUrl + '/courses/' + $scope.canvasCourseId + '/grades';
       apiService.util.iframeParentLocation(gradebookUrl);
     };
 
@@ -22,22 +23,22 @@
      * Sends message to parent window to go to Course Details
      */
     $scope.goToCourseDetails = function() {
-      var courseDetailsUrl = $scope.parentHostUrl + '/courses/' + $scope.canvasCourseId + '/settings#tab-details';
-      apiService.util.iframeParentLocation(courseDetailsUrl);
+      var courseDetailsUrl = $scope.canvasRootUrl + '/courses/' + $scope.canvasCourseId + '/settings#tab-details';
+      if (!!window.parent.frames.length) {
+        apiService.util.iframeParentLocation(courseDetailsUrl);
+      } else {
+        $window.location.href = courseDetailsUrl;
+      }
     };
 
     /**
      * Performs authorization check on user to control interface presentation
      */
     var checkAuthorization = function() {
-      canvasCourseGradeExportFactory.checkAuthorization().success(function(data) {
-        $scope.courseUserRoles = data.roles;
+      canvasSharedFactory.courseUserRoles($scope.canvasCourseId).success(function(data) {
+        $scope.canvasRootUrl = data.canvasRootUrl;
         $scope.canvasCourseId = data.courseId;
-
-        // get iframe parent hostname
-        var parser = document.createElement('a');
-        parser.href = document.referrer;
-        $scope.parentHostUrl = parser.protocol + '//' + parser.host;
+        $scope.courseUserRoles = data.roles;
 
         $scope.userAuthorized = userIsAuthorized($scope.courseUserRoles);
         if ($scope.userAuthorized) {
@@ -96,7 +97,7 @@
     };
 
     var getExportOptions = function() {
-      canvasCourseGradeExportFactory.exportOptions().success(function(data) {
+      canvasCourseGradeExportFactory.exportOptions($scope.canvasCourseId).success(function(data) {
         if ($scope.appState !== 'error') {
           loadSectionTerms(data.sectionTerms);
         }

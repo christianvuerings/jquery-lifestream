@@ -18,7 +18,13 @@ class CanvasCourseAddUserController < ApplicationController
   # GET /api/academics/canvas/course_user_roles
   def course_user_roles
     profile = user_profile
-    render json: { courseId: canvas_course_id, roles: profile[:roles], roleTypes: profile[:roleTypes], grantingRoles: profile[:grantingRoles] }.to_json
+    render json: {
+      canvasRootUrl: Settings.canvas_proxy.url_root,
+      courseId: canvas_course_id,
+      roles: profile[:roles],
+      roleTypes: profile[:roleTypes],
+      grantingRoles: profile[:grantingRoles]
+    }.to_json
   end
 
   # GET /api/academics/canvas/course_add_user/search_users.json

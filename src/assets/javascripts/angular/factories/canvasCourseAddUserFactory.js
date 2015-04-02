@@ -14,10 +14,6 @@
       });
     };
 
-    var courseUserRoles = function(canvasCourseId) {
-      return $http.get('/api/academics/canvas/course_user_roles/' + canvasCourseId);
-    };
-
     var courseSections = function(canvasCourseId) {
       return $http.get('/api/academics/canvas/course_add_user/' + canvasCourseId + '/course_sections');
     };
@@ -32,7 +28,6 @@
 
     return {
       searchUsers: searchUsers,
-      courseUserRoles: courseUserRoles,
       courseSections: courseSections,
       addUser: addUser
     };

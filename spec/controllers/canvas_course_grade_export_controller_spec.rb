@@ -11,10 +11,12 @@ describe CanvasCourseGradeExportController do
     ]
   end
 
+  let(:canvas_course_id) { '1164764' }
+
   before do
     session['user_id'] = "4868640"
     session['canvas_user_id'] = "43232321"
-    session['canvas_course_id'] = "1164764"
+    session['canvas_course_id'] = canvas_course_id
     allow_any_instance_of(Canvas::CoursePolicy).to receive(:can_export_grades?).and_return(true)
     allow_any_instance_of(Canvas::CourseUsers).to receive(:course_grades).and_return(course_grades)
   end
@@ -43,17 +45,30 @@ describe CanvasCourseGradeExportController do
     end
 
     it_should_behave_like 'an endpoint' do
-      let(:make_request) { get :export_options, :format => :csv }
+      let(:make_request) { get :export_options, canvas_course_id: 'embedded', :format => :csv }
       let(:error_text) { 'Something went wrong' }
       before { allow_any_instance_of(Canvas::Egrades).to receive(:official_sections).and_raise(RuntimeError, error_text) }
     end
 
     it_should_behave_like 'an authenticated endpoint' do
-      let(:make_request) { get :export_options, :format => :csv }
+      let(:make_request) { get :export_options, canvas_course_id: 'embedded', :format => :csv }
     end
 
     it 'provides official course sections' do
-      get :export_options
+      get :export_options, canvas_course_id: 'embedded'
+      expect(response.status).to eq(200)
+      json_response = JSON.parse(response.body)
+      expect(json_response).to be_an_instance_of Hash
+      official_sections = json_response['officialSections']
+      expect(official_sections).to be_an_instance_of Array
+      expect(official_sections.count).to eq 2
+      expect(official_sections[0]['course_cntl_num']).to eq '22280'
+      expect(official_sections[1]['course_cntl_num']).to eq '22345'
+    end
+
+    it 'supports canvas course id parameter when absent in session' do
+      session['canvas_course_id'] = nil
+      get :export_options, canvas_course_id: canvas_course_id
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
       expect(json_response).to be_an_instance_of Hash
@@ -65,7 +80,7 @@ describe CanvasCourseGradeExportController do
     end
 
     it 'provides grading standard enabled boolean' do
-      get :export_options
+      get :export_options, canvas_course_id: 'embedded'
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
       expect(json_response).to be_an_instance_of Hash
@@ -73,7 +88,7 @@ describe CanvasCourseGradeExportController do
     end
 
     it 'provides official section terms existing within course' do
-      get :export_options
+      get :export_options, canvas_course_id: 'embedded'
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
       expect(json_response).to be_an_instance_of Hash
@@ -89,19 +104,19 @@ describe CanvasCourseGradeExportController do
   describe 'when serving egrades download' do
 
     it_should_behave_like 'an endpoint' do
-      let(:make_request) { get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234', :type => 'final' }
+      let(:make_request) { get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234', :type => 'final' }
       let(:error_text) { 'Something went wrong' }
       before { allow_any_instance_of(Canvas::Egrades).to receive(:official_student_grades_csv).and_raise(RuntimeError, error_text) }
     end
 
     it_should_behave_like 'an authenticated endpoint' do
-      let(:make_request) { get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234' }
+      let(:make_request) { get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234' }
     end
 
     context 'when the canvas course id is not present in the session' do
       before { session['canvas_course_id'] = nil }
       it 'returns 403 error' do
-        get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234'
+        get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234'
         expect(response.status).to eq(403)
         expect(response.body).to eq " "
       end
@@ -110,7 +125,7 @@ describe CanvasCourseGradeExportController do
     context 'when user is not authorized to download egrades csv' do
       before { allow_any_instance_of(Canvas::CoursePolicy).to receive(:can_export_grades?).and_return(false) }
       it 'returns 403 error' do
-        get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234'
+        get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234'
         expect(response.status).to eq(403)
         expect(response.body).to eq ' '
       end
@@ -120,35 +135,35 @@ describe CanvasCourseGradeExportController do
       let(:csv_string) { "uid,grade,comment\n872584,F,\"\"\n4000123,B,\"\"\n872527,A+,\"\"\n872529,D-,\"\"\n" }
       before { allow_any_instance_of(Canvas::Egrades).to receive(:official_student_grades_csv).and_return(csv_string) }
       it 'raises exception if term code not provided' do
-        get :download_egrades_csv, :format => :csv, :term_yr => '2014', :ccn => '1234', :type => 'final'
+        get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_yr => '2014', :ccn => '1234', :type => 'final'
         expect(response.status).to eq(400)
         json_response = JSON.parse(response.body)
         expect(json_response['error']).to eq 'term_cd required'
       end
 
       it 'raises exception if term year not provided' do
-        get :download_egrades_csv, :format => :csv, :term_cd => 'D', :ccn => '1234', :type => 'final'
+        get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :ccn => '1234', :type => 'final'
         expect(response.status).to eq(400)
         json_response = JSON.parse(response.body)
         expect(json_response['error']).to eq 'term_yr required'
       end
 
       it 'raises exception if course control number not provided' do
-        get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :type => 'final'
+        get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :term_yr => '2014', :type => 'final'
         expect(response.status).to eq(400)
         json_response = JSON.parse(response.body)
         expect(json_response['error']).to eq 'ccn required'
       end
 
       it 'raises exception if type not provided' do
-        get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234'
+        get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234'
         expect(response.status).to eq(400)
         json_response = JSON.parse(response.body)
         expect(json_response['error']).to eq 'type required'
       end
 
       it 'serves egrades csv file download' do
-        get :download_egrades_csv, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234', :type => 'current'
+        get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234', :type => 'current'
         expect(response.status).to eq(200)
         expect(response.headers['Content-Type']).to eq 'text/csv'
         expect(response.headers['Content-Disposition']).to eq 'attachment; filename=course_1164764_grades.csv'
@@ -177,6 +192,17 @@ describe CanvasCourseGradeExportController do
         expect(response_csv[3]['uid']).to eq '872529'
         expect(response_csv[3]['grade']).to eq 'D-'
         expect(response_csv[3]['comment']).to eq ''
+      end
+
+      it 'supports canvas course id parameter when absent in session' do
+        session['canvas_course_id'] = nil
+        get :download_egrades_csv, canvas_course_id: canvas_course_id, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234', :type => 'current'
+        expect(response.status).to eq(200)
+        expect(response.headers['Content-Type']).to eq 'text/csv'
+        expect(response.headers['Content-Disposition']).to eq 'attachment; filename=course_1164764_grades.csv'
+        expect(response.body).to be_an_instance_of String
+        response_csv = CSV.parse(response.body, {headers: true})
+        expect(response_csv.count).to eq 4
       end
     end
 

@@ -127,6 +127,11 @@
       templateUrl: 'canvas_embedded/course_manage_official_sections.html',
       controller: 'CanvasCourseManageOfficialSectionsController'
     }).
+    when('/canvas/course_grade_export/:canvasCourseId', {
+      templateUrl: 'canvas_embedded/course_grade_export.html',
+      controller: 'CanvasCourseGradeExportController',
+      isEmbedded: true
+    }).
     when('/canvas/user_provision', {
       templateUrl: 'canvas_embedded/user_provision.html',
       controller: 'CanvasUserProvisionController'
