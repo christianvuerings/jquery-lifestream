@@ -16,8 +16,8 @@ module CalCentralPages
     elements(:semester_heading, :h3, :xpath => '//h3[contains(.,"Tele-BEARS for")]')
     elements(:more_info_link, :link, :xpath => '//h3[contains(text(),"Tele-BEARS for")]//a[contains(text(),"More Info")][@href="http://registrar.berkeley.edu/tbfaqs.html"]')
     link(:more_info_semester_link, :xpath => '//a[contains(text(),"More Info")][@href="http://registrar.berkeley.edu/tbfaqs.html"]')
-    elements(:adviser_code_icon, :image, :xpath => '//div[@class="cc-clearfix cc-academics-adviser-message-container ng-scope"]//i')
-    elements(:adviser_code_msg, :div, :xpath => '//div[@data-ng-switch="telebears.adviserCodeRequired.type"]')
+    elements(:advisor_code_icon, :image, :xpath => '//div[@class="cc-clearfix cc-academics-advisor-message-container ng-scope"]//i')
+    elements(:advisor_code_msg, :div, :xpath => '//div[@data-ng-switch="telebears.advisorCodeRequired.type"]')
     elements(:phase_start_time, :div, :xpath => '//h4[contains(.,"Tele-BEARS Phase ")]/following-sibling::ul//div[@data-ng-bind="phase.startTime.epoch * 1000 | dateUnlessNoonFilter:\'EEE MMM d | h:mm a\'"]')
     elements(:phase_end_time, :div, :xpath => '//h4[contains(.,"Tele-BEARS Phase ")]/following-sibling::ul//div[@data-ng-bind="phase.endTime.epoch * 1000 | dateUnlessNoonFilter:\'EEE MMM d | h:mm a\'"]')
 
@@ -27,9 +27,9 @@ module CalCentralPages
       semester_headings
     end
 
-    def all_telebears_adviser_icons
+    def all_telebears_advisor_icons
       icons = []
-      adviser_code_icon_elements.each do |icon|
+      advisor_code_icon_elements.each do |icon|
         icon_type = icon.attribute('class')
         if icon_type == 'cc-left fa fa-exclamation-circle cc-icon-red'
           icon_type = true
@@ -43,9 +43,9 @@ module CalCentralPages
       icons
     end
 
-    def all_telebears_adviser_msgs
+    def all_telebears_advisor_msgs
       messages = []
-      adviser_code_msg_elements.each { |msg| messages.push(msg.text) }
+      advisor_code_msg_elements.each { |msg| messages.push(msg.text) }
       messages
     end
 

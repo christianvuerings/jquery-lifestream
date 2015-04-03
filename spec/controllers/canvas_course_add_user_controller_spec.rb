@@ -33,38 +33,49 @@ describe CanvasCourseAddUserController do
     ]
   end
 
+  let(:canvas_root_url) { 'https://ucb.beta.example.com' }
   let(:canvas_course_id) {'767330'}
 
   before do
-    session['user_id'] = "12345"
-    session['canvas_user_id'] = "43232321"
+    session['user_id'] = '12345'
+    session['canvas_user_id'] = '43232321'
     allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(canvas_course_user_hash)
     allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(true)
     allow(Canvas::CourseAddUser).to receive(:course_sections_list).and_return(course_sections_list)
+    allow(Settings.canvas_proxy).to receive(:url_root).and_return(canvas_root_url)
   end
 
   shared_examples 'a course-access protected controller' do
 
-    context "when serving course user role information" do
+    context 'when serving course user role information' do
 
-      it_should_behave_like "an api endpoint" do
+      it_should_behave_like 'an api endpoint' do
         before { allow(subject).to receive(:course_user_roles).and_raise(RuntimeError, "Something went wrong") }
         let(:make_request) { get :course_user_roles, request_params }
       end
 
-      it_should_behave_like "a user authenticated api endpoint" do
+      it_should_behave_like 'a user authenticated api endpoint' do
         let(:make_request) { get :course_user_roles, request_params }
       end
 
-      context "when session with canvas course user present" do
+      context 'when session with canvas course user present' do
 
-        context "when user is student" do
+        context 'when user is student' do
           let(:canvas_course_student_hash) { canvas_course_user_hash.merge({'enrollments' => [student_enrollment_hash]}) }
           before do
             allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(false)
             allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(canvas_course_student_hash)
           end
-          it "returns course user details" do
+
+          it 'returns canvas root url and course id' do
+            get :course_user_roles, request_params
+            expect(response.status).to eq(200)
+            response_json = JSON.parse(response.body)
+            expect(response_json['canvasRootUrl']).to eq 'https://ucb.beta.example.com'
+            expect(response_json['courseId']).to eq 767330
+          end
+
+          it 'returns course user details' do
             get :course_user_roles, request_params
             expect(response.status).to eq(200)
             response_json = JSON.parse(response.body)
@@ -84,7 +95,7 @@ describe CanvasCourseAddUserController do
             expect(role_types[0]).to eq 'StudentEnrollment'
           end
 
-          it "returns no granting roles" do
+          it 'returns no granting roles' do
             get :course_user_roles, request_params
             expect(response.status).to eq(200)
             response_json = JSON.parse(response.body)
@@ -92,14 +103,22 @@ describe CanvasCourseAddUserController do
           end
         end
 
-        context "when user is teachers assistant" do
+        context 'when user is teachers assistant' do
           let(:canvas_course_ta_hash) { canvas_course_user_hash.merge({'enrollments' => [ta_enrollment_hash]}) }
           before do
             allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(false)
             allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(canvas_course_ta_hash)
           end
 
-          it "returns course user details" do
+          it 'returns canvas root url and course id' do
+            get :course_user_roles, request_params
+            expect(response.status).to eq(200)
+            response_json = JSON.parse(response.body)
+            expect(response_json['canvasRootUrl']).to eq 'https://ucb.beta.example.com'
+            expect(response_json['courseId']).to eq 767330
+          end
+
+          it 'returns course user details' do
             get :course_user_roles, request_params
             expect(response.status).to eq(200)
             response_json = JSON.parse(response.body)
@@ -119,7 +138,7 @@ describe CanvasCourseAddUserController do
             expect(role_types[0]).to eq 'TaEnrollment'
           end
 
-          it "returns student and observer granting roles" do
+          it 'returns student and observer granting roles' do
             get :course_user_roles, request_params
             expect(response.status).to eq(200)
             pp response.body
@@ -133,14 +152,22 @@ describe CanvasCourseAddUserController do
           end
         end
 
-        context "when user is canvas course teacher" do
+        context 'when user is canvas course teacher' do
           let(:canvas_course_teacher_hash) { canvas_course_user_hash.merge({'enrollments' => [teacher_enrollment_hash]}) }
           before do
             allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(false)
             allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(canvas_course_teacher_hash)
           end
 
-          it "returns course user details" do
+          it 'returns canvas root url and course id' do
+            get :course_user_roles, request_params
+            expect(response.status).to eq(200)
+            response_json = JSON.parse(response.body)
+            expect(response_json['canvasRootUrl']).to eq 'https://ucb.beta.example.com'
+            expect(response_json['courseId']).to eq 767330
+          end
+
+          it 'returns course user details' do
             get :course_user_roles, request_params
             expect(response.status).to eq(200)
             response_json = JSON.parse(response.body)
@@ -160,7 +187,7 @@ describe CanvasCourseAddUserController do
             expect(role_types[0]).to eq 'TeacherEnrollment'
           end
 
-          it "returns all granting roles" do
+          it 'returns all granting roles' do
             get :course_user_roles, request_params
             expect(response.status).to eq(200)
             response_json = JSON.parse(response.body)
@@ -173,12 +200,21 @@ describe CanvasCourseAddUserController do
           end
         end
 
-        context "when user is canvas account admin" do
+        context 'when user is canvas account admin' do
           before do
             allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(true)
             allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(nil)
           end
-          it "returns canvas admin user details" do
+
+          it 'returns canvas root url and course id' do
+            get :course_user_roles, request_params
+            expect(response.status).to eq(200)
+            response_json = JSON.parse(response.body)
+            expect(response_json['canvasRootUrl']).to eq 'https://ucb.beta.example.com'
+            expect(response_json['courseId']).to eq 767330
+          end
+
+          it 'returns canvas admin user details' do
             get :course_user_roles, request_params
             expect(response.status).to eq(200)
             response_json = JSON.parse(response.body)
@@ -197,7 +233,7 @@ describe CanvasCourseAddUserController do
             expect(role_types).to eq []
           end
 
-          it "returns all granting roles" do
+          it 'returns all granting roles' do
             get :course_user_roles, request_params
             expect(response.status).to eq(200)
             response_json = JSON.parse(response.body)
@@ -215,39 +251,39 @@ describe CanvasCourseAddUserController do
 
     end
 
-    context "when performing user search" do
+    context 'when performing user search' do
       before do
         allow(Canvas::CourseAddUser).to receive(:search_users).and_return(users_found)
       end
 
-      it_should_behave_like "an api endpoint" do
+      it_should_behave_like 'an api endpoint' do
         before { allow(subject).to receive(:search_users).and_raise(RuntimeError, "Something went wrong") }
         let(:make_request) { get :search_users, request_params.merge(searchText: "John Doe", searchType: "name") }
       end
 
-      it_should_behave_like "a user authenticated api endpoint" do
+      it_should_behave_like 'a user authenticated api endpoint' do
         let(:make_request) { get :search_users, request_params.merge(searchText: "John Doe", searchType: "name") }
       end
 
-      it_should_behave_like "a canvas course admin authorized api endpoint" do
+      it_should_behave_like 'a canvas course admin authorized api endpoint' do
         let(:make_request) { get :search_users, request_params.merge(searchText: "John Doe", searchType: "name") }
       end
 
-      it "returns error if searchText parameter is blank" do
+      it 'returns error if searchText parameter is blank' do
         get :search_users, request_params.merge(searchText: "", searchType: "name")
         expect(response.status).to eq(400)
         json_response = JSON.parse(response.body)
         expect(json_response['error']).to eq "Parameter 'searchText' is blank"
       end
 
-      it "returns error if searchType parameter is not valid" do
+      it 'returns error if searchType parameter is not valid' do
         get :search_users, request_params.merge(searchText: "John Doe", searchType: "weight")
         expect(response.status).to eq(400)
         json_response = JSON.parse(response.body)
         expect(json_response['error']).to eq "Parameter 'searchType' is invalid"
       end
 
-      it "returns user search results" do
+      it 'returns user search results' do
         expect(Canvas::CourseAddUser).to receive(:search_users).with('John Doe', 'name').and_return(users_found)
         get :search_users, request_params.merge(searchText: "John Doe", searchType: "name")
         expect(response.status).to eq(200)

@@ -8,11 +8,11 @@
       <p data-ng-if="urlToMakeAppointment">
         You may schedule a <a data-ng-href="{{urlToMakeAppointment}}">new appointment</a> with an advisor.
       </p>
-      <div data-ng-if="caseloadAdviser" class="cc-clearfix-container cc-widget-lsadvising-advisor">
-        <img data-ng-if="caseloadAdviser.photoUrl" class="cc-left cc-widget-lsadvising-picture" alt="{{caseloadAdviser.firstName + ' ' + caseloadAdviser.lastName}}'s Profile Picture" data-ng-src="{{caseloadAdviser.photoUrl}}">
+      <div data-ng-if="caseloadAdvisor" class="cc-clearfix-container cc-widget-lsadvising-advisor">
+        <img data-ng-if="caseloadAdvisor.photoUrl" class="cc-left cc-widget-lsadvising-picture" alt="{{caseloadAdvisor.firstName + ' ' + caseloadAdvisor.lastName}}'s Profile Picture" data-ng-src="{{caseloadAdvisor.photoUrl}}">
         <h3 class="cc-widget-lsadvising-heading-first cc-widget-lsadvising-heading">College Advisor</h3>
-        <a data-ng-href="mailto:{{caseloadAdviser.email}}">
-          <span data-ng-bind-template="{{caseloadAdviser.firstName + ' ' + caseloadAdviser.lastName}}"></span>
+        <a data-ng-href="mailto:{{caseloadAdvisor.email}}">
+          <span data-ng-bind-template="{{caseloadAdvisor.firstName + ' ' + caseloadAdvisor.lastName}}"></span>
         </a>
       </div>
       <div data-ng-if="futureAppointments.length">

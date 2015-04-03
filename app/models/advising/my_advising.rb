@@ -70,6 +70,7 @@ module Advising
           response[key].reverse! if key == 'pastAppointments'
         end
       end
+      response['caseloadAdvisor'] = response.delete 'caseloadAdviser'
       HashConverter.camelize response
     end
 

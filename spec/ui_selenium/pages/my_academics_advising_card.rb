@@ -16,7 +16,7 @@ module CalCentralPages
     div(:advising_card_spinner, :xpath => '//h2[text()="L&S Advising"]/../following-sibling::div[@class="cc-spinner"]')
     paragraph(:make_appt_msg, :xpath => '//p[@data-ng-if="urlToMakeAppointment"]')
     link(:make_appt_link, :xpath => '//a[@href="https://bhive.berkeley.edu/appointments"][contains(.,"new appointment")]')
-    span(:college_adviser_link, :xpath => '//h3[contains(.,"College Advisor")]/following-sibling::a/span')
+    span(:college_advisor_link, :xpath => '//h3[contains(.,"College Advisor")]/following-sibling::a/span')
 
     h3(:future_appts_heading, :xpath => '//h3[text()="Current Appointments"]')
     elements(:future_appts, :list_item, :xpath => '//li[@data-ng-repeat="appointment in futureAppointments"]')
@@ -45,7 +45,7 @@ module CalCentralPages
       times
     end
 
-    def all_future_appt_advisers
+    def all_future_appt_advisors
       advisors = []
       future_appt_advisors_elements.each { |advisor| advisors.push(advisor.text) }
       advisors
@@ -72,13 +72,13 @@ module CalCentralPages
       dates.drop(1)
     end
 
-    def all_prev_appt_advisers
-      advisers = []
+    def all_prev_appt_advisors
+      advisors = []
       prev_appts_table_element.each do |row|
-        adviser = row[1].text
-        advisers.push(adviser)
+        advisor = row[1].text
+        advisors.push(advisor)
       end
-      advisers.drop(1)
+      advisors.drop(1)
     end
   end
 end
