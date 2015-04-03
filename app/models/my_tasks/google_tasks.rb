@@ -96,36 +96,36 @@ module MyTasks
 
     def format_google_task_response(entry)
       formatted_entry = {
-        'emitter' => GoogleApps::Proxy::APP_ID,
-        'id' => entry['id'],
-        'sourceUrl' => entry['selfLink'] || '',
-        'title' => entry['title'] || '',
-        'type' => 'task'
+        emitter: GoogleApps::Proxy::APP_ID,
+        id: entry['id'],
+        sourceUrl: entry['selfLink'] || '',
+        title: entry['title'] || '',
+        type: 'task'
       }
 
-      formatted_entry['notes'] = entry['notes'] if entry['notes']
-      formatted_entry['status'] = entry['status'] == 'needsAction' ? 'needsAction' : 'completed'
+      formatted_entry[:notes] = entry['notes'] if entry['notes']
+      formatted_entry[:status] = entry['status'] == 'needsAction' ? 'needsAction' : 'completed'
 
       if entry['completed']
-        format_date_into_entry!(convert_date(entry['completed']), formatted_entry, 'completedDate')
+        format_date_into_entry!(convert_date(entry['completed']), formatted_entry, :completedDate)
       end
 
       due_date = if entry['due']
         # Google task datetimes have misleading datetime accuracy. There is no way to record a specific due time
         # for tasks (through the UI), thus the reported time+tz is always 00:00:00+0000. Calling convert_datetime_or_date
-        # will strip off the false accuracy and return a plain old Date. 
+        # will strip off the false accuracy and return a plain old Date.
         parsed_date = convert_datetime_or_date entry['due']
         # Tasks are not overdue until the end of the day. Advance forward one day and back one second to cover
         # the possibility of daylight savings transitions.
         Time.at((parsed_date + 1).in_time_zone.to_datetime.to_i - 1).to_datetime
       end
-      format_date_into_entry!(due_date, formatted_entry, 'dueDate')
+      format_date_into_entry!(due_date, formatted_entry, :dueDate)
 
-      formatted_entry['bucket'] = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
-      logger.debug "Putting Google task with dueDate: #{formatted_entry['dueDate']} in bucket: #{formatted_entry['bucket']}"
+      formatted_entry[:bucket] = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
+      logger.debug "Putting Google task with dueDate: #{formatted_entry[:dueDate]} in bucket: #{formatted_entry[:bucket]}"
 
       if formatted_entry['bucket'] == 'Unscheduled'
-        format_date_into_entry!(convert_date(entry['updated']), formatted_entry, 'updatedDate')
+        format_date_into_entry!(convert_date(entry['updated']), formatted_entry, :updatedDate)
       end
 
       logger.debug "Formatted body response from google proxy - #{formatted_entry.inspect}"

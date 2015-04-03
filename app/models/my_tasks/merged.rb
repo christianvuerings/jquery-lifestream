@@ -33,11 +33,11 @@ module MyTasks
         tasks += value_hash[:source].fetch_tasks
       end
       logger.debug "#{self.class.name} get_feed is #{tasks.inspect}"
-      {"tasks" => tasks}
+      {tasks: tasks}
     end
 
     def filter_for_view_as(feed)
-      feed['tasks'].delete_if {|t| t['emitter'] == 'Google'}
+      feed[:tasks].delete_if {|t| t[:emitter] == 'Google'}
       feed
     end
 
