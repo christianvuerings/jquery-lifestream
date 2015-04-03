@@ -1,5 +1,5 @@
 module MyTasks
-  class SisTasks
+  class SlateTasks
     include MyTasks::TasksModule, ClassLogger, HtmlSanitizer, SafeJsonParser
 
     def initialize(uid, starting_date)
@@ -10,7 +10,7 @@ module MyTasks
 
     def fetch_tasks
       tasks = []
-      checklist_feed = CampusSolutions::Checklist.new(user_id: @uid).get
+      checklist_feed = Slate::Checklist.new(user_id: @uid).get
       checklist_results = collect_results(checklist_feed) { |result| format_checklist result }
       tasks.concat checklist_results.compact if checklist_results
       tasks
@@ -20,11 +20,11 @@ module MyTasks
 
     def collect_results(response)
       collected_results = []
-      if (response && response[:feed] && results = response[:feed]['PERSON_CHKLST_ITEM'])
-        logger.info "Sorting SIS Checklist feed into buckets with starting_date #{@starting_date}; #{results}"
+      if (response && response[:feed] && results = response[:feed]['PERSON_CHKLST']['PERSON_CHKLST_ITEM'])
+        logger.info "Sorting Slate Checklist feed into buckets with starting_date #{@starting_date}; #{results}"
         results.each do |result|
           if (formatted_entry = yield result)
-            logger.debug "Adding Checklist task with dueDate: #{formatted_entry['dueDate']} in bucket '#{formatted_entry['bucket']}': #{formatted_entry}"
+            logger.debug "Adding Slate Checklist task with dueDate: #{formatted_entry['dueDate']} in bucket '#{formatted_entry['bucket']}': #{formatted_entry}"
             collected_results << formatted_entry
           end
         end
@@ -34,13 +34,12 @@ module MyTasks
 
     def entry_from_result(result)
       {
-        'emitter' => CampusSolutions::Checklist::APP_ID,
-        'linkDescription' => "View in #{CampusSolutions::Checklist::APP_NAME}",
+        'emitter' => Slate::Checklist::APP_ID,
+        'linkDescription' => "View in #{Slate::Checklist::APP_NAME}",
         'linkUrl' => 'http://sisproject.berkeley.edu',
         'sourceUrl' => 'http://sisproject.berkeley.edu',
         'status' => 'inprogress',
-        'title' => result['CHECKLIST_CD_DESCR'],
-        'notes' => result['INFORMATION'],
+        'title' => "#{result['CHKLST_ITEM_CD']}: #{result['CHECKLIST_CD_DESCR']}",
         'type' => 'task'
       }
     end
@@ -51,6 +50,7 @@ module MyTasks
     end
 
     def format_checklist(result)
+      return nil if result['CHKLST_ITEM_CD'].blank? || result['CHECKLIST_CD_DESCR'].blank?
       formatted_entry = entry_from_result result
       due_date = convert_datetime_or_date result['DUE_DT']
       format_date_and_bucket(formatted_entry, due_date)
@@ -58,7 +58,7 @@ module MyTasks
         formatted_entry['dueDate']['hasTime'] = due_date.is_a?(DateTime)
       end
       if formatted_entry['bucket'] == 'Unscheduled'
-        # TODO front-end code needs an updated_date for sorting. See if we can get that from the CS feed somehow.
+        # TODO front-end code needs an updated_date for sorting. See if we can get that from the Slate feed somehow.
         updated_date = DateTime.now
         format_date_into_entry!(updated_date, formatted_entry, 'updatedDate')
       end
