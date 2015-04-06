@@ -91,7 +91,7 @@ module Canvas
             accounts_batch = []
           end
         end
-        compare_to_campus(accounts_batch)
+        compare_to_campus(accounts_batch) if accounts_batch.present?
       end
     end
 
