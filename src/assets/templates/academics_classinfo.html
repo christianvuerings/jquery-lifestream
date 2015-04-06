@@ -140,7 +140,13 @@
     </div>
 
     <div class="medium-4 columns cc-column-last">
-      <div data-ng-include="'widgets/webcast.html'"></div>
+
+      <div class="cc-widget cc-widget-webcast" data-ng-if="api.user.profile.features.videos">
+        <div class="cc-widget-title">
+          <h2>Webcasts</h2>
+        </div>
+        <div data-ng-include src="'widgets/webcast.html'"></div>
+      </div>
 
       <div data-ng-if="selectedSemester.timeBucket === 'current' || selectedSemester.timeBucket === 'future'" class="cc-widget" data-ng-controller="TextbookController" data-ng-if="api.user.profile.features.textbooks">
         <div class="cc-widget-title">

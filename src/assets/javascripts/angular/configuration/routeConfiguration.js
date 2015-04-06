@@ -67,7 +67,8 @@
       isPublic: true
     }).
     when('/canvas/embedded/rosters', {
-      templateUrl: 'canvas_embedded/roster.html'
+      templateUrl: 'canvas_embedded/roster.html',
+      isEmbedded: true
     }).
     when('/canvas/embedded/site_creation', {
       templateUrl: 'canvas_embedded/site_creation.html',
@@ -129,8 +130,7 @@
     }).
     when('/canvas/course_grade_export/:canvasCourseId', {
       templateUrl: 'canvas_embedded/course_grade_export.html',
-      controller: 'CanvasCourseGradeExportController',
-      isEmbedded: true
+      controller: 'CanvasCourseGradeExportController'
     }).
     when('/canvas/user_provision', {
       templateUrl: 'canvas_embedded/user_provision.html',
