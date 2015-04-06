@@ -16,16 +16,26 @@ rvm gemset use $GEMSET
 bundle install --local --retry 3 || { echo "WARNING: bundle install --local failed, running bundle install"; bundle install --retry 3 || { echo "ERROR: bundle install failed"; exit 1; } }
 bundle package --all || { echo "WARNING: bundle package failed"; exit 1; }
 
-# set up Xvfb for headless browser testing
-if [ ! -f /tmp/.X99-lock ];
-then
-    Xvfb :99 -screen 0 1440x900x16 &
-fi
-
 # set up environment
 export RAILS_ENV=testext
 export DISPLAY=":99"
 export JRUBY_OPTS="-Xcext.enabled=true -J-Xmx900m -J-XX:MaxPermSize=500m -J-Djruby.compile.mode=OFF"
 
 # run the tests
-bundle exec rake assets:clean db:reset spec:xml
+if [ "$2" == "uitest" ]; then
+  # run UI tests if we've been given a second arg
+  echo "Running UI tests"
+  export UI_TEST=true
+  bundle exec rake spec:xml
+else
+  # run regular testext tests
+  echo "Running testext tests"
+
+  # set up Xvfb for headless browser testing
+  if [ ! -f /tmp/.X99-lock ];
+  then
+      Xvfb :99 -screen 0 1440x900x16 &
+  fi
+
+  bundle exec rake assets:clean db:reset spec:xml
+fi
