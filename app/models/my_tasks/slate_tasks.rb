@@ -34,19 +34,19 @@ module MyTasks
 
     def entry_from_result(result)
       {
-        'emitter' => Slate::Checklist::APP_ID,
-        'linkDescription' => "View in #{Slate::Checklist::APP_NAME}",
-        'linkUrl' => 'http://sisproject.berkeley.edu',
-        'sourceUrl' => 'http://sisproject.berkeley.edu',
-        'status' => 'inprogress',
-        'title' => "#{result['CHKLST_ITEM_CD']}: #{result['CHECKLIST_CD_DESCR']}",
-        'type' => 'task'
+        emitter: Slate::Checklist::APP_ID,
+        linkDescription: "View in #{Slate::Checklist::APP_NAME}",
+        linkUrl: 'http://sisproject.berkeley.edu',
+        sourceUrl: 'http://sisproject.berkeley.edu',
+        status: 'inprogress',
+        title: "#{result['CHKLST_ITEM_CD']}: #{result['CHECKLIST_CD_DESCR']}",
+        type: 'task'
       }
     end
 
     def format_date_and_bucket(formatted_entry, date)
-      format_date_into_entry!(date, formatted_entry, 'dueDate')
-      formatted_entry['bucket'] = determine_bucket(date, formatted_entry, @now_time, @starting_date)
+      format_date_into_entry!(date, formatted_entry, :dueDate)
+      formatted_entry[:bucket] = determine_bucket(date, formatted_entry, @now_time, @starting_date)
     end
 
     def format_checklist(result)
@@ -55,12 +55,12 @@ module MyTasks
       due_date = convert_datetime_or_date result['DUE_DT']
       format_date_and_bucket(formatted_entry, due_date)
       if due_date
-        formatted_entry['dueDate']['hasTime'] = due_date.is_a?(DateTime)
+        formatted_entry[:dueDate][:hasTime] = due_date.is_a?(DateTime)
       end
-      if formatted_entry['bucket'] == 'Unscheduled'
+      if formatted_entry[:bucket] == 'Unscheduled'
         # TODO front-end code needs an updated_date for sorting. See if we can get that from the Slate feed somehow.
         updated_date = DateTime.now
-        format_date_into_entry!(updated_date, formatted_entry, 'updatedDate')
+        format_date_into_entry!(updated_date, formatted_entry, :updatedDate)
       end
       formatted_entry
     end
