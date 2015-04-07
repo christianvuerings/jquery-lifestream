@@ -39,8 +39,8 @@ module MyTasks
         linkUrl: 'http://sisproject.berkeley.edu',
         sourceUrl: 'http://sisproject.berkeley.edu',
         status: 'inprogress',
-        title: result['CHECKLIST_CD_DESCR'],
-        notes: result['INFORMATION'],
+        title: result['DESCR'],
+        notes: result['DESCRLONG'],
         type: 'task'
       }
     end
