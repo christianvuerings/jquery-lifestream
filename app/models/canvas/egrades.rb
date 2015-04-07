@@ -111,7 +111,7 @@ module Canvas
       }
 
       if options[:cache].present?
-        self.class.fetch_from_cache("#{@canvas_course_id}") { get_official_course_status.call }
+        self.class.fetch_from_cache("is-official-#{@canvas_course_id}") { get_official_course_status.call }
       else
         get_official_course_status.call
       end

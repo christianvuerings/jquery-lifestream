@@ -365,14 +365,14 @@ describe Canvas::Egrades do
     }
     before { allow(subject).to receive(:official_section_identifiers).and_return(section_identifiers) }
 
-    it 'uses cache by default' do
-      expect(Canvas::Egrades).to receive(:fetch_from_cache).with("#{canvas_course_id}").and_return(false)
+    it "uses cache by default" do
+      expect(Canvas::Egrades).to receive(:fetch_from_cache).with("is-official-#{canvas_course_id}").and_return(false)
       result = subject.is_official_course?
       expect(result).to eq false
     end
 
-    it 'bypasses cache when cache option is false' do
-      expect(Canvas::Egrades).to_not receive(:fetch_from_cache).with("#{canvas_course_id}")
+    it "bypasses cache when cache option is false" do
+      expect(Canvas::Egrades).to_not receive(:fetch_from_cache).with("is-official-#{canvas_course_id}")
       result = subject.is_official_course?(:cache => false)
       expect(result).to eq true
     end
