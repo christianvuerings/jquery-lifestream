@@ -7,7 +7,6 @@ module Slate
     include ClassLogger
     include Cache::UserCacheExpiry
     include Proxies::Mockable
-    include User::Student
 
     def initialize(options = {})
       super(Settings.slate_checklist_proxy, options)
@@ -30,29 +29,23 @@ module Slate
     private
 
     def get_internal
-      student_id = lookup_student_id
-      if student_id.nil?
-        logger.info "Lookup of student_id for uid #{@uid} failed, cannot call Slate Checklist API"
-        {
-          noStudentId: true
+      url = @settings.base_url
+      logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+      request_options = {
+        basic_auth: {
+          username: @settings.username,
+          password: @settings.password
+        },
+        query: {
+          uid: @uid
         }
-      else
-        url = @settings.base_url
-        logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
-        # TODO figure out where we get EmplID from (which is passed to Slate as the "sid" param)
-        request_options = {
-          basic_auth: {
-            username: @settings.username,
-            password: @settings.password
-          }
-        }
-        response = get_response(url, request_options)
-        logger.debug "Remote server status #{response.code}, Body = #{response.body}"
-        {
-          statusCode: response.code,
-          feed: response.parsed_response
-        }
-      end
+      }
+      response = get_response(url, request_options)
+      logger.debug "Remote server status #{response.code}, Body = #{response.body}"
+      {
+        statusCode: response.code,
+        feed: response.parsed_response
+      }
     end
 
     def mock_json
