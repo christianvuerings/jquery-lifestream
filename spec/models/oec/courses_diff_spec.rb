@@ -34,7 +34,7 @@ describe Oec::CoursesDiff do
         expect(expected_diff.length > 0).to eq diff.was_difference_found
         if dept_name == 'STAT'
           # Bogus ids in STAT_courses_confirmed.csv
-          expected_error_counts = { '2015-B-666' => 1, '2015-B-55555' => 1, '1999-E-BAD/CCN_X' => 6, '2015-B-111' => 1, '2015-B-33333' => 1 }
+          expected_error_counts = { '2015-B-6666' => 1, '2015-B-55555' => 1, '1999-E-BAD/CCN_X' => 6, '2015-B-111' => 1, '2015-B-33333' => 1 }
           expected_error_counts.each do |course_id, error_count|
             expect(diff.errors_per_course_id[course_id].length).to eq error_count
           end
