@@ -39,19 +39,21 @@ module Canvas
       end
     end
 
-    def canvas_course_students
-      proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id)
-      course_users = proxy.course_users(:cache => false)
-      course_students = []
-      course_users.each do |course_user|
-        user_grade = student_grade(course_user['enrollments'])
-        course_students << {
-          :sis_login_id => course_user['sis_login_id'],
-          :final_grade => user_grade[:final_grade],
-          :current_grade => user_grade[:current_grade],
-        }
+    def canvas_course_students(force = false)
+      self.class.fetch_from_cache("course-students-#{@canvas_course_id}", force) do
+        proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id)
+        course_users = proxy.course_users(:cache => false)
+        course_students = []
+        course_users.each do |course_user|
+          user_grade = student_grade(course_user['enrollments'])
+          course_students << {
+            :sis_login_id => course_user['sis_login_id'],
+            :final_grade => user_grade[:final_grade],
+            :current_grade => user_grade[:current_grade],
+          }
+        end
+        course_students
       end
-      course_students
     end
 
     # Extracts scores and grades from enrollments

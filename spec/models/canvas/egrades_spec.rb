@@ -151,6 +151,16 @@ describe Canvas::Egrades do
       expect(Canvas::CourseUsers).to_not receive(:fetch_from_cache)
       result = subject.canvas_course_students
     end
+
+    it "should not specify forced cache write by default" do
+      expect(Canvas::Egrades).to_not receive(:fetch_from_cache).with("course-students-#{canvas_course_id}", true)
+      result = subject.canvas_course_students
+    end
+
+    it "should specify forced cache write when specified" do
+      expect(Canvas::Egrades).to receive(:fetch_from_cache).with("course-students-#{canvas_course_id}", true)
+      result = subject.canvas_course_students(true)
+    end
   end
 
   context "when extracting student grades from enrollments" do
