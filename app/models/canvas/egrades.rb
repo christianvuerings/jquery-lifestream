@@ -46,14 +46,8 @@ module Canvas
       course_users.each do |course_user|
         user_grade = student_grade(course_user['enrollments'])
         course_students << {
-          :canvas_course_id => @canvas_course_id,
-          :canvas_user_id => course_user['id'],
-          :sis_user_id => course_user['sis_user_id'],
           :sis_login_id => course_user['sis_login_id'],
-          :name => course_user['name'],
-          :final_score => user_grade[:final_score],
           :final_grade => user_grade[:final_grade],
-          :current_score => user_grade[:current_score],
           :current_grade => user_grade[:current_grade],
         }
       end

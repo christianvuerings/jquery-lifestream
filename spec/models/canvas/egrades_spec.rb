@@ -118,41 +118,32 @@ describe Canvas::Egrades do
 
       # Student with Grade
       expect(result[0][:sis_login_id]).to eq "4000123"
-      expect(result[0][:sis_user_id]).to eq "UID:4000123"
-      expect(result[0][:final_score]).to eq 34.9
       expect(result[0][:final_grade]).to eq "F"
-      expect(result[0][:current_score]).to eq 34.9
       expect(result[0][:current_grade]).to eq "F"
+
       # Teacher Enrollment
       expect(result[1][:sis_login_id]).to eq "4000169"
-      expect(result[1][:final_score]).to eq nil
       expect(result[1][:final_grade]).to eq nil
-      expect(result[1][:current_score]).to eq nil
       expect(result[1][:current_grade]).to eq nil
+
       # Student with No Grade
       expect(result[2][:sis_login_id]).to eq "4000309"
-      expect(result[2][:final_score]).to eq nil
       expect(result[2][:final_grade]).to eq nil
-      expect(result[2][:current_score]).to eq nil
       expect(result[2][:current_grade]).to eq nil
+
       # Student with Grade
       expect(result[3][:sis_login_id]).to eq "4000189"
-      expect(result[3][:final_score]).to eq 89.9
       expect(result[3][:final_grade]).to eq "B+"
-      expect(result[3][:current_score]).to eq 89.9
       expect(result[3][:current_grade]).to eq "B+"
+
       # Student with Grade
       expect(result[4][:sis_login_id]).to eq "4000199"
-      expect(result[4][:final_score]).to eq 69.5
       expect(result[4][:final_grade]).to eq "D-"
-      expect(result[4][:current_score]).to eq 71.8
       expect(result[4][:current_grade]).to eq "C"
+
       # Student with Grade
       expect(result[5][:sis_login_id]).to eq "4000272"
-      expect(result[5][:sis_user_id]).to eq "20629333"
-      expect(result[5][:final_score]).to eq 10.5
       expect(result[5][:final_grade]).to eq "F-"
-      expect(result[5][:current_score]).to eq 10.5
       expect(result[5][:current_grade]).to eq "F-"
     end
 
