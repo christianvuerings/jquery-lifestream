@@ -145,8 +145,9 @@
                 "selfLink": "https://www.googleapis.com/tasks/v1/lists/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDow/tasks/MDM3NDMyMTM2NzUwNzM1MDg0MTc6MDoxNDExNDM2NjM5",
                 "position": "00000000002147483647",
                 "notes": "Submit a signed Emergency Loan promissory note",
-                "status": "needsAction",
-                "due": ":::UTC_NEXT_WEEK:::"
+                "status": "completed",
+                "due": ":::UTC_NEXT_WEEK:::",
+                "completed": "2012-11-28T20:22:52.000Z"
               },
               {
                 "kind": "tasks#task",
