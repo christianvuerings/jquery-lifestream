@@ -38,7 +38,7 @@ module Oec
       put_valid_i(row, 'course_cntl_num', split_course_id[2].split('_')[0], '\d{4,5}')
       ldap_uid = row[9]
       instructor_func = row[13]
-      put_valid_i(row, 'ldap_uid', ldap_uid, '\d{3,10}') unless ldap_uid.blank?
+      put_valid_i(row, 'ldap_uid', ldap_uid, '\d{1,10}') unless ldap_uid.blank?
       put_valid_i(row, 'instructor_func', instructor_func, '[1-4]') unless instructor_func.blank?
     end
 

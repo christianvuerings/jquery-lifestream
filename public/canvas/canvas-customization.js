@@ -246,16 +246,15 @@
               if (gradesExportLtiId) {
                 // form link to external tool
                 var linkUrl = '/courses/' + courseId + '/external_tools/' + gradesExportLtiId;
-                // add 'Download E-Grades (.csv)' option to gradebook drop down menu
-                var $gradebookDropDownList = $('ul.gradebook_drop_down');
-                var downloadEGradesItem = [
-                  '<li class="ui-menu-item" role="presentation">',
-                  '<a id="download_egrades" href="' + linkUrl + '" class="ui-corner-all" tabindex="-1" role="menuitem">',
-                  'Download E-Grades (.csv)',
-                  '</a>',
-                  '</li>'
+                // add 'E-Grades' button to Gradebook toolbar menu
+                var $gradebookToolbarMenuButtons = $('#gradebook-toolbar .gradebook_menu span.ui-buttonset');
+                var egradesItem = [
+                  '<a class="ui-button" id="download_csv" href="' + linkUrl + '">',
+                  '<i class="icon-export"></i>',
+                  'E-Grades',
+                  '</a>'
                 ].join('');
-                $gradebookDropDownList.prepend(downloadEGradesItem);
+                $gradebookToolbarMenuButtons.append(egradesItem);
               }
             });
           }

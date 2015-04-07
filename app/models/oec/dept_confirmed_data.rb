@@ -4,7 +4,7 @@ module Oec
     attr_reader :confirmed_data_per_dept
     attr_reader :warnings_per_dept
 
-    def initialize(src_dir, departments)
+    def initialize(src_dir, departments = [])
       @confirmed_data_per_dept = {}
       @warnings_per_dept = {}
       csv_filename_suffix = '_courses_confirmed.csv'
@@ -15,8 +15,9 @@ module Oec
         csv_file_hash[dept_name] = filename
       end
       biology_dept = 'BIOLOGY'
+      biology_explicitly_requested = departments.include? biology_dept
       (departments.empty? ? Settings.oec.departments : departments).each do |dept_name|
-        if dept_name.casecmp(biology_dept) == 0
+        if biology_explicitly_requested && dept_name.casecmp(biology_dept) == 0
           warn(dept_name, "#{biology_dept}#{csv_filename_suffix} is not allowed. #{biology_dept} data is expected in the INTEGBI and MCELLBI files.")
         elsif csv_file_hash.has_key? dept_name
           corrected_data = []
@@ -26,7 +27,9 @@ module Oec
             if row.empty? || row[0].blank?
               warn(dept_name, "#{dept_name}#{csv_filename_suffix} has corrupt or missing data at row #{index + 1}")
             elsif index > 0
-              hashed_row = Oec::RowConverter.new(row).hashed_row
+              converter = Oec::RowConverter.new(row)
+              converter.warnings.each { |message| warn(dept_name, message) }
+              hashed_row = converter.hashed_row
               ldap_uid = hashed_row['ldap_uid']
               course_id = hashed_row['course_id']
               row_uid = ldap_uid.blank? ? course_id : "#{course_id}-#{ldap_uid}"
