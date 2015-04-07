@@ -20,7 +20,7 @@ module MyTasks
 
     def collect_results(response)
       collected_results = []
-      if (response && response[:feed] && results = response[:feed]['PERSON_CHKLST']['PERSON_CHKLST_ITEM'])
+      if (response && response[:feed] && response[:feed]['PERSON_CHKLST'] && results = response[:feed]['PERSON_CHKLST']['PERSON_CHKLST_ITEM'])
         logger.info "Sorting Slate Checklist feed into buckets with starting_date #{@starting_date}; #{results}"
         results.each do |result|
           if (formatted_entry = yield result)
