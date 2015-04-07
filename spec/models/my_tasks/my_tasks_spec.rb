@@ -42,7 +42,7 @@ describe 'MyTasks' do
     let(:tasks) { my_tasks_model.get_feed[:tasks] }
 
     it 'should sort tasks into the right buckets' do
-      expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 6
+      expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 7
       expect(tasks.count{|task| task[:bucket] == 'Unscheduled'}).to eq 5
 
       # On Sundays, no "later in the week" tasks can escape the "Today" bucket. Since this moves
@@ -52,7 +52,7 @@ describe 'MyTasks' do
         expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 9
       else
         expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 2
-        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 14
+        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 19
       end
 
       expect(tasks.count{|task| %w(Overdue Today Future Unscheduled).exclude? task[:bucket]}).to eq 0
@@ -167,7 +167,7 @@ describe 'MyTasks' do
     tasks = my_tasks_model.get_feed[:tasks]
     tasks.size.should be > 0
     tasks.each do |task|
-      expect([GoogleApps::Proxy::APP_ID, Slate::Checklist::APP_ID]).to include task[:emitter]
+      expect([GoogleApps::Proxy::APP_ID, Slate::Checklist::APP_ID, CampusSolutions::Checklist::APP_ID]).to include task[:emitter]
     end
   end
 
@@ -213,7 +213,7 @@ describe 'MyTasks' do
 
     my_tasks_model = MyTasks::Merged.new(@user_id)
     valid_feed = my_tasks_model.get_feed
-    valid_feed[:tasks].length.should == 4
+    valid_feed[:tasks].length.should == 10
   end
 
   it 'should include an updatedDate for unscheduled Canvas tasks' do

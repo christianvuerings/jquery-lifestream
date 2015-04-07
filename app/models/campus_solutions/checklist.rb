@@ -7,7 +7,6 @@ module CampusSolutions
     include ClassLogger
     include Cache::UserCacheExpiry
     include Proxies::Mockable
-    include User::Student
 
     def initialize(options = {})
       super(Settings.cs_checklist_proxy, options)
@@ -30,31 +29,24 @@ module CampusSolutions
     private
 
     def get_internal
-      student_id = lookup_student_id
-      if student_id.nil?
-        logger.info "Lookup of student_id for uid #{@uid} failed, cannot call Campus Solutions Checklist API"
-        {
-          noStudentId: true
+      url = @settings.base_url
+      logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+      request_options = {
+        query: {
+          'SCC_PROFILE_ID' => @uid,
+          'languageCd' => 'ENG'
         }
-      else
-        url = @settings.base_url
-        logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
-        request_options = {
-          query: {
-            studentId: student_id
-          }
-        }
-        response = get_response(url, request_options)
-        logger.debug "Remote server status #{response.code}, Body = #{response.body}"
-        feed = response.parsed_response['SCC_GET_CHKLST_RESP']
-        if feed.blank?
-          feed = response.parsed_response
-        end
-        {
-          statusCode: response.code,
-          feed: feed
-        }
+      }
+      response = get_response(url, request_options)
+      logger.debug "Remote server status #{response.code}, Body = #{response.body}"
+      feed = response.parsed_response['SCC_GET_CHKLST_RESP']
+      if feed.blank?
+        feed = response.parsed_response
       end
+      {
+        statusCode: response.code,
+        feed: feed
+      }
     end
 
     def mock_json
