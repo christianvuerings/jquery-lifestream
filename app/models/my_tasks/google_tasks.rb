@@ -124,7 +124,7 @@ module MyTasks
       formatted_entry[:bucket] = determine_bucket(due_date, formatted_entry, @now_time, @starting_date)
       logger.debug "Putting Google task with dueDate: #{formatted_entry[:dueDate]} in bucket: #{formatted_entry[:bucket]}"
 
-      if formatted_entry['bucket'] == 'Unscheduled'
+      if formatted_entry[:bucket] == 'Unscheduled'
         format_date_into_entry!(convert_date(entry['updated']), formatted_entry, :updatedDate)
       end
 
