@@ -2,11 +2,6 @@ require 'spec_helper'
 
 describe CampusSolutions::Checklist do
 
-  it_should_behave_like 'a student data proxy' do
-    let(:proxy_class) { CampusSolutions::Checklist }
-    let(:feed_key) { 'PERSON_CHKLST_ITEM' }
-  end
-
   context 'mock proxy' do
     let(:oski_uid) { '61889' }
     let(:oski_student_id) { 11667051 }

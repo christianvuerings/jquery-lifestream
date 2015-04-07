@@ -46,9 +46,13 @@ module CampusSolutions
         }
         response = get_response(url, request_options)
         logger.debug "Remote server status #{response.code}, Body = #{response.body}"
+        feed = response.parsed_response['SCC_GET_CHKLST_RESP']
+        if feed.blank?
+          feed = response.parsed_response
+        end
         {
           statusCode: response.code,
-          feed: response.parsed_response
+          feed: feed
         }
       end
     end
