@@ -62,7 +62,7 @@ module GoogleApps
       ActiveSupport::Notifications.instrument('proxy', {url: request_params[:uri], class: self.class}) do
         FakeableProxy.wrap_request("#{GoogleApps::Proxy::APP_ID}#{vcr_id}", @fake, @fake_options) {
           begin
-            logger.info "Fake = #@fake; Making request to #{request_params[:uri]} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+            logger.info "Fake = #{@fake}; Making request to #{request_params[:uri]} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
             client = GoogleApps::Client.client.dup
             if request_params[:authenticated]
               client.authorization = @authorization

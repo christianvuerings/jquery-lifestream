@@ -138,7 +138,7 @@ module Textbooks
       return fake_list(section_numbers) if @fake
 
       url = bookstore_link(section_numbers)
-      logger.info "Fake = #@fake; Making request to #{url}; cache expiration #{self.class.expires_in}"
+      logger.info "Fake = #{@fake}; Making request to #{url}; cache expiration #{self.class.expires_in}"
       response = get_response(url,
         headers: {
           "Authorization" => "Token token=#{Settings.textbooks_proxy.token}"
@@ -150,7 +150,7 @@ module Textbooks
 
     def fake_list(section_numbers)
       path = Rails.root.join('fixtures', 'json', "textbooks-#{@slug}-#{@dept}-#{@course_catalog}-#{section_numbers.join('-')}.json").to_s
-      logger.info "Fake = #@fake, getting textbook data from JSON fixture file #{path}"
+      logger.info "Fake = #{@fake}, getting textbook data from JSON fixture file #{path}"
       unless File.exists?(path)
         raise Errors::ProxyError.new("Unrecorded textbook response #{path}")
       end

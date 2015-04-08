@@ -13,7 +13,7 @@ module Financials
 
     def get
       url = "#{Settings.financials_proxy.base_url}/student/#{@student_id}"
-      logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+      logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
 
       FakeableProxy.wrap_request(APP_ID + "_financials", @fake, {match_requests_on: [:method, :path]}) {
         get_response(
