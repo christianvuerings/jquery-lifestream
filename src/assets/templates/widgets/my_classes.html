@@ -16,9 +16,9 @@
               <div class="cc-widget-list-column-left">
                 <div class="cc-icon cc-widget-icon" data-ng-class="'cc-icon-{{ class.emitter|lowercase }}'"></div>
               </div>
-              <div class="cc-widget-course-site-margin">
-                <div class="cc-ellipsis cc-widget-classes-title" data-ng-bind="class.name"></div>
-                <div data-ng-bind="class.shortDescription" class="cc-ellipsis cc-text-light cc-widget-course-site-subtitle"></div>
+              <div class="cc-widget-course-site">
+                <div class="cc-ellipsis" data-ng-bind="class.name"></div>
+                <div data-ng-bind="class.shortDescription" class="cc-ellipsis cc-text-light"></div>
               </div>
             </a>
             <div data-ng-switch-default>
@@ -35,9 +35,9 @@
                 <li class="cc-widget-icon-container" data-ng-repeat="subclass in class.subclasses">
                   <div class="cc-icon cc-widget-icon" data-ng-class="{'bSpace':'cc-icon-bspace', 'bCourses':'cc-icon-bcourses'}[subclass.emitter]">
                   </div>
-                  <div class="cc-widget-course-site-margin">
-                    <a class="cc-ellipsis cc-widget-classes-title" data-ng-bind="subclass.name" data-ng-href="{{subclass.site_url}}"></a>
-                    <div data-ng-if="subclass.shortDescription != subclass.name && subclass.shortDescription != class.name" data-ng-bind="subclass.shortDescription" class="cc-ellipsis cc-text-light cc-widget-course-site-subtitle"></div>
+                  <div class="cc-widget-course-site">
+                    <a class="cc-ellipsis" data-ng-bind="subclass.name" data-ng-href="{{subclass.site_url}}"></a>
+                    <div data-ng-if="subclass.shortDescription != subclass.name && subclass.shortDescription != class.name" data-ng-bind="subclass.shortDescription" class="cc-ellipsis cc-text-light"></div>
                   </div>
                 </li>
               </ul>
