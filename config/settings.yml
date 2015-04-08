@@ -150,8 +150,8 @@ textbooks_proxy:
 webcast_proxy:
   fake: false
   base_url: 'https://video-dev.ets.berkeley.edu/warehouse'
-  username: secret
-  password: secret
+  username: 'secret'
+  password: 'secret'
 
 audio_proxy:
   base_url: 'https://wbe-itunes.berkeley.edu'
