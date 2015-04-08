@@ -150,7 +150,7 @@ textbooks_proxy:
 webcast_proxy:
   fake: false
   base_url: 'https://video-dev.ets.berkeley.edu/warehouse/webcast.json'
-  rooms_url: 'https://video-dev.ets.berkeley.edu/warehouse/rooms.json'
+  rooms_url: 'https://video-dev.ets.berkeley.edu/warehouse/2015/B/rooms.json'
   username: secret
   password: secret
 
