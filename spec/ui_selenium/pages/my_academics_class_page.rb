@@ -29,7 +29,7 @@ module CalCentralPages
 
     # WEBCAST
     h2(:webcast_heading, :xpath => '//h2[text()="Webcasts"]')
-    div(:webcast_spinner_gone, :xpath => '//div[@class="cc-widget-padding cc-widget-webcast-content"]/div[@data-cc-spinner-directive=""]')
+    div(:webcast_spinner_gone, :xpath => '//div[@data-ng-controller="WebcastController"]/div[@data-cc-spinner-directive=""]')
     button(:video_tab, :xpath => '//button[text()="Video"]')
     div(:no_video_msg, :xpath => '//div[contains(.,"No video content available.")]')
     select(:video_select, :xpath => '//select[@data-ng-model="selectedVideo"]')
