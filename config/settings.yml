@@ -147,11 +147,11 @@ textbooks_proxy:
   base_url: "https://calstudentstore.berkeley.edu"
   token: secret set per deployment layer
 
-playlists_warehouse_proxy:
+webcast_proxy:
   fake: false
-  base_url: 'https://video-dev.ets.berkeley.edu/warehouse/webcast.json'
-  username: secret
-  password: secret
+  base_url: 'https://video-dev.ets.berkeley.edu/warehouse'
+  username: 'secret'
+  password: 'secret'
 
 audio_proxy:
   base_url: 'https://wbe-itunes.berkeley.edu'

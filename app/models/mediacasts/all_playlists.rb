@@ -4,15 +4,16 @@ module Mediacasts
     include ClassLogger, SafeJsonParser
 
     PROXY_ERROR = {
-      :proxy_error_message => "There was a problem fetching the webcasts."
+      :proxy_error_message => 'There was a problem fetching the webcasts.'
     }
 
     ERRORS = {
-      :video_error_message => "There are no webcasts available."
+      :video_error_message => 'There are no webcasts available.'
     }
 
     def initialize(options = {})
-      super(Settings.playlists_warehouse_proxy, options)
+      super(Settings.webcast_proxy, options)
+      @webcast_json_url = "#{@settings.base_url}/webcast.json"
     end
 
     def get
@@ -31,7 +32,7 @@ module Mediacasts
         data = safe_json File.read(Rails.root.join('fixtures', 'json', 'webcasts.json').to_s)
       else
         response = get_response(
-          @settings.base_url,
+          @webcast_json_url,
           basic_auth: {username: @settings.username, password: @settings.password},
           on_error: {return_feed: PROXY_ERROR}
         )
@@ -42,7 +43,7 @@ module Mediacasts
         raise Errors::ProxyError.new(
             'Error occurred converting response to json',
             response: response,
-            url: @settings.base_url,
+            url: @webcast_json_url,
             return_feed: PROXY_ERROR
           )
       end
