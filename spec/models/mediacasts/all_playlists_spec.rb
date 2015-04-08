@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Mediacasts::AllPlaylists do
 
-  let (:playlist_uri) { URI.parse(Settings.playlists_warehouse_proxy.base_url) }
+  let (:playlist_uri) { URI.parse(Settings.webcast_proxy.base_url) }
 
   context 'a fake proxy' do
     subject { Mediacasts::AllPlaylists.new({:fake => true}) }

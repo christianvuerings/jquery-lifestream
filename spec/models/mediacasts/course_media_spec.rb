@@ -174,7 +174,7 @@ describe Mediacasts::CourseMedia do
     end
 
     context 'with a real, non-fake playlists proxy' do
-      let (:playlist_uri) { URI.parse Settings.playlists_warehouse_proxy.base_url }
+      let (:playlist_uri) { URI.parse Settings.webcast_proxy.base_url }
       subject { Mediacasts::CourseMedia.new(2014, 'B', 'CHEM', '1AL') }
 
       context 'normal return of real data', :testext => true do

@@ -12,7 +12,7 @@ module Mediacasts
     }
 
     def initialize(options = {})
-      super(Settings.playlists_warehouse_proxy, options)
+      super(Settings.webcast_proxy, options)
     end
 
     def get
