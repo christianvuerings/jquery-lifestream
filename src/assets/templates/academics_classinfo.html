@@ -127,12 +127,15 @@
         </div>
         <div class="cc-widget-padding">
           <ul class="cc-academics-class-sites-list">
-            <li data-ng-repeat="site in selectedCourse.class_sites">
-              <a data-ng-href="{{site.site_url}}"
-                 data-ng-click="api.analytics.trackExternalLink('Class Sites', group.emitter, site.site_url)">
-                <i class="cc-left cc-icon" data-ng-class="'cc-icon-{{site.emitter|lowercase}}'"></i>
-                <strong class="cc-ellipsis" data-ng-bind="site.name"></strong>
-              </a>
+            <li data-ng-repeat="site in selectedCourse.class_sites" class="cc-icon-container">
+              <i class="cc-left cc-icon" data-ng-class="'cc-icon-{{site.emitter|lowercase}}'"></i>
+              <div class="cc-class-site">
+                <a data-ng-href="{{site.site_url}}"
+                   data-ng-click="api.analytics.trackExternalLink('Class Sites', group.emitter, site.site_url)">
+                  <strong class="cc-ellipsis" data-ng-bind="site.name"></strong>
+                </a>
+                <div data-ng-if="site.shortDescription != site.name && site.shortDescription != selectedCourse.title" data-ng-bind="site.shortDescription" class="cc-ellipsis cc-text-light"></div>
+              </div>
             </li>
           </ul>
         </div>
