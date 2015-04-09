@@ -51,6 +51,9 @@ module MyTasks
     end
 
     def format_checklist(result)
+      unless result.is_a?(Hash) && result['DESCR'].present?
+        return nil
+      end
       formatted_entry = entry_from_result result
       due_date = convert_datetime_or_date result['DUE_DT']
       format_date_and_bucket(formatted_entry, due_date)
