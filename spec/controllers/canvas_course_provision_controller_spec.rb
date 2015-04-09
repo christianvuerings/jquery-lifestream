@@ -156,7 +156,7 @@ describe CanvasCourseProvisionController do
 
   describe '#job_status' do
     it_should_behave_like "an api endpoint" do
-      before { allow(Canvas::ProvideCourseSite).to receive(:find).and_raise(RuntimeError, "Something went wrong") }
+      before { allow(Canvas::BackgroundJob).to receive(:find).and_raise(RuntimeError, "Something went wrong") }
       let(:make_request) { get :job_status, job_id: 'canvas.courseprovision.12345.1383330151057' }
     end
 

@@ -61,32 +61,6 @@ describe Canvas::ProvideCourseSite do
   subject     { Canvas::ProvideCourseSite.new(uid) }
 
   #####################################
-  # Class Methods
-
-  describe '.unique_job_id' do
-    it 'returns unique job id based on current time' do
-      current_time = Time.at(1383330151.057)
-      expect(Time).to receive(:now) { current_time }
-      result = Canvas::ProvideCourseSite.unique_job_id
-      expect(result).to eq '1383330151057'
-    end
-  end
-
-  describe '.find' do
-    it "returns the current job object from global storage" do
-      job_state = { jobStatus: 'courseCreationCompleted' }
-      Rails.cache.write('canvas.courseprovision.1234.123456789', job_state, expires_in: 5.seconds.to_i, raw: true)
-      result = Canvas::ProvideCourseSite.find('canvas.courseprovision.1234.123456789')
-      expect(result).to eq job_state
-    end
-
-    it 'returns nil if job state not found' do
-      result = Canvas::ProvideCourseSite.find('canvas.courseprovision.1234.123456789')
-      result.should be_nil
-    end
-  end
-
-  #####################################
   # Instance Methods
 
   describe '#initialize' do
@@ -111,7 +85,7 @@ describe Canvas::ProvideCourseSite do
     end
 
     it 'initializes with unique cache key' do
-      Canvas::ProvideCourseSite.stub(:unique_job_id).and_return('1383330151057')
+      allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return('1383330151057')
       expect(subject.cache_key).to eq "canvas.courseprovision.#{uid}.1383330151057"
     end
   end
@@ -170,7 +144,7 @@ describe Canvas::ProvideCourseSite do
 
     it 'sets status as completed and saves' do
       subject.create_course_site(site_name, site_course_code, 'fall-2013', ['21136', '21204'])
-      cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
+      cached_object = Canvas::BackgroundJob.find(subject.job_id)
       expect(cached_object.jobStatus).to eq 'courseCreationCompleted'
     end
   end
@@ -203,7 +177,7 @@ describe Canvas::ProvideCourseSite do
       end
       it 'executes all steps in order' do
         subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
-        cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
+        cached_object = Canvas::BackgroundJob.find(subject.job_id)
         expect(cached_object.jobStatus).to eq 'sectionEditsCompleted'
       end
     end
@@ -213,7 +187,7 @@ describe Canvas::ProvideCourseSite do
       end
       it 'returns a proper message' do
         expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, 'Unable to remove memberships')
-        cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
+        cached_object = Canvas::BackgroundJob.find(subject.job_id)
         expect(cached_object.jobStatus).to eq 'sectionEditsError'
         expect(cached_object.errors).to eq ['Unable to remove memberships']
       end
@@ -224,7 +198,7 @@ describe Canvas::ProvideCourseSite do
       end
       it 'reports an error' do
         expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, 'No changes to sections requested')
-        cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
+        cached_object = Canvas::BackgroundJob.find(subject.job_id)
         expect(cached_object.jobStatus).to eq 'sectionEditsError'
       end
     end
@@ -232,7 +206,7 @@ describe Canvas::ProvideCourseSite do
       let(:course_site_term) { {term_yr: '2014', term_cd: 'B'} }
       it 'reports an error' do
         expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, "Course site #{canvas_course_id} does not match a current term")
-        cached_object = Canvas::ProvideCourseSite.find(subject.job_id)
+        cached_object = Canvas::BackgroundJob.find(subject.job_id)
         expect(cached_object.jobStatus).to eq 'sectionEditsError'
       end
     end
@@ -452,59 +426,59 @@ describe Canvas::ProvideCourseSite do
   end
 
   describe '#import_course_site' do
+    let(:canvas_sis_import_proxy) { double }
     before do
       @course_row = {'course_id'=>'CRS:COMPSCI-47A-2013-D', 'short_name'=>'COMPSCI 47A SLF 001', 'long_name'=>'Completion of Work in Computer Science 61A', 'account_id'=>'ACCT:COMPSCI', 'term_id'=>'TERM:2013-D', 'status'=>'active'}
-      @canvas_sis_import_proxy_stub = double
-      allow(@canvas_sis_import_proxy_stub).to receive(:import_courses).and_return(true)
+      allow(canvas_sis_import_proxy).to receive(:import_courses).and_return(true)
       allow(subject).to receive(:make_courses_csv).and_return('/csv/filepath')
     end
 
     it 'raises exception if course site import fails' do
-      @canvas_sis_import_proxy_stub.stub(:import_courses).and_return(nil)
-      allow(Canvas::SisImport).to receive(:new).and_return(@canvas_sis_import_proxy_stub)
+      allow(canvas_sis_import_proxy).to receive(:import_courses).and_return(nil)
+      allow(Canvas::SisImport).to receive(:new).and_return(canvas_sis_import_proxy)
       expect { subject.import_course_site(@course_row) }.to raise_error(RuntimeError, 'Course site could not be created.')
     end
 
     it 'sets sections csv file path' do
-      Canvas::SisImport.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      allow(Canvas::SisImport).to receive(:new).and_return(canvas_sis_import_proxy)
       subject.import_course_site(@course_row)
       filepath = subject.instance_eval { @import_data['courses_csv_file'] }
       expect(filepath).to eq '/csv/filepath'
     end
 
     it 'updates completed steps list' do
-      Canvas::SisImport.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      allow(Canvas::SisImport).to receive(:new).and_return(canvas_sis_import_proxy)
       subject.import_course_site(@course_row)
       expect(subject.instance_eval { @completed_steps }).to eq ['Imported course']
     end
   end
 
   describe '#import_sections' do
+    let(:canvas_sis_import_proxy) { double }
     before do
       @section_rows = [
         {'section_id'=>'SEC:2013-D-26178', 'course_id'=>'CRS:COMPSCI-47A-2013-D', 'name'=>'COMPSCI 47A SLF 001', 'status'=>'active'},
         {'section_id'=>'SEC:2013-D-26181', 'course_id'=>'CRS:COMPSCI-47A-2013-D', 'name'=>'COMPSCI 47B SLF 001', 'status'=>'active'}
       ]
-      @canvas_sis_import_proxy_stub = double
-      allow(@canvas_sis_import_proxy_stub).to receive(:import_sections).and_return(true)
+      allow(canvas_sis_import_proxy).to receive(:import_sections).and_return(true)
       allow(subject).to receive(:make_sections_csv).and_return('/csv/filepath')
     end
 
     it 'raises exception if section imports fails' do
-      @canvas_sis_import_proxy_stub.stub(:import_sections).and_return(nil)
-      allow(Canvas::SisImport).to receive(:new).and_return(@canvas_sis_import_proxy_stub)
+      allow(canvas_sis_import_proxy).to receive(:import_sections).and_return(nil)
+      allow(Canvas::SisImport).to receive(:new).and_return(canvas_sis_import_proxy)
       expect { subject.import_sections(@section_rows) }.to raise_error(RuntimeError, 'Course site was created without any sections or members! Section import failed.')
     end
 
     it 'sets sections csv file path' do
-      Canvas::SisImport.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      allow(Canvas::SisImport).to receive(:new).and_return(canvas_sis_import_proxy)
       subject.import_sections(@section_rows)
       filepath = subject.instance_eval { @import_data['sections_csv_file'] }
       expect(filepath).to eq '/csv/filepath'
     end
 
     it 'updates completed steps list' do
-      Canvas::SisImport.stub(:new).and_return(@canvas_sis_import_proxy_stub)
+      allow(Canvas::SisImport).to receive(:new).and_return(canvas_sis_import_proxy)
       subject.import_sections(@section_rows)
       expect(subject.instance_eval { @completed_steps }).to eq ['Imported sections']
     end
@@ -687,7 +661,7 @@ describe Canvas::ProvideCourseSite do
     end
 
     it 'should get properly formatted candidate course list from fake Oracle MV', :if => CampusOracle::Connection.test_data? do
-      Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(nil)
+      allow_any_instance_of(Bearfacts::Proxy).to receive(:lookup_student_id).and_return(nil)
       terms_feed = Canvas::ProvideCourseSite.new('238382').candidate_courses_list
       expect(terms_feed.length).to eq 1
       expect(terms_feed[0][:name]).to eq 'Fall 2013'
@@ -800,7 +774,7 @@ describe Canvas::ProvideCourseSite do
     let(:campus_course_slug) { 'engin-7' }
 
     it 'should raise exception when sis course id fails to generate' do
-      subject.stub(:generate_unique_sis_course_id).and_return(nil)
+      allow(subject).to receive(:generate_unique_sis_course_id).and_return(nil)
       expect do
         subject.generate_course_site_definition(site_name, site_course_code, term_yr, term_cd, subaccount, campus_course_slug)
       end.to raise_error(RuntimeError, 'Could not define new course site!')
@@ -995,7 +969,7 @@ describe Canvas::ProvideCourseSite do
         {yr: '3026', cd: 'D', slug: 'fall-3026'},
         {yr: '3027', cd: 'B', slug: 'spring-3027'},
       ]
-      subject.stub(:current_terms).and_return(term_codes_array)
+      allow(subject).to receive(:current_terms).and_return(term_codes_array)
     end
 
     it 'should return matching term code hash' do
@@ -1031,9 +1005,9 @@ describe Canvas::ProvideCourseSite do
     end
 
     it 'saves current state of job to global storage' do
-      allow(Canvas::ProvideCourseSite).to receive(:unique_job_id).and_return('1383330151057')
+      allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return('1383330151057')
       subject.save
-      retrieved_job = Canvas::ProvideCourseSite.find(subject.job_id)
+      retrieved_job = Canvas::BackgroundJob.find(subject.job_id)
       expect(retrieved_job).to be_an_instance_of Canvas::ProvideCourseSite
       expect(retrieved_job.uid).to eq uid
       expect(retrieved_job.jobStatus).to eq 'New'

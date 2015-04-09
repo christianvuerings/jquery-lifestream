@@ -5,20 +5,6 @@ module Canvas
 
     attr_reader :uid, :jobStatus, :cache_key, :errors, :section_definitions
 
-    #####################################
-    # Class Methods
-
-    def self.unique_job_id
-      Time.now.to_f.to_s.gsub('.', '')
-    end
-
-    def self.find(cache_key)
-      Rails.cache.fetch(cache_key)
-    end
-
-    #####################################
-    # Instance Methods
-
     # Currently this depends on an instructor's point of view.
     def initialize(uid, options = {})
       super()
@@ -29,7 +15,7 @@ module Canvas
       @completed_steps = []
       @total_steps = 0.0
       @import_data = {}
-      @cache_key = "canvas.courseprovision.#{@uid}.#{Canvas::ProvideCourseSite.unique_job_id}"
+      @cache_key = "canvas.courseprovision.#{@uid}.#{Canvas::BackgroundJob.unique_job_id}"
       @section_definitions = []
     end
 
