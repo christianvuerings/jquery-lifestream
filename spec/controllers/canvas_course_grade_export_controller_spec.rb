@@ -21,6 +21,38 @@ describe CanvasCourseGradeExportController do
     allow_any_instance_of(Canvas::CourseUsers).to receive(:course_grades).and_return(course_grades)
   end
 
+  describe 'when preparing course enrollments cache' do
+    let(:torquebox_fake_background_proxy) { double }
+    let(:background_job_id) { 'canvas.egrades.12345.1383330151058' }
+    before do
+      allow(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).and_return(nil)
+      allow_any_instance_of(Canvas::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
+      allow_any_instance_of(Canvas::Egrades).to receive(:save).and_return(nil)
+      allow_any_instance_of(Canvas::Egrades).to receive(:job_id).and_return(background_job_id)
+    end
+
+    it 'makes call to load canvas course student grades with forced cacheing' do
+      expect(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).with(true).and_return(nil)
+      allow_any_instance_of(Canvas::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
+      post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :format => :csv
+      expect(response.status).to eq(200)
+      json_response = JSON.parse(response.body)
+      expect(json_response).to be_an_instance_of Hash
+      expect(json_response['jobRequestStatus']).to eq 'Success'
+    end
+
+    it 'saves state to cache and returns background job id' do
+      allow_any_instance_of(Canvas::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
+      expect_any_instance_of(Canvas::Egrades).to receive(:save).and_return(nil)
+      post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :format => :csv
+      expect(response.status).to eq(200)
+      json_response = JSON.parse(response.body)
+      expect(json_response).to be_an_instance_of Hash
+      expect(json_response['jobRequestStatus']).to eq 'Success'
+      expect(json_response['jobId']).to eq background_job_id
+    end
+  end
+
   describe 'when serving grade export option data' do
     let(:official_course_sections) do
       [

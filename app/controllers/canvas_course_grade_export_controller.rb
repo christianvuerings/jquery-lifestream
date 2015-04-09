@@ -14,6 +14,14 @@ class CanvasCourseGradeExportController < ApplicationController
     authorize canvas_course, :can_export_grades?
   end
 
+  # POST /api/academics/canvas/egrade_export/prepare/:canvas_course_id.json
+  def prepare_grades_cache
+    egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
+    egrades_worker.background.canvas_course_student_grades(true)
+    egrades_worker.save
+    render json: { jobRequestStatus: 'Success', jobId: egrades_worker.job_id }.to_json
+  end
+
   # GET /api/academics/canvas/egrade_export/download/:canvas_course_id.csv
   def download_egrades_csv
     raise Errors::BadRequestError, "term_cd required" unless params['term_cd']
