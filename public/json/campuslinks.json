@@ -173,7 +173,7 @@
     {
       "name": "BAIRS",
       "description": "Berkeley Administrative Initiative Reporting System",
-      "url": "http://www.bai.berkeley.edu/",
+      "url": "http://www.bai.berkeley.edu/BAIRS/index.htm",
       "roles": {
         "student": false,
         "staff": true,
@@ -206,8 +206,8 @@
     },
     {
       "name": "BFS",
-      "description": "Berkeley's Financial System",
-      "url": "http://www.bai.berkeley.edu/",
+      "description": "Berkeley Financial System",
+      "url": "http://www.bai.berkeley.edu/BFS/index.htm",
       "roles": {
         "student": false,
         "staff": true,
@@ -239,9 +239,9 @@
       ]
     },
     {
-      "name": "BearBuy Procurement",
-      "description": "Campus' procurement system that allows for catalog shopping and electronically-enabled workflows",
-      "url": "http://procurement.berkeley.edu/bearbuy/",
+      "name": "BearBuy",
+      "description": "Campus procurement system with online catalog shopping and electronically-enabled workflows",
+      "url": "http://supplychain.berkeley.edu/bearbuy/",
       "roles": {
         "student": false,
         "staff": true,
@@ -757,6 +757,23 @@
         {
           "topcategory": "Tools \u0026 Resources",
           "subcategory": "Security \u0026 Access"
+        }
+      ]
+    },
+    {
+      "name": "CalPlanning",
+      "description": "UC Berkeley's financial planning and analysis tool",
+      "url": "http://budget.berkeley.edu/systems/calplanning",
+      "roles": {
+        "student": false,
+        "staff": true,
+        "faculty": false,
+        "exStudent": false
+      },
+      "categories": [
+        {
+          "topcategory": "Tools \u0026 Resources",
+          "subcategory": "Budget"
         }
       ]
     },
