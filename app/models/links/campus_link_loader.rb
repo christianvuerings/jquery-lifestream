@@ -15,9 +15,9 @@ module Links
     end
 
     def self.load_links!(filename)
-      student = Links::UserRole.find_or_create_by_name("Student", {:slug => "student"})
-      staff = Links::UserRole.find_or_create_by_name("Staff", {:slug => "staff"})
-      faculty = Links::UserRole.find_or_create_by_name("Faculty", {:slug => "faculty"})
+      student = Links::UserRole.find_or_create_by(name: 'Student') {|ur| ur.slug = 'student'}
+      staff = Links::UserRole.find_or_create_by(name: 'Staff') {|ur| ur.slug = 'staff'}
+      faculty = Links::UserRole.find_or_create_by(name: 'Faculty') {|ur| ur.slug = 'faculty'}
 
       begin
         file = File.open("#{Rails.root}#{filename}")
