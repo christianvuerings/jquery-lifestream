@@ -7,6 +7,9 @@
 #
 ###############################################################################################
 
+########################################################
+# Canvas Controller Authorizations
+
 shared_examples 'a canvas course admin authorized api endpoint' do
 
   let(:canvas_user_profile) do
@@ -77,4 +80,13 @@ shared_examples 'a canvas course admin authorized api endpoint' do
     end
   end
 
+end
+
+########################################################
+# Classes using Canvas::BackgroundJob
+
+shared_examples 'a background job worker' do
+  it 'supports Torquebox background jobs' do
+    expect(subject.background.class).to eq TorqueBox::Messaging::Backgroundable::BackgroundProxy
+  end
 end

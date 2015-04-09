@@ -6,6 +6,7 @@ module Canvas
   #
   class Egrades
     extend Cache::Cacheable
+    include Canvas::BackgroundJob
 
     GRADE_TYPES = ['final','current']
 

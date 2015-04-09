@@ -23,6 +23,8 @@ describe Canvas::Egrades do
     ]
   end
 
+  it_should_behave_like 'a background job worker'
+
   context "when serving official student grades csv" do
     before { allow(subject).to receive(:official_student_grades).with('C', '2014', '7309').and_return(official_student_grades_list) }
     it "raises error when called with invalid type argument" do
