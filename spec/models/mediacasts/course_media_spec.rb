@@ -198,7 +198,7 @@ describe Mediacasts::CourseMedia do
         after(:each) { WebMock.reset! }
         it 'should return the fetch error message' do
           response = subject.get_playlist
-          expect(response[:proxy_error_message]).to eq 'There was a problem fetching the webcasts.'
+          expect(response[:proxy_error_message]).to include('There was a problem')
         end
       end
 
@@ -209,7 +209,7 @@ describe Mediacasts::CourseMedia do
         after(:each) { WebMock.reset! }
         it 'should return the fetch error message' do
           response = subject.get_playlist
-          expect(response[:proxy_error_message]).to eq 'There was a problem fetching the webcasts.'
+          expect(response[:proxy_error_message]).to include('There was a problem')
         end
       end
 
