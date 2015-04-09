@@ -1,0 +1,25 @@
+FROM ubuntu:14.04
+MAINTAINER talkingquickly.co.uk <ben@talkingquickly.co.uk>
+
+ENV DEBIAN_FRONTEND noninteractive
+
+# INSTALL
+RUN apt-get update -y --fix-missing
+RUN apt-get install -y --fix-missing -q \
+  nodejs \
+  npm
+
+# Fix Ubuntu npm installation quirk
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+
+# Install gulp
+RUN npm install -g gulp
+
+# Front-end app code
+ADD docker/gulp/start-gulp.sh /start-gulp.sh
+RUN chmod +x /start-gulp.sh
+WORKDIR /app
+ADD . /app
+
+VOLUME ["/app/public"]
+CMD ["/start-gulp.sh"]

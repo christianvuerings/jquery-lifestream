@@ -59,11 +59,11 @@ cal1card_proxy:
   fake: true
 
 postgres:
-  database: calcentral_development
-  username: calcentral_development
-  password: secret
-  host: localhost
-  port: 5432
+  database: <%= ENV['DB_ENV_POSTGRESQL_DB'] || 'calcentral_development' %>
+  username: <%= ENV['DB_ENV_POSTGRESQL_USER'] || 'calcentral_development' %>
+  password: <%= ENV['DB_ENV_POSTGRESQL_PASS'] || 'secret' %>
+  host: <%= ENV['DB_PORT_5432_TCP_ADDR'] || 'localhost' %>
+  port: <%= ENV['DB_PORT_5432_TCP_PORT'] || '5432' %>
 
 sakai_proxy:
   fake: true

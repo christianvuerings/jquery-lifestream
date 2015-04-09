@@ -1,0 +1,13 @@
+.git
+.gitignore
+.idea
+*.iml
+.vagrant
+db/*.sqlite3
+tmp
+log/*.log
+.bundle
+.DS_Store
+.Spotlight-V100
+.Trashes
+coverage
