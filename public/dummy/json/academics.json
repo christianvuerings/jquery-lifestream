@@ -642,6 +642,7 @@
           "course_id": "phys_ed-1-2013-d",
           "dept": "PHYS ED",
           "dept_desc": "Physical Education",
+          "multiplePrimaries": true,
           "slug": "phys_ed-1",
           "title": "Physical Education Activities",
           "sections": [
@@ -654,11 +655,14 @@
               "section_number": "002",
               "schedules": [
                 {
-
                   "buildingName": "HEARST GYM",
                   "roomNumber": "234",
                   "schedule": "MTuWTh 8:30A-10:00A"
                 }
+              ],
+              "slug": "lab-002",
+              "siteIds": [
+                "11108107"
               ],
               "instructors": [
                 {
@@ -666,7 +670,8 @@
                   "uid": "938382"
                 }
               ],
-              "units": ".5"
+              "units": ".5",
+              "url": "/academics/semester/fall-2013/class/phys_ed-1/lab-002"
             },
             {
               "ccn": "72945",
@@ -682,13 +687,39 @@
                   "schedule": "TuWTh 5:00P-7:00P"
                 }
               ],
+              "slug": "lab-104",
               "instructors": [
                 {
                   "name": "Richard Emanuel IVES",
                   "uid": "38383737"
                 }
               ],
-              "units": "1.5"
+              "units": "1.5",
+              "url": "/academics/semester/fall-2013/class/phys_ed-1/lab-104"
+            },
+            {
+              "ccn": "72946",
+              "instruction_format": "IND",
+              "is_primary_section": false,
+              "section_label": "IND 201",
+              "section_number": "201",
+              "associatedWithPrimary": "72910",
+              "schedules": [],
+              "instructors": [
+                {
+                  "name": "Louis Pasteur",
+                  "uid": "938382"
+                }
+              ]
+            }
+          ],
+          "class_sites": [
+            {
+              "id": "11108107",
+              "shortDescription": "Lift With Louis",
+              "name": "PHYS ED 1 LAB 002",
+              "emitter": "bCourses",
+              "site_url": "https://ucberkeley.beta.instructure.com/courses/11108107"
             }
           ],
           "url": "/academics/semester/fall-2013/class/phys_ed-1"
@@ -839,6 +870,7 @@
           "course_id": "pb_hlth-297-2012-B",
           "dept": "PB HLTH",
           "dept_desc": "Public Health",
+          "multiplePrimaries": true,
           "slug": "pb_hlth-297",
           "title": "Field Study in Public Health",
           "sections": [
@@ -850,13 +882,15 @@
               "section_label": "FLD 004",
               "section_number": "004",
               "schedules": [],
+              "slug": "fld-004",
               "instructors": [
                 {
                   "name": "Louis Pasteur",
                   "uid": "938382"
                 }
               ],
-              "units": "3.0"
+              "units": "3.0",
+              "url": "/academics/semester/spring-2012/class/pb_hlth-297/fld-004"
             },
             {
               "ccn": "78172",
@@ -866,13 +900,15 @@
               "section_label": "FLD 015",
               "section_number": "015",
               "schedules": [],
+              "slug": "fld-015",
               "instructors": [
                 {
                   "name": "Jean-Joseph Henri Toussaint",
                   "uid": "938383"
                 }
               ],
-              "units": "2.0"
+              "units": "2.0",
+              "url": "/academics/semester/spring-2012/class/pb_hlth-297/fld-015"
             }
           ],
           "transcript": [
