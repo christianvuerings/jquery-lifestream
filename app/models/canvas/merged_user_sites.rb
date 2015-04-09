@@ -29,6 +29,7 @@ module Canvas
         return nil unless (response && response.status == 200)
         merged_sites[:courses] << merge_course_with_sections(course, JSON.parse(response.body))
       end
+      merged_sites[:courses].sort_by! { |site| site[:name] }
 
       group_sites = Canvas::Groups.new(user_id: @uid).groups
       group_sites.each do |group|

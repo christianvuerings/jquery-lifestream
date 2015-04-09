@@ -13,7 +13,7 @@ module CalLink
     def request_internal
       url = "#{Settings.cal_link_proxy.base_url}/api/memberships"
       params = build_params
-      Rails.logger.info "#{self.class.name}: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; params = #{params}, cache expiration #{self.class.expires_in}"
+      Rails.logger.info "#{self.class.name}: Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; params = #{params}, cache expiration #{self.class.expires_in}"
 
       response = ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class }) do
         FakeableProxy.wrap_request(APP_ID + "_memberships", @fake, {:match_requests_on => [:method, :path, :body]}) {

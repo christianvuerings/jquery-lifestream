@@ -24,11 +24,11 @@ module Cal1card
 
     def get_converted_xml
       if @fake
-        logger.info "Fake = #@fake, getting data from XML fixture file; user #{@uid}; cache expiration #{self.class.expires_in}"
+        logger.info "Fake = #{@fake}, getting data from XML fixture file; user #{@uid}; cache expiration #{self.class.expires_in}"
         feed = MultiXml.parse File.read(Rails.root.join('fixtures', 'xml', 'cal1card_feed.xml').to_s)
       else
         url = "#{@settings.feed_url}?uid=#{@uid}"
-        logger.info "Internal_get: Fake = #@fake; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+        logger.info "Internal_get: Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
         response = get_response(
           url,
           basic_auth: {username: @settings.username, password: @settings.password}

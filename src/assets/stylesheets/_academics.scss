@@ -71,13 +71,18 @@
     font-weight: bold;
   }
   .cc-academics-class-sites-list {
-    a {
-      display: block;
-      padding: 2px 10px;
+    .cc-class-site {
+      line-height: 1.4;
+      margin: 0 0 6px 30px;
+      padding-top: 2px;
     }
-    i {
-      display: block;
-      margin-right: 10px;
+    .cc-icon {
+      margin-top: -8px;
+      position: absolute;
+      top: 50%;
+    }
+    .cc-icon-container {
+      position: relative;
     }
   }
   .cc-academics-column-labels {

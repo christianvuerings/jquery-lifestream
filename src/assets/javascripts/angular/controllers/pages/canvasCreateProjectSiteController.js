@@ -2,7 +2,7 @@
   'use strict';
 
   /**
-   * Canvas 'Create a Site' overview index controller
+   * Canvas 'Create a Project Site' overview index controller
    */
   angular.module('calcentral.controllers').controller('CanvasCreateProjectSiteController', function(apiService, canvasProjectProvisionFactory, canvasSiteCreationFactory, canvasSiteCreationService, $location, $route, $scope, $window) {
     apiService.util.setTitle('Create a Project Site');

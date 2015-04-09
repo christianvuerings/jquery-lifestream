@@ -1,7 +1,7 @@
 (function(angular, naturalSort) {
   'use strict';
 
-  angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $window) {
+  angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $route, $window) {
     /**
      * Check whether the current browser can play mp3 files
      * Based on Modernizr: http://git.io/DPOxlQ
@@ -25,6 +25,13 @@
      */
     var changeControllerName = function(name) {
       $rootScope.controllerName = name;
+    };
+
+    /**
+     * Pass whether this is a bCourses app context or not.
+     */
+    var checkIsBcourses = function() {
+      $rootScope.isBcourses = $route.current.isBcourses;
     };
 
     /**
@@ -147,6 +154,7 @@
     return {
       canPlayMp3: canPlayMp3,
       changeControllerName: changeControllerName,
+      checkIsBcourses: checkIsBcourses,
       encodeSlash: encodeSlash,
       iframeScrollToTop: iframeScrollToTop,
       iframeUpdateHeight: iframeUpdateHeight,

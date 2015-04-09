@@ -26,7 +26,7 @@ module Finaid
       else
         url = "#{@settings.base_url}/#{student_id}/finaid"
         vcr_opts = {:match_requests_on => [:method, :path, VCR.request_matchers.uri_without_params(:token, :app_id, :app_key)]}
-        logger.info "Fake = #@fake; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}, aidYear = #{@term_year}; cache expiration #{self.class.expires_in}"
+        logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}, aidYear = #{@term_year}; cache expiration #{self.class.expires_in}"
         response = FakeableProxy.wrap_request(vcr_id = APP_ID + "_" + vcr_cassette, @fake, vcr_opts) {
           request_options = {query: {
             token: @settings.token,

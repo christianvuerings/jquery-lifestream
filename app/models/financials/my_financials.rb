@@ -16,7 +16,7 @@ module Financials
       student_id = lookup_student_id
       if student_id.blank?
         # don't continue if student id can't be found.
-        logger.info "Lookup of student_id for uid #@uid failed, cannot call CFV API"
+        logger.info "Lookup of student_id for uid #{@uid} failed, cannot call CFV API"
         no_billing_data_response
       else
         response = Financials::Proxy.new(user_id: @uid, student_id: student_id).get

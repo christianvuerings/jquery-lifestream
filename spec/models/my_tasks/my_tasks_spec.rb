@@ -78,6 +78,20 @@ describe 'MyTasks' do
       end
     end
 
+    it 'should include an updatedDate for unscheduled Google tasks' do
+      unscheduled_google_task = tasks.find { |task| task[:emitter] == 'Google' && task[:bucket] == 'Unscheduled' }
+      expect(unscheduled_google_task[:updatedDate][:epoch]).to be_present
+      expect(unscheduled_google_task[:updatedDate][:dateTime]).to be_present
+      expect(unscheduled_google_task[:updatedDate][:dateString]).to eq '11/30'
+    end
+
+    it 'should include a completedDate for completed Google tasks' do
+      completed_google_task = tasks.find { |task| task[:emitter] == 'Google' && task[:status] == 'completed' }
+      expect(completed_google_task[:completedDate][:epoch]).to be_present
+      expect(completed_google_task[:completedDate][:dateTime]).to be_present
+      expect(completed_google_task[:completedDate][:dateString]).to eq '11/28'
+    end
+
   end
 
   it 'should fail general update_tasks param validation, missing required parameters' do
