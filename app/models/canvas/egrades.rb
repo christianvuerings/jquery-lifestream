@@ -1,7 +1,7 @@
 module Canvas
   # Prepares CSV export of official enrollments for use with E-Grades (UCB Online Grading System)
   #
-  # All grades/scores for students enrolled in the Canvas course are prepared by #canvas_course_students
+  # All grades/scores for students enrolled in the Canvas course are prepared by #canvas_course_student_grades
   # #official_student_grades provides only the grades for the students officially enrolled in the section term/ccn specified.
   #
   class Egrades
@@ -31,7 +31,7 @@ module Canvas
     def official_student_grades(term_cd, term_yr, ccn)
       enrolled_students = CampusOracle::Queries.get_enrolled_students(ccn, term_yr, term_cd)
       campus_attributes = enrolled_students.index_by {|s| s['ldap_uid']}
-      official_students = canvas_course_students.select {|student| campus_attributes[student[:sis_login_id]] }
+      official_students = canvas_course_student_grades.select {|student| campus_attributes[student[:sis_login_id]] }
       official_students.each do |student|
         campus_data = campus_attributes[student[:sis_login_id]]
         student[:pnp_flag] = campus_data['pnp_flag']
@@ -39,7 +39,7 @@ module Canvas
       end
     end
 
-    def canvas_course_students(force = false)
+    def canvas_course_student_grades(force = false)
       self.class.fetch_from_cache("course-students-#{@canvas_course_id}", force) do
         proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id)
         course_users = proxy.course_users(:cache => false)

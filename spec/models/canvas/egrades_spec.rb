@@ -5,17 +5,26 @@ describe Canvas::Egrades do
   let(:canvas_course_section_id)  { 1312012 }
   subject { Canvas::Egrades.new(:canvas_course_id => canvas_course_id) }
 
-  let(:canvas_course_students_list) do
+  let(:official_student_grades_list) do
     [
-      {:sis_login_id => "872584", :sis_user_id => "UID:872527", :final_score => 34.9, :final_grade => "F", :current_score => 72.3, :current_grade => "C", :pnp_flag => "N", :student_id => "2004491"},
-      {:sis_login_id => "4000123", :sis_user_id => "UID:4000123", :final_score => 89.5, :final_grade => "B", :current_score => 89.5, :current_grade => "B", :pnp_flag => "N", :student_id => "24000123"},
-      {:sis_login_id => "872527", :sis_user_id => "2004445", :final_score => 99.5, :final_grade => "A+", :current_score => 99.5, :current_grade => "A+", :pnp_flag => "Y", :student_id => "2004445"},
-      {:sis_login_id => "872529", :sis_user_id => "2004421", :final_score => 69.6, :final_grade => "D-", :current_score => 73.1, :current_grade => "C", :pnp_flag => "N", :student_id => "2004421"},
+      {:sis_login_id => "872584", :final_grade => "F", :current_grade => "C", :pnp_flag => "N", :student_id => "2004491"},
+      {:sis_login_id => "4000123", :final_grade => "B", :current_grade => "B", :pnp_flag => "N", :student_id => "24000123"},
+      {:sis_login_id => "872527", :final_grade => "A+", :current_grade => "A+", :pnp_flag => "Y", :student_id => "2004445"},
+      {:sis_login_id => "872529", :final_grade => "D-", :current_grade => "C", :pnp_flag => "N", :student_id => "2004421"},
+    ]
+  end
+
+  let(:canvas_course_student_grades_list) do
+    [
+      {:sis_login_id => "872584", :final_grade => "F", :current_grade => "C"},
+      {:sis_login_id => "4000123", :final_grade => "B", :current_grade => "B"},
+      {:sis_login_id => "872527", :final_grade => "A+", :current_grade => "A+"},
+      {:sis_login_id => "872529", :final_grade => "D-", :current_grade => "C"},
     ]
   end
 
   context "when serving official student grades csv" do
-    before { allow(subject).to receive(:official_student_grades).with('C', '2014', '7309').and_return(canvas_course_students_list) }
+    before { allow(subject).to receive(:official_student_grades).with('C', '2014', '7309').and_return(official_student_grades_list) }
     it "raises error when called with invalid type argument" do
       expect { subject.official_student_grades_csv('C', '2014', '7309', 'finished') }.to raise_error(ArgumentError, 'type argument must be \'final\' or \'current\'')
     end
@@ -80,7 +89,7 @@ describe Canvas::Egrades do
 
     before do
       allow(CampusOracle::Queries).to receive(:get_enrolled_students).with('7309', '2014', 'C').and_return(primary_section_enrollees)
-      allow(subject).to receive(:canvas_course_students).and_return(canvas_course_students_list)
+      allow(subject).to receive(:canvas_course_student_grades).and_return(canvas_course_student_grades_list)
     end
     it "only provides grades for official enrollees in section specified" do
       result = subject.official_student_grades('C', '2014', '7309')
@@ -110,9 +119,9 @@ describe Canvas::Egrades do
     end
   end
 
-  context "when providing canvas course students" do
-    it "returns canvas course students with grades" do
-      result = subject.canvas_course_students
+  context "when providing canvas course student grades" do
+    it "returns canvas course student grades" do
+      result = subject.canvas_course_student_grades
       expect(result).to be_an_instance_of Array
       expect(result.count).to eq 6
 
@@ -149,17 +158,17 @@ describe Canvas::Egrades do
 
     it "should not source data from cache" do
       expect(Canvas::CourseUsers).to_not receive(:fetch_from_cache)
-      result = subject.canvas_course_students
+      result = subject.canvas_course_student_grades
     end
 
     it "should not specify forced cache write by default" do
       expect(Canvas::Egrades).to_not receive(:fetch_from_cache).with("course-students-#{canvas_course_id}", true)
-      result = subject.canvas_course_students
+      result = subject.canvas_course_student_grades
     end
 
     it "should specify forced cache write when specified" do
       expect(Canvas::Egrades).to receive(:fetch_from_cache).with("course-students-#{canvas_course_id}", true)
-      result = subject.canvas_course_students(true)
+      result = subject.canvas_course_student_grades(true)
     end
   end
 
