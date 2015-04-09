@@ -121,8 +121,8 @@
     },
     {
       "name": "Administration \u0026 Finance",
-      "description": "Adminstration officials ",
-      "url": "http://vcaf.berkeley.edu/divisions",
+      "description": "Administration officials ",
+      "url": "http://vcaf.berkeley.edu/who-we-are/divisions",
       "roles": {
         "student": true,
         "staff": true,
@@ -533,7 +533,7 @@
     },
     {
       "name": "Cal Marketplace",
-      "description": "everything at Cal you may want to buy, discover or visit",
+      "description": "Everything at Cal you may want to buy, discover or visit",
       "url": "http://calmarketplace.berkeley.edu/",
       "roles": {
         "student": true,
@@ -711,7 +711,7 @@
     },
     {
       "name": "CalMail",
-      "description": "email",
+      "description": "Campus email management",
       "url": "http://calmail.berkeley.edu",
       "roles": {
         "student": true,
@@ -1143,23 +1143,6 @@
       ]
     },
     {
-      "name": "Conduct Office",
-      "description": "Student conduct office",
-      "url": "http://studentconduct.berkeley.edu",
-      "roles": {
-        "student": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Campus Departments",
-          "subcategory": "Student Services"
-        }
-      ]
-    },
-    {
       "name": "Course Catalog",
       "description": "Detailed course descriptions",
       "url": "http://guide.berkeley.edu/courses/",
@@ -1508,23 +1491,6 @@
       ]
     },
     {
-      "name": "Grade book",
-      "description": "A tool to enter, upload, and calculate student grades on bSpace",
-      "url": "http://gsi.berkeley.edu/teachingguide/tech/bspace-gradebook.html",
-      "roles": {
-        "student": false,
-        "staff": false,
-        "faculty": true,
-        "exStudent": false
-      },
-      "categories": [
-        {
-          "topcategory": "Faculty",
-          "subcategory": "Tools"
-        }
-      ]
-    },
-    {
       "name": "Graduate Assembly",
       "description": "Graduate student government",
       "url": "https://ga.berkeley.edu/",
@@ -1683,7 +1649,7 @@
     },
     {
       "name": "Imagine Services",
-      "description": "custom electronic document workflows",
+      "description": "Custom electronic document workflows",
       "url": "http://ist.berkeley.edu/imagine",
       "roles": {
         "student": false,
@@ -2536,7 +2502,7 @@
     },
     {
       "name": "Student Learning Center",
-      "description": "Resources such as tutoring and is open 24 hour to provide students with a place to study",
+      "description": "Tutoring, workshops, support services, and 24-hour study access",
       "url": "http://slc.berkeley.edu",
       "roles": {
         "student": true,
@@ -2709,8 +2675,25 @@
       ]
     },
     {
+      "name": "The Center for Student Conduct",
+      "description": "Administers and promotes our Code of Student Conduct",
+      "url": "http://sa.berkeley.edu/conduct",
+      "roles": {
+        "student": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Campus Departments",
+          "subcategory": "Student Services"
+        }
+      ]
+    },
+    {
       "name": "The Daily Californian (The DailyCal)",
-      "description": "an independent student newspaper",
+      "description": "Independent student newspaper",
       "url": "http://www.dailycal.org/",
       "roles": {
         "student": true,
@@ -3011,7 +2994,7 @@
     },
     {
       "name": "bCal",
-      "description": "personal calandar",
+      "description": "Your campus calendar",
       "url": "http://bcal.berkeley.edu",
       "roles": {
         "student": true,
@@ -3079,7 +3062,7 @@
     },
     {
       "name": "bMail",
-      "description": "email",
+      "description": "Your campus email account",
       "url": "http://bmail.berkeley.edu",
       "roles": {
         "student": true,
@@ -3116,6 +3099,23 @@
         {
           "topcategory": "Communication \u0026 Collaboration",
           "subcategory": "Collaboration Tools"
+        }
+      ]
+    },
+    {
+      "name": "bSpace Grade book",
+      "description": "A tool to enter, upload, and calculate student grades on bSpace",
+      "url": "http://gsi.berkeley.edu/teachingguide/tech/bspace-gradebook.html",
+      "roles": {
+        "student": false,
+        "staff": false,
+        "faculty": true,
+        "exStudent": false
+      },
+      "categories": [
+        {
+          "topcategory": "Faculty",
+          "subcategory": "Tools"
         }
       ]
     },
