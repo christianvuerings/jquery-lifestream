@@ -1,6 +1,6 @@
 module Canvas
   class ProvideCourseSite < Csv
-    include TorqueBox::Messaging::Backgroundable
+    include Canvas::BackgroundJob
     include ClassLogger
 
     attr_reader :uid, :jobStatus, :cache_key, :errors, :section_definitions

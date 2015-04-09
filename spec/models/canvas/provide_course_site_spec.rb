@@ -60,6 +60,8 @@ describe Canvas::ProvideCourseSite do
   }
   subject     { Canvas::ProvideCourseSite.new(uid) }
 
+  it_should_behave_like 'a background job worker'
+
   #####################################
   # Instance Methods
 
