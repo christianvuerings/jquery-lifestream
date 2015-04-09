@@ -28,7 +28,7 @@ module Mediacasts
     def request_internal
       return {} unless Settings.features.videos
       if @fake
-        logger.info "Fake = #@fake, getting data from JSON fixture file; cache expiration #{self.class.expires_in}"
+        logger.info "Fake = #{@fake}, getting data from JSON fixture file; cache expiration #{self.class.expires_in}"
         data = safe_json File.read(Rails.root.join('fixtures', 'json', 'webcasts.json').to_s)
       else
         response = get_response(
