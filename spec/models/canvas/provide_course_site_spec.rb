@@ -997,7 +997,7 @@ describe Canvas::ProvideCourseSite do
 
   describe '#save' do
     it 'raises exception if cache expiration not present' do
-      allow(Settings.cache.expiration).to receive(:CanvasCourseProvisioningJobs).and_return(nil)
+      allow(Settings.cache.expiration).to receive(:CanvasBackgroundJobs).and_return(nil)
       expect { subject.save }.to raise_error(RuntimeError, 'Unable to save. Cache expiration setting not present.')
     end
 

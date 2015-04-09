@@ -399,8 +399,8 @@ module Canvas
 
     def save
       raise RuntimeError, 'Unable to save. cache_key missing' if @cache_key.blank?
-      raise RuntimeError, 'Unable to save. Cache expiration setting not present.' if Settings.cache.expiration.CanvasCourseProvisioningJobs == nil
-      Rails.cache.write(@cache_key, self, expires_in: Settings.cache.expiration.CanvasCourseProvisioningJobs)
+      raise RuntimeError, 'Unable to save. Cache expiration setting not present.' if Settings.cache.expiration.CanvasBackgroundJobs == nil
+      Rails.cache.write(@cache_key, self, expires_in: Settings.cache.expiration.CanvasBackgroundJobs)
     end
 
     def complete_step(step_text)

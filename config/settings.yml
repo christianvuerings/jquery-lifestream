@@ -211,7 +211,7 @@ cache:
     Canvas::Lti: <%= 5.minutes %>
     Canvas::CourseStudents: <%= 15.minutes %>
     Canvas::CourseTeachers: <%= 5.minutes %>
-    CanvasCourseProvisioningJobs: <%= 24.hours %>
+    CanvasBackgroundJobs: <%= 24.hours %>
     Advising::MyAdvising: <%= 2.hours %>
 
     Berkeley::Terms: NEXT_08_00
