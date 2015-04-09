@@ -186,7 +186,7 @@ describe Mediacasts::CourseMedia do
           expect(recording).to be_an_instance_of Hash
           expect(recording['youTubeId']).to eq 'VvOGnqMCbKE'
           expect(recording['lecture']).to eq '2014-01-24: Introduction, safety, observations and notebook skills, How the nose knows'
-          expect(recording['recordingStartUTC']).to eq '2014-01-24T00:00:00-08:00'
+          expect(recording['recordingStartUTC']).to eq '2014-01-24T12:07:00-08:00'
           # audioOnly
         end
       end
