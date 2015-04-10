@@ -33,4 +33,9 @@ describe Berkeley::TermCodes do
     term_hash[:term_cd].should == 'D'
   end
 
+  it 'copes with the pre-1982 and/or non-Berkeley UC Winter quarter' do
+    expect(Berkeley::TermCodes.to_slug('1974', 'A')).to eq 'winter-1974'
+    expect(Berkeley::TermCodes.to_english('1974', 'A')).to eq 'Winter 1974'
+  end
+
 end
