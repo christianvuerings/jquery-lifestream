@@ -1,4 +1,4 @@
-module Mediacasts
+module Webcast
   class Rooms < Proxy
 
     def initialize(options = {})

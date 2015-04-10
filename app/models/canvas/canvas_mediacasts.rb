@@ -28,10 +28,10 @@ module Canvas
           if (campus_course = CampusOracle::Queries.get_course_from_section(campus_section[:ccn], term_yr, term_cd))
             dept_name = campus_course['dept_name']
             catalog_id = campus_course['catalog_id']
-            course_id = Mediacasts::CourseMedia.course_id(term_yr, term_cd, dept_name, catalog_id)
+            course_id = Webcast::CourseMedia.course_id(term_yr, term_cd, dept_name, catalog_id)
             unless checked_courses.include?(course_id)
               checked_courses << course_id
-              media_feed = Mediacasts::CourseMedia.new(term_yr, term_cd, dept_name, catalog_id).get_feed
+              media_feed = Webcast::CourseMedia.new(term_yr, term_cd, dept_name, catalog_id).get_feed
               return media_feed unless empty_feed?(media_feed)
             end
           end

@@ -1,4 +1,4 @@
-describe Mediacasts::CourseMedia do
+describe Webcast::CourseMedia do
 
   let(:proxy_error_hash) do
     {:proxy_error_message => 'Proxy Error'}
@@ -70,7 +70,7 @@ describe Mediacasts::CourseMedia do
 
   context 'when serving mediacasts' do
 
-    subject { Mediacasts::CourseMedia.new(2008, 'D', 'LAW', '2723') }
+    subject { Webcast::CourseMedia.new(2008, 'D', 'LAW', '2723') }
 
     context 'when proxy error message is not blank' do
       before { subject.should_receive(:get_playlist).twice.and_return proxy_error_hash }
@@ -141,14 +141,14 @@ describe Mediacasts::CourseMedia do
 
     context 'when course title has a _slash_' do
       it 'should decode _slash_ to /' do
-        subject = Mediacasts::CourseMedia.new(2014, 'D', 'MALAY_slash_I', '1A')
+        subject = Webcast::CourseMedia.new(2014, 'D', 'MALAY_slash_I', '1A')
         expect(subject.instance_eval {@id}).to eq '2014-D-MALAY/I-1A'
       end
     end
 
     context 'when course title has no _slash_' do
       it 'should do nothing to title' do
-        subject = Mediacasts::CourseMedia.new(2014, 'D', 'COMPSCI', '61A')
+        subject = Webcast::CourseMedia.new(2014, 'D', 'COMPSCI', '61A')
         expect(subject.instance_eval {@id}).to eq '2014-D-COMPSCI-61A'
       end
     end
@@ -157,10 +157,10 @@ describe Mediacasts::CourseMedia do
 
   context 'retrieving the YouTube id for a course' do
     context 'with a fake playlists proxy' do
-      subject { Mediacasts::CourseMedia.new(2008, 'D', 'LAW', '2723') }
+      subject { Webcast::CourseMedia.new(2008, 'D', 'LAW', '2723') }
 
       before do
-        allow(Mediacasts::AllPlaylists).to receive(:new).and_return Mediacasts::AllPlaylists.new({fake: true})
+        allow(Webcast::AllPlaylists).to receive(:new).and_return Webcast::AllPlaylists.new({fake: true})
       end
 
       context 'a normal return of fake data' do
@@ -175,7 +175,7 @@ describe Mediacasts::CourseMedia do
 
     context 'with a real, non-fake playlists proxy' do
       let (:playlist_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/webcast.json" }
-      subject { Mediacasts::CourseMedia.new(2014, 'B', 'CHEM', '1AL') }
+      subject { Webcast::CourseMedia.new(2014, 'B', 'CHEM', '1AL') }
 
       context 'normal return of real data', :testext => true do
         it 'should return correct recordings' do

@@ -1,4 +1,4 @@
-module Mediacasts
+module Webcast
   class CourseMedia
 
     def self.course_id(year, term, dept, catalog_id)
@@ -36,12 +36,12 @@ module Mediacasts
     end
 
     def get_playlist
-      proxy = Mediacasts::AllPlaylists.new
+      proxy = Webcast::AllPlaylists.new
       all_playlists = proxy.get
       if all_playlists && all_playlists[:courses]
         playlist = all_playlists[:courses][@id]
         if playlist.blank?
-          Mediacasts::AllPlaylists::ERRORS
+          Webcast::AllPlaylists::ERRORS
         else
           playlist
         end
@@ -80,7 +80,7 @@ module Mediacasts
     end
 
     def get_audio(audio_rss)
-      Mediacasts::Audio.new({:audio_rss => audio_rss}).get
+      Webcast::Audio.new({:audio_rss => audio_rss}).get
     end
 
   end

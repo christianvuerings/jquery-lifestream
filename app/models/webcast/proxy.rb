@@ -1,4 +1,4 @@
-module Mediacasts
+module Webcast
   class Proxy < BaseProxy
 
     include ClassLogger, SafeJsonParser
@@ -25,7 +25,7 @@ module Mediacasts
     def get_json_data
       json_url = "#{@settings.base_url}/#{get_json_path}"
       if @fake
-        path = Rails.root.join('fixtures', 'json', get_json_path).to_s
+        path = Rails.root.join('fixtures', 'webcast', get_json_path).to_s
         logger.info "Fake = #{@fake}. Get JSON from fixture file #{path}. Cache expires in: #{self.class.expires_in}"
         json_data = safe_json File.read(path)
       else
