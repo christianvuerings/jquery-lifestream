@@ -41,7 +41,7 @@ module Slate
         }
       }
       response = get_response(url, request_options)
-      logger.debug "Remote server status #{response.code}, Body = #{response.body}"
+      logger.debug "Remote server status #{response.code}, Body = #{response.body.force_encoding('UTF-8')}"
       {
         statusCode: response.code,
         feed: response.parsed_response
