@@ -67,6 +67,13 @@
     };
 
     /**
+     * Redirect to settings page
+     */
+    var redirectToSettings = function() {
+      window.location = '/settings';
+    };
+
+    /**
      * Prevent a click event from bubbling up to its parents
      */
     var preventBubble = function($event) {
@@ -164,6 +171,7 @@
       preventBubble: preventBubble,
       printPage: printPage,
       redirect: redirect,
+      redirectToSettings: redirectToSettings,
       setTitle: setTitle,
       supportsLocalStorage: supportsLocalStorage,
       uidPattern: uidPattern
