@@ -89,4 +89,17 @@ shared_examples 'a background job worker' do
   it 'supports Torquebox background jobs' do
     expect(subject.background.class).to eq TorqueBox::Messaging::Backgroundable::BackgroundProxy
   end
+
+  it 'saves current object state to cache' do
+    job_id = subject.background_job_id
+    subject.background_job_save
+    expect(Canvas::BackgroundJob.find(subject.background_job_id)).to_not eq nil
+  end
+
+  it 'provides consistent job id' do
+    allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return('generated.cache.key1','generated.cache.key2')
+    expect(subject.background_job_id).to eq 'generated.cache.key1'
+    expect(subject.background_job_id).to eq 'generated.cache.key1'
+  end
+
 end
