@@ -301,8 +301,14 @@
     }
 
     .cc-template-sections-table-cell-course-code {
-      font-weight: bold;
       width: 115px;
+    }
+
+    .cc-template-sections-table-cell-course-code-label {
+      cursor: pointer;
+      font-weight: bold;
+      margin: 0;
+      text-align: left;
     }
 
     .cc-template-sections-table-cell-section-label {
@@ -326,6 +332,7 @@
     }
 
     .cc-template-sections-table-cell-section-label-label {
+      cursor: pointer;
       font-size: 13px;
       margin: 0;
       text-align: left;
