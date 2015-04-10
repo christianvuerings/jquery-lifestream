@@ -3,10 +3,13 @@ module Berkeley
     extend self
 
     def codes
+      # UC Berkeley only offers Spring, Summer, and Fall courses. Before 1982, however, it was on the
+      # same quarterly system as other UC campuses.
       @codes ||= {
-        :B => "Spring",
-        :C => "Summer",
-        :D => "Fall"
+        :A => 'Winter',
+        :B => 'Spring',
+        :C => 'Summer',
+        :D => 'Fall'
       }
     end
 
