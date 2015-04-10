@@ -66,3 +66,6 @@ public/bcourses_embedded.html
 
 # Npm log
 npm-debug.log
+
+# Vagrant
+.vagrant/

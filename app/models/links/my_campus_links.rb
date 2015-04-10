@@ -20,7 +20,7 @@ module Links
       links = []
       navigation = []
 
-      @maincats = Links::LinkCategory.where("root_level = ?", true)
+      @maincats = Links::LinkCategory.where("root_level = ?", true).order(:name)
       @maincats.each do |cat|
         @section = {
           "label" => cat.name,
@@ -33,7 +33,7 @@ module Links
       # End Navigation section
 
       # Begin Links section
-      @all_links = Links::Link.where("published = ?", true)
+      @all_links = Links::Link.where("published = ?", true).order(:name)
       @all_links.each do |link|
         links.push({
                      "name" => link.name,
@@ -56,8 +56,7 @@ module Links
       subsects.each do |subsection|
         categories.push({"id" => subsection.link_top_cat.slug, "name" => subsection.link_top_cat.name})
       end
-      categories = categories.sort_by { |n| n["name"] } # Alphabetize left-nav subsections
-      categories
+      categories.sort_by { |n| n["name"] } # Alphabetize left-nav subsections
     end
 
     # Given a link, return an array of the categories it lives in by examining its host sections
@@ -70,7 +69,7 @@ module Links
           categories.push(catlist)
         end
       end
-      categories
+      categories.sort_by { |c| [c['topcategory'], c['subcategory']] }
     end
 
     # Given a link, provide the client side with a list of the user roles who would be interested in it.

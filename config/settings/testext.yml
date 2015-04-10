@@ -8,11 +8,11 @@ ldap:
 terms:
   fake_now: 2013-10-11 04:20:00
 postgres:
-  database: calcentral_test
-  username: calcentral_test
-  password: secret
-  host: localhost
-  port: 5432
+  database: <%= ENV['DB_ENV_POSTGRESQL_DB'] || 'calcentral_test' %>
+  username: <%= ENV['DB_ENV_POSTGRESQL_USER'] || 'calcentral_test' %>
+  password: <%= ENV['DB_ENV_POSTGRESQL_PASS'] || 'secret' %>
+  host: <%= ENV['DB_PORT_5432_TCP_ADDR'] || 'localhost' %>
+  port: <%= ENV['DB_PORT_5432_TCP_PORT'] || '5432' %>
 campusdb:
   adapter: jdbc
   driver: oracle.jdbc.OracleDriver
