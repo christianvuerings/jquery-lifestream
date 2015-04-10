@@ -117,7 +117,7 @@ shared_examples 'a background job worker' do
     end
 
     it 'returns zero float background job total steps' do
-      expect(subject.background_job_total_steps).to eq 1.0
+      expect(subject.background_job_total_steps).to eq 1
     end
 
     it 'returns initial background job report' do
@@ -145,5 +145,32 @@ shared_examples 'a background job worker' do
     subject.background_job_complete_step('Step one completed')
     cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
     expect(cached_object.background_job_completed_steps).to eq ['Step one completed']
+  end
+
+  it 'updates error list' do
+    subject.background_job_add_error('Something went wrong')
+    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    expect(cached_object.background_job_errors).to eq ['Something went wrong']
+  end
+
+  it 'updates total steps' do
+    subject.background_job_set_total_steps('8')
+    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    expect(cached_object.background_job_total_steps).to eq 8
+  end
+
+  it 'reports as processing or completed based on total and completed steps' do
+    subject.background_job_set_total_steps('3')
+    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    expect(cached_object.background_job_status).to eq 'New'
+    subject.background_job_complete_step('step 1')
+    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    expect(cached_object.background_job_status).to eq 'Processing'
+    subject.background_job_complete_step('step 2')
+    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    expect(cached_object.background_job_status).to eq 'Processing'
+    subject.background_job_complete_step('step 3')
+    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    expect(cached_object.background_job_status).to eq 'Completed'
   end
 end

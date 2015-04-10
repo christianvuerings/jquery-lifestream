@@ -7,18 +7,19 @@ module Canvas
   #     include Canvas::BackgroundJob
   #
   #     def initialize
-  #       @background_job_total_steps = 2.0 # must be a floating point value
+  #       background_job_set_total_steps(2)
   #     end
   #
   #     def perform_work
-  #       # do something
+  #       # do step one
   #       if (error)
-  #         @background_job_errors << 'Something went wrong'
+  #         background_job_add_error('Something went wrong')
   #         return false
   #       end
   #       background_job_complete_step('First step completed')
-  #       # do something else
-  #       @
+  #
+  #       # do step two
+  #       background_job_complete_step('Second step completed')
   #     end
   #
   #     def background_job_report_custom
@@ -62,7 +63,7 @@ module Canvas
     end
 
     def background_job_total_steps
-      @background_job_total_steps ||= 1.0
+      @background_job_total_steps ||= 1
     end
 
     # Overridden by class. Provides hash merged into background job report hash
@@ -70,11 +71,22 @@ module Canvas
       Hash.new
     end
 
+    def background_job_set_total_steps(total_steps)
+      @background_job_total_steps = total_steps.to_i
+      background_job_save
+    end
+
+    def background_job_add_error(error)
+      @background_job_errors ||= []
+      @background_job_errors << error
+      background_job_save
+    end
+
     def background_job_report
       json_hash = {
         jobId: background_job_id,
         completedSteps: background_job_completed_steps,
-        percentComplete: (background_job_completed_steps.count.to_f / background_job_total_steps).round(2),
+        percentComplete: (background_job_completed_steps.count.to_f / background_job_total_steps.to_f).round(2),
       }
       json_hash[:errors] = background_job_errors if background_job_errors.count > 0
       json_hash.reverse_merge!(background_job_report_custom)
@@ -84,6 +96,11 @@ module Canvas
     def background_job_complete_step(step_text)
       @background_job_completed_steps ||= []
       @background_job_completed_steps << step_text
+
+      completed_steps = background_job_completed_steps.count
+      @background_job_status = 'Processing' if (completed_steps > 0) || (completed_steps < @background_job_total_steps)
+      @background_job_status = 'Completed' if (completed_steps == @background_job_total_steps)
+
       background_job_save
     end
 
