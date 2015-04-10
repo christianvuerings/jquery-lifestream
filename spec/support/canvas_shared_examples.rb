@@ -86,6 +86,7 @@ end
 # Classes using Canvas::BackgroundJob
 
 shared_examples 'a background job worker' do
+  let(:background_job_id) { 'Canvas::BackgroundJob.1383330151057-67f4b934525501cb' }
   it 'supports Torquebox background jobs' do
     expect(subject.background.class).to eq TorqueBox::Messaging::Backgroundable::BackgroundProxy
   end
@@ -96,10 +97,53 @@ shared_examples 'a background job worker' do
     expect(Canvas::BackgroundJob.find(subject.background_job_id)).to_not eq nil
   end
 
-  it 'provides consistent job id' do
+  it 'provides consistent background job id' do
     allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return('generated.cache.key1','generated.cache.key2')
     expect(subject.background_job_id).to eq 'generated.cache.key1'
     expect(subject.background_job_id).to eq 'generated.cache.key1'
   end
 
+  context 'when background job state first saved to cache' do
+    it 'returns background job status as New' do
+      expect(subject.background_job_status).to eq 'New'
+    end
+
+    it 'returns empty background job error array' do
+      expect(subject.background_job_errors).to eq []
+    end
+
+    it 'returns empty background job completed steps array' do
+      expect(subject.background_job_completed_steps).to eq []
+    end
+
+    it 'returns zero float background job total steps' do
+      expect(subject.background_job_total_steps).to eq 1.0
+    end
+
+    it 'returns initial background job report' do
+      allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return(background_job_id)
+      report_json = subject.background_job_report
+      report = JSON.parse(report_json)
+      expect(report).to be_an_instance_of Hash
+      expect(report['jobId']).to eq background_job_id
+      expect(report['completedSteps']).to eq []
+      expect(report['percentComplete']).to eq 0.0
+      expect(report['errors']).to eq nil
+    end
+
+    it 'returns background job report with custom report values' do
+      allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return(background_job_id)
+      allow(subject).to receive(:background_job_report_custom).and_return({:customKey => 'customValue'})
+      report_json = subject.background_job_report
+      report = JSON.parse(report_json)
+      expect(report).to be_an_instance_of Hash
+      expect(report['customKey']).to eq 'customValue'
+    end
+  end
+
+  it 'updates completed steps' do
+    subject.background_job_complete_step('Step one completed')
+    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    expect(cached_object.background_job_completed_steps).to eq ['Step one completed']
+  end
 end
