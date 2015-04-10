@@ -85,11 +85,6 @@ describe Canvas::ProvideCourseSite do
       expect(subject.instance_eval { @import_data }).to be_an_instance_of Hash
       expect(subject.instance_eval { @import_data }).to eq({})
     end
-
-    it 'initializes with unique cache key' do
-      allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return('1383330151057')
-      expect(subject.cache_key).to eq "canvas.courseprovision.#{uid}.1383330151057"
-    end
   end
 
   describe '#create_course_site' do
@@ -146,7 +141,7 @@ describe Canvas::ProvideCourseSite do
 
     it 'sets status as completed and saves' do
       subject.create_course_site(site_name, site_course_code, 'fall-2013', ['21136', '21204'])
-      cached_object = Canvas::BackgroundJob.find(subject.job_id)
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
       expect(cached_object.jobStatus).to eq 'courseCreationCompleted'
     end
   end
@@ -179,7 +174,7 @@ describe Canvas::ProvideCourseSite do
       end
       it 'executes all steps in order' do
         subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
-        cached_object = Canvas::BackgroundJob.find(subject.job_id)
+        cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
         expect(cached_object.jobStatus).to eq 'sectionEditsCompleted'
       end
     end
@@ -189,7 +184,7 @@ describe Canvas::ProvideCourseSite do
       end
       it 'returns a proper message' do
         expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, 'Unable to remove memberships')
-        cached_object = Canvas::BackgroundJob.find(subject.job_id)
+        cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
         expect(cached_object.jobStatus).to eq 'sectionEditsError'
         expect(cached_object.errors).to eq ['Unable to remove memberships']
       end
@@ -200,7 +195,7 @@ describe Canvas::ProvideCourseSite do
       end
       it 'reports an error' do
         expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, 'No changes to sections requested')
-        cached_object = Canvas::BackgroundJob.find(subject.job_id)
+        cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
         expect(cached_object.jobStatus).to eq 'sectionEditsError'
       end
     end
@@ -208,7 +203,7 @@ describe Canvas::ProvideCourseSite do
       let(:course_site_term) { {term_yr: '2014', term_cd: 'B'} }
       it 'reports an error' do
         expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, "Course site #{canvas_course_id} does not match a current term")
-        cached_object = Canvas::BackgroundJob.find(subject.job_id)
+        cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
         expect(cached_object.jobStatus).to eq 'sectionEditsError'
       end
     end
@@ -995,28 +990,6 @@ describe Canvas::ProvideCourseSite do
     end
   end
 
-  describe '#save' do
-    it 'raises exception if cache expiration not present' do
-      allow(Settings.cache.expiration).to receive(:CanvasBackgroundJobs).and_return(nil)
-      expect { subject.save }.to raise_error(RuntimeError, 'Unable to save. Cache expiration setting not present.')
-    end
-
-    it 'raises exception if cache key not present' do
-      subject.instance_eval { @cache_key = nil }
-      expect { subject.save }.to raise_error(RuntimeError, 'Unable to save. cache_key missing')
-    end
-
-    it 'saves current state of job to global storage' do
-      allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return('1383330151057')
-      subject.save
-      retrieved_job = Canvas::BackgroundJob.find(subject.job_id)
-      expect(retrieved_job).to be_an_instance_of Canvas::ProvideCourseSite
-      expect(retrieved_job.uid).to eq uid
-      expect(retrieved_job.jobStatus).to eq 'New'
-      expect(retrieved_job.job_id).to eq "canvas.courseprovision.#{uid}.1383330151057"
-    end
-  end
-
   describe '#complete_step' do
     it 'adds step to completed steps log' do
       subject.complete_step('Did something awesome')
@@ -1024,7 +997,7 @@ describe Canvas::ProvideCourseSite do
     end
 
     it 'saves state of background job' do
-      expect(subject).to receive(:save).and_return(true)
+      expect(subject).to receive(:background_job_save).and_return(true)
       subject.complete_step('Did something awesome')
     end
   end
@@ -1032,7 +1005,7 @@ describe Canvas::ProvideCourseSite do
   describe '#to_json' do
     before do
       subject.instance_eval { @jobStatus = 'courseCreationError'}
-      subject.instance_eval { @cache_key = 'canvas.courseprovision.1234.1383330151057'}
+      subject.instance_eval { @background_job_id = 'Canvas::BackgroundJob.1383330151057-67f4b934525501cb'}
       subject.instance_eval { @completed_steps = ['step1 description', 'step2 description']}
     end
 
@@ -1042,7 +1015,7 @@ describe Canvas::ProvideCourseSite do
       result.should be_an_instance_of String
       json_result = JSON.parse(result)
       expect(json_result['jobStatus']).to eq 'courseCreationError'
-      expect(json_result['job_id']).to eq 'canvas.courseprovision.1234.1383330151057'
+      expect(json_result['job_id']).to eq 'Canvas::BackgroundJob.1383330151057-67f4b934525501cb'
       expect(json_result['completed_steps'][0]).to eq 'step1 description'
       expect(json_result['completed_steps'][1]).to eq 'step2 description'
       expect(json_result['percent_complete']).to eq 0.17
@@ -1092,12 +1065,4 @@ describe Canvas::ProvideCourseSite do
       subject.refresh_sections_cache(canvas_course_id)
     end
   end
-
-  describe '#job_id' do
-    it 'returns cache key' do
-      job_id = subject.instance_eval { @cache_key }
-      expect(subject.job_id).to eq job_id
-    end
-  end
-
 end
