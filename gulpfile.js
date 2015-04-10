@@ -60,6 +60,8 @@
       // JavaScript
       js: {
         external: [
+          // Lodash
+          'node_modules/lodash/index.js',
           // Date parsing
           'node_modules/moment/moment.js',
           // Libraries (google analytics)

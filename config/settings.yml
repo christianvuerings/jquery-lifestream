@@ -284,6 +284,7 @@ features:
   advising: false
   background_jobs_check: true
   course_manage_official_sections: false
+  spamChristian: false
 
 youtube_splash_id: 'EQ-a7xrfVag'
 
