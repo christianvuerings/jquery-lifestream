@@ -24,6 +24,7 @@
      */
     var initState = function() {
       // initialize maintenance notice settings
+      $scope.existingCourseSections = [];
       $scope.allSections = [];
       $scope.courseActionVerb = 'site is updated';
       $scope.maintenanceCollapsed = true;
