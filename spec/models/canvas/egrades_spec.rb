@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe Canvas::Egrades do
-  let(:canvas_course_id)          { 1164764 }
+  let(:canvas_course_id)          { 1276293 }
   let(:canvas_course_section_id)  { 1312012 }
   subject { Canvas::Egrades.new(:canvas_course_id => canvas_course_id) }
 
@@ -125,7 +125,7 @@ describe Canvas::Egrades do
     it "returns canvas course student grades" do
       result = subject.canvas_course_student_grades
       expect(result).to be_an_instance_of Array
-      expect(result.count).to eq 6
+      expect(result.count).to eq 11
 
       # Student with Grade
       expect(result[0][:sis_login_id]).to eq "4000123"
