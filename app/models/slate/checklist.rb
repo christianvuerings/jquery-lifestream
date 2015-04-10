@@ -38,10 +38,14 @@ module Slate
         },
         query: {
           uid: @uid
+        },
+        headers: {
+          'Accept' => 'text/xml;charset=UTF-8',
+          'Accept-Charset' => 'UTF-8'
         }
       }
       response = get_response(url, request_options)
-      logger.debug "Remote server status #{response.code}, Body = #{response.body.force_encoding('UTF-8')}"
+      logger.debug "Remote server status #{response.code}, Response encoding = #{response.body.encoding}; Body = #{response.body.force_encoding('UTF-8')}"
       {
         statusCode: response.code,
         feed: response.parsed_response
