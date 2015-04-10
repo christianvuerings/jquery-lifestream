@@ -56,6 +56,7 @@ describe CampusOracle::UserCourses::Base do
       it 'includes only course info at the course level' do
         course = subject.first
         expect(course[:course_code]).to eq "#{base_enrollment['dept_name']} #{base_enrollment['catalog_id']}"
+        expect(course[:course_option]).to eq base_enrollment['course_option']
         expect(course[:catid]).to eq base_enrollment['catalog_id']
         expect(course[:cred_cd]).to be_nil
         expect(course[:pnp_flag]).to be_nil

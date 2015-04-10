@@ -10,6 +10,7 @@ describe MyClasses::Campus do
   let(:fake_sections) {[
     {
       ccn: rand(99999),
+      instruction_format: 'LEC',
       is_primary_section: true
     }
   ]}
@@ -20,6 +21,7 @@ describe MyClasses::Campus do
     catid: catid,
     dept: 'ECON',
     course_code: course_code,
+    course_option: 'E1',
     emitter: 'Campus',
     name: 'Retire in Only 85 Years',
     role: 'Student',
@@ -77,21 +79,35 @@ describe MyClasses::Campus do
           unit: '2',
           section_number: '021',
           waitlistPosition: 2
+        },
+        {
+          ccn: '76393',
+          enroll_status: 'E',
+          instruction_format: 'DIS',
+          is_primary_section: false,
+          pnp_flag: 'N ',
+          unit: '0',
+          section_number: '200',
+          waitlistPosition: 0
         }
       ]}
       it_behaves_like 'a Classes list'
-      its(:size) {should eq fake_sections.size}
-      it 'treats them as two different classes with the same URL' do
+      its(:size) {should eq 2}
+      it 'treats them as two different classes' do
         expect(subject[0][:listings][0][:id]).to_not eq subject[1][:listings][0][:id]
-        [subject, fake_sections].transpose.each do |course, enrollment|
+        expect(subject[0][:site_url]).to_not eq subject[1][:site_url]
+        [subject, fake_sections[0..1]].transpose.each do |course, enrollment|
           expect(course[:listings].first[:courseCodeSection]).to eq "#{enrollment[:instruction_format]} #{enrollment[:section_number]}"
-          expect(course[:sections].size).to eq 1
           expect(course[:sections][0][:ccn]).to eq enrollment[:ccn]
           if (enrollment[:waitlistPosition] > 0)
             expect(course[:enroll_limit]).to eq enrollment[:enroll_limit]
             expect(course[:waitlistPosition]).to eq enrollment[:waitlistPosition]
           end
         end
+      end
+      it 'associates secondary sections based on course_option' do
+        expect(subject[0][:sections].size).to eq 2
+        expect(subject[1][:sections].size).to eq 1
       end
     end
   end

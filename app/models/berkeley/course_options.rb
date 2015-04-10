@@ -142,15 +142,14 @@ module Berkeley
       'Z9' => [{formats: ['DIS', 'LAB']}]
     }
 
-    def nested?(course_option, primary_section_number, secondary_section)
+    def nested?(course_option, primary_section_number, secondary_section_number, secondary_instruction_format)
       mapping = MAPPING[course_option]
       return false if mapping.nil?
-      return false unless match_idx = mapping.index { |m| m[:formats].include?(secondary_section['instruction_format']) }
-      match = mapping[match_idx]
+      return false unless match = mapping.find { |m| m[:formats].include?(secondary_instruction_format) }
       return true if match[:primary].nil?
       match_string = primary_section_number[match[:primary]]
       match_string.reverse! if match[:reverse]
-      return match_string == secondary_section['section_num'][match[:secondary]]
+      return match_string == secondary_section_number[match[:secondary]]
     end
 
   end

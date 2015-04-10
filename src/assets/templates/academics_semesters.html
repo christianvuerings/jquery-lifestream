@@ -25,8 +25,10 @@
           </thead>
           <tbody data-ng-if="!semester.summaryFromTranscript" data-ng-repeat="class in semester.classes">
             <tr data-ng-repeat="section in class.sections" data-ng-if="section.is_primary_section">
-              <td data-ng-if="class.url"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a>
-              <td data-ng-if="!class.url" data-ng-bind="class.course_code"></td>
+              <td data-ng-if="class.multiplePrimaries && section.url"><a data-ng-href="{{section.url}}" data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></a></td>
+              <td data-ng-if="class.multiplePrimaries && !section.url" data-ng-bind-template="{{class.course_code}} {{section.section_label}}"></td>
+              <td data-ng-if="!class.multiplePrimaries && class.url"><a data-ng-href="{{class.url}}" data-ng-bind="class.course_code"></a></td>
+              <td data-ng-if="!class.multiplePrimaries && !class.url" data-ng-bind="class.course_code"></td>
               <td data-ng-bind="class.title"></td>
               <td data-ng-bind="section.units | number:1" class="cc-table-right"></td>
             </tr>
