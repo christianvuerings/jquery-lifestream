@@ -1,13 +1,15 @@
-(function(angular) {
+(function(angular, _) {
   'use strict';
 
   /**
    * Tasks controller
    */
-  angular.module('calcentral.controllers').controller('TasksController', function(apiService, tasksFactory, $filter, $scope) {
+  angular.module('calcentral.controllers').controller('TasksController', function(apiService, tasksFactory, $http, $interval, $filter, $scope) {
     // Initial mode for Tasks view
     $scope.currentTaskMode = 'scheduled';
     $scope.taskModes = ['scheduled', 'unscheduled', 'completed'];
+
+    var currentTasks = false;
 
     var calculateCounts = function() {
       $scope.counts = {
@@ -58,12 +60,66 @@
       calculateCounts();
     };
 
+    var capitalize = function(s) {
+      return s && s[0].toUpperCase() + s.slice(1);
+    };
+
+    var sendBrowserNotification = function(emitter, message) {
+      var notification;
+      notification = new Notification('New ' + capitalize(emitter) + ' Task', {
+        icon: '/assets/images/icon_slate_64x64.png',
+        body: message
+      });
+    };
+
+    var checkBrowserNotification = function(emitter, message) {
+      // Let's check if the browser supports notifications
+      if (!('Notification' in window)) {
+        return;
+      } else if (Notification.permission === 'granted') {
+        // If it's okay let's create a notification
+        sendBrowserNotification(emitter, message);
+      } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission(function(permission) {
+          // If the user is okay, let's create a notification
+          if (permission === 'granted') {
+            sendBrowserNotification(emitter, message);
+          }
+        });
+      }
+    };
+
+    var checkUpdate = function(data) {
+      // Will strip the $$hashKey for comparison
+      var tasksCopy = angular.copy(data.tasks);
+      if (currentTasks &&
+        tasksCopy &&
+        !angular.equals(currentTasks, tasksCopy)
+      ) {
+        var newTasks = _.filter(tasksCopy, function(obj) {
+          return !_.findWhere(currentTasks, obj);
+        });
+
+        for (var i = 0; i < newTasks.length; i++) {
+          var newTask = newTasks[i];
+          var message = 'Oski, a new ' + newTask.emitter + ' task has been added: ' + newTask.title;
+          $http.get('https://twiltestberkeley.herokuapp.com/message/' + message);
+          checkBrowserNotification(newTask.emitter, newTask.title);
+        }
+      }
+      currentTasks = tasksCopy;
+    };
+
     var getTasks = function(options) {
       return tasksFactory.getTasks(options).success(function(data) {
         apiService.updatedFeeds.feedLoaded(data);
         angular.extend($scope, data);
         if ($scope.tasks) {
           $scope.updateTaskLists();
+        }
+
+        if (apiService.user.profile.features.spamChristian) {
+          checkUpdate(data);
         }
       });
     };
@@ -76,6 +132,16 @@
       }
     });
     getTasks();
+
+    $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
+      if (isAuthenticated && apiService.user.profile.features.spamChristian) {
+        $interval(function() {
+          getTasks({
+            refreshCache: true
+          });
+        }, 2000);
+      }
+    });
 
     var toggleStatus = function(task) {
       if (task.status === 'completed') {
@@ -187,4 +253,4 @@
       return (task.status === 'completed');
     };
   });
-})(window.angular);
+})(window.angular, window._);
