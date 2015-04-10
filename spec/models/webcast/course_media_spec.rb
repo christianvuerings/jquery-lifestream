@@ -160,7 +160,7 @@ describe Webcast::CourseMedia do
       subject { Webcast::CourseMedia.new(2008, 'D', 'LAW', '2723') }
 
       before do
-        allow(Webcast::AllPlaylists).to receive(:new).and_return Webcast::AllPlaylists.new({fake: true})
+        allow(Webcast::Recordings).to receive(:new).and_return Webcast::Recordings.new({fake: true})
       end
 
       context 'a normal return of fake data' do

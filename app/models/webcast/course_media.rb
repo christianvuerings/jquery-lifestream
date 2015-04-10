@@ -36,17 +36,17 @@ module Webcast
     end
 
     def get_playlist
-      proxy = Webcast::AllPlaylists.new
-      all_playlists = proxy.get
-      if all_playlists && all_playlists[:courses]
-        playlist = all_playlists[:courses][@id]
+      proxy = Webcast::Recordings.new
+      recordings = proxy.get
+      if recordings && recordings[:courses]
+        playlist = recordings[:courses][@id]
         if playlist.blank?
-          Webcast::AllPlaylists::ERRORS
+          Webcast::Recordings::ERRORS
         else
           playlist
         end
       else
-        all_playlists
+        recordings
       end
     end
 
