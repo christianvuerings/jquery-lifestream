@@ -1,11 +1,9 @@
 describe Mediacasts::Rooms do
 
   let (:rooms_json_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/rooms.json" }
-  let (:term_yr) { 2015 }
-  let (:term_cd) { 'D' }
 
   context 'a fake proxy' do
-    subject { Mediacasts::Rooms.new(term_yr, term_cd, {:fake => true}) }
+    subject { Mediacasts::Rooms.new({:fake => true}) }
 
     context 'fake data' do
       it 'should return webcast-enabled rooms' do
@@ -16,7 +14,7 @@ describe Mediacasts::Rooms do
   end
 
   context 'a real, non-fake proxy' do
-    subject { Mediacasts::Rooms.new(term_yr, term_cd) }
+    subject { Mediacasts::Rooms.new }
 
     context 'real data', :testext => true do
       it 'should return at least one building' do
@@ -35,7 +33,7 @@ describe Mediacasts::Rooms do
       after(:each) { WebMock.reset! }
       it 'should return the fetch error message' do
         buildings = subject.get
-        expect(buildings[:proxy_error_message]).to include('There was a problem')
+        expect(buildings[:proxy_error_message]).to include 'There was a problem'
       end
     end
 
@@ -46,7 +44,7 @@ describe Mediacasts::Rooms do
       after(:each) { WebMock.reset! }
       it 'should return the fetch error message' do
         buildings = subject.get
-        expect(buildings[:proxy_error_message]).to include('There was a problem')
+        expect(buildings[:proxy_error_message]).to include 'There was a problem'
       end
     end
 
