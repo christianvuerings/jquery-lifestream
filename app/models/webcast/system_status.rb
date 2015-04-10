@@ -1,4 +1,4 @@
-module Mediacasts
+module Webcast
   class SystemStatus < Proxy
 
     def initialize(options = {})

@@ -1,4 +1,4 @@
-module Mediacasts
+module Webcast
   class Audio < BaseProxy
 
     include ClassLogger, SafeJsonParser, DatedFeed
