@@ -42,7 +42,7 @@ module Canvas
 
     def canvas_course_student_grades(force = false)
       self.class.fetch_from_cache("course-students-#{@canvas_course_id}", force) do
-        proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id)
+        proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id, :paging_callback => self)
         course_users = proxy.course_users(:cache => false)
         course_students = []
         course_users.each do |course_user|
