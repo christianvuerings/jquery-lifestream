@@ -22,6 +22,13 @@ class CanvasCourseGradeExportController < ApplicationController
     render json: { jobRequestStatus: 'Success', jobId: egrades_worker.job_id }.to_json
   end
 
+  # GET /api/academics/canvas/egrade_export/status/:canvas_course_id.json?jobId=Canvas::BackgroundJob.1383330151057-67f4b934525501cb
+  def job_status
+    background_job = Canvas::BackgroundJob.find(params['jobId'])
+    render json: background_job.background_job_report and return if background_job.class == Canvas::Egrades
+    render json: { jobId: params['jobId'], jobStatus: 'Error', errors: ['Unable to find Canvas::EGrades background job'] }.to_json
+  end
+
   # GET /api/academics/canvas/egrade_export/download/:canvas_course_id.csv
   def download_egrades_csv
     raise Errors::BadRequestError, "term_cd required" unless params['term_cd']

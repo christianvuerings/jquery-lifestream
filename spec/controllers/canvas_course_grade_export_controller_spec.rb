@@ -53,6 +53,45 @@ describe CanvasCourseGradeExportController do
     end
   end
 
+  describe '#job_status' do
+    let(:background_job_id) { 'Canvas::BackgroundJob.1383330151057-67f4b934525501cb' }
+
+    it_should_behave_like 'an endpoint' do
+      let(:error_text) { 'Something went wrong' }
+      let(:make_request) { get :job_status, canvas_course_id: canvas_course_id, jobId: background_job_id }
+      before { allow(Canvas::BackgroundJob).to receive(:find).and_raise(RuntimeError, 'Something went wrong') }
+    end
+
+    it_should_behave_like 'an authenticated endpoint' do
+      let(:make_request) { get :job_status, canvas_course_id: canvas_course_id, jobId: background_job_id }
+    end
+
+    it 'returns error if egrades background job not found' do
+      get :job_status, canvas_course_id: canvas_course_id, jobId: background_job_id
+      assert_response :success
+      json_response = JSON.parse(response.body)
+      expect(json_response['jobId']).to eq background_job_id
+      expect(json_response['jobStatus']).to eq 'Error'
+      expect(json_response['errors']).to eq ['Unable to find Canvas::EGrades background job']
+    end
+
+    it 'returns status of canvas egrades background job' do
+      egrades = Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
+      egrades.background_job_set_total_steps(2)
+      egrades.background_job_complete_step('step 1')
+
+      get :job_status, canvas_course_id: canvas_course_id, jobId: egrades.background_job_id
+      assert_response :success
+      json_response = JSON.parse(response.body)
+      expect(json_response['jobId']).to eq egrades.background_job_id
+      expect(json_response['jobStatus']).to eq 'Processing'
+      expect(json_response['completedSteps'].count).to eq 1
+      expect(json_response['completedSteps'][0]).to eq 'step 1'
+      expect(json_response['percentComplete']).to eq 0.50
+      expect(json_response['errors']).to eq nil
+    end
+  end
+
   describe 'when serving grade export option data' do
     let(:official_course_sections) do
       [
