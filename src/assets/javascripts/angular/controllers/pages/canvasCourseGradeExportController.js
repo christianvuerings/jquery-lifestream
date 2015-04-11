@@ -5,7 +5,7 @@
   /**
    * Canvas Add User to Course LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCourseGradeExportController', function(apiService, canvasCourseGradeExportFactory, canvasSharedFactory, $http, $routeParams, $scope, $window) {
+  angular.module('calcentral.controllers').controller('CanvasCourseGradeExportController', function(apiService, canvasCourseGradeExportFactory, canvasSharedFactory, $http, $routeParams, $scope, $timeout, $window) {
     apiService.util.setTitle('E-Grade Export');
 
     $scope.appState = 'initializing';
@@ -29,6 +29,63 @@
       } else {
         $window.location.href = courseDetailsUrl;
       }
+    };
+
+    /*
+     * Updates status of background job in $scope.
+     * Halts jobStatusLoader loop if job no longer in progress.
+     */
+    var statusProcessor = function(data) {
+      angular.extend($scope, data);
+      $scope.percentCompleteRounded = Math.round($scope.percentComplete * 100);
+      if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
+        jobStatusLoader();
+      } else {
+        delete $scope.percentCompleteRounded;
+        $timeout.cancel(timeoutPromise);
+        $scope.appState = 'ready';
+      }
+    };
+
+    /*
+     * Performs background job status request every 2000 miliseconds
+     * with result processed by statusProcessor.
+     */
+    var timeoutPromise;
+    var jobStatusLoader = function() {
+      timeoutPromise = $timeout(function() {
+        return canvasCourseGradeExportFactory.jobStatus($scope.backgroundJobId)
+          .success(statusProcessor)
+          .error(function() {
+            $scope.errorStatus = 'error';
+            $scope.contactSupport = true;
+            $scope.displayError = 'Unable to obtain grade preloading status.';
+          });
+      }, 2000);
+    };
+
+    /*
+     * Begins grade preloading process
+     */
+    var preloadGrades = function() {
+      $scope.appState = 'loading';
+      canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId).success(function(data) {
+        if (data.jobRequestStatus === 'Success') {
+          $scope.backgroundJobId = data.jobId;
+          jobStatusLoader();
+        } else {
+          $scope.appState = 'error';
+          $scope.contactSupport = true;
+          $scope.errorStatus = 'Grade preloading request failed';
+        }
+      }).error(function(data) {
+        $scope.appState = 'error';
+        $scope.contactSupport = true;
+        $scope.errorStatus = 'Grade preloading failed';
+        if (data) {
+          $scope.errorStatus = data.errors.join('; ');
+        }
+      });
     };
 
     /**
@@ -108,11 +165,12 @@
           loadOfficialSections(data.officialSections);
         }
         if ($scope.appState !== 'error') {
-          $scope.appState = 'ready';
+          preloadGrades();
         }
       }).error(function(data) {
-        $scope.showError = true;
-        $scope.errorStatus = data;
+        $scope.appState = 'error';
+        $scope.contactSupport = true;
+        $scope.errorStatus = 'Unable to obtain course settings.';
       });
     };
 
