@@ -270,15 +270,15 @@ describe Canvas::Egrades do
       allow(subject).to receive(:official_section_identifiers).and_return(section_identifiers)
       allow(CampusOracle::Queries).to receive(:get_sections_from_ccns).with('2014', 'C', ['22280','22345']).and_return(sections)
     end
-    context "when official sections are not identified in course site" do
+    context 'when official sections are not identified in course site' do
       let(:section_identifiers) { [] }
-      it "returns empty array" do
+      it 'returns empty array' do
         expect(subject.official_sections).to eq []
       end
     end
-    context "when official sections are identified in course site" do
+    context 'when official sections are identified in course site' do
       let(:section_identifiers) { [{:term_yr => '2014', :term_cd => 'C', :ccn => '22280'}, {:term_yr => '2014', :term_cd => 'C', :ccn => '22345'}] }
-      it "provides array of filtered section hashes" do
+      it 'provides array of filtered section hashes' do
         result = subject.official_sections
         expect(result).to be_an_instance_of Array
         expect(result.count).to eq 2
@@ -300,26 +300,26 @@ describe Canvas::Egrades do
         end
       end
 
-      it "includes display name in each hash" do
+      it 'includes display name in each hash' do
         result = subject.official_sections
         expect(result).to be_an_instance_of Array
         expect(result.count).to eq 2
         expect(result[0]).to be_an_instance_of Hash
         expect(result[1]).to be_an_instance_of Hash
-        expect(result[0]['display_name']).to eq "CHEM 3BL LEC 001"
-        expect(result[1]['display_name']).to eq "CHEM 3BL LAB 208"
+        expect(result[0]['display_name']).to eq 'CHEM 3BL LEC 001'
+        expect(result[1]['display_name']).to eq 'CHEM 3BL LAB 208'
       end
     end
   end
 
-  context "when providing official section terms existing within course" do
+  context 'when providing official section terms existing within course' do
     let(:section_identifiers) {[
       {:term_yr => '2014', :term_cd => 'C', :ccn => '1298', :name => 'LAW 2081 LEC 002'},
       {:term_yr => '2014', :term_cd => 'C', :ccn => '1299', :name => 'LAW 2081 LEC 001'},
       {:term_yr => '2014', :term_cd => 'D', :ccn => '1028', :name => 'LAW 2081 DIS 101'}
     ]}
     before { allow(subject).to receive(:official_section_identifiers).and_return(section_identifiers) }
-    it "it returns array of term hashes" do
+    it 'it returns array of term hashes' do
       # Note: There should never be more than one term in a course site
       # This feature is intended for detecting an exceptional scenario
       result = subject.section_terms
@@ -334,12 +334,12 @@ describe Canvas::Egrades do
     end
   end
 
-  context "when providing official section identifiers existing within course" do
+  context 'when providing official section identifiers existing within course' do
     let(:success_response) { [{:term_yr => '2014', :term_cd => 'C', :ccn => '7309'}, {:term_yr => '2014', :term_cd => 'C', :ccn => '6211'}] }
     subject { Canvas::Egrades.new(:canvas_course_id => 767330) }
 
-    context "when official sections returned" do
-      it "returns course sections if already obtained" do
+    context 'when official sections returned' do
+      it 'returns course sections if already obtained' do
         expect_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).once.and_return(success_response)
         result_1 = subject.official_section_identifiers
         expect(result_1).to be_an_instance_of Array
@@ -356,7 +356,7 @@ describe Canvas::Egrades do
     end
   end
 
-  context "when indicating if a course site has official sections" do
+  context 'when indicating if a course site has official sections' do
     let(:section_identifiers) {
       [
         {:term_yr => '2014', :term_cd => 'C', :ccn => '7309'},
@@ -365,25 +365,71 @@ describe Canvas::Egrades do
     }
     before { allow(subject).to receive(:official_section_identifiers).and_return(section_identifiers) }
 
-    it "uses cache by default" do
+    it 'uses cache by default' do
       expect(Canvas::Egrades).to receive(:fetch_from_cache).with("#{canvas_course_id}").and_return(false)
       result = subject.is_official_course?
       expect(result).to eq false
     end
 
-    it "bypasses cache when cache option is false" do
+    it 'bypasses cache when cache option is false' do
       expect(Canvas::Egrades).to_not receive(:fetch_from_cache).with("#{canvas_course_id}")
       result = subject.is_official_course?(:cache => false)
       expect(result).to eq true
     end
 
-    it "returns true when course site has official sections" do
+    it 'returns true when course site has official sections' do
       expect(subject.is_official_course?).to eq true
     end
 
-    it "returns false when course site does not contain official sections" do
+    it 'returns false when course site does not contain official sections' do
       expect(subject).to receive(:official_section_identifiers).and_return([])
       expect(subject.is_official_course?).to eq false
+    end
+  end
+
+  context 'when providing muted assignments' do
+    let(:course_assignments) {
+      [
+        {
+          'id' => 19082,
+          'name' => 'Assignment 1',
+          'muted' => false,
+          'due_at' => "2015-05-12T19:40:00Z",
+          'points_possible' => 100
+        },
+        {
+          'id' => 19083,
+          'name' => 'Assignment 2',
+          'muted' => true,
+          'due_at' => "2015-10-13T06:05:00Z",
+          'points_possible' => 50
+        },
+        {
+          'id' => 19084,
+          'name' => 'Assignment 3',
+          'muted' => true,
+          'due_at' => "2015-05-06T12:30:00Z",
+          'points_possible' => 25
+        },
+      ]
+    }
+    before { allow_any_instance_of(Canvas::CourseAssignments).to receive(:course_assignments).and_return(course_assignments) }
+
+    it 'provides current muted assignments' do
+      muted_assignments = subject.muted_assignments
+      expect(muted_assignments).to be_an_instance_of Array
+      expect(muted_assignments.count).to eq 2
+      expect(muted_assignments[0]['name']).to eq 'Assignment 2'
+      expect(muted_assignments[0]['points_possible']).to eq 50
+      expect(muted_assignments[1]['name']).to eq 'Assignment 3'
+      expect(muted_assignments[1]['points_possible']).to eq 25
+    end
+
+    it 'converts due at timestamp to display format' do
+      muted_assignments = subject.muted_assignments
+      expect(muted_assignments).to be_an_instance_of Array
+      expect(muted_assignments[0]['due_at']).to eq "Oct 13, 2015 at 6:05am"
+      expect(muted_assignments[1]['due_at']).to eq "May 6, 2015 at 12:30pm"
     end
   end
 
