@@ -87,6 +87,7 @@ end
 
 shared_examples 'a background job worker' do
   let(:background_job_id) { 'Canvas::BackgroundJob.1383330151057-67f4b934525501cb' }
+
   it 'supports Torquebox background jobs' do
     expect(subject.background.class).to eq TorqueBox::Messaging::Backgroundable::BackgroundProxy
   end
@@ -125,7 +126,8 @@ shared_examples 'a background job worker' do
       report_json = subject.background_job_report
       report = JSON.parse(report_json)
       expect(report).to be_an_instance_of Hash
-      expect(report['jobId']).to eq background_job_id
+      expect(report['jobId']).to be_an_instance_of String
+      expect(report['jobStatus']).to eq 'New'
       expect(report['completedSteps']).to eq []
       expect(report['percentComplete']).to eq 0.0
       expect(report['errors']).to eq nil
@@ -141,16 +143,63 @@ shared_examples 'a background job worker' do
     end
   end
 
-  it 'updates completed steps' do
-    subject.background_job_complete_step('Step one completed')
+  it 'reports as processing based on total and completed steps' do
+    subject.background_job_set_total_steps('3')
+    subject.background_job_complete_step('step 1')
+    subject.background_job_complete_step('step 2')
     cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
-    expect(cached_object.background_job_completed_steps).to eq ['Step one completed']
+    report_json = cached_object.background_job_report
+    report = JSON.parse(report_json)
+    expect(report).to be_an_instance_of Hash
+    expect(report['jobId']).to be_an_instance_of String
+    expect(report['jobStatus']).to eq 'Processing'
+    expect(report['completedSteps']).to eq ['step 1', 'step 2']
+    expect(report['percentComplete']).to eq 0.67
+    expect(report['errors']).to eq nil
   end
 
-  it 'updates error list' do
+  it 'reports as completed based on total and completed steps' do
+    subject.background_job_set_total_steps('3')
+    subject.background_job_complete_step('step 1')
+    subject.background_job_complete_step('step 2')
+    subject.background_job_complete_step('step 3')
+    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    report_json = cached_object.background_job_report
+    report = JSON.parse(report_json)
+    expect(report).to be_an_instance_of Hash
+    expect(report['jobId']).to be_an_instance_of String
+    expect(report['jobStatus']).to eq 'Completed'
+    expect(report['completedSteps']).to eq ['step 1','step 2','step 3']
+    expect(report['percentComplete']).to eq 1
+    expect(report['errors']).to eq nil
+  end
+
+  it 'reports errors when present' do
+    subject.background_job_set_total_steps('3')
+    subject.background_job_complete_step('step 1')
     subject.background_job_add_error('Something went wrong')
     cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
-    expect(cached_object.background_job_errors).to eq ['Something went wrong']
+    report_json = cached_object.background_job_report
+    report = JSON.parse(report_json)
+    expect(report).to be_an_instance_of Hash
+    expect(report['jobId']).to be_an_instance_of String
+    expect(report['jobStatus']).to eq 'Error'
+    expect(report['completedSteps']).to eq ['step 1']
+    expect(report['percentComplete']).to eq 0.33
+    expect(report['errors']).to eq ['Something went wrong']
+
+    subject.background_job_complete_step('step 2')
+    subject.background_job_add_error('Something else went wrong')
+    subject.background_job_complete_step('step 3')
+    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    report_json = cached_object.background_job_report
+    report = JSON.parse(report_json)
+    expect(report).to be_an_instance_of Hash
+    expect(report['jobId']).to be_an_instance_of String
+    expect(report['jobStatus']).to eq 'Error'
+    expect(report['completedSteps']).to eq ['step 1','step 2','step 3']
+    expect(report['percentComplete']).to eq 1
+    expect(report['errors']).to eq ['Something went wrong', 'Something else went wrong']
   end
 
   it 'updates total steps' do
