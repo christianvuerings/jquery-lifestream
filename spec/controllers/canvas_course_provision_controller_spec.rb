@@ -176,12 +176,12 @@ describe CanvasCourseProvisionController do
     it 'returns status of canvas course provisioning job' do
       cpcs = Canvas::ProvideCourseSite.new('1234')
       cpcs.instance_eval { @jobStatus = 'Processing'; @completed_steps = ['Prepared courses list', 'Identified department sub-account'] }
-      cpcs.save
+      cpcs.background_job_save
 
-      get :job_status, job_id: cpcs.job_id
+      get :job_status, job_id: cpcs.background_job_id
       assert_response :success
       json_response = JSON.parse(response.body)
-      json_response['job_id'].should == cpcs.job_id
+      json_response['job_id'].should == cpcs.background_job_id
       json_response['jobStatus'].should == 'Processing'
       json_response['completed_steps'][0].should == 'Prepared courses list'
       json_response['completed_steps'][1].should == 'Identified department sub-account'
