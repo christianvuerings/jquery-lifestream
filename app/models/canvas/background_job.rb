@@ -7,6 +7,7 @@ module Canvas
   #     include Canvas::BackgroundJob
   #
   #     def initialize
+  #       background_job_set_type('special-job')
   #       background_job_set_total_steps(2)
   #     end
   #
@@ -83,9 +84,18 @@ module Canvas
       background_job_save
     end
 
+    def background_job_type
+      @background_job_type ||= self.class.name
+    end
+
+    def background_job_set_type(job_type)
+      @background_job_type = "#{self.class.name}:#{job_type}"
+    end
+
     def background_job_report
       json_hash = {
         jobId: background_job_id,
+        jobType: background_job_type,
         jobStatus: background_job_status,
         completedSteps: background_job_completed_steps,
         percentComplete: (background_job_completed_steps.count.to_f / background_job_total_steps.to_f).round(2),
