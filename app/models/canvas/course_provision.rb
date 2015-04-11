@@ -57,19 +57,19 @@ module Canvas
 
     def create_course_site(site_name, site_course_code, term_slug, ccns)
       cpcs = Canvas::ProvideCourseSite.new(working_uid)
-      cpcs.save
+      cpcs.background_job_save
       cpcs.background.create_course_site(site_name, site_course_code, term_slug, ccns, @admin_by_ccns.present?)
       self.class.expire instance_key unless @admin_by_ccns
-      cpcs.job_id
+      cpcs.background_job_id
     end
 
     def edit_sections(ccns_to_remove, ccns_to_add)
       raise RuntimeError, "canvas_course_id option not present" if @canvas_course_id.blank?
       cpcs = Canvas::ProvideCourseSite.new(working_uid)
-      cpcs.save
+      cpcs.background_job_save
       cpcs.background.edit_sections(get_course_info, ccns_to_remove, ccns_to_add)
       self.class.expire instance_key unless @admin_by_ccns
-      cpcs.job_id
+      cpcs.background_job_id
     end
 
     def get_course_info
