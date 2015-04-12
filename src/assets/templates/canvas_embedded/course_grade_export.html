@@ -96,6 +96,14 @@
 
     <!-- No Grading Standard Enabled -->
     <div data-ng-if="!errorStatus && noGradingStandardEnabled">
+
+      <div class="row collapse">
+        <div class="medium-12 columns">
+          <i class="fa fa-long-arrow-left"></i>
+          <button class="cc-button-link" data-ng-click="goToGradebook()">Back to Gradebook</button>
+        </div>
+      </div>
+
       <h1>Download E-Grades (.csv)</h1>
       <div class="row collapse">
         <div class="medium-12 columns">
