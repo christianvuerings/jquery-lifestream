@@ -8,8 +8,38 @@
   }
 
   .cc-page-course-grade-export-header {
-    margin-top: 15px;
+    margin: 15px 0;
     text-transform: capitalize;
+  }
+
+  .cc-page-course-grade-export-sub-header {
+    margin: 10px 0;
+  }
+
+  .cc-page-course-grading-export-error-notice {
+    border: 1px solid $bc-color-grey;
+    margin-bottom: 20px;
+    padding: 15px;
+  }
+
+  .cc-page-course-grade-export-error-display {
+    .cc-page-course-grade-export-warning {
+      color: $bc-color-notice-warning;
+      font-size: 35px;
+      line-height: 40px;
+      margin: 10px 0;
+    }
+  }
+
+  .cc-page-course-grading-export-error-notice-icon {
+    float: left;
+    margin-right: 10px;
+    width: 40px;
+  }
+
+  .cc-page-course-grading-export-error-notice-container {
+    float: left;
+    max-width: 600px;
   }
 
   .cc-page-course-grade-export-download-button-container {
@@ -35,17 +65,6 @@
 
   .cc-page-course-grade-export-more-info-container {
     margin: 20px 10px;
-  }
-
-  .cc-page-course-grade-export-error-display {
-    .cc-page-course-grade-export-warning {
-      color: $bc-color-notice-warning;
-      margin: 10px 0;
-    }
-  }
-
-  .cc-page-course-grade-export-header {
-    margin: 10px;
   }
 
   .cc-page-course-grade-export-section {
