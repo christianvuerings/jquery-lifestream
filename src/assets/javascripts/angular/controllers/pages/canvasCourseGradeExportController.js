@@ -167,7 +167,7 @@
         if ($scope.appState !== 'error') {
           preloadGrades();
         }
-      }).error(function(data) {
+      }).error(function() {
         $scope.appState = 'error';
         $scope.contactSupport = true;
         $scope.errorStatus = 'Unable to obtain course settings.';
