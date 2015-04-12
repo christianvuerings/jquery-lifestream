@@ -30,26 +30,24 @@
     </div>
 
     <div class="row collapse">
-      <div class="medium-4 columns">
-        <div class="cc-page-course-grade-export-download-button-container">
-          <h2 class="cc-page-course-grade-export-download-header">Current Grades Download</h2>
-          <p class="cc-page-course-grade-export-download-description">
-            Current grades download ignores unsubmitted assignments when calculating grades.
-            Use this download when you want to excuse unsubmitted assignments.
-          </p>
-          <a data-ng-href="/api/academics/canvas/egrade_export/download/{{canvasCourseId}}.csv?ccn={{selectedSection.course_cntl_num}}&term_cd={{selectedSection.term_cd}}&term_yr={{selectedSection.term_yr}}&type=current" target="_self" class="cc-button cc-page-course-grade-export-download-button">Current Grades Download</a>
-        </div>
+      <div class="medium-5 columns">
+        <h2 class="cc-page-course-grade-export-download-header">Current Grades Download</h2>
+        <p class="cc-page-course-grade-export-download-description">
+          Current grades download ignores unsubmitted assignments when calculating grades.
+          Use this download when you want to excuse unsubmitted assignments.
+        </p>
+        <a data-ng-href="/api/academics/canvas/egrade_export/download/{{canvasCourseId}}.csv?ccn={{selectedSection.course_cntl_num}}&term_cd={{selectedSection.term_cd}}&term_yr={{selectedSection.term_yr}}&type=current" target="_self" class="cc-button cc-page-course-grade-export-download-button">Download Current Grades</a>
       </div>
+    </div>
 
-      <div class="medium-4 columns end">
-        <div class="cc-page-course-grade-export-download-button-container">
-          <h2 class="cc-page-course-grade-export-download-header">Final Grades Download</h2>
-          <p class="cc-page-course-grade-export-download-description">
-            Final grades download counts unsubmitted assignments as zeroes when calculating grades.
-            Use this download when you want to include all unsubmitted assignments as part of the grade.
-          </p>
-          <a data-ng-href="/api/academics/canvas/egrade_export/download/{{canvasCourseId}}.csv?ccn={{selectedSection.course_cntl_num}}&term_cd={{selectedSection.term_cd}}&term_yr={{selectedSection.term_yr}}&type=final" target="_self" class="cc-button cc-page-course-grade-export-download-button">Final Grades Download</a>
-        </div>
+    <div class="row collapse">
+      <div class="medium-5 columns">
+        <h2 class="cc-page-course-grade-export-download-header">Final Grades Download</h2>
+        <p class="cc-page-course-grade-export-download-description">
+          Final grades download counts unsubmitted assignments as zeroes when calculating grades.
+          Use this download when you want to include all unsubmitted assignments as part of the grade.
+        </p>
+        <a data-ng-href="/api/academics/canvas/egrade_export/download/{{canvasCourseId}}.csv?ccn={{selectedSection.course_cntl_num}}&term_cd={{selectedSection.term_cd}}&term_yr={{selectedSection.term_yr}}&type=final" target="_self" class="cc-button cc-page-course-grade-export-download-button">Download Final Grades</a>
       </div>
     </div>
 

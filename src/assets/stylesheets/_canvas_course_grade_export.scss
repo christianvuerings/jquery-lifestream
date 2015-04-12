@@ -7,11 +7,6 @@
     margin-bottom: 10px;
   }
 
-  .cc-page-course-grade-export-download-button-container {
-    border: $bc-color-off-black 1px solid;
-    margin: 10px;
-  }
-
   a.cc-page-course-grade-export-download-button {
     display: block;
     margin: 10px;
@@ -20,18 +15,16 @@
   }
 
   .cc-page-course-grade-export-download-description {
-    min-height: 90px;
     padding: 4px 10px;
-    text-align: center;
   }
 
   .cc-page-course-grade-export-download-header {
+    margin-top: 10px;
     padding: 4px 10px;
-    text-align: center;
   }
 
   .cc-page-course-grade-export-more-info-container {
-    margin: 10px;
+    margin: 20px 10px;
   }
 
   .cc-page-course-grade-export-error-display {
