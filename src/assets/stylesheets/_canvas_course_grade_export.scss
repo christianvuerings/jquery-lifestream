@@ -7,6 +7,16 @@
     margin-bottom: 10px;
   }
 
+  .cc-page-course-grade-export-header {
+    margin-top: 15px;
+    text-transform: capitalize;
+  }
+
+  .cc-page-course-grade-export-download-button-container {
+    border: $bc-color-off-black 1px solid;
+    margin: 10px;
+  }
+
   a.cc-page-course-grade-export-download-button {
     display: block;
     margin: 10px;
