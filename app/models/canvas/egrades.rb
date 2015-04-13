@@ -117,5 +117,20 @@ module Canvas
       end
     end
 
+    def muted_assignments
+      assignments = Canvas::CourseAssignments.new(:course_id => @canvas_course_id).course_assignments(:cache => false)
+      muted_assignments = []
+      assignments.each do |assignment|
+        if assignment['muted'] == true
+          muted_assignments << {
+            'name' => assignment['name'],
+            'points_possible' => assignment['points_possible'],
+            'due_at' => Time.iso8601(assignment['due_at']).strftime('%b %-e, %Y at %-l:%M%P')
+          }
+        end
+      end
+      muted_assignments
+    end
+
   end
 end
