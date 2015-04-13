@@ -34,6 +34,12 @@ describe CanvasCourseGradeExportController do
         'grading_standard_id' => 0
       }
     end
+    let(:muted_assignments) do
+      [
+        {'name' => 'Assignment 4', 'due_at' => 'Oct 13, 2015 at 8:30am', 'points_possible' => 25},
+        {'name' => 'Assignment 7', 'due_at' => 'Oct 18, 2015 at 9:30am', 'points_possible' => 100},
+      ]
+    end
 
     let(:grade_types) { {:number_grades_present => true, :letter_grades_present => false} }
     let(:section_terms) { [{:term_cd => 'C', :term_yr => '2014'}, {:term_cd => 'D', :term_yr => '2015'}] }
@@ -42,6 +48,7 @@ describe CanvasCourseGradeExportController do
       allow_any_instance_of(Canvas::Egrades).to receive(:official_sections).and_return(official_course_sections)
       allow_any_instance_of(Canvas::Egrades).to receive(:grade_types_present).and_return(grade_types)
       allow_any_instance_of(Canvas::Egrades).to receive(:section_terms).and_return(section_terms)
+      allow_any_instance_of(Canvas::Egrades).to receive(:muted_assignments).and_return(muted_assignments)
     end
 
     it_should_behave_like 'an endpoint' do
@@ -98,6 +105,17 @@ describe CanvasCourseGradeExportController do
       expect(section_terms[0]['term_yr']).to eq '2014'
       expect(section_terms[1]['term_cd']).to eq 'D'
       expect(section_terms[1]['term_yr']).to eq '2015'
+    end
+
+    it 'provides muted assignments existing within course' do
+      get :export_options, canvas_course_id: 'embedded'
+      expect(response.status).to eq(200)
+      json_response = JSON.parse(response.body)
+      expect(json_response).to be_an_instance_of Hash
+      muted_assignments = json_response['mutedAssignments']
+      expect(muted_assignments.count).to eq 2
+      expect(muted_assignments[0]['name']).to eq 'Assignment 4'
+      expect(muted_assignments[1]['name']).to eq 'Assignment 7'
     end
   end
 
