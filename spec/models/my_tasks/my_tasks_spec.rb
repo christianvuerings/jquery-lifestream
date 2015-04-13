@@ -42,17 +42,19 @@ describe 'MyTasks' do
     let(:tasks) { my_tasks_model.get_feed[:tasks] }
 
     it 'should sort tasks into the right buckets' do
-      expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 7
+      # TODO this test will start failing in 2016 because of the slate_checklist_feed.xml values which are
+      # not timeshifted (because they can't be). See https://jira.ets.berkeley.edu/jira/browse/CLC-5124
+      expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 11
       expect(tasks.count{|task| task[:bucket] == 'Unscheduled'}).to eq 5
 
       # On Sundays, no "later in the week" tasks can escape the "Today" bucket. Since this moves
       # some "Future" tasks to "Today", more total tasks will be in the feed on Sunday.
       if Time.zone.today.sunday?
         expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 7
-        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 9
+        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 6
       else
         expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 2
-        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 19
+        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 15
       end
 
       expect(tasks.count{|task| %w(Overdue Today Future Unscheduled).exclude? task[:bucket]}).to eq 0
