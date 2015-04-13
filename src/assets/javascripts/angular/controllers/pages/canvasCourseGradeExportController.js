@@ -78,13 +78,10 @@
           $scope.contactSupport = true;
           $scope.errorStatus = 'Grade preloading request failed';
         }
-      }).error(function(data) {
+      }).error(function() {
         $scope.appState = 'error';
         $scope.contactSupport = true;
         $scope.errorStatus = 'Grade preloading failed';
-        if (data) {
-          $scope.errorStatus = data.errors.join('; ');
-        }
       });
     };
 
