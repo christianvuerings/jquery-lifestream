@@ -1,5 +1,5 @@
 module Webcast
-  class AllPlaylists < Proxy
+  class Recordings < Proxy
 
     def initialize(options = {})
       super(options)

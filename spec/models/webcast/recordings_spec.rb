@@ -1,9 +1,9 @@
-describe Webcast::AllPlaylists do
+describe Webcast::Recordings do
 
   let (:webcast_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/webcast.json" }
 
   context 'a fake proxy' do
-    subject { Webcast::AllPlaylists.new({:fake => true}) }
+    subject { Webcast::Recordings.new({:fake => true}) }
 
     context 'a normal return of fake data' do
       it 'should return a lot of playlists' do
@@ -14,7 +14,7 @@ describe Webcast::AllPlaylists do
   end
 
   context 'a real, non-fake proxy' do
-    subject { Webcast::AllPlaylists.new }
+    subject { Webcast::Recordings.new }
 
     context 'normal return of real data', :testext => true do
       it 'should return a bunch of playlists' do
