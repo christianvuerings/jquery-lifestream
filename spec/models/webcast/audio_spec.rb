@@ -1,13 +1,13 @@
 require "spec_helper"
 require "json"
 
-describe Mediacasts::Audio do
+describe Webcast::Audio do
 
   context "real data", :textext => true do
 
     let (:audio_base_url) { URI.parse(Settings.audio_proxy.base_url) }
     let (:rss_url) { "#{audio_base_url}/media/common/courses/spring_2014/rss/english_117s_001_audio.rss"; }
-    let (:proxy) { Mediacasts::Audio.new({:audio_rss => rss_url}) }
+    let (:proxy) { Webcast::Audio.new({:audio_rss => rss_url}) }
 
     it "should get real audio data" do
       proxy_response = proxy.get
@@ -67,7 +67,7 @@ describe Mediacasts::Audio do
   end
 
   context "empty RSS feed" do
-    let (:proxy) { Mediacasts::Audio.new({:audio_rss => ""}) }
+    let (:proxy) { Webcast::Audio.new({:audio_rss => ""}) }
 
     it "should return an empty audio array" do
       proxy_response = proxy.get

@@ -41,7 +41,7 @@ RUN git clone https://github.com/sstephenson/ruby-build.git /tmp/ruby-build && \
 RUN ruby-build --definitions
 
 # Install ruby
-RUN ruby-build -v jruby-1.7.13 /usr/local
+RUN ruby-build -v jruby-1.7.19 /usr/local
 
 # Install base gems
 RUN gem install bundler rubygems-bundler --no-rdoc --no-ri

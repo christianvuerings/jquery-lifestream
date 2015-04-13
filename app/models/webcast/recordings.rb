@@ -1,5 +1,5 @@
-module Mediacasts
-  class AllPlaylists < Proxy
+module Webcast
+  class Recordings < Proxy
 
     def initialize(options = {})
       super(options)
@@ -18,7 +18,7 @@ module Mediacasts
       }
       data['courses'].each do |course|
         if course['year'] && course['semester'] && course['deptName'] && course['catalogId']
-          key = Mediacasts::CourseMedia.course_id(course['year'], course['semester'], course['deptName'], course['catalogId'])
+          key = Webcast::CourseMedia.course_id(course['year'], course['semester'], course['deptName'], course['catalogId'])
           recordings[:courses][key] = {
             audio_only: course['audioOnly'],
             audio_rss: course['audioRSS'].to_s,

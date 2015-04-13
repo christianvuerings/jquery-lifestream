@@ -23,7 +23,9 @@
             data-ng-model="section.selected" data-ng-click="updateSelected()" aria-label="Checkbox for {{section.courseCode}} {{section.section_label}}"
             aria-checked="{{section.selected}}">
         </td>
-        <td class="cc-template-sections-table-cell-course-code" data-ng-bind="section.courseCode"></td>
+        <td class="cc-template-sections-table-cell-course-code">
+          <label class="cc-template-sections-table-cell-course-code-label" for="cc-template-canvas-manage-sections-checkbox-{{section.ccn}}" data-ng-bind="section.courseCode"></label>
+        </td>
         <td class="cc-template-sections-table-cell-section-label">
           <label class="cc-template-sections-table-cell-section-label-label" for="cc-template-canvas-manage-sections-checkbox-{{section.ccn}}" data-ng-bind="section.section_label"></label>
         </td>

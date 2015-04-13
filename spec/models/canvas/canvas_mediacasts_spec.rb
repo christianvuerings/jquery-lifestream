@@ -21,7 +21,7 @@ describe Canvas::CanvasMediacasts do
         ]
       end
       before do
-        expect(Mediacasts::CourseMedia).to receive(:new).at_least(:once) do |yr, cd, dept, catid|
+        expect(Webcast::CourseMedia).to receive(:new).at_least(:once) do |yr, cd, dept, catid|
           expect((yr == '2013' && cd == 'B' && dept == 'BIOLOGY' && catid == '1A') ||
             (yr == '2012' && cd == 'B' && dept == 'COG SCI')).to be_truthy
           # 2013-B-7366

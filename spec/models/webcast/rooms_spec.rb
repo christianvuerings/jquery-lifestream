@@ -1,9 +1,9 @@
-describe Mediacasts::Rooms do
+describe Webcast::Rooms do
 
   let (:rooms_json_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/rooms.json" }
 
   context 'a fake proxy' do
-    subject { Mediacasts::Rooms.new({:fake => true}) }
+    subject { Webcast::Rooms.new({:fake => true}) }
 
     context 'fake data' do
       it 'should return webcast-enabled rooms' do
@@ -14,7 +14,7 @@ describe Mediacasts::Rooms do
   end
 
   context 'a real, non-fake proxy' do
-    subject { Mediacasts::Rooms.new }
+    subject { Webcast::Rooms.new }
 
     context 'real data', :testext => true do
       it 'should return at least one building' do
