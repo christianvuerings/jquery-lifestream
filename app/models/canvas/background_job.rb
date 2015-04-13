@@ -33,7 +33,7 @@ module Canvas
 
     def self.unique_job_id
       15.times do
-        cache_key_candidate = "#{self.name.to_sym}.#{Time.now.to_f.to_s.gsub('.', '')}-#{SecureRandom.hex(8)}"
+        cache_key_candidate = "#{Time.now.to_f.to_s.gsub('.', '')}-#{SecureRandom.hex(8)}"
         return cache_key_candidate if Rails.cache.read(cache_key_candidate).nil?
       end
       raise RuntimeError, 'Unable to find unique Canvas Background Job ID'

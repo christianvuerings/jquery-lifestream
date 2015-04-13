@@ -10,12 +10,12 @@ describe Canvas::BackgroundJob do
 
     it 'returns unique job id based on current time' do
       result = Canvas::BackgroundJob.unique_job_id
-      expect(result).to eq 'Canvas::BackgroundJob.1383330151057-67f4b934525501cb'
+      expect(result).to eq '1383330151057-67f4b934525501cb'
     end
 
     it 'raises exception if unique id not found after 15 attempts' do
       allow(SecureRandom).to receive(:hex).and_return('67f4b934525501cb')
-      Rails.cache.write('Canvas::BackgroundJob.1383330151057-67f4b934525501cb', 'test_payload', expires_in: 3000)
+      Rails.cache.write('1383330151057-67f4b934525501cb', 'test_payload', expires_in: 3000)
       expect { Canvas::BackgroundJob.unique_job_id }.to raise_error(RuntimeError, 'Unable to find unique Canvas Background Job ID')
     end
   end
@@ -23,13 +23,13 @@ describe Canvas::BackgroundJob do
   describe '.find' do
     it "returns the current job object from global storage" do
       job_state = { jobStatus: 'courseCreationCompleted' }
-      Rails.cache.write('Canvas::BackgroundJob.1383330151057-67f4b934525501cb', job_state, expires_in: 5.seconds.to_i, raw: true)
-      result = Canvas::BackgroundJob.find('Canvas::BackgroundJob.1383330151057-67f4b934525501cb')
+      Rails.cache.write('Canvas::Egrades.1383330151057-67f4b934525501cb', job_state, expires_in: 5.seconds.to_i, raw: true)
+      result = Canvas::BackgroundJob.find('Canvas::Egrades.1383330151057-67f4b934525501cb')
       expect(result).to eq job_state
     end
 
     it 'returns nil if job state not found' do
-      result = Canvas::BackgroundJob.find('Canvas::BackgroundJob.1383330151057-67f4b934525501cb')
+      result = Canvas::BackgroundJob.find('Canvas::Egrades.1383330151057-67f4b934525501cb')
       result.should be_nil
     end
   end
