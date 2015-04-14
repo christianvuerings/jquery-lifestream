@@ -158,7 +158,7 @@ audio_proxy:
 
 blog_latest_release_notes_feed_proxy:
   fake: false
-  feed_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
+  base_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
 
 app_alerts_proxy:
   fake: false

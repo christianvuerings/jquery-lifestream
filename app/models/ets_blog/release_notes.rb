@@ -2,21 +2,24 @@ module EtsBlog
   class ReleaseNotes < BaseProxy
 
     include ClassLogger, HtmlSanitizer
+    include Proxies::MockableXml
+    include HttpRequester
 
     def initialize(options = {})
       super(Settings.blog_latest_release_notes_feed_proxy, options)
+      initialize_mocks if @fake
+    end
+
+    def default_message_on_exception
+      'An error occurred retrieving release notes. Please try again later.'
     end
 
     def get_latest_release_notes
       self.class.fetch_from_cache do
         begin
           logger.info "Fetching release notes from blog, cache expiration #{self.class.expires_in}"
-          response = if @fake
-                       MultiXml.parse File.read(Rails.root.join('fixtures', 'xml', 'release_notes_feed.xml').to_s)
-                     else
-                       #HTTParty won't parse automatically because the application/xml header is missing
-                       MultiXml.parse get_response(@settings.feed_url)
-                     end
+          #HTTParty won't parse automatically because the application/xml header is missing
+          response = MultiXml.parse(get_response(@settings.base_url).body)
           entry = response['rss']['channel']['item'].first
 
           d = Date.parse entry['pubDate']
@@ -40,5 +43,10 @@ module EtsBlog
         end
       end
     end
+
+    def mock_xml
+      File.read(Rails.root.join('fixtures', 'xml', 'release_notes_feed.xml'))
+    end
+
   end
 end
