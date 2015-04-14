@@ -1,0 +1,11 @@
+{
+  "completedSteps": [
+    "step 1",
+    "step 2",
+    "step 3"
+  ],
+  "jobId": "Canvas::BackgroundJob.1428786369371-d90f25d9402f5168",
+  "jobStatus": "Completed",
+  "jobType": "Canvas::Egrades",
+  "percentComplete": 1.0
+}
