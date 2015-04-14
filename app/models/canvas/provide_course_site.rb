@@ -16,6 +16,7 @@ module Canvas
       @total_steps = 0.0
       @import_data = {}
       @section_definitions = []
+      background_job_initialize
     end
 
     def create_course_site(site_name, site_course_code, term_slug, ccns, is_admin_by_ccns = false)
