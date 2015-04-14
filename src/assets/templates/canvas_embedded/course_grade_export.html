@@ -104,35 +104,38 @@
         </div>
       </div>
 
-      <div class="row collapse">
-        <div class="medium-12 columns">
-          <h1 class="cc-page-course-grade-export-header">Provide some extra information before downloading E-Grades</h1>
+      <div data-ng-if="noGradingStandardEnabled">
+        <div class="row collapse">
+          <div class="medium-12 columns">
+            <h1 class="cc-page-course-grade-export-header">Provide some extra information before downloading E-Grades</h1>
 
-          <div class="cc-page-course-grading-export-error-notice">
-            <div class="cc-page-course-grading-export-error-notice-icon">
-              <i class="fa fa-warning cc-left cc-page-course-grade-export-warning"></i>
+            <div class="cc-page-course-grading-export-error-notice">
+              <div class="cc-page-course-grading-export-error-notice-icon">
+                <i class="fa fa-warning cc-left cc-page-course-grade-export-warning"></i>
+              </div>
+
+              <div class="cc-page-course-grading-export-error-notice-container">
+                Letter grades are required by the E-Grades system. A grading scheme must be applied to calculate
+                student letter grades.
+              </div>
+
+              <div class="cc-clearfix"></div>
             </div>
 
-            <div class="cc-page-course-grading-export-error-notice-container">
-              Letter grades are required by the E-Grades system. A grading scheme must be applied to calculate
-              student letter grades.
-            </div>
+            <h2 class="cc-page-course-grade-export-sub-header">Set a Grading Scheme</h2>
+            <p>
+              Please edit and enable the grading scheme in the <button class="cc-button-link" data-ng-click="goToCourseDetails()">course details</button> page for this course site.
+              You may need to choose an alternative grading scheme for your course site other than the default scheme. Once this
+              step is completed, return here and try again.
+            </p>
+            <p>
+              For more information see <a href="http://guides.instructure.com/m/4152/l/57089-how-do-i-enable-a-grading-scheme-for-my-course">How do I enable a grading scheme for my course?</a>
+            </p>
 
-            <div class="cc-clearfix"></div>
           </div>
-
-          <h2 class="cc-page-course-grade-export-sub-header">Set a Grading Scheme</h2>
-          <p>
-            Please edit and enable the grading scheme in the <button class="cc-button-link" data-ng-click="goToCourseDetails()">course details</button> page for this course site.
-            You may need to choose an alternative grading scheme for your course site other than the default scheme. Once this
-            step is completed, return here and try again.
-          </p>
-          <p>
-            For more information see <a href="http://guides.instructure.com/m/4152/l/57089-how-do-i-enable-a-grading-scheme-for-my-course">How do I enable a grading scheme for my course?</a>
-          </p>
-
         </div>
       </div>
+
     </div>
   </div>
 
