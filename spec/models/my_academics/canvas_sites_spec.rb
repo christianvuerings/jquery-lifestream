@@ -13,6 +13,17 @@ describe MyAcademics::CanvasSites do
       class_sites: []
     }
   end
+  let(:campus_course_multiple_primaries_base) do
+    {
+      slug: course_id,
+      multiplePrimaries: true,
+      sections: [
+        {ccn: ccn.to_s},
+        {ccn: (ccn+1).to_s}
+      ],
+      class_sites: []
+    }
+  end
   let(:fake_term_yr) {2013}
   let(:fake_term_cd) {'D'}
   let(:student_classes) {[]}
@@ -136,6 +147,18 @@ describe MyAcademics::CanvasSites do
           end
         end
 
+        context 'when campus courses include multiple primaries' do
+          let(:student_classes) {[campus_course_multiple_primaries_base]}
+          it 'includes the site in the campus class item' do
+            it_is_a_linked_course_site_item(:semesters)
+          end
+          it 'links the site to the correct primary section' do
+            course = subject[:semesters].first[:classes].first
+            site = course[:class_sites].first
+            expect(course[:sections][0][:siteIds]).to eq [site[:id]]
+            expect(course[:sections][1][:siteIds]).to eq nil
+          end
+        end
       end
 
       context 'when the Canvas course site does not match a known campus section' do

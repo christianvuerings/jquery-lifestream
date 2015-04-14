@@ -140,9 +140,14 @@ describe CampusOracle::Queries do
 
   context "#get_enrolled_sections", if: Sakai::SakaiData.test_data? do
     subject { CampusOracle::Queries.get_enrolled_sections('300939') }
-
-    it { should_not be_blank }
-    it { subject.all? { |section| section.has_key?("cred_cd") } }
+    it 'should include requested columns' do
+      expect(subject).to be_present
+      %w(dept_description term_yr term_cd course_cntl_num enroll_status wait_list_seq_num unit pnp_flag grade
+         course_title course_title_short dept_name catalog_id primary_secondary_cd section_num instruction_format
+         catalog_root catalog_prefix catalog_suffix_1 catalog_suffix_2 enroll_limit cred_cd course_option).each do |column|
+        expect(subject).to all(include column)
+      end
+    end
   end
 
   it 'finds cross-listed course data', if: Sakai::SakaiData.test_data? do

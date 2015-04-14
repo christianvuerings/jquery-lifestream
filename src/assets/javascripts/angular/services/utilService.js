@@ -84,8 +84,8 @@
       }
 
       $event.stopPropagation();
-      // When it's not an anchor tag, we also prevent the default event
-      if ($event.target.nodeName !== 'A') {
+      // When it's not an anchor tag or within an anchor tag, we also prevent the default event
+      if ($event.target.nodeName !== 'A' && $event.target.parentElement.nodeName !== 'A') {
         $event.preventDefault();
       }
     };

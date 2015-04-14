@@ -66,7 +66,7 @@ module CampusOracle
                   primaries.each do |prim|
                     secondaries.each do |sec|
                       if explicit_secondaries.include?(sec['course_cntl_num']) ||
-                        Berkeley::CourseOptions.nested?(course[:course_option], prim[:section_number], sec)
+                        Berkeley::CourseOptions.nested?(course[:course_option], prim[:section_number], sec['section_num'], sec['instruction_format'])
                         nested_secondaries[sec['course_cntl_num']] = row_to_section_data(sec)
                       end
                     end
@@ -109,24 +109,20 @@ module CampusOracle
           nil
         else
           course_name = row['course_title'].present? ? row['course_title'] : row['course_title_short']
-          course_item.merge!({
+          course_item.merge({
                                term_yr: row['term_yr'],
                                term_cd: row['term_cd'],
                                dept: row['dept_name'],
                                dept_desc: row['dept_description'],
                                catid: row['catalog_id'],
                                course_catalog: row['catalog_id'],
+                               course_option: row['course_option'],
                                emitter: 'Campus',
                                name: course_name,
                                sections: [
                                  row_to_section_data(row)
                                ]
                              })
-          # This only applies to instructors and will be skipped for students.
-          if (course_option = row['course_option'])
-            course_item[:course_option] = course_option
-          end
-          course_item
         end
       end
 

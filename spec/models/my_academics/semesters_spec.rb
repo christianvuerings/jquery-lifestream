@@ -43,26 +43,34 @@ describe MyAcademics::Semesters do
       dept_desc: dept,
       catid: catid,
       course_catalog: catid,
+      course_option: 'A1',
       emitter: 'Campus',
       name: random_string(15).capitalize,
-      sections: rand(1..3).times.map{ course_enrollment_section },
+      sections: course_enrollment_sections,
       role: 'Student'
     }
   end
 
-  def course_enrollment_section
-    format = ['LEC', 'DIS', 'SEM'].sample
-    section_number = "00#{rand(9)}"
+  def course_enrollment_sections
+    sections = [ course_enrollment_section(is_primary_section: true) ]
+    rand(1..3).times { sections << course_enrollment_section(is_primary_section: false) }
+    sections
+  end
+
+  def course_enrollment_section(opts={})
+    format = opts[:format] || ['LEC', 'DIS', 'SEM'].sample
+    section_number = opts[:section_number] || "00#{rand(9)}"
+    is_primary_section = opts[:is_primary_section] || false
     {
       ccn: random_ccn,
       instruction_format: format,
-      is_primary_section: true,
+      is_primary_section: is_primary_section,
       section_label: "#{format} #{section_number}",
       section_number: section_number,
-      units: rand(1.0..5.0).round(1),
+      units: (is_primary_section ? rand(1.0..5.0).round(1) : 0.0),
       pnp_flag: 'N ',
       cred_cd: nil,
-      grade: random_grade,
+      grade: (is_primary_section ? random_grade : nil),
       cross_listed_flag: nil,
       schedules: [{
         buildingName: random_string(10),
@@ -135,6 +143,56 @@ describe MyAcademics::Semesters do
     end
   end
 
+  context 'multiple primaries' do
+    let(:multiple_primary_enrollment_term) do
+      term = enrollment_term('2013-D')
+      term.first[:course_option] = 'E1'
+      term.first[:sections] = [
+        course_enrollment_section(is_primary_section: true, format: 'LEC', section_number: '001'),
+        course_enrollment_section(is_primary_section: true, format: 'LEC', section_number: '002'),
+        course_enrollment_section(is_primary_section: false, format: 'DIS', section_number: '101'),
+        course_enrollment_section(is_primary_section: false, format: 'DIS', section_number: '201')
+      ]
+      term
+    end
+    let(:term_keys) { ['2013-D'] }
+    let(:enrollment_data) { {'2013-D' => multiple_primary_enrollment_term} }
+
+    let(:classes) { feed[:semesters].first[:classes] }
+    let(:multiple_primary_class) { classes.first }
+    let(:single_primary_classes) { classes[1..-1] }
+
+    it 'should flag multiple primaries' do
+      expect(multiple_primary_class[:multiplePrimaries]).to eq true
+      single_primary_classes.each { |c| expect(c).not_to include(:multiplePrimaries) }
+    end
+
+    it 'should include slugs and URLs only for primary sections of multiple-primary courses' do
+      multiple_primary_class[:sections].each do |s|
+        if s[:is_primary_section]
+          expect(s[:slug]).to eq "#{s[:instruction_format].downcase}-#{s[:section_number]}"
+          expect(s[:url]).to eq "#{multiple_primary_class[:url]}/#{s[:slug]}"
+        else
+          expect(s).not_to include(:slug)
+          expect(s).not_to include(:url)
+        end
+      end
+      single_primary_classes.each do |c|
+        c[:sections].each do |s|
+          expect(s).not_to include(:slug)
+          expect(s).not_to include(:url)
+        end
+      end
+    end
+
+    it 'should associate secondary sections with the correct primaries' do
+      expect(multiple_primary_class[:sections][0]).not_to include(:associatedWithPrimary)
+      expect(multiple_primary_class[:sections][1]).not_to include(:associatedWithPrimary)
+      expect(multiple_primary_class[:sections][2][:associatedWithPrimary]).to eq multiple_primary_class[:sections][0][:slug]
+      expect(multiple_primary_class[:sections][3][:associatedWithPrimary]).to eq multiple_primary_class[:sections][1][:slug]
+    end
+  end
+
   it 'should include additional credits' do
     expect(feed[:additionalCredits]).to eq transcript_data[:additional_credits]
   end
@@ -190,7 +248,7 @@ describe MyAcademics::Semesters do
 
     shared_examples 'grades from enrollment' do
       it 'returns enrollment grades' do
-        grades_from_enrollment = enrollment_data["#{term_yr}-#{term_cd}"].map { |e| e[:sections].map{ |s| s.slice(:units, :grade) } }
+        grades_from_enrollment = enrollment_data["#{term_yr}-#{term_cd}"].map { |e| e[:sections].map{ |s| s.slice(:units, :grade) if s[:is_primary_section] }.compact }
         expect(feed_semester_grades).to match_array grades_from_enrollment
       end
     end

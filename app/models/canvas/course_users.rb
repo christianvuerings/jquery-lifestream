@@ -6,6 +6,7 @@ module Canvas
     def initialize(options = {})
       super(options)
       @course_id = options[:course_id]
+      @paging_callback = options[:paging_callback]
     end
 
     def course_users(options = {})
@@ -33,6 +34,17 @@ module Canvas
         )
         break unless (response && response.status == 200 && users_list = safe_json(response.body))
         all_users.concat(users_list)
+
+        if @paging_callback.present?
+          parsed_link_header = LinkHeader.parse(response['link'])
+          last_link = parsed_link_header.find_link(['rel', 'last']).href
+          current_link = parsed_link_header.find_link(['rel', 'current']).href
+          current_page_number = /\bpage=([0-9]+)/.match(current_link)[1]
+          last_page_number = /\bpage=([0-9]+)/.match(last_link)[1]
+          @paging_callback.background_job_complete_step("Retrieving Canvas Course Users - Page #{current_page_number} of #{last_page_number}")
+          @paging_callback.background_job_set_total_steps(last_page_number)
+        end
+
         params = next_page_params(response)
       end
       all_users

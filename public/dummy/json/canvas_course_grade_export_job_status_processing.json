@@ -1,0 +1,9 @@
+{
+  "completedSteps": [
+    "step 1"
+  ],
+  "jobId": "Canvas::BackgroundJob.1428786369371-d90f25d9402f5168",
+  "jobStatus": "Processing",
+  "jobType": "Canvas::Egrades",
+  "percentComplete": 0.5
+}

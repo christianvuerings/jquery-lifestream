@@ -1,23 +1,9 @@
 module Canvas
   class ProvideCourseSite < Csv
-    include TorqueBox::Messaging::Backgroundable
+    include Canvas::BackgroundJob
     include ClassLogger
 
     attr_reader :uid, :jobStatus, :cache_key, :errors, :section_definitions
-
-    #####################################
-    # Class Methods
-
-    def self.unique_job_id
-      Time.now.to_f.to_s.gsub('.', '')
-    end
-
-    def self.find(cache_key)
-      Rails.cache.fetch(cache_key)
-    end
-
-    #####################################
-    # Instance Methods
 
     # Currently this depends on an instructor's point of view.
     def initialize(uid, options = {})
@@ -29,15 +15,15 @@ module Canvas
       @completed_steps = []
       @total_steps = 0.0
       @import_data = {}
-      @cache_key = "canvas.courseprovision.#{@uid}.#{Canvas::ProvideCourseSite.unique_job_id}"
       @section_definitions = []
+      background_job_initialize
     end
 
     def create_course_site(site_name, site_course_code, term_slug, ccns, is_admin_by_ccns = false)
       @total_steps = 12.0
       @jobStatus = 'Processing'
-      save
-      logger.info("Course provisioning job started. Job state updated in cache key #{@cache_key}")
+      background_job_save
+      logger.info("Course provisioning job started. Job state updated in cache key #{background_job_id}")
       @import_data['site_name'] = site_name
       @import_data['site_course_code'] = site_course_code
       @import_data['term_slug'] = term_slug
@@ -61,7 +47,7 @@ module Canvas
 
       # TODO Expire user's Canvas-related caches to maintain UX consistency.
       @jobStatus = 'courseCreationCompleted'
-      save
+      background_job_save
 
       # Start a background job to add current students and instructors to the new site.
       import_enrollments_in_background(@import_data['sis_course_id'], section_definitions)
@@ -69,7 +55,7 @@ module Canvas
       logger.error("ERROR: #{error.message}; Completed steps: #{@completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
       @jobStatus = 'courseCreationError'
       @errors << error.message
-      save
+      background_job_save
       raise error
     end
 
@@ -80,8 +66,8 @@ module Canvas
       @total_steps += 2.0 if ccns_to_add.present?
       @total_steps += 1.0 if ccns_to_remove.present?
       @jobStatus = 'Processing'
-      save
-      logger.info("Edit course site sections job started. Job state updated in cache key #{@cache_key}")
+      background_job_save
+      logger.info("Edit course site sections job started. Job state updated in cache key #{background_job_id}")
       @import_data['term'] = find_term(yr: canvas_course_info[:term][:term_yr], cd: canvas_course_info[:term][:term_cd])
       raise RuntimeError, "Course site #{canvas_course_id} does not match a current term" if @import_data['term'].nil?
       @import_data['term_slug'] = @import_data['term'][:slug]
@@ -98,7 +84,7 @@ module Canvas
       # Add section enrollments.
       refresh_sections_cache(canvas_course_id)
       @jobStatus = 'sectionEditsCompleted'
-      save
+      background_job_save
 
       # Start a background job to add students and instructors to the new sections in the site.
       import_enrollments_in_background(@import_data['sis_course_id'], section_definitions, canvas_course_id)
@@ -106,7 +92,7 @@ module Canvas
       logger.error("ERROR: #{error.message}; Completed steps: #{@completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
       @jobStatus = 'sectionEditsError'
       @errors << error.message
-      save
+      background_job_save
       raise error
     end
 
@@ -411,21 +397,15 @@ module Canvas
       end
     end
 
-    def save
-      raise RuntimeError, 'Unable to save. cache_key missing' if @cache_key.blank?
-      raise RuntimeError, 'Unable to save. Cache expiration setting not present.' if Settings.cache.expiration.CanvasCourseProvisioningJobs == nil
-      Rails.cache.write(@cache_key, self, expires_in: Settings.cache.expiration.CanvasCourseProvisioningJobs)
-    end
-
     def complete_step(step_text)
       @completed_steps << step_text
-      logger.info("Job #{@cache_key} has completed steps #{@completed_steps}")
-      save
+      logger.info("Job ID #{background_job_id} has completed steps #{@completed_steps}")
+      background_job_save
     end
 
     def to_json
       json_hash = {
-        job_id: @cache_key,
+        job_id: background_job_id,
         jobStatus: @jobStatus,
         completed_steps: @completed_steps,
         percent_complete: (@completed_steps.count.to_f / @total_steps).round(2),
@@ -433,10 +413,6 @@ module Canvas
       json_hash['error'] = @errors.join('; ') if @errors.count > 0
       json_hash['course_site'] = {short_name: @import_data['course_site_short_name'], url: @import_data['course_site_url']} if @jobStatus == 'courseCreationCompleted'
       json_hash.to_json
-    end
-
-    def job_id
-      @cache_key
     end
 
     def refresh_sections_cache(canvas_course_id)

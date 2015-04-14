@@ -228,7 +228,7 @@ module CampusOracle
         sql = <<-SQL
       select d.dept_description, c.term_yr, c.term_cd, c.course_cntl_num, r.enroll_status, r.wait_list_seq_num, r.unit, r.pnp_flag, r.grade,
         c.course_title, c.course_title_short, c.dept_name, c.catalog_id, c.primary_secondary_cd, c.section_num, c.instruction_format,
-        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2, c.enroll_limit, c.cred_cd
+        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2, c.enroll_limit, c.cred_cd, c.course_option
       from calcentral_class_roster_vw r
       join calcentral_course_info_vw c on (
         c.term_yr = r.term_yr

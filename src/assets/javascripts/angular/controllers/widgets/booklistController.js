@@ -5,18 +5,9 @@
   /**
    * Textbook controller
    */
-  angular.module('calcentral.controllers').controller('BooklistController', function(textbookFactory, $routeParams, $scope, $q) {
+  angular.module('calcentral.controllers').controller('BooklistController', function(academicsService, textbookFactory, $routeParams, $scope, $q) {
     $scope.semesterBooks = [];
     var requests = [];
-
-    var getSemester = function(semesters) {
-      for (var i = 0; i < semesters.length; i++) {
-        var semester = semesters[i];
-        if (semester.slug === $routeParams.semesterSlug) {
-          return semester;
-        }
-      }
-    };
 
     var getTextbook = function(courseInfo, courseNumber) {
       return textbookFactory.getTextbooks({
@@ -36,9 +27,13 @@
     };
 
     var addToRequests = function(semester) {
-      for (var c = 0; c < semester.classes.length; c++) {
+      var enrolledCourses = academicsService.getClassesSections(semester.classes, false);
+      var waitlistedCourses = academicsService.getClassesSections(semester.classes, true);
+      var courses = enrolledCourses.concat(waitlistedCourses);
+
+      for (var c = 0; c < courses.length; c++) {
         // get textbooks for each course
-        var selectedCourse = semester.classes[c];
+        var selectedCourse = courses[c];
         var sectionNumbers = selectedCourse.sections.map(returnSection);
 
         var courseInfo = {
@@ -48,12 +43,17 @@
           'slug': semester.slug
         };
 
-        requests.push(getTextbook(courseInfo, selectedCourse.course_code));
+        var courseTitle = selectedCourse.course_code;
+        if (selectedCourse.multiplePrimaries) {
+          courseTitle = courseTitle + ' ' + selectedCourse.sections[0].section_label;
+        }
+
+        requests.push(getTextbook(courseInfo, courseTitle));
       }
     };
 
     var getSemesterTextbooks = function(semesters) {
-      var semester = getSemester(semesters);
+      var semester = academicsService.findSemester(semesters, $routeParams.semesterSlug);
       addToRequests(semester);
 
       $scope.semesterName = semester.name;

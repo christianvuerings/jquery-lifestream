@@ -158,15 +158,15 @@ audio_proxy:
 
 blog_latest_release_notes_feed_proxy:
   fake: false
-  feed_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
+  base_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
 
 app_alerts_proxy:
   fake: false
-  feed_url: "http://ets.berkeley.edu/calcentral-alerts/feed"
+  base_url: "http://ets.berkeley.edu/calcentral-alerts/feed"
 
 cal1card_proxy:
   fake: false
-  feed_url: 'https://webstage.housing.berkeley.edu/c1c/dyn/csc.asp'
+  base_url: 'https://webstage.housing.berkeley.edu/c1c/dyn/csc.asp'
   username: 'secret'
   password: 'secret'
 
@@ -211,7 +211,7 @@ cache:
     Canvas::Lti: <%= 5.minutes %>
     Canvas::CourseStudents: <%= 15.minutes %>
     Canvas::CourseTeachers: <%= 5.minutes %>
-    CanvasCourseProvisioningJobs: <%= 24.hours %>
+    CanvasBackgroundJobs: <%= 24.hours %>
     Advising::MyAdvising: <%= 2.hours %>
 
     Berkeley::Terms: NEXT_08_00

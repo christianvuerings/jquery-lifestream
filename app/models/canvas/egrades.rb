@@ -1,17 +1,19 @@
 module Canvas
   # Prepares CSV export of official enrollments for use with E-Grades (UCB Online Grading System)
   #
-  # All grades/scores for students enrolled in the Canvas course are prepared by #canvas_course_students
+  # All grades/scores for students enrolled in the Canvas course are prepared by #canvas_course_student_grades
   # #official_student_grades provides only the grades for the students officially enrolled in the section term/ccn specified.
   #
   class Egrades
     extend Cache::Cacheable
+    include Canvas::BackgroundJob
 
     GRADE_TYPES = ['final','current']
 
     def initialize(options = {})
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
+      background_job_initialize
     end
 
     def official_student_grades_csv(term_cd, term_yr, ccn, type)
@@ -31,7 +33,7 @@ module Canvas
     def official_student_grades(term_cd, term_yr, ccn)
       enrolled_students = CampusOracle::Queries.get_enrolled_students(ccn, term_yr, term_cd)
       campus_attributes = enrolled_students.index_by {|s| s['ldap_uid']}
-      official_students = canvas_course_students.select {|student| campus_attributes[student[:sis_login_id]] }
+      official_students = canvas_course_student_grades.select {|student| campus_attributes[student[:sis_login_id]] }
       official_students.each do |student|
         campus_data = campus_attributes[student[:sis_login_id]]
         student[:pnp_flag] = campus_data['pnp_flag']
@@ -39,25 +41,21 @@ module Canvas
       end
     end
 
-    def canvas_course_students
-      proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id)
-      course_users = proxy.course_users(:cache => false)
-      course_students = []
-      course_users.each do |course_user|
-        user_grade = student_grade(course_user['enrollments'])
-        course_students << {
-          :canvas_course_id => @canvas_course_id,
-          :canvas_user_id => course_user['id'],
-          :sis_user_id => course_user['sis_user_id'],
-          :sis_login_id => course_user['sis_login_id'],
-          :name => course_user['name'],
-          :final_score => user_grade[:final_score],
-          :final_grade => user_grade[:final_grade],
-          :current_score => user_grade[:current_score],
-          :current_grade => user_grade[:current_grade],
-        }
+    def canvas_course_student_grades(force = false)
+      self.class.fetch_from_cache("course-students-#{@canvas_course_id}", force) do
+        proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id, :paging_callback => self)
+        course_users = proxy.course_users(:cache => false)
+        course_students = []
+        course_users.each do |course_user|
+          user_grade = student_grade(course_user['enrollments'])
+          course_students << {
+            :sis_login_id => course_user['sis_login_id'],
+            :final_grade => user_grade[:final_grade],
+            :current_grade => user_grade[:current_grade],
+          }
+        end
+        course_students
       end
-      course_students
     end
 
     # Extracts scores and grades from enrollments
@@ -111,7 +109,7 @@ module Canvas
       }
 
       if options[:cache].present?
-        self.class.fetch_from_cache("#{@canvas_course_id}") { get_official_course_status.call }
+        self.class.fetch_from_cache("is-official-#{@canvas_course_id}") { get_official_course_status.call }
       else
         get_official_course_status.call
       end

@@ -9,6 +9,7 @@
       <a href="/academics">My Academics</a> &raquo;
       <a data-ng-href="/academics/semester/{{selectedSemester.slug}}"><span data-ng-bind="selectedSemester.name"></span></a> &raquo;
       <span data-ng-bind="selectedCourse.course_code"></span>
+      <span data-ng-if="selectedSection" data-ng-bind-template=" &raquo; {{selectedSection.section_label}}"></span>
       <div class="cc-academics-teaching-button-group" data-ng-if="isInstructorOrGsi">
         <ul class="cc-button-group cc-even-{{selectOptions.length}}" role="tablist">
           <li data-ng-repeat="selectOption in selectOptions">
@@ -70,7 +71,7 @@
           <div data-ng-hide="isInstructorOrGsi" class="cc-table">
             <table class="cc-academics-class-info" data-ng-repeat="section in selectedCourse.sections" data-ng-if="section.is_primary_section">
               <tbody>
-                <tr class="cc-academics-class-primary-row" data-ng-if="selectedCourse.multiplePrimaries">
+                <tr class="cc-academics-class-primary-row" data-ng-if="selectedCourse.multiplePrimaries && !selectedSection">
                   <td data-ng-bind="section.section_label"></td>
                 </tr>
                 <tr>

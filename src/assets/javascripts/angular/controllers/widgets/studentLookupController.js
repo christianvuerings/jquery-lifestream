@@ -8,8 +8,7 @@
   angular.module('calcentral.controllers').controller('StudentLookupController', function(adminFactory, apiService, $scope) {
     $scope.selectOptions = ['Search', 'Saved', 'Recent'];
     $scope.globalShowLimit = 10;
-    $scope.showSavedLimit = $scope.globalShowLimit;
-    $scope.showRecentLimit = $scope.globalShowLimit;
+    $scope.showLimit = $scope.globalShowLimit;
     var CURRENT_SELECTION_KEY = 'ccAdminCurrentSelection';
     var LAST_QUERY_KEY = 'ccAdminLastQuery';
     var ID_TYPE_KEY = 'ccAdminIdType';
@@ -77,16 +76,18 @@
       adminFactory.getStoredUsers(options)
         .success(function(data) {
           $scope.admin.storedUsers = data.users;
-          // Make sure each tab has the latest users
-          $scope.admin.tabs[0].users = $scope.admin.storedUsers.saved;
-          $scope.admin.tabs[1].users = $scope.admin.storedUsers.recent;
-          // Make sure the searched users have the latest save state
+          // Make sure users have the latest save state
           checkIfSaved($scope.admin.searchedUsers);
+          checkIfSaved($scope.admin.storedUsers.saved);
+          checkIfSaved($scope.admin.storedUsers.recent);
+          // Make sure each tab has the latest state
+          establishTabs();
         })
         .error(function() {
           var error = 'There was a problem fetching your items.';
           $scope.admin.savedUsersError = error;
           $scope.admin.recentUsersError = error;
+          establishTabs();
         });
     };
     getStoredUsers();
@@ -131,7 +132,7 @@
     };
 
     /**
-     * Used by 'Search' tab to toggle save state of user
+     * Used by stars to toggle save state of user
      */
     $scope.admin.toggleSaveState = function(user) {
       if (user.saved) {
@@ -173,7 +174,7 @@
     };
 
     $scope.admin.lookupUser = function() {
-      $scope.admin.lookupErrorStatus = '';
+      $scope.admin.searchUsersError = '';
       $scope.admin.searchedUsers = [];
 
       lookupUser($scope.admin.query + '').then(function(response) {
@@ -181,10 +182,11 @@
           localStorage.setItem(LAST_QUERY_KEY, $scope.admin.query);
         }
         if (response.error) {
-          $scope.admin.lookupErrorStatus = response.error;
+          $scope.admin.searchUsersError = response.error;
         } else {
           $scope.admin.searchedUsers = checkIfSaved(response.users);
         }
+        establishTabs();
       });
     };
 
@@ -215,21 +217,24 @@
       }).success(apiService.util.redirectToSettings);
     };
 
-    $scope.admin.tabs = [
-      { // Saved tab
-        name: 'Saved',
-        error: $scope.admin.savedUsersError,
-        users: $scope.admin.storedUsers.saved,
-        showLimit: $scope.showSavedLimit,
-        deleteUser: $scope.admin.deleteSavedUser
-      },
-      { // Recent tab
-        name: 'Recent',
-        error: $scope.admin.recentUsersError,
-        users: $scope.admin.storedUsers.recent,
-        showLimit: $scope.showRecentLimit,
-        deleteUser: $scope.admin.deleteRecentUser
-      }
-    ];
+    var establishTabs = function() {
+      $scope.admin.tabs = [
+        { // Search tab
+          name: 'Search',
+          error: $scope.admin.searchUsersError,
+          users: $scope.admin.searchedUsers
+        },
+        { // Saved tab
+          name: 'Saved',
+          error: $scope.admin.savedUsersError,
+          users: $scope.admin.storedUsers.saved
+        },
+        { // Recent tab
+          name: 'Recent',
+          error: $scope.admin.recentUsersError,
+          users: $scope.admin.storedUsers.recent
+        }
+      ];
+    };
   });
 })(window, window.angular);
