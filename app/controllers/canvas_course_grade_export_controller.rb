@@ -18,7 +18,6 @@ class CanvasCourseGradeExportController < ApplicationController
   def prepare_grades_cache
     egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
     egrades_worker.background.canvas_course_student_grades(true)
-    egrades_worker.save
     render json: { jobRequestStatus: 'Success', jobId: egrades_worker.job_id }.to_json
   end
 

@@ -13,7 +13,6 @@ module Canvas
     def initialize(options = {})
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
-      background_job_initialize
     end
 
     def official_student_grades_csv(term_cd, term_yr, ccn, type)
@@ -42,6 +41,7 @@ module Canvas
     end
 
     def canvas_course_student_grades(force = false)
+      background_job_initialize
       self.class.fetch_from_cache("course-students-#{@canvas_course_id}", force) do
         proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id, :paging_callback => self)
         course_users = proxy.course_users(:cache => false)

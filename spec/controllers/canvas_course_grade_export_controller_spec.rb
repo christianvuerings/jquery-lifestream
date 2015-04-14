@@ -41,9 +41,8 @@ describe CanvasCourseGradeExportController do
       expect(json_response['jobRequestStatus']).to eq 'Success'
     end
 
-    it 'saves state to cache and returns background job id' do
+    it 'returns background job id' do
       allow_any_instance_of(Canvas::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
-      expect_any_instance_of(Canvas::Egrades).to receive(:save).and_return(nil)
       post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :format => :csv
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
@@ -77,6 +76,7 @@ describe CanvasCourseGradeExportController do
 
     it 'returns status of canvas egrades background job' do
       egrades = Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
+      egrades.background_job_initialize
       egrades.background_job_set_total_steps(2)
       egrades.background_job_complete_step('step 1')
 
