@@ -40,7 +40,17 @@ module MyAcademics
               campus_courses.each do |course|
                 linked_ccns = []
                 course[:sections].each do |s|
-                  linked_ccns << {ccn: s[:ccn]} if site_ccns.include?(s[:ccn].to_i)
+                  if site_ccns.include? s[:ccn].to_i
+                    linked_ccns << {ccn: s[:ccn]}
+                    # In the case of multiple primaries, expose the minimum data needed to make a section association.
+                    if course[:multiplePrimaries]
+                      primary_to_associate = s[:is_primary_section] ? s : course[:sections].find { |prim| prim[:slug] == s[:associatedWithPrimary] }
+                      if primary_to_associate
+                        primary_to_associate[:siteIds] ||= []
+                        primary_to_associate[:siteIds] << course_site[:id]
+                      end
+                    end
+                  end
                 end
                 if linked_ccns.present?
                   course[:class_sites] ||= []

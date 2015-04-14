@@ -24,6 +24,10 @@
       templateUrl: 'academics_classinfo.html',
       controller: 'AcademicsController'
     }).
+    when('/academics/semester/:semesterSlug/class/:classSlug/:sectionSlug', {
+      templateUrl: 'academics_classinfo.html',
+      controller: 'AcademicsController'
+    }).
     when('/academics/booklist/:semesterSlug', {
       templateUrl: 'academics_booklist.html',
       controller: 'AcademicsController'

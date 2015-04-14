@@ -34,11 +34,14 @@ module MyAcademics
       enrollment_term.map do |course|
         next unless course[:role] == 'Student'
         mapped_course = course_info course
+        primaries_count = 0
         mapped_course[:sections].each do |section|
           if section[:is_primary_section]
             section[:gradeOption] = Berkeley::GradeOptions.grade_option_for_enrollment(section[:cred_cd], section[:pnp_flag])
+            primaries_count += 1
           end
         end
+        merge_multiple_primaries(mapped_course, course[:course_option]) if primaries_count > 1
         mapped_course
       end
     end
@@ -63,6 +66,27 @@ module MyAcademics
           grade_sources = transcript_term[:courses].select { |t| t[:dept] == course[:dept] && t[:courseCatalog] == course[:courseCatalog] }
         end
         course[:transcript] = grade_sources.map { |e| e.slice(:units, :grade) } if grade_sources.present?
+      end
+    end
+
+    def merge_multiple_primaries(course, course_option)
+      course[:multiplePrimaries] = true
+      course[:sections].each do |section|
+        if section[:is_primary_section]
+          section[:slug] = section_slug(section)
+          section[:url] = "#{course[:url]}/#{section[:slug]}"
+        else
+          associated_primary = course[:sections].find do |prim|
+            prim[:is_primary_section] && Berkeley::CourseOptions.nested?(course_option, prim[:section_number], section[:section_number], section[:instruction_format])
+          end
+          section[:associatedWithPrimary] = section_slug associated_primary
+        end
+      end
+    end
+
+    def section_slug(section)
+      if section
+        "#{section[:instruction_format].downcase}-#{section[:section_number]}"
       end
     end
 
