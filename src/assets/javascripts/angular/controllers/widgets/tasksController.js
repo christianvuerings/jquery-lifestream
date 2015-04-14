@@ -67,7 +67,7 @@
     var sendBrowserNotification = function(emitter, message) {
       var notification;
       notification = new Notification('New ' + capitalize(emitter) + ' Task', {
-        icon: '/assets/images/icon_slate_64x64.png',
+        icon: emitter === 'slate' ? '/assets/images/icon_slate_64x64.png' : '/assets/images/icon_campussolutions_64x64.png',
         body: message
       });
     };
