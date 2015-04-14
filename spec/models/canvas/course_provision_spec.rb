@@ -204,9 +204,9 @@ describe Canvas::CourseProvision do
     let(:cpcs)  { instance_double(Canvas::ProvideCourseSite) }
     before do
       allow(cpcs).to receive(:background).and_return(cpcs)
-      allow(cpcs).to receive(:save).and_return(true)
+      allow(cpcs).to receive(:background_job_save).and_return(true)
       allow(cpcs).to receive(:create_course_site).and_return(true)
-      allow(cpcs).to receive(:job_id).and_return('canvas.courseprovision.1234.1383330151057')
+      allow(cpcs).to receive(:background_job_id).and_return('canvas.courseprovision.1234.1383330151057')
       allow(Canvas::ProvideCourseSite).to receive(:new).and_return(cpcs)
     end
 
@@ -216,9 +216,9 @@ describe Canvas::CourseProvision do
     end
 
     it 'saves state of job before sending to bg job queue' do
-      expect(cpcs).to receive(:save).ordered.and_return(true)
+      expect(cpcs).to receive(:background_job_save).ordered.and_return(true)
       expect(cpcs).to receive(:background).ordered.and_return(cpcs)
-      expect(cpcs).to receive(:job_id).ordered.and_return('canvas.courseprovision.1234.1383330151057')
+      expect(cpcs).to receive(:background_job_id).ordered.and_return('canvas.courseprovision.1234.1383330151057')
       subject.create_course_site('Intro to Biomedicine', 'BIOENG 101 LEC', 'fall-2013', ['1136', '1204'])
     end
   end
@@ -230,17 +230,17 @@ describe Canvas::CourseProvision do
     context 'when user is authorized' do
       let(:cpcs) { instance_double(Canvas::ProvideCourseSite) }
       let(:course_info) { {canvasCourseId: canvas_course_id} }
-      let(:job_id) { "canvas.courseprovision.#{ccns_to_add.first}" }
+      let(:background_job_id) { "canvas.courseprovision.#{ccns_to_add.first}" }
       before do
         expect(subject).to receive(:get_course_info).and_return(course_info)
         expect(Canvas::ProvideCourseSite).to receive(:new).and_return(cpcs)
-        expect(cpcs).to receive(:save).ordered
+        expect(cpcs).to receive(:background_job_save).ordered
         expect(cpcs).to receive(:background).ordered.and_return(cpcs)
         expect(cpcs).to receive(:edit_sections).ordered
-        expect(cpcs).to receive(:job_id).ordered.and_return(job_id)
+        expect(cpcs).to receive(:background_job_id).ordered.and_return(background_job_id)
       end
       it 'saves the state of the job' do
-        expect(subject.edit_sections(ccns_to_remove, ccns_to_add)).to eq job_id
+        expect(subject.edit_sections(ccns_to_remove, ccns_to_add)).to eq background_job_id
       end
     end
   end

@@ -156,7 +156,7 @@ describe CanvasCourseProvisionController do
 
   describe '#job_status' do
     it_should_behave_like "an api endpoint" do
-      before { allow(Canvas::ProvideCourseSite).to receive(:find).and_raise(RuntimeError, "Something went wrong") }
+      before { allow(Canvas::BackgroundJob).to receive(:find).and_raise(RuntimeError, "Something went wrong") }
       let(:make_request) { get :job_status, job_id: 'canvas.courseprovision.12345.1383330151057' }
     end
 
@@ -176,12 +176,12 @@ describe CanvasCourseProvisionController do
     it 'returns status of canvas course provisioning job' do
       cpcs = Canvas::ProvideCourseSite.new('1234')
       cpcs.instance_eval { @jobStatus = 'Processing'; @completed_steps = ['Prepared courses list', 'Identified department sub-account'] }
-      cpcs.save
+      cpcs.background_job_save
 
-      get :job_status, job_id: cpcs.job_id
+      get :job_status, job_id: cpcs.background_job_id
       assert_response :success
       json_response = JSON.parse(response.body)
-      json_response['job_id'].should == cpcs.job_id
+      json_response['job_id'].should == cpcs.background_job_id
       json_response['jobStatus'].should == 'Processing'
       json_response['completed_steps'][0].should == 'Prepared courses list'
       json_response['completed_steps'][1].should == 'Identified department sub-account'
