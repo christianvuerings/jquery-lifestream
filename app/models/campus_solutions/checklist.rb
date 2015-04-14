@@ -6,7 +6,7 @@ module CampusSolutions
 
     include ClassLogger
     include Cache::UserCacheExpiry
-    include Proxies::Mockable
+    include Proxies::MockableXml
 
     def initialize(options = {})
       super(Settings.cs_checklist_proxy, options)
@@ -49,9 +49,8 @@ module CampusSolutions
       }
     end
 
-    def mock_json
-      xml = MultiXml.parse File.read(Rails.root.join('fixtures', 'xml', 'cs_checklist_feed.xml'))
-      xml['SCC_GET_CHKLST_RESP'].to_json
+    def mock_xml
+      read_file('fixtures', 'xml', 'cs_checklist_feed.xml')
     end
 
   end

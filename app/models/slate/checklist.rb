@@ -6,7 +6,7 @@ module Slate
 
     include ClassLogger
     include Cache::UserCacheExpiry
-    include Proxies::Mockable
+    include Proxies::MockableXml
 
     def initialize(options = {})
       super(Settings.slate_checklist_proxy, options)
@@ -46,25 +46,14 @@ module Slate
       }
       response = get_response(url, request_options)
       logger.debug "Remote server status #{response.code}, Response encoding = #{response.body.encoding}; Body = #{response.body.force_encoding('UTF-8')}"
-      logger.debug "Entire response = #{response.inspect}"
       {
         statusCode: response.code,
         feed: response.parsed_response
       }
     end
 
-    def mock_json
-      xml = MultiXml.parse File.read(Rails.root.join('fixtures', 'xml', 'slate_checklist_feed.xml'))
-      xml.to_json
-    end
-
-    def mock_request
-      # Webmock match criteria need an adjustment because of basic authentication.
-      feed_uri = URI.parse(@settings.base_url)
-      {
-        method: :any,
-        uri: /.*#{feed_uri.hostname}#{feed_uri.path}.*/
-      }
+    def mock_xml
+      read_file('fixtures', 'xml', 'slate_checklist_feed.xml')
     end
 
   end
