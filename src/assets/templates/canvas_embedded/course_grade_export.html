@@ -169,6 +169,33 @@
               For more information see the 'Unmute Assignment' section of <a href="http://guides.instructure.com/m/4152/l/45130-how-do-i-mute-an-assignment-in-the-gradebook#UnmuteAssignment">How do I mute an assignment in the Gradebook?</a>
             </p>
 
+            <h3 class="cc-page-course-grading-export-muted-assignments-table-header">
+              <span data-ng-pluralize count="mutedAssignments.length" when="{'one': '1 Muted Assignment', 'other': '{{mutedAssignments.length}} Muted Assignments'}"></span>
+            </h3>
+
+            <table role="grid">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Due At</th>
+                  <th>Points Possible</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-ng-repeat="assignment in mutedAssignments">
+                  <td>
+                    <span data-ng-bind="assignment.name"></span>
+                  </td>
+                  <td>
+                    <span data-ng-if="assignment.due_at === null">N/A</span>
+                    <span data-ng-if="assignment.due_at !== null" data-ng-bind="assignment.due_at"></span>
+                  </td>
+                  <td>
+                    <span data-ng-bind="assignment.points_possible"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

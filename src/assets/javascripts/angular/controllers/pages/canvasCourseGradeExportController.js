@@ -140,6 +140,7 @@
 
     /* Load and initialize application based on muted Assignments */
     var handleMutedAssignments = function(mutedAssignments) {
+      $scope.mutedAssignments = mutedAssignments;
       if (mutedAssignments.length > 0) {
         $scope.appState = 'error';
         $scope.mutedAssignmentsPresent = true;
