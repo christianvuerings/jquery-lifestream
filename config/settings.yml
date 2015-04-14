@@ -162,7 +162,7 @@ blog_latest_release_notes_feed_proxy:
 
 app_alerts_proxy:
   fake: false
-  feed_url: "http://ets.berkeley.edu/calcentral-alerts/feed"
+  base_url: "http://ets.berkeley.edu/calcentral-alerts/feed"
 
 cal1card_proxy:
   fake: false

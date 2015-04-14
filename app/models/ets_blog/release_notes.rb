@@ -1,7 +1,8 @@
 module EtsBlog
   class ReleaseNotes < BaseProxy
 
-    include ClassLogger, HtmlSanitizer
+    include ClassLogger
+    include HtmlSanitizer
     include Proxies::MockableXml
     include HttpRequester
 
@@ -45,7 +46,7 @@ module EtsBlog
     end
 
     def mock_xml
-      File.read(Rails.root.join('fixtures', 'xml', 'release_notes_feed.xml'))
+      read_file('fixtures', 'xml', 'release_notes_feed.xml')
     end
 
   end

@@ -39,5 +39,9 @@ module Proxies
       ''
     end
 
+    def read_file(*args)
+      File.read(Rails.root.join(*args))
+    end
+
   end
 end

@@ -41,7 +41,7 @@ module Cal1card
     end
 
     def mock_xml
-      File.read(Rails.root.join('fixtures', 'xml', 'cal1card_feed.xml'))
+      read_file('fixtures', 'xml', 'cal1card_feed.xml')
     end
 
   end

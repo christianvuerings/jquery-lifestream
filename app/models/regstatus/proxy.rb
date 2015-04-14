@@ -61,7 +61,7 @@ module Regstatus
     end
 
     def mock_json
-      File.read(Rails.root.join('fixtures', 'json', 'regstatus.json'))
+      read_file('fixtures', 'json', 'regstatus.json')
     end
 
   end
