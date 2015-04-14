@@ -166,7 +166,7 @@ app_alerts_proxy:
 
 cal1card_proxy:
   fake: false
-  feed_url: 'https://webstage.housing.berkeley.edu/c1c/dyn/csc.asp'
+  base_url: 'https://webstage.housing.berkeley.edu/c1c/dyn/csc.asp'
   username: 'secret'
   password: 'secret'
 

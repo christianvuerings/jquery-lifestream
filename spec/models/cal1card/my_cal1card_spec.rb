@@ -28,7 +28,7 @@ describe Cal1card::MyCal1card do
 
   context "server errors" do
     include_context 'short-lived Live Updates cache'
-    let (:cal1card_uri) { URI.parse(Settings.cal1card_proxy.feed_url) }
+    let (:cal1card_uri) { URI.parse(Settings.cal1card_proxy.base_url) }
     before(:each) { Cal1card::MyCal1card.stub(:new).and_return(real_oski_proxy) }
     after(:each) { WebMock.reset! }
 

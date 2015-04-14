@@ -18,6 +18,15 @@ module Proxies
       set_response
     end
 
+    def override_xml
+      if block_given?
+        parsed_structure = MultiXml.parse @response[:body]
+        yield parsed_structure
+        @response[:body] = parsed_structure
+      end
+      set_response
+    end
+
     def set_response(options={})
       @response.merge! options
       stub = stub_request(@request[:method], @request[:uri])
