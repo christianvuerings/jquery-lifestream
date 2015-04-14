@@ -26,7 +26,7 @@
     .cc-page-course-grade-export-warning {
       color: $bc-color-notice-warning;
       font-size: 35px;
-      line-height: 40px;
+      line-height: 20px;
       margin: 10px 0;
     }
   }
@@ -38,8 +38,16 @@
   }
 
   .cc-page-course-grading-export-error-notice-container {
+    display: table;
     float: left;
+    font-weight: bold;
     max-width: 600px;
+    min-height: 40px;
+  }
+
+  .cc-page-course-grading-export-error-notice-text {
+    display: table-cell;
+    vertical-align: middle;
   }
 
   .cc-page-course-grade-export-download-button-container {
