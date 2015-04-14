@@ -54,7 +54,7 @@ describe CanvasCourseGradeExportController do
   end
 
   describe '#job_status' do
-    let(:background_job_id) { 'Canvas::BackgroundJob.1383330151057-67f4b934525501cb' }
+    let(:background_job_id) { 'Canvas::Egrades.1383330151057-67f4b934525501cb' }
 
     it_should_behave_like 'an endpoint' do
       let(:error_text) { 'Something went wrong' }
