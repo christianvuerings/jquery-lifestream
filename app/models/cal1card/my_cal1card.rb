@@ -2,12 +2,14 @@ module Cal1card
   class MyCal1card < UserSpecificModel
     include Cache::LiveUpdatesEnabled
     include Cache::FeedExceptionsHandled
+    include Proxies::MockableXml
     include HttpRequester
 
     def initialize(uid, options={})
       super(uid, options)
       @settings = Settings.cal1card_proxy
       @fake = (options[:fake] != nil) ? options[:fake] : @settings.fake
+      initialize_mocks if @fake
     end
 
     def default_message_on_exception
@@ -23,23 +25,23 @@ module Cal1card
     end
 
     def get_converted_xml
-      if @fake
-        logger.info "Fake = #{@fake}, getting data from XML fixture file; user #{@uid}; cache expiration #{self.class.expires_in}"
-        feed = MultiXml.parse File.read(Rails.root.join('fixtures', 'xml', 'cal1card_feed.xml').to_s)
-      else
-        url = "#{@settings.feed_url}?uid=#{@uid}"
-        logger.info "Internal_get: Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-        response = get_response(
-          url,
-          basic_auth: {username: @settings.username, password: @settings.password}
-        )
-        feed = response.parsed_response
-        logger.debug "Cal1Card remote response: #{response.inspect}"
-      end
+      url = "#{@settings.base_url}?uid=#{@uid}"
+      logger.info "Internal_get: Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+      response = get_response(
+        url,
+        basic_auth: {username: @settings.username, password: @settings.password}
+      )
+      feed = response.parsed_response
+      logger.debug "Cal1Card remote response: #{response.inspect}"
+
       camelized = HashConverter.camelize feed
       camelized[:cal1card].merge({
         statusCode: 200
       })
+    end
+
+    def mock_xml
+      read_file('fixtures', 'xml', 'cal1card_feed.xml')
     end
 
   end

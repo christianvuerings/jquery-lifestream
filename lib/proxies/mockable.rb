@@ -20,9 +20,10 @@ module Proxies
     end
 
     def mock_request
+      feed_uri = URI.parse(@settings.base_url)
       {
         method: :get,
-        uri: /\A#{Regexp.quote @settings.base_url}/
+        uri: /.*#{feed_uri.hostname}#{feed_uri.path}.*/
       }
     end
 
@@ -36,6 +37,10 @@ module Proxies
 
     def mock_json
       ''
+    end
+
+    def read_file(*args)
+      File.read(Rails.root.join(*args))
     end
 
   end

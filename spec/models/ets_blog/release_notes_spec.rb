@@ -4,7 +4,7 @@ describe EtsBlog::ReleaseNotes do
 
   let (:fake_proxy) { EtsBlog::ReleaseNotes.new({fake: true}) }
   let (:real_proxy) { EtsBlog::ReleaseNotes.new({fake: false}) }
-  let (:feed_uri) { URI.parse(Settings.blog_latest_release_notes_feed_proxy.feed_url) }
+  let (:feed_uri) { URI.parse(Settings.blog_latest_release_notes_feed_proxy.base_url) }
 
   context 'fetching fake data feed' do
     include_context 'it writes to the cache'

@@ -2,9 +2,12 @@ module EtsBlog
   class Alerts < BaseProxy
 
     include DatedFeed
+    include Proxies::MockableXml
+    include HttpRequester
 
     def initialize(options = {})
       super(Settings.app_alerts_proxy, options)
+      initialize_mocks if @fake
     end
 
     def get_latest
@@ -43,11 +46,12 @@ module EtsBlog
 
     def get_feed
       logger.info "#{self.class.name} Fetching alerts from blog (fake=#{@fake}, cache expiration #{self.class.expires_in}"
-      if @fake
-        MultiXml.parse File.read(Rails.root.join('fixtures', 'xml', 'app_alerts_feed.xml').to_s)
-      else
-        get_response(@settings.feed_url).parsed_response
-      end
+      #HTTParty won't parse automatically because the application/xml header is missing
+      MultiXml.parse(get_response(@settings.base_url).body)
+    end
+
+    def mock_xml
+      read_file('fixtures', 'xml', 'app_alerts_feed.xml')
     end
 
   end
