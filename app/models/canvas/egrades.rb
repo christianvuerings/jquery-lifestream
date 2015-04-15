@@ -11,8 +11,12 @@ module Canvas
     GRADE_TYPES = ['final','current']
 
     def initialize(options = {})
+      default_options = {:enable_grading_scheme => false}
+      options.reverse_merge!(default_options)
+
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
+      @enable_grading_scheme = options[:enable_grading_scheme]
     end
 
     def official_student_grades_csv(term_cd, term_yr, ccn, type)
@@ -42,6 +46,16 @@ module Canvas
 
     def canvas_course_student_grades(force = false)
       background_job_initialize
+
+      course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
+      if course_settings.settings(:cache => false)['grading_standard_enabled'].blank?
+        if @enable_grading_scheme
+          course_settings.set_grading_scheme
+        else
+          raise Errors::BadRequestError, "Enable Grading Scheme action not specified"
+        end
+      end
+
       self.class.fetch_from_cache("course-students-#{@canvas_course_id}", force) do
         proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id, :paging_callback => self)
         course_users = proxy.course_users(:cache => false)
