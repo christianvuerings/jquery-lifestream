@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/instructure/ims-lti.git
+  revision: b909e936a3c8ed13fec527d0dfe3c177431d2932
+  specs:
+    ims-lti (1.1.5)
+      builder
+      oauth (~> 0.4.5)
+      uuid
+
+GIT
   remote: https://github.com/sj26/rspec_junit_formatter.git
   revision: 850d57cc5bd4f88dd1d4ffb245d57f222cd9e04f
   specs:
@@ -12,15 +21,6 @@ GIT
   revision: 224df492657e617a0c93c0319e78f0eefee5b636
   specs:
     spork (1.0.0rc4)
-
-GIT
-  remote: https://github.com/instructure/ims-lti.git
-  revision: b909e936a3c8ed13fec527d0dfe3c177431d2932
-  specs:
-    ims-lti (1.1.5)
-      builder
-      oauth (~> 0.4.5)
-      uuid
 
 GEM
   remote: https://rubygems.org/
@@ -445,7 +445,6 @@ DEPENDENCIES
   activeresource (~> 4.0.0)
   addressable (~> 2.3.4)
   bootstrap-sass (~> 3.3.1.0)
-  bundler (~> 1.7.0)
   cancan (~> 1.6.10)
   capistrano (~> 2.15.4)
   capybara (~> 2.4.4)
