@@ -13,41 +13,19 @@
   }
 
   .cc-page-course-grade-export-sub-header {
-    margin: 10px 0;
+    margin: 15px 0;
   }
 
   .cc-page-course-grading-export-error-notice {
-    border: 1px solid $bc-color-grey;
-    margin-bottom: 20px;
-    padding: 15px;
+    margin: 10px 0;
   }
 
-  .cc-page-course-grade-export-error-display {
-    .cc-page-course-grade-export-warning {
-      color: $bc-color-notice-warning;
-      font-size: 35px;
-      line-height: 20px;
-      margin: 10px 0;
-    }
+  .cc-page-course-grade-export-error-notice-icon {
+    margin-right: 7px;
   }
 
-  .cc-page-course-grading-export-error-notice-icon {
-    float: left;
-    margin-right: 10px;
-    width: 40px;
-  }
-
-  .cc-page-course-grading-export-error-notice-container {
-    display: table;
-    float: left;
-    font-weight: bold;
-    max-width: 600px;
-    min-height: 40px;
-  }
-
-  .cc-page-course-grading-export-error-notice-text {
-    display: table-cell;
-    vertical-align: middle;
+  .cc-page-course-grading-export-error-notice-cell {
+    padding: 3px;
   }
 
   .cc-page-course-grade-export-download-button-container {
