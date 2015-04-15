@@ -6,11 +6,8 @@ module Canvas
   #   def MyClass
   #     include Canvas::BackgroundJob
   #
-  #     def initialize
-  #       background_job_initialize(:job_type => 'special_job', :total_steps => 3)
-  #     end
-  #
   #     def perform_work
+  #       background_job_initialize(:job_type => 'special_job', :total_steps => 3)
   #       # do step one
   #       if (error)
   #         background_job_add_error('Something went wrong')
@@ -27,6 +24,9 @@ module Canvas
   #       {:customKey => @custom_value}
   #     end
   #   end
+  #
+  #   worker = Canvas::MyClass.new(:canvas_course_id => canvas_course_id)
+  #   worker.background.perform_work
   #
   module BackgroundJob
     include TorqueBox::Messaging::Backgroundable

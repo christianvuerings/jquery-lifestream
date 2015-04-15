@@ -45,7 +45,7 @@ describe Canvas::CourseUsers do
 
   it 'uses paging callback during request if present' do
     paging_callback = double
-    expect(paging_callback).to receive(:background_job_set_total_steps).twice.and_return(true)
+    expect(paging_callback).to receive(:set_course_user_page_total).twice.and_return(true)
     expect(paging_callback).to receive(:background_job_complete_step).with("Retrieving Canvas Course Users - Page 1 of 2").and_return(true).ordered
     expect(paging_callback).to receive(:background_job_complete_step).with("Retrieving Canvas Course Users - Page 2 of 2").and_return(true).ordered
     worker = Canvas::CourseUsers.new(:user_id => user_id, :course_id => canvas_course_id, :paging_callback => paging_callback)

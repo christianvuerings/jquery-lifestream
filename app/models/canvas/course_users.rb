@@ -42,7 +42,7 @@ module Canvas
           current_page_number = /\bpage=([0-9]+)/.match(current_link)[1]
           last_page_number = /\bpage=([0-9]+)/.match(last_link)[1]
           @paging_callback.background_job_complete_step("Retrieving Canvas Course Users - Page #{current_page_number} of #{last_page_number}")
-          @paging_callback.background_job_set_total_steps(last_page_number)
+          @paging_callback.set_course_user_page_total(last_page_number)
         end
 
         params = next_page_params(response)

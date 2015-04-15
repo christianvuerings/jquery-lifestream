@@ -125,18 +125,27 @@
                   Letter grades are required by the E-Grades system. A grading scheme must be applied to calculate student letter grades.
                 </div>
               </div>
-
               <div class="cc-clearfix"></div>
             </div>
 
             <p>
-              Please edit and enable the grading scheme in the <button class="cc-button-link" data-ng-click="goToCourseDetails()">course details</button> page for this course site.
-              You may need to choose an alternative grading scheme for your course site other than the default scheme. Once this
-              step is completed, return here and try again.
+              Select to enable and use the default 'Letter Grades +/-' grading scheme below and then click on 'Continue'.
+            </p>
+            <p>
+              If you need to choose an alternative grading scheme for your course site other than the default scheme,
+              please edit and enable the grading scheme in the
+              <button class="cc-button-link" data-ng-click="goToCourseDetails()">course details</button> page for this course site.
+              Once this step is completed, return here and try again.
             </p>
             <p>
               For more information see <a href="http://guides.instructure.com/m/4152/l/57089-how-do-i-enable-a-grading-scheme-for-my-course">How do I enable a grading scheme for my course?</a>
             </p>
+
+            <div>
+              <input id="cc-page-course-grading-export-enable-grading-scheme" type="checkbox"
+              data-ng-model="enableDefaultGradingScheme" aria-label="Enable Default Letter Grades +/- Grading Scheme">
+              <label for="cc-page-course-grading-export-enable-grading-scheme">Enable and use default Letter Grades +/- grading scheme with E-Grades Download</label>
+            </div>
 
           </div>
         </div>
@@ -151,13 +160,11 @@
               <div class="cc-page-course-grading-export-error-notice-icon">
                 <i class="fa fa-warning cc-left cc-page-course-grade-export-warning"></i>
               </div>
-
               <div class="cc-page-course-grading-export-error-notice-container">
                 <div class="cc-page-course-grading-export-error-notice-text">
                   In order to download E-Grades, all assignments need to be unmuted.
                 </div>
               </div>
-
               <div class="cc-clearfix"></div>
             </div>
 
@@ -196,6 +203,16 @@
                 </tr>
               </tbody>
             </table>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row collapse">
+        <div class="medium-12 columns end">
+          <div class="cc-text-right">
+            <button class="cc-button-link cc-page-button-grey" type="button" data-ng-click="goToGradebook()" type="button" aria-label="Go Back to Gradebook">Back</button>
+            <button data-ng-disabled="!enableDefaultGradingScheme" data-ng-click="preloadGrades()" class="bc-canvas-button bc-canvas-button-primary" type="submit">Continue</button>
           </div>
         </div>
       </div>
