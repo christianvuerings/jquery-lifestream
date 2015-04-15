@@ -82,7 +82,7 @@
     </div>
   </div>
 
-  <div data-ng-if="appState === 'error'">
+  <div data-ng-show="appState === 'error'">
 
     <!-- Standard Error -->
     <div data-ng-if="errorStatus">
@@ -95,7 +95,7 @@
     </div>
 
     <!-- No Grading Standard Enabled -->
-    <div data-ng-if="!errorStatus && (noGradingStandardEnabled || mutedAssignmentsPresent)">
+    <div data-ng-show="!errorStatus && (noGradingStandardEnabled || mutedAssignmentsPresent)">
 
       <div class="row collapse">
         <div class="medium-12 columns">
