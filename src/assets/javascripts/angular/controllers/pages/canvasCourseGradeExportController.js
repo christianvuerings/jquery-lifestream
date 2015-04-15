@@ -138,6 +138,15 @@
       }
     };
 
+    /* Load and initialize application based on muted Assignments */
+    var handleMutedAssignments = function(mutedAssignments) {
+      $scope.mutedAssignments = mutedAssignments;
+      if (mutedAssignments.length > 0) {
+        $scope.appState = 'error';
+        $scope.mutedAssignmentsPresent = true;
+      }
+    };
+
     /* Load and initialize application based on official sections */
     var loadOfficialSections = function(officialSections) {
       if (officialSections && officialSections.length > 0) {
@@ -157,6 +166,7 @@
         }
         if ($scope.appState !== 'error') {
           handleGradingStandardState(data.gradingStandardEnabled);
+          handleMutedAssignments(data.mutedAssignments);
         }
         if ($scope.appState !== 'error') {
           loadOfficialSections(data.officialSections);
