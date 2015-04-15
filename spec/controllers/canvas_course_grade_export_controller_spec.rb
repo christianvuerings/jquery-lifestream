@@ -47,7 +47,7 @@ describe CanvasCourseGradeExportController do
       allow(fake_canvas_egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
       allow(fake_canvas_egrades).to receive(:job_id).and_return(background_job_id)
       expect(Canvas::Egrades).to receive(:new).with(:canvas_course_id => canvas_course_id.to_i, :enable_grading_scheme => true).and_return(fake_canvas_egrades)
-      post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :enable_grading_scheme => 1, :format => :csv
+      post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :enableGradingScheme => 1, :format => :csv
       expect(response.status).to eq(200)
     end
 
