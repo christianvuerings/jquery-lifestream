@@ -25,6 +25,26 @@ describe Canvas::Egrades do
 
   it_should_behave_like 'a background job worker'
 
+  context "when setting the course user page total" do
+    context "when default grading scheme enable option specified" do
+      subject { Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :enable_grading_scheme => true) }
+      it "sets total steps to reflect grading scheme step plus number of pages" do
+        subject.background_job_initialize
+        subject.set_course_user_page_total('5')
+        subject.background_job_complete_step('step 1')
+        report = subject.background_job_report
+        expect(report[:percentComplete]).to eq 0.17
+      end
+    end
+    it "sets total steps to number of pages specified" do
+      subject.background_job_initialize
+      subject.set_course_user_page_total('5')
+      subject.background_job_complete_step('step 1')
+      report = subject.background_job_report
+      expect(report[:percentComplete]).to eq 0.2
+    end
+  end
+
   context "when serving official student grades csv" do
     before { allow(subject).to receive(:official_student_grades).with('C', '2014', '7309').and_return(official_student_grades_list) }
     it "raises error when called with invalid type argument" do

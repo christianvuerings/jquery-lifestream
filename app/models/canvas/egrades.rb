@@ -44,6 +44,13 @@ module Canvas
       end
     end
 
+    def set_course_user_page_total(page_total)
+      @course_user_page_total = page_total.to_i
+      total_steps = page_total.to_i
+      total_steps += 1 if @enable_grading_scheme
+      background_job_set_total_steps(total_steps)
+    end
+
     def canvas_course_student_grades(force = false)
       background_job_initialize
 
