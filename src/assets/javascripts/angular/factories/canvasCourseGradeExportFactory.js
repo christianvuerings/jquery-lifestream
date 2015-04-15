@@ -10,9 +10,8 @@
     };
 
     var prepareGradesCacheJob = function(canvasCourseId, enableGradingScheme) {
-      enableGradingScheme = (typeof(enableGradingScheme) !== 'undefined') ? enableGradingScheme : false;
       return $http.post('/api/academics/canvas/egrade_export/prepare/' + canvasCourseId, {
-        enableGradingScheme: enableGradingScheme
+        enableGradingScheme: !!enableGradingScheme
       });
     };
 
