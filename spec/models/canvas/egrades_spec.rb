@@ -151,7 +151,10 @@ describe Canvas::Egrades do
     let(:course_details) {
       {'id' => 1121, 'name' => 'Just another course site'}
     }
-    before { allow_any_instance_of(Canvas::CourseSettings).to receive(:settings).and_return(course_settings) }
+    before do
+      subject.background_job_initialize
+      allow_any_instance_of(Canvas::CourseSettings).to receive(:settings).and_return(course_settings)
+    end
 
     context "when course grading scheme is not enabled" do
       before do

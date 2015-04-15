@@ -52,8 +52,6 @@ module Canvas
     end
 
     def canvas_course_student_grades(force = false)
-      background_job_initialize
-
       course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
       if course_settings.settings(:cache => false)['grading_standard_enabled'].blank?
         if @enable_grading_scheme
