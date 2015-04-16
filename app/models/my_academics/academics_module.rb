@@ -153,6 +153,27 @@ module MyAcademics
       term << course_info
     end
 
+    def merge_multiple_primaries(course, course_option)
+      course[:multiplePrimaries] = true
+      course[:sections].each do |section|
+        if section[:is_primary_section]
+          section[:slug] = section_slug(section)
+          section[:url] = "#{course[:url]}/#{section[:slug]}"
+        else
+          associated_primary = course[:sections].find do |prim|
+            prim[:is_primary_section] && Berkeley::CourseOptions.nested?(course_option, prim[:section_number], section[:section_number], section[:instruction_format])
+          end
+          section[:associatedWithPrimary] = section_slug associated_primary
+        end
+      end
+    end
+
+    def section_slug(section)
+      if section
+        "#{section[:instruction_format].downcase}-#{section[:section_number]}"
+      end
+    end
+
     def decode_instruction_format(format)
       case format
         when 'CLC' then 'clinic'

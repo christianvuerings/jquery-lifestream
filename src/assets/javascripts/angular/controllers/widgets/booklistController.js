@@ -22,10 +22,6 @@
       });
     };
 
-    var returnSection = function(section) {
-      return section.section_number;
-    };
-
     var addToRequests = function(semester) {
       var enrolledCourses = academicsService.getClassesSections(semester.classes, false);
       var waitlistedCourses = academicsService.getClassesSections(semester.classes, true);
@@ -34,15 +30,7 @@
       for (var c = 0; c < courses.length; c++) {
         // get textbooks for each course
         var selectedCourse = courses[c];
-        var sectionNumbers = selectedCourse.sections.map(returnSection);
-
-        var courseInfo = {
-          'sectionNumbers[]': sectionNumbers,
-          'department': selectedCourse.dept,
-          'courseCatalog': selectedCourse.courseCatalog,
-          'slug': semester.slug
-        };
-
+        var courseInfo = academicsService.textbookRequestInfo(selectedCourse, semester);
         var courseTitle = selectedCourse.course_code;
         if (selectedCourse.multiplePrimaries) {
           courseTitle = courseTitle + ' ' + selectedCourse.sections[0].section_label;

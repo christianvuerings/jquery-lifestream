@@ -85,6 +85,13 @@
       position: relative;
     }
   }
+  .cc-academics-class-textbooks {
+    &:not(:first-of-type) {
+      border-top: 1px solid $cc-color-list-border;
+      margin-top: 15px;
+      padding-top: 15px;
+    }
+  }
   .cc-academics-column-labels {
     color: $cc-color-light-medium-grey;
     font-weight: bold;
