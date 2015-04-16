@@ -1,6 +1,6 @@
 module Canvas
   class CourseProvision
-    include ActiveAttr::Model, ClassLogger
+    include ActiveAttr::Model, Berkeley::CourseCodes, ClassLogger
     extend Cache::Cacheable
 
     # Admins cannot rely on CalCentral "Act As" in production because the instructor may not yet have logged into Calcentral.
@@ -113,25 +113,23 @@ module Canvas
 
     def merge_non_teaching_site_sections(teaching_semesters, missing_sections_feed)
       missing_sections_feed.each do |missing_sections_semester|
-        teaching_semester_idx = teaching_semesters.index do |semester|
+        teaching_semester = teaching_semesters.find do |semester|
           semester[:termYear] == missing_sections_semester[:termYear] &&
             semester[:termCode] == missing_sections_semester[:termCode]
         end
-        if teaching_semester_idx
-          teaching_semester_classes = teaching_semesters[teaching_semester_idx][:classes]
+        if teaching_semester
           missing_sections_semester[:classes].each do |missing_sections_course|
             missing_course_code = missing_sections_course[:course_code]
-            teaching_class_idx = teaching_semester_classes.index do |teaching_course|
+            teaching_class = teaching_semester[:classes].find do |teaching_course|
               teaching_course[:listings].index {|l| l[:course_code] == missing_course_code}
             end
-            if teaching_class_idx
-              teaching_sections = teaching_semester_classes[teaching_class_idx][:sections]
-              # TODO Make the ordering match normal logic.
-              teaching_semester_classes[teaching_class_idx][:sections] = missing_sections_course[:sections] + teaching_sections
+            if teaching_class
+              teaching_class[:sections].concat(missing_sections_course[:sections]).sort_by! { |s| comparable_section_code s }
             else
-              teaching_semester_classes << missing_sections_course
+              teaching_semester[:classes] << missing_sections_course
             end
           end
+          teaching_semester[:classes].sort_by! { |c| comparable_course_code c }
         else
           teaching_semesters << missing_sections_semester
         end
