@@ -51,11 +51,13 @@ module Canvas
       background_job_set_total_steps(total_steps)
     end
 
-    def canvas_course_student_grades(force = false)
+    def prepare_download
       course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
       if course_settings.settings(:cache => false)['grading_standard_enabled'].blank?
         if @enable_grading_scheme
-          # faking 1/30 (3%) percentage complete
+          # Background job not updated with total number of steps until obtained via callback
+          # called from Canvas::CourseUsers#course_users. Therefore faking 30 total steps here
+          # here to begin the background job at 3% complete before update
           background_job_set_total_steps(30)
           course_settings.set_grading_scheme
           background_job_complete_step('Enabled default grading scheme')
@@ -63,7 +65,10 @@ module Canvas
           raise Errors::BadRequestError, "Enable Grading Scheme action not specified"
         end
       end
+      canvas_course_student_grades(true)
+    end
 
+    def canvas_course_student_grades(force = false)
       self.class.fetch_from_cache("course-students-#{@canvas_course_id}", force) do
         proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id, :paging_callback => self)
         course_users = proxy.course_users(:cache => false)

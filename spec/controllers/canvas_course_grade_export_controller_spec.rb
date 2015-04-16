@@ -25,14 +25,14 @@ describe CanvasCourseGradeExportController do
     let(:torquebox_fake_background_proxy) { double }
     let(:background_job_id) { 'canvas.egrades.12345.1383330151058' }
     before do
-      allow(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).and_return(nil)
+      allow(torquebox_fake_background_proxy).to receive(:prepare_download).and_return(nil)
       allow_any_instance_of(Canvas::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
       allow_any_instance_of(Canvas::Egrades).to receive(:save).and_return(nil)
       allow_any_instance_of(Canvas::Egrades).to receive(:background_job_id).and_return(background_job_id)
     end
 
     it 'makes call to load canvas course student grades with forced cacheing' do
-      expect(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).with(true).and_return(nil)
+      expect(torquebox_fake_background_proxy).to receive(:prepare_download).and_return(nil)
       allow_any_instance_of(Canvas::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
       post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :format => :csv
       expect(response.status).to eq(200)
@@ -42,7 +42,7 @@ describe CanvasCourseGradeExportController do
     end
 
     it 'supports enable_grading_scheme option' do
-      allow(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).with(true).and_return(nil)
+      allow(torquebox_fake_background_proxy).to receive(:prepare_download).and_return(nil)
       fake_canvas_egrades = double
       allow(fake_canvas_egrades).to receive(:background_job_initialize).and_return(nil)
       allow(fake_canvas_egrades).to receive(:background).and_return(torquebox_fake_background_proxy)

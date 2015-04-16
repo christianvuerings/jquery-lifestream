@@ -141,7 +141,7 @@ describe Canvas::Egrades do
     end
   end
 
-  context "when providing canvas course student grades" do
+  context "when preparing downloads" do
     let(:course_settings) do
       {
         'grading_standard_enabled' => true,
@@ -160,35 +160,39 @@ describe Canvas::Egrades do
       before do
         course_settings['grading_standard_enabled'] = false
         course_settings['grading_standard_id'] = nil
-        allow_any_instance_of(Canvas::CourseSettings).to receive(:settings).and_return(course_settings)
         allow_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_details)
+        allow(subject).to receive(:canvas_course_student_grades).with(true)
       end
       context "when grading scheme enable confirmed" do
         subject { Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :enable_grading_scheme => true) }
         it "enables grading scheme" do
           expect_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_details)
-          subject.canvas_course_student_grades(true)
+          subject.prepare_download
         end
         it "sets the total steps to 30 to temporarily ensure a low reported percentage complete" do
-          expect(subject).to receive(:background_job_set_total_steps).with(30).and_return(nil).ordered
-          expect(subject).to receive(:background_job_set_total_steps).with(3).and_return(nil).ordered
-          expect(subject).to receive(:background_job_set_total_steps).with(3).and_return(nil).ordered
-          subject.canvas_course_student_grades
+          expect(subject).to receive(:background_job_set_total_steps).with(30).and_return(nil)
+          subject.prepare_download
         end
         it "completes the grading scheme enabling step" do
-          expect(subject).to receive(:background_job_complete_step).with('Enabled default grading scheme').ordered
-          expect(subject).to receive(:background_job_complete_step).with('Retrieving Canvas Course Users - Page 1 of 2').ordered
-          expect(subject).to receive(:background_job_complete_step).with('Retrieving Canvas Course Users - Page 2 of 2').ordered
-          subject.canvas_course_student_grades
+          expect(subject).to receive(:background_job_complete_step).with('Enabled default grading scheme')
+          subject.prepare_download
         end
       end
       context "when grading scheme enable not confirmed" do
         it "raises bad request exception" do
-          expect { subject.canvas_course_student_grades(true) }.to raise_error(Errors::BadRequestError, 'Enable Grading Scheme action not specified')
+          expect { subject.prepare_download }.to raise_error(Errors::BadRequestError, 'Enable Grading Scheme action not specified')
         end
       end
     end
 
+    it "preloads canvas course users in cache" do
+      expect(subject).to receive(:canvas_course_student_grades).with(true)
+      subject.prepare_download
+    end
+  end
+
+  context "when providing canvas course student grades" do
+    before { subject.background_job_initialize }
     it "returns canvas course student grades" do
       result = subject.canvas_course_student_grades
       expect(result).to be_an_instance_of Array
