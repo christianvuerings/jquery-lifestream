@@ -141,7 +141,7 @@ describe Canvas::Egrades do
     end
   end
 
-  context "when providing canvas course student grades" do
+  context "when preparing downloads" do
     let(:course_settings) do
       {
         'grading_standard_enabled' => true,
@@ -160,35 +160,39 @@ describe Canvas::Egrades do
       before do
         course_settings['grading_standard_enabled'] = false
         course_settings['grading_standard_id'] = nil
-        allow_any_instance_of(Canvas::CourseSettings).to receive(:settings).and_return(course_settings)
         allow_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_details)
+        allow(subject).to receive(:canvas_course_student_grades).with(true)
       end
       context "when grading scheme enable confirmed" do
         subject { Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :enable_grading_scheme => true) }
         it "enables grading scheme" do
           expect_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_details)
-          subject.canvas_course_student_grades(true)
+          subject.prepare_download
         end
         it "sets the total steps to 30 to temporarily ensure a low reported percentage complete" do
-          expect(subject).to receive(:background_job_set_total_steps).with(30).and_return(nil).ordered
-          expect(subject).to receive(:background_job_set_total_steps).with(3).and_return(nil).ordered
-          expect(subject).to receive(:background_job_set_total_steps).with(3).and_return(nil).ordered
-          subject.canvas_course_student_grades
+          expect(subject).to receive(:background_job_set_total_steps).with(30).and_return(nil)
+          subject.prepare_download
         end
         it "completes the grading scheme enabling step" do
-          expect(subject).to receive(:background_job_complete_step).with('Enabled default grading scheme').ordered
-          expect(subject).to receive(:background_job_complete_step).with('Retrieving Canvas Course Users - Page 1 of 2').ordered
-          expect(subject).to receive(:background_job_complete_step).with('Retrieving Canvas Course Users - Page 2 of 2').ordered
-          subject.canvas_course_student_grades
+          expect(subject).to receive(:background_job_complete_step).with('Enabled default grading scheme')
+          subject.prepare_download
         end
       end
       context "when grading scheme enable not confirmed" do
         it "raises bad request exception" do
-          expect { subject.canvas_course_student_grades(true) }.to raise_error(Errors::BadRequestError, 'Enable Grading Scheme action not specified')
+          expect { subject.prepare_download }.to raise_error(Errors::BadRequestError, 'Enable Grading Scheme action not specified')
         end
       end
     end
 
+    it "preloads canvas course users in cache" do
+      expect(subject).to receive(:canvas_course_student_grades).with(true)
+      subject.prepare_download
+    end
+  end
+
+  context "when providing canvas course student grades" do
+    before { subject.background_job_initialize }
     it "returns canvas course student grades" do
       result = subject.canvas_course_student_grades
       expect(result).to be_an_instance_of Array
@@ -465,25 +469,6 @@ describe Canvas::Egrades do
       expect(subject.is_official_course?).to eq false
     end
   end
-
-[
-  {"anonymous_peer_reviews"=>false, "assignment_group_id"=>58, "automatic_peer_reviews"=>false,
-    "created_at"=>"2015-04-02T18:43:38Z", "due_at"=>nil, "grade_group_students_individually"=>false,
-    "grading_standard_id"=>nil, "grading_type"=>"points", "group_category_id"=>nil, "id"=>8, "lock_at"=>nil,
-    "peer_reviews"=>false, "points_possible"=>100, "position"=>1, "post_to_sis"=>nil, "unlock_at"=>nil,
-    "updated_at"=>"2015-04-02T18:44:21Z", "course_id"=>17, "name"=>"Assignment 1", "submission_types"=>["online_text_entry"],
-    "has_submitted_submissions"=>false, "description"=>nil, "muted"=>false,
-    "html_url"=>"http://localhost:3100/courses/17/assignments/8", "has_overrides"=>false, "needs_grading_count"=>0,
-    "integration_id"=>nil, "integration_data"=>{}, "published"=>true, "unpublishable"=>true, "locked_for_user"=>false},
-  {"anonymous_peer_reviews"=>false, "assignment_group_id"=>58, "automatic_peer_reviews"=>false,
-    "created_at"=>"2015-04-02T18:43:58Z", "due_at"=>nil, "grade_group_students_individually"=>false,
-    "grading_standard_id"=>nil, "grading_type"=>"points", "group_category_id"=>nil, "id"=>9, "lock_at"=>nil,
-    "peer_reviews"=>false, "points_possible"=>100, "position"=>2, "post_to_sis"=>nil, "unlock_at"=>nil,
-    "updated_at"=>"2015-04-13T19:59:48Z", "course_id"=>17, "name"=>"Assignment 2", "submission_types"=>["online_text_entry"],
-    "has_submitted_submissions"=>false, "description"=>nil, "muted"=>true,
-    "html_url"=>"http://localhost:3100/courses/17/assignments/9", "has_overrides"=>false, "needs_grading_count"=>0,
-    "integration_id"=>nil, "integration_data"=>{}, "published"=>true, "unpublishable"=>true, "locked_for_user"=>false}
-]
 
   context 'when providing muted assignments' do
     let(:course_assignments) {

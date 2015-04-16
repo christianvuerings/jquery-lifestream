@@ -21,9 +21,9 @@
     };
 
     /**
-     * Sends message to parent window to go to Course Details
+     * Sends message to parent window to go to Course Settings
      */
-    $scope.goToCourseDetails = function() {
+    $scope.goToCourseSettings = function() {
       var courseDetailsUrl = $scope.canvasRootUrl + '/courses/' + $scope.canvasCourseId + '/settings#tab-details';
       if (!!window.parent.frames.length) {
         apiService.util.iframeParentLocation(courseDetailsUrl);
