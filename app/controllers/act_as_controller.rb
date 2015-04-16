@@ -11,6 +11,10 @@ class ActAsController < ApplicationController
     session['original_user_id'] = session['user_id'] unless session['original_user_id']
     session['user_id'] = params['uid']
 
+    # This makes sure the most recently viewed user is at the top of the list
+    User::StoredUsers.delete_recent_uid(session['original_user_id'], params['uid'])
+    User::StoredUsers.store_recent_uid(session['original_user_id'], params['uid'])
+
     render :nothing => true, :status => 204
   end
 

@@ -11,9 +11,7 @@
     var searchUsersByUidUrl = '/api/search_users/uid/';
     var storedUsersUrl = '/stored_users';
     var storeSavedUserUrl = '/store_user/saved';
-    var storeRecentUserUrl = '/store_user/recent';
     var deleteSavedUserUrl = '/delete_user/saved';
-    var deleteRecentUserUrl = '/delete_user/recent';
 
     var actAs = function(user) {
       return $http.post(actAsUrl, user);
@@ -35,20 +33,12 @@
       return apiService.http.request(options, storedUsersUrl);
     };
 
-    var storeUser = function(options, type) {
-      if (type === 'recent') {
-        return $http.post(storeRecentUserUrl, options);
-      } else if (type === 'saved') {
-        return $http.post(storeSavedUserUrl, options);
-      }
+    var storeUser = function(options) {
+      return $http.post(storeSavedUserUrl, options);
     };
 
-    var deleteUser = function(options, type) {
-      if (type === 'recent') {
-        return $http.post(deleteRecentUserUrl, options);
-      } else if (type === 'saved') {
-        return $http.post(deleteSavedUserUrl, options);
-      }
+    var deleteUser = function(options) {
+      return $http.post(deleteSavedUserUrl, options);
     };
 
     return {
