@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409173515) do
+ActiveRecord::Schema.define(version: 20150415232131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,5 +210,16 @@ ActiveRecord::Schema.define(version: 20150409173515) do
 
   add_index "user_visits", ["last_visit_at"], name: "index_user_visits_on_last_visit_at", using: :btree
   add_index "user_visits", ["uid"], name: "index_user_visits_on_uid", unique: true, using: :btree
+
+  create_table "webcast_preferences", force: true do |t|
+    t.integer  "year",                                 null: false
+    t.string   "term_cd",    limit: 1,                 null: false
+    t.integer  "ccn",                                  null: false
+    t.boolean  "opt_out",              default: false, null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+  end
+
+  add_index "webcast_preferences", ["year", "term_cd", "ccn"], name: "webcast_preferences_main_index", using: :btree
 
 end
