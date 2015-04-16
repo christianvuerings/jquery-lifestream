@@ -27,8 +27,16 @@
     var countSectionItem = function(selectedCourse, sectionItem) {
       var count = 0;
       for (var i = 0; i < selectedCourse.sections.length; i++) {
-        if (selectedCourse.sections[i][sectionItem] && selectedCourse.sections[i][sectionItem].length) {
-          count += selectedCourse.sections[i][sectionItem].length;
+        var section = selectedCourse.sections[i];
+        // Ignore crosslistings.
+        if (section.scheduledWithCcn) {
+          continue;
+        }
+        // If called without a second argument, return a simple count of sections ignoring crosslistings.
+        if (!sectionItem) {
+          count += 1;
+        } else if (section[sectionItem] && section[sectionItem].length) {
+          count += section[sectionItem].length;
         }
       }
       return count;
@@ -86,11 +94,14 @@
       return classes;
     };
 
-    var getClassesSections = function(courses, findWaitlisted) {
+    var getClassesSections = function(courses, findWaitlisted, courseCode) {
       var classes = [];
 
       for (var i = 0; i < courses.length; i++) {
         var course = courses[i];
+        if (courseCode && course.course_code !== courseCode) {
+          continue;
+        }
         var sections = [];
         for (var j = 0; j < course.sections.length; j++) {
           var section = course.sections[j];
@@ -181,6 +192,10 @@
       return count;
     };
 
+    var returnSection = function(section) {
+      return section.section_number;
+    };
+
     var splitMultiplePrimaries = function(originalCourse, enrolledSections) {
       var classes = {};
       for (var i = 0; i < enrolledSections.length; i++) {
@@ -209,6 +224,17 @@
       return classes;
     };
 
+    var textbookRequestInfo = function(course, semester) {
+      var sectionNumbers = course.sections.map(returnSection);
+      var courseInfo = {
+        'sectionNumbers[]': sectionNumbers,
+        'department': course.dept,
+        'courseCatalog': course.courseCatalog,
+        'slug': semester.slug
+      };
+      return courseInfo;
+    };
+
     // Expose methods
     return {
       chooseDefaultSemester: chooseDefaultSemester,
@@ -221,7 +247,8 @@
       hasTeachingClasses: hasTeachingClasses,
       isLSStudent: isLSStudent,
       normalizeGradingData: normalizeGradingData,
-      pastSemestersCount: pastSemestersCount
+      pastSemestersCount: pastSemestersCount,
+      textbookRequestInfo: textbookRequestInfo
     };
   });
 }(window.angular));

@@ -96,6 +96,8 @@
         }
         $scope.selectedCourseCountInstructors = academicsService.countSectionItem($scope.selectedCourse, 'instructors');
         $scope.selectedCourseCountSchedules = academicsService.countSectionItem($scope.selectedCourse, 'schedules');
+        $scope.selectedCourseCountScheduledSections = academicsService.countSectionItem($scope.selectedCourse);
+        $scope.selectedCourseLongInstructorsList = ($scope.selectedCourseCountScheduledSections > 5) || ($scope.selectedCourseCountInstructors > 10);
       }
     };
 
