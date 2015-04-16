@@ -1,6 +1,15 @@
 <div class="cc-page-course-grade-export">
 
   <div data-ng-if="appState === 'loading'">
+
+    <div class="row collapse">
+      <div class="medium-5 columns end">
+        <div class="cc-page-course-grade-export-header">
+          <h1>Preparing E-Grades for Download</h1>
+        </div>
+      </div>
+    </div>
+
     <div data-ng-hide="jobStatus" class="cc-page-course-grade-export-notice-pending-request">
       <i class="fa fa-spinner fa-spin"></i>
       Sending preparation request...
