@@ -1,6 +1,15 @@
 <div class="cc-page-course-grade-export">
 
   <div data-ng-if="appState === 'loading'">
+
+    <div class="row collapse">
+      <div class="medium-5 columns end">
+        <div class="cc-page-course-grade-export-header">
+          <h1>Preparing E-Grades for Download</h1>
+        </div>
+      </div>
+    </div>
+
     <div data-ng-hide="jobStatus" class="cc-page-course-grade-export-notice-pending-request">
       <i class="fa fa-spinner fa-spin"></i>
       Sending preparation request...
@@ -131,12 +140,12 @@
 
             <h3 class="cc-page-course-grade-export-error-grading-scheme-header">Default Grading Scheme</h3>
 
-            <p style="margin: 10px 0;">
+            <p class="cc-page-course-grading-export-error-notice">
               Select to enable and use the default 'Letter Grades +/-' grading scheme below and then click on 'Continue' below.
             </p>
             <div>
               <input id="cc-page-course-grading-export-enable-grading-scheme" type="checkbox"
-              data-ng-model="enableDefaultGradingScheme" aria-label="Enable Default Letter Grades +/- Grading Scheme">
+              data-ng-model="enableDefaultGradingScheme">
               <label for="cc-page-course-grading-export-enable-grading-scheme">Enable and use default Letter Grades +/- grading scheme with E-Grades Download</label>
             </div>
 
