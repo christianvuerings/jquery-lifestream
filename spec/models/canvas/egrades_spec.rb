@@ -161,12 +161,25 @@ describe Canvas::Egrades do
         course_settings['grading_standard_enabled'] = false
         course_settings['grading_standard_id'] = nil
         allow_any_instance_of(Canvas::CourseSettings).to receive(:settings).and_return(course_settings)
+        allow_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_details)
       end
       context "when grading scheme enable confirmed" do
         subject { Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :enable_grading_scheme => true) }
         it "enables grading scheme" do
           expect_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_details)
           subject.canvas_course_student_grades(true)
+        end
+        it "sets the total steps to 30 to temporarily ensure a low reported percentage complete" do
+          expect(subject).to receive(:background_job_set_total_steps).with(30).and_return(nil).ordered
+          expect(subject).to receive(:background_job_set_total_steps).with(3).and_return(nil).ordered
+          expect(subject).to receive(:background_job_set_total_steps).with(3).and_return(nil).ordered
+          subject.canvas_course_student_grades
+        end
+        it "completes the grading scheme enabling step" do
+          expect(subject).to receive(:background_job_complete_step).with('Enabled default grading scheme').ordered
+          expect(subject).to receive(:background_job_complete_step).with('Retrieving Canvas Course Users - Page 1 of 2').ordered
+          expect(subject).to receive(:background_job_complete_step).with('Retrieving Canvas Course Users - Page 2 of 2').ordered
+          subject.canvas_course_student_grades
         end
       end
       context "when grading scheme enable not confirmed" do
