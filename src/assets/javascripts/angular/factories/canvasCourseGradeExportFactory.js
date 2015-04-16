@@ -9,8 +9,10 @@
       return $http.get('/api/academics/canvas/egrade_export/options/' + canvasCourseId);
     };
 
-    var prepareGradesCacheJob = function(canvasCourseId) {
-      return $http.post('/api/academics/canvas/egrade_export/prepare/' + canvasCourseId);
+    var prepareGradesCacheJob = function(canvasCourseId, enableGradingScheme) {
+      return $http.post('/api/academics/canvas/egrade_export/prepare/' + canvasCourseId, {
+        enableGradingScheme: !!enableGradingScheme
+      });
     };
 
     var jobStatus = function(canvasCourseId, jobId) {

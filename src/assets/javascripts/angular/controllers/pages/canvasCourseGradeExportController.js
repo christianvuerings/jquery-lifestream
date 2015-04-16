@@ -10,6 +10,7 @@
 
     $scope.appState = 'initializing';
     $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
+    $scope.enableDefaultGradingScheme = false;
 
     /**
      * Sends message to parent window to switch to gradebook
@@ -67,9 +68,9 @@
     /*
      * Begins grade preloading process
      */
-    var preloadGrades = function() {
+    $scope.preloadGrades = function() {
       $scope.appState = 'loading';
-      canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId).success(function(data) {
+      canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId, $scope.enableDefaultGradingScheme).success(function(data) {
         if (data.jobRequestStatus === 'Success') {
           $scope.backgroundJobId = data.jobId;
           jobStatusLoader();
@@ -172,7 +173,7 @@
           loadOfficialSections(data.officialSections);
         }
         if ($scope.appState !== 'error') {
-          preloadGrades();
+          $scope.preloadGrades();
         }
       }).error(function() {
         $scope.appState = 'error';

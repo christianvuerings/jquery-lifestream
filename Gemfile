@@ -1,8 +1,5 @@
 source 'https://rubygems.org'
 
-# bundler, for managing dependencies
-gem 'bundler', '~> 1.7.0'
-
 # The core framework
 # https://github.com/rails/rails
 gem 'rails', '4.1.8'
