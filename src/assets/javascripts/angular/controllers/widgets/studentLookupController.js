@@ -103,8 +103,8 @@
      */
     $scope.admin.storeRecentUser = function(user) {
       // Make sure the most recently viewed user is at the top of the list
-      $scope.admin.deleteRecentUser(user).success(function() {
-        adminFactory.storeUser({
+      return $scope.admin.deleteRecentUser(user).success(function() {
+        return adminFactory.storeUser({
           uid: user.ldap_uid
         }, 'recent');
       });
@@ -211,10 +211,11 @@
      * Act as another user
      */
     $scope.admin.actAsUser = function(user) {
-      $scope.admin.storeRecentUser(user);
-      return adminFactory.actAs({
-        uid: user.ldap_uid
-      }).success(apiService.util.redirectToSettings);
+      $scope.admin.storeRecentUser(user).then(function() {
+        return adminFactory.actAs({
+          uid: user.ldap_uid
+        }).success(apiService.util.redirectToSettings);
+      });
     };
 
     var establishTabs = function() {
