@@ -466,25 +466,6 @@ describe Canvas::Egrades do
     end
   end
 
-[
-  {"anonymous_peer_reviews"=>false, "assignment_group_id"=>58, "automatic_peer_reviews"=>false,
-    "created_at"=>"2015-04-02T18:43:38Z", "due_at"=>nil, "grade_group_students_individually"=>false,
-    "grading_standard_id"=>nil, "grading_type"=>"points", "group_category_id"=>nil, "id"=>8, "lock_at"=>nil,
-    "peer_reviews"=>false, "points_possible"=>100, "position"=>1, "post_to_sis"=>nil, "unlock_at"=>nil,
-    "updated_at"=>"2015-04-02T18:44:21Z", "course_id"=>17, "name"=>"Assignment 1", "submission_types"=>["online_text_entry"],
-    "has_submitted_submissions"=>false, "description"=>nil, "muted"=>false,
-    "html_url"=>"http://localhost:3100/courses/17/assignments/8", "has_overrides"=>false, "needs_grading_count"=>0,
-    "integration_id"=>nil, "integration_data"=>{}, "published"=>true, "unpublishable"=>true, "locked_for_user"=>false},
-  {"anonymous_peer_reviews"=>false, "assignment_group_id"=>58, "automatic_peer_reviews"=>false,
-    "created_at"=>"2015-04-02T18:43:58Z", "due_at"=>nil, "grade_group_students_individually"=>false,
-    "grading_standard_id"=>nil, "grading_type"=>"points", "group_category_id"=>nil, "id"=>9, "lock_at"=>nil,
-    "peer_reviews"=>false, "points_possible"=>100, "position"=>2, "post_to_sis"=>nil, "unlock_at"=>nil,
-    "updated_at"=>"2015-04-13T19:59:48Z", "course_id"=>17, "name"=>"Assignment 2", "submission_types"=>["online_text_entry"],
-    "has_submitted_submissions"=>false, "description"=>nil, "muted"=>true,
-    "html_url"=>"http://localhost:3100/courses/17/assignments/9", "has_overrides"=>false, "needs_grading_count"=>0,
-    "integration_id"=>nil, "integration_data"=>{}, "published"=>true, "unpublishable"=>true, "locked_for_user"=>false}
-]
-
   context 'when providing muted assignments' do
     let(:course_assignments) {
       [
