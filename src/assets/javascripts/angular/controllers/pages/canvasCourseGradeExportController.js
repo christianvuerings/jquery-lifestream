@@ -55,7 +55,7 @@
     var timeoutPromise;
     var jobStatusLoader = function() {
       timeoutPromise = $timeout(function() {
-        return canvasCourseGradeExportFactory.jobStatus($scope.backgroundJobId)
+        return canvasCourseGradeExportFactory.jobStatus($scope.canvasCourseId, $scope.backgroundJobId)
           .success(statusProcessor)
           .error(function() {
             $scope.errorStatus = 'error';

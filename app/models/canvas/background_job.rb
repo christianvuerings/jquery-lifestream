@@ -7,7 +7,6 @@ module Canvas
   #     include Canvas::BackgroundJob
   #
   #     def perform_work
-  #       background_job_initialize(:job_type => 'special_job', :total_steps => 3)
   #       # do step one
   #       if (error)
   #         background_job_add_error('Something went wrong')
@@ -26,6 +25,7 @@ module Canvas
   #   end
   #
   #   worker = Canvas::MyClass.new(:canvas_course_id => canvas_course_id)
+  #   worker.background_job_initialize(:job_type => 'special_job', :total_steps => 3)
   #   worker.background.perform_work
   #
   module BackgroundJob

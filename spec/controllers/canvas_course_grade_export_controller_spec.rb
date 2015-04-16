@@ -28,7 +28,7 @@ describe CanvasCourseGradeExportController do
       allow(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).and_return(nil)
       allow_any_instance_of(Canvas::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
       allow_any_instance_of(Canvas::Egrades).to receive(:save).and_return(nil)
-      allow_any_instance_of(Canvas::Egrades).to receive(:job_id).and_return(background_job_id)
+      allow_any_instance_of(Canvas::Egrades).to receive(:background_job_id).and_return(background_job_id)
     end
 
     it 'makes call to load canvas course student grades with forced cacheing' do
@@ -44,8 +44,9 @@ describe CanvasCourseGradeExportController do
     it 'supports enable_grading_scheme option' do
       allow(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).with(true).and_return(nil)
       fake_canvas_egrades = double
+      allow(fake_canvas_egrades).to receive(:background_job_initialize).and_return(nil)
       allow(fake_canvas_egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
-      allow(fake_canvas_egrades).to receive(:job_id).and_return(background_job_id)
+      allow(fake_canvas_egrades).to receive(:background_job_id).and_return(background_job_id)
       expect(Canvas::Egrades).to receive(:new).with(:canvas_course_id => canvas_course_id.to_i, :enable_grading_scheme => true).and_return(fake_canvas_egrades)
       post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :enableGradingScheme => 1, :format => :csv
       expect(response.status).to eq(200)

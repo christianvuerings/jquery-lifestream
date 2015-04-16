@@ -52,12 +52,13 @@ module Canvas
     end
 
     def canvas_course_student_grades(force = false)
-      background_job_initialize
-
       course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
       if course_settings.settings(:cache => false)['grading_standard_enabled'].blank?
         if @enable_grading_scheme
+          # faking 1/30 (3%) percentage complete
+          background_job_set_total_steps(30)
           course_settings.set_grading_scheme
+          background_job_complete_step('Enabled default grading scheme')
         else
           raise Errors::BadRequestError, "Enable Grading Scheme action not specified"
         end
