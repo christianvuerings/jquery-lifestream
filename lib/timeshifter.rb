@@ -8,8 +8,6 @@ class Timeshifter
     str
   end
 
-  private
-
   def self.substitutions
     @substitutions ||= build_substitutions
   end
