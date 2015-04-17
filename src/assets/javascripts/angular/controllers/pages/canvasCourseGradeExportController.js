@@ -70,6 +70,7 @@
      */
     $scope.preloadGrades = function() {
       $scope.appState = 'loading';
+      $scope.jobStatus = 'New';
       canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId, $scope.enableDefaultGradingScheme).success(function(data) {
         if (data.jobRequestStatus === 'Success') {
           $scope.backgroundJobId = data.jobId;
