@@ -5,9 +5,11 @@ class BootstrapController < ApplicationController
   before_filter :check_databases_alive, :warmup_live_updates
   layout false
 
-  # Always redirect to public/index.html and let the front-end handle the routes
+  # View code is public/index-main.html (compiled by gulp build).
+  # We don't want to serve index-main statically because that would skip the check_databases_alive and
+  # check_reauthentication code.
   def index
-    render "public/index.html"
+    render 'public/index-main.html'
   end
 
   # CalCentral cannot fully trust a user session which was initiated via an LTI embedded app,

@@ -99,10 +99,12 @@
         bcoursesEmbedded: 'src/bcourses_embedded.html',
         // bCourses Embedded public file
         bcoursesEmbeddedPublic: 'public/bcourses_embedded.html',
-        // index.html file
-        index: 'src/index.html',
-        // index.html public file
-        indexPublic: 'public/index.html',
+        // index file. If it's named index.html, BootstrapController gets skipped due to
+        // hardcoded Rails assumptions about static asset serving. We always want BootstrapController
+        // in the processing chain, so our index is called index-main.html.
+        index: 'src/index-main.html',
+        // index-main.html public file
+        indexPublic: 'public/index-main.html',
         // html files in public/assets
         publicAssets: 'public/assets/*.html',
         // All html files in the source
@@ -267,7 +269,7 @@
           injectOptions
         ))
         .pipe(rename({
-          basename: 'index'
+          basename: 'index-main'
         }))
         .pipe(gulp.dest('public')),
       gulp.src(paths.src.mainTemplates.base)
