@@ -100,9 +100,9 @@
         // bCourses Embedded public file
         bcoursesEmbeddedPublic: 'public/bcourses_embedded.html',
         // index.html file
-        index: 'src/index.html',
+        index: 'src/bootstrap.html',
         // index.html public file
-        indexPublic: 'public/index.html',
+        indexPublic: 'public/bootstrap.html',
         // html files in public/assets
         publicAssets: 'public/assets/*.html',
         // All html files in the source
@@ -267,7 +267,7 @@
           injectOptions
         ))
         .pipe(rename({
-          basename: 'index'
+          basename: 'bootstrap'
         }))
         .pipe(gulp.dest('public')),
       gulp.src(paths.src.mainTemplates.base)
