@@ -3,7 +3,7 @@ application:
 
 app_alerts_proxy:
   fake: true
-  feed_url: "http://ets-dev.berkeley.edu/calcentral-alerts/feed"
+  base_url: "http://ets-dev.berkeley.edu/calcentral-alerts/feed"
 
 bearfacts_proxy:
   fake: true
