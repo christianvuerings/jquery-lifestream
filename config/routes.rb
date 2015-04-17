@@ -121,10 +121,7 @@ Calcentral::Application.routes.draw do
   post '/stop_act_as' => 'act_as#stop', :via => :post
   get '/stored_users' => 'stored_users#get', :via => :get, :defaults => { :format => 'json' }
   post '/store_user/saved' => 'stored_users#store_saved_uid', via: :post, defaults: { format: 'json' }
-  post '/store_user/recent' => 'stored_users#store_recent_uid', via: :post, defaults: { format: 'json' }
   post '/delete_user/saved' => 'stored_users#delete_saved_uid', via: :post, defaults: { format: 'json' }
-  post '/delete_user/recent' => 'stored_users#delete_recent_uid', via: :post, defaults: { format: 'json' }
-
 
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true

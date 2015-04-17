@@ -98,37 +98,16 @@
       });
     };
 
-    /**
-     * Store recent/saved user
-     */
-    $scope.admin.storeRecentUser = function(user) {
-      // Make sure the most recently viewed user is at the top of the list
-      return $scope.admin.deleteRecentUser(user).success(function() {
-        return adminFactory.storeUser({
-          uid: user.ldap_uid
-        }, 'recent');
-      });
-    };
-
     $scope.admin.storeSavedUser = function(user) {
       adminFactory.storeUser({
         uid: user.ldap_uid
-      }, 'saved').success(getStoredUsersUncached);
-    };
-
-    /**
-     * Delete recent/saved user
-     */
-    $scope.admin.deleteRecentUser = function(user) {
-      return adminFactory.deleteUser({
-        uid: user.ldap_uid
-      }, 'recent').success(getStoredUsersUncached);
+      }).success(getStoredUsersUncached);
     };
 
     $scope.admin.deleteSavedUser = function(user) {
       adminFactory.deleteUser({
         uid: user.ldap_uid
-      }, 'saved').success(getStoredUsersUncached);
+      }).success(getStoredUsersUncached);
     };
 
     /**
@@ -211,11 +190,9 @@
      * Act as another user
      */
     $scope.admin.actAsUser = function(user) {
-      $scope.admin.storeRecentUser(user).then(function() {
-        return adminFactory.actAs({
-          uid: user.ldap_uid
-        }).success(apiService.util.redirectToSettings);
-      });
+      return adminFactory.actAs({
+        uid: user.ldap_uid
+      }).success(apiService.util.redirectToSettings);
     };
 
     var establishTabs = function() {
