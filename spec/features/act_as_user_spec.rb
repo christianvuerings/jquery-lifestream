@@ -190,7 +190,6 @@ feature "act_as_user" do
     end
     login_with_cas "238382"
     act_as_user "2040"
-    User::Data.unstub(:where)
     visit "/api/my/up_next"
     response = JSON.parse(page.body)
     response["items"].empty?.should be_truthy
