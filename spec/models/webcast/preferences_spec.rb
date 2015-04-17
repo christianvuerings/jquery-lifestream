@@ -7,7 +7,7 @@ describe Webcast::Preferences do
     end
 
     it 'should deny per uniqueness constraint' do
-      expect { Webcast::Preferences.create params(2016, 'B', 5678, true) }.to raise_error NameError
+      expect { Webcast::Preferences.create params(2016, 'B', 5678, true) }.to raise_exception
     end
 
     it 'should not find matching record' do
