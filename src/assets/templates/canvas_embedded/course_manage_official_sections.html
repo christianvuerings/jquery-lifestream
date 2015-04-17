@@ -88,10 +88,10 @@
 
         <div data-ng-if="currentStagedCount() > 12" class="row">
           <div class="medium-12 columns cc-text-right">
-            <button data-ng-click="changeWorkflowStep('preview')" class="bc-canvas-button" aria-label="Cancel section modifications for this course site">
+            <button data-ng-click="changeWorkflowStep('preview')" class="bc-canvas-button cc-canvas-no-decoration" aria-label="Cancel section modifications for this course site">
               Cancel
             </button>
-            <button data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" class="bc-canvas-button bc-canvas-button-primary" aria-label="Apply pending modifications to this course site">
+            <button data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" class="bc-canvas-button bc-canvas-button-primary cc-canvas-no-decoration" aria-label="Apply pending modifications to this course site">
               Save Changes
             </button>
           </div>
