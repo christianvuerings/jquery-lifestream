@@ -73,7 +73,7 @@
      * Get stored recent/saved users
      */
     var getStoredUsers = function(options) {
-      adminFactory.getStoredUsers(options)
+      return adminFactory.getStoredUsers(options)
         .success(function(data) {
           $scope.admin.storedUsers = data.users;
           // Make sure users have the latest save state
@@ -81,19 +81,19 @@
           checkIfSaved($scope.admin.storedUsers.saved);
           checkIfSaved($scope.admin.storedUsers.recent);
           // Make sure each tab has the latest state
-          establishTabs();
+          updateTabs();
         })
         .error(function() {
           var error = 'There was a problem fetching your items.';
           $scope.admin.savedUsersError = error;
           $scope.admin.recentUsersError = error;
-          establishTabs();
+          updateTabs();
         });
     };
     getStoredUsers();
 
     var getStoredUsersUncached = function() {
-      getStoredUsers({
+      return getStoredUsers({
         refreshCache: true
       });
     };
@@ -111,7 +111,7 @@
     };
 
     $scope.admin.storeSavedUser = function(user) {
-      adminFactory.storeUser({
+      return adminFactory.storeUser({
         uid: user.ldap_uid
       }, 'saved').success(getStoredUsersUncached);
     };
@@ -126,7 +126,7 @@
     };
 
     $scope.admin.deleteSavedUser = function(user) {
-      adminFactory.deleteUser({
+      return adminFactory.deleteUser({
         uid: user.ldap_uid
       }, 'saved').success(getStoredUsersUncached);
     };
@@ -186,7 +186,7 @@
         } else {
           $scope.admin.searchedUsers = checkIfSaved(response.users);
         }
-        establishTabs();
+        updateTabs();
       });
     };
 
@@ -218,8 +218,29 @@
       });
     };
 
+    var updateTabs = function() {
+      var newTabs = establishTabs();
+      // Update the contents of $scope.admin.tabs with everything in newTabs
+      for (var i = 0; i < newTabs.length; i++) {
+        var newTab = newTabs[i];
+        var tab = $scope.admin.tabs[i];
+        // Update tab error message
+        tab.error = newTab.error;
+        // Empty tab.users array or initialize it if undefined
+        if (tab.users) {
+          tab.users.length = 0;
+        } else {
+          tab.users = [];
+        }
+        // Transfer everything from newTab.users to tab.users
+        for (var j = 0; j < newTab.users.length; j++) {
+          tab.users.push(newTab.users[j]);
+        }
+      }
+    };
+
     var establishTabs = function() {
-      $scope.admin.tabs = [
+      return [
         { // Search tab
           name: 'Search',
           error: $scope.admin.searchUsersError,
@@ -237,5 +258,7 @@
         }
       ];
     };
+
+    $scope.admin.tabs = establishTabs();
   });
 })(window, window.angular);
