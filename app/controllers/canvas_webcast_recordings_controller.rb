@@ -1,4 +1,4 @@
-class CanvasMediacastsController < ApplicationController
+class CanvasWebcastRecordingsController < ApplicationController
   include SpecificToCourseSite
 
   before_filter :api_authenticate
@@ -11,7 +11,7 @@ class CanvasMediacastsController < ApplicationController
   def get_media
     raise Errors::BadRequestError, "Bad course site ID #{canvas_course_id}" if canvas_course_id.blank?
     authorize Canvas::Course.new(canvas_course_id: canvas_course_id), :can_view_course?
-    render :json => Canvas::CanvasMediacasts.new(user_id: session['user_id'], course_id: canvas_course_id).get_feed
+    render :json => Canvas::WebcastRecordings.new(user_id: session['user_id'], course_id: canvas_course_id).get_feed
   end
 
 end

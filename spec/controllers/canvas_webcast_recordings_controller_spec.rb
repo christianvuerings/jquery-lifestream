@@ -1,5 +1,3 @@
-require "spec_helper"
-
 shared_examples 'a protected controller' do
   let(:user_id) { rand(99999).to_s }
   before do
@@ -14,7 +12,7 @@ shared_examples 'a protected controller' do
       expect(Canvas::CourseUser).to receive(:new).with(user_id: user_id, course_id: canvas_course_id).and_return(
         double(course_user: {enrollments: [role: 'StudentEnrollment']})
       )
-      expect(Canvas::CanvasMediacasts).to receive(:new).with(user_id: user_id, course_id: canvas_course_id).and_return(
+      expect(Canvas::WebcastRecordings).to receive(:new).with(user_id: user_id, course_id: canvas_course_id).and_return(
         double(get_feed: {videos: []})
       )
     end
@@ -31,7 +29,7 @@ shared_examples 'a protected controller' do
       expect(Canvas::CourseUser).to receive(:new).with(user_id: user_id, course_id: canvas_course_id).and_return(
         double(course_user: nil)
       )
-      expect(Canvas::CanvasMediacasts).to_not receive(:new)
+      expect(Canvas::WebcastRecordings).to_not receive(:new)
     end
     it 'returns 403 error' do
       make_request
@@ -44,7 +42,7 @@ shared_examples 'a protected controller' do
       allow(Canvas::CourseUser).to receive(:new).with(user_id: user_id, course_id: canvas_course_id).and_return(
         double(course_user: nil)
       )
-      expect(Canvas::CanvasMediacasts).to receive(:new).with(user_id: user_id, course_id: canvas_course_id).and_return(
+      expect(Canvas::WebcastRecordings).to receive(:new).with(user_id: user_id, course_id: canvas_course_id).and_return(
         double(get_feed: {videos: []})
       )
     end
@@ -57,12 +55,13 @@ shared_examples 'a protected controller' do
   end
 end
 
-describe CanvasMediacastsController do
+describe CanvasWebcastRecordingsController do
+
   let(:canvas_course_id) { rand(99999) }
 
   context 'in CalCentral context with explicit Canvas course ID' do
     let(:make_request) { get :get_media, canvas_course_id: canvas_course_id.to_s }
-    it_behaves_like "a user authenticated api endpoint"
+    it_behaves_like 'a user authenticated api endpoint'
     it_behaves_like 'a protected controller'
   end
 
