@@ -85,6 +85,10 @@ class CanvasLtiController < ApplicationController
     lti_xml_configuration
   end
 
+  def lti_course_webcast_sign_up
+    lti_xml_configuration
+  end
+
   def lti_course_grade_export
     lti_xml_configuration
   end
