@@ -9,6 +9,18 @@ describe Canvas::CourseProvision do
   let(:teaching_ccn) { random_ccn }
   let(:official_sections) { [{:term_yr=>'2013', :term_cd=>'D', :ccn=>teaching_ccn}] }
   let(:superuser_id) { rand(99999).to_s }
+  let(:teaching_section) { { :ccn => teaching_ccn, :instruction_format => 'DIS', :is_primary_section => false, :section_label => 'DIS 102', :section_number => '102' } }
+  let(:teaching_class) do
+    {
+      :slug => 'engin-7',
+      :title => 'Introduction to Computer Programming for Scientists and Engineers',
+      :role => 'Instructor',
+      :listings => [
+        { :course_code => 'ENGIN 7', :dept => 'ENGIN' }
+      ],
+      :sections => [ teaching_section ]
+    }
+  end
   let(:teaching_semesters) {
     [
       {
@@ -16,18 +28,7 @@ describe Canvas::CourseProvision do
         :slug => 'fall-2013',
         :termCode => 'D',
         :termYear => '2013',
-        :classes => [
-          {
-            :course_code => 'ENGIN 7',
-            :dept => 'ENGIN',
-            :slug => 'engin-7',
-            :title => 'Introduction to Computer Programming for Scientists and Engineers',
-            :role => 'Instructor',
-            :sections => [
-              { :ccn => teaching_ccn, :instruction_format => 'DIS', :is_primary_section => false, :section_label => 'DIS 102', :section_number => '102' }
-            ]
-          }
-        ]
+        :classes => [ teaching_class ]
       }
     ]
   }
@@ -296,6 +297,82 @@ describe Canvas::CourseProvision do
       course_info = {term: {term_yr: '2013', term_cd: 'C'}, officialSections: bigger_site_sections}
       inaccessible = subject.find_nonteaching_site_sections(teaching_semesters, course_info)
       expect(inaccessible).to eq missing_sections
+    end
+  end
+
+  describe '#merge_non_teaching_site_sections' do
+    subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
+    before { subject.merge_non_teaching_site_sections(teaching_semesters, non_teaching_sections) }
+
+    context 'non-teaching section in existing course' do
+      let(:non_teaching_sections_list) {[
+        {ccn: random_ccn, is_primary_section: true, section_label: 'LEC 001'},
+        {ccn: random_ccn, is_primary_section: true, section_label: 'LEC 002'},
+        {ccn: random_ccn, is_primary_section: false, section_label: 'DIS 101'},
+        {ccn: random_ccn, is_primary_section: false, section_label: 'DIS 103'},
+        {ccn: random_ccn, is_primary_section: false, section_label: 'DIS 201'},
+        {ccn: random_ccn, is_primary_section: false, section_label: 'LAB 100'},
+      ]}
+
+      let(:non_teaching_sections) do
+        [{termYear: teaching_semesters.first[:termYear],
+          termCode: teaching_semesters.first[:termCode],
+          classes: [{
+            course_code: teaching_semesters.first[:classes].first[:listings].first[:course_code],
+            sections: non_teaching_sections_list.shuffle
+          }]
+        }]
+      end
+
+      it 'adds sections in standard ordering' do
+        expect(teaching_semesters.first[:classes].first[:sections]).to eq non_teaching_sections_list.insert(3, teaching_section)
+      end
+    end
+
+    context 'non-teaching section in different course' do
+      let(:non_teaching_courses_list) do
+        [
+          {listings: [{course_code: 'ANTHRO 999'}, {course_code: 'SANSKRIT 999'}], sections: [{ccn: random_ccn}]},
+          {listings: [{course_code: 'ENGIN 2C'}], sections: [{ccn: random_ccn}]},
+          {listings: [{course_code: 'ENGIN 99'}], sections: [{ccn: random_ccn}]},
+          {listings: [{course_code: 'ENGIN 101L'}], sections: [{ccn: random_ccn}]},
+          {listings: [{course_code: 'ENGIN C103'}], sections: [{ccn: random_ccn}]},
+          {listings: [{course_code: 'ENGIN C107L'}, {course_code: 'NUCLEARENG C107L'}], sections: [{ccn: random_ccn}]},
+          {listings: [{course_code: 'ENGIN 110'}], sections: [{ccn: random_ccn}]},
+          {listings: [{course_code: 'ENGIN 110L'}], sections: [{ccn: random_ccn}]},
+          {listings: [{course_code: 'ENGIN C112'}], sections: [{ccn: random_ccn}]},
+          {listings: [{course_code: 'ENGIN C112L'}], sections: [{ccn: random_ccn}]},
+          {listings: [{course_code: 'MCELLBI 10'}], sections: [{ccn: random_ccn}]},
+        ]
+      end
+
+      let(:non_teaching_sections) do
+        [{
+          termYear: teaching_semesters.first[:termYear],
+          termCode: teaching_semesters.first[:termCode],
+          classes: non_teaching_courses_list.shuffle
+        }]
+      end
+
+      it 'adds courses in standard ordering' do
+        expect(teaching_semesters.first[:classes]).to eq non_teaching_courses_list.insert(2, teaching_class)
+      end
+    end
+
+    context 'non-teaching section in different term' do
+      let(:non_teaching_sections) do
+        [{termYear: '2014',
+            termCode: 'D',
+            classes: [
+              course_code: 'ENGIN 100',
+              sections: [{ccn: random_ccn}]
+            ]
+          }]
+      end
+
+      it 'appends new term' do
+        expect(teaching_semesters.last).to eq non_teaching_sections.first
+      end
     end
   end
 

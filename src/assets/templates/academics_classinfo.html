@@ -31,7 +31,7 @@
     <div class="medium-4 columns cc-academics-row-margin">
       <div class="cc-widget">
         <div class="cc-widget-title">
-          <h2>Class information</h2>
+          <h2>Class Information</h2>
         </div>
         <div class="cc-widget-padding">
           <h3>Class Title</h3>
@@ -64,11 +64,10 @@
             </table>
           </div>
 
-          <h3 data-ng-if="selectedCourseCountSchedules || selectedCourse.units || selectedCourse.gradeOption">Class Info</h3>
+          <h3 data-ng-if="!isInstructorOrGsi && (selectedCourseCountSchedules || selectedCourse.units || selectedCourse.gradeOption)">Class Info</h3>
 
-          <h4 data-ng-hide="isInstructorOrGsi">Course Offering</h4>
-
-          <div data-ng-hide="isInstructorOrGsi" class="cc-table">
+          <h4 data-ng-if="!isInstructorOrGsi">Course Offering</h4>
+          <div data-ng-if="!isInstructorOrGsi" class="cc-table">
             <table class="cc-academics-class-info" data-ng-repeat="section in selectedCourse.sections" data-ng-if="section.is_primary_section">
               <tbody>
                 <tr class="cc-academics-class-primary-row" data-ng-if="selectedCourse.multiplePrimaries && !selectedSection">
@@ -87,7 +86,8 @@
             </table>
           </div>
 
-          <h4 data-ng-if="selectedCourseCountSchedules">Section Schedules</h4>
+          <h3 data-ng-if="isInstructorOrGsi && selectedCourseCountSchedules">Section Schedules</h3>
+          <h4 data-ng-if="!isInstructorOrGsi && selectedCourseCountSchedules">Section Schedules</h4>
 
           <div class="row collapse" data-ng-repeat="section in selectedCourse.sections" data-ng-if="!section.scheduledWithCcn">
             <div class="small-3 columns" data-ng-if="section.schedules && section.schedules.length" data-ng-bind="section.section_label"></div>
@@ -100,6 +100,7 @@
           </div>
         </div>
       </div>
+      <div data-ng-if="selectedCourseLongInstructorsList" data-ng-include="'academics_class_sites.html'" ></div>
     </div>
 
     <div class="medium-4 columns" data-ng-if="selectedCourseCountInstructors">
@@ -122,25 +123,7 @@
           </div>
         </div>
       </div>
-      <div class="cc-widget" data-ng-if="selectedCourse.class_sites.length">
-        <div class="cc-widget-title">
-          <h2>Class Sites</h2>
-        </div>
-        <div class="cc-widget-padding">
-          <ul class="cc-academics-class-sites-list">
-            <li data-ng-repeat="site in selectedCourse.class_sites" class="cc-icon-container">
-              <i class="cc-left cc-icon" data-ng-class="'cc-icon-{{site.emitter|lowercase}}'"></i>
-              <div class="cc-class-site">
-                <a data-ng-href="{{site.site_url}}"
-                   data-ng-click="api.analytics.trackExternalLink('Class Sites', group.emitter, site.site_url)">
-                  <strong class="cc-ellipsis" data-ng-bind="site.name"></strong>
-                </a>
-                <div data-ng-if="site.shortDescription != site.name && site.shortDescription != selectedCourse.title" data-ng-bind="site.shortDescription" class="cc-ellipsis cc-text-light"></div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <div data-ng-if="!selectedCourseLongInstructorsList" data-ng-include="'academics_class_sites.html'" ></div>
     </div>
 
     <div class="medium-4 columns cc-column-last">
@@ -158,11 +141,14 @@
         </div>
         <div data-cc-spinner-directive>
           <div class="cc-widget-padding">
-            <div data-ng-if="books.items.length">
-              <div data-ng-include="'textbook.html'"></div>
-            </div>
-            <div class="cc-text-line-height" data-ng-if="!books.items.length" data-ng-bind="books.bookUnavailableError"></div>
-            <div class="cc-text-line-height" data-ng-if="textbookError.body" data-ng-bind="textbookError.body">
+            <div class="cc-text-line-height" data-ng-if="!textbooksCount && textbookError.body" data-ng-bind="textbookError.body"></div>
+            <div data-ng-if="textbooksCount" data-ng-repeat="sectionBookList in bookListsBySection" class="cc-academics-class-textbooks">
+              <h3 class="cc-book-title" data-ng-bind="sectionBookList.sectionLabel" data-ng-if="bookListsBySection.length > 1"></h3>
+              <div data-ng-repeat="books in sectionBookList">
+                <div data-ng-if="books.items.length" data-ng-include="'textbook.html'"></div>
+                <div class="cc-text-line-height" data-ng-if="!books.items.length" data-ng-bind="books.bookUnavailableError"></div>
+              </div>
+              <div class="cc-text-line-height" data-ng-if="textbooksCount && sectionBookList.errorMessage" data-ng-bind="sectionBookList.errorMessage"></div>
             </div>
           </div>
         </div>

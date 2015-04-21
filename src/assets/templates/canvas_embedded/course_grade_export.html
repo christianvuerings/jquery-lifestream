@@ -1,6 +1,15 @@
 <div class="cc-page-course-grade-export">
 
   <div data-ng-if="appState === 'loading'">
+
+    <div class="row collapse">
+      <div class="medium-5 columns end">
+        <div class="cc-page-course-grade-export-header">
+          <h1>Preparing E-Grades for Download</h1>
+        </div>
+      </div>
+    </div>
+
     <div data-ng-hide="jobStatus" class="cc-page-course-grade-export-notice-pending-request">
       <i class="fa fa-spinner fa-spin"></i>
       Sending preparation request...
@@ -72,6 +81,13 @@
         <p class="cc-page-course-grade-export-more-info-container">
           For more information, see <a href="http://ets.berkeley.edu/bcourses/how-do-i-submit-grades-e-grades-bcourses">How do I Submit Grades to E-Grades from bCourses?</a>
         </p>
+        <p class="cc-page-course-grade-export-more-info-container">
+          Updated Gradebook?
+          <button class="bc-canvas-button cc-page-course-grade-export-refresh-button" data-ng-click="preloadGrades()">
+            <i class="fa fa-refresh"></i>
+            Refresh Prepared Grades
+          </button>
+        </p>
       </div>
     </div>
 
@@ -82,7 +98,7 @@
     </div>
   </div>
 
-  <div data-ng-if="appState === 'error'">
+  <div data-ng-show="appState === 'error'">
 
     <!-- Standard Error -->
     <div data-ng-if="errorStatus">
@@ -95,7 +111,7 @@
     </div>
 
     <!-- No Grading Standard Enabled -->
-    <div data-ng-if="!errorStatus && (noGradingStandardEnabled || mutedAssignmentsPresent)">
+    <div data-ng-show="!errorStatus && (noGradingStandardEnabled || mutedAssignmentsPresent)">
 
       <div class="row collapse">
         <div class="medium-12 columns">
@@ -110,7 +126,7 @@
         </div>
       </div>
 
-      <div data-ng-if="noGradingStandardEnabled">
+      <div data-ng-show="noGradingStandardEnabled" class="cc-page-course-grading-export-error">
         <div class="row collapse">
           <div class="medium-12 columns">
 
@@ -119,37 +135,44 @@
                 <i class="fa fa-exclamation-triangle cc-icon-yellow cc-page-course-grade-export-error-notice-icon"></i>
               </div>
               <div class="cc-page-course-grading-export-error-notice-cell">
-                Letter grades are required by the E-Grades system. A grading scheme must be applied to calculate student letter grades.
+                In order to download E-Grades, a grading scheme must be enabled.
               </div>
               <div class="cc-clearfix"></div>
             </div>
 
-            <h2 class="cc-page-course-grade-export-sub-header">Set a Grading Scheme</h2>
+            <h2 class="cc-page-course-grade-export-sub-header">Set Grading Scheme</h2>
 
-            <p>
-              Select to enable and use the default 'Letter Grades +/-' grading scheme below and then click on 'Continue'.
+            <p>A grading scheme must be enabled to calculate student letter grades. You can choose to enable the
+            default grading scheme, or manually enable a custom grading scheme.</p>
+
+            <h3 class="cc-page-course-grade-export-error-grading-scheme-header">Default Grading Scheme</h3>
+
+            <p class="cc-page-course-grading-export-error-notice">
+              Select to enable and use the default 'Letter Grades +/-' grading scheme below and then click on 'Continue' below.
             </p>
+            <div>
+              <input id="cc-page-course-grading-export-enable-grading-scheme" type="checkbox"
+              data-ng-model="enableDefaultGradingScheme">
+              <label for="cc-page-course-grading-export-enable-grading-scheme">Enable and use default Letter Grades +/- grading scheme with E-Grades Download</label>
+            </div>
+
+            <h3 class="cc-page-course-grade-export-error-grading-scheme-header">Custom Grading Scheme</h3>
+
             <p>
               If you need to choose an alternative grading scheme for your course site other than the default scheme,
               please edit and enable the grading scheme in the
-              <button class="cc-button-link" data-ng-click="goToCourseDetails()">course details</button> page for this course site.
+              <button class="cc-button-link" data-ng-click="goToCourseSettings()">course settings</button> page for this course site.
               Once this step is completed, return here and try again.
             </p>
             <p>
               For more information see <a href="http://guides.instructure.com/m/4152/l/57089-how-do-i-enable-a-grading-scheme-for-my-course">How do I enable a grading scheme for my course?</a>
             </p>
 
-            <div>
-              <input id="cc-page-course-grading-export-enable-grading-scheme" type="checkbox"
-              data-ng-model="enableDefaultGradingScheme" aria-label="Enable Default Letter Grades +/- Grading Scheme">
-              <label for="cc-page-course-grading-export-enable-grading-scheme">Enable and use default Letter Grades +/- grading scheme with E-Grades Download</label>
-            </div>
-
           </div>
         </div>
       </div>
 
-      <div data-ng-if="mutedAssignmentsPresent">
+      <div data-ng-if="mutedAssignmentsPresent" class="cc-page-course-grading-export-error">
         <div class="row collapse">
           <div class="medium-12 columns">
 
@@ -208,8 +231,8 @@
       <div class="row collapse">
         <div class="medium-12 columns end">
           <div class="cc-text-right">
-            <button class="cc-button-link cc-page-button-grey" type="button" data-ng-click="goToGradebook()" type="button" aria-label="Go Back to Gradebook">Back</button>
-            <button data-ng-disabled="!enableDefaultGradingScheme" data-ng-click="preloadGrades()" class="bc-canvas-button bc-canvas-button-primary" type="submit">Continue</button>
+            <button class="cc-button-link cc-page-button-grey cc-page-course-grading-export-back-link" type="button" data-ng-click="goToGradebook()" type="button" aria-label="Go Back to Gradebook">Back</button>
+            <button data-ng-click="preloadGrades()" data-ng-disabled="!enableDefaultGradingScheme" class="bc-canvas-button bc-canvas-button-primary" type="submit">Continue</button>
           </div>
         </div>
       </div>

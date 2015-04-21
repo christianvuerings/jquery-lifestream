@@ -1,6 +1,4 @@
-require "spec_helper"
-
-describe Canvas::CanvasMediacasts do
+describe Canvas::WebcastRecordings do
 
   describe '#get_feed' do
     let(:canvas_course_id) { rand(99999) }
@@ -11,7 +9,7 @@ describe Canvas::CanvasMediacasts do
         double(body: canvas_course_sections_list.to_json, status: 200)
       )
     end
-    subject { Canvas::CanvasMediacasts.new(course_id: canvas_course_id).get_feed }
+    subject { Canvas::WebcastRecordings.new(course_id: canvas_course_id).get_feed }
     context 'when the Canvas course site maps to campus class sections' do
       let(:canvas_course_sections_list) do
         [

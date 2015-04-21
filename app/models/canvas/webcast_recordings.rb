@@ -1,5 +1,5 @@
 module Canvas
-  class CanvasMediacasts
+  class WebcastRecordings
     extend Cache::Cacheable
     include ClassLogger
 

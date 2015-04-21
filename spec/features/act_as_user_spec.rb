@@ -4,32 +4,35 @@ feature "act_as_user" do
   before do
     @target_uid = "978966"
     @fake_events_list = GoogleApps::EventsList.new(fake: true)
-    User::Auth.new_or_update_superuser! "238382"
-    User::Auth.new_or_update_superuser! "2040"
+    User::Auth.new_or_update_superuser! '238382'
+    User::Auth.new_or_update_superuser! '2040'
+    User::Data.create({uid: '238382'})
+    User::Data.create({uid: '2040'})
     Settings.features.stub(:reauthentication).and_return(false)
   end
 
-  scenario "switch to another user and back while using a super-user" do
+  scenario 'switch to another user and back while using a super-user' do
     # disabling the cache_warmer while we're switching back and forth between users
     # The switching back triggers a cache invalidation, while the warming thread is still running.
     Cache::UserCacheWarmer.stub(:warm).and_return(nil)
-    User::Data.stub(:where, :uid => '2040').and_return("tricking the first login check")
-    login_with_cas "238382"
+    login_with_cas '238382'
     suppress_rails_logging {
-      act_as_user "2040"
+      act_as_user '2040'
     }
-    User::Data.unstub(:where)
-    visit "/api/my/status"
+    visit '/api/my/status'
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_truthy
-    response["uid"].should == "2040"
+    response['isLoggedIn'].should be_truthy
+    response['uid'].should == '2040'
     suppress_rails_logging {
      stop_act_as_user
     }
-    visit "/api/my/status"
+    visit '/api/my/status'
     response = JSON.parse(page.body)
-    response["isLoggedIn"].should be_truthy
-    response["uid"].should == "238382"
+    response['isLoggedIn'].should be_truthy
+    response['uid'].should == '238382'
+    visit '/stored_users'
+    response = JSON.parse(page.body)
+    response['users']['recent'][0]['ldap_uid'].should == '2040'
   end
 
   scenario "make sure admin users can act as a user who has never signed in before" do
@@ -71,7 +74,6 @@ feature "act_as_user" do
 
     # you don't want the admin user to delete an existing "viewed as" user's data row
     viewed_user_uid = "2040"
-    fake_user = User::Data.create(:uid=>viewed_user_uid)
     User::Data.where(:uid=>viewed_user_uid).should_not be_empty
     suppress_rails_logging {
       act_as_user "2040"
@@ -179,7 +181,6 @@ feature "act_as_user" do
     Cache::UserCacheWarmer.stub(:warm).and_return(nil)
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::EventsList.stub(:new).and_return(@fake_events_list)
-    User::Data.stub(:where, :uid => '2040').and_return("tricking the first login check")
     %w(238382 2040 11002820).each do |user|
       login_with_cas user
       visit "/api/my/up_next"
@@ -189,7 +190,6 @@ feature "act_as_user" do
     end
     login_with_cas "238382"
     act_as_user "2040"
-    User::Data.unstub(:where)
     visit "/api/my/up_next"
     response = JSON.parse(page.body)
     response["items"].empty?.should be_truthy

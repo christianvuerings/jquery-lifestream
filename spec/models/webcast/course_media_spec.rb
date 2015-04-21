@@ -68,7 +68,7 @@ describe Webcast::CourseMedia do
     }
   end
 
-  context 'when serving mediacasts' do
+  context 'when serving Webcast recordings' do
 
     subject { Webcast::CourseMedia.new(2008, 'D', 'LAW', '2723') }
 
@@ -81,7 +81,7 @@ describe Webcast::CourseMedia do
     end
 
     context 'when proxy error message is blank' do
-      it 'should return mediacasts' do
+      it 'should return Webcast recordings' do
         subject.should_receive(:get_playlist).and_return empty_proxy_error_hash
         subject.should_receive(:get_videos_as_json).and_return fake_video_result
         result = subject.get_feed

@@ -62,7 +62,7 @@ Calcentral::Application.routes.draw do
   get '/api/academics/canvas/egrade_export/options/:canvas_course_id' => 'canvas_course_grade_export#export_options', :defaults => { :format => 'json' }
   get '/api/academics/canvas/egrade_export/is_official_course' => 'canvas_course_grade_export#is_official_course', :defaults => { :format => 'json' }
   get '/api/academics/canvas/egrade_export/status/:canvas_course_id' => 'canvas_course_grade_export#job_status', :defaults => { :format => 'json' }
-  post '/api/academics/canvas/egrade_export/prepare/:canvas_course_id.csv' => 'canvas_course_grade_export#prepare_grades_cache', :defaults => { :format => 'json' }
+  post '/api/academics/canvas/egrade_export/prepare/:canvas_course_id' => 'canvas_course_grade_export#prepare_grades_cache', :defaults => { :format => 'json' }
   get '/api/academics/rosters/canvas/:canvas_course_id' => 'canvas_rosters#get_feed', :as => :canvas_roster, :defaults => { :format => 'json' }
   get '/api/academics/rosters/campus/:campus_course_id' => 'campus_rosters#get_feed', :as => :campus_roster, :defaults => { :format => 'json' }
   get '/api/academics/rosters/canvas/csv/:canvas_course_id' => 'canvas_rosters#get_csv', :as => :canvas_roster_csv, :defaults => { :format => 'csv' }
@@ -82,7 +82,7 @@ Calcentral::Application.routes.draw do
   get '/api/academics/canvas/course_add_user/:canvas_course_id/search_users' => 'canvas_course_add_user#search_users', :via => :get, :as => :canvas_course_add_user_search_users, :defaults => { :format => 'json' }
   get '/api/academics/canvas/course_add_user/:canvas_course_id/course_sections' => 'canvas_course_add_user#course_sections', :via => :get, :as => :canvas_course_add_user_course_sections, :defaults => { :format => 'json' }
   post '/api/academics/canvas/course_add_user/:canvas_course_id/add_user' => 'canvas_course_add_user#add_user', :via => :post, :as => :canvas_course_add_user_add_user, :defaults => { :format => 'json' }
-  get '/api/canvas/media/:canvas_course_id' => 'canvas_mediacasts#get_media', :defaults => { :format => 'json' }
+  get '/api/canvas/media/:canvas_course_id' => 'canvas_webcast_recordings#get_media', :defaults => { :format => 'json' }
 
   # System utility endpoints
   get '/api/cache/clear' => 'cache#clear', :defaults => { :format => 'json' }
@@ -121,10 +121,7 @@ Calcentral::Application.routes.draw do
   post '/stop_act_as' => 'act_as#stop', :via => :post
   get '/stored_users' => 'stored_users#get', :via => :get, :defaults => { :format => 'json' }
   post '/store_user/saved' => 'stored_users#store_saved_uid', via: :post, defaults: { format: 'json' }
-  post '/store_user/recent' => 'stored_users#store_recent_uid', via: :post, defaults: { format: 'json' }
   post '/delete_user/saved' => 'stored_users#delete_saved_uid', via: :post, defaults: { format: 'json' }
-  post '/delete_user/recent' => 'stored_users#delete_recent_uid', via: :post, defaults: { format: 'json' }
-
 
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true

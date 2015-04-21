@@ -46,13 +46,13 @@ module MyClasses
             listing[:id] = "#{listing[:id]}-#{section[:section_number]}"
           end
           working_course[:listings].first[:courseCodeSection] = "#{section[:instruction_format]} #{section[:section_number]}"
+          working_course[:site_url] << "/#{section[:instruction_format].downcase}-#{section[:section_number]}"
         end
         if section[:waitlistPosition] && section[:waitlistPosition] > 0
           working_course[:enroll_limit] = section[:enroll_limit]
           working_course[:waitlistPosition] = section[:waitlistPosition]
         end
         working_course[:sections] = [section]
-        working_course[:site_url] << "/#{section[:instruction_format].downcase}-#{section[:section_number]}"
         working_course.delete :course_option
         class_list << working_course
       end

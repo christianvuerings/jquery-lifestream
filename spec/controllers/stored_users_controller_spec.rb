@@ -73,27 +73,6 @@ describe StoredUsersController do
 
   end
 
-  describe '#store_recent_uid' do
-
-    it 'should return error_response on invalid uid' do
-      post :store_recent_uid, { format: 'json', uid: 'not_numeric' }
-      expect(response.status).to eq(400)
-      json_response = JSON.parse(response.body)
-      expect(json_response['success']).to eq false
-      expect(json_response['message']).to eq 'Please provide a numeric UID.'
-    end
-
-    it 'should return success_response on valid uid' do
-      User::StoredUsers.should_receive(:store_recent_uid).with('1234', '100').and_return(success_response)
-
-      post :store_recent_uid, { format: 'json', uid: '100' }
-      expect(response.status).to eq(200)
-      json_response = JSON.parse(response.body)
-      expect(json_response['success']).to eq true
-    end
-
-  end
-
   describe '#delete_saved_uid' do
 
     it 'should return error_response on invalid uid' do
@@ -108,27 +87,6 @@ describe StoredUsersController do
       User::StoredUsers.should_receive(:delete_saved_uid).with('1234', '100').and_return(success_response)
 
       post :delete_saved_uid, { format: 'json', uid: '100' }
-      expect(response.status).to eq(200)
-      json_response = JSON.parse(response.body)
-      expect(json_response['success']).to eq true
-    end
-
-  end
-
-  describe '#delete_recent_uid' do
-
-    it 'should return error_response on invalid uid' do
-      post :delete_recent_uid, { format: 'json', uid: 'not_numeric' }
-      expect(response.status).to eq(400)
-      json_response = JSON.parse(response.body)
-      expect(json_response['success']).to eq false
-      expect(json_response['message']).to eq 'Please provide a numeric UID.'
-    end
-
-    it 'should return success_response on valid uid' do
-      User::StoredUsers.should_receive(:delete_recent_uid).with('1234', '100').and_return(success_response)
-
-      post :delete_recent_uid, { format: 'json', uid: '100' }
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
       expect(json_response['success']).to eq true

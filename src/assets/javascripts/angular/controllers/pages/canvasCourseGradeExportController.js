@@ -21,9 +21,9 @@
     };
 
     /**
-     * Sends message to parent window to go to Course Details
+     * Sends message to parent window to go to Course Settings
      */
-    $scope.goToCourseDetails = function() {
+    $scope.goToCourseSettings = function() {
       var courseDetailsUrl = $scope.canvasRootUrl + '/courses/' + $scope.canvasCourseId + '/settings#tab-details';
       if (!!window.parent.frames.length) {
         apiService.util.iframeParentLocation(courseDetailsUrl);
@@ -55,7 +55,7 @@
     var timeoutPromise;
     var jobStatusLoader = function() {
       timeoutPromise = $timeout(function() {
-        return canvasCourseGradeExportFactory.jobStatus($scope.backgroundJobId)
+        return canvasCourseGradeExportFactory.jobStatus($scope.canvasCourseId, $scope.backgroundJobId)
           .success(statusProcessor)
           .error(function() {
             $scope.errorStatus = 'error';
@@ -70,6 +70,7 @@
      */
     $scope.preloadGrades = function() {
       $scope.appState = 'loading';
+      $scope.jobStatus = 'New';
       canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId, $scope.enableDefaultGradingScheme).success(function(data) {
         if (data.jobRequestStatus === 'Success') {
           $scope.backgroundJobId = data.jobId;

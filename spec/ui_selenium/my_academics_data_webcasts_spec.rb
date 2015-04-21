@@ -49,10 +49,9 @@ describe 'My Academics webcasts card', :testui => true do
               it "shows the audio tab by default for UID #{uid}" do
                 expect(has_right_default_tab).to be true
               end
-              my_academics.video_tab
-              has_no_video_message = my_academics.no_video_msg?
-              it "shows a 'no video' message for UID #{uid}" do
-                expect(has_no_video_message).to be true
+              has_video_tab = my_academics.video_tab?
+              it "shows no video tab for UID #{uid}" do
+                expect(has_video_tab).to be false
               end
             elsif video_you_tube_id.nil? && audio_url.nil?
               has_no_webcast_message = my_academics.no_webcast_msg?
@@ -65,10 +64,9 @@ describe 'My Academics webcasts card', :testui => true do
               it "shows the video tab by default for UID #{uid}" do
                 expect(has_right_default_tab).to be true
               end
-              my_academics.audio_tab
-              has_no_audio_message = my_academics.no_audio_msg?
-              it "shows a 'no audio' message for UID #{uid}" do
-                expect(has_no_audio_message).to be true
+              has_audio_tab = my_academics.audio_tab?
+              it "shows no audio tab for UID #{uid}" do
+                expect(has_audio_tab).to be false
               end
             else
               my_academics.video_thumbnail_element.when_present(timeout=WebDriverUtils.academics_timeout)
@@ -79,8 +77,7 @@ describe 'My Academics webcasts card', :testui => true do
             end
 
             unless video_you_tube_id.nil?
-              my_academics.video_tab_element.when_present(timeout=WebDriverUtils.page_event_timeout)
-              my_academics.video_tab
+              my_academics.video_thumbnail_element.when_present(timeout=WebDriverUtils.page_event_timeout)
               all_visible_video_lectures = my_academics.video_select_element.options.length
               thumbnail_present = my_academics.video_thumbnail_element.attribute('src').include? video_you_tube_id
               auto_play = my_academics.you_tube_video_auto_plays?(driver)
@@ -102,8 +99,11 @@ describe 'My Academics webcasts card', :testui => true do
             end
 
             unless audio_url.nil?
-              my_academics.audio_tab_element.when_present(timeout=WebDriverUtils.page_event_timeout)
-              my_academics.audio_tab
+              unless video_you_tube_id.nil?
+                my_academics.audio_tab_element.when_present(timeout=WebDriverUtils.page_event_timeout)
+                my_academics.audio_tab
+              end
+              my_academics.audio_source_element.when_present(timeout=WebDriverUtils.page_event_timeout)
               all_visible_audio_lectures = my_academics.audio_select_element.options.length
               audio_player_present = my_academics.audio_source_element.attribute('src').include? audio_url
               it "shows all the available lecture audio recordings for UID #{uid}" do
