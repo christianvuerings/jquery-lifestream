@@ -167,11 +167,11 @@
           loadSectionTerms(data.sectionTerms);
         }
         if ($scope.appState !== 'error') {
-          handleGradingStandardState(data.gradingStandardEnabled);
-          handleMutedAssignments(data.mutedAssignments);
+          loadOfficialSections(data.officialSections);
         }
         if ($scope.appState !== 'error') {
-          loadOfficialSections(data.officialSections);
+          handleGradingStandardState(data.gradingStandardEnabled);
+          handleMutedAssignments(data.mutedAssignments);
         }
         if ($scope.appState !== 'error') {
           $scope.preloadGrades();
