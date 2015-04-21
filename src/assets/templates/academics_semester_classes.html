@@ -1,17 +1,17 @@
 <div class="cc-widget">
   <div class="cc-widget-title">
-    <h2><span data-ng-bind="widgetSemesterName + ' '"></span>Classes</h2>
+    <h2 class="cc-left"><span data-ng-bind="widgetSemesterName + ' '"></span>Classes</h2>
+    <a class="cc-academics-classes-booklist-link cc-right"
+       data-ng-href="/academics/booklist/{{selectedSemester.slug}}"
+       data-ng-if="selectedSemester.hasEnrollmentData && selectedSemester.timeBucket !== 'past'">Book List</a>
   </div>
   <div data-ng-if="selectedStudentSemester || ((selectedSemester.timeBucket === 'current') && !selectedTeachingSemester)">
     <div class="cc-academics-subtitle">
       <h3>Enrollments</h3>
     </div>
     <div class="cc-widget-padding">
-      <h3 class="cc-left" data-ng-if="selectedSemester.timeBucket === 'current'">Current</h3>
-      <a class="cc-academics-enrollments-booklist-link cc-right"
-         data-ng-href="/academics/booklist/{{selectedSemester.slug}}"
-         data-ng-if="selectedSemester.hasEnrollmentData && selectedSemester.timeBucket !== 'past'">Book List</a>
-      <div class="cc-clearfix cc-table">
+      <h3 data-ng-if="selectedSemester.timeBucket === 'current'">Current</h3>
+      <div class="cc-table">
         <table data-ng-if="selectedCourses.length">
           <thead>
             <th scope="col" class="cc-table-right-spacing">Course Number</th>
