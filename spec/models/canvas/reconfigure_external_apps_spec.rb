@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Canvas::ReconfigureExternalApps do
   let(:fake_canvas_host) {'https://ucberkeley.beta.instructure.com'}
   let(:fake_calcentral_host) {'cc-dev.example.com'}
@@ -10,7 +8,7 @@ describe Canvas::ReconfigureExternalApps do
   describe '#reset_external_app_hosts_by_url' do
     context 'when servers need resetting' do
       let(:new_calcentral_host) {'jabberwock.example.com'}
-      it "resets all hosted apps" do
+      it 'resets all hosted apps' do
         fake_external_tools_list = fake_external_tools_proxy.external_tools_list
         external_tools_proxy = double()
         external_tools_proxy.should_receive(:external_tools_list).exactly(2).times.and_return(fake_external_tools_list)
@@ -24,7 +22,7 @@ describe Canvas::ReconfigureExternalApps do
     end
 
     context 'when servers are already up to date' do
-      it "leaves hosted apps alone" do
+      it 'leaves hosted apps alone' do
         fake_external_tools_list = fake_external_tools_proxy.external_tools_list
         external_tools_proxy = double()
         external_tools_proxy.should_receive(:external_tools_list).twice.and_return(fake_external_tools_list)
@@ -125,7 +123,8 @@ describe Canvas::ReconfigureExternalApps do
 
   describe '#configure_all_apps_from_current_host' do
     let(:unknown_tool_id) {random_id}
-    let(:webcasts_id) {random_id}
+    let(:webcast_tool_id) {random_id}
+    let(:webcast_sign_up_tool_id) {random_id}
     let(:egrades_id) {random_id}
     let(:accounts_mocks) do
       external_accounts_hash = {}
@@ -145,9 +144,15 @@ describe Canvas::ReconfigureExternalApps do
         },
         {
           'consumer_key' => random_id,
-          'id' => webcasts_id,
+          'id' => webcast_tool_id,
           'name' => 'America\'s Highest Educational Videos',
           'url' => "#{Settings.canvas_proxy.app_provider_host}/canvas/embedded/course_mediacasts"
+        },
+        {
+          'consumer_key' => random_id,
+          'id' => webcast_sign_up_tool_id,
+          'name' => 'Sign up for the Webcast service',
+          'url' => "#{Settings.canvas_proxy.app_provider_host}/canvas/embedded/course_webcast_sign_up"
         }
       ]
       external_accounts_hash[Settings.canvas_proxy.official_courses_account_id][:tools_feed] = [
@@ -155,7 +160,7 @@ describe Canvas::ReconfigureExternalApps do
           'consumer_key' => random_id,
           'id' => egrades_id,
           'name' => 'Download E-Grades',
-          'url' => "https://not.really.the.same.webhost/canvas/embedded/course_grade_export"
+          'url' => 'https://not.really.the.same.webhost/canvas/embedded/course_grade_export'
         }
       ]
       external_accounts_hash
@@ -178,7 +183,7 @@ describe Canvas::ReconfigureExternalApps do
     it 'overwrites existing known apps and adds others' do
       Canvas::ReconfigureExternalApps.new.configure_all_apps_from_current_host
       main_account = accounts_mocks[Settings.canvas_proxy.account_id]
-      expect(main_account[:received_resets]).to eq [webcasts_id]
+      expect(main_account[:received_resets]).to eq [webcast_tool_id, webcast_sign_up_tool_id]
       expect(main_account[:received_creates]).to include 'Find a Person to Add'
       official_courses_account = accounts_mocks[Settings.canvas_proxy.official_courses_account_id]
       expect(official_courses_account[:received_resets]).to eq [egrades_id]
