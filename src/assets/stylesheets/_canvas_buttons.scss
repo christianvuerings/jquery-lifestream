@@ -24,10 +24,11 @@ $bc-canvas-button-selected-color: #fff;
   overflow: hidden;
   padding: 8px 14px;
   transition: background-color .2s ease-in-out;
-  &:hover, &:active, &:focus, &:link {
+  &:hover, &:active, &:focus {
     background: $bc-canvas-button-hover-background;
     border-color: $bc-canvas-button-hover-border;
     color: $bc-color-grey-text;
+    text-decoration: none;
   }
   &[disabled] {
     color: $bc-color-grey-text;
@@ -47,7 +48,7 @@ $bc-canvas-button-selected-color: #fff;
   background: $bc-canvas-button-primary-background;
   border: 1px solid $bc-canvas-button-primary-border;
   color: $bc-color-white;
-  &:hover, &:active, &:focus, &:link {
+  &:hover, &:active, &:focus {
     background: $bc-canvas-button-primary-hover-background;
     border-color: $bc-canvas-button-primary-hover-border;
     box-shadow: none;

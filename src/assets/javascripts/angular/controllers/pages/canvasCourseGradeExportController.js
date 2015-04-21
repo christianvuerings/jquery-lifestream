@@ -132,20 +132,24 @@
       }
     };
 
-    /* Load and initialize application based on grading standard state for course */
-    var handleGradingStandardState = function(gradingStandardEnabled) {
+    /* Load and initialize application based on grading standard and muted assignment states for course */
+    var validateCourseState = function(gradingStandardEnabled, mutedAssignments) {
+      $scope.mutedAssignments = mutedAssignments;
+
       if (!gradingStandardEnabled) {
         $scope.appState = 'error';
         $scope.noGradingStandardEnabled = true;
+        $scope.validationNotice = 'In order to download E-Grades, a <strong>grading scheme</strong> must be <strong>enabled</strong>.';
       }
-    };
 
-    /* Load and initialize application based on muted Assignments */
-    var handleMutedAssignments = function(mutedAssignments) {
-      $scope.mutedAssignments = mutedAssignments;
       if (mutedAssignments.length > 0) {
         $scope.appState = 'error';
         $scope.mutedAssignmentsPresent = true;
+        $scope.validationNotice = 'In order to download E-Grades, all <strong>assignments</strong> must be <strong>unmuted</strong>.';
+      }
+
+      if (!gradingStandardEnabled && mutedAssignments.length > 0) {
+        $scope.validationNotice = 'In order to download E-Grades, a <strong>grading scheme</strong> must be <strong>enabled</strong> and all <strong>assignments</strong> must be <strong>unmuted</strong>.';
       }
     };
 
@@ -170,8 +174,7 @@
           loadOfficialSections(data.officialSections);
         }
         if ($scope.appState !== 'error') {
-          handleGradingStandardState(data.gradingStandardEnabled);
-          handleMutedAssignments(data.mutedAssignments);
+          validateCourseState(data.gradingStandardEnabled, data.mutedAssignments);
         }
         if ($scope.appState !== 'error') {
           $scope.preloadGrades();
