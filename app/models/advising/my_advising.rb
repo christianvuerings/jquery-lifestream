@@ -3,6 +3,7 @@ module Advising
     include Cache::LiveUpdatesEnabled
     include Cache::FeedExceptionsHandled
     include HttpRequester
+    include Proxies::Mockable
     include SafeJsonParser
     include User::Student
     include ClassLogger
@@ -11,6 +12,7 @@ module Advising
       super(uid, options)
       @settings = Settings.advising_proxy
       @fake = (options[:fake] != nil) ? options[:fake] : @settings.fake
+      initialize_mocks if @fake
     end
 
     def default_message_on_exception
@@ -33,32 +35,24 @@ module Advising
         return {}
       end
 
-      if @fake
-        logger.info "Fake = #{@fake}, getting data from JSON fixture file; user #{@uid}; cache expiration #{self.class.expires_in}"
-        json = File.read(Rails.root.join('fixtures', 'json', 'advising.json').to_s)
-        parsed_json = safe_json(json)
-        status_code = 200
+      url = "#{@settings.base_url}/student/#{student_id}"
+      logger.info "get_parsed_response: Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+      response = get_response(
+        url,
+        basic_auth: {username: @settings.username, password: @settings.password},
+        on_error: {rescue_status: 404}
+      )
+      if response.code == 404
+        logger.debug "404 response from advising API for user #{@uid}"
+        parsed_json = {'body' => 'No advising data could be found for your account.'}
       else
-        url = "#{@settings.base_url}/student/#{student_id}"
-        logger.info "Internal_get: Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-        response = get_response(
-          url,
-          basic_auth: {username: @settings.username, password: @settings.password},
-          on_error: {rescue_status: 404}
-        )
-        status_code = response.code
-        if status_code == 404
-          logger.debug "404 response from advising API for user #{@uid}"
-          parsed_json = {'body' => 'No advising data could be found for your account.'}
-        else
-          unless (parsed_json = safe_json(response.body))
-            raise Errors::ProxyError.new('Empty response', response: response, url: url, uid: uid)
-          end
+        unless (parsed_json = safe_json(response.body))
+          raise Errors::ProxyError.new('Empty response', response: response, url: url, uid: uid)
         end
-        logger.debug "Advising remote response: #{response.inspect}"
       end
+      logger.debug "Advising remote response: #{response.inspect}"
 
-      sanitize_response(parsed_json).merge(statusCode: status_code)
+      sanitize_response(parsed_json).merge(statusCode: response.code)
     end
 
     def sanitize_response(response)
@@ -84,6 +78,10 @@ module Advising
         logger.warn "Received invalid appointment data for user #{@uid}: #{appt}"
         false
       end
+    end
+
+    def mock_json
+      read_file('fixtures', 'json', 'advising.json')
     end
 
   end
