@@ -23,8 +23,17 @@
       var previousSemester = {};
       var previousSemesterCompare = false;
       var selectedSemesterCompare = selectedSemester.termYear + selectedSemester.termCode;
-      angular.forEach(semestersLists, function(semesterList) {
-        angular.forEach(semesterList, function(semester) {
+      for (var i = 0; i < semestersLists.length; i++) {
+        var semesterList = semestersLists[i];
+        if (!semesterList) {
+          continue;
+        }
+        var isStudentSemesterList = (i === 0);
+        for (var j = 0; j < semesterList.length; j++) {
+          var semester = semesterList[j];
+          if (isStudentSemesterList && !semester.hasEnrollmentData) {
+            continue;
+          }
           var cmp = semester.termYear + semester.termCode;
           if ((cmp < selectedSemesterCompare) && (!previousSemesterCompare || (cmp > previousSemesterCompare))) {
             previousSemesterCompare = cmp;
@@ -33,8 +42,8 @@
             nextSemesterCompare = cmp;
             nextSemester.slug = semester.slug;
           }
-        });
-      });
+        }
+      }
       $scope.nextSemester = nextSemester;
       $scope.previousSemester = previousSemester;
       $scope.previousNextSemesterShow = (nextSemesterCompare || previousSemesterCompare);
