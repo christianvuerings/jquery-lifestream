@@ -175,7 +175,7 @@
         </div>
       </div>
 
-      <div data-ng-show="noGradingStandardEnabled" class="cc-page-course-grading-export-error">
+      <div data-ng-show="noGradingStandardEnabled && !mutedAssignmentsPresent" class="cc-page-course-grading-export-error">
         <div class="row collapse">
           <div class="medium-12 columns">
 
@@ -196,15 +196,11 @@
               <div class="cc-clearfix"></div>
             </div>
 
-          </div>
-        </div>
-      </div>
+            <div class="cc-text-right">
+              <button class="bc-canvas-button cc-page-course-grading-export-back-link" type="button" data-ng-click="goToGradebook()" type="button" aria-label="Go Back to Gradebook">Cancel</button>
+              <button data-ng-click="preloadGrades()" data-ng-disabled="!enableDefaultGradingScheme" class="bc-canvas-button bc-canvas-button-primary" type="submit">Continue</button>
+            </div>
 
-      <div class="row collapse">
-        <div class="medium-12 columns end">
-          <div class="cc-text-right">
-            <button class="bc-canvas-button cc-page-course-grading-export-back-link" type="button" data-ng-click="goToGradebook()" type="button" aria-label="Go Back to Gradebook">Cancel</button>
-            <button data-ng-click="preloadGrades()" data-ng-disabled="!enableDefaultGradingScheme" class="bc-canvas-button bc-canvas-button-primary" type="submit">Continue</button>
           </div>
         </div>
       </div>
