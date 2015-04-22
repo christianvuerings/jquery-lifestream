@@ -17,14 +17,14 @@ bundle install --local --retry 3 || { echo "WARNING: bundle install --local fail
 bundle package --all || { echo "WARNING: bundle package failed"; exit 1; }
 
 # set up environment
-export RAILS_ENV=testext
+export RAILS_ENV=${RAILS_ENV:="testext"}
 export DISPLAY=":99"
 export JRUBY_OPTS="-Xcext.enabled=true -J-Xmx900m -J-XX:MaxPermSize=500m -J-Djruby.compile.mode=OFF"
 
 # run the tests
 if [ "$2" == "uitest" ]; then
   # run UI tests if we've been given a second arg
-  echo "Running UI tests"
+  echo "Running UI tests with RAILS_ENV=$RAILS_ENV"
   export UI_TEST=true
   bundle exec rake spec:xml
 else
