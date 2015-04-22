@@ -130,17 +130,21 @@
         </div>
       </div>
 
-      <div class="cc-notice-box cc-notice-warning cc-radius cc-page-course-grading-export-error-notice">
-        <div class="cc-left cc-page-course-grading-export-error-notice-cell">
-          <i class="fa fa-exclamation-triangle cc-icon-yellow cc-page-course-grade-export-error-notice-icon"></i>
-        </div>
-        <div class="cc-page-course-grading-export-error-notice-cell" data-ng-bind-html="validationNotice"></div>
-        <div class="cc-clearfix"></div>
-      </div>
-
       <div data-ng-if="mutedAssignmentsPresent" class="cc-page-course-grading-export-error">
+
         <div class="row collapse">
           <div class="medium-12 columns">
+
+            <div class="cc-notice-box cc-notice-warning cc-radius cc-page-course-grading-export-error-notice">
+              <div class="cc-left cc-page-course-grading-export-error-notice-cell">
+                <i class="fa fa-exclamation-triangle cc-icon-yellow cc-page-course-grade-export-error-notice-icon"></i>
+              </div>
+              <div class="cc-page-course-grading-export-error-notice-cell">
+                In order to download E-Grades, all <strong>assignments</strong> must be <strong>unmuted</strong>.
+              </div>
+              <div class="cc-clearfix"></div>
+            </div>
+
             <h2 class="cc-page-course-grade-export-sub-header">Unmute All Assignments</h2>
             <p class="cc-page-course-grade-export-error-description">
               E-Grade.csv exports cannot be properly calculated when assignments within the Gradebook are muted.<br>
@@ -183,6 +187,16 @@
       <div data-ng-show="noGradingStandardEnabled && !mutedAssignmentsPresent" class="cc-page-course-grading-export-error">
         <div class="row collapse">
           <div class="medium-12 columns">
+
+            <div class="cc-notice-box cc-notice-warning cc-radius cc-page-course-grading-export-error-notice">
+              <div class="cc-left cc-page-course-grading-export-error-notice-cell">
+                <i class="fa fa-exclamation-triangle cc-icon-yellow cc-page-course-grade-export-error-notice-icon"></i>
+              </div>
+              <div class="cc-page-course-grading-export-error-notice-cell">
+                In order to download E-Grades, a <strong>grading scheme</strong> must be <strong>enabled</strong>.
+              </div>
+              <div class="cc-clearfix"></div>
+            </div>
 
             <h2 class="cc-page-course-grade-export-sub-header">Set Grading Scheme</h2>
             <p class="cc-page-course-grade-export-error-description">

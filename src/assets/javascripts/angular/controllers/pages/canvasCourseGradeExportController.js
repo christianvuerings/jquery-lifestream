@@ -156,17 +156,13 @@
     /* Load and initialize application based on grading standard and muted assignment states for course */
     var validateCourseState = function(gradingStandardEnabled, mutedAssignments) {
       $scope.mutedAssignments = mutedAssignments;
-
       if (!gradingStandardEnabled) {
         $scope.appState = 'error';
         $scope.noGradingStandardEnabled = true;
-        $scope.validationNotice = 'In order to download E-Grades, a <strong>grading scheme</strong> must be <strong>enabled</strong>.';
       }
-
       if (mutedAssignments.length > 0) {
         $scope.appState = 'error';
         $scope.mutedAssignmentsPresent = true;
-        $scope.validationNotice = 'In order to download E-Grades, all <strong>assignments</strong> must be <strong>unmuted</strong>.';
       }
     };
 
