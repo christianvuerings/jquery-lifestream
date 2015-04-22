@@ -251,7 +251,7 @@
                 var egradesItem = [
                   '<a class="ui-button" id="download_csv" href="' + linkUrl + '">',
                   '<i class="icon-export"></i>',
-                  'E-Grades',
+                  ' E-Grades',
                   '</a>'
                 ].join('');
                 $gradebookToolbarMenuButtons.append(egradesItem);
