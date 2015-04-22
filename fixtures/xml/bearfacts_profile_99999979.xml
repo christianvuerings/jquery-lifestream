@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<studentProfile asOfDate="August 08, 2013 12:00 AM" termName="Fall" termYear="2013" xmlns="urn:berkeley.edu/babl">
+  <showRegistrationAlertMsg>false</showRegistrationAlertMsg>
+  <regBlockStatusCode>0</regBlockStatusCode>
+  <studentType>STUDENT</studentType>
+  <ugGradFlag>U</ugGradFlag>
+  <noProfileDataFlag>false</noProfileDataFlag>
+  <studentGeneralProfile>
+    <corpEducLevel>SENIOR</corpEducLevel>
+    <nonAPLevel>SENIOR</nonAPLevel>
+    <studentName>
+      <firstName>WWOPQUQWWW</firstName>
+      <middleName/>
+      <middleInitial/>
+      <lastName>EBBEITSTBBB</lastName>
+    </studentName>
+    <birthDate>05/18/1969</birthDate>
+    <sex>F</sex>
+    <collegePrimary>CONCURNT</collegePrimary>
+    <collegeSecond>NAT RES</collegeSecond>
+    <collegeThird>ENV DSGN</collegeThird>
+    <majorPrimary>DOUBLE</majorPrimary>
+    <majorSecond>CONSERV&amp;RSRC STUDIES</majorSecond>
+    <majorThird>LANDSCAPE ARCH</majorThird>
+    <anticipGradDate>30-MAY-14</anticipGradDate>
+    <isActiveAthlete>false</isActiveAthlete>
+    <isInternational>false</isInternational>
+    <isConfidential>false</isConfidential>
+  </studentGeneralProfile>
+  <studentTermProfile>
+    <adminCancel>false</adminCancel>
+    <registration>NOT REGISTERED</registration>
+    <unitsEnrolled>12.0</unitsEnrolled>
+    <confirmedSchedule>PERM. ADDRESS</confirmedSchedule>
+    <academicStatus>GOOD STANDING</academicStatus>
+    <californiaResidencyStatus>CALIFORNIA RESIDENT</californiaResidencyStatus>
+    <regSpecialProgram>NONE</regSpecialProgram>
+    <newStudent>false</newStudent>
+  </studentTermProfile>
+  <underGradReqProfile>
+    <subjectA>REQT SATISFIED</subjectA>
+    <americanHistory>REQT SATISFIED</americanHistory>
+    <americanInstitutions>REQT SATISFIED</americanInstitutions>
+    <americanCultures>REQT SATISFIED</americanCultures>
+  </underGradReqProfile>
+  <studentContacts>
+    <studentContact addressType="LOCAL" badAddressFlag="false">
+      <address disclosure="false">
+        <streetOne>5555 QPE TPW E YQU</streetOne>
+        <city>BERKELEY</city>
+        <state>CA</state>
+        <postalCode>94703</postalCode>
+        <postalCodeTwo/>
+      </address>
+      <phone disclosure="false">
+        <telAreaCode>800</telAreaCode>
+        <telExchange>555</telExchange>
+        <telNumber>9588</telNumber>
+      </phone>
+      <lastUpdateDate>2010-12-28 00:00:00.0</lastUpdateDate>
+      <lastUpdateUserId>UGAP100</lastUpdateUserId>
+    </studentContact>
+    <studentContact addressType="BILLING" badAddressFlag="false">
+      <address disclosure="false"/>
+      <phone disclosure="false"/>
+    </studentContact>
+    <studentContact addressType="PERMANENT" badAddressFlag="false">
+      <address disclosure="false">
+        <streetOne>5555 QPE TPW E YQU</streetOne>
+        <city>BERKELEY</city>
+        <state>CA</state>
+        <postalCode>94703</postalCode>
+        <postalCodeTwo/>
+      </address>
+      <phone disclosure="false">
+        <telAreaCode>800</telAreaCode>
+        <telExchange>555</telExchange>
+        <telNumber>5788</telNumber>
+      </phone>
+      <lastUpdateDate>2010-12-28 00:00:00.0</lastUpdateDate>
+      <lastUpdateUserId>UGAP100</lastUpdateUserId>
+    </studentContact>
+    <emailAddress>not_a_real_name@domain.edu</emailAddress>
+    <emailDisclosure>false</emailDisclosure>
+    <emailLastUpdateDate>2011-05-02 00:00:00.0</emailLastUpdateDate>
+    <emailLastUpdateUserId>STUDENT</emailLastUpdateUserId>
+    <badEmailAddressFlag>false</badEmailAddressFlag>
+    <addressAvailableFlag>true</addressAvailableFlag>
+  </studentContacts>
+</studentProfile>

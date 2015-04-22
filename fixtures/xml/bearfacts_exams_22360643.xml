@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<studentFinalExamSchedules xmlns="urn:berkeley.edu/babl" termName="Fall" termYear="2013" termCode="D" asOfDate="May 08, 2013 12:00 AM" sortBy="2">
+  <isExtensionStudent>false</isExtensionStudent>
+  <studentFinalExamSchedule>
+    <studentFinalExamScheduleKey>
+      <deptName>Media Studies</deptName>
+      <courseRootNum>104</courseRootNum>
+      <courseSuf1Num>A</courseSuf1Num>
+      <primSecFlag>P</primSecFlag>
+      <sectNum>001</sectNum>
+      <instructnFormatDet>LEC</instructnFormatDet>
+      <courseTitle>Freedom of Speech and the Press</courseTitle>
+      <examDate>2013-05-15 00:00:00.0</examDate>
+      <startTime>1130</startTime>
+      <startTimeAmPmFlag>A</startTimeAmPmFlag>
+      <endTime>0230</endTime>
+      <endTimeAmPmFlag>P</endTimeAmPmFlag>
+      <courseControlNumber>56742</courseControlNumber>
+      <finalExamGroup>10</finalExamGroup>
+    </studentFinalExamScheduleKey>
+    <instructor>TURNER, W B</instructor>
+    <studentFinalExamLocation>
+      <location>F295 HAAS</location>
+    </studentFinalExamLocation>
+  </studentFinalExamSchedule>
+  <studentFinalExamSchedule>
+    <studentFinalExamScheduleKey>
+      <deptName>French</deptName>
+      <courseRootNum>004</courseRootNum>
+      <primSecFlag>P</primSecFlag>
+      <sectNum>003</sectNum>
+      <instructnFormatDet>LEC</instructnFormatDet>
+      <courseTitle>Advanced Intermediate French</courseTitle>
+      <examDate>2013-05-16 00:00:00.0</examDate>
+      <startTime>1130</startTime>
+      <startTimeAmPmFlag>A</startTimeAmPmFlag>
+      <endTime>0230</endTime>
+      <endTimeAmPmFlag>P</endTimeAmPmFlag>
+      <courseControlNumber>32302</courseControlNumber>
+      <finalExamGroup>14</finalExamGroup>
+    </studentFinalExamScheduleKey>
+    <instructor>SYLVIA, O G</instructor>
+    <studentFinalExamLocation>
+      <location>185 BARROWS</location>
+    </studentFinalExamLocation>
+  </studentFinalExamSchedule>
+  <studentFinalExamSchedule>
+    <studentFinalExamScheduleKey>
+      <deptName>Media Studies</deptName>
+      <courseRootNum>101</courseRootNum>
+      <primSecFlag>P</primSecFlag>
+      <sectNum>001</sectNum>
+      <instructnFormatDet>LEC</instructnFormatDet>
+      <courseTitle>Visual Communications</courseTitle>
+      <examDate>2013-05-16 00:00:00.0</examDate>
+      <startTime>0300</startTime>
+      <startTimeAmPmFlag>P</startTimeAmPmFlag>
+      <endTime>0600</endTime>
+      <endTimeAmPmFlag>P</endTimeAmPmFlag>
+      <courseControlNumber>56706</courseControlNumber>
+      <finalExamGroup>15</finalExamGroup>
+    </studentFinalExamScheduleKey>
+    <instructor>JACKSON, J</instructor>
+    <studentFinalExamLocation>
+      <location>1 PIMENTEL</location>
+    </studentFinalExamLocation>
+  </studentFinalExamSchedule>
+</studentFinalExamSchedules>

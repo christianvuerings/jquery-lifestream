@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<studentClassSchedules asOfDate="May 28, 2013 12:00 AM" termCode="B" termName="Summer" termYear="2013" xmlns="urn:berkeley.edu/babl">
+  <isRegistered>true</isRegistered>
+  <isEnrolled>true</isEnrolled>
+  <studentType>STUDENT</studentType>
+  <ugGradStatus>U</ugGradStatus>
+  <classSchedule>
+    <courseControlNumber>57206</courseControlNumber>
+    <deptName>AEROSPC</deptName>
+    <courseNumber>1B</courseNumber>
+    <instructnFormatDet>LEC</instructnFormatDet>
+    <sectNum>001</sectNum>
+    <primSecFlag>P</primSecFlag>
+    <pnpFlag/>
+    <numberOfUnits>1.0</numberOfUnits>
+    <buildingCode>HEARST GYM</buildingCode>
+    <roomNum>188</roomNum>
+    <weekGroup>F</weekGroup>
+    <startTime>0900</startTime>
+    <startTimeAmPmFlag>A</startTimeAmPmFlag>
+    <endTime>1000</endTime>
+    <endTimeAmPmFlag>A</endTimeAmPmFlag>
+    <isEdd>false</isEdd>
+    <instrShortName>BOONE, M M</instrShortName>
+    <courseTitle>FOUND US AIR FORCE</courseTitle>
+  </classSchedule>
+  <classSchedule>
+    <courseControlNumber>57215</courseControlNumber>
+    <deptName>AEROSPC</deptName>
+    <courseNumber>100</courseNumber>
+    <instructnFormatDet>LAB</instructnFormatDet>
+    <sectNum>001</sectNum>
+    <primSecFlag>P</primSecFlag>
+    <pnpFlag>Y</pnpFlag>
+    <buildingCode>BARROWS</buildingCode>
+    <roomNum>166</roomNum>
+    <weekGroup>F</weekGroup>
+    <startTime>0200</startTime>
+    <startTimeAmPmFlag>P</startTimeAmPmFlag>
+    <endTime>0400</endTime>
+    <endTimeAmPmFlag>P</endTimeAmPmFlag>
+    <isEdd>false</isEdd>
+    <instrShortName>BOONE, M M</instrShortName>
+    <courseTitle>LEADERSHIP LAB</courseTitle>
+  </classSchedule>
+  <studentTermUnitTotal>
+    <enrollUnitTotal>1.0</enrollUnitTotal>
+    <waitListUnitTotal>0.0</waitListUnitTotal>
+    <workloadUnitTotal>1.0</workloadUnitTotal>
+    <enrollIncludingWaitListTotal>1.0</enrollIncludingWaitListTotal>
+  </studentTermUnitTotal>
+</studentClassSchedules>

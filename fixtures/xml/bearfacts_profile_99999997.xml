@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<studentProfile asOfDate="August 13, 2013 12:00 AM" termName="Fall" termYear="2013" xmlns="urn:berkeley.edu/babl">
+  <showRegistrationAlertMsg>false</showRegistrationAlertMsg>
+  <regBlockStatusCode>0</regBlockStatusCode>
+  <studentType>STUDENT</studentType>
+  <ugGradFlag>G</ugGradFlag>
+  <noProfileDataFlag>false</noProfileDataFlag>
+  <studentGeneralProfile>
+    <corpEducLevel>DOCTORAL</corpEducLevel>
+    <futureTBLevel>ADV DOC</futureTBLevel>
+    <studentName>
+      <firstName>QQEOQU</firstName>
+      <middleName/>
+      <middleInitial/>
+      <lastName>PTTWETS</lastName>
+    </studentName>
+    <birthDate>01/16/1986</birthDate>
+    <sex>F</sex>
+    <collegePrimary>LAW</collegePrimary>
+    <majorPrimary>DOUBLE</majorPrimary>
+    <majorSecond>JURSPRDNCE&amp;SOC POLCY</majorSecond>
+    <majorThird>LAW</majorThird>
+    <anticipGradDate>30-MAY-15</anticipGradDate>
+    <isActiveAthlete>false</isActiveAthlete>
+    <isInternational>false</isInternational>
+    <isConfidential>false</isConfidential>
+  </studentGeneralProfile>
+  <studentTermProfile>
+    <adminCancel>false</adminCancel>
+    <registration>REGISTERED</registration>
+    <unitsEnrolled>12.0</unitsEnrolled>
+    <confirmedSchedule>PERM. ADDRESS</confirmedSchedule>
+    <academicStatus>GOOD STANDING</academicStatus>
+    <californiaResidencyStatus>CALIFORNIA RESIDENT</californiaResidencyStatus>
+    <regSpecialProgram>NONE</regSpecialProgram>
+    <degreeCandidateDate></degreeCandidateDate>
+    <newStudent>false</newStudent>
+  </studentTermProfile>
+  <underGradReqProfile/>
+  <studentContacts>
+    <studentContact addressType="LOCAL" badAddressFlag="false">
+      <address disclosure="false">
+        <streetOne>55 QRQ QW</streetOne>
+        <city>SAN FRANCISCO</city>
+        <postalCode>94103</postalCode>
+        <postalCodeTwo/>
+      </address>
+      <phone disclosure="false"/>
+      <lastUpdateDate>2011-06-14 00:00:00.0</lastUpdateDate>
+      <lastUpdateUserId>REGP311</lastUpdateUserId>
+    </studentContact>
+    <studentContact addressType="BILLING" badAddressFlag="false">
+      <address disclosure="false"/>
+      <phone disclosure="false"/>
+    </studentContact>
+    <studentContact addressType="PERMANENT" badAddressFlag="false">
+      <address disclosure="false">
+        <streetOne>55 QRQ QW</streetOne>
+        <city>SAN FRANCISCO</city>
+        <state>CA</state>
+        <postalCode>94103</postalCode>
+        <postalCodeTwo/>
+      </address>
+      <phone disclosure="false"/>
+      <lastUpdateDate>2011-06-14 00:00:00.0</lastUpdateDate>
+      <lastUpdateUserId>REGP311</lastUpdateUserId>
+    </studentContact>
+    <emailAddress>not_a_real_name@domain.edu</emailAddress>
+    <emailDisclosure>false</emailDisclosure>
+    <emailLastUpdateDate>2011-06-22 00:00:00.0</emailLastUpdateDate>
+    <emailLastUpdateUserId>STUDENT</emailLastUpdateUserId>
+    <badEmailAddressFlag>false</badEmailAddressFlag>
+    <addressAvailableFlag>true</addressAvailableFlag>
+  </studentContacts>
+</studentProfile>
