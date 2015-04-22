@@ -2,10 +2,14 @@
   background-color: $bc-color-white;
   font-family: $bc-header-font-family;
   font-size: 14px;
+  font-weight: 300;
   padding: 15px 25px;
 
   // Reset to avoid default Foundation form styling
   p {
+    font-family: $bc-header-font-family;
+    font-size: 14px;
+    font-weight: 300;
     margin-bottom: 10px;
   }
 
@@ -98,6 +102,7 @@
   }
 
   .cc-page-course-grading-export-muted-assignments-table {
+    margin-bottom: 35px;
     th, td {
       padding: 14px 20px;
     }
