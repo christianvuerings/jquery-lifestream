@@ -113,6 +113,20 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 // bCourses Shared Template Styles
 // ***********************************
 
+.cc-template-back-icon {
+  color: $bc-color-link-blue;
+  font-size: 15px;
+}
+
+.cc-template-back-button-link {
+  &:active, &:hover, &:visited, &:link {
+    font-family: $bc-header-font-family;
+    font-size: 14px;
+  }
+  font-family: $bc-header-font-family;
+  font-size: 14px;
+}
+
 // Error display for remote background jobs
 .cc-template-background-job-error {
   background-color: $bc-color-notice-red-bg;

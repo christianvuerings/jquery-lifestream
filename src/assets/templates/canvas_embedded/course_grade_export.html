@@ -28,8 +28,7 @@
   <div data-ng-if="appState === 'ready'">
     <div class="row collapse">
       <div class="medium-12 columns">
-        <i class="fa fa-angle-left cc-page-course-grade-export-back-icon"></i>&nbsp;
-        <button class="cc-button-link cc-page-course-grade-export-back-button-link" data-ng-click="goToGradebook()">Back to Gradebook</button>
+        <div data-ng-include src="'canvas_embedded/_shared/back_to_gradebook_link.html'"></div>
       </div>
     </div>
 
@@ -118,8 +117,7 @@
       <div class="row collapse">
         <div class="medium-12 columns">
           <div class="cc-page-course-grade-export-back-link">
-            <i class="fa fa-angle-left cc-page-course-grade-export-back-icon"></i>&nbsp;
-            <button class="cc-button-link cc-page-course-grade-export-back-button-link" data-ng-click="goToGradebook()">Back to Gradebook</button>
+            <div data-ng-include src="'canvas_embedded/_shared/back_to_gradebook_link.html'"></div>
           </div>
         </div>
       </div>
