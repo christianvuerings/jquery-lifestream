@@ -87,6 +87,27 @@
       });
     };
 
+    $scope.getExportOptions = function() {
+      canvasCourseGradeExportFactory.exportOptions($scope.canvasCourseId).success(function(data) {
+        if ($scope.appState !== 'error') {
+          loadSectionTerms(data.sectionTerms);
+        }
+        if ($scope.appState !== 'error') {
+          loadOfficialSections(data.officialSections);
+        }
+        if ($scope.appState !== 'error') {
+          validateCourseState(data.gradingStandardEnabled, data.mutedAssignments);
+        }
+        if ($scope.appState !== 'error') {
+          $scope.preloadGrades();
+        }
+      }).error(function() {
+        $scope.appState = 'error';
+        $scope.contactSupport = true;
+        $scope.errorStatus = 'Unable to obtain course settings.';
+      });
+    };
+
     /**
      * Performs authorization check on user to control interface presentation
      */
@@ -98,7 +119,7 @@
 
         $scope.userAuthorized = userIsAuthorized($scope.courseUserRoles);
         if ($scope.userAuthorized) {
-          getExportOptions();
+          $scope.getExportOptions();
         } else {
           $scope.appState = 'error';
           $scope.errorStatus = 'You must be a teacher in this bCourses course to export to E-Grades CSV.';
@@ -159,27 +180,6 @@
         $scope.errorStatus = 'None of the sections within this course site are associated with UC Berkeley course catalog sections.';
         $scope.contactSupport = true;
       }
-    };
-
-    var getExportOptions = function() {
-      canvasCourseGradeExportFactory.exportOptions($scope.canvasCourseId).success(function(data) {
-        if ($scope.appState !== 'error') {
-          loadSectionTerms(data.sectionTerms);
-        }
-        if ($scope.appState !== 'error') {
-          loadOfficialSections(data.officialSections);
-        }
-        if ($scope.appState !== 'error') {
-          validateCourseState(data.gradingStandardEnabled, data.mutedAssignments);
-        }
-        if ($scope.appState !== 'error') {
-          $scope.preloadGrades();
-        }
-      }).error(function() {
-        $scope.appState = 'error';
-        $scope.contactSupport = true;
-        $scope.errorStatus = 'Unable to obtain course settings.';
-      });
     };
 
     var userIsAuthorized = function(courseUserRoles) {
