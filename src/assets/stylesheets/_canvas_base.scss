@@ -119,12 +119,12 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .cc-template-back-button-link {
+  font-family: $bc-header-font-family;
+  font-size: 14px;
   &:active, &:hover, &:visited, &:link {
     font-family: $bc-header-font-family;
     font-size: 14px;
   }
-  font-family: $bc-header-font-family;
-  font-size: 14px;
 }
 
 // Error display for remote background jobs
