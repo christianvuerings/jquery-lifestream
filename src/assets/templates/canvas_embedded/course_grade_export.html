@@ -143,10 +143,6 @@
               <a href="http://guides.instructure.com/m/4152/l/45130-how-do-i-mute-an-assignment-in-the-gradebook#UnmuteAssignment">How to mute assignments in Gradebook</a>
             </p>
 
-            <div class="cc-page-course-grading-export-muted-assignments-table-header">
-              <button class="cc-button-link cc-page-course-grade-export-gradebook-button" data-ng-click="goToGradebook()">Change in Gradebook</button>
-            </div>
-
             <table class="bc-table bc-table-striped cc-page-course-grading-export-muted-assignments-table" role="grid">
               <thead>
                 <tr>
@@ -170,6 +166,11 @@
                 </tr>
               </tbody>
             </table>
+
+            <div class="cc-text-right">
+              <button class="bc-canvas-button cc-page-course-grading-export-back-link" type="button" data-ng-click="goToGradebook()" type="button" aria-label="Go Back to Gradebook">Cancel</button>
+              <button class="bc-canvas-button bc-canvas-button-primary cc-page-course-grade-export-gradebook-button" data-ng-click="goToGradebook()">Change in Gradebook</button>
+            </div>
 
           </div>
         </div>
