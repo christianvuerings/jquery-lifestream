@@ -147,10 +147,6 @@
         $scope.mutedAssignmentsPresent = true;
         $scope.validationNotice = 'In order to download E-Grades, all <strong>assignments</strong> must be <strong>unmuted</strong>.';
       }
-
-      if (!gradingStandardEnabled && mutedAssignments.length > 0) {
-        $scope.validationNotice = 'In order to download E-Grades, a <strong>grading scheme</strong> must be <strong>enabled</strong> and all <strong>assignments</strong> must be <strong>unmuted</strong>.';
-      }
     };
 
     /* Load and initialize application based on official sections */
