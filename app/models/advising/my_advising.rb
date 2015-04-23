@@ -4,7 +4,6 @@ module Advising
     include Cache::FeedExceptionsHandled
     include HttpRequester
     include Proxies::Mockable
-    include SafeJsonParser
     include User::Student
     include ClassLogger
 
@@ -42,17 +41,14 @@ module Advising
         basic_auth: {username: @settings.username, password: @settings.password},
         on_error: {rescue_status: 404}
       )
+      feed = {statusCode: response.code}
       if response.code == 404
         logger.debug "404 response from advising API for user #{@uid}"
-        parsed_json = {'body' => 'No advising data could be found for your account.'}
+        feed.merge(body: 'No advising data could be found for your account.')
       else
-        unless (parsed_json = safe_json(response.body))
-          raise Errors::ProxyError.new('Empty response', response: response, url: url, uid: uid)
-        end
+        logger.debug "Advising remote response: #{response.inspect}"
+        feed.merge sanitize_response(response.parsed_response)
       end
-      logger.debug "Advising remote response: #{response.inspect}"
-
-      sanitize_response(parsed_json).merge(statusCode: response.code)
     end
 
     def sanitize_response(response)
