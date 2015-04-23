@@ -40,9 +40,9 @@ describe 'MyBadges::StudentInfo' do
   end
 
   context 'for Law student users' do
+    before { Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(99999997) }
     let! (:law_proxy) { Bearfacts::Profile.new({user_id: '212381', fake: true}) }
     before do
-      Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(99999997)
       Bearfacts::Profile.stub(:new).and_return(law_proxy)
       Bearfacts::Regblocks.stub(:new).and_return(double(get: {
         activeBlocks: [],
@@ -86,10 +86,10 @@ describe 'MyBadges::StudentInfo' do
   end
 
   context 'valid bearfacts regblocks' do
+    before { Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051) }
     let! (:oski_profile_proxy) { Bearfacts::Profile.new({user_id: '61889', fake: true}) }
     let! (:oski_blocks_proxy) { Bearfacts::Regblocks.new({user_id: '61889', fake: true}) }
     before do
-      Bearfacts::Proxy.any_instance.stub(:lookup_student_id).and_return(11667051)
       Bearfacts::Profile.stub(:new).and_return(oski_profile_proxy)
       Bearfacts::Regblocks.stub(:new).and_return(oski_blocks_proxy)
     end

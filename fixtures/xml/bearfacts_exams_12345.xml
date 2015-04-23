@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<studentFinalExamSchedules asOfDate="May 28, 2013 12:00 AM" sortBy="2" termCode="D" termName="Fall" termYear="2013" xmlns="urn:berkeley.edu/babl">
+  <isExtensionStudent>false</isExtensionStudent>
+  <studentFinalExamSchedule>
+    <studentFinalExamScheduleKey>
+      <deptName>Computer Science</deptName>
+      <courseRootNum>061</courseRootNum>
+      <courseSuf1Num>A</courseSuf1Num>
+      <courseSuf2Num>S</courseSuf2Num>
+      <primSecFlag>P</primSecFlag>
+      <sectNum>001</sectNum>
+      <instructnFormatDet>LAB</instructnFormatDet>
+      <courseTitle>The Structure and Interpretation of Computer Programs (Self-Paced</courseTitle>
+      <examDate>2013-05-14 00:00:00.0</examDate>
+      <startTime>0300</startTime>
+      <startTimeAmPmFlag>P</startTimeAmPmFlag>
+      <endTime>0600</endTime>
+      <endTimeAmPmFlag>P</endTimeAmPmFlag>
+      <courseControlNumber>26273</courseControlNumber>
+      <finalExamGroup>07</finalExamGroup>
+    </studentFinalExamScheduleKey>
+    <instructor>HARVEY, B</instructor>
+    <studentFinalExamLocation>
+      <location>273 SODA</location>
+    </studentFinalExamLocation>
+  </studentFinalExamSchedule>
+  <studentFinalExamSchedule>
+    <studentFinalExamScheduleKey>
+      <deptName>Computer Science</deptName>
+      <courseRootNum>070</courseRootNum>
+      <primSecFlag>P</primSecFlag>
+      <sectNum>001</sectNum>
+      <instructnFormatDet>LEC</instructnFormatDet>
+      <courseTitle>Discrete Mathematics and Probability Theory</courseTitle>
+      <examDate>2013-05-16 00:00:00.0</examDate>
+      <startTime>0800</startTime>
+      <startTimeAmPmFlag>A</startTimeAmPmFlag>
+      <endTime>1100</endTime>
+      <endTimeAmPmFlag>A</endTimeAmPmFlag>
+      <courseControlNumber>26430</courseControlNumber>
+      <finalExamGroup>13</finalExamGroup>
+    </studentFinalExamScheduleKey>
+    <instructor>SAHAI, A</instructor>
+    <studentFinalExamLocation>
+      <location>100 HAAS PAVIL</location>
+    </studentFinalExamLocation>
+  </studentFinalExamSchedule>
+  <studentFinalExamSchedule>
+    <studentFinalExamScheduleKey>
+      <deptName>English</deptName>
+      <courseRootNum>117</courseRootNum>
+      <courseSuf1Num>S</courseSuf1Num>
+      <primSecFlag>P</primSecFlag>
+      <sectNum>001</sectNum>
+      <instructnFormatDet>LEC</instructnFormatDet>
+      <courseTitle>Shakespeare</courseTitle>
+      <examDate>2013-05-16 00:00:00.0</examDate>
+      <startTime>0300</startTime>
+      <startTimeAmPmFlag>P</startTimeAmPmFlag>
+      <endTime>0600</endTime>
+      <endTimeAmPmFlag>P</endTimeAmPmFlag>
+      <courseControlNumber>28123</courseControlNumber>
+      <finalExamGroup>15</finalExamGroup>
+    </studentFinalExamScheduleKey>
+    <instructor>KNAPP, J D</instructor>
+    <studentFinalExamLocation>
+      <location>159 MULFORD</location>
+    </studentFinalExamLocation>
+  </studentFinalExamSchedule>
+  <studentFinalExamSchedule>
+    <studentFinalExamScheduleKey>
+      <deptName>Computer Science</deptName>
+      <courseRootNum>061</courseRootNum>
+      <courseSuf1Num>B</courseSuf1Num>
+      <primSecFlag>P</primSecFlag>
+      <sectNum>001</sectNum>
+      <instructnFormatDet>LEC</instructnFormatDet>
+      <courseTitle>Data Structures</courseTitle>
+      <examDate>2013-05-17 00:00:00.0</examDate>
+      <startTime>1130</startTime>
+      <startTimeAmPmFlag>A</startTimeAmPmFlag>
+      <endTime>0230</endTime>
+      <endTimeAmPmFlag>P</endTimeAmPmFlag>
+      <courseControlNumber>26274</courseControlNumber>
+      <finalExamGroup>18</finalExamGroup>
+    </studentFinalExamScheduleKey>
+    <instructor>SHEWCHUK, J</instructor>
+    <studentFinalExamLocation>
+      <location>100 HAAS PAVIL</location>
+    </studentFinalExamLocation>
+  </studentFinalExamSchedule>
+  <studentFinalExamSchedule>
+    <studentFinalExamScheduleKey>
+      <deptName>English</deptName>
+      <courseRootNum>135</courseRootNum>
+      <courseSuf1Num>A</courseSuf1Num>
+      <courseSuf2Num>C</courseSuf2Num>
+      <primSecFlag>P</primSecFlag>
+      <sectNum>001</sectNum>
+      <instructnFormatDet>LEC</instructnFormatDet>
+      <courseTitle>Literature of American Cultures</courseTitle>
+      <examDate>2013-05-17 00:00:00.0</examDate>
+      <startTime>0700</startTime>
+      <startTimeAmPmFlag>P</startTimeAmPmFlag>
+      <endTime>1000</endTime>
+      <endTimeAmPmFlag>P</endTimeAmPmFlag>
+      <courseControlNumber>28162</courseControlNumber>
+      <finalExamGroup>20</finalExamGroup>
+    </studentFinalExamScheduleKey>
+    <instructor>WAGNER, B</instructor>
+    <studentFinalExamLocation>
+      <location>105 NORTH GATE</location>
+    </studentFinalExamLocation>
+  </studentFinalExamSchedule>
+</studentFinalExamSchedules>

@@ -20,10 +20,9 @@ module Proxies
     end
 
     def mock_request
-      feed_uri = URI.parse(@settings.base_url)
       {
         method: :get,
-        uri: /.*#{feed_uri.hostname}.*#{feed_uri.path}.*/
+        uri_matching: @settings.base_url
       }
     end
 
@@ -40,7 +39,8 @@ module Proxies
     end
 
     def read_file(*args)
-      Timeshifter.process(File.read(Rails.root.join(*args)))
+      path = Rails.root.join(*args)
+      Timeshifter.process(File.read path) if File.exist? path
     end
 
   end

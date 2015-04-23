@@ -9,7 +9,6 @@ module Financials
     include Cache::LiveUpdatesEnabled
     include Cache::FeedExceptionsHandled
     include Cache::JsonifiedFeed
-    include SafeJsonParser
     include User::Student
 
     def get_feed_internal
@@ -28,7 +27,7 @@ module Financials
       if response.code == 404
         no_billing_data_response
       else
-        body = safe_json(response.body)
+        body = response.parsed_response
         if body && (student = body['student'])
           feed = {
             apiVersion: api_version(response),

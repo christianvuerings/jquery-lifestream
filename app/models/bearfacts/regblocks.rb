@@ -3,8 +3,7 @@ module Bearfacts
     include DatedFeed
 
     def get
-      student_id = lookup_student_id
-      response = request("/student/#{student_id}/reg/regblocks", "regblocks")
+      response = request(request_path, request_params)
       feed = response.delete :feed
       return response if feed.blank?
 
@@ -21,7 +20,7 @@ module Bearfacts
         type = block['blockType'].to_text
         status = block['status'].to_text
 
-        translated_codes = Notifications::RegBlockCodeTranslator.new(student_id).translate_bearfacts_proxy(reason_code, office)
+        translated_codes = Notifications::RegBlockCodeTranslator.new(@student_id).translate_bearfacts_proxy(reason_code, office)
 
         reg_block = translated_codes.slice(:reason, :message).merge({
           status: status,
@@ -48,6 +47,14 @@ module Bearfacts
                    activeBlocks: active_blocks,
                    inactiveBlocks: inactive_blocks
                  })
+    end
+
+    def mock_xml
+      read_file('fixtures', 'xml', "bearfacts_regblocks_#{@student_id}.xml")
+    end
+
+    def request_path
+      "/student/#{@student_id}/reg/regblocks"
     end
 
   end

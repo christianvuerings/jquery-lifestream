@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<studentFinalExamSchedules xmlns="urn:berkeley.edu/babl" termName="Fall" termYear="2013" termCode="D" asOfDate="April 18, 2013 12:00 AM" sortBy="2">
+  <isExtensionStudent>false</isExtensionStudent>
+  <studentFinalExamSchedule>
+    <studentFinalExamScheduleKey>
+      <deptName>Psychology</deptName>
+      <coursePrefixNum>C</coursePrefixNum>
+      <courseRootNum>120</courseRootNum>
+      <primSecFlag>P</primSecFlag>
+      <sectNum>001</sectNum>
+      <instructnFormatDet>LEC</instructnFormatDet>
+      <courseTitle>Basic Issues in Cognition</courseTitle>
+      <examDate>2013-05-14 00:00:00.0</examDate>
+      <startTime>0800</startTime>
+      <startTimeAmPmFlag>A</startTimeAmPmFlag>
+      <endTime>1100</endTime>
+      <endTimeAmPmFlag>A</endTimeAmPmFlag>
+      <courseControlNumber>74058</courseControlNumber>
+      <finalExamGroup>05</finalExamGroup>
+    </studentFinalExamScheduleKey>
+    <instructor>LOMBROZO, T</instructor>
+    <note>COG SCIC100 01</note>
+    <studentFinalExamLocation>
+      <location>390 HEARST MIN</location>
+    </studentFinalExamLocation>
+  </studentFinalExamSchedule>
+  <studentFinalExamSchedule>
+    <studentFinalExamScheduleKey>
+      <deptName>Psychology</deptName>
+      <courseRootNum>133</courseRootNum>
+      <primSecFlag>P</primSecFlag>
+      <sectNum>001</sectNum>
+      <instructnFormatDet>LEC</instructnFormatDet>
+      <courseTitle>Psychology of Sleep</courseTitle>
+      <examDate>2013-05-15 00:00:00.0</examDate>
+      <startTime>0300</startTime>
+      <startTimeAmPmFlag>P</startTimeAmPmFlag>
+      <endTime>0600</endTime>
+      <endTimeAmPmFlag>P</endTimeAmPmFlag>
+      <courseControlNumber>74220</courseControlNumber>
+      <finalExamGroup>11</finalExamGroup>
+    </studentFinalExamScheduleKey>
+    <instructor>HARVEY, A G</instructor>
+    <studentFinalExamLocation>
+      <location>100 GPB</location>
+    </studentFinalExamLocation>
+  </studentFinalExamSchedule>
+  <studentFinalExamSchedule>
+    <studentFinalExamScheduleKey>
+      <deptName>Education</deptName>
+      <courseRootNum>140</courseRootNum>
+      <courseSuf1Num>A</courseSuf1Num>
+      <courseSuf2Num>C</courseSuf2Num>
+      <primSecFlag>P</primSecFlag>
+      <sectNum>001</sectNum>
+      <instructnFormatDet>LEC</instructnFormatDet>
+      <courseTitle>Literacy: Individual and Societal Development</courseTitle>
+      <examDate>2013-05-16 00:00:00.0</examDate>
+      <startTime>0300</startTime>
+      <startTimeAmPmFlag>P</startTimeAmPmFlag>
+      <endTime>0600</endTime>
+      <endTimeAmPmFlag>P</endTimeAmPmFlag>
+      <courseControlNumber>23731</courseControlNumber>
+      <finalExamGroup>15</finalExamGroup>
+    </studentFinalExamScheduleKey>
+    <instructor>HULL, G A</instructor>
+    <studentFinalExamLocation>
+      <location>2060 VALLEY LSB</location>
+    </studentFinalExamLocation>
+  </studentFinalExamSchedule>
+  <studentFinalExamSchedule>
+    <studentFinalExamScheduleKey>
+      <deptName>Education</deptName>
+      <courseRootNum>140</courseRootNum>
+      <courseSuf1Num>A</courseSuf1Num>
+      <courseSuf2Num>C</courseSuf2Num>
+      <primSecFlag>P</primSecFlag>
+      <sectNum>001</sectNum>
+      <instructnFormatDet>LEC</instructnFormatDet>
+      <courseTitle>Literacy: Individual and Societal Development</courseTitle>
+      <examDate></examDate>
+      <startTime>0300</startTime>
+      <startTimeAmPmFlag>P</startTimeAmPmFlag>
+      <endTime>0600</endTime>
+      <endTimeAmPmFlag>P</endTimeAmPmFlag>
+      <courseControlNumber>23731</courseControlNumber>
+      <finalExamGroup>15</finalExamGroup>
+    </studentFinalExamScheduleKey>
+    <instructor>HULL, G A</instructor>
+    <studentFinalExamLocation>
+      <location>2060 VALLEY LSB</location>
+    </studentFinalExamLocation>
+  </studentFinalExamSchedule>
+</studentFinalExamSchedules>
