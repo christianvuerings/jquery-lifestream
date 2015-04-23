@@ -117,20 +117,6 @@
   }
   .cc-page-myfinances-table {
     margin: 20px 10px 10px;
-    table {
-      table-layout: fixed;
-    }
-    td, th {
-      border-bottom: 1px solid $cc-color-widget-background;
-      font-size: 12px;
-      padding: 4px;
-    }
-    th {
-      white-space: nowrap;
-    }
-    .cc-widget-list-selected tr:first-child td {
-      border-bottom: 0;
-    }
   }
   .cc-page-myfinances-type {
     i {
