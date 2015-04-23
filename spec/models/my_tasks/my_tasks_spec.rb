@@ -42,16 +42,16 @@ describe 'MyTasks' do
     let(:tasks) { my_tasks_model.get_feed[:tasks] }
 
     it 'should sort tasks into the right buckets' do
-      expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 6
+      expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 8
       expect(tasks.count{|task| task[:bucket] == 'Unscheduled'}).to eq 5
 
       # On Sundays, no "later in the week" tasks can escape the "Today" bucket. Since this moves
       # some "Future" tasks to "Today", more total tasks will be in the feed on Sunday.
       if Time.zone.today.sunday?
-        expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 9
+        expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 7
         expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 9
       else
-        expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 4
+        expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 2
         expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 18
       end
 
