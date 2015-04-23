@@ -55,14 +55,16 @@
 .cc-table-finances {
   table {
     table-layout: fixed;
-  }
-  td, th {
-    border-bottom: 1px solid $cc-color-widget-background;
-    font-size: 12px;
-    padding: 4px;
-  }
-  th {
-    white-space: nowrap;
+    tr {
+      td, th {
+        border-bottom: 1px solid $cc-color-widget-background;
+        font-size: 12px;
+        padding: 4px;
+      }
+      th {
+        white-space: nowrap;
+      }
+    }
   }
   .cc-widget-list-selected tr:first-child td {
     border-bottom: 0;
