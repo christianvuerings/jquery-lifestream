@@ -27,10 +27,7 @@ module Bearfacts
     end
 
     def mock_request
-      {
-        method: :get,
-        uri: /.*#{@settings.base_url}#{request_path}.*/
-      }
+      super.merge(uri_matching: "#{@settings.base_url}#{request_path}")
     end
 
     def request(path, params)

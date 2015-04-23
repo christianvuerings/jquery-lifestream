@@ -1,0 +1,1554 @@
+[
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 69703,
+        "name": "*LEAD Center*",
+        "status": "Active",
+        "shortName": "LEAD",
+        "summary": "The LEAD Center is a new one-stop-shop for UC Berkeley students looking to find leadership training, get involved with organizations, or receive advising for student groups.",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "foo@stanford.edu",
+        "externalWebsite": "http://calcentral.berkeley.edu",
+        "facebookUrl": "https://www.facebook.com/calcentral",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "callink.berkeley.edu/images/W170xL170/0/noshadow/Profile/12345.jpg",
+        "profileUrl": "callink.berkeley.edu/organization/CalCentral",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 2823,
+        "typeName": "Campus Departments",
+        "parentId": 45852,
+        "parentName": "Associated Students of the University of California",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 5101,
+            "categoryName": "Campus Departments"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 46063,
+        "name": "AAVPG - Intellectual Community Fund",
+        "status": "Active",
+        "shortName": "ICF",
+        "summary": "The Intellectual Community Fund provides monetary support to educational, activist, and awareness events planned by and for Cal students. The objective of the program is to foster a campus community that is conducive to free intellectual exchange.",
+        "description": "<div>\r\n<p>Welcome to the&nbsp;<strong>Intellectual Community Fund</strong>&nbsp;(ICF) homepage!&nbsp;</p>\r\n<p>Fall Application Submissions will be open from<strong>&nbsp;9/8/2013 to &nbsp;11/24/2013.&nbsp;</strong></p>\r\n<p><em>Please Note</em>: You may only apply for&nbsp;<strong>ONE</strong>&nbsp;AAVP grant per event and&nbsp;<strong>NO&nbsp;</strong>funding can be used for purchasing food, beverages, making copies, etc...for a complete list of spending restrictions, please&nbsp;<span style=\"text-decoration: underline;\"><a title=\"click here\" href=\"http://www.asuc.org/index.php/asuc-document/document-repository/132-the-asuc-by-laws-by-article\" target=\"_blank\">click here</a></span>&nbsp;and then on&nbsp;<em>Title III Finance By-Laws.</em></p>\r\n<p><strong>TO APPLY:&nbsp;</strong></p>\r\n<ol>\r\n<li>You must first login (top right of screen) with your Calnet ID and Passphrase.&nbsp;Please answer every question as thoroughly and thoughtfully as you can.&nbsp;<strong>&nbsp;<a title=\"icf application\" href=\"https://callink.berkeley.edu/form/start/13142\" target=\"_blank\">LINK TO ICF GRANT APPLICATION</a></strong></li>\r\n<li>After filling out an application, please&nbsp;<a title=\"Click here\" href=\"http://www.supersaas.com/schedule/ASUC/ICF_Grants_Interviews\" target=\"_blank\"><span style=\"text-decoration: underline;\">click here</span></a>&nbsp;to sign up for a mandatory interview. You must sign-up at least&nbsp;<strong>5 business days</strong>&nbsp;in advance. If you want to alter your interview time anytime after signing up, you must create an account. ICF interview slots will&nbsp;be in 20-minute intervals at <strong>114c Hearst Gym</strong> on the following days:&nbsp;</li>\r\n</ol>\r\n<p><strong>&nbsp; &nbsp; &nbsp; Mondays 12-1pm,Tuesdays 2-4pm Wednesdays 12-1pm<br /> </strong></p>\r\n<p>We look forward to reviewing your application! If you have any further questions, please do not hesitate to email us at&nbsp;<a href=\"mailto:asuc.icf@gmail.com\">asuc.icf@gmail.com</a>.&nbsp;<br /> <br /> **<strong><span style=\"text-decoration: underline;\">Please do not request to join organization. The invitation is for those whose applications are approved. The Grants Directors will be inviting you if that happens.</span></strong></p>\r\n<p><em>----------------------------------------------------------------------------------------------- --------------</em></p>\r\n<p><em>For more information about the Intellectual Community Fund:</em></p>\r\n</div>\r\n<p><strong>The Intellectual Community Fund</strong> provides monetary support to educational, activist, and awareness events serving multiple communities of interest planned by and for Cal students. The Intellectual Community fund promotes campus programs that serve the diverse student population of UC Berkeley and are conducive to free intellectual exchange.</p>\r\n<p><span style=\"text-decoration: underline;\">Allocations are limited to $500 per application for undergraduates and $250 per application for graduate students.</span>&nbsp; Undergraduates and new applicants have priority for this fund, but we encourage all students to apply. Awards are contingent upon the availability of current funds and the number of received applications.</p>\r\n<p>The Committee will grant awards to proposals that demonstrate:</p>\r\n<ul>\r\n<li>Extensive advertisement and high expected turn-out.</li>\r\n<li>Attempt to present a balanced educational perspective.</li>\r\n<li>Orientation toward co-curricular, academic, or professional development.</li>\r\n<li>Innovative efforts to address and serve the unmet academic needs of the student population.</li>\r\n<li>Collaboration with multiple campus and community groups.</li>\r\n<li>Involvement of a considerable number of UC Berkeley students.</li>\r\n<li>Thoughtful planning with careful attention to logistical and financial details.</li>\r\n<li>Efforts to seek alternative funding.</li>\r\n<li>Includes statement of support from a faculty mentor or student group adviser (optional)</li>\r\n</ul>\r\n<p>&nbsp;</p>\r\n<p>Please keep in mind that, due to various reasons, there is no guarantee that an application will be awarded funding or the full amount requested. Please send an email to asuc.icf@gmail.com if you have any questions.</p>",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "foo@stanford.edu",
+        "externalWebsite": "http://calcentral.berkeley.edu",
+        "facebookUrl": "https://www.facebook.com/calcentral",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "callink.berkeley.edu/images/W170xL170/0/noshadow/Profile/12345.jpg",
+        "profileUrl": "callink.berkeley.edu/organization/CalCentral",
+        "directoryVisibility": "Hidden",
+        "membershipType": "Closed",
+        "typeId": 1235,
+        "typeName": "Hidden",
+        "parentId": 46052,
+        "parentName": "AAVP Grants",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 2687,
+            "categoryName": "ASUC Government Offices"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 65797,
+        "name": "Bears Ice Hockey",
+        "status": "Active",
+        "shortName": "CIHT",
+        "summary": "Bears Ice Hockey",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/CIHT",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 5117,
+            "categoryName": "Recreational Student Organizations"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 46272,
+        "name": "Berkeley Public Service Center",
+        "status": "Active",
+        "shortName": "CCPSC",
+        "summary": "UC Berkeley Public Service Center",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/calcorpspublicservicecenter",
+        "directoryVisibility": "Visible",
+        "membershipType": "Open",
+        "typeId": 2823,
+        "typeName": "Campus Departments",
+        "parentId": 45852,
+        "parentName": "Associated Students of the University of California",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 2686,
+            "categoryName": "Admin"
+          },
+          {
+            "categoryId": 5101,
+            "categoryName": "Campus Departments"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 91406,
+        "name": "Blueprint Leaders for Social Justice",
+        "status": "Active",
+        "shortName": "",
+        "summary": "...",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/blueprintleadersforsocialjustice",
+        "directoryVisibility": "Visible",
+        "membershipType": "Open",
+        "typeId": 1242,
+        "typeName": "Sponsored Student Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 5101,
+            "categoryName": "Campus Departments"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 46260,
+        "name": "CALLINK TEST ORGANIZATION",
+        "status": "Active",
+        "shortName": "CTO",
+        "summary": "This organization is for demonstration purposes only",
+        "description": "<p>This organization is for demonstration purposes only</p>",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "foo@stanford.edu",
+        "externalWebsite": "http://calcentral.berkeley.edu",
+        "facebookUrl": "https://www.facebook.com/calcentral",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "callink.berkeley.edu/images/W170xL170/0/noshadow/Profile/12345.jpg",
+        "profileUrl": "callink.berkeley.edu/organization/CalCentral",
+        "directoryVisibility": "Visible",
+        "membershipType": "Open",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45852,
+        "parentName": "Associated Students of the University of California",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 2686,
+            "categoryName": "Admin"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 91891,
+        "name": "DUP - Bears Ice Hockey",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "...",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/bearsicehockey",
+        "directoryVisibility": "Visible",
+        "membershipType": "Open",
+        "typeId": 1236,
+        "typeName": "New Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+          {
+            "categoryId": 5117,
+            "categoryName": "Recreational Student Organizations"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94158,
+        "name": "dup - Lead Center Organization",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "text organizations",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testorganization",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1244,
+        "typeName": "CalGreeks",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 45953,
+        "name": "For Christ's Sake",
+        "status": "Active",
+        "shortName": "FCS",
+        "summary": "For Christ's Sake is a Christian a Capella group that seeks to glorify God and share the gospel of Jesus Christ through song.",
+        "description": "<div class=\"mhl\">&nbsp;</div>\r\n<div class=\"mhl\">\r\n<div id=\"id_520ff26ac5f532540216577\" class=\"text_exposed_root\">As Cal's Christian a cappella group, we have come together across campus fellowships and churches to proclaim the good news of the Gospel through song to our campus and community. Our hope is that through music we can better understand and share with others the knowledge that every good thing in us is for the sake of Christ, as expressed in Philemon 1:6.<br /><br /></div>\r\n<div class=\"text_exposed_root\"><span>We were founded by a group of Cal students</span><span>&nbsp;in 2000. This spring, we celebrate 13 years of God's faithfulness to this group, and our prayer is that you might also be blessed by the joy we experience through Him.&nbsp;<br /><br />FCS has had the privilege of producing 3 studio albums: Nothing Compares (2004), Voicemail (2009), and Send Some Rain (2013). To listen to and purchase our most recent album, visit&nbsp;http://fcsberkeley.bandcamp.com/<br /><br />Interested in gigs, purchasing a CD, or have general questions? Email us at foo@gmail.com.&nbsp;</span></div>\r\n</div>",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "foo@stanford.edu",
+        "externalWebsite": "http://calcentral.berkeley.edu",
+        "facebookUrl": "https://www.facebook.com/calcentral",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "callink.berkeley.edu/images/W170xL170/0/noshadow/Profile/12345.jpg",
+        "profileUrl": "callink.berkeley.edu/organization/CalCentral",
+        "directoryVisibility": "Visible",
+        "membershipType": "Open",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 2693,
+            "categoryName": "ASUC Student Activity Groups"
+          },
+          {
+            "categoryId": 5113,
+            "categoryName": "Performing Arts Student Organizations"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 91370,
+        "name": "Jeff's super cool fraternity",
+        "status": "Active",
+        "shortName": "",
+        "summary": "...",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/bobssupercoolfraternity",
+        "directoryVisibility": "Visible",
+        "membershipType": "Open",
+        "typeId": 1236,
+        "typeName": "New Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 2686,
+            "categoryName": "Admin"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 93520,
+        "name": "Jeff's test student organization",
+        "status": "Locked",
+        "shortName": "",
+        "summary": "jeff's test student organization",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/jeffsteststudentorganization",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 69703,
+        "parentName": "*LEAD Center*",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 2686,
+            "categoryName": "Admin"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 91372,
+        "name": "Kelly's New Test Sorority",
+        "status": "Active",
+        "shortName": "",
+        "summary": "test organization",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/kellysnewsorority",
+        "directoryVisibility": "Hidden",
+        "membershipType": "Open",
+        "typeId": 1235,
+        "typeName": "Hidden",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 2686,
+            "categoryName": "Admin"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 88067,
+        "name": "Kelly's Test Fraternity",
+        "status": "Active",
+        "shortName": "KTF",
+        "summary": "Just for fun",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "foo@stanford.edu",
+        "externalWebsite": "http://calcentral.berkeley.edu",
+        "facebookUrl": "https://www.facebook.com/calcentral",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "callink.berkeley.edu/images/W170xL170/0/noshadow/Profile/12345.jpg",
+        "profileUrl": "callink.berkeley.edu/organization/CalCentral",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1244,
+        "typeName": "CalGreeks",
+        "parentId": 69703,
+        "parentName": "*LEAD Center*",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94211,
+        "name": "Lead Center Test Group 10",
+        "status": "Active",
+        "shortName": "",
+        "summary": "test group 10",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgroupten",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94212,
+        "name": "lead center test group 11",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "test",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgroupeleven",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94213,
+        "name": "Lead Center Test Group 12",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "test",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgrouptwelve",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45984,
+        "parentName": "SISG - Student Initiated Service Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94214,
+        "name": "lead center test group 13",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "test group",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgroupthirteen",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45984,
+        "parentName": "SISG - Student Initiated Service Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94217,
+        "name": "Lead Center test group 15",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "test group",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgroupfifteen",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94218,
+        "name": "lead center test group 16",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "test group",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgroupsixteen",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45984,
+        "parentName": "SISG - Student Initiated Service Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94219,
+        "name": "lead center test group 17",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "test",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgroupseventeen",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94220,
+        "name": "lead center test group 20",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "test",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgrouptwenty",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94109,
+        "name": "Lead Center Test Group 3",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "test group",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgroup3",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94159,
+        "name": "lead center test group 4",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "text organization",
+        "description": "<p>testing</p>",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgroupfour",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45984,
+        "parentName": "SISG - Student Initiated Service Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94160,
+        "name": "lead center test group 5",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "test group number 5",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgroupfive",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94206,
+        "name": "lead center test group 6",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "test group",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgroupsix",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 94207,
+        "name": "lead center test group 7",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "test group",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/testgroupseven",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45984,
+        "parentName": "SISG - Student Initiated Service Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 91374,
+        "name": "LEAD Center Test Sponsored",
+        "status": "Inactive",
+        "shortName": "",
+        "summary": "Test Group",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/leadcentertestgroup",
+        "directoryVisibility": "Visible",
+        "membershipType": "Open",
+        "typeId": 1242,
+        "typeName": "Sponsored Student Organizations",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+          {
+            "categoryId": 2686,
+            "categoryName": "Admin"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 59672,
+        "name": "Leadership Symposium Planning Committee",
+        "status": "Active",
+        "shortName": "LSSPT",
+        "summary": "To plan an annual event that brings together various student leaders and provides for them a forum in which they can learn new leadership skills, share their experiences, and network ",
+        "description": "<p>The purpose of the Leadership Symposium Planning Committee is to plan an annual event that brings together various student leaders and provides for them a forum in which they can learn new leadership skills, share their experiences, and network with their students, alumni, and campus dignitaries.i</p>",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/leadsymp",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 2823,
+        "typeName": "Campus Departments",
+        "parentId": 45984,
+        "parentName": "SISG - Student Initiated Service Groups",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 5101,
+            "categoryName": "Campus Departments"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 67825,
+        "name": "Plant and Environmental Biology Club",
+        "status": "Frozen",
+        "shortName": "",
+        "summary": "To foster an environment which allows discussion, conservation, and interactions for students who are interested in plant biology.",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/plant",
+        "directoryVisibility": "Visible",
+        "membershipType": "Closed",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 69703,
+        "parentName": "*LEAD Center*",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 5098,
+            "categoryName": "Academic Student Organizations"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 46642,
+        "name": "Room to Read",
+        "status": "Inactive",
+        "shortName": "RtT",
+        "summary": " If you think education is expensive, try ignorance. We at the World Literacy Project believe that education is the key to ending poverty, improving public health, and empowering women.",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/roomtoread",
+        "directoryVisibility": "Visible",
+        "membershipType": "Open",
+        "typeId": 1243,
+        "typeName": "Registered Student Organizations",
+        "parentId": 45984,
+        "parentName": "SISG - Student Initiated Service Groups",
+        "primaryContactId": null,
+        "primaryContactName": "",
+        "primaryContactCampusEmail": "",
+        "categories": [
+          {
+            "categoryId": 2694,
+            "categoryName": "ASUC Student Initiated Service Groups"
+          },
+          {
+            "categoryId": 5118,
+            "categoryName": "Service Student Organizations"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 45984,
+        "name": "SISG - Student Initiated Service Groups",
+        "status": "Active",
+        "shortName": "SISG",
+        "summary": "asuc sponsored service groups",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/sisgstudentinitiatedservicegroups",
+        "directoryVisibility": "Hidden",
+        "membershipType": "Open",
+        "typeId": 1249,
+        "typeName": "ADMIN",
+        "parentId": 45864,
+        "parentName": "LEAD Center Test Group 2",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 2694,
+            "categoryName": "ASUC Student Initiated Service Groups"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  },
+  {
+    "pageNumber": 1,
+    "pageSize": 100,
+    "totalItems": 1,
+    "totalPages": 1,
+    "items": [
+      {
+        "organizationId": 91672,
+        "name": "Zeta Beta Tau",
+        "status": "Active",
+        "shortName": "",
+        "summary": "...",
+        "description": "",
+        "addressStreet1": "",
+        "addressStreet2": "",
+        "addressCity": "",
+        "addressStateProvince": "",
+        "addressZipPostal": "",
+        "phoneNumber": "",
+        "extension": "",
+        "faxNumber": "",
+        "email": "",
+        "externalWebsite": "",
+        "facebookUrl": "",
+        "twitterUrl": "",
+        "flickrFeedUrl": "",
+        "youtubeChannelUrl": "",
+        "googleCalendarUrl": "",
+        "profileImageUrl": "",
+        "profileUrl": "callink.berkeley.edu/organization/zetabetatau",
+        "directoryVisibility": "Visible",
+        "membershipType": "Open",
+        "typeId": 1244,
+        "typeName": "CalGreeks",
+        "parentId": 45853,
+        "parentName": "SAG - Student Activity Groups",
+        "primaryContactId": 2015295,
+        "primaryContactName": "Oski Bear",
+        "primaryContactCampusEmail": "oski.bear@berkeley.edu",
+        "categories": [
+          {
+            "categoryId": 5110,
+            "categoryName": "Interfraternity Council (IFC) Fraternities"
+          }
+        ],
+        "customFields": [
+        ]
+      }
+    ]
+  }
+]
