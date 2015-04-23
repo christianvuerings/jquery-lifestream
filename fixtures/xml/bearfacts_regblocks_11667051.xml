@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<studentRegistrationBlocks asOfDate="March 14, 2013 12:00 AM" xmlns="urn:berkeley.edu/babl">
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>FINAN</blockType>
+    <termYear>2011</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>08</reasonCode>
+    <reason>LIBRARY</reason>
+    <blockedDate>2011-01-26 00:00:00.0</blockedDate>
+    <clearedDate>2011-01-26 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ADMIN</blockType>
+    <termYear>1997</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>44</reasonCode>
+    <reason>STAT LAPSE</reason>
+    <office>OR</office>
+    <blockedDate>1997-01-22 00:00:00.0</blockedDate>
+    <clearedDate>1997-02-20 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ADMIN</blockType>
+    <termYear>1997</termYear>
+    <termCode>D</termCode>
+    <subTerm>2</subTerm>
+    <reasonCode>50</reasonCode>
+    <reason>MISC</reason>
+    <office>OR</office>
+    <blockedDate>1997-12-02 00:00:00.0</blockedDate>
+    <clearedDate>1998-01-06 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ADMIN</blockType>
+    <termYear>1999</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>44</reasonCode>
+    <reason>STAT LAPSE</reason>
+    <office>OR</office>
+    <blockedDate>1999-01-22 00:00:00.0</blockedDate>
+    <clearedDate>1999-01-22 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ADMIN</blockType>
+    <termYear>2002</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>44</reasonCode>
+    <reason>STAT LAPSE</reason>
+    <office>OR</office>
+    <blockedDate>2002-05-20 00:00:00.0</blockedDate>
+    <clearedDate>2002-05-20 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ADMIN</blockType>
+    <termYear>2002</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>50</reasonCode>
+    <reason>MISC</reason>
+    <office>OR</office>
+    <blockedDate>2002-05-20 00:00:00.0</blockedDate>
+    <clearedDate>2002-05-23 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ADMIN</blockType>
+    <termYear>2003</termYear>
+    <termCode>D</termCode>
+    <subTerm>2</subTerm>
+    <reasonCode>48</reasonCode>
+    <reason>MISCONDUCT</reason>
+    <office>OR</office>
+    <blockedDate>2004-01-14 00:00:00.0</blockedDate>
+    <clearedDate>2004-01-14 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>1999</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>60</reasonCode>
+    <reason>ACADEMIC</reason>
+    <office>LNS</office>
+    <blockedDate>1999-03-19 00:00:00.0</blockedDate>
+    <clearedDate>2000-04-10 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2000</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>60</reasonCode>
+    <reason>ACADEMIC</reason>
+    <office>LNS</office>
+    <blockedDate>1999-03-24 00:00:00.0</blockedDate>
+    <clearedDate>1999-03-24 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2001</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>60</reasonCode>
+    <reason>ACADEMIC</reason>
+    <office>LNS</office>
+    <blockedDate>1999-03-24 00:00:00.0</blockedDate>
+    <clearedDate>1999-12-20 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2000</termYear>
+    <termCode>D</termCode>
+    <subTerm>2</subTerm>
+    <reasonCode>60</reasonCode>
+    <reason>ACADEMIC</reason>
+    <office>LNS</office>
+    <blockedDate>2000-04-12 00:00:00.0</blockedDate>
+    <clearedDate>2000-04-13 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2003</termYear>
+    <termCode>D</termCode>
+    <subTerm>2</subTerm>
+    <reasonCode>60</reasonCode>
+    <reason>ACADEMIC</reason>
+    <office>LNS</office>
+    <blockedDate>2004-01-09 00:00:00.0</blockedDate>
+    <clearedDate>2004-01-09 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ADMIN</blockType>
+    <termYear>2011</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>50</reasonCode>
+    <reason>MISC</reason>
+    <office>OR</office>
+    <blockedDate>2011-02-03 00:00:00.0</blockedDate>
+    <clearedDate>2011-02-03 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ADMIN</blockType>
+    <termYear>2012</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>44</reasonCode>
+    <reason>STAT LAPSE</reason>
+    <office>OR</office>
+    <blockedDate>2012-03-20 00:00:00.0</blockedDate>
+    <clearedDate>2012-03-20 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2004</termYear>
+    <termCode>D</termCode>
+    <subTerm>2</subTerm>
+    <reasonCode>60</reasonCode>
+    <reason>ACADEMIC</reason>
+    <office>LNS</office>
+    <blockedDate>2004-01-09 00:00:00.0</blockedDate>
+    <clearedDate>2004-01-09 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2006</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>70</reasonCode>
+    <office>LNS</office>
+    <blockedDate>2005-11-29 00:00:00.0</blockedDate>
+    <clearedDate>2005-11-29 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2006</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>68</reasonCode>
+    <office>LNS</office>
+    <blockedDate>2005-11-29 00:00:00.0</blockedDate>
+    <clearedDate>2005-11-29 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2006</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>62</reasonCode>
+    <office>LNS</office>
+    <blockedDate>2005-12-06 00:00:00.0</blockedDate>
+    <clearedDate>2005-12-06 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2006</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>60</reasonCode>
+    <reason>ACADEMIC</reason>
+    <office>LNS</office>
+    <blockedDate>2005-12-12 00:00:00.0</blockedDate>
+    <clearedDate>2005-12-12 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2007</termYear>
+    <termCode>D</termCode>
+    <subTerm>2</subTerm>
+    <reasonCode>68</reasonCode>
+    <office>LNS</office>
+    <blockedDate>:::NO_TZ_DAY_BEFORE_YESTERDAY:::</blockedDate>
+    <clearedDate>:::NO_TZ_YESTERDAY:::</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2007</termYear>
+    <termCode>D</termCode>
+    <subTerm>2</subTerm>
+    <reasonCode>72</reasonCode>
+    <office>LNS</office>
+    <blockedDate>2007-03-06 00:00:00.0</blockedDate>
+    <clearedDate>2007-03-06 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2009</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>72</reasonCode>
+    <office>LNS</office>
+    <blockedDate>2009-01-14 00:00:00.0</blockedDate>
+    <clearedDate>2009-01-14 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>ACAD</blockType>
+    <termYear>2010</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>68</reasonCode>
+    <office>LNS</office>
+    <blockedDate>2009-06-16 00:00:00.0</blockedDate>
+    <clearedDate>2009-06-16 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>FINAN</blockType>
+    <termYear>1999</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>06</reasonCode>
+    <reason>CUBS</reason>
+    <office>BPS</office>
+    <blockedDate>1999-02-04 00:00:00.0</blockedDate>
+    <clearedDate>1999-02-16 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Released</status>
+    <blockType>FINAN</blockType>
+    <termYear>2004</termYear>
+    <termCode>D</termCode>
+    <subTerm>2</subTerm>
+    <reasonCode>16</reasonCode>
+    <reason>CARS</reason>
+    <office>BPS</office>
+    <blockedDate>2004-05-06 00:00:00.0</blockedDate>
+    <clearedDate>2004-05-06 00:00:00.0</clearedDate>
+  </studentRegistrationBlock>
+  <studentRegistrationBlock>
+    <status>Active</status>
+    <blockType>FINAN</blockType>
+    <termYear>2013</termYear>
+    <termCode>B</termCode>
+    <subTerm>4</subTerm>
+    <reasonCode>16</reasonCode>
+    <reason>CARS</reason>
+    <office>BPS</office>
+    <blockedDate>:::NO_TZ_YESTERDAY:::</blockedDate>
+  </studentRegistrationBlock>
+</studentRegistrationBlocks>

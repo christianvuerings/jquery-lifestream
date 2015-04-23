@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<telebearsAppointment asOfDate="September 24, 2013 12:00 AM" termName="Spring" termYear="2013" xmlns="urn:berkeley.edu/babl">
+  <telebearsAppointmentPhase>
+    <period>II</period>
+    <startDate>Tuesday 04/09/13 09:00 AM</startDate>
+    <endDate>Wednesday 04/10/13 09:00 AM</endDate>
+  </telebearsAppointmentPhase>
+  <eligRegStatusCode>C</eligRegStatusCode>
+  <ugGradFlag>U</ugGradFlag>
+  <authReleaseCode>P</authReleaseCode>
+  <collegeCdPrimary>16</collegeCdPrimary>
+  <majorCdPrimary>300</majorCdPrimary>
+  <isExtension>false</isExtension>
+</telebearsAppointment>

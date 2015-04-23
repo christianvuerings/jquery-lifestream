@@ -40,7 +40,8 @@ module Proxies
     end
 
     def read_file(*args)
-      Timeshifter.process(File.read(Rails.root.join(*args)))
+      path = Rails.root.join(*args)
+      Timeshifter.process(File.read path) if File.exist? path
     end
 
   end
