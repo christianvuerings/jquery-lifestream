@@ -11,7 +11,7 @@
     <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />
 
     <div class="cc-select cc-left">
-      <select data-ng-options="section as section.name for section in sections track by section.ccn" ng-model="searchSection">
+      <select data-ng-options="section as section.name for section in sections track by section.ccn" data-ng-model="searchSection">
         <option value="">All Sections</option>
       </select>
     </div>
