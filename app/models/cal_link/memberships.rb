@@ -1,44 +1,47 @@
 module CalLink
   class Memberships < Proxy
-
-    include SafeJsonParser
     include Cache::UserCacheExpiry
 
     def get_memberships
-      self.class.smart_fetch_from_cache({id: @uid, user_message_on_exception: "Remote server unreachable"}) do
+      self.class.smart_fetch_from_cache(id: @uid, user_message_on_exception: 'Remote server unreachable') do
         request_internal
       end
     end
 
-    def request_internal
-      url = "#{Settings.cal_link_proxy.base_url}/api/memberships"
-      params = build_params
-      Rails.logger.info "#{self.class.name}: Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; params = #{params}, cache expiration #{self.class.expires_in}"
+    private
 
-      response = ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class }) do
-        FakeableProxy.wrap_request(APP_ID + "_memberships", @fake, {:match_requests_on => [:method, :path, :body]}) {
-          get_response(
-            url,
-            query: params
-          )
-        }
+    def mock_json
+      read_file('fixtures', 'json', 'cal_link_memberships.json')
+    end
+
+    def mock_request
+      super.merge(uri_matching: request_url)
+    end
+
+    def request_internal
+      params = request_params.merge common_cal_link_params
+      logger.info "Fake = #{@fake}; Making request to #{request_url} on behalf of user #{@uid}; params = #{params}, cache expiration #{self.class.expires_in}"
+
+      response = ActiveSupport::Notifications.instrument('proxy', { url: request_url, class: self.class }) do
+        get_response(request_url, {query: params})
       end
-      Rails.logger.debug "#{self.class.name}: Remote server status #{response.code}, Body = #{response.body}"
+      logger.debug "Remote server status #{response.code}, Body = #{response.body}"
+
       {
-        :body => response.parsed_response,
-        :statusCode => response.code
+        body: response.parsed_response,
+        statusCode: response.code
       }
     end
 
-    private
+    def request_params
+      {
+        username: @uid,
+        currentMembershipsOnly: true
+      }
+    end
 
-    def build_params
-      params = super
-      params.merge(
-        {
-          :username => @uid,
-          :currentMembershipsOnly => true
-        })
+    def request_url
+      "#{@settings.base_url}/api/memberships"
     end
 
   end

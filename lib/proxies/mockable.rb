@@ -20,10 +20,9 @@ module Proxies
     end
 
     def mock_request
-      feed_uri = URI.parse(@settings.base_url)
       {
         method: :get,
-        uri: /.*#{feed_uri.hostname}.*#{feed_uri.path}.*/
+        uri_matching: @settings.base_url
       }
     end
 

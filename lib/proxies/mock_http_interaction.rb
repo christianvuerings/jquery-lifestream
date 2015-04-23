@@ -28,10 +28,21 @@ module Proxies
     end
 
     def set_response(options={})
-      @response.merge! options
-      stub = stub_request(@request[:method], @request[:uri])
+      uri_matcher = if @request[:uri_matching]
+                      parsed_uri = URI.parse(@request[:uri_matching])
+                      /.*#{parsed_uri.hostname}.*#{parsed_uri.path}.*/
+                    else
+                      @request[:uri]
+                    end
+      stub = stub_request(@request[:method], uri_matcher)
+
       request_params = @request.slice(:body, :query, :headers)
+      if (@request[:query_including])
+        request_params[:query] = hash_including @request[:query_including]
+      end
       stub = stub.with(request_params) if request_params.any?
+
+      @response.merge! options
       stub.to_return @response
     end
 
