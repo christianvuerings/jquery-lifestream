@@ -32,7 +32,7 @@
             for the most current information.
           </div>
           <div data-ng-if="!transitionRegStatus.registered" class="cc-widget-profile-message-text">
-            You are not officially registered for the <span ng-bind="transitionRegStatus.termName"></span> term.
+            You are not officially registered for the <span data-ng-bind="transitionRegStatus.termName"></span> term.
           </div>
         </div>
         <div data-ng-if="!transitionRegStatus">
@@ -95,7 +95,7 @@
       </div>
     </div>
 
-    <div class="cc-table cc-table-top-border cc-clearfix" ng-if="collegeAndLevel.standing || gpaUnits.totalUnits !== null">
+    <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="collegeAndLevel.standing || gpaUnits.totalUnits !== null">
       <table>
         <thead data-ng-if="collegeAndLevel.standing">
           <tr>
