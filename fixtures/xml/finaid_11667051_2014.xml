@@ -1,0 +1,1129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SSIDOC>
+  <Action>Pull</Action>
+  <SystemInfo>
+    <AidYears>
+      <AidYear Default="X" Desc="System Default">2014</AidYear>
+    </AidYears>
+  </SystemInfo>
+  <FALifecycle AidYear="2014" AltID="" SID="11667051">
+    <CurrentDate>2014-02-13</CurrentDate>
+    <Correspondence>
+      <Type>WEB</Type>
+    </Correspondence>
+    <Demographic>
+      <Title></Title>
+      <FirstName>OSKI</FirstName>
+      <MiddleName></MiddleName>
+      <LastName>BEAR</LastName>
+      <Gender>M</Gender>
+      <BirthDate>1975-02-05</BirthDate>
+      <Addresses>
+        <Address Type="B1">
+          <Communications>
+            <Communication Status="" Type="EM">papa@xx.com</Communication>
+            <Communication Status="" Type="PN">925-222-2222</Communication>
+          </Communications>
+        </Address>
+        <Address Type="B2">
+          <Communications>
+            <Communication Status="" Type="EM">mamma@xx.com</Communication>
+            <Communication Status="" Type="PN">925-333-3333</Communication>
+          </Communications>
+        </Address>
+        <Address Type="C3">
+          <Communications>
+            <Communication Status="" Type="EM">buela@berkeley.edu</Communication>
+            <Communication Status="" Type="PN">(510)555-9507</Communication>
+          </Communications>
+        </Address>
+        <Address Type="C4">
+          <Communications>
+            <Communication Status="" Type="EM">buela@BERKELEY.EDU</Communication>
+            <Communication Status="" Type="PN">(510)555-9507</Communication>
+          </Communications>
+        </Address>
+        <Address Type="CP">
+          <Communications>
+            <Communication Status="" Type="EM">buela@berkeley.edu</Communication>
+            <Communication Status="" Type="PN">(510) 555-9507</Communication>
+          </Communications>
+        </Address>
+        <Address Type="F1">
+          <Communications>
+            <Communication Status="" Type="EM">papa@berkeley.edu</Communication>
+          </Communications>
+        </Address>
+        <Address Type="F2">
+          <Communications>
+            <Communication Status="" Type="EM">mammabear@xxx.com</Communication>
+          </Communications>
+        </Address>
+        <Address Type="F3">
+          <Communications>
+            <Communication Status="" Type="EM">buelo@berkeley.edu</Communication>
+          </Communications>
+        </Address>
+      </Addresses>
+    </Demographic>
+    <RelationshipData>
+      <Relationship Type="E1">
+        <LastName></LastName>
+        <FirstName></FirstName>
+        <MiddleName/>
+        <Street1></Street1>
+        <Street2></Street2>
+        <Street3></Street3>
+        <City></City>
+        <State></State>
+        <ZipCode></ZipCode>
+        <Country></Country>
+        <PhoneNumber></PhoneNumber>
+        <Citizenship/>
+        <MaidenName></MaidenName>
+        <Title></Title>
+        <DateofDeath/>
+        <FamilyRelationship/>
+        <StateLegalResidence/>
+        <Authorized/>
+        <GraduationDate/>
+        <EnrolledCollege></EnrolledCollege>
+        <AcademicLevel/>
+        <LoanRequestedAmount/>
+        <CreditBalanceChoice/>
+        <LoanSignatureDate/>
+        <HispanicLatino/>
+        <AmericanIndianAlaska/>
+        <Asian/>
+        <BlackAfricanAmerican/>
+        <PacificIslander/>
+        <White/>
+        <AlienRegNumber/>
+        <UserCode1/>
+        <UserCode2/>
+        <UserCode3/>
+        <UserCode4/>
+        <UserNumber1/>
+        <UserNumber2/>
+        <UserDate1/>
+        <Email></Email>
+      </Relationship>
+      <Relationship Type="F1">
+        <LastName>Bear</LastName>
+        <FirstName>Papa</FirstName>
+        <MiddleName/>
+        <Street1></Street1>
+        <Street2></Street2>
+        <Street3></Street3>
+        <City></City>
+        <State></State>
+        <ZipCode></ZipCode>
+        <Country></Country>
+        <PhoneNumber></PhoneNumber>
+        <Citizenship/>
+        <MaidenName></MaidenName>
+        <Title></Title>
+        <DateofDeath/>
+        <FamilyRelationship>P</FamilyRelationship>
+        <StateLegalResidence/>
+        <Authorized>A</Authorized>
+        <GraduationDate/>
+        <EnrolledCollege></EnrolledCollege>
+        <AcademicLevel/>
+        <LoanRequestedAmount/>
+        <CreditBalanceChoice/>
+        <LoanSignatureDate/>
+        <HispanicLatino/>
+        <AmericanIndianAlaska/>
+        <Asian/>
+        <BlackAfricanAmerican/>
+        <PacificIslander/>
+        <White/>
+        <AlienRegNumber/>
+        <UserCode1/>
+        <UserCode2/>
+        <UserCode3/>
+        <UserCode4/>
+        <UserNumber1/>
+        <UserNumber2/>
+        <UserDate1/>
+        <Email>papa@berkeley.edu</Email>
+      </Relationship>
+      <Relationship Type="F2">
+        <LastName>Bear</LastName>
+        <FirstName>Mamma</FirstName>
+        <MiddleName/>
+        <Street1></Street1>
+        <Street2></Street2>
+        <Street3></Street3>
+        <City></City>
+        <State></State>
+        <ZipCode></ZipCode>
+        <Country></Country>
+        <PhoneNumber></PhoneNumber>
+        <Citizenship/>
+        <MaidenName></MaidenName>
+        <Title></Title>
+        <DateofDeath/>
+        <FamilyRelationship>P</FamilyRelationship>
+        <StateLegalResidence/>
+        <Authorized>A</Authorized>
+        <GraduationDate/>
+        <EnrolledCollege></EnrolledCollege>
+        <AcademicLevel/>
+        <LoanRequestedAmount/>
+        <CreditBalanceChoice/>
+        <LoanSignatureDate/>
+        <HispanicLatino/>
+        <AmericanIndianAlaska/>
+        <Asian/>
+        <BlackAfricanAmerican/>
+        <PacificIslander/>
+        <White/>
+        <AlienRegNumber/>
+        <UserCode1/>
+        <UserCode2/>
+        <UserCode3/>
+        <UserCode4/>
+        <UserNumber1/>
+        <UserNumber2/>
+        <UserDate1/>
+        <Email>mammabear@xxx.com</Email>
+      </Relationship>
+      <Relationship Type="F3">
+        <LastName>Bear</LastName>
+        <FirstName>Buelo</FirstName>
+        <MiddleName/>
+        <Street1></Street1>
+        <Street2></Street2>
+        <Street3></Street3>
+        <City></City>
+        <State></State>
+        <ZipCode></ZipCode>
+        <Country></Country>
+        <PhoneNumber></PhoneNumber>
+        <Citizenship/>
+        <MaidenName>EMPTY</MaidenName>
+        <Title></Title>
+        <DateofDeath/>
+        <FamilyRelationship>R</FamilyRelationship>
+        <StateLegalResidence/>
+        <Authorized>R</Authorized>
+        <GraduationDate/>
+        <EnrolledCollege></EnrolledCollege>
+        <AcademicLevel/>
+        <LoanRequestedAmount/>
+        <CreditBalanceChoice/>
+        <LoanSignatureDate/>
+        <HispanicLatino/>
+        <AmericanIndianAlaska/>
+        <Asian/>
+        <BlackAfricanAmerican/>
+        <PacificIslander/>
+        <White/>
+        <AlienRegNumber/>
+        <UserCode1/>
+        <UserCode2/>
+        <UserCode3/>
+        <UserCode4/>
+        <UserNumber1/>
+        <UserNumber2/>
+        <UserDate1/>
+        <Email>buelo@berkeley.edu</Email>
+      </Relationship>
+    </RelationshipData>
+    <CourseData>
+      <Course/>
+    </CourseData>
+    <PromNoteData>
+      <PromNote LoanType="DLST" PersonType="ST">
+        <PromNoteStatus/>
+        <ExpirationDate/>
+        <BorrowerLastName/>
+        <BorrowerFirstName/>
+        <PromNoteSigDate/>
+        <EntranceCounselDate>2007-06-06</EntranceCounselDate>
+        <ExitCounselDate/>
+        <ExitFollowupDate/>
+        <MPNIdentifier/>
+      </PromNote>
+    </PromNoteData>
+    <AcademicData>
+      <AdmitTerm></AdmitTerm>
+      <ExpectGradDate>2013-12-31</ExpectGradDate>
+      <PriorBachelorDegree/>
+      <AcademicLevel/>
+      <PlannedEnrollmentsForYear>Y</PlannedEnrollmentsForYear>
+      <Campus></Campus>
+      <Division></Division>
+      <DependencyStatus/>
+      <Decision>
+        <Date/>
+        <Status/>
+      </Decision>
+      <EnrollmentData>
+        <ByTerm>
+          <Term ID="2">
+            <Status/>
+            <Hours/>
+            <EnrollmentType/>
+            <PlannedEnrollment/>
+          </Term>
+          <Term ID="3">
+            <Status/>
+            <Hours/>
+            <EnrollmentType/>
+            <PlannedEnrollment/>
+          </Term>
+          <Term ID="4">
+            <Status/>
+            <Hours/>
+            <EnrollmentType/>
+            <PlannedEnrollment/>
+          </Term>
+          <Term ID="5">
+            <Status>T</Status>
+            <Hours>10.00</Hours>
+            <EnrollmentType/>
+            <PlannedEnrollment>Y</PlannedEnrollment>
+          </Term>
+          <Term ID="6">
+            <Status/>
+            <Hours/>
+            <EnrollmentType/>
+            <PlannedEnrollment/>
+          </Term>
+        </ByTerm>
+      </EnrollmentData>
+      <PackagingData>
+        <Status>P</Status>
+        <Date>2014-02-04</Date>
+      </PackagingData>
+      <ByTerm>
+        <Term ID="2">
+          <AcademicProgress></AcademicProgress>
+          <Division></Division>
+          <Hold></Hold>
+          <Major></Major>
+          <College></College>
+          <Department></Department>
+          <HousingType></HousingType>
+          <HoldCode1></HoldCode1>
+          <HoldCode2></HoldCode2>
+          <HoldCode3></HoldCode3>
+          <HoldCode4></HoldCode4>
+          <HoldCode5></HoldCode5>
+          <HoldCode6></HoldCode6>
+          <ParentContribution/>
+          <StudentContribution/>
+          <ExpectedFamilyContribution>.00</ExpectedFamilyContribution>
+          <InstitutionParentContribution/>
+          <AdmitStatus/>
+          <AdmitType></AdmitType>
+        </Term>
+        <Term ID="3">
+          <AcademicProgress></AcademicProgress>
+          <Division></Division>
+          <Hold></Hold>
+          <Major></Major>
+          <College></College>
+          <Department></Department>
+          <HousingType></HousingType>
+          <HoldCode1></HoldCode1>
+          <HoldCode2></HoldCode2>
+          <HoldCode3></HoldCode3>
+          <HoldCode4></HoldCode4>
+          <HoldCode5></HoldCode5>
+          <HoldCode6></HoldCode6>
+          <ParentContribution/>
+          <StudentContribution/>
+          <ExpectedFamilyContribution>.00</ExpectedFamilyContribution>
+          <InstitutionParentContribution/>
+          <AdmitStatus/>
+          <AdmitType></AdmitType>
+        </Term>
+        <Term ID="4">
+          <AcademicProgress></AcademicProgress>
+          <Division></Division>
+          <Hold></Hold>
+          <Major></Major>
+          <College></College>
+          <Department></Department>
+          <HousingType></HousingType>
+          <HoldCode1></HoldCode1>
+          <HoldCode2></HoldCode2>
+          <HoldCode3></HoldCode3>
+          <HoldCode4></HoldCode4>
+          <HoldCode5></HoldCode5>
+          <HoldCode6></HoldCode6>
+          <ParentContribution/>
+          <StudentContribution/>
+          <ExpectedFamilyContribution>.00</ExpectedFamilyContribution>
+          <InstitutionParentContribution/>
+          <AdmitStatus/>
+          <AdmitType></AdmitType>
+        </Term>
+        <Term ID="5">
+          <AcademicProgress></AcademicProgress>
+          <Division></Division>
+          <Hold></Hold>
+          <Major></Major>
+          <College></College>
+          <Department></Department>
+          <HousingType></HousingType>
+          <HoldCode1></HoldCode1>
+          <HoldCode2></HoldCode2>
+          <HoldCode3></HoldCode3>
+          <HoldCode4></HoldCode4>
+          <HoldCode5></HoldCode5>
+          <HoldCode6></HoldCode6>
+          <ParentContribution/>
+          <StudentContribution/>
+          <ExpectedFamilyContribution>.00</ExpectedFamilyContribution>
+          <InstitutionParentContribution/>
+          <AdmitStatus>A</AdmitStatus>
+          <AdmitType>L1</AdmitType>
+        </Term>
+        <Term ID="6">
+          <AcademicProgress></AcademicProgress>
+          <Division></Division>
+          <Hold></Hold>
+          <Major></Major>
+          <College></College>
+          <Department></Department>
+          <HousingType></HousingType>
+          <HoldCode1></HoldCode1>
+          <HoldCode2></HoldCode2>
+          <HoldCode3></HoldCode3>
+          <HoldCode4></HoldCode4>
+          <HoldCode5></HoldCode5>
+          <HoldCode6></HoldCode6>
+          <ParentContribution/>
+          <StudentContribution/>
+          <ExpectedFamilyContribution/>
+          <InstitutionParentContribution/>
+          <AdmitStatus/>
+          <AdmitType></AdmitType>
+        </Term>
+      </ByTerm>
+    </AcademicData>
+    <FinancialData>
+      <ParentContribution/>
+      <StudentContribution/>
+      <ExpectedFamilyContribution>.00</ExpectedFamilyContribution>
+      <UnMetNeed>-300.00</UnMetNeed>
+      <WorkMax/>
+      <NumberInCollege/>
+      <Parent>
+        <LoanAuthorization>Authorized</LoanAuthorization>
+        <LastName>Duck</LastName>
+        <FirstName>Donnie</FirstName>
+        <MiddleInitial>X</MiddleInitial>
+        <SSN>123-45-6789</SSN>
+        <AddressType>HomeAddress</AddressType>
+      </Parent>
+      <ByTerm>
+        <Term ID="2">
+          <ParentContribution/>
+          <StudentContribution/>
+          <ExpectedFamilyContribution>.00</ExpectedFamilyContribution>
+          <InstitutionParentContribution/>
+          <UnMetNeed>.00</UnMetNeed>
+        </Term>
+        <Term ID="3">
+          <ParentContribution/>
+          <StudentContribution/>
+          <ExpectedFamilyContribution>.00</ExpectedFamilyContribution>
+          <InstitutionParentContribution/>
+          <UnMetNeed>-7967.00</UnMetNeed>
+        </Term>
+        <Term ID="4">
+          <ParentContribution/>
+          <StudentContribution/>
+          <ExpectedFamilyContribution>.00</ExpectedFamilyContribution>
+          <InstitutionParentContribution/>
+          <UnMetNeed>.00</UnMetNeed>
+        </Term>
+        <Term ID="5">
+          <ParentContribution/>
+          <StudentContribution/>
+          <ExpectedFamilyContribution>.00</ExpectedFamilyContribution>
+          <InstitutionParentContribution/>
+          <UnMetNeed>-7967.00</UnMetNeed>
+        </Term>
+        <Term ID="6">
+          <ParentContribution/>
+          <StudentContribution/>
+          <ExpectedFamilyContribution/>
+          <InstitutionParentContribution/>
+          <UnMetNeed/>
+        </Term>
+      </ByTerm>
+    </FinancialData>
+    <TrackData>
+      <Track Desc="DVN - NB Dependent Verification Required">DVN</Track>
+      <TrackType/>
+      <ISIRTranNumber>00</ISIRTranNumber>
+      <VerificationTrackGroup/>
+      <TrackDocs>
+        <Document>
+          <Name>Free Application for Federal Student Aid (FAFSA)</Name>
+          <Code>FAFSA</Code>
+          <Status></Status>
+          <Date/>
+          <CompletionType>A</CompletionType>
+          <Supplemental/>
+        </Document>
+        <Document>
+          <Name>Verification Dependent</Name>
+          <Code>VerifDep</Code>
+          <Status></Status>
+          <Date/>
+          <CompletionType>F</CompletionType>
+          <Supplemental>
+            <Usage Type="DS">
+              <Content Type="TXT">Your financial aid awards are not official because you were selected for Verification.
+                These estimated, conditional awards will not pay to your CARS account. You must complete the
+                Verification documents and submit them to the Financial Aid and Scholarships Office with the required
+                documentation. If your verified household or financial information varies significantly from what you
+                reported on your FAFSA, your awards are subject to change from your conditional offer. The verification
+                documents will be mailed to your permanent address.
+              </Content>
+            </Usage>
+          </Supplemental>
+          <AcctRecID></AcctRecID>
+        </Document>
+        <Document>
+          <Name>THIRD PARTY AUTHORIZATION - CF - CF</Name>
+          <Code>69</Code>
+          <Status></Status>
+          <Date>2009-07-08</Date>
+          <CompletionType>F</CompletionType>
+          <Supplemental/>
+        </Document>
+        <Document>
+          <Name>FAFSA Dependency Status Change</Name>
+          <Code>95</Code>
+          <Status></Status>
+          <Date/>
+          <CompletionType>F</CompletionType>
+          <Supplemental>
+            <Usage Type="DS">
+              <Content Type="TXT">We were notified that you updated your FAFSA with new information that resulted in a
+                change to your dependency status. You must complete the FAFSA Dependency Change form and submit the
+                requested documentation to the Financial Aid and Scholarships Office.
+              </Content>
+              <Content Type="URL">
+                http://students.berkeley.edu/finaid/home/otherforms/FAFSADependencyChange95-1314Fill.pdf
+              </Content>
+            </Usage>
+          </Supplemental>
+          <AcctRecID></AcctRecID>
+        </Document>
+        <Document>
+          <Name>FAFSA Income or Asset Change</Name>
+          <Code>96</Code>
+          <Status>N</Status>
+          <Date>2014-04-05</Date>
+          <CompletionType>F</CompletionType>
+          <Supplemental>
+            <Usage Type="DS">
+              <Content Type="TXT">We were notified that you updated your FAFSA with new information that resulted in a
+                change to your Expected Family Contribution (EFC). You must complete the FAFSA Income or Asset Change
+                form and submit the requested documentation to the Financial Aid and Scholarships Office.
+              </Content>
+              <Content Type="URL">
+                http://students.berkeley.edu/finaid/home/otherforms/FAFSAIncomeAssetChange96-1314Fill.pdf
+              </Content>
+            </Usage>
+          </Supplemental>
+          <AcctRecID></AcctRecID>
+        </Document>
+        <Document>
+          <Name>FAFSA Household Change</Name>
+          <Code>97</Code>
+          <Status></Status>
+          <Date/>
+          <CompletionType>F</CompletionType>
+          <Supplemental>
+            <Usage Type="DS">
+              <Content Type="TXT">We were notified that you updated your FAFSA with information that resulted in a
+                change to your (or your parents') household size, number in college, and/or marital status. You must
+                complete the FAFSA Household Information Change form and submit the requested documentation to the
+                Financial Aid and Scholarships Office.
+              </Content>
+              <Content Type="URL">
+                http://students.berkeley.edu/finaid/home/otherforms/FAFSAHouseholdChange97-1314Fill.pdf
+              </Content>
+            </Usage>
+          </Supplemental>
+          <AcctRecID></AcctRecID>
+        </Document>
+        <Document>
+          <Name>Defaulted Loans in Bankruptcy</Name>
+          <Code>A3</Code>
+          <Status></Status>
+          <Date/>
+          <CompletionType>F</CompletionType>
+          <Supplemental>
+            <Usage Type="DS">
+              <Content Type="TXT">The US Department of Education indicates that you have one or more defaulted federal
+                loans in active bankruptcy status. You must complete the Defaulted Student Loans in Bankruptcy form and
+                provide the required documentation.
+              </Content>
+              <Content Type="URL">
+                http://students.berkeley.edu/finaid/home/otherforms/defaultedloansbankruptcyA3-1314Fill.pdf
+              </Content>
+            </Usage>
+          </Supplemental>
+          <AcctRecID></AcctRecID>
+        </Document>
+        <Document>
+          <Name>Eligible Non-Citizen Statement</Name>
+          <Code>A6</Code>
+          <Status></Status>
+          <Date/>
+          <CompletionType>F</CompletionType>
+          <Supplemental>
+            <Usage Type="DS">
+              <Content Type="TXT">You must verify your eligible non-citizen status by submitting the Eligible
+                Non-Citizen Statement form with documentation. This documentation must be submitted, in person, to the
+                Cal Student Central office at 120 Sproul Hall.
+              </Content>
+              <Content Type="URL">
+                http://students.berkeley.edu/finaid/home/otherforms/EligibleNonCitizenA6-1314Fill.pdf
+              </Content>
+            </Usage>
+          </Supplemental>
+          <AcctRecID></AcctRecID>
+        </Document>
+        <Document>
+          <Name>Selective Service Verification - CF</Name>
+          <Code>B1</Code>
+          <Status></Status>
+          <Date>2006-04-05</Date>
+          <CompletionType>F</CompletionType>
+          <Supplemental>
+            <Usage Type="DS">
+              <Content Type="TXT">The Department of Education could not confirm that you are registered with Selective
+                Service. We need to verify that you are registered, or are not required to register, before we can award
+                you financial aid. You can register or confirm your registration on the Selective Service website at
+                http://www.sss.gov or by calling (888) 655-1825. Once you have documentation of your registration
+                status, submit it to us with the Selective Service Verification Form. If you are a Dream Act student,
+                you can register only by completing a Selective Service Registration Form at a local post office; the
+                Selective Service will mail your registration confirmation card to you in four to six weeks, and once
+                you have it, submit a copy of it to us with the Selective Service Verification Form.
+              </Content>
+              <Content Type="URL">http://students.berkeley.edu/finaid/home/otherforms/SelServVerifB1-1314Fill.pdf
+              </Content>
+            </Usage>
+          </Supplemental>
+          <AcctRecID></AcctRecID>
+        </Document>
+        <Document>
+          <Name>Social Security Number Certification</Name>
+          <Code>B2</Code>
+          <Status></Status>
+          <Date/>
+          <CompletionType>F</CompletionType>
+          <Supplemental>
+            <Usage Type="DS">
+              <Content Type="TXT">Your Social Security number did not match the information on file with the Social
+                Security Administration. You must submit the Social Security Number Certification form to the Financial
+                Aid and Scholarships Office in order to receive financial aid.
+              </Content>
+              <Content Type="URL">
+                http://students.berkeley.edu/finaid/home/otherforms/SocialSecurityCertB2-1314Fill.pdf
+              </Content>
+            </Usage>
+          </Supplemental>
+          <AcctRecID></AcctRecID>
+        </Document>
+        <Document>
+          <Name>U.S. Citizenship Confirmation - CF</Name>
+          <Code>B3</Code>
+          <Status></Status>
+          <Date>2007-04-24</Date>
+          <CompletionType>F</CompletionType>
+          <Supplemental>
+            <Usage Type="DS">
+              <Content Type="TXT">Your citizenship status could not be confirmed by the Social Security Administration.
+                You must complete the U.S. Citizenship Certification and bring it, along with the required
+                documentation, to Cal Student Central at 120 Sproul Hall. This form must be presented in person with
+                your original documents.
+              </Content>
+              <Content Type="URL">http://students.berkeley.edu/finaid/home/otherforms/USCitizenConfirmB3-1314Fill.pdf
+              </Content>
+            </Usage>
+          </Supplemental>
+          <AcctRecID></AcctRecID>
+        </Document>
+        <Document>
+          <Name>Budget Appeal</Name>
+          <Code>D1</Code>
+          <Status>P</Status>
+          <Date>2013-12-10</Date>
+          <CompletionType></CompletionType>
+          <Supplemental/>
+        </Document>
+        <Document>
+          <Name>Quality Assurance Dependent</Name>
+          <Code>Q4</Code>
+          <Status></Status>
+          <Date/>
+          <CompletionType>F</CompletionType>
+          <Supplemental/>
+        </Document>
+        <Document>
+          <Name>Quality Assurance Independent</Name>
+          <Code>Q5</Code>
+          <Status></Status>
+          <Date/>
+          <CompletionType>F</CompletionType>
+          <Supplemental/>
+        </Document>
+        <Document>
+          <Name>Free Application for Federal Student Aid (FAFSA)</Name>
+          <Code>03</Code>
+          <Status>P</Status>
+          <Date>2013-04-18</Date>
+          <CompletionType>A</CompletionType>
+          <Supplemental/>
+        </Document>
+      </TrackDocs>
+      <InterestCodes/>
+      <FileComplete/>
+      <FASFADate/>
+      <ScreenedDate/>
+    </TrackData>
+    <BudgetData>
+      <Budgets>
+        <Component Code="NE" Desc="Not Enrolled">
+          <TotalAmount>0</TotalAmount>
+          <Supplemental/>
+          <ByTerm>
+            <Term ID="3">
+              <Amount>0</Amount>
+            </Term>
+            <Term ID="5">
+              <Amount>0</Amount>
+            </Term>
+          </ByTerm>
+        </Component>
+      </Budgets>
+      <Totals>
+        <TotalComponents>1</TotalComponents>
+        <TotalDirectCost>.00</TotalDirectCost>
+        <TotalBudget>.00</TotalBudget>
+        <TotalPellBudget/>
+        <ByTerm>
+          <Term ID="3">
+            <TotalComponents>1</TotalComponents>
+            <TotalDirectCost>.00</TotalDirectCost>
+            <TotalBudget>.00</TotalBudget>
+            <TotalPellBudget/>
+          </Term>
+          <Term ID="5">
+            <TotalComponents>1</TotalComponents>
+            <TotalDirectCost>.00</TotalDirectCost>
+            <TotalBudget>.00</TotalBudget>
+            <TotalPellBudget/>
+          </Term>
+        </ByTerm>
+      </Totals>
+    </BudgetData>
+    <AwardData>
+      <AllAwards>
+        <AidCategory Type="Loan">
+          <Awards/>
+          <Totals>
+            <TotalAwards>0</TotalAwards>
+            <TotalOffered>.00</TotalOffered>
+            <TotalPaid>.00</TotalPaid>
+            <TotalAccepted>.00</TotalAccepted>
+          </Totals>
+        </AidCategory>
+        <AidCategory Type="Grant">
+          <Awards/>
+          <Totals>
+            <TotalAwards>0</TotalAwards>
+            <TotalOffered>.00</TotalOffered>
+            <TotalPaid>.00</TotalPaid>
+            <TotalAccepted>.00</TotalAccepted>
+          </Totals>
+        </AidCategory>
+        <AidCategory Type="Scholarship">
+          <Awards/>
+          <Totals>
+            <TotalAwards>0</TotalAwards>
+            <TotalOffered>.00</TotalOffered>
+            <TotalPaid>.00</TotalPaid>
+            <TotalAccepted>.00</TotalAccepted>
+          </Totals>
+        </AidCategory>
+        <AidCategory Type="Work">
+          <Awards/>
+          <Totals>
+            <TotalAwards>0</TotalAwards>
+            <TotalOffered>.00</TotalOffered>
+            <TotalPaid>.00</TotalPaid>
+            <TotalAccepted>.00</TotalAccepted>
+          </Totals>
+        </AidCategory>
+        <AidCategory Type=" ">
+          <Awards>
+            <Award Aidid="EMLA" Desc="Emerge Loan Liv Exp Auto" TypeAid="9">
+              <AwardControl/>
+              <WebControl/>
+              <LongDescription>Emergency Loan for Living Expenses</LongDescription>
+              <PromNoteSigDate/>
+              <ExitCounselDate/>
+              <EntranceCounselDate/>
+              <LoanNumber></LoanNumber>
+              <AcceptStatus>A</AcceptStatus>
+              <ProcessingResponsibility>Y</ProcessingResponsibility>
+              <Sponsor>C</Sponsor>
+              <AdminResponsibility>C</AdminResponsibility>
+              <PersonType/>
+              <TotalOffered>700.00</TotalOffered>
+              <TotalPaid>.00</TotalPaid>
+              <TotalAccepted>700.00</TotalAccepted>
+              <OriginalOffered>500.00</OriginalOffered>
+              <ByTerm/>
+              <DisbursementData Date="2014-01-14" Seqnr="001" Term="5">
+                <Amount>500.00</Amount>
+              </DisbursementData>
+              <DisbursementData Date="2014-01-14" Seqnr="002" Term="5">
+                <Amount>200.00</Amount>
+              </DisbursementData>
+              <DisbursementData Date="2014-02-05" Seqnr="003" Term="5">
+                <Amount>-700.00</Amount>
+              </DisbursementData>
+              <UserData>
+                <Codes/>
+                <Numbers/>
+              </UserData>
+              <Supplemental/>
+            </Award>
+            <Award Aidid="EOP1" Desc="EOP Grant" TypeAid="G">
+              <AwardControl/>
+              <WebControl/>
+              <LongDescription>EOP Grant General</LongDescription>
+              <PromNoteSigDate/>
+              <ExitCounselDate/>
+              <EntranceCounselDate/>
+              <LoanNumber></LoanNumber>
+              <AcceptStatus>A</AcceptStatus>
+              <ProcessingResponsibility>Y</ProcessingResponsibility>
+              <Sponsor>D</Sponsor>
+              <AdminResponsibility>D</AdminResponsibility>
+              <PersonType/>
+              <TotalOffered>300.00</TotalOffered>
+              <TotalPaid>.00</TotalPaid>
+              <TotalAccepted>300.00</TotalAccepted>
+              <OriginalOffered>300.00</OriginalOffered>
+              <ByTerm>
+                <Term ID="3">
+                  <ActualEnrollment/>
+                  <PackagedEnrollment/>
+                  <Offered>150.00</Offered>
+                  <Paid>.00</Paid>
+                  <Accepted>150.00</Accepted>
+                  <Disbursements>
+                    <Actual/>
+                    <Anticipated>
+                      <AnticipatedDisbDetail ID="02">
+                        <AnticipatedDisbDate>2013-08-22</AnticipatedDisbDate>
+                        <AnticipatedGrossAmt>150</AnticipatedGrossAmt>
+                        <AnticipatedNetAmt>150</AnticipatedNetAmt>
+                      </AnticipatedDisbDetail>
+                    </Anticipated>
+                    <Estimated/>
+                  </Disbursements>
+                </Term>
+                <Term ID="5">
+                  <ActualEnrollment/>
+                  <PackagedEnrollment/>
+                  <Offered>150.00</Offered>
+                  <Paid>.00</Paid>
+                  <Accepted>150.00</Accepted>
+                  <Disbursements>
+                    <Actual/>
+                    <Anticipated>
+                      <AnticipatedDisbDetail ID="07">
+                        <AnticipatedDisbDate>2014-01-14</AnticipatedDisbDate>
+                        <AnticipatedGrossAmt>150</AnticipatedGrossAmt>
+                        <AnticipatedNetAmt>150</AnticipatedNetAmt>
+                      </AnticipatedDisbDetail>
+                    </Anticipated>
+                    <Estimated/>
+                  </Disbursements>
+                </Term>
+              </ByTerm>
+              <UserData>
+                <Codes>
+                  <File ID="AWD">
+                    <Code Item="1">GO</Code>
+                  </File>
+                </Codes>
+                <Numbers/>
+              </UserData>
+              <Supplemental/>
+            </Award>
+            <Award Aidid="XDEPF" Desc="EST. DEPT AWARD AY FEE" TypeAid="G">
+              <AwardControl/>
+              <WebControl/>
+              <LongDescription>Department Fee Award Estimated</LongDescription>
+              <PromNoteSigDate/>
+              <ExitCounselDate/>
+              <EntranceCounselDate/>
+              <LoanNumber></LoanNumber>
+              <AcceptStatus>D</AcceptStatus>
+              <ProcessingResponsibility>N</ProcessingResponsibility>
+              <Sponsor>C</Sponsor>
+              <AdminResponsibility>D</AdminResponsibility>
+              <PersonType/>
+              <TotalOffered>.00</TotalOffered>
+              <TotalPaid>.00</TotalPaid>
+              <TotalAccepted>.00</TotalAccepted>
+              <OriginalOffered>15635.50</OriginalOffered>
+              <ByTerm/>
+              <UserData>
+                <Codes>
+                  <File ID="AWD">
+                    <Code Item="1">SR</Code>
+                  </File>
+                </Codes>
+                <Numbers/>
+              </UserData>
+              <Supplemental/>
+            </Award>
+          </Awards>
+          <Totals>
+            <TotalAwards>3</TotalAwards>
+            <TotalOffered>1000.00</TotalOffered>
+            <TotalPaid>.00</TotalPaid>
+            <TotalAccepted>1000.00</TotalAccepted>
+          </Totals>
+        </AidCategory>
+      </AllAwards>
+      <Totals>
+        <TotalAwards>3</TotalAwards>
+        <TotalOffered>1000.00</TotalOffered>
+        <TotalPaid>.00</TotalPaid>
+        <TotalAccepted>1000.00</TotalAccepted>
+        <ByTerm>
+          <Term ID="03">
+            <TotalAwards>1</TotalAwards>
+            <TotalOffered>150.00</TotalOffered>
+            <TotalPaid>.00</TotalPaid>
+            <TotalAccepted>150.00</TotalAccepted>
+          </Term>
+          <Term ID="05">
+            <TotalAwards>1</TotalAwards>
+            <TotalOffered>150.00</TotalOffered>
+            <TotalPaid>.00</TotalPaid>
+            <TotalAccepted>150.00</TotalAccepted>
+          </Term>
+        </ByTerm>
+      </Totals>
+    </AwardData>
+    <HistoricalData>
+      <EnrollmentHistory>
+        <Enrollment Aidyr="2011" Term="1">
+          <PlannedEnrollment>Y</PlannedEnrollment>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2011" Term="3">
+          <PlannedEnrollment>Y</PlannedEnrollment>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2011" Term="5">
+          <PlannedEnrollment>Y</PlannedEnrollment>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2011" Term="6">
+          <PlannedEnrollment>Y</PlannedEnrollment>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2012" Term="3">
+          <PlannedEnrollment>Y</PlannedEnrollment>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2012" Term="5">
+          <PlannedEnrollment>Y</PlannedEnrollment>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2013" Term="3">
+          <PlannedEnrollment>Y</PlannedEnrollment>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2013" Term="5">
+          <PlannedEnrollment>Y</PlannedEnrollment>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2013" Term="6">
+          <PlannedEnrollment>Y</PlannedEnrollment>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2014" Term="2">
+          <PlannedEnrollment/>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2014" Term="3">
+          <PlannedEnrollment/>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2014" Term="4">
+          <PlannedEnrollment/>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2014" Term="5">
+          <PlannedEnrollment>Y</PlannedEnrollment>
+          <ActualEnrollment/>
+        </Enrollment>
+        <Enrollment Aidyr="2014" Term="6">
+          <PlannedEnrollment/>
+          <ActualEnrollment/>
+        </Enrollment>
+      </EnrollmentHistory>
+      <HistoryAward Aidid="PERK" Name="Fed Perkins Loan">
+        <Awards>
+          <Award Aidyr="2012">
+            <OfferAmount>4000.00</OfferAmount>
+            <PaidAmount>.00</PaidAmount>
+            <EnrolledCampus></EnrolledCampus>
+            <TypeAid>J</TypeAid>
+            <AwardStatus/>
+            <PromNoteSigDate/>
+            <ExitCounselDate/>
+            <EntranceCounselDate/>
+            <BeginDate>2011-08-18</BeginDate>
+            <EndDate>2012-05-11</EndDate>
+            <CurrentAwardPayment>.00</CurrentAwardPayment>
+            <ExtraUnsubFlag/>
+          </Award>
+        </Awards>
+        <Totals>
+          <TotalOffered>4000.00</TotalOffered>
+          <TotalPaid>.00</TotalPaid>
+        </Totals>
+      </HistoryAward>
+      <HistoryAward Aidid="CALA" Name="Cal Grant A History">
+        <Awards>
+          <Award Aidyr="2013">
+            <OfferAmount>12192.00</OfferAmount>
+            <PaidAmount>12192.00</PaidAmount>
+            <EnrolledCampus></EnrolledCampus>
+            <TypeAid>Q</TypeAid>
+            <AwardStatus/>
+            <PromNoteSigDate/>
+            <ExitCounselDate/>
+            <EntranceCounselDate/>
+            <BeginDate>2012-08-16</BeginDate>
+            <EndDate>2013-05-17</EndDate>
+            <CurrentAwardPayment>.00</CurrentAwardPayment>
+            <ExtraUnsubFlag/>
+          </Award>
+        </Awards>
+        <Totals>
+          <TotalOffered>12192.00</TotalOffered>
+          <TotalPaid>12192.00</TotalPaid>
+        </Totals>
+      </HistoryAward>
+    </HistoricalData>
+    <LoanData>
+      <PreviousStafLender></PreviousStafLender>
+      <LenderID></LenderID>
+      <CounselDate>2007-06-06</CounselDate>
+      <NSLDS/>
+    </LoanData>
+    <DiagnosticData>
+      <Diagnostic Aidid=" " Category="PKG" Code="PK18" Name="" Term="  ">
+        <Message>No FAFSA</Message>
+        <URL></URL>
+        <Categories>
+          <Category Name="CAT01">W</Category>
+        </Categories>
+        <Supplemental>
+          <Usage Type="DS">
+            <Content Type="TXT">We have not received a FAFSA from you for 2013-14. If you have not filed a FAFSA and
+              wish to apply for financial aid, you may complete your application online at http://www.fafsa.ed.gov/. If
+              you have filed a FAFSA already, go to the FAFSA website to ensure that you have listed the UC Berkeley
+              school code 001312. If you are looking for your 2011-12 financial aid, choose 2011-2012 from the dropdown
+              box in the upper right corner of the screen.
+            </Content>
+            <Content Type="URL">http://www.fafsa.ed.gov</Content>
+          </Usage>
+        </Supplemental>
+        <AcctRecID></AcctRecID>
+      </Diagnostic>
+    </DiagnosticData>
+    <MemoData/>
+    <UserData>
+      <Codes/>
+      <Numbers>
+        <File ID="SAM">
+          <Number Item="5">0</Number>
+        </File>
+      </Numbers>
+    </UserData>
+    <shopping_sheet>
+      <production_info>
+        <info_type>Shopping Sheet 13-14</info_type>
+        <production_date>02-13-2014</production_date>
+      </production_info>
+      <school_info>
+        <name>UC Berkeley</name>
+        <initials>UC Berkeley</initials>
+        <street_address>201 Sproul Hall #1960</street_address>
+        <city>Berkeley</city>
+        <state>CA</state>
+        <postal_code>94720-1960</postal_code>
+        <phone_number>(510)664-9181</phone_number>
+        <email_address>fao_ugr@berkeley.edu</email_address>
+        <graduation_rate>90.00</graduation_rate>
+        <loan_default_rate>2.60</loan_default_rate>
+        <natl_loan_default_rate>13.40</natl_loan_default_rate>
+        <median_borrowing>17224</median_borrowing>
+        <ten_year_monthly_cost>198.21</ten_year_monthly_cost>
+        <additional_comments/>
+      </school_info>
+      <student SID="11667051">
+        <first_name>OSKI</first_name>
+        <middle_name/>
+        <last_name>BEAR</last_name>
+        <costs>
+          <tuition_and_fees/>
+          <housing_and_meals/>
+          <books_and_supplies/>
+          <transportation/>
+          <other_education_costs/>
+        </costs>
+        <grants_and_scholarships>
+          <total_grants_and_scholarships>300.00</total_grants_and_scholarships>
+          <grants_from_school>300.00</grants_from_school>
+          <federal_pell_grant>.00</federal_pell_grant>
+          <grants_from_state>.00</grants_from_state>
+          <other_scholarships>.00</other_scholarships>
+        </grants_and_scholarships>
+        <net_costs>300.00-</net_costs>
+        <work_options>
+          <work_study>.00</work_study>
+        </work_options>
+        <loan_options>
+          <federal_perkins_loans>.00</federal_perkins_loans>
+          <federal_direct_subsidized_loan>.00</federal_direct_subsidized_loan>
+          <federal_direct_unsubsidized_loan>.00</federal_direct_unsubsidized_loan>
+        </loan_options>
+        <other_options>
+          <family_contribution/>
+        </other_options>
+      </student>
+    </shopping_sheet>
+  </FALifecycle>
+  <Response>
+    <Code>0000</Code>
+    <Message>Success</Message>
+  </Response>
+</SSIDOC>

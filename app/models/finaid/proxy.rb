@@ -1,10 +1,8 @@
 module Finaid
   class Proxy < BaseProxy
-
     include ClassLogger
+    include Proxies::MockableXml
     include User::Student
-
-    APP_ID = "Myfinaid"
 
     attr_reader :term_year
 
@@ -12,37 +10,48 @@ module Finaid
       super(Settings.myfinaid_proxy, options)
       raise ArgumentError, "Finaid::Proxy requires a term_year" unless options[:term_year].present?
       @term_year = options[:term_year].to_s
+      @student_id = lookup_student_id
+      initialize_mocks if @fake
     end
 
     def get
-      FeedWrapper.new(request_internal("myfinaid"))
+      FeedWrapper.new request_internal
     end
 
-    def request_internal(vcr_cassette)
-      student_id = lookup_student_id
-      if student_id.nil?
+    private
+
+    def mock_request
+      super.merge(uri_matching: request_url, query_including: {aidYear: @term_year})
+    end
+
+    def mock_xml
+      read_file('fixtures', 'xml', "finaid_#{@student_id}_#{@term_year}.xml")
+    end
+
+    def request_internal
+      if @student_id.nil?
         logger.info "Lookup of student_id for uid #{@uid} failed, cannot call Finaid API"
         return nil
       else
-        url = "#{@settings.base_url}/#{student_id}/finaid"
-        vcr_opts = {:match_requests_on => [:method, :path, VCR.request_matchers.uri_without_params(:token, :app_id, :app_key)]}
-        logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}, aidYear = #{@term_year}; cache expiration #{self.class.expires_in}"
-        response = FakeableProxy.wrap_request(vcr_id = APP_ID + "_" + vcr_cassette, @fake, vcr_opts) {
-          request_options = {query: {
-            token: @settings.token,
-            aidYear: @term_year
-          }}
-          if (@settings.app_id.present? && @settings.app_key.present?)
-            request_options[:headers] = {
-              'app_id' => @settings.app_id,
-              'app_key' => @settings.app_key
-            }
-          end
-          get_response(url, request_options)
-        }
+        logger.info "Fake = #{@fake}; Making request to #{request_url} on behalf of user #{@uid}, student_id = #{@student_id}, aidYear = #{@term_year}; cache expiration #{self.class.expires_in}"
+        request_options = {query: {
+          token: @settings.token,
+          aidYear: @term_year
+        }}
+        if (@settings.app_id.present? && @settings.app_key.present?)
+          request_options[:headers] = {
+            'app_id' => @settings.app_id,
+            'app_key' => @settings.app_key
+          }
+        end
+        response = get_response(request_url, request_options)
         logger.debug "Remote server status #{response.code}, Body = #{response.body}"
         response
       end
+    end
+
+    def request_url
+      "#{@settings.base_url}/#{@student_id}/finaid"
     end
 
   end
