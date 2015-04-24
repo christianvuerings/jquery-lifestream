@@ -29,7 +29,7 @@ describe Finaid::MyFinAid do
 
     context 'when student is a registered test student', :testext => true do
       before { allow_any_instance_of(Finaid::Proxy).to receive(:lookup_student_id).and_return('97450293475029347520394785') }
-      let!(:feed) { Finaid::Proxy.new({user_id: '300849', term_year: this_term_year}).get }
+      let!(:feed) { Finaid::Proxy.new({user_id: '300849', term_year: this_term_year, fake: false}).get }
 
       it 'should have a unsuccessful response code and message' do
         expect(feed['SSIDOC']['Response']['Code'].to_text).to eq 'B0023'
