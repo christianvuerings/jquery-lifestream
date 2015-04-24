@@ -183,7 +183,7 @@
                   </div>
                   <div class="medium-8 columns">
                     <input type="text" name="siteName" id="siteName" data-ng-model="siteName" data-ng-required="true">
-                    <div ng-if="createCourseSiteForm.siteName.$error.required" class="cc-notice-box cc-notice-error cc-radius">
+                    <div data-ng-if="createCourseSiteForm.siteName.$error.required" class="cc-notice-box cc-notice-error cc-radius">
                       <i class="cc-left fa fa-exclamation-circle cc-icon-red cc-canvas-notice-icon"></i>
                       Please fill out a site name.
                     </div>
@@ -200,7 +200,7 @@
 
                 <div class="row">
                   <div class="medium-offset-4 medium-8 columns">
-                    <button ng-disabled="createCourseSiteForm.$invalid" class="bc-canvas-button bc-canvas-button-primary" type="submit"
+                    <button data-ng-disabled="createCourseSiteForm.$invalid" class="bc-canvas-button bc-canvas-button-primary" type="submit"
                     role="button" aria-label="Create Course Site" aria-controls="cc-page-create-course-site-monitor-step">Create Course Site</button>
                     <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showSelecting()">Go Back</button>
                   </div>

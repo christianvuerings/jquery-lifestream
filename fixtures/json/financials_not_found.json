@@ -1,0 +1,9 @@
+{
+  "ErrorResponse": {
+    "code": "Not Found",
+    "message": "CFV No Search Result Found - [ Student ID :::STUDENT_ID:::]",
+    "moreInfo": "https://integration.berkeley.edu/cfv/errors.html",
+    "status": "Not Found",
+    "studentId": :::STUDENT_ID:::
+  }
+}

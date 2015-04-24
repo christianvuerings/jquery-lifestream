@@ -43,6 +43,12 @@ describe Financials::MyFinancials do
   end
 
   context 'error on remote server' do
+    let(:student_id) { '11667051' }
+    let(:real_proxy) { Financials::Proxy.new({user_id: uid, student_id: student_id, fake: false}) }
+    before {
+      allow(Financials::Proxy).to receive(:new).and_return(real_proxy)
+    }
+
     let! (:body) { 'An unknown error occurred.' }
     let! (:status) { 506 }
     include_context 'expecting logs from server errors'
@@ -87,7 +93,6 @@ describe Financials::MyFinancials do
       end
       it_behaves_like 'a feed with the common live-updates fields'
     end
-
   end
 
 end

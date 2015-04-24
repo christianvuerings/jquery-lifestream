@@ -83,7 +83,7 @@
     <p class="cc-widget-padding" data-ng-if="choice === 'balance' && myfinances.summary.accountBalanceFloat < 0 && counts.open === 0">
       You have an over-payment on your account. You do not owe anything at this time. Please select a different filter to view activity details.
     </p>
-    <div class="cc-table cc-table-sortable cc-page-myfinances-table" data-ng-hide="choice === 'balance' && myfinances.summary.accountBalanceFloat <= 0  && counts.open === 0" aria-live="polite">
+    <div class="cc-table cc-table-sortable cc-page-myfinances-table cc-table-finances" data-ng-hide="choice === 'balance' && myfinances.summary.accountBalanceFloat <= 0  && counts.open === 0" aria-live="polite">
       <table>
         <thead>
           <tr>
