@@ -474,38 +474,22 @@ describe Canvas::Egrades do
     let(:course_assignments) {
       [
         {
-          'id' => 19082,
-          'name' => 'Assignment 1',
-          'muted' => false,
-          'due_at' => "2015-05-12T19:40:00Z",
-          'points_possible' => 100
-        },
-        {
           'id' => 19083,
           'name' => 'Assignment 2',
           'muted' => true,
           'due_at' => "2015-10-13T06:05:00Z",
           'points_possible' => 50
         },
-        {
-          'id' => 19084,
-          'name' => 'Assignment 3',
-          'muted' => true,
-          'due_at' => nil,
-          'points_possible' => 25
-        },
       ]
     }
-    before { allow_any_instance_of(Canvas::CourseAssignments).to receive(:course_assignments).and_return(course_assignments) }
+    before { allow_any_instance_of(Canvas::CourseAssignments).to receive(:muted_assignments).and_return(course_assignments) }
 
     it 'provides current muted assignments' do
       muted_assignments = subject.muted_assignments
       expect(muted_assignments).to be_an_instance_of Array
-      expect(muted_assignments.count).to eq 2
+      expect(muted_assignments.count).to eq 1
       expect(muted_assignments[0]['name']).to eq 'Assignment 2'
       expect(muted_assignments[0]['points_possible']).to eq 50
-      expect(muted_assignments[1]['name']).to eq 'Assignment 3'
-      expect(muted_assignments[1]['points_possible']).to eq 25
     end
 
     it 'converts due at timestamp to display format' do

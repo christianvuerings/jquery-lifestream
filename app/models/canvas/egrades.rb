@@ -143,19 +143,11 @@ module Canvas
     end
 
     def muted_assignments
-      assignments = Canvas::CourseAssignments.new(:course_id => @canvas_course_id).course_assignments(:cache => false)
-      muted_assignments = []
-      assignments.each do |assignment|
-        due_at_date = assignment['due_at'].nil? ? nil : Time.iso8601(assignment['due_at']).strftime('%b %-e, %Y at %-l:%M%P')
-        if assignment['muted'] == true
-          muted_assignments << {
-            'name' => assignment['name'],
-            'points_possible' => assignment['points_possible'],
-            'due_at' => due_at_date
-          }
-        end
+      muted_assignments = Canvas::CourseAssignments.new(:course_id => @canvas_course_id).muted_assignments
+      muted_assignments.collect do |assignment|
+        assignment['due_at'] = assignment['due_at'].nil? ? nil : Time.iso8601(assignment['due_at']).strftime('%b %-e, %Y at %-l:%M%P')
+        assignment
       end
-      muted_assignments
     end
 
   end
