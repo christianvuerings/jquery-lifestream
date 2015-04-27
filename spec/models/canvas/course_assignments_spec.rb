@@ -47,4 +47,22 @@ describe Canvas::CourseAssignments do
       muted_assignments = subject.muted_assignments
     end
   end
+
+  context 'when unmuting an assignment' do
+    it 'unmutes the assignment' do
+      request_params = {
+        'assignment' => {
+          'muted' => false
+        }
+      }
+      request_options = {
+        :method => :put,
+        :body => request_params,
+      }
+      result = subject.unmute_assignment(11)
+      expect(result).to be_an_instance_of Hash
+      expect(result['id']).to eq 11
+      expect(result['muted']).to eq false
+    end
+  end
 end

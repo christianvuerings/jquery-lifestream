@@ -16,7 +16,7 @@ module Canvas
       while params do
         response = request_uncached(
           "courses/#{@course_id}/assignments?#{params}",
-          "_course_assignments"
+          '_course_assignments'
         )
         break unless (response && response.status == 200 && assignments_list = safe_json(response.body))
         all_assignments.concat(assignments_list)
@@ -29,6 +29,20 @@ module Canvas
       course_assignments.select do |assignment|
         assignment['muted'] == true
       end
+    end
+
+    def unmute_assignment(canvas_assignment_id)
+      request_params = {
+        'assignment' => {
+          'muted' => false
+        }
+      }
+      request_options = {
+        :method => :put,
+        :body => request_params,
+      }
+      response = request_uncached("courses/#{@course_id}/assignments/#{canvas_assignment_id}", '_course_assignment_unmute', request_options)
+      JSON.parse(response.body)
     end
 
   end
