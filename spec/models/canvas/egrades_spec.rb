@@ -23,6 +23,32 @@ describe Canvas::Egrades do
     ]
   end
 
+  let(:course_assignments) {
+    [
+      {
+        'id' => 19082,
+        'name' => 'Assignment 1',
+        'muted' => false,
+        'due_at' => "2015-05-12T19:40:00Z",
+        'points_possible' => 100
+      },
+      {
+        'id' => 19083,
+        'name' => 'Assignment 2',
+        'muted' => true,
+        'due_at' => "2015-10-13T06:05:00Z",
+        'points_possible' => 50
+      },
+      {
+        'id' => 19084,
+        'name' => 'Assignment 3',
+        'muted' => false,
+        'due_at' => nil,
+        'points_possible' => 25
+      },
+    ]
+  }
+
   it_should_behave_like 'a background job worker'
 
   context "when setting the course user page total" do
@@ -471,18 +497,8 @@ describe Canvas::Egrades do
   end
 
   context 'when providing muted assignments' do
-    let(:course_assignments) {
-      [
-        {
-          'id' => 19083,
-          'name' => 'Assignment 2',
-          'muted' => true,
-          'due_at' => "2015-10-13T06:05:00Z",
-          'points_possible' => 50
-        },
-      ]
-    }
-    before { allow_any_instance_of(Canvas::CourseAssignments).to receive(:muted_assignments).and_return(course_assignments) }
+    let(:muted_course_assignments) { [course_assignments[1]] }
+    before { allow_any_instance_of(Canvas::CourseAssignments).to receive(:muted_assignments).and_return(muted_course_assignments) }
 
     it 'provides current muted assignments' do
       muted_assignments = subject.muted_assignments
@@ -496,6 +512,19 @@ describe Canvas::Egrades do
       muted_assignments = subject.muted_assignments
       expect(muted_assignments).to be_an_instance_of Array
       expect(muted_assignments[0]['due_at']).to eq "Oct 13, 2015 at 6:05am"
+    end
+  end
+
+  context 'when unmuting all course assignments' do
+    let(:muted_course_assignments) do
+      course_assignments.collect {|assignment| assignment['muted'] = true; assignment}
+    end
+    it 'unmutes all muted assignments for the course specified' do
+      allow_any_instance_of(Canvas::CourseAssignments).to receive(:muted_assignments).and_return(muted_course_assignments)
+      expect_any_instance_of(Canvas::CourseAssignments).to receive(:unmute_assignment).exactly(1).times.with(19082)
+      expect_any_instance_of(Canvas::CourseAssignments).to receive(:unmute_assignment).exactly(1).times.with(19083)
+      expect_any_instance_of(Canvas::CourseAssignments).to receive(:unmute_assignment).exactly(1).times.with(19084)
+      result = subject.unmute_course_assignments(canvas_course_id)
     end
   end
 

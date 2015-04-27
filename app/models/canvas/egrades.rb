@@ -150,5 +150,13 @@ module Canvas
       end
     end
 
+    def unmute_course_assignments(canvas_course_id)
+      worker = Canvas::CourseAssignments.new(:course_id => @canvas_course_id)
+      muted_assignments = worker.muted_assignments
+      muted_assignments.each do |assignment|
+        worker.unmute_assignment(assignment['id'])
+      end
+    end
+
   end
 end
