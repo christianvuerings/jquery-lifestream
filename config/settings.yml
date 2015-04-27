@@ -130,13 +130,6 @@ regstatus_proxy:
   app_key: ''
   base_url: 'https://apis.berkeley.edu/cxf/asws/regstatus'
 
-research_user_proxy:
-  fake: false
-  base_url: "https://hub-qa.berkeley.edu/alfresco/service/api/ucb/person"
-  site_url: "https://hub-qa.berkeley.edu/page/site"
-  username: "secret"
-  password: "secret"
-
 myfinaid_proxy:
   fake: false
   token: secret set per deployment layer
