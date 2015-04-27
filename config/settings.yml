@@ -117,6 +117,13 @@ bearfacts_proxy:
   app_key: ''
   base_url: "https://apis-dev.berkeley.edu/bearfacts-apis"
 
+calmail_proxy:
+  fake: false
+  api_key: '99999'
+  base_url: 'https://example.com/manage/api1'
+  domain: 'bcourses-lists.berkeley.edu'
+  owner_uid: '211159'
+
 regstatus_proxy:
   fake: false
   app_id: ''
