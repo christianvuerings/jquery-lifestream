@@ -19,6 +19,12 @@ module Canvas
       end
     end
 
+    def muted_assignments
+      course_assignments(:cache => false).select do |assignment|
+        assignment['muted'] == true
+      end
+    end
+
     private
 
     # Interface to request all assignments in a course
