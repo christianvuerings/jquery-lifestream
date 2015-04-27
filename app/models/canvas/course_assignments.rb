@@ -8,28 +8,9 @@ module Canvas
       @course_id = options[:course_id]
     end
 
-    def course_assignments(options = {})
-      default_options = {:cache => true}
-      options.reverse_merge!(default_options)
-
-      if options[:cache].present?
-        self.class.fetch_from_cache(@course_id) { request_course_assignments }
-      else
-        request_course_assignments
-      end
-    end
-
-    def muted_assignments
-      course_assignments(:cache => false).select do |assignment|
-        assignment['muted'] == true
-      end
-    end
-
-    private
-
     # Interface to request all assignments in a course
     # See https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.index
-    def request_course_assignments
+    def course_assignments
       all_assignments = []
       params = "per_page=100"
       while params do
@@ -42,6 +23,12 @@ module Canvas
         params = next_page_params(response)
       end
       all_assignments
+    end
+
+    def muted_assignments
+      course_assignments.select do |assignment|
+        assignment['muted'] == true
+      end
     end
 
   end

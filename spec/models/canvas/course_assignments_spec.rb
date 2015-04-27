@@ -43,22 +43,8 @@ describe Canvas::CourseAssignments do
     end
 
     it 'serves uncached records' do
-      expect(subject).to receive(:course_assignments).with(:cache => false).and_return(fake_assignments)
+      expect(subject).to receive(:course_assignments).and_return(fake_assignments)
       muted_assignments = subject.muted_assignments
     end
-  end
-
-  it 'uses cache by default' do
-    expect(Canvas::CourseAssignments).to receive(:fetch_from_cache).and_return([])
-    assignments = subject.course_assignments
-    expect(assignments).to be_an_instance_of Array
-    expect(assignments.count).to eq 0
-  end
-
-  it 'bypasses cache when cache option is false' do
-    expect(Canvas::CourseAssignments).to_not receive(:fetch_from_cache)
-    assignments = subject.course_assignments(:cache => false)
-    expect(assignments).to be_an_instance_of Array
-    expect(assignments.count).to eq 2
   end
 end
