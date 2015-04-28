@@ -71,7 +71,7 @@
     $scope.preloadGrades = function() {
       $scope.appState = 'loading';
       $scope.jobStatus = 'New';
-      canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId, $scope.enableDefaultGradingScheme).success(function(data) {
+      canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId, $scope.enableDefaultGradingScheme, $scope.unmuteAllAssignments).success(function(data) {
         if (data.jobRequestStatus === 'Success') {
           $scope.backgroundJobId = data.jobId;
           jobStatusLoader();
@@ -106,6 +106,19 @@
         $scope.contactSupport = true;
         $scope.errorStatus = 'Unable to obtain course settings.';
       });
+    };
+
+    $scope.notReadyForPreparation = function() {
+      if ($scope.noGradingStandardEnabled && $scope.mutedAssignmentsPresent && $scope.enableDefaultGradingScheme && $scope.unmuteAllAssignments) {
+        return false;
+      }
+      if ($scope.noGradingStandardEnabled && !$scope.mutedAssignmentsPresent && $scope.enableDefaultGradingScheme) {
+        return false;
+      }
+      if (!$scope.noGradingStandardEnabled && $scope.mutedAssignmentsPresent && $scope.unmuteAllAssignments) {
+        return false;
+      }
+      return true;
     };
 
     /**
