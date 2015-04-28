@@ -277,7 +277,7 @@ describe CanvasCourseGradeExportController do
         get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234', :type => 'current'
         expect(response.status).to eq(200)
         expect(response.headers['Content-Type']).to eq 'text/csv'
-        expect(response.headers['Content-Disposition']).to eq 'attachment; filename=course_1164764_grades.csv'
+        expect(response.headers['Content-Disposition']).to eq 'attachment; filename=egrades-current-1234-Fall-2014-1164764.csv'
         expect(response.body).to be_an_instance_of String
         response_csv = CSV.parse(response.body, {headers: true})
         expect(response_csv.count).to eq 4
@@ -310,7 +310,7 @@ describe CanvasCourseGradeExportController do
         get :download_egrades_csv, canvas_course_id: canvas_course_id, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234', :type => 'current'
         expect(response.status).to eq(200)
         expect(response.headers['Content-Type']).to eq 'text/csv'
-        expect(response.headers['Content-Disposition']).to eq 'attachment; filename=course_1164764_grades.csv'
+        expect(response.headers['Content-Disposition']).to eq 'attachment; filename=egrades-current-1234-Fall-2014-1164764.csv'
         expect(response.body).to be_an_instance_of String
         response_csv = CSV.parse(response.body, {headers: true})
         expect(response_csv.count).to eq 4
