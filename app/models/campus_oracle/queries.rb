@@ -307,11 +307,11 @@ module CampusOracle
     end
 
     def self.get_course_secondary_sections(term_yr, term_cd, department, catalog_id)
-      stringify_ints! get_course_sections(term_yr, term_cd, department, catalog_id, true)
+      get_course_sections(term_yr, term_cd, department, catalog_id, true)
     end
 
     def self.get_all_course_sections(term_yr, term_cd, department, catalog_id)
-      stringify_ints! get_course_sections(term_yr, term_cd, department, catalog_id, false)
+      get_course_sections(term_yr, term_cd, department, catalog_id, false)
     end
 
     def self.get_section_schedules(term_yr, term_cd, ccn)
