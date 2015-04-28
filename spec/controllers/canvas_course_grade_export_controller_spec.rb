@@ -41,14 +41,25 @@ describe CanvasCourseGradeExportController do
       expect(json_response['jobRequestStatus']).to eq 'Success'
     end
 
-    it 'supports enable_grading_scheme option' do
+    it 'supports enableGradingScheme option' do
       allow(torquebox_fake_background_proxy).to receive(:prepare_download).and_return(nil)
       fake_canvas_egrades = double
       allow(fake_canvas_egrades).to receive(:background_job_initialize).and_return(nil)
       allow(fake_canvas_egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
       allow(fake_canvas_egrades).to receive(:background_job_id).and_return(background_job_id)
-      expect(Canvas::Egrades).to receive(:new).with(:canvas_course_id => canvas_course_id.to_i, :enable_grading_scheme => true).and_return(fake_canvas_egrades)
+      expect(Canvas::Egrades).to receive(:new).with(:canvas_course_id => canvas_course_id.to_i, :enable_grading_scheme => true, :unmute_assignments => false).and_return(fake_canvas_egrades)
       post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :enableGradingScheme => 1, :format => :csv
+      expect(response.status).to eq(200)
+    end
+
+    it 'supports unmuteAssignments option' do
+      allow(torquebox_fake_background_proxy).to receive(:prepare_download).and_return(nil)
+      fake_canvas_egrades = double
+      allow(fake_canvas_egrades).to receive(:background_job_initialize).and_return(nil)
+      allow(fake_canvas_egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
+      allow(fake_canvas_egrades).to receive(:background_job_id).and_return(background_job_id)
+      expect(Canvas::Egrades).to receive(:new).with(:canvas_course_id => canvas_course_id.to_i, :enable_grading_scheme => false, :unmute_assignments => true).and_return(fake_canvas_egrades)
+      post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :unmuteAssignments => 1, :format => :csv
       expect(response.status).to eq(200)
     end
 
