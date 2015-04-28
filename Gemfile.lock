@@ -1,26 +1,18 @@
 GIT
   remote: https://github.com/instructure/ims-lti.git
-  revision: b909e936a3c8ed13fec527d0dfe3c177431d2932
+  revision: 016adac413022a451f722b25fb6574cc4f9899ae
   specs:
-    ims-lti (1.1.5)
+    ims-lti (1.1.8)
       builder
       oauth (~> 0.4.5)
-      uuid
 
 GIT
   remote: https://github.com/sj26/rspec_junit_formatter.git
-  revision: 850d57cc5bd4f88dd1d4ffb245d57f222cd9e04f
+  revision: f6b272c5cd8f1e2bc28e2f0769b23bc2f8f7ed9f
   specs:
     rspec_junit_formatter (0.2.0)
       builder (< 4)
-      rspec (>= 2, < 4)
-      rspec-core (!= 2.12.0)
-
-GIT
-  remote: https://github.com/sporkrb/spork.git
-  revision: 224df492657e617a0c93c0319e78f0eefee5b636
-  specs:
-    spork (1.0.0rc4)
+      rspec-core (>= 2, < 4, != 2.12.0)
 
 GEM
   remote: https://rubygems.org/
@@ -163,10 +155,16 @@ GEM
       lumberjack (~> 1.0)
       pry (>= 0.9.12)
       thor (>= 0.18.1)
+    guard-compat (1.2.1)
     guard-livereload (2.4.0)
       em-websocket (~> 0.5)
       guard (~> 2.8)
       multi_json (~> 1.8)
+    guard-spork (2.1.0)
+      childprocess (>= 0.2.3)
+      guard (~> 2.0)
+      guard-compat (~> 1.0)
+      spork (>= 0.8.4)
     haml (4.0.5)
       tilt
     hashie (3.3.1)
@@ -205,8 +203,6 @@ GEM
       rb-inotify (>= 0.9)
     log4r (1.1.10)
     lumberjack (1.0.9)
-    macaddr (1.6.7)
-      systemu (~> 2.6.2)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
@@ -358,6 +354,7 @@ GEM
     slop (3.6.0)
     spoon (0.0.4)
       ffi
+    spork (1.0.0rc0)
     spork-rails (4.0.0)
       rails (>= 3.0.0, < 5)
       spork (>= 1.0rc0)
@@ -370,7 +367,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    systemu (2.6.4)
     thor (0.19.1)
     thread_safe (0.3.4-java)
     tilt (1.4.1)
@@ -414,8 +410,6 @@ GEM
     torquebox-web (3.1.2-java)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uuid (2.3.7)
-      macaddr (~> 1.0)
     vcr (2.9.3)
     watir-webdriver (0.6.11)
       selenium-webdriver (>= 2.18.0)
@@ -454,6 +448,7 @@ DEPENDENCIES
   faraday_middleware (~> 0.9.1)
   google-api-client (~> 0.8.2)
   guard-livereload (~> 2.4.0)
+  guard-spork
   headless (~> 1.0.2)
   httparty (~> 0.13.3)
   icalendar (~> 2.2.2)
@@ -486,8 +481,8 @@ DEPENDENCIES
   selenium-webdriver (~> 2.44.0)
   signet (~> 0.6.0)
   simplecov (~> 0.9.1)
-  spork!
-  spork-rails (~> 4.0.0)
+  spork (= 1.0.0rc0)
+  spork-rails
   torquebox (~> 3.1.2)
   torquebox-messaging (~> 3.1.2)
   torquebox-server (~> 3.1.2)
