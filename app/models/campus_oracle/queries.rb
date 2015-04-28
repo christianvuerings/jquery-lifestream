@@ -307,22 +307,11 @@ module CampusOracle
     end
 
     def self.get_course_secondary_sections(term_yr, term_cd, department, catalog_id)
-      result = []
-      use_pooled_connection {
-        sql = <<-SQL
-      select c.term_yr, c.term_cd, c.course_cntl_num,
-        c.dept_name, c.catalog_id, c.section_num, c.instruction_format,
-        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2
-      from calcentral_course_info_vw c where c.term_yr = #{term_yr.to_i} and c.term_cd = #{connection.quote(term_cd)} and
-        c.dept_name = #{connection.quote(department)} and c.catalog_id = #{connection.quote(catalog_id)} and
-        c.section_cancel_flag is null and c.primary_secondary_cd != 'P'
-      order by c.term_yr desc, c.term_cd desc, c.dept_name,
-        c.catalog_root, c.catalog_prefix nulls first, c.catalog_suffix_1 nulls first, c.catalog_suffix_2 nulls first,
-        c.instruction_format, c.section_num
-        SQL
-        result = connection.select_all(sql)
-      }
-      stringify_ints! result
+      stringify_ints! get_course_sections(term_yr, term_cd, department, catalog_id, true)
+    end
+
+    def self.get_all_course_sections(term_yr, term_cd, department, catalog_id)
+      stringify_ints! get_course_sections(term_yr, term_cd, department, catalog_id, false)
     end
 
     def self.get_section_schedules(term_yr, term_cd, ccn)
@@ -464,6 +453,29 @@ module CampusOracle
         result = connection.select_all(sql)
       }
       result
+    end
+
+    private
+
+    def self.get_course_sections(term_yr, term_cd, department, catalog_id, only_secondary_sections)
+      result = []
+      section_type_condition = only_secondary_sections ? ' and c.primary_secondary_cd != \'P\' ' : ''
+      use_pooled_connection {
+        sql = <<-SQL
+      select c.term_yr, c.term_cd, c.course_cntl_num,
+        c.dept_name, c.catalog_id, c.section_num, c.instruction_format,
+        c.catalog_root, c.catalog_prefix, c.catalog_suffix_1, c.catalog_suffix_2
+      from calcentral_course_info_vw c where c.term_yr = #{term_yr.to_i} and c.term_cd = #{connection.quote(term_cd)} and
+        c.dept_name = #{connection.quote(department)} and c.catalog_id = #{connection.quote(catalog_id)} and
+        c.section_cancel_flag is null
+        #{section_type_condition}
+      order by c.term_yr desc, c.term_cd desc, c.dept_name,
+        c.catalog_root, c.catalog_prefix nulls first, c.catalog_suffix_1 nulls first, c.catalog_suffix_2 nulls first,
+        c.instruction_format, c.section_num
+        SQL
+        result = connection.select_all(sql)
+      }
+      stringify_ints! result
     end
 
   end
