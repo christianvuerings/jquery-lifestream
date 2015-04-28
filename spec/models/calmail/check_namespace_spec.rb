@@ -4,6 +4,7 @@ describe Calmail::CheckNamespace do
   let(:list_name) { "site-#{random_id}" }
 
   describe '#name_available?' do
+    subject { Calmail::CheckNamespace.new(fake: true) }
     before do
       subject.set_response(mock_response)
     end
@@ -34,7 +35,10 @@ describe Calmail::CheckNamespace do
   end
 
   describe '#check_namespace' do
-    context 'using real data feed', testext: true do
+    # These testext tests are disabled because they fail for unknown reasons when they're run as part
+    # of a full suite by our continuous integration server. Run by themselves, they're still useful.
+    # TODO Figure out the cause of the failure. See CLC-5170 for details.
+    context 'using real data feed', testext: true, ignore: true do
       let(:response) { subject.check_namespace(list_name) }
       context 'known mailing list' do
         let(:list_name) {'raytest'}
