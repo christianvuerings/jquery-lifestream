@@ -40,7 +40,7 @@ describe CampusOracle::Queries do
 
   it 'should find some students in Biology 1a' do
     students = CampusOracle::Queries.get_enrolled_students('7309', '2013', 'D')
-    expect(students).to have_at_least(1).items
+    expect(students).to_not be_nil
     expect(students).to be_an_instance_of Array
     if CampusOracle::Queries.test_data?
       # we will only have predictable enrollments in our fake Oracle db.
@@ -73,7 +73,7 @@ describe CampusOracle::Queries do
 
   it 'should find sections from CCNs' do
     courses = CampusOracle::Queries.get_sections_from_ccns('2013', 'D', %w(7309 07366 919191 16171))
-    expect(courses).to be_present
+    expect(courses).to_not be_nil
     if CampusOracle::Queries.test_data?
       courses.length.should == 3
       index = courses.index { |c|
@@ -85,7 +85,7 @@ describe CampusOracle::Queries do
           c['instruction_format'] == 'LEC' &&
           c['section_num'] == '003'
       }
-      expect(index).to be_present
+      expect(index).to_not be_nil
     end
   end
 
@@ -115,7 +115,7 @@ describe CampusOracle::Queries do
             t['dept_name'] == section['dept_name'] &&
             t['catalog_id'] == section['catalog_id']
         end
-        expect(transcript).to be_present
+        expect(transcript).to_not be_nil
         transcript['grade'].should == expected_grades[idx]
       end
     end
@@ -125,13 +125,13 @@ describe CampusOracle::Queries do
     let(:current_term) {Berkeley::Terms.fetch.current}
     it 'should be able to limit enrollment queries' do
       sections = CampusOracle::Queries.get_enrolled_sections('300939', [current_term])
-      expect(sections).to be_present
+      expect(sections).to_not be_nil
       expect(sections).to have(3).items if CampusOracle::Queries.test_data?
     end
     it 'should be able to limit teaching assignment queries' do
       # These are only the explicitly assigned sections and do not include implicit nesting.
       sections = CampusOracle::Queries.get_instructing_sections('238382', [current_term])
-      expect(sections).to be_present
+      expect(sections).to_not be_nil
       expect(sections).to have(2).items if CampusOracle::Queries.test_data?
     end
   end
@@ -156,14 +156,14 @@ describe CampusOracle::Queries do
 
   it 'should find where a person is teaching' do
     sections = CampusOracle::Queries.get_instructing_sections('238382')
-    expect(sections).to be_present
+    expect(sections).to_not be_nil
     expect(sections).to have(4).items if CampusOracle::Queries.test_data?
   end
 
   it 'finds all active sections for the course' do
     sections = CampusOracle::Queries.get_all_course_sections(2013, 'D', 'BIOLOGY', '1A')
     # This is a real course offering and should show up in live DBs.
-    expect(sections).to be_present
+    expect(sections).to_not be_nil
     if CampusOracle::Queries.test_data?
       expect(sections).to have(3).items
       # Should not include canceled section.
@@ -174,7 +174,7 @@ describe CampusOracle::Queries do
   it 'finds all active secondary sections for the course' do
     sections = CampusOracle::Queries.get_course_secondary_sections(2013, 'D', 'BIOLOGY', '1A')
     # This is a real course offering and should show up in live DBs.
-    expect(sections).to be_present
+    expect(sections).to_not be_nil
     if CampusOracle::Queries.test_data?
       expect(sections).to have(2).items
       # Should not include canceled section.
@@ -198,7 +198,7 @@ describe CampusOracle::Queries do
 
   it 'should return class schedule data' do
     data = CampusOracle::Queries.get_section_schedules('2013', 'D', '16171')
-    expect(data).to be_present
+    expect(data).to_not be_nil
     if CampusOracle::Queries.test_data?
       expect(data).to have(2).items
       expect(data[0]['building_name']).to eq 'WHEELER'
@@ -208,13 +208,13 @@ describe CampusOracle::Queries do
 
   it 'should respect business rule about print_cd of A in class schedule data' do
     data = CampusOracle::Queries.get_section_schedules('2013', 'D', '12345')
-    expect(data).to be_present
+    expect(data).to_not be_nil
     expect(data).to have(1).items if CampusOracle::Queries.test_data?
   end
 
   it 'should return instructor data given a course control number' do
     data = CampusOracle::Queries.get_section_instructors('2013', 'D', '7309')
-    expect(data).to be_present
+    expect(data).to_not be_nil
     if CampusOracle::Queries.test_data?
       expect(data[0]['ldap_uid']).to eq '238382'
       expect(data[0]['student_id']).to eq '238382' # student id is typically nil for instructors
@@ -254,7 +254,7 @@ describe CampusOracle::Queries do
 
   it 'should be able to look up Tammi student info' do
     info = CampusOracle::Queries.get_student_info '300939'
-    expect(info).to be_present
+    expect(info).to_not be_nil
     if CampusOracle::Queries.test_data?
       expect(info['first_reg_term_cd']).to eq 'D'
       expect(info['first_reg_term_yr']).to eq '2013'
@@ -292,8 +292,8 @@ describe CampusOracle::Queries do
     end
 
     it 'should escape user input to avoid SQL injection', :testext => true do
-      CampusOracle::Queries.connection.should_receive(:quote_string).with("anything' OR 'x'='x").and_return "anything'' OR ''x''=''x"
-      user_data = CampusOracle::Queries.find_people_by_name "anything' OR 'x'='x"
+      CampusOracle::Queries.connection.should_receive(:quote_string).with("anything' OR 'x'='x").and_return("anything'' OR ''x''=''x")
+      user_data = CampusOracle::Queries.find_people_by_name("anything' OR 'x'='x")
     end
 
     it 'should be able to find users by last name separated by a comma and space', :testext => true do
@@ -333,8 +333,8 @@ describe CampusOracle::Queries do
     end
 
     it 'should escape user input to avoid SQL injection', :testext => true do
-      CampusOracle::Queries.connection.should_receive(:quote_string).with("'anything' OR 'x'='x'").and_return("'anything'' OR ''x''=''x'")
-      user_data = CampusOracle::Queries.find_people_by_email("'anything' OR 'x'='x'")
+      CampusOracle::Queries.connection.should_receive(:quote_string).with("anything' OR 'x'='x").and_return("anything'' OR ''x''=''x")
+      user_data = CampusOracle::Queries.find_people_by_email("anything' OR 'x'='x")
     end
 
     it 'should be able to find users by partial email', :testext => true do
