@@ -39,7 +39,7 @@ class CanvasCourseGradeExportController < ApplicationController
     egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
     official_student_grades = egrades_worker.official_student_grades_csv(params['term_cd'], params['term_yr'], params['ccn'], params['type'])
     respond_to do |format|
-      format.csv { render csv: official_student_grades.to_s, filename: "course_#{canvas_course_id}_grades" }
+      format.csv { render csv: official_student_grades.to_s, filename: "egrades-#{params['type']}-#{params['ccn']}-#{params['term_cd']}-#{params['term_yr']}-#{canvas_course_id}" }
     end
   end
 
