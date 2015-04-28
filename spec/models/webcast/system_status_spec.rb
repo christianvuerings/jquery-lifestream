@@ -7,7 +7,15 @@ describe Webcast::SystemStatus do
 
     context 'fake data' do
       it 'should return webcast-enabled rooms' do
-        expect(subject.get['is_sign_up_active']).to be_truthy
+        expect(subject.get['is_sign_up_active']).to be true
+      end
+    end
+
+    context 'when video feature flag is false' do
+      before { Settings.features.videos = false }
+      after { Settings.features.videos = true }
+      it 'should be false regardless of value in the feed' do
+        expect(subject.get['is_sign_up_active']).to be false
       end
     end
   end
@@ -21,6 +29,5 @@ describe Webcast::SystemStatus do
         expect([true, false]).to include flag
       end
     end
-
   end
 end
