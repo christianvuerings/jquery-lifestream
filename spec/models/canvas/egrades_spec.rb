@@ -177,9 +177,11 @@ describe Canvas::Egrades do
     let(:course_details) {
       {'id' => 1121, 'name' => 'Just another course site'}
     }
+    let(:muted_assignments) { [] }
     before do
       subject.background_job_initialize
       allow_any_instance_of(Canvas::CourseSettings).to receive(:settings).and_return(course_settings)
+      allow_any_instance_of(Canvas::CourseAssignments).to receive(:muted_assignments).and_return(muted_assignments)
     end
 
     context "when course grading scheme is not enabled" do
@@ -207,6 +209,25 @@ describe Canvas::Egrades do
       context "when grading scheme enable not confirmed" do
         it "raises bad request exception" do
           expect { subject.prepare_download }.to raise_error(Errors::BadRequestError, 'Enable Grading Scheme action not specified')
+        end
+      end
+    end
+
+    context 'when muted assignments are present for course site' do
+      let(:muted_assignments) { [{'id' => 1, 'name' => 'Assignment 1', 'muted' => true}] }
+      before do
+        allow_any_instance_of(Canvas::CourseAssignments).to receive(:muted_assignments).and_return(muted_assignments)
+      end
+      context "when unmute assignments action specified" do
+        subject { Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :unmute_assignments => true) }
+        it "unmutes assignments for course site" do
+          expect(subject).to receive(:unmute_course_assignments).with(canvas_course_id)
+          subject.prepare_download
+        end
+      end
+      context "when unmute assignments action not specified" do
+        it "raises bad request exception" do
+          expect { subject.prepare_download }.to raise_error(Errors::BadRequestError, 'Unmute assignments action not specified')
         end
       end
     end

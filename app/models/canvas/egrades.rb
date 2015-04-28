@@ -11,12 +11,16 @@ module Canvas
     GRADE_TYPES = ['final','current']
 
     def initialize(options = {})
-      default_options = {:enable_grading_scheme => false}
+      default_options = {
+        :enable_grading_scheme => false,
+        :unmute_assignments => false
+      }
       options.reverse_merge!(default_options)
 
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
       @enable_grading_scheme = options[:enable_grading_scheme]
+      @unmute_assignments = options[:unmute_assignments]
     end
 
     def official_student_grades_csv(term_cd, term_yr, ccn, type)
@@ -53,6 +57,7 @@ module Canvas
 
     def prepare_download
       course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
+      course_assignments = Canvas::CourseAssignments.new(:course_id => @canvas_course_id)
       if course_settings.settings(:cache => false)['grading_standard_enabled'].blank?
         if @enable_grading_scheme
           # Background job not updated with total number of steps until obtained via callback
@@ -63,6 +68,13 @@ module Canvas
           background_job_complete_step('Enabled default grading scheme')
         else
           raise Errors::BadRequestError, "Enable Grading Scheme action not specified"
+        end
+      end
+      if course_assignments.muted_assignments.count > 0
+        if @unmute_assignments
+          unmute_course_assignments(@canvas_course_id)
+        else
+          raise Errors::BadRequestError, "Unmute assignments action not specified"
         end
       end
       canvas_course_student_grades(true)
