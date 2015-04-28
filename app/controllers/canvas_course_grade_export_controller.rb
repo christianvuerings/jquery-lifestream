@@ -38,8 +38,13 @@ class CanvasCourseGradeExportController < ApplicationController
     raise Errors::BadRequestError, "invalid value for 'type' parameter" unless Canvas::Egrades::GRADE_TYPES.include?(params['type'])
     egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
     official_student_grades = egrades_worker.official_student_grades_csv(params['term_cd'], params['term_yr'], params['ccn'], params['type'])
+    term_season = {
+      'B' => 'Spring',
+      'C' => 'Summer',
+      'D' => 'Fall'
+    }[params['term_cd']]
     respond_to do |format|
-      format.csv { render csv: official_student_grades.to_s, filename: "egrades-#{params['type']}-#{params['ccn']}-#{params['term_cd']}-#{params['term_yr']}-#{canvas_course_id}" }
+      format.csv { render csv: official_student_grades.to_s, filename: "egrades-#{params['type']}-#{params['ccn']}-#{term_season}-#{params['term_yr']}-#{canvas_course_id}" }
     end
   end
 
