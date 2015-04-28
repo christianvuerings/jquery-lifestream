@@ -11,12 +11,16 @@ module Canvas
     GRADE_TYPES = ['final','current']
 
     def initialize(options = {})
-      default_options = {:enable_grading_scheme => false}
+      default_options = {
+        :enable_grading_scheme => false,
+        :unmute_assignments => false
+      }
       options.reverse_merge!(default_options)
 
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
       @enable_grading_scheme = options[:enable_grading_scheme]
+      @unmute_assignments = options[:unmute_assignments]
     end
 
     def official_student_grades_csv(term_cd, term_yr, ccn, type)
@@ -53,6 +57,7 @@ module Canvas
 
     def prepare_download
       course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
+      course_assignments = Canvas::CourseAssignments.new(:course_id => @canvas_course_id)
       if course_settings.settings(:cache => false)['grading_standard_enabled'].blank?
         if @enable_grading_scheme
           # Background job not updated with total number of steps until obtained via callback
@@ -63,6 +68,13 @@ module Canvas
           background_job_complete_step('Enabled default grading scheme')
         else
           raise Errors::BadRequestError, "Enable Grading Scheme action not specified"
+        end
+      end
+      if course_assignments.muted_assignments.count > 0
+        if @unmute_assignments
+          unmute_course_assignments(@canvas_course_id)
+        else
+          raise Errors::BadRequestError, "Unmute assignments action not specified"
         end
       end
       canvas_course_student_grades(true)
@@ -143,19 +155,19 @@ module Canvas
     end
 
     def muted_assignments
-      assignments = Canvas::CourseAssignments.new(:course_id => @canvas_course_id).course_assignments(:cache => false)
-      muted_assignments = []
-      assignments.each do |assignment|
-        due_at_date = assignment['due_at'].nil? ? nil : Time.iso8601(assignment['due_at']).strftime('%b %-e, %Y at %-l:%M%P')
-        if assignment['muted'] == true
-          muted_assignments << {
-            'name' => assignment['name'],
-            'points_possible' => assignment['points_possible'],
-            'due_at' => due_at_date
-          }
-        end
+      muted_assignments = Canvas::CourseAssignments.new(:course_id => @canvas_course_id).muted_assignments
+      muted_assignments.collect do |assignment|
+        assignment['due_at'] = assignment['due_at'].nil? ? nil : Time.iso8601(assignment['due_at']).strftime('%b %-e, %Y at %-l:%M%P')
+        assignment
       end
-      muted_assignments
+    end
+
+    def unmute_course_assignments(canvas_course_id)
+      worker = Canvas::CourseAssignments.new(:course_id => @canvas_course_id)
+      muted_assignments = worker.muted_assignments
+      muted_assignments.each do |assignment|
+        worker.unmute_assignment(assignment['id'])
+      end
     end
 
   end

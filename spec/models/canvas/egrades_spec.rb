@@ -23,6 +23,32 @@ describe Canvas::Egrades do
     ]
   end
 
+  let(:course_assignments) {
+    [
+      {
+        'id' => 19082,
+        'name' => 'Assignment 1',
+        'muted' => false,
+        'due_at' => "2015-05-12T19:40:00Z",
+        'points_possible' => 100
+      },
+      {
+        'id' => 19083,
+        'name' => 'Assignment 2',
+        'muted' => true,
+        'due_at' => "2015-10-13T06:05:00Z",
+        'points_possible' => 50
+      },
+      {
+        'id' => 19084,
+        'name' => 'Assignment 3',
+        'muted' => false,
+        'due_at' => nil,
+        'points_possible' => 25
+      },
+    ]
+  }
+
   it_should_behave_like 'a background job worker'
 
   context "when setting the course user page total" do
@@ -151,9 +177,11 @@ describe Canvas::Egrades do
     let(:course_details) {
       {'id' => 1121, 'name' => 'Just another course site'}
     }
+    let(:muted_assignments) { [] }
     before do
       subject.background_job_initialize
       allow_any_instance_of(Canvas::CourseSettings).to receive(:settings).and_return(course_settings)
+      allow_any_instance_of(Canvas::CourseAssignments).to receive(:muted_assignments).and_return(muted_assignments)
     end
 
     context "when course grading scheme is not enabled" do
@@ -181,6 +209,25 @@ describe Canvas::Egrades do
       context "when grading scheme enable not confirmed" do
         it "raises bad request exception" do
           expect { subject.prepare_download }.to raise_error(Errors::BadRequestError, 'Enable Grading Scheme action not specified')
+        end
+      end
+    end
+
+    context 'when muted assignments are present for course site' do
+      let(:muted_assignments) { [{'id' => 1, 'name' => 'Assignment 1', 'muted' => true}] }
+      before do
+        allow_any_instance_of(Canvas::CourseAssignments).to receive(:muted_assignments).and_return(muted_assignments)
+      end
+      context "when unmute assignments action specified" do
+        subject { Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :unmute_assignments => true) }
+        it "unmutes assignments for course site" do
+          expect(subject).to receive(:unmute_course_assignments).with(canvas_course_id)
+          subject.prepare_download
+        end
+      end
+      context "when unmute assignments action not specified" do
+        it "raises bad request exception" do
+          expect { subject.prepare_download }.to raise_error(Errors::BadRequestError, 'Unmute assignments action not specified')
         end
       end
     end
@@ -471,47 +518,34 @@ describe Canvas::Egrades do
   end
 
   context 'when providing muted assignments' do
-    let(:course_assignments) {
-      [
-        {
-          'id' => 19082,
-          'name' => 'Assignment 1',
-          'muted' => false,
-          'due_at' => "2015-05-12T19:40:00Z",
-          'points_possible' => 100
-        },
-        {
-          'id' => 19083,
-          'name' => 'Assignment 2',
-          'muted' => true,
-          'due_at' => "2015-10-13T06:05:00Z",
-          'points_possible' => 50
-        },
-        {
-          'id' => 19084,
-          'name' => 'Assignment 3',
-          'muted' => true,
-          'due_at' => nil,
-          'points_possible' => 25
-        },
-      ]
-    }
-    before { allow_any_instance_of(Canvas::CourseAssignments).to receive(:course_assignments).and_return(course_assignments) }
+    let(:muted_course_assignments) { [course_assignments[1]] }
+    before { allow_any_instance_of(Canvas::CourseAssignments).to receive(:muted_assignments).and_return(muted_course_assignments) }
 
     it 'provides current muted assignments' do
       muted_assignments = subject.muted_assignments
       expect(muted_assignments).to be_an_instance_of Array
-      expect(muted_assignments.count).to eq 2
+      expect(muted_assignments.count).to eq 1
       expect(muted_assignments[0]['name']).to eq 'Assignment 2'
       expect(muted_assignments[0]['points_possible']).to eq 50
-      expect(muted_assignments[1]['name']).to eq 'Assignment 3'
-      expect(muted_assignments[1]['points_possible']).to eq 25
     end
 
     it 'converts due at timestamp to display format' do
       muted_assignments = subject.muted_assignments
       expect(muted_assignments).to be_an_instance_of Array
       expect(muted_assignments[0]['due_at']).to eq "Oct 13, 2015 at 6:05am"
+    end
+  end
+
+  context 'when unmuting all course assignments' do
+    let(:muted_course_assignments) do
+      course_assignments.collect {|assignment| assignment['muted'] = true; assignment}
+    end
+    it 'unmutes all muted assignments for the course specified' do
+      allow_any_instance_of(Canvas::CourseAssignments).to receive(:muted_assignments).and_return(muted_course_assignments)
+      expect_any_instance_of(Canvas::CourseAssignments).to receive(:unmute_assignment).exactly(1).times.with(19082)
+      expect_any_instance_of(Canvas::CourseAssignments).to receive(:unmute_assignment).exactly(1).times.with(19083)
+      expect_any_instance_of(Canvas::CourseAssignments).to receive(:unmute_assignment).exactly(1).times.with(19084)
+      result = subject.unmute_course_assignments(canvas_course_id)
     end
   end
 

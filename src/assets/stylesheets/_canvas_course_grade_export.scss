@@ -92,7 +92,7 @@
   }
 
   .cc-page-course-grading-export-muted-assignments-table {
-    margin-bottom: 35px;
+    margin-bottom: 20px;
     th, td {
       padding: 14px 20px;
     }
@@ -138,12 +138,16 @@
     padding: 2px;
   }
 
-  .cc-page-course-grading-export-enable-grading-scheme-label-container {
+  .cc-page-course-grading-export-error-resolution-action-container {
     float: left;
     padding: 2px;
   }
 
-  .cc-page-course-grading-export-enable-grading-scheme-label {
+  .cc-page-course-grading-export-error-resolution-action-label {
     font-weight: bold;
+  }
+
+  .cc-page-course-grading-export-unmute-action-container {
+    margin-bottom: 10px;
   }
 }
