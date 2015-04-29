@@ -25,13 +25,12 @@ module Canvas
         if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(canvas_section['sis_section_id']))
           term_yr = campus_section[:term_yr]
           term_cd = campus_section[:term_cd]
-          if (campus_course = CampusOracle::Queries.get_course_from_section(campus_section[:ccn], term_yr, term_cd))
-            dept_name = campus_course['dept_name']
-            catalog_id = campus_course['catalog_id']
-            course_id = Webcast::CourseMedia.course_id(term_yr, term_cd, dept_name, catalog_id)
+          ccn = campus_section[:ccn].to_i
+          if ccn > 0
+            course_id = Webcast::CourseMedia.id_per_ccn(term_yr, term_cd, ccn)
             unless checked_courses.include?(course_id)
               checked_courses << course_id
-              media_feed = Webcast::CourseMedia.new(term_yr, term_cd, dept_name, catalog_id).get_feed
+              media_feed = Webcast::CourseMedia.new(term_yr, term_cd, ccn).get_feed
               return media_feed unless empty_feed?(media_feed)
             end
           end

@@ -19,14 +19,13 @@ describe Canvas::WebcastRecordings do
         ]
       end
       before do
-        expect(Webcast::CourseMedia).to receive(:new).at_least(:once) do |yr, cd, dept, catid|
-          expect((yr == '2013' && cd == 'B' && dept == 'BIOLOGY' && catid == '1A') ||
-            (yr == '2012' && cd == 'B' && dept == 'COG SCI')).to be_truthy
+        expect(Webcast::CourseMedia).to receive(:new).at_least(:once) do |yr, cd, ccn|
+          expect((yr == '2013' && cd == 'B' && ccn == 7366) || (yr == '2012' && cd == 'B' && ccn == 16171)).to be_truthy
           # 2013-B-7366
-          if yr == '2013' && cd == 'B' && dept == 'BIOLOGY' && catid == '1A'
+          if yr == '2013' && cd == 'B' && ccn == 7366
             double(get_feed: media_feed_empty)
           # 2012-B-16171
-          elsif yr == '2012' && cd == 'B' && dept == 'COG SCI'
+          elsif yr == '2012' && cd == 'B' && ccn == 16171
             double(get_feed: media_feed_full)
           end
         end

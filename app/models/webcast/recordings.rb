@@ -12,13 +12,15 @@ module Webcast
     def request_internal
       return {} unless Settings.features.videos
 
-      data = get_json_data
       recordings = {
         courses: {}
       }
-      data['courses'].each do |course|
-        if course['year'] && course['semester'] && course['deptName'] && course['catalogId']
-          key = Webcast::CourseMedia.course_id(course['year'], course['semester'], course['deptName'], course['catalogId'])
+      get_json_data['courses'].each do |course|
+        year = course['year']
+        semester = course['semester']
+        ccn = course['ccn']
+        if year && semester && ccn
+          key = Webcast::CourseMedia.id_per_ccn(year, semester, course['ccn'])
           recordings[:courses][key] = {
             audio_only: course['audioOnly'],
             audio_rss: course['audioRSS'].to_s,
@@ -33,4 +35,3 @@ module Webcast
 
   end
 end
-
