@@ -1,0 +1,12 @@
+{
+  "kind": "tasks#task",
+  "id": "MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
+  "etag": "\"xpAkFLPl6-bJ80GtpdmouLYETwo/LTE5MjM5MDA1MjU\"",
+  "title": "some bogus title",
+  "updated": "2012-12-06T22:24:36.000Z",
+  "selfLink": "https://www.googleapis.com/tasks/v1/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA/tasks/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjEzODE3NzMzNzg",
+  "position": "00000000002147483647",
+  "notes": "some bogus notes",
+  "status": "completed",
+  "completed": "2012-12-06T22:24:37.000Z"
+}

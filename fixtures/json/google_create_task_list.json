@@ -1,0 +1,8 @@
+{
+  "kind": "tasks#taskList",
+  "id": "MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA",
+  "etag": "\"xpAkFLPl6-bJ80GtpdmouLYETwo/0Cwp04Njfy3FLT1EW1OTtb7SxIc\"",
+  "title": "test",
+  "updated": "2012-12-06T22:24:32.000Z",
+  "selfLink": "https://www.googleapis.com/tasks/v1/users/@me/lists/MDkwMzQyMTI0OTE3NTY4OTU0MzY6NzAzMjk1MTk3OjA"
+}

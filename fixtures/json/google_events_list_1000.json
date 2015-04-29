@@ -1,0 +1,238 @@
+{
+  "kind": "calendar#events",
+  "etag": "\"NybCyMgjkLQM6Il-p8A5652MtaE/Zt0uNunhtP3a8a3Y1CNWk3ELfxY\"",
+  "summary": "tammi.chang.clc@gmail.com FAKE 1000",
+  "updated": "2012-11-16T20:41:41.000Z",
+  "timeZone": "America/Los_Angeles",
+  "accessRole": "owner",
+  "defaultReminders": [
+    {
+      "method": "popup",
+      "minutes": 30
+    },
+    {
+      "method": "email",
+      "minutes": 30
+    }
+  ],
+  "items": [
+    {
+      "kind": "calendar#event",
+      "etag": "\"fi3QRdJKQhyHAzX8fKt0yeht0TY/Z2NhbDAwMDAxMzU2MDQyOTA3NzIzMDAw\"",
+      "id": "24mvjaandpak0tnc74p4ooqcag",
+      "status": "confirmed",
+      "htmlLink": "https://www.google.com/calendar/event?eid=MjRtdmphYW5kcGFrMHRuYzc0cDRvb3FjYWcgdGFtbWkuY2hhbmcuY2xjQG0",
+      "created": "2012-12-20T22:35:07.000Z",
+      "updated": "2012-12-20T22:35:07.723Z",
+      "summary": "Math library closed",
+      "creator": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "organizer": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "start": {
+        "date": ":::TODAY:::"
+      },
+      "end": {
+        "date": ":::TOMORROW:::"
+      },
+      "transparency": "transparent",
+      "iCalUID": "24mvjaandpak0tnc74p4ooqcag@google.com",
+      "sequence": 0,
+      "reminders": {
+        "useDefault": true
+      }
+    },
+    {
+      "kind": "calendar#event",
+      "etag": "\"NybCyMgjkLQM6Il-p8A5652MtaE/Q0lpMzB0ZXdKeEVBQUFBQUFBQUFBQT09\"",
+      "id": "_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq_20121116T190000Z",
+      "status": "confirmed",
+      "htmlLink": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqY2RoZDZkMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIxMTE2VDE5MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+      "created": "1900-01-01T12:00:00.000Z",
+      "updated": "2012-11-16T20:41:41.908Z",
+      "summary": "PHYSICS 7B Lecture",
+      "location": "1 LECONTE",
+      "creator": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "organizer": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "start": {
+        "dateTime": ":::TODAY_NINE:::"
+      },
+      "end": {
+        "dateTime": ":::TODAY_TEN:::"
+      },
+      "recurringEventId": "_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq",
+      "originalStartTime": {
+        "dateTime": "2012-11-16T11:00:00-08:00",
+        "timeZone": "America/Los_Angeles"
+      },
+      "iCalUID": "schedule-77966-3@ninjacourses.com",
+      "sequence": 1,
+      "reminders": {
+        "useDefault": true
+      }
+    },
+    {
+      "kind": "calendar#event",
+      "etag": "\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\"",
+      "id": "_edhmgpb4elm6ab9n6gp34c1d7106sqbed9gm6rrle9pmaspecdnmq",
+      "status": "confirmed",
+      "htmlLink": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42Z3AzNGMxZDcxMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODIzVDE5MzAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+      "created": "1900-01-01T12:00:00.000Z",
+      "updated": "2012-10-09T23:07:19.000Z",
+      "summary": "EE 20N Lecture",
+      "location": "105 STANLEY",
+      "creator": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "organizer": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "start": {
+        "dateTime": ":::TODAY_LUNCHTIME:::",
+        "timeZone": "America/Los_Angeles"
+      },
+      "end": {
+        "dateTime": ":::TODAY_AFTER_LUNCH:::",
+        "timeZone": "America/Los_Angeles"
+      },
+      "recurrence": [
+        "RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=TU,TH"
+      ],
+      "iCalUID": "schedule-74220-8@ninjacourses.com",
+      "sequence": 0,
+      "reminders": {
+        "useDefault": true
+      }
+    },
+    {
+      "kind": "calendar#event",
+      "etag": "\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\"",
+      "id": "_edhmgpb4elm6ab9n6oqjge1dcpkmsobc81n6irjac5hmutbiedin6bj3dtmg",
+      "status": "confirmed",
+      "htmlLink": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42b3FqZ2UxZGNwa21zb2JjODFuNmlyamFjNWhtdXRiaWVkaW42YmozZHRtZyB0YW1taS5jaGFuZy5jbGNAbQ",
+      "created": "1900-01-01T12:00:00.000Z",
+      "updated": "2012-10-09T23:07:19.000Z",
+      "summary": "MATH 53 Final",
+      "creator": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "organizer": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "start": {
+        "dateTime": ":::TODAY_THREE_THIRTY:::"
+      },
+      "end": {
+        "dateTime": ":::TODAY_FOUR_THIRTY:::"
+      },
+      "iCalUID": "schedule-76588-final@ninjacourses.com",
+      "sequence": 0,
+      "reminders": {
+        "useDefault": true
+      },
+      "attendees": [
+        {
+          "self": true,
+          "responseStatus": "accepted"
+        },
+        {
+          "responseStatus": "needsAction"
+        }
+      ]
+    },
+    {
+      "kind": "calendar#event",
+      "etag": "\"MzcDyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\"",
+      "id": "_feingpb4elm6ab9n6oqjge1dcpkmsobc81n6irjac5hmutbiedin6bj3dtmg",
+      "status": "confirmed",
+      "htmlLink": "https://www.google.com/calendar/event?eid=Y3WlbG1ncGI0ZWxtNmFiOW42b3FqZ2UxZGNwa21zb2JjODFuNmlyamFjNWhtdXRiaWVkaW42YmozZHRtZyB0YW1taS5jaGFuZy5jbGNAbQ",
+      "created": "1900-01-01T12:00:00.000Z",
+      "updated": "2012-10-09T23:07:19.000Z",
+      "summary": "Carouse with Oski",
+      "creator": {
+        "email": "oski@example.com",
+        "displayName": "Oski the Bear"
+      },
+      "organizer": {
+        "email": "oski@example.com",
+        "displayName": "Oski the Bear"
+      },
+      "start": {
+        "dateTime": ":::TODAY_THREE_THIRTY:::"
+      },
+      "end": {
+        "dateTime": ":::TODAY_FOUR_THIRTY:::"
+      },
+      "iCalUID": "schedule-76588-final@ninjacourses.com",
+      "sequence": 0,
+      "reminders": {
+        "useDefault": true
+      },
+      "attendees": [
+        {
+          "self": true,
+          "responseStatus": "declined"
+        },
+        {
+          "email": "oski@example.com",
+          "displayName": "Oski the Bear",
+          "responseStatus": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "calendar#event",
+      "etag": "\"fi3QRdJKQhyHAzX8fKt0yeht0TY/Z2NhbDAwMDAxMzU2MDQyOTIxMDE3MDAw\"",
+      "id": "3bq5gvvu0dduqrr7gqm3jchfds",
+      "status": "confirmed",
+      "htmlLink": "https://www.google.com/calendar/event?eid=M2JxNWd2dnUwZGR1cXJyN2dxbTNqY2hmZHMgdGFtbWkuY2hhbmcuY2xjQG0",
+      "created": "2012-12-20T22:35:21.000Z",
+      "updated": "2012-12-20T22:35:21.017Z",
+      "summary": "Tomorrow all-day",
+      "creator": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "organizer": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "start": {
+        "date": ":::TOMORROW:::"
+      },
+      "end": {
+        "date": ":::DAY_AFTER_TOMORROW:::"
+      },
+      "transparency": "transparent",
+      "iCalUID": "3bq5gvvu0dduqrr7gqm3jchfds@google.com",
+      "sequence": 0,
+      "reminders": {
+        "useDefault": true
+      }
+    }
+  ]
+}

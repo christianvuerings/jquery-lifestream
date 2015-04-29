@@ -2,8 +2,6 @@ require "spec_helper"
 
 describe GoogleApps::EventsInsert do
   let(:user_id) { rand(999999).to_s }
-  # be careful about modifying payloads, the proxies are matching vcr recordings
-  # also by body since these are POSTs
   let!(:valid_payload) do
     {
       'calendarId' => 'primary',
@@ -28,6 +26,9 @@ describe GoogleApps::EventsInsert do
       }
     }
   end
+  let(:fake_proxy) do
+    fake_proxy = GoogleApps::EventsInsert.new(fake: true)
+  end
 
   shared_examples "200 insert event task" do
     its(:status) { should eq(200) }
@@ -42,18 +43,17 @@ describe GoogleApps::EventsInsert do
   end
 
   context "fake insert event test", if: Rails.env.test? do
-    before(:each) do
-      fake_proxy = GoogleApps::EventsInsert.new(fake: true)
-      GoogleApps::EventsInsert.stub(:new).and_return(fake_proxy)
-    end
-
     context "valid payload" do
-      subject { GoogleApps::EventsInsert.new(user_id).insert_event(valid_payload) }
+      subject { fake_proxy.insert_event(valid_payload) }
       it_behaves_like "200 insert event task"
     end
 
     context "invalid payload" do
-      subject { GoogleApps::EventsInsert.new(user_id).insert_event(invalid_payload) }
+      subject {
+        fake_proxy.json_filename = 'google_events_insert_invalid.json'
+        fake_proxy.set_response({status: 400})
+        fake_proxy.insert_event(invalid_payload)
+      }
       it_behaves_like "4xx insert event task"
     end
   end

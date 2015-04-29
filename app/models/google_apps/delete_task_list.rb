@@ -3,7 +3,7 @@ module GoogleApps
 
     def delete_task_list(task_list_id)
       response = request(:api => "tasks", :resource => "tasklists", :method => "delete",
-                         :params => {tasklist: task_list_id}, :vcr_id => "_tasks").first
+                         :params => {tasklist: task_list_id}).first
       #According to the API, empty response body == successful
       !response.nil? && response.data.blank?
     end

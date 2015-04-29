@@ -1,0 +1,27 @@
+{
+  "kind": "plus#person",
+  "etag": "AtDvFRdo1nr9guODqwfbgdIwgiE/_rO2os0jeRUzCd-Q00uxeeX0XQY",
+  "gender": "female",
+  "emails": [
+    {
+      "value": "tammi.chang.clc@gmail.com",
+      "type": "account"
+    }
+  ],
+  "objectType": "person",
+  "id": "114856790171836979104",
+  "displayName": "Tammi Chang",
+  "name": {
+    "familyName": "Chang",
+    "givenName": "Tammi"
+  },
+  "url": "https://plus.google.com/114856790171836979104",
+  "image": {
+    "url": "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=50",
+    "isDefault": true
+  },
+  "isPlusUser": true,
+  "language": "en",
+  "circledByCount": 1,
+  "verified": false
+}
