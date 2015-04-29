@@ -49,15 +49,9 @@ class CanvasCourseGradeExportController < ApplicationController
   end
 
   def export_options
-    course_settings_worker = Canvas::CourseSettings.new(:course_id => canvas_course_id.to_i)
-    course_settings = course_settings_worker.settings(:cache => false)
-    grading_standard_enabled = course_settings['grading_standard_enabled']
-
     egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id.to_i)
-    course_sections = egrades_worker.official_sections
-    section_terms = egrades_worker.section_terms
-    muted_assignments = egrades_worker.muted_assignments
-    render json: {:officialSections => course_sections, :gradingStandardEnabled => grading_standard_enabled, :sectionTerms => section_terms, :mutedAssignments => muted_assignments}.to_json
+    export_options_json = egrades_worker.export_options.to_json
+    render json: export_options_json
   end
 
   before_filter :set_cross_origin_access_control_headers, :only => [:is_official_course]
