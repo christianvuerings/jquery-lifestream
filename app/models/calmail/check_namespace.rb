@@ -31,14 +31,12 @@ module Calmail
     def mock_response_list_name_exists
       mock_response.merge(
         status: 500,
-        body: '{"tg_flash": null, "message": "Invalid: localpart: A mailing list by that name already exists"}'
+        body: "{\"tg_flash\": null, \"message\": \"#{MAILING_LIST_EXISTS}\"}"
       )
     end
 
-    def mock_response_list_name_available
-      mock_response.merge(
-        body: '{"available": true, "tg_flash": null}'
-      )
+    def mock_json
+      '{"available": true, "tg_flash": null}'
     end
 
   end
