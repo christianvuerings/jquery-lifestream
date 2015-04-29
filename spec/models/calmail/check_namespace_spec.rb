@@ -4,7 +4,7 @@ describe Calmail::CheckNamespace do
   let(:list_name) { "site-#{random_id}" }
 
   describe '#name_available?' do
-    subject { Calmail::CheckNamespace.new(fake: true) }
+    subject { described_class.new(fake: true) }
     before do
       subject.set_response(mock_response)
     end
@@ -16,7 +16,7 @@ describe Calmail::CheckNamespace do
       end
     end
     context 'mailing list does not exist' do
-      let(:mock_response) { subject.mock_response_list_name_available }
+      let(:mock_response) { subject.mock_response }
       it 'finds nothing' do
         expect(result).to be true
       end
