@@ -1,0 +1,30 @@
+{
+  "kind": "calendar#event",
+  "etag": "\"B0R-JqZ1uFKvtifdS4AVDz7BCB4/MTM4MDA1OTczNDAzNDAwMA\"",
+  "id": "vbi7fn47g1kq8olcorq2grujhc",
+  "status": "confirmed",
+  "htmlLink": "https://www.google.com/calendar/event?eid=dmJpN2ZuNDdnMWtxOG9sY29ycTJncnVqaGMgeXVodW5nQGJlcmtlbGV5LmVkdQ",
+  "created": "2013-09-24T21:55:34.000Z",
+  "updated": "2013-09-24T21:55:34.034Z",
+  "summary": "Fancy event",
+  "creator": {
+    "email": "oskibear@stanford.edu",
+    "displayName": "Oski Bear",
+    "self": true
+  },
+  "organizer": {
+    "email": "oskibear@berkeley.edu",
+    "self": true
+  },
+  "start": {
+    "dateTime": "2013-09-24T02:06:00-07:00"
+  },
+  "end": {
+    "dateTime": "2013-09-24T03:06:00-07:00"
+  },
+  "iCalUID": "fake@google.com",
+  "sequence": 0,
+  "reminders": {
+    "useDefault": true
+  }
+}

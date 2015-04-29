@@ -3,7 +3,7 @@ module Proxies
 
     def initialize_mocks
       if defined? WebMock
-        set_response
+        on_request.set_response(@response_overrides || {})
       end
     end
 
@@ -16,7 +16,9 @@ module Proxies
     end
 
     def set_response(options={})
-      on_request.set_response(options)
+      @response_overrides ||= {}
+      @response_overrides.merge! options
+      on_request.set_response(@response_overrides)
     end
 
     def mock_request
