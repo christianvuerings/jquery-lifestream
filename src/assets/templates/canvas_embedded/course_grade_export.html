@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div data-ng-if="appState === 'ready'">
+  <div data-ng-if="appState === 'selection'">
     <div class="row collapse">
       <div class="medium-12 columns">
         <div data-ng-include src="'canvas_embedded/_shared/back_to_gradebook_link.html'"></div>
@@ -60,7 +60,7 @@
           Current grades download ignores unsubmitted assignments when calculating grades.
           Use this download when you want to excuse unsubmitted assignments.
         </p>
-        <a data-ng-href="/api/academics/canvas/egrade_export/download/{{canvasCourseId}}.csv?ccn={{selectedSection.course_cntl_num}}&term_cd={{selectedSection.term_cd}}&term_yr={{selectedSection.term_yr}}&type=current" target="_self" class="bc-canvas-button bc-canvas-button-primary">Download Current Grades</a>
+        <button data-ng-click="preloadGrades('current')" class="bc-canvas-button bc-canvas-button-primary">Download Current Grades</button>
       </div>
     </div>
 
@@ -71,7 +71,7 @@
           Final grades download counts unsubmitted assignments as zeroes when calculating grades.
           Use this download when you want to include all unsubmitted assignments as part of the grade.
         </p>
-        <a data-ng-href="/api/academics/canvas/egrade_export/download/{{canvasCourseId}}.csv?ccn={{selectedSection.course_cntl_num}}&term_cd={{selectedSection.term_cd}}&term_yr={{selectedSection.term_yr}}&type=final" target="_self" class="bc-canvas-button bc-canvas-button-primary">Download Final Grades</a>
+        <button data-ng-click="preloadGrades('final')" class="bc-canvas-button bc-canvas-button-primary">Download Final Grades</button>
       </div>
     </div>
 
@@ -80,13 +80,6 @@
         <div class="cc-page-course-grade-export-more-info-container">
           <p class="cc-page-course-grade-export-more-info">
             For more information, see <a href="http://ets.berkeley.edu/bcourses/how-do-i-submit-grades-e-grades-bcourses">How do I Submit Grades to E-Grades from bCourses?</a>
-          </p>
-          <p class="cc-page-course-grade-export-more-info">
-            Updated Gradebook?
-            <button class="bc-canvas-button cc-page-course-grade-export-refresh-button" data-ng-click="getExportOptions()">
-              <i class="fa fa-refresh"></i>
-              Refresh Prepared Grades
-            </button>
           </p>
         </div>
       </div>
@@ -222,7 +215,7 @@
         <div class="medium-12 columns">
           <div class="cc-text-right">
             <button class="bc-canvas-button cc-page-course-grading-export-back-link" type="button" data-ng-click="goToGradebook()" type="button" aria-label="Go Back to Gradebook">Cancel</button>
-            <button data-ng-click="preloadGrades()" data-ng-disabled="notReadyForPreparation()" class="bc-canvas-button bc-canvas-button-primary" type="button">Continue</button>
+            <button data-ng-click="switchToSelection()" data-ng-disabled="notReadyForPreparation()" class="bc-canvas-button bc-canvas-button-primary" type="button">Continue</button>
           </div>
         </div>
       </div>
