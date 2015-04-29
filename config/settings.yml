@@ -117,6 +117,12 @@ bearfacts_proxy:
   app_key: ''
   base_url: "https://apis-dev.berkeley.edu/bearfacts-apis"
 
+cal_groups_proxy:
+  fake: false
+  username: 'secret'
+  password: 'secret'
+  base_url: 'https://group-test.berkeley.edu/gws/servicesRest/json/v2_2_100'
+
 calmail_proxy:
   fake: false
   api_key: '99999'
