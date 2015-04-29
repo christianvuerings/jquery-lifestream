@@ -9,8 +9,7 @@ module MyGroups
       [
         Callink,
         Canvas,
-        Sakai,
-        Research
+        Sakai
       ].each do |provider|
         groups.concat(provider.new(@uid).fetch)
       end

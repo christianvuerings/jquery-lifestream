@@ -117,18 +117,24 @@ bearfacts_proxy:
   app_key: ''
   base_url: "https://apis-dev.berkeley.edu/bearfacts-apis"
 
+cal_groups_proxy:
+  fake: false
+  username: 'secret'
+  password: 'secret'
+  base_url: 'https://group-test.berkeley.edu/gws/servicesRest/json/v2_2_100'
+
+calmail_proxy:
+  fake: false
+  api_key: '99999'
+  base_url: 'https://example.com/manage/api1'
+  domain: 'bcourses-lists.berkeley.edu'
+  owner_uid: '211159'
+
 regstatus_proxy:
   fake: false
   app_id: ''
   app_key: ''
   base_url: 'https://apis.berkeley.edu/cxf/asws/regstatus'
-
-research_user_proxy:
-  fake: false
-  base_url: "https://hub-qa.berkeley.edu/alfresco/service/api/ucb/person"
-  site_url: "https://hub-qa.berkeley.edu/page/site"
-  username: "secret"
-  password: "secret"
 
 myfinaid_proxy:
   fake: false
@@ -213,6 +219,7 @@ cache:
     Canvas::CourseStudents: <%= 15.minutes %>
     Canvas::CourseTeachers: <%= 5.minutes %>
     CanvasBackgroundJobs: <%= 24.hours %>
+    Canvas::Egrades: <%= 1.minute %>
     Advising::MyAdvising: <%= 2.hours %>
 
     Berkeley::Terms: NEXT_08_00

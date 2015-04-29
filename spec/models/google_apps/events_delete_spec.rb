@@ -17,7 +17,12 @@ describe GoogleApps::EventsDelete do
     end
 
     context "non-existing event (404)" do
-      subject { GoogleApps::EventsDelete.new(user_id).delete_event("non_existent") }
+      subject {
+        proxy = GoogleApps::EventsDelete.new(user_id)
+        proxy.json_filename = 'google_events_delete_nonexistent.json'
+        proxy.set_response({status: 404})
+        proxy.delete_event("non_existent")
+      }
 
       its(:status) { should eq(404) }
       it { subject.response[:body].should be_blank }

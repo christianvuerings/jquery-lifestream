@@ -1,0 +1,13 @@
+{
+  "error": {
+    "errors": [
+      {
+        "domain": "global",
+        "reason": "invalid",
+        "message": "Invalid value for: Invalid format: \"2013-09-24T03:06:00.000-07:0\" is malformed at \"-07:0\""
+      }
+    ],
+    "code": 400,
+    "message": "Invalid value for: Invalid format: \"2013-09-24T03:06:00.000-07:0\" is malformed at \"-07:0\""
+  }
+}

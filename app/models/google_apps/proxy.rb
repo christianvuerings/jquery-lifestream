@@ -4,12 +4,15 @@ module GoogleApps
 
   class Proxy < BaseProxy
 
-    attr_accessor :authorization
+    include Proxies::Mockable
+
+    attr_accessor :authorization, :json_filename
 
     APP_ID = "Google"
 
     def initialize(options = {})
       super(Settings.google_proxy, options)
+      WebMock.enable!
 
       if @fake
         @authorization = GoogleApps::Client.new_fake_auth
@@ -58,31 +61,32 @@ module GoogleApps
       result_pages
     end
 
-    def simple_request(request_params, vcr_id)
+    def simple_request(request_params)
+      @params = request_params
+      initialize_mocks if @fake
+
       ActiveSupport::Notifications.instrument('proxy', {url: request_params[:uri], class: self.class}) do
-        FakeableProxy.wrap_request("#{GoogleApps::Proxy::APP_ID}#{vcr_id}", @fake, @fake_options) {
-          begin
-            logger.info "Fake = #{@fake}; Making request to #{request_params[:uri]} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-            client = GoogleApps::Client.client.dup
-            if request_params[:authenticated]
-              client.authorization = @authorization
-            end
-            response = client.execute(
-              :http_method => request_params[:http_method],
-              :uri => request_params[:uri],
-              :authenticated => request_params[:authenticated]
-            )
-            if response.blank?
-              logger.error "Got a blank response from Google: #{response.inspect}"
-            elsif response.status >= 400
-              logger.error "Got an error response from Google. Status #{response.status}, Body #{response.body}"
-            end
-            response
-          rescue => e
-            logger.fatal "#{e.to_s} - Unable to send request transaction"
-            nil
+        begin
+          logger.info "Fake = #{@fake}; Making request to #{request_params[:uri]} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+          client = GoogleApps::Client.client.dup
+          if request_params[:authenticated]
+            client.authorization = @authorization
           end
-        }
+          response = client.execute(
+            :http_method => request_params[:http_method],
+            :uri => request_params[:uri],
+            :authenticated => request_params[:authenticated]
+          )
+          if response.blank?
+            logger.error "Got a blank response from Google: #{response.inspect}"
+          elsif response.status >= 400
+            logger.error "Got an error response from Google. Status #{response.status}, Body #{response.body}"
+          end
+          response
+        rescue => e
+          logger.fatal "#{e.to_s} - Unable to send request transaction"
+          nil
+        end
       end
     end
 
@@ -100,14 +104,15 @@ module GoogleApps
     private
 
     def request_transaction(page_params, num_requests)
+      @params = page_params
+      initialize_mocks if @fake
+
       result_page = ActiveSupport::Notifications.instrument('proxy', {class: self.class}) do
-        FakeableProxy.wrap_request("#{APP_ID}#{page_params[:vcr_id]}", @fake, @fake_options) do
-          begin
-            GoogleApps::Client.request_page(@authorization, page_params)
-          rescue => e
-            logger.fatal "#{e.to_s} - Unable to send request transaction"
-            nil
-          end
+        begin
+          GoogleApps::Client.request_page(@authorization, page_params)
+        rescue => e
+          logger.fatal "#{e.to_s} - Unable to send request transaction"
+          nil
         end
       end
 
@@ -141,7 +146,6 @@ module GoogleApps
         params: request_params[:params],
         body: request_params[:body],
         headers: request_params[:headers],
-        vcr_id: request_params[:vcr_id] || "",
         resource_method: GoogleApps::Client.discover_resource_method(request_params[:api],
                                                                     request_params[:resource],
                                                                     request_params[:method]),
@@ -178,5 +182,10 @@ module GoogleApps
         nil
       end
     end
+
+    def mock_json
+      read_file('fixtures', 'json', json_filename)
+    end
+
   end
 end

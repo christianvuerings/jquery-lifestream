@@ -16,7 +16,7 @@ class CanvasCourseGradeExportController < ApplicationController
 
   # POST /api/academics/canvas/egrade_export/prepare/:canvas_course_id.json
   def prepare_grades_cache
-    egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :enable_grading_scheme => !!params['enableGradingScheme'])
+    egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :enable_grading_scheme => !!params['enableGradingScheme'], :unmute_assignments => !!params['unmuteAssignments'])
     egrades_worker.background_job_initialize
     egrades_worker.background.prepare_download
     render json: { jobRequestStatus: 'Success', jobId: egrades_worker.background_job_id }.to_json
@@ -38,21 +38,20 @@ class CanvasCourseGradeExportController < ApplicationController
     raise Errors::BadRequestError, "invalid value for 'type' parameter" unless Canvas::Egrades::GRADE_TYPES.include?(params['type'])
     egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
     official_student_grades = egrades_worker.official_student_grades_csv(params['term_cd'], params['term_yr'], params['ccn'], params['type'])
+    term_season = {
+      'B' => 'Spring',
+      'C' => 'Summer',
+      'D' => 'Fall'
+    }[params['term_cd']]
     respond_to do |format|
-      format.csv { render csv: official_student_grades.to_s, filename: "course_#{canvas_course_id}_grades" }
+      format.csv { render csv: official_student_grades.to_s, filename: "egrades-#{params['type']}-#{params['ccn']}-#{term_season}-#{params['term_yr']}-#{canvas_course_id}" }
     end
   end
 
   def export_options
-    course_settings_worker = Canvas::CourseSettings.new(:course_id => canvas_course_id.to_i)
-    course_settings = course_settings_worker.settings(:cache => false)
-    grading_standard_enabled = course_settings['grading_standard_enabled']
-
     egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id.to_i)
-    course_sections = egrades_worker.official_sections
-    section_terms = egrades_worker.section_terms
-    muted_assignments = egrades_worker.muted_assignments
-    render json: {:officialSections => course_sections, :gradingStandardEnabled => grading_standard_enabled, :sectionTerms => section_terms, :mutedAssignments => muted_assignments}.to_json
+    export_options_json = egrades_worker.export_options.to_json
+    render json: export_options_json
   end
 
   before_filter :set_cross_origin_access_control_headers, :only => [:is_official_course]
@@ -64,9 +63,8 @@ class CanvasCourseGradeExportController < ApplicationController
 
   def is_official_course
     raise Pundit::NotAuthorizedError, "Canvas Course ID not present in params" if params['canvas_course_id'].blank?
-    egrades_worker = Canvas::Egrades.new(:canvas_course_id => params['canvas_course_id'])
-    is_official_course = egrades_worker.is_official_course?
-    render json: { :isOfficialCourse => is_official_course }.to_json
+    official_course_worker = Canvas::OfficialCourse.new(:canvas_course_id => params['canvas_course_id'])
+    render json: { :isOfficialCourse => official_course_worker.is_official_course? }.to_json
   end
 
   private

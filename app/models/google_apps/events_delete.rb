@@ -1,7 +1,18 @@
 module GoogleApps
   class EventsDelete < Events
+
     def initialize(options = {})
-      super(options.reverse_merge(fake_options: {match_requests_on: [:method, :path]}))
+      super options
+      @json_filename='google_events_delete.json'
+    end
+
+    def mock_request
+      super.merge(method: :delete,
+                  uri_matching: 'https://www.googleapis.com/calendar/v3/calendars/primary/events')
+    end
+
+    def mock_response
+      super.merge({status: 204})
     end
 
     def delete_event(event_id)
@@ -10,8 +21,7 @@ module GoogleApps
               resource: "events",
               method: "delete",
               body: "",
-              headers: {"Content-Type" => "application/json"},
-              vcr_id: "_events_delete").first
+              headers: {"Content-Type" => "application/json"}).first
     end
   end
 end

@@ -1,0 +1,131 @@
+{
+  "kind": "calendar#events",
+  "etag": "\"NybCyMgjkLQM6Il-p8A5652MtaE/RPFhM9XfQaq7GDWH24K4TpW6C6I\"",
+  "summary": "tammi.chang.clc@gmail.com",
+  "updated": "2012-11-16T20:41:41.000Z",
+  "timeZone": "America/Los_Angeles",
+  "accessRole": "owner",
+  "defaultReminders": [
+    {
+      "method": "popup",
+      "minutes": 30
+    },
+    {
+      "method": "email",
+      "minutes": 30
+    }
+  ],
+  "items": [
+    {
+      "kind": "calendar#event",
+      "etag": "\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\"",
+      "id": "_edhmgpb4elm6ab9n6ssjgcpd6l06sqbed9gm6rrle9pmaspecdnmq",
+      "status": "confirmed",
+      "htmlLink": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqZ2NwZDZsMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI5VDIxMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+      "created": "1900-01-01T12:00:00.000Z",
+      "updated": "2012-10-09T23:07:19.000Z",
+      "summary": "PHYSICS 7B Discussion",
+      "location": "225 LECONTE",
+      "creator": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "organizer": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "start": {
+        "dateTime": "2012-08-29T14:00:00-07:00",
+        "timeZone": "America/Los_Angeles"
+      },
+      "end": {
+        "dateTime": "2012-08-29T16:00:00-07:00",
+        "timeZone": "America/Los_Angeles"
+      },
+      "recurrence": [
+        "RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=WE"
+      ],
+      "iCalUID": "schedule-77983-5@ninjacourses.com",
+      "sequence": 0,
+      "reminders": {
+        "useDefault": true
+      }
+    },
+    {
+      "kind": "calendar#event",
+      "etag": "\"NybCyMgjkLQM6Il-p8A5652MtaE/Q05pUW9iNmtKeEVBQUFBQUFBQUFBQT09\"",
+      "id": "_edhmgpb4elm6ab9n6ssjgd1d6h06sqbed9gm6rrle9pmaspecdnmq",
+      "status": "confirmed",
+      "htmlLink": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqZ2QxZDZoMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIwODI3VDIxMDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+      "created": "1900-01-01T12:00:00.000Z",
+      "updated": "2012-10-09T23:07:19.000Z",
+      "summary": "PHYSICS 7B Lab",
+      "location": "245 LECONTE",
+      "creator": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "organizer": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "start": {
+        "dateTime": "2012-08-27T14:00:00-07:00",
+        "timeZone": "America/Los_Angeles"
+      },
+      "end": {
+        "dateTime": "2012-08-27T16:00:00-07:00",
+        "timeZone": "America/Los_Angeles"
+      },
+      "recurrence": [
+        "RRULE:FREQ=WEEKLY;WKST=SU;UNTIL=20121209T080000Z;BYDAY=MO"
+      ],
+      "iCalUID": "schedule-77984-4@ninjacourses.com",
+      "sequence": 0,
+      "reminders": {
+        "useDefault": true
+      }
+    },
+    {
+      "kind": "calendar#event",
+      "etag": "\"NybCyMgjkLQM6Il-p8A5652MtaE/Q0lpMzB0ZXdKeEVBQUFBQUFBQUFBQT09\"",
+      "id": "_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq_20121116T190000Z",
+      "status": "confirmed",
+      "htmlLink": "https://www.google.com/calendar/event?eid=X2VkaG1ncGI0ZWxtNmFiOW42c3NqY2RoZDZkMDZzcWJlZDlnbTZycmxlOXBtYXNwZWNkbm1xXzIwMTIxMTE2VDE5MDAwMFogdGFtbWkuY2hhbmcuY2xjQG0",
+      "created": "1900-01-01T12:00:00.000Z",
+      "updated": "2012-11-16T20:41:41.908Z",
+      "summary": "PHYSICS 7B Lecture",
+      "location": "1 LECONTE",
+      "creator": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "organizer": {
+        "email": "tammi.chang.clc@gmail.com",
+        "displayName": "Tammi Chang",
+        "self": true
+      },
+      "start": {
+        "dateTime": "2012-11-16T16:00:00-08:00"
+      },
+      "end": {
+        "dateTime": "2012-11-16T17:00:00-08:00"
+      },
+      "recurringEventId": "_edhmgpb4elm6ab9n6ssjcdhd6d06sqbed9gm6rrle9pmaspecdnmq",
+      "originalStartTime": {
+        "dateTime": "2012-11-16T11:00:00-08:00",
+        "timeZone": "America/Los_Angeles"
+      },
+      "iCalUID": "schedule-77966-3@ninjacourses.com",
+      "sequence": 1,
+      "reminders": {
+        "useDefault": true
+      }
+    }
+  ]
+}

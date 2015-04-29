@@ -203,7 +203,7 @@
     {
       "year": 2009,
       "semester": "Spring",
-      "ccn": 81852,
+      "ccn": 81853,
       "catalogId": "150A",
       "deptName": "SOCIOL",
       "audioOnly": false,
@@ -1711,7 +1711,7 @@
       "semester": "Fall",
       "ccn": 123,
       "catalogId": "catalog_id_1",
-      "audioOnly": false,
+      "audioOnly": true,
       "public": true,
       "youTubePlaylist": "youTubePlaylistId",
       "iTunesVideo": 789,

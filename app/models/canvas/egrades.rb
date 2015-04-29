@@ -11,12 +11,17 @@ module Canvas
     GRADE_TYPES = ['final','current']
 
     def initialize(options = {})
-      default_options = {:enable_grading_scheme => false}
+      default_options = {
+        :enable_grading_scheme => false,
+        :unmute_assignments => false
+      }
       options.reverse_merge!(default_options)
 
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
       @enable_grading_scheme = options[:enable_grading_scheme]
+      @unmute_assignments = options[:unmute_assignments]
+      @canvas_official_course = Canvas::OfficialCourse.new(:canvas_course_id => @canvas_course_id)
     end
 
     def official_student_grades_csv(term_cd, term_yr, ccn, type)
@@ -53,6 +58,7 @@ module Canvas
 
     def prepare_download
       course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
+      course_assignments = Canvas::CourseAssignments.new(:course_id => @canvas_course_id)
       if course_settings.settings(:cache => false)['grading_standard_enabled'].blank?
         if @enable_grading_scheme
           # Background job not updated with total number of steps until obtained via callback
@@ -63,6 +69,13 @@ module Canvas
           background_job_complete_step('Enabled default grading scheme')
         else
           raise Errors::BadRequestError, "Enable Grading Scheme action not specified"
+        end
+      end
+      if course_assignments.muted_assignments.count > 0
+        if @unmute_assignments
+          unmute_course_assignments(@canvas_course_id)
+        else
+          raise Errors::BadRequestError, "Unmute assignments action not specified"
         end
       end
       canvas_course_student_grades(true)
@@ -102,7 +115,7 @@ module Canvas
 
     # Provides official sections associated with Canvas course
     def official_sections
-      sec_ids = official_section_identifiers
+      sec_ids = @canvas_official_course.official_section_identifiers
       return [] if sec_ids.empty?
       # A course site can only be provisioned to include sections from a specific term, so all terms should be the same for each section
       term = { :term_yr => sec_ids[0][:term_yr], :term_cd => sec_ids[0][:term_cd] }
@@ -116,46 +129,31 @@ module Canvas
       end
     end
 
-    # Returns array of terms associated with Canvas course site
-    def section_terms
-      official_section_identifiers.collect {|sect| sect.slice(:term_yr, :term_cd)}.uniq
-    end
-
-    # Provides official section identifiers for sections in Canvas course
-    def official_section_identifiers
-      @official_section_ids ||= Canvas::CourseSections.new(:course_id => @canvas_course_id).official_section_identifiers
-    end
-
-    # Returns true if course site contains official sections
-    def is_official_course?(options = {})
-      default_options = {:cache => true}
-      options.reverse_merge!(default_options)
-
-      get_official_course_status = Proc.new {
-        (official_section_identifiers.count > 0) ? true : false
+    def export_options
+      course_settings_worker = Canvas::CourseSettings.new(:course_id => @canvas_course_id.to_i)
+      course_settings = course_settings_worker.settings(:cache => false)
+      {
+        :officialSections => official_sections,
+        :gradingStandardEnabled => course_settings['grading_standard_enabled'],
+        :sectionTerms => @canvas_official_course.section_terms,
+        :mutedAssignments => muted_assignments
       }
-
-      if options[:cache].present?
-        self.class.fetch_from_cache("is-official-#{@canvas_course_id}") { get_official_course_status.call }
-      else
-        get_official_course_status.call
-      end
     end
 
     def muted_assignments
-      assignments = Canvas::CourseAssignments.new(:course_id => @canvas_course_id).course_assignments(:cache => false)
-      muted_assignments = []
-      assignments.each do |assignment|
-        due_at_date = assignment['due_at'].nil? ? nil : Time.iso8601(assignment['due_at']).strftime('%b %-e, %Y at %-l:%M%P')
-        if assignment['muted'] == true
-          muted_assignments << {
-            'name' => assignment['name'],
-            'points_possible' => assignment['points_possible'],
-            'due_at' => due_at_date
-          }
-        end
+      muted_assignments = Canvas::CourseAssignments.new(:course_id => @canvas_course_id).muted_assignments
+      muted_assignments.collect do |assignment|
+        assignment['due_at'] = assignment['due_at'].nil? ? nil : Time.iso8601(assignment['due_at']).strftime('%b %-e, %Y at %-l:%M%P')
+        assignment
       end
-      muted_assignments
+    end
+
+    def unmute_course_assignments(canvas_course_id)
+      worker = Canvas::CourseAssignments.new(:course_id => @canvas_course_id)
+      muted_assignments = worker.muted_assignments
+      muted_assignments.each do |assignment|
+        worker.unmute_assignment(assignment['id'])
+      end
     end
 
   end
