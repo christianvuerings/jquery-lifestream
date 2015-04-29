@@ -21,6 +21,7 @@ module Canvas
       @canvas_course_id = options[:canvas_course_id]
       @enable_grading_scheme = options[:enable_grading_scheme]
       @unmute_assignments = options[:unmute_assignments]
+      @canvas_official_course = Canvas::OfficialCourse.new(:canvas_course_id => @canvas_course_id)
     end
 
     def official_student_grades_csv(term_cd, term_yr, ccn, type)
@@ -114,7 +115,7 @@ module Canvas
 
     # Provides official sections associated with Canvas course
     def official_sections
-      sec_ids = official_section_identifiers
+      sec_ids = @canvas_official_course.official_section_identifiers
       return [] if sec_ids.empty?
       # A course site can only be provisioned to include sections from a specific term, so all terms should be the same for each section
       term = { :term_yr => sec_ids[0][:term_yr], :term_cd => sec_ids[0][:term_cd] }
@@ -128,30 +129,15 @@ module Canvas
       end
     end
 
-    # Returns array of terms associated with Canvas course site
-    def section_terms
-      official_section_identifiers.collect {|sect| sect.slice(:term_yr, :term_cd)}.uniq
-    end
-
-    # Provides official section identifiers for sections in Canvas course
-    def official_section_identifiers
-      @official_section_ids ||= Canvas::CourseSections.new(:course_id => @canvas_course_id).official_section_identifiers
-    end
-
-    # Returns true if course site contains official sections
-    def is_official_course?(options = {})
-      default_options = {:cache => true}
-      options.reverse_merge!(default_options)
-
-      get_official_course_status = Proc.new {
-        (official_section_identifiers.count > 0) ? true : false
+    def export_options
+      course_settings_worker = Canvas::CourseSettings.new(:course_id => @canvas_course_id.to_i)
+      course_settings = course_settings_worker.settings(:cache => false)
+      {
+        :officialSections => official_sections,
+        :gradingStandardEnabled => course_settings['grading_standard_enabled'],
+        :sectionTerms => @canvas_official_course.section_terms,
+        :mutedAssignments => muted_assignments
       }
-
-      if options[:cache].present?
-        self.class.fetch_from_cache("is-official-#{@canvas_course_id}") { get_official_course_status.call }
-      else
-        get_official_course_status.call
-      end
     end
 
     def muted_assignments
