@@ -166,6 +166,7 @@
       iframeScrollToTop: iframeScrollToTop,
       iframeUpdateHeight: iframeUpdateHeight,
       iframeParentLocation: iframeParentLocation,
+      isInIframe: isInIframe,
       hideOffCanvasMenu: hideOffCanvasMenu,
       naturalSort: naturalSort,
       preventBubble: preventBubble,
