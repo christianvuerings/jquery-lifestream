@@ -13,7 +13,7 @@ describe Calendar::Queries do
       end
       it 'should respect business rule about print_cd of A in class schedule data' do
         if Calendar::Queries.test_data?
-          expect(subject.length).to eq 4
+          expect(subject.length).to eq 5
         end
       end
     end
@@ -53,6 +53,7 @@ describe Calendar::Queries do
       it 'should return Spring 2013 and Fall 2013' do
         expect(subject[0].slug).to eq 'spring-2013'
         expect(subject[1].slug).to eq 'summer-2013'
+        expect(subject[2].slug).to eq 'fall-2013'
       end
     end
     context 'in Summer 2013' do
@@ -60,6 +61,7 @@ describe Calendar::Queries do
       it 'should return Summer 2013 and Fall 2013' do
         expect(subject[0].slug).to eq 'summer-2013'
         expect(subject[1].slug).to eq 'fall-2013'
+        expect(subject[2].slug).to eq 'spring-2014'
       end
     end
     context 'in Fall 2013' do
@@ -67,6 +69,7 @@ describe Calendar::Queries do
       it 'should return Fall 2013 and Spring 2014' do
         expect(subject[0].slug).to eq 'fall-2013'
         expect(subject[1].slug).to eq 'spring-2014'
+        expect(subject[2].slug).to eq 'summer-2014'
       end
     end
     # Fall 2014 is the last term in the fake test data for CALCENTRAL_TERM_INFO_VW)
@@ -75,7 +78,7 @@ describe Calendar::Queries do
       it 'should return Fall 2014' do
         expect(subject[0].slug).to eq 'fall-2014'
         if Calendar::Queries.test_data?
-          expect(subject.length).to eq 2
+          expect(subject.length).to eq 3
         end
       end
     end
