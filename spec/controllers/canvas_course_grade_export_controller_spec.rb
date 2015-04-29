@@ -302,12 +302,12 @@ describe CanvasCourseGradeExportController do
   describe 'when indicating if a course site has official sections' do
     before do
       session['user_id'] = nil
-      allow_any_instance_of(Canvas::Egrades).to receive(:is_official_course?).and_return(true)
+      allow_any_instance_of(Canvas::OfficialCourse).to receive(:is_official_course?).and_return(true)
     end
     it_should_behave_like 'an endpoint' do
       let(:make_request) { get :is_official_course, :format => :csv, :canvas_course_id => '1234' }
       let(:error_text) { 'Something went wrong' }
-      before { allow(Canvas::Egrades).to receive(:new).and_raise(RuntimeError, error_text) }
+      before { allow(Canvas::OfficialCourse).to receive(:new).and_raise(RuntimeError, error_text) }
     end
 
     context 'when the canvas course id is not present in the params' do

@@ -63,9 +63,8 @@ class CanvasCourseGradeExportController < ApplicationController
 
   def is_official_course
     raise Pundit::NotAuthorizedError, "Canvas Course ID not present in params" if params['canvas_course_id'].blank?
-    egrades_worker = Canvas::Egrades.new(:canvas_course_id => params['canvas_course_id'])
-    is_official_course = egrades_worker.is_official_course?
-    render json: { :isOfficialCourse => is_official_course }.to_json
+    official_course_worker = Canvas::OfficialCourse.new(:canvas_course_id => params['canvas_course_id'])
+    render json: { :isOfficialCourse => official_course_worker.is_official_course? }.to_json
   end
 
   private
