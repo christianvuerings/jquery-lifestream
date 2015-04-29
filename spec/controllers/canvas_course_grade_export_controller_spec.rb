@@ -41,14 +41,25 @@ describe CanvasCourseGradeExportController do
       expect(json_response['jobRequestStatus']).to eq 'Success'
     end
 
-    it 'supports enable_grading_scheme option' do
+    it 'supports enableGradingScheme option' do
       allow(torquebox_fake_background_proxy).to receive(:prepare_download).and_return(nil)
       fake_canvas_egrades = double
       allow(fake_canvas_egrades).to receive(:background_job_initialize).and_return(nil)
       allow(fake_canvas_egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
       allow(fake_canvas_egrades).to receive(:background_job_id).and_return(background_job_id)
-      expect(Canvas::Egrades).to receive(:new).with(:canvas_course_id => canvas_course_id.to_i, :enable_grading_scheme => true).and_return(fake_canvas_egrades)
+      expect(Canvas::Egrades).to receive(:new).with(:canvas_course_id => canvas_course_id.to_i, :enable_grading_scheme => true, :unmute_assignments => false).and_return(fake_canvas_egrades)
       post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :enableGradingScheme => 1, :format => :csv
+      expect(response.status).to eq(200)
+    end
+
+    it 'supports unmuteAssignments option' do
+      allow(torquebox_fake_background_proxy).to receive(:prepare_download).and_return(nil)
+      fake_canvas_egrades = double
+      allow(fake_canvas_egrades).to receive(:background_job_initialize).and_return(nil)
+      allow(fake_canvas_egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
+      allow(fake_canvas_egrades).to receive(:background_job_id).and_return(background_job_id)
+      expect(Canvas::Egrades).to receive(:new).with(:canvas_course_id => canvas_course_id.to_i, :enable_grading_scheme => false, :unmute_assignments => true).and_return(fake_canvas_egrades)
+      post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :unmuteAssignments => 1, :format => :csv
       expect(response.status).to eq(200)
     end
 
@@ -122,37 +133,49 @@ describe CanvasCourseGradeExportController do
         {'name' => 'Assignment 7', 'due_at' => 'Oct 18, 2015 at 9:30am', 'points_possible' => 100},
       ]
     end
-
-    let(:grade_types) { {:number_grades_present => true, :letter_grades_present => false} }
     let(:section_terms) { [{:term_cd => 'C', :term_yr => '2014'}, {:term_cd => 'D', :term_yr => '2015'}] }
+    let(:export_options) do
+      {
+        :officialSections => official_course_sections,
+        :gradingStandardEnabled => false,
+        :sectionTerms => section_terms,
+        :mutedAssignments => muted_assignments
+      }
+    end
     before do
-      allow_any_instance_of(Canvas::CourseSettings).to receive(:settings).and_return(course_settings)
-      allow_any_instance_of(Canvas::Egrades).to receive(:official_sections).and_return(official_course_sections)
-      allow_any_instance_of(Canvas::Egrades).to receive(:grade_types_present).and_return(grade_types)
-      allow_any_instance_of(Canvas::Egrades).to receive(:section_terms).and_return(section_terms)
-      allow_any_instance_of(Canvas::Egrades).to receive(:muted_assignments).and_return(muted_assignments)
+      allow_any_instance_of(Canvas::Egrades).to receive(:export_options).and_return(export_options)
     end
 
     it_should_behave_like 'an endpoint' do
       let(:make_request) { get :export_options, canvas_course_id: 'embedded', :format => :csv }
       let(:error_text) { 'Something went wrong' }
-      before { allow_any_instance_of(Canvas::Egrades).to receive(:official_sections).and_raise(RuntimeError, error_text) }
+      before { allow_any_instance_of(Canvas::Egrades).to receive(:export_options).and_raise(RuntimeError, error_text) }
     end
 
     it_should_behave_like 'an authenticated endpoint' do
       let(:make_request) { get :export_options, canvas_course_id: 'embedded', :format => :csv }
     end
 
-    it 'provides official course sections' do
+    it 'provides export options' do
       get :export_options, canvas_course_id: 'embedded'
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
       expect(json_response).to be_an_instance_of Hash
+
       official_sections = json_response['officialSections']
       expect(official_sections).to be_an_instance_of Array
       expect(official_sections.count).to eq 2
       expect(official_sections[0]['course_cntl_num']).to eq '22280'
       expect(official_sections[1]['course_cntl_num']).to eq '22345'
+
+      expect(json_response['gradingStandardEnabled']).to eq false
+
+      section_terms = json_response['sectionTerms']
+      expect(section_terms).to be_an_instance_of Array
+      expect(section_terms.count).to eq 2
+
+      muted_assignments = json_response['mutedAssignments']
+      expect(muted_assignments).to be_an_instance_of Array
     end
 
     it 'supports canvas course id parameter when absent in session' do
@@ -166,38 +189,6 @@ describe CanvasCourseGradeExportController do
       expect(official_sections.count).to eq 2
       expect(official_sections[0]['course_cntl_num']).to eq '22280'
       expect(official_sections[1]['course_cntl_num']).to eq '22345'
-    end
-
-    it 'provides grading standard enabled boolean' do
-      get :export_options, canvas_course_id: 'embedded'
-      expect(response.status).to eq(200)
-      json_response = JSON.parse(response.body)
-      expect(json_response).to be_an_instance_of Hash
-      expect(json_response['gradingStandardEnabled']).to eq true
-    end
-
-    it 'provides official section terms existing within course' do
-      get :export_options, canvas_course_id: 'embedded'
-      expect(response.status).to eq(200)
-      json_response = JSON.parse(response.body)
-      expect(json_response).to be_an_instance_of Hash
-      section_terms = json_response['sectionTerms']
-      expect(section_terms.count).to eq 2
-      expect(section_terms[0]['term_cd']).to eq 'C'
-      expect(section_terms[0]['term_yr']).to eq '2014'
-      expect(section_terms[1]['term_cd']).to eq 'D'
-      expect(section_terms[1]['term_yr']).to eq '2015'
-    end
-
-    it 'provides muted assignments existing within course' do
-      get :export_options, canvas_course_id: 'embedded'
-      expect(response.status).to eq(200)
-      json_response = JSON.parse(response.body)
-      expect(json_response).to be_an_instance_of Hash
-      muted_assignments = json_response['mutedAssignments']
-      expect(muted_assignments.count).to eq 2
-      expect(muted_assignments[0]['name']).to eq 'Assignment 4'
-      expect(muted_assignments[1]['name']).to eq 'Assignment 7'
     end
   end
 
@@ -266,7 +257,7 @@ describe CanvasCourseGradeExportController do
         get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234', :type => 'current'
         expect(response.status).to eq(200)
         expect(response.headers['Content-Type']).to eq 'text/csv'
-        expect(response.headers['Content-Disposition']).to eq 'attachment; filename=course_1164764_grades.csv'
+        expect(response.headers['Content-Disposition']).to eq 'attachment; filename=egrades-current-1234-Fall-2014-1164764.csv'
         expect(response.body).to be_an_instance_of String
         response_csv = CSV.parse(response.body, {headers: true})
         expect(response_csv.count).to eq 4
@@ -299,7 +290,7 @@ describe CanvasCourseGradeExportController do
         get :download_egrades_csv, canvas_course_id: canvas_course_id, :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234', :type => 'current'
         expect(response.status).to eq(200)
         expect(response.headers['Content-Type']).to eq 'text/csv'
-        expect(response.headers['Content-Disposition']).to eq 'attachment; filename=course_1164764_grades.csv'
+        expect(response.headers['Content-Disposition']).to eq 'attachment; filename=egrades-current-1234-Fall-2014-1164764.csv'
         expect(response.body).to be_an_instance_of String
         response_csv = CSV.parse(response.body, {headers: true})
         expect(response_csv.count).to eq 4
@@ -311,12 +302,12 @@ describe CanvasCourseGradeExportController do
   describe 'when indicating if a course site has official sections' do
     before do
       session['user_id'] = nil
-      allow_any_instance_of(Canvas::Egrades).to receive(:is_official_course?).and_return(true)
+      allow_any_instance_of(Canvas::OfficialCourse).to receive(:is_official_course?).and_return(true)
     end
     it_should_behave_like 'an endpoint' do
       let(:make_request) { get :is_official_course, :format => :csv, :canvas_course_id => '1234' }
       let(:error_text) { 'Something went wrong' }
-      before { allow(Canvas::Egrades).to receive(:new).and_raise(RuntimeError, error_text) }
+      before { allow(Canvas::OfficialCourse).to receive(:new).and_raise(RuntimeError, error_text) }
     end
 
     context 'when the canvas course id is not present in the params' do

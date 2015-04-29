@@ -12,7 +12,7 @@ describe "GoogleTaskList" do
   end
 
   # simulates creating a tasklist, create a task, toggle statuses back and forth, delete tasklist.
-  it "should simulate a fake task toggle between statuses" do
+  it "should simulate a fake task toggle between statuses", :testext => true do
     proxy_opts = {
       :fake => true
     }

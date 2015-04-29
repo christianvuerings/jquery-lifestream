@@ -7,20 +7,27 @@ module HttpRequester
   def get_response(url, additional_options={})
     ActiveSupport::Notifications.instrument('proxy', {url: url, class: self.class}) do
       error_options = additional_options.delete(:on_error) || {}
-      response = HTTParty.get(
-        url,
-        {
-          timeout: Settings.application.outgoing_http_timeout,
-          verify: verify_ssl?
-        }.merge(additional_options)
-      )
+      error_options.merge!(url: url)
+      request_type = additional_options.delete(:method) || :get
+      request_options = {
+        timeout: Settings.application.outgoing_http_timeout,
+        verify: verify_ssl?
+      }.merge(additional_options)
+      response = case request_type
+        when :get
+          HTTParty.get(url, request_options)
+        when :post
+          HTTParty.post(url, request_options)
+        else
+          raise Errors::ProxyError.new("Unhandled request type #{request_type}", error_options)
+      end
       begin
         if error_options[:rescue_status] == response.code || error_options[:rescue_status] == :all
           return response
         end
 
         if response.code >= 400
-          error_options.merge!(url: url, response: response)
+          error_options.merge!(response: response)
           error_options.merge!(uid: @uid) if @uid
           raise Errors::ProxyError.new('Connection failed', error_options)
         end
@@ -28,9 +35,9 @@ module HttpRequester
           logger.error "Unable to parse response from URL (#{url}), remote server status: #{response.code}, body: #{response.body}"
         end
       rescue MultiXml::ParseError => e
-        raise Errors::ProxyError.new("Error parsing XML: #{e.message}", url: url, response: response)
+        raise Errors::ProxyError.new("Error parsing XML: #{e.message}", error_options.merge!(response: response))
       rescue JSON::ParserError => e
-        raise Errors::ProxyError.new("Error parsing JSON: #{e.message}", url: url, response: response)
+        raise Errors::ProxyError.new("Error parsing JSON: #{e.message}", error_options.merge!(response: response))
       end
       response
     end

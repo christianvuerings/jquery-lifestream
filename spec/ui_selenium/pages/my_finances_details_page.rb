@@ -34,7 +34,7 @@ module CalCentralPages
       image(:sort_descending, :xpath => '//i[@class="fa fa-chevron-down"]')
       image(:sort_ascending, :xpath => '//i[@class="fa fa-chevron-up"]')
 
-      table(:transaction_table, :xpath => '//div[@class="cc-table cc-table-sortable cc-page-myfinances-table"]/table')
+      table(:transaction_table, :xpath => '//div[@class="cc-table cc-table-sortable cc-page-myfinances-table cc-table-finances"]/table')
       link(:transaction_table_row_one, :xpath => '//div[@class="cc-table cc-table-sortable cc-page-myfinances-table"]/table/tbody')
 
       span(:trans_date, :xpath => '//span[@data-ng-bind="item.transDate | date:\'MM/dd/yy\'"]')

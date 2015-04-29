@@ -17,7 +17,11 @@
      */
     $scope.goToGradebook = function() {
       var gradebookUrl = $scope.canvasRootUrl + '/courses/' + $scope.canvasCourseId + '/grades';
-      apiService.util.iframeParentLocation(gradebookUrl);
+      if (apiService.util.isInIframe) {
+        apiService.util.iframeParentLocation(gradebookUrl);
+      } else {
+        $window.location.href = gradebookUrl;
+      }
     };
 
     /**
@@ -25,7 +29,7 @@
      */
     $scope.goToCourseSettings = function() {
       var courseDetailsUrl = $scope.canvasRootUrl + '/courses/' + $scope.canvasCourseId + '/settings#tab-details';
-      if (!!window.parent.frames.length) {
+      if (apiService.util.isInIframe) {
         apiService.util.iframeParentLocation(courseDetailsUrl);
       } else {
         $window.location.href = courseDetailsUrl;
@@ -44,7 +48,8 @@
       } else {
         delete $scope.percentCompleteRounded;
         $timeout.cancel(timeoutPromise);
-        $scope.appState = 'ready';
+        $scope.switchToSelection();
+        downloadGrades();
       }
     };
 
@@ -66,12 +71,13 @@
     };
 
     /*
-     * Begins grade preloading process
+     * Begins grade preparation and download process
      */
-    $scope.preloadGrades = function() {
+    $scope.preloadGrades = function(type) {
+      $scope.selectedType = type;
       $scope.appState = 'loading';
       $scope.jobStatus = 'New';
-      canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId, $scope.enableDefaultGradingScheme).success(function(data) {
+      canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId, $scope.enableDefaultGradingScheme, $scope.unmuteAllAssignments).success(function(data) {
         if (data.jobRequestStatus === 'Success') {
           $scope.backgroundJobId = data.jobId;
           jobStatusLoader();
@@ -99,13 +105,54 @@
           validateCourseState(data.gradingStandardEnabled, data.mutedAssignments);
         }
         if ($scope.appState !== 'error') {
-          $scope.preloadGrades();
+          $scope.appState = 'selection';
         }
       }).error(function() {
         $scope.appState = 'error';
         $scope.contactSupport = true;
         $scope.errorStatus = 'Unable to obtain course settings.';
       });
+    };
+
+    $scope.notReadyForPreparation = function() {
+      if ($scope.noGradingStandardEnabled && $scope.mutedAssignmentsPresent && $scope.enableDefaultGradingScheme && $scope.unmuteAllAssignments) {
+        return false;
+      }
+      if ($scope.noGradingStandardEnabled && !$scope.mutedAssignmentsPresent && $scope.enableDefaultGradingScheme) {
+        return false;
+      }
+      if (!$scope.noGradingStandardEnabled && $scope.mutedAssignmentsPresent && $scope.unmuteAllAssignments) {
+        return false;
+      }
+      return true;
+    };
+
+    /*
+     * Switches to 'selection' step and scrolls to top of page
+     */
+    $scope.switchToSelection = function() {
+      // issue scroll to top based on Canvas or CalCentral context
+      if (apiService.util.isInIframe) {
+        apiService.util.iframeScrollToTop();
+      } else {
+        $window.scrollTo(0, 0);
+      }
+      $scope.appState = 'selection';
+    };
+
+    /*
+     * Triggers auto-download of selected CSV download
+     */
+    var downloadGrades = function() {
+      var downloadPath = [
+        '/api/academics/canvas/egrade_export/download/',
+        $scope.canvasCourseId + '.csv?',
+        'ccn=' + $scope.selectedSection.course_cntl_num + '&',
+        'term_cd=' + $scope.selectedSection.term_cd + '&',
+        'term_yr=' + $scope.selectedSection.term_yr + '&',
+        'type=' + $scope.selectedType
+      ].join('');
+      $window.location.href = downloadPath;
     };
 
     /**

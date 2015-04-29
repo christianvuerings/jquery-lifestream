@@ -25,17 +25,44 @@ describe Canvas::CourseAssignments do
     expect(assignments[1]['points_possible']).to eq 50
   end
 
-  it 'uses cache by default' do
-    expect(Canvas::CourseAssignments).to receive(:fetch_from_cache).and_return([])
-    assignments = subject.course_assignments
-    expect(assignments).to be_an_instance_of Array
-    expect(assignments.count).to eq 0
+  context 'when providing muted assignments' do
+    let(:fake_assignments) do
+      [
+        {'id' => 1, 'name' => 'Assignment 1', 'muted' => false},
+        {'id' => 2, 'name' => 'Assignment 2', 'muted' => true},
+        {'id' => 3, 'name' => 'Assignment 3', 'muted' => false},
+      ]
+    end
+    it 'provides muted course assignments' do
+      allow(subject).to receive(:course_assignments).and_return(fake_assignments)
+      muted_assignments = subject.muted_assignments
+      expect(muted_assignments).to be_an_instance_of Array
+      expect(muted_assignments.count).to eq 1
+      expect(muted_assignments[0]['id']).to eq 2
+      expect(muted_assignments[0]['name']).to eq 'Assignment 2'
+    end
+
+    it 'serves uncached records' do
+      expect(subject).to receive(:course_assignments).and_return(fake_assignments)
+      muted_assignments = subject.muted_assignments
+    end
   end
 
-  it 'bypasses cache when cache option is false' do
-    expect(Canvas::CourseAssignments).to_not receive(:fetch_from_cache)
-    assignments = subject.course_assignments(:cache => false)
-    expect(assignments).to be_an_instance_of Array
-    expect(assignments.count).to eq 2
+  context 'when unmuting an assignment' do
+    it 'unmutes the assignment' do
+      request_params = {
+        'assignment' => {
+          'muted' => false
+        }
+      }
+      request_options = {
+        :method => :put,
+        :body => request_params,
+      }
+      result = subject.unmute_assignment(11)
+      expect(result).to be_an_instance_of Hash
+      expect(result['id']).to eq 11
+      expect(result['muted']).to eq false
+    end
   end
 end

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed version="0.3" xmlns="http://purl.org/atom/ns#">
+  <title>Gmail - Inbox for someone@berkeley.edu</title>
+  <tagline>New messages in your Gmail Inbox</tagline>
+  <fullcount>3</fullcount>
+  <link
+    href="http://mail.google.com/mail" rel="alternate" type="text/html"/>
+  <modified>2013-04-04T23:17:40Z</modified>
+
+  <entry>
+    <title>Customize Gmail with colors and themes</title>
+    <summary>To spice up your inbox with colors and
+      themes, check out the Themes tab under Settings. Customize
+    </summary>
+    <link
+      href="http://mail.google.com/mail?account_id=someone@berkeley.edu&amp;message_id=1387c850861e7a48&amp;view=conv&amp;extsrc=atom"
+      rel="alternate" type="text/html"/>
+    <modified>2012-07-12T18:48:09Z</modified>
+    <issued>
+      2012-07-12T18:48:09Z
+    </issued>
+    <id>tag:gmail.google.com,2004:1407313656749652552</id>
+    <author>
+      <name>Gmail Team</name>
+      <email>mail-noreply@google.com</email>
+    </author>
+
+  </entry>
+
+  <entry>
+    <title>Get Gmail on your mobile phone</title>
+    <summary>Access Gmail on your mobile phone The days of
+      needing your computer to get to your inbox are long
+    </summary>
+    <link
+      href="http://mail.google.com/mail?account_id=someone@berkeley.edu&amp;message_id=1387c85060883cf9&amp;view=conv&amp;extsrc=atom"
+      rel="alternate" type="text/html"/>
+    <modified>2012-07-12T18:48:09Z</modified>
+    <issued>
+      2012-07-12T18:48:09Z
+    </issued>
+    <id>tag:gmail.google.com,2004:1407313656119049465</id>
+    <author>
+      <name>Gmail Team</name>
+      <email>mail-noreply@google.com</email>
+    </author>
+
+  </entry>
+
+  <entry>
+    <title>Get started with Gmail</title>
+    <summary>4 things you need to know Gmail is a little bit different.
+      Learn these 4 basics and you'll never
+    </summary>
+    <link
+      href="http://mail.google.com/mail?account_id=someone@berkeley.edu&amp;message_id=1387c8505a277bb4&amp;view=conv&amp;extsrc=atom"
+      rel="alternate" type="text/html"/>
+    <modified>2012-07-12T18:48:08Z</modified>
+    <issued>
+      2012-07-12T18:48:08Z
+    </issued>
+    <id>tag:gmail.google.com,2004:1407313656012045236</id>
+    <author>
+      <name>Gmail Team</name>
+      <email>mail-noreply@google.com</email>
+    </author>
+
+  </entry>
+
+</feed>
