@@ -17,7 +17,7 @@
      */
     $scope.goToGradebook = function() {
       var gradebookUrl = $scope.canvasRootUrl + '/courses/' + $scope.canvasCourseId + '/grades';
-      if (!!window.parent.frames.length) {
+      if (apiService.util.isInIframe) {
         apiService.util.iframeParentLocation(gradebookUrl);
       } else {
         $window.location.href = gradebookUrl;
@@ -29,7 +29,7 @@
      */
     $scope.goToCourseSettings = function() {
       var courseDetailsUrl = $scope.canvasRootUrl + '/courses/' + $scope.canvasCourseId + '/settings#tab-details';
-      if (!!window.parent.frames.length) {
+      if (apiService.util.isInIframe) {
         apiService.util.iframeParentLocation(courseDetailsUrl);
       } else {
         $window.location.href = courseDetailsUrl;
@@ -132,7 +132,7 @@
      */
     $scope.switchToSelection = function() {
       // issue scroll to top based on Canvas or CalCentral context
-      if (!!window.parent.frames.length) {
+      if (apiService.util.isInIframe) {
         apiService.util.iframeScrollToTop();
       } else {
         $window.scrollTo(0, 0);
