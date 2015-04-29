@@ -19,7 +19,7 @@ describe MediacastsController do
 
     context 'fetching fake data' do
       before do
-        expect(Settings.webcast_proxy).to receive(:fake).and_return(true)
+        expect(Settings.webcast_proxy).to receive(:fake).at_most(3).and_return(true)
       end
 
       context 'when no Webcast recordings found' do
@@ -28,14 +28,18 @@ describe MediacastsController do
           CampusOracle::Queries.should_receive(:get_all_course_sections).with(term_yr, term_cd, dept_name, catalog_id).and_return []
           post :get_media, year: term_yr, term_code: term_cd, dept: dept_name, catalog_id: catalog_id
           expect(response.status).to eq 200
-          expect(JSON.parse response.body).to eq({})
+          json = JSON.parse response.body
+          expect(json['media']).to eq({})
         end
       end
 
       context 'when no Webcast recordings found' do
         it 'should pay attention to term code' do
           json = post_course chem_101
-          expect(json[:videos]).to be_nil
+          expect(json['media']).to have(3).items
+          %w(1 2 3).each do |ccn|
+            expect(json['media']["2014-B-#{ccn}"]['video_error_message']).to eq 'No Webcast data found.'
+          end
         end
       end
 
@@ -43,11 +47,10 @@ describe MediacastsController do
         it 'should escape special characters in dept name' do
           json = post_course malay_100A
           # This course happens to have zero YouTube videos
-          course = json['2014-D-85006']
+          course = json['media']['2014-D-85006']
           expect(course['videos']).to be_empty
-          itunes = course['itunes']
-          expect(itunes['audio']).to be_nil
-          expect(itunes['video']).to include('819827828')
+          expect(course['itunes']['audio']).to be_nil
+          expect(course['itunes']['video']).to include('819827828')
         end
       end
     end

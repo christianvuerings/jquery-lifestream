@@ -1,6 +1,5 @@
 module Webcast
   class Merged
-
     include Cache::CachedFeed
 
     def initialize(year, term, ccn_list, options = {})
@@ -14,12 +13,12 @@ module Webcast
       {
         :system_status => Webcast::SystemStatus.new(@options).get,
         :rooms => Webcast::Rooms.new(@options).get,
-        :media => Webcast::CourseMedia.new(@year, @term, @ccn_list, @options).get_feed
+        :media => @year && @term ? Webcast::CourseMedia.new(@year, @term, @ccn_list, @options).get_feed : {}
       }
     end
 
     def instance_key
-      Webcast::CourseMedia.id_per_ccn(@year, @term, @ccn_list.to_s)
+      @year && @term ? Webcast::CourseMedia.id_per_ccn(@year, @term, @ccn_list.to_s) : @options[:user_id]
     end
 
   end

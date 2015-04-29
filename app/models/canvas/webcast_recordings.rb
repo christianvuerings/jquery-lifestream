@@ -3,9 +3,10 @@ module Canvas
     extend Cache::Cacheable
     include ClassLogger
 
-    def initialize(options={})
+    def initialize(options = {})
       @uid = options[:user_id]
       @canvas_course_id = options[:course_id]
+      @options = options
     end
 
     # Authorization checks are performed by the controller.
@@ -16,36 +17,31 @@ module Canvas
     end
 
     def get_feed_internal
-      media_feed = empty_feed
-      response = Canvas::CourseSections.new(course_id: @canvas_course_id).sections_list
-      return empty_feed unless response && response.status == 200
-      canvas_sections = JSON.parse(response.body)
-      checked_courses = Set.new
-      canvas_sections.each do |canvas_section|
-        if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(canvas_section['sis_section_id']))
-          term_yr = campus_section[:term_yr]
-          term_cd = campus_section[:term_cd]
-          ccn = campus_section[:ccn].to_i
-          if ccn > 0
-            course_id = Webcast::CourseMedia.id_per_ccn(term_yr, term_cd, ccn)
-            unless checked_courses.include?(course_id)
-              checked_courses << course_id
-              media_feed = Webcast::CourseMedia.new(term_yr, term_cd, ccn).get_feed
-              return media_feed unless empty_feed?(media_feed)
+      ccn_list = []
+      if @canvas_course_id
+        response = Canvas::CourseSections.new(course_id: @canvas_course_id).sections_list
+        if response && response.status == 200
+          canvas_sections = JSON.parse(response.body)
+          canvas_sections.each do |canvas_section|
+            if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(canvas_section['sis_section_id']))
+              @term_yr ||= campus_section[:term_yr]
+              @term_cd ||= campus_section[:term_cd]
+              ccn = campus_section[:ccn].to_i
+              ccn_list << ccn if ccn > 0
             end
           end
         end
       end
-      media_feed
+      Webcast::Merged.new(@term_yr, @term_cd, ccn_list, @options).get_feed
     end
 
     def empty_feed
       {
-        audio: [],
-        itunes: {
-          audio: nil,
-          video: nil
-        }
+        system_status: {
+          is_sign_up_active: false
+        },
+        rooms: {},
+        media: {}
       }
     end
 
