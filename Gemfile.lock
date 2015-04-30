@@ -455,7 +455,7 @@ DEPENDENCIES
   dalli (~> 2.7.2)
   faraday (~> 0.9.0)
   faraday_middleware (~> 0.9.1)
-  google-api-client (~> 0.8.2)
+  google-api-client (~> 0.8.6)
   guard-livereload (~> 2.4.0)
   guard-spork
   headless (~> 1.0.2)
