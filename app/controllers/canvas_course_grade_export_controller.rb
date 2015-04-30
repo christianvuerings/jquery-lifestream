@@ -18,7 +18,7 @@ class CanvasCourseGradeExportController < ApplicationController
   def prepare_grades_cache
     egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :enable_grading_scheme => !!params['enableGradingScheme'], :unmute_assignments => !!params['unmuteAssignments'])
     egrades_worker.background_job_initialize
-    egrades_worker.background.prepare_download
+    egrades_worker.background.canvas_course_student_grades(true)
     render json: { jobRequestStatus: 'Success', jobId: egrades_worker.background_job_id }.to_json
   end
 
