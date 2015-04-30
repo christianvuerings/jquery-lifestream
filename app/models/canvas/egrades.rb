@@ -56,31 +56,6 @@ module Canvas
       background_job_set_total_steps(total_steps)
     end
 
-    def prepare_download
-      course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
-      course_assignments = Canvas::CourseAssignments.new(:course_id => @canvas_course_id)
-      if course_settings.settings(:cache => false)['grading_standard_enabled'].blank?
-        if @enable_grading_scheme
-          # Background job not updated with total number of steps until obtained via callback
-          # called from Canvas::CourseUsers#course_users. Therefore faking 30 total steps here
-          # here to begin the background job at 3% complete before update
-          background_job_set_total_steps(30)
-          course_settings.set_grading_scheme
-          background_job_complete_step('Enabled default grading scheme')
-        else
-          raise Errors::BadRequestError, "Enable Grading Scheme action not specified"
-        end
-      end
-      if course_assignments.muted_assignments.count > 0
-        if @unmute_assignments
-          unmute_course_assignments(@canvas_course_id)
-        else
-          raise Errors::BadRequestError, "Unmute assignments action not specified"
-        end
-      end
-      canvas_course_student_grades(true)
-    end
-
     def resolve_issues(enable_grading_scheme = false, unmute_assignments = false)
       if enable_grading_scheme
         course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
