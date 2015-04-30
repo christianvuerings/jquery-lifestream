@@ -20,6 +20,8 @@ module HttpRequester
           HTTParty.get(url, request_options)
         when :post
           HTTParty.post(url, request_options)
+        when :put
+          HTTParty.put(url, request_options)
         else
           raise Errors::ProxyError.new("Unhandled request type #{request_type}", error_options)
       end
