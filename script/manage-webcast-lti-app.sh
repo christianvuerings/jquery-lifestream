@@ -19,9 +19,9 @@ export LOGGER_LEVEL=INFO
 
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
-echo "`date`: Webcast cron job started on app node: `hostname -s`..." | $LOGIT
+echo "`date`: Webcast LTI app visibility check started on app node: `hostname -s`..." | $LOGIT
 
 cd deploy
 bundle exec rake webcast:canvas_integration | $LOGIT
 
-echo "`date`: Webcast cron job is done" | $LOGIT
+echo "`date`: Webcast LTI app visibility check  is done" | $LOGIT
