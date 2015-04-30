@@ -12,7 +12,6 @@ module GoogleApps
 
     def initialize(options = {})
       super(Settings.google_proxy, options)
-      WebMock.enable!
 
       if @fake
         @authorization = GoogleApps::Client.new_fake_auth
