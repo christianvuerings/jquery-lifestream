@@ -3,7 +3,6 @@
 --
 
 SET statement_timeout = 0;
-SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -52,7 +51,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: fin_aid_years; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: fin_aid_years; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE fin_aid_years (
@@ -84,7 +83,7 @@ ALTER SEQUENCE fin_aid_years_id_seq OWNED BY fin_aid_years.id;
 
 
 --
--- Name: link_categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: link_categories; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE link_categories (
@@ -117,7 +116,7 @@ ALTER SEQUENCE link_categories_id_seq OWNED BY link_categories.id;
 
 
 --
--- Name: link_categories_link_sections; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: link_categories_link_sections; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE link_categories_link_sections (
@@ -127,7 +126,7 @@ CREATE TABLE link_categories_link_sections (
 
 
 --
--- Name: link_sections; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: link_sections; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE link_sections (
@@ -160,7 +159,7 @@ ALTER SEQUENCE link_sections_id_seq OWNED BY link_sections.id;
 
 
 --
--- Name: link_sections_links; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: link_sections_links; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE link_sections_links (
@@ -170,7 +169,7 @@ CREATE TABLE link_sections_links (
 
 
 --
--- Name: links; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: links; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE links (
@@ -204,7 +203,7 @@ ALTER SEQUENCE links_id_seq OWNED BY links.id;
 
 
 --
--- Name: links_user_roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: links_user_roles; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE links_user_roles (
@@ -214,7 +213,7 @@ CREATE TABLE links_user_roles (
 
 
 --
--- Name: summer_sub_terms; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: summer_sub_terms; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE summer_sub_terms (
@@ -248,7 +247,7 @@ ALTER SEQUENCE summer_sub_terms_id_seq OWNED BY summer_sub_terms.id;
 
 
 --
--- Name: user_auths; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: user_auths; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE user_auths (
@@ -283,7 +282,7 @@ ALTER SEQUENCE user_auths_id_seq OWNED BY user_auths.id;
 
 
 --
--- Name: user_roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: user_roles; Type: TABLE; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE TABLE user_roles (
@@ -1635,7 +1634,7 @@ SELECT pg_catalog.setval('user_roles_id_seq', 3, true);
 
 
 --
--- Name: fin_aid_years_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: fin_aid_years_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY fin_aid_years
@@ -1643,7 +1642,7 @@ ALTER TABLE ONLY fin_aid_years
 
 
 --
--- Name: link_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: link_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY link_categories
@@ -1651,7 +1650,7 @@ ALTER TABLE ONLY link_categories
 
 
 --
--- Name: link_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: link_sections_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY link_sections
@@ -1659,7 +1658,7 @@ ALTER TABLE ONLY link_sections
 
 
 --
--- Name: links_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: links_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY links
@@ -1667,7 +1666,7 @@ ALTER TABLE ONLY links
 
 
 --
--- Name: summer_sub_terms_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: summer_sub_terms_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY summer_sub_terms
@@ -1675,7 +1674,7 @@ ALTER TABLE ONLY summer_sub_terms
 
 
 --
--- Name: user_auths_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: user_auths_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY user_auths
@@ -1683,7 +1682,7 @@ ALTER TABLE ONLY user_auths
 
 
 --
--- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace:
 --
 
 ALTER TABLE ONLY user_roles
@@ -1691,21 +1690,21 @@ ALTER TABLE ONLY user_roles
 
 
 --
--- Name: index_fin_aid_years_on_current_year; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_fin_aid_years_on_current_year; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE UNIQUE INDEX index_fin_aid_years_on_current_year ON fin_aid_years USING btree (current_year);
 
 
 --
--- Name: index_summer_sub_terms_on_year_and_sub_term_code; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_summer_sub_terms_on_year_and_sub_term_code; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE INDEX index_summer_sub_terms_on_year_and_sub_term_code ON summer_sub_terms USING btree (year, sub_term_code);
 
 
 --
--- Name: index_user_auths_on_uid; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_user_auths_on_uid; Type: INDEX; Schema: public; Owner: -; Tablespace:
 --
 
 CREATE UNIQUE INDEX index_user_auths_on_uid ON user_auths USING btree (uid);
