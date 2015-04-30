@@ -81,6 +81,16 @@ module Canvas
       canvas_course_student_grades(true)
     end
 
+    def resolve_issues(enable_grading_scheme = false, unmute_assignments = false)
+      if enable_grading_scheme
+        course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
+        course_settings.set_grading_scheme
+      end
+      if unmute_assignments
+        unmute_course_assignments(@canvas_course_id)
+      end
+    end
+
     def canvas_course_student_grades(force = false)
       self.class.fetch_from_cache("course-students-#{@canvas_course_id}", force) do
         proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id, :paging_callback => self)

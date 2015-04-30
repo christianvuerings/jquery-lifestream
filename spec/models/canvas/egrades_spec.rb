@@ -238,6 +238,39 @@ describe Canvas::Egrades do
     end
   end
 
+  context "when resolving course state issues" do
+    let(:course_settings) { { 'id' => canvas_course_id } }
+    let(:muted_assignments) { [] }
+    before do
+      allow_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_settings)
+      allow(subject).to receive(:unmute_course_assignments).and_return(muted_assignments)
+    end
+
+    context "when enabling grading scheme" do
+      it 'enables the grading scheme' do
+        expect_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_settings)
+        subject.resolve_issues(true, false)
+      end
+
+      it 'does not unmute assignments' do
+        expect(subject).to_not receive(:unmute_course_assignments)
+        subject.resolve_issues(true, false)
+      end
+    end
+
+    context "when unmuting assignments" do
+      it 'unmutes assignments' do
+        expect(subject).to receive(:unmute_course_assignments).and_return(muted_assignments)
+        subject.resolve_issues(false, true)
+      end
+
+      it 'does not enable the grading scheme' do
+        expect_any_instance_of(Canvas::CourseSettings).to_not receive(:set_grading_scheme)
+        subject.resolve_issues(false, true)
+      end
+    end
+  end
+
   context "when providing canvas course student grades" do
     before { subject.background_job_initialize }
     it "returns canvas course student grades" do
