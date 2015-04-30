@@ -12,7 +12,23 @@ module Finaid
       if Settings.features.my_fin_aid
         append!(feed[:activities])
       end
+      if Settings.features.cs_fin_aid
+        append_cs_fin_aid!(feed)
+      end
       feed
+    end
+
+    def append_cs_fin_aid!(feed)
+      begin
+        proxy = CampusSolutions::Awards.new({user_id: @uid})
+        feed[:awards] = proxy.get[:feed]
+      rescue => e
+        self.class.handle_exception(e, self.class.cache_key(@uid), {
+                                       id: @uid,
+                                       user_message_on_exception: "Remote server unreachable",
+                                       return_nil_on_generic_error: true
+                                     })
+      end
     end
 
     def append!(activities)
