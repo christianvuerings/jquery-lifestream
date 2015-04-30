@@ -33,7 +33,7 @@
   .cc-page-course-grading-export-error-notice {
     font-size: 14px;
     font-weight: normal;
-    margin: 3px 0;
+    margin: 17px 0 0;
   }
 
   .cc-page-course-grade-export-error-notice-icon {
@@ -59,7 +59,7 @@
     font-size: 20px;
     font-weight: 400;
     margin-top: 24px;
-    padding: 12px 0;
+    padding: 10px 0;
   }
 
   .cc-page-course-grade-export-more-info-container {
@@ -121,6 +121,7 @@
 
   .cc-page-course-grade-export-error-description {
     line-height: 17px;
+    margin-bottom: 8px;
   }
 
   .cc-page-course-grading-export-back-link {
@@ -140,6 +141,11 @@
 
   .cc-page-course-grading-export-error-resolution-action-container {
     float: left;
+    padding: 2px;
+  }
+
+  .cc-page-course-grading-export-muted-assignments-see-gradebook {
+    float: right;
     padding: 2px;
   }
 
