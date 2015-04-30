@@ -49,13 +49,13 @@ describe CalGroups::FindGroups do
       include_examples 'group not found'
     end
 
-    context 'when response metadata reports failure' do
+    context 'on unspecified failure' do
       before do
         proxy.override_json do |json|
           json['WsFindGroupsResults']['resultMetadata']['success'] = 'F'
         end
       end
-      it 'should return an error' do
+      it 'returns an error' do
         expect(name_available_response[:statusCode]).to eq 503
       end
     end

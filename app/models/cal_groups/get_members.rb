@@ -11,12 +11,12 @@ module CalGroups
     def get_members
       handling_exceptions(qualify @group_name) do
         response = request
-        if response['WsGetMembersLiteResult']
+        if successful?(response) && response['WsGetMembersLiteResult']
           {
             members: (response['WsGetMembersLiteResult']['wsSubjects'] || [])
           }
         else
-          raise Errors::ProxyError.new('Could not parse results from CalGroups', {response: response})
+          raise Errors::ProxyError.new('Error response from CalGroups', {response: response})
         end
       end
     end

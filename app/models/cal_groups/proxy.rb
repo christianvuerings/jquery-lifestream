@@ -19,6 +19,12 @@ module CalGroups
       super.merge(uri_matching: request_url)
     end
 
+    def mock_response
+      response = super
+      response[:headers].merge!({'Content-Type' => 'text/x-json;utf-8'})
+      response
+    end
+
     def qualify(name)
       [@stem_name, name].join(':')
     end
@@ -35,25 +41,28 @@ module CalGroups
       logger.info "Fake = #{@fake}; Making request to #{request_url}"
       response = get_response(request_url, request_options)
       logger.debug "Remote server status #{response.code}, Body = #{response.body}"
-
-      if success?(response)
-        response.parsed_response
-      else
-        raise Errors::ProxyError.new('Failure response from CalGroups', {response: response})
-      end
+      response
     end
 
     def request_url
       [@settings.base_url, request_path].join('/')
     end
 
-    def success?(response)
-      if response && response.parsed_response && response.parsed_response.values
-        results = response.parsed_response.values.first
-        if (metadata = results['resultMetadata'])
-          metadata['success'] == 'T'
-        end
+    def result_code(response)
+      if (m = result_metadata response)
+        m && m['resultCode']
       end
+    end
+
+    def result_metadata(response)
+      if response && response.parsed_response && response.parsed_response.values
+        response.parsed_response.values.first['resultMetadata']
+      end
+    end
+
+    def successful?(response)
+      m = result_metadata response
+      m.present? && m['success'] == 'T'
     end
 
   end

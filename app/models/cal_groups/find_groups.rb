@@ -12,17 +12,17 @@ module CalGroups
 
     def find_group_by_name(qualified_name)
       response = request({
-          body: {
-            wsLiteObjectType: 'WsRestFindGroupsLiteRequest',
-            queryFilterType: 'FIND_BY_GROUP_NAME_EXACT',
-            groupName: qualified_name
-          },
-          method: :post
-        })
-      if response['WsFindGroupsResults']
+        body: {
+          wsLiteObjectType: 'WsRestFindGroupsLiteRequest',
+          queryFilterType: 'FIND_BY_GROUP_NAME_EXACT',
+          groupName: qualified_name
+        },
+        method: :post
+      })
+      if successful?(response) && response['WsFindGroupsResults']
         response['WsFindGroupsResults']['groupResults'] || []
       else
-        raise Errors::ProxyError.new('Could not parse results from CalGroups', {response: response})
+        raise Errors::ProxyError.new('Error response from CalGroups', {response: response})
       end
     end
 

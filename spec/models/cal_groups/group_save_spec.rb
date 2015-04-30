@@ -1,0 +1,52 @@
+describe CalGroups::GroupSave do
+  let(:stem_name) { 'edu:berkeley:app:bcourses' }
+  let(:group_name) { "site-#{random_id}" }
+  let(:proxy) { described_class.new(stem_name: stem_name, group_name: group_name, fake: fake) }
+  let(:result) { proxy.save[:response] }
+
+  after(:each) { WebMock.reset! }
+
+  context 'fake data feed' do
+    let(:fake) { true }
+
+    it 'affirms creation and returns data for created group' do
+      expect(result[:created]).to eq true
+      %w(displayExtension displayName extension idIndex name typeOfGroup uuid).each do |key|
+        expect(result[:group][key]).to be_present
+      end
+    end
+
+    context 'when group already exists' do
+      before do
+        proxy.set_response({
+          status: 500,
+          body: proxy.read_file('fixtures', 'json', 'cal_groups_group_save_already_exists.json')
+        })
+      end
+      it 'denies creation and returns minimal data' do
+        expect(result[:created]).to eq false
+        %w(extension name).each do |key|
+          expect(result[:group][key]).to be_present
+        end
+      end
+    end
+
+    context 'on unspecified failure' do
+      before do
+        proxy.override_json do |json|
+          json['WsGroupSaveLiteResult']['resultMetadata']['success'] = 'F'
+        end
+      end
+      it 'returns an error' do
+        expect(result[:statusCode]).to eq 503
+      end
+    end
+  end
+
+  context 'real data feed' do
+    let(:fake) { false }
+    it_behaves_like 'a proxy logging errors' do
+      subject { result }
+    end
+  end
+end

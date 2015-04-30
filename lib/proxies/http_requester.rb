@@ -14,6 +14,8 @@ module HttpRequester
         verify: verify_ssl?
       }.merge(additional_options)
       response = case request_type
+        when :delete
+          HTTParty.delete(url, request_options)
         when :get
           HTTParty.get(url, request_options)
         when :post

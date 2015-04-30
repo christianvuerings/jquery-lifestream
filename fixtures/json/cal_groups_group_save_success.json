@@ -1,0 +1,22 @@
+{
+  "WsGroupSaveLiteResult": {
+    "responseMetadata": {
+      "millis": "115",
+      "serverVersion": "2.2.1"
+    },
+    "resultMetadata": {
+      "resultCode": "SUCCESS_INSERTED",
+      "resultMessage": "Success for: clientVersion: 2.2.100, wsGroupToSaves: Array size: 1: [0]: WsGroupToSave[\n  wsGroupLookup=WsGroupLookup[pitGroups=[],groupName=edu:berkeley:app:bcourses:testgroup],\n  wsGroup=WsGroup[name=edu:berkeley:app:bcourses:testgroup],saveMode=...\n, actAsSubject: null, txType: NONE, paramNames: \n, params: null",
+      "success": "T"
+    },
+    "wsGroup": {
+      "displayExtension": "testgroup",
+      "displayName": "edu:berkeley:app:bCourses:testgroup",
+      "extension": "testgroup",
+      "idIndex": "19235",
+      "name": "edu:berkeley:app:bcourses:testgroup",
+      "typeOfGroup": "group",
+      "uuid": "1cc4398e7aa246af945be1157f448561"
+    }
+  }
+}
