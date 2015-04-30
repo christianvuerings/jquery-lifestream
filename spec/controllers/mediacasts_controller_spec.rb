@@ -2,7 +2,8 @@ describe MediacastsController do
 
   before { session['user_id'] = rand(99999).to_s }
 
-  # Single digit CCNs have no webcast recordings
+  # Test data has no entry with a single digit CCN. Using the ccn_sets below, we expect 'No Webcast data found' for
+  # each single digit ccn.
   let(:law_2723) { {:dept_name => 'LAW', :catalog_id => '2723', :term_yr => '2008', :term_cd => 'D', :ccn_set => [1, 49688, 2]} }
   let(:chem_101) { {:dept_name => 'CHEM', :catalog_id => '101', :term_yr => '2014', :term_cd => 'B', :ccn_set => [1, 2, 3]} }
   let(:malay_100A) { {:dept_name => 'MALAY/I', :catalog_id => '100A', :term_yr => '2014', :term_cd => 'D', :ccn_set => [85006]} }
@@ -31,9 +32,7 @@ describe MediacastsController do
           json = JSON.parse response.body
           expect(json['media']).to eq({})
         end
-      end
 
-      context 'when no Webcast recordings found' do
         it 'should pay attention to term code' do
           json = post_course chem_101
           expect(json['media']).to have(3).items

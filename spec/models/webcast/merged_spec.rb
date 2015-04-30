@@ -21,7 +21,7 @@ describe Webcast::Merged do
         expect(feed[:videos]).to be_empty
         expect(feed[:audio]).to be_empty
         expect(feed[:itunes]['audio']).to be_nil
-        expect(feed[:itunes]['audio']).to be_nil
+        expect(feed[:itunes]['video']).to be_nil
       end
     end
 

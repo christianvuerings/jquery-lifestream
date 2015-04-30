@@ -15,7 +15,7 @@ describe Webcast::CourseMedia do
   context 'when generating id according to year, term, ccn' do
     # id_per_ccn
     it 'should allow lookups by either term_cd or term name' do
-      expect(Webcast::CourseMedia.id_per_ccn(2014, 'FALL ', 1234)).to eq '2014-D-1234'
+      expect(Webcast::CourseMedia.id_per_ccn(2014, 'sPriNg ', 1234)).to eq '2014-B-1234'
       expect(Webcast::CourseMedia.id_per_ccn(2014, 'd', 1234)).to eq '2014-D-1234'
       expect(Webcast::CourseMedia.id_per_ccn(2014, 'summer', 1234)).to eq '2014-C-1234'
       expect(Webcast::CourseMedia.id_per_ccn(2014, ' C', 1234)).to eq '2014-C-1234'

@@ -2,8 +2,8 @@ module Webcast
   class CourseMedia
 
     def self.id_per_ccn(year, term, ccn)
-      term.to_s.strip!
       # Allow lookups by either term_cd or term name
+      term = term.to_s.strip
       term_cd = Berkeley::TermCodes.names[term.downcase]
       "#{year}-#{term_cd || term.upcase}-#{ccn}"
     end
