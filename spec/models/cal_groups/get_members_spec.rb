@@ -56,6 +56,17 @@ describe CalGroups::GetMembers do
       end
       include_examples 'group not found'
     end
+
+    context 'on unspecified failure' do
+      before do
+        proxy.override_json do |json|
+          json['WsGetMembersLiteResult']['resultMetadata']['success'] = 'F'
+        end
+      end
+      it 'returns an error' do
+        expect(result[:statusCode]).to eq 503
+      end
+    end
   end
 
   context 'using real data feed', testext: true do
