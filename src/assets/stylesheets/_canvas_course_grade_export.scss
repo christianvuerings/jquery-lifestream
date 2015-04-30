@@ -121,6 +121,7 @@
 
   .cc-page-course-grade-export-error-description {
     line-height: 17px;
+    margin-bottom: 8px;
   }
 
   .cc-page-course-grading-export-back-link {
@@ -140,6 +141,11 @@
 
   .cc-page-course-grading-export-error-resolution-action-container {
     float: left;
+    padding: 2px;
+  }
+
+  .cc-page-course-grading-export-muted-assignments-see-gradebook {
+    float: right;
     padding: 2px;
   }
 
