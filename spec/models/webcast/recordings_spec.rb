@@ -3,12 +3,13 @@ describe Webcast::Recordings do
   let (:webcast_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/webcast.json" }
 
   context 'a fake proxy' do
-    subject { Webcast::Recordings.new({:fake => true}) }
-
-    context 'a normal return of fake data' do
+    context 'data organized by ccn' do
+      let(:recordings) { Webcast::Recordings.new({:fake => true}).get }
       it 'should return a lot of playlists' do
-        result = subject.get
-        expect(result[:courses].keys.length).to eq 17
+        expect(recordings[:courses].keys.length).to eq 19
+        law_2723 = recordings[:courses]['2008-D-49688']
+        expect(law_2723).to_not be_nil
+        expect(law_2723[:recordings]).to have(12).items
       end
     end
   end

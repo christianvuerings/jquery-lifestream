@@ -1,19 +1,18 @@
 module Webcast
   class CourseMedia
 
-    def self.course_id(year, term, dept, catalog_id)
-      # allow lookups by either term_cd or term name
+    def self.id_per_ccn(year, term, ccn)
+      # Allow lookups by either term_cd or term name
+      term = term.to_s.strip
       term_cd = Berkeley::TermCodes.names[term.downcase]
-      if term_cd.blank?
-        term_cd = term
-      end
-      "#{year}-#{term_cd}-#{dept}-#{catalog_id}"
+      "#{year}-#{term_cd || term.upcase}-#{ccn}"
     end
 
-    def initialize(year, term, dept, catalog_id)
-      dept = decode_slash(dept)
-      catalog_id = decode_slash(catalog_id)
-      @id = self.class.course_id(year, term, dept, catalog_id)
+    def initialize(year, term, ccn_list, options = {})
+      @year = year
+      @term = term
+      @ccn_list = ccn_list
+      @options = options
     end
 
     # Replaces '_slash_' with '/' since front-end encodes slashes. See CLC-4279.
@@ -23,31 +22,41 @@ module Webcast
     end
 
     def get_feed
-      playlist = get_playlist
-      if !playlist[:proxy_error_message].blank? || !playlist[:body].blank?
+      return {} unless Settings.features.videos
+      playlist_data_hash = get_playlist_hash
+      error_message = playlist_data_hash[:proxy_error_message]
+      unless error_message.blank? && playlist_data_hash[:body].blank?
         return {
-          :proxyErrorMessage => playlist[:proxy_error_message] || playlist[:body]
+          :proxyErrorMessage => error_message || playlist_data_hash[:body]
         }
       end
-      videos = get_videos_as_json(playlist)
-      audio = get_audio_as_json(playlist)
-      itunes = get_itunes_as_json(playlist)
-      videos.merge(audio).merge(itunes)
+      feed = {}
+      @ccn_list.each do |ccn|
+        key = Webcast::CourseMedia.id_per_ccn(@year, @term, ccn)
+        data = playlist_data_hash[ccn]
+        if data
+          videos = get_videos_as_json data
+          audio = get_audio_as_json data
+          itunes = get_itunes_as_json data
+          feed[key] = videos.merge(audio).merge(itunes)
+        else
+          feed[key] = Webcast::Recordings::ERRORS
+        end
+      end
+      feed
     end
 
-    def get_playlist
-      proxy = Webcast::Recordings.new
-      recordings = proxy.get
+    def get_playlist_hash
+      playlist_hash = {}
+      recordings = Webcast::Recordings.new(@options).get
       if recordings && recordings[:courses]
-        playlist = recordings[:courses][@id]
-        if playlist.blank?
-          Webcast::Recordings::ERRORS
-        else
-          playlist
+        @ccn_list.each do |ccn|
+          key = Webcast::CourseMedia.id_per_ccn(@year, @term, ccn)
+          playlist = recordings[:courses][key]
+          playlist_hash[ccn] = playlist unless playlist.blank?
         end
-      else
-        recordings
       end
+      playlist_hash
     end
 
     def get_itunes_url(id)
@@ -64,7 +73,7 @@ module Webcast
     end
 
     def get_videos_as_json(playlist)
-      if !Settings.features.videos || playlist[:recordings].blank? || playlist[:audio_only]
+      if playlist[:recordings].blank? || playlist[:audio_only]
         {
           :videos => []
         }
@@ -76,11 +85,12 @@ module Webcast
     end
 
     def get_audio_as_json(playlist)
-      get_audio(playlist[:audio_rss])
+      get_audio playlist[:audio_rss]
     end
 
     def get_audio(audio_rss)
-      Webcast::Audio.new({:audio_rss => audio_rss}).get
+      audio_options = @options.merge({:audio_rss => audio_rss})
+      Webcast::Audio.new(audio_options).get
     end
 
   end

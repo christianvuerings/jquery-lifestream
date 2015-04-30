@@ -2,37 +2,43 @@ describe Canvas::WebcastRecordings do
 
   describe '#get_feed' do
     let(:canvas_course_id) { rand(99999) }
-    let(:media_feed_empty) { JSON.parse(File.read(Rails.root.join('public/dummy/json/media_none.json'))) }
-    let(:media_feed_full) { JSON.parse(File.read(Rails.root.join('public/dummy/json/media.json'))) }
     before do
       allow_any_instance_of(Canvas::CourseSections).to receive(:sections_list).and_return(
         double(body: canvas_course_sections_list.to_json, status: 200)
       )
     end
-    subject { Canvas::WebcastRecordings.new(course_id: canvas_course_id).get_feed }
+
+    subject { Canvas::WebcastRecordings.new({course_id: canvas_course_id, fake: true}) }
+
     context 'when the Canvas course site maps to campus class sections' do
       let(:canvas_course_sections_list) do
         [
           {'id' => rand(99999).to_s, 'name' => 'a', 'course_id' => canvas_course_id, 'sis_section_id' => nil},
-          {'id' => rand(99999).to_s, 'name' => 'b', 'course_id' => canvas_course_id, 'sis_section_id' => 'SEC:2013-B-7366'},
-          {'id' => rand(99999).to_s, 'name' => 'c', 'course_id' => canvas_course_id, 'sis_section_id' => 'SEC:2012-B-16171'}
+          {'id' => rand(99999).to_s, 'name' => 'b', 'course_id' => canvas_course_id, 'sis_section_id' => 'SEC:2009-B-49982'},
+          {'id' => rand(99999).to_s, 'name' => 'c', 'course_id' => canvas_course_id, 'sis_section_id' => 'SEC:2009-B-81853'}
         ]
       end
-      before do
-        expect(Webcast::CourseMedia).to receive(:new).at_least(:once) do |yr, cd, dept, catid|
-          expect((yr == '2013' && cd == 'B' && dept == 'BIOLOGY' && catid == '1A') ||
-            (yr == '2012' && cd == 'B' && dept == 'COG SCI')).to be_truthy
-          # 2013-B-7366
-          if yr == '2013' && cd == 'B' && dept == 'BIOLOGY' && catid == '1A'
-            double(get_feed: media_feed_empty)
-          # 2012-B-16171
-          elsif yr == '2012' && cd == 'B' && dept == 'COG SCI'
-            double(get_feed: media_feed_full)
-          end
-        end
+
+      it 'contains two sets of recordings' do
+        feed = subject.get_feed
+        expect(feed[:system_status]['is_sign_up_active']).to be true
+        expect(feed[:rooms]).to have(26).items
+        expect(feed[:media]).to have(2).items
+
+        law_27171 = feed[:media]['2009-B-49982']
+        expect(law_27171[:audio]).to have(13).items
+        expect(law_27171[:audio][12][:title]).to match('Lecture 1')
+        expect(law_27171[:itunes][:audio]).to end_with('354822513')
+        expect(law_27171[:itunes][:video]).to end_with('354822509')
+
+        sociol_150A = feed[:media]['2009-B-81853']
+        expect(law_27171[:audio]).to have_at_least(10).items
+        expect(law_27171[:audio][12][:title]).to_not be_nil
+        expect(law_27171[:itunes][:audio]).to_not be_nil
+        expect(law_27171[:itunes][:video]).to_not be_nil
       end
-      it { should eq media_feed_full }
     end
+
     context 'when the Canvas site does not map to any campus class sections' do
       let(:canvas_course_sections_list) do
         [
@@ -41,9 +47,10 @@ describe Canvas::WebcastRecordings do
         ]
       end
       it 'is empty' do
-        expect(subject[:audio]).to be_blank
-        expect(subject[:itunes][:audio]).to be_blank
-        expect(subject[:itunes][:video]).to be_blank
+        feed = subject.get_feed
+        expect(feed[:system_status]['is_sign_up_active']).to be true
+        expect(feed[:rooms]).to have(26).items
+        expect(feed[:media]).to be_empty
       end
     end
   end

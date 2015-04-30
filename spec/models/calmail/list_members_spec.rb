@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Calmail::ListMembers do
-  subject { Calmail::ListMembers.new(fake: true) }
+  subject { described_class.new(fake: true) }
   let(:list_name) { "site-#{random_id}" }
 
   describe '#list_members' do

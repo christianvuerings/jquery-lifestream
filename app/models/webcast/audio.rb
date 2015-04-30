@@ -1,9 +1,9 @@
 module Webcast
-  class Audio < BaseProxy
+  class Audio < Proxy
 
     include ClassLogger, SafeJsonParser, DatedFeed
 
-    APP_ID = "Webcasts - Audio"
+    APP_ID = 'Webcasts - Audio'
 
     def initialize(options = {})
       @audio_rss = options[:audio_rss]
