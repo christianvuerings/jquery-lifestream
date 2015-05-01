@@ -42,12 +42,6 @@ module Canvas
       end
     end
 
-    def set_course_user_page_total(page_total)
-      @course_user_page_total = page_total.to_i
-      total_steps = page_total.to_i
-      background_job_set_total_steps(total_steps)
-    end
-
     def resolve_issues(enable_grading_scheme = false, unmute_assignments = false)
       if enable_grading_scheme
         course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
