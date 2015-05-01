@@ -141,9 +141,11 @@
     };
 
     $scope.resolveIssues = function() {
+      $scope.resolvingCourseState = true;
       canvasCourseGradeExportFactory.resolveIssues($scope.canvasCourseId, $scope.enableDefaultGradingScheme, $scope.unmuteAllAssignments)
         .success(function(data) {
           if (data.status && data.status === 'Resolved') {
+            $scope.resolvingCourseState = false;
             $scope.switchToSelection();
           } else {
             $scope.appState = 'error';
