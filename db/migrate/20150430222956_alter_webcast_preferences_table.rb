@@ -2,6 +2,9 @@ class AlterWebcastPreferencesTable < ActiveRecord::Migration
   def change
 
     remove_index(:webcast_preferences, {name: 'webcast_preferences_unique_index'})
+    remove_index(:webcast_preferences, :year)
+    remove_index(:webcast_preferences, :term_cd)
+    remove_index(:webcast_preferences, :ccn)
     drop_table :webcast_preferences
 
     create_table :webcast_course_site_log do |t|
