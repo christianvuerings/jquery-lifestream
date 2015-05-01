@@ -11,16 +11,9 @@ module Canvas
     GRADE_TYPES = ['final','current']
 
     def initialize(options = {})
-      default_options = {
-        :enable_grading_scheme => false,
-        :unmute_assignments => false
-      }
-      options.reverse_merge!(default_options)
-
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
       @enable_grading_scheme = options[:enable_grading_scheme]
-      @unmute_assignments = options[:unmute_assignments]
       @canvas_official_course = Canvas::OfficialCourse.new(:canvas_course_id => @canvas_course_id)
     end
 
@@ -52,7 +45,6 @@ module Canvas
     def set_course_user_page_total(page_total)
       @course_user_page_total = page_total.to_i
       total_steps = page_total.to_i
-      total_steps += 1 if @enable_grading_scheme
       background_job_set_total_steps(total_steps)
     end
 
