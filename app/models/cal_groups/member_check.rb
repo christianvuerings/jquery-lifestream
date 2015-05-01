@@ -1,14 +1,14 @@
 module CalGroups
-  class MemberGet < Member
+  class MemberCheck < Member
 
-    def get
+    def check
       handling_exceptions(request_path) do
         response = request
         if successful?(response)
           {
             isMember: (result_code(response) == 'IS_MEMBER'),
-            group: response['WsHasMemberLiteResult']['wsGroup'],
-            member: response['WsHasMemberLiteResult']['wsSubject']
+            group: parse_group(response['WsHasMemberLiteResult']['wsGroup']),
+            member: parse_member(response['WsHasMemberLiteResult']['wsSubject'])
           }
         else
           raise Errors::ProxyError.new('Error response from CalGroups', {response: response})
@@ -19,7 +19,7 @@ module CalGroups
     private
 
     def mock_json
-      read_file('fixtures', 'json', 'cal_groups_member_get.json')
+      read_file('fixtures', 'json', 'cal_groups_member_check.json')
     end
 
   end

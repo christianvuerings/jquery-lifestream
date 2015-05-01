@@ -1,6 +1,8 @@
+include CalGroupsHelperModule
+
 describe CalGroups::FindGroups do
   let(:stem_name) { 'edu:berkeley:app:bcourses' }
-  let(:group_name) { "site-#{random_id}" }
+  let(:group_name) { 'testgroup' }
   let(:qualified_group_name) { [stem_name, group_name].join(':') }
 
   let(:proxy) { CalGroups::FindGroups.new(stem_name: stem_name, fake: fake) }
@@ -13,9 +15,7 @@ describe CalGroups::FindGroups do
   shared_examples 'group found' do
     it 'returns data for a single group' do
       expect(find_group).to have(1).item
-      %w(displayExtension displayName extension idIndex name typeOfGroup uuid).each do |key|
-        expect(find_group.first[key]).to be_present
-      end
+      expect_valid_group_data(find_group.first)
     end
 
     it 'reports group name as unavailable' do
@@ -65,7 +65,6 @@ describe CalGroups::FindGroups do
     let(:fake) { false }
 
     context 'a known test group' do
-      let(:group_name) { 'testgroup' }
       include_examples 'group found'
     end
 
