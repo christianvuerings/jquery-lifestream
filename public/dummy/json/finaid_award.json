@@ -1,0 +1,231 @@
+{
+  "finaidAwards": {
+    "terms": [
+      {
+        "startTerm": "Fall",
+        "startTermYear": "2014",
+        "endTerm": "Spring",
+        "endTermYear": "2015",
+        "totalOffered": 60000,
+        "totalAccepted": 43500,
+        "categories": [
+          {
+            "title": "Gift Aid",
+            "total": 16000,
+            "link": {
+              "title": "Add additional resource",
+              "type": "add",
+              "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/h/?tab=DEFAULT"
+            },
+            "items": [
+              {
+                "title": "Federal Pell Grant (for Fall 2014)",
+                "amount": 2500,
+                "transaction": "GA0009436703",
+                "servicer": {
+                  "website": {
+                    "title": "Great Lakes Higher Education Corporation & Affiliates",
+                    "url": "https://home.mygreatlakes.org"
+                  },
+                  "phone": "(800) 236-4300"
+                },
+                "type": "Financial Aid and Scholarships",
+                "status": "Confirmed",
+                "requirements": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, ante eget volutpat suscipit, arcu lacus gravida ligula, sit amet suscipit metus elit ac quam. Mauris mauris ex, vestibulum id pretium ac, pretium ac leo. Donec tristique tortor malesuada dolor posuere, sed sagittis ante molestie. Vestibulum et accumsan mauris."
+              },
+              {
+                "title": "Federal Pell Grant (for Fall 2015)",
+                "amount": 2500,
+                "transaction": "GA0009436704",
+                "status": "Estimated",
+                "type": "Grant"
+              },
+              {
+                "title": "Wyzant College Scholarship",
+                "amount": 10000,
+                "transaction": "GA0009436705",
+                "status": "Estimated",
+                "type": "Grant"
+              },
+              {
+                "title": "Hispanic College Fund",
+                "amount": 1000,
+                "transaction": "GA0009436706",
+                "status": "Confirmed",
+                "type": "Scholarships"
+              }
+            ]
+          },
+          {
+            "title": "Loan",
+            "total": 27600,
+            "link": {
+              "title": "Revise loan amounts",
+              "type": "regular",
+              "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_PROTO_FL.UC_FA_AWD_PROTO_FL.GBL?ucFrom=CalCentral&ucFromLink=https://calcentral.berkeley.edu"
+            },
+            "items": [
+              {
+                "title": "Federal Direct Subsidized Loan (For Fall 2014)",
+                "type": "Subsidized Loan",
+                "offered": 7000,
+                "amount": 7000,
+                "min": 3500,
+                "transaction": "OR0009436704",
+                "fees": "2.3% of loan total",
+                "disbursed": "partial",
+                "servicer": {
+                  "website": {
+                    "title": "Great Lakes Higher Education Corporation & Affiliates",
+                    "url": "https://home.mygreatlakes.org"
+                  },
+                  "phone": "(800) 236-4300"
+                },
+                "counseling": [
+                  {
+                    "title": "Entrance counseling",
+                    "completed": true,
+                    "completedDate": "2015-04-15T00:00:00-07:00"
+                  },
+                  {
+                    "title": "Exit counseling",
+                    "completed": true,
+                    "completedDate": "2015-04-20T00:00:00-07:00"
+                  }
+                ],
+                "requirements": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, ante eget volutpat suscipit, arcu lacus gravida ligula, sit amet suscipit metus elit ac quam. Mauris mauris ex, vestibulum id pretium ac, pretium ac leo. Donec tristique tortor malesuada dolor posuere, sed sagittis ante molestie. Vestibulum et accumsan mauris."
+              },
+              {
+                "title": "Federal Direct Subsidized Loan (For Fall 2015)",
+                "type": "Subsidized Loan",
+                "offered": 7000,
+                "amount": 7000,
+                "min": 2000,
+                "transaction": "OR0009436704",
+                "disbursed": "partial"
+              },
+              {
+                "title": "Federal Direct Parent Loan",
+                "type": "Unsubsidized Parental Loan",
+                "offered": 10000,
+                "amount": 0,
+                "min": 1500,
+                "transaction": "OR0009436705",
+                "disbursed": "yes"
+              },
+              {
+                "title": "Great Lakes Educational Loan",
+                "type": "Private Loan",
+                "offered": 18000,
+                "amount": 11500,
+                "min": 1000,
+                "transaction": "OR0009436703",
+                "disbursed": "no"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "startTerm": "Fall",
+        "startTermYear": "2013",
+        "endTerm": "Spring",
+        "endTermYear": "2014",
+        "totalOffered": 40000,
+        "totalAccepted": 26500,
+        "categories": [
+          {
+            "title": "Gift Aid",
+            "total": 16000,
+            "link": {
+              "title": "Add additional resource",
+              "type": "add",
+              "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psp/bcsdev/EMPLOYEE/HRMS/h/?tab=DEFAULT"
+            },
+            "items": [
+              {
+                "title": "Federal Pell Grant (for Fall 2013)",
+                "amount": 2500,
+                "transaction": "GA0009436703",
+                "servicer": {
+                  "website": {
+                    "title": "Great Lakes Higher Education Corporation & Affiliates",
+                    "url": "https://home.mygreatlakes.org"
+                  },
+                  "phone": "(800) 236-4300"
+                },
+                "type": "Financial Aid and Scholarships",
+                "status": "Confirmed",
+                "requirements": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, ante eget volutpat suscipit, arcu lacus gravida ligula, sit amet suscipit metus elit ac quam. Mauris mauris ex, vestibulum id pretium ac, pretium ac leo. Donec tristique tortor malesuada dolor posuere, sed sagittis ante molestie. Vestibulum et accumsan mauris."
+              },
+              {
+                "title": "Federal Pell Grant (for Fall 2014)",
+                "amount": 2500,
+                "transaction": "GA0009436704",
+                "status": "Estimated",
+                "type": "Grant"
+              },
+              {
+                "title": "Wyzant College Scholarship",
+                "amount": 10000,
+                "transaction": "GA0009436705",
+                "status": "Estimated",
+                "type": "Grant"
+              }
+            ]
+          },
+          {
+            "title": "Loan",
+            "total": 27600,
+            "link": {
+              "title": "Revise loan amounts",
+              "type": "regular",
+              "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_PROTO_FL.UC_FA_AWD_PROTO_FL.GBL?ucFrom=CalCentral&ucFromLink=https://calcentral.berkeley.edu"
+            },
+            "items": [
+              {
+                "title": "Federal Direct Subsidized Loan (For Fall 2014)",
+                "type": "Subsidized Loan",
+                "offered": 7000,
+                "amount": 7000,
+                "min": 3500,
+                "transaction": "OR0009436704",
+                "fees": "2.3% of loan total",
+                "disbursed": "partial",
+                "servicer": {
+                  "website": {
+                    "title": "Great Lakes Higher Education Corporation & Affiliates",
+                    "url": "https://home.mygreatlakes.org"
+                  },
+                  "phone": "(800) 236-4300"
+                },
+                "counseling": [
+                  {
+                    "title": "Entrance counseling",
+                    "completed": true,
+                    "completedDate": "2015-04-15T00:00:00-07:00"
+                  },
+                  {
+                    "title": "Exit counseling",
+                    "completed": true,
+                    "completedDate": "2015-04-20T00:00:00-07:00"
+                  }
+                ],
+                "requirements": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, ante eget volutpat suscipit, arcu lacus gravida ligula, sit amet suscipit metus elit ac quam. Mauris mauris ex, vestibulum id pretium ac, pretium ac leo. Donec tristique tortor malesuada dolor posuere, sed sagittis ante molestie. Vestibulum et accumsan mauris."
+              },
+              {
+                "title": "Federal Direct Subsidized Loan (For Fall 2015)",
+                "type": "Subsidized Loan",
+                "offered": 7000,
+                "amount": 7000,
+                "min": 2000,
+                "transaction": "OR0009436704",
+                "disbursed": "partial"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
