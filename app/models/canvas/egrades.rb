@@ -7,6 +7,7 @@ module Canvas
   class Egrades
     extend Cache::Cacheable
     include Canvas::BackgroundJob
+    include ClassLogger
 
     GRADE_TYPES = ['final','current']
 
@@ -45,6 +46,7 @@ module Canvas
       if enable_grading_scheme
         course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
         course_settings.set_grading_scheme
+        logger.warn("Enabled default grading scheme for Canvas Course ID #{@canvas_course_id}")
       end
       if unmute_assignments
         unmute_course_assignments(@canvas_course_id)
@@ -121,8 +123,10 @@ module Canvas
     def unmute_course_assignments(canvas_course_id)
       worker = Canvas::CourseAssignments.new(:course_id => @canvas_course_id)
       muted_assignments = worker.muted_assignments
+      logger.warn("Unmuting #{muted_assignments.count} assignments for Canvas Course ID #{@canvas_course_id}")
       muted_assignments.each do |assignment|
         worker.unmute_assignment(assignment['id'])
+        logger.warn("Unmuted Assignment ID #{assignment['id']} for Canvas Course ID #{@canvas_course_id}")
       end
     end
 
