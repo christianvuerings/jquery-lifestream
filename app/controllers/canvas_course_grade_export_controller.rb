@@ -16,10 +16,15 @@ class CanvasCourseGradeExportController < ApplicationController
 
   # POST /api/academics/canvas/egrade_export/prepare/:canvas_course_id.json
   def prepare_grades_cache
-    egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :enable_grading_scheme => !!params['enableGradingScheme'], :unmute_assignments => !!params['unmuteAssignments'])
-    egrades_worker.background_job_initialize
-    egrades_worker.background.canvas_course_student_grades(true)
-    render json: { jobRequestStatus: 'Success', jobId: egrades_worker.background_job_id }.to_json
+    egrades.background_job_initialize
+    egrades.background.canvas_course_student_grades(true)
+    render json: { jobRequestStatus: 'Success', jobId: egrades.background_job_id }.to_json
+  end
+
+  # POST /api/academics/canvas/egrade_export/resolve/:canvas_course_id.json?enableGradingScheme=1&unmuteAssignments=0
+  def resolve_issues
+    egrades.resolve_issues(!!params['enableGradingScheme'], !!params['unmuteAssignments'])
+    render json: { status: 'Resolved' }
   end
 
   # GET /api/academics/canvas/egrade_export/status/:canvas_course_id.json?jobId=Canvas::BackgroundJob.1383330151057-67f4b934525501cb
@@ -36,8 +41,7 @@ class CanvasCourseGradeExportController < ApplicationController
     raise Errors::BadRequestError, "ccn required" unless params['ccn']
     raise Errors::BadRequestError, "type required" unless params['type']
     raise Errors::BadRequestError, "invalid value for 'type' parameter" unless Canvas::Egrades::GRADE_TYPES.include?(params['type'])
-    egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
-    official_student_grades = egrades_worker.official_student_grades_csv(params['term_cd'], params['term_yr'], params['ccn'], params['type'])
+    official_student_grades = egrades.official_student_grades_csv(params['term_cd'], params['term_yr'], params['ccn'], params['type'])
     term_season = {
       'B' => 'Spring',
       'C' => 'Summer',
@@ -49,8 +53,7 @@ class CanvasCourseGradeExportController < ApplicationController
   end
 
   def export_options
-    egrades_worker = Canvas::Egrades.new(:canvas_course_id => canvas_course_id.to_i)
-    export_options_json = egrades_worker.export_options.to_json
+    export_options_json = egrades.export_options.to_json
     render json: export_options_json
   end
 
@@ -68,6 +71,10 @@ class CanvasCourseGradeExportController < ApplicationController
   end
 
   private
+
+  def egrades
+    @egrades_worker ||= Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
+  end
 
   def canvas_course
     canvas_course = Canvas::Course.new(:canvas_course_id => canvas_course_id.to_i)

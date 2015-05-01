@@ -31,6 +31,16 @@ describe CanvasCourseGradeExportController do
       allow_any_instance_of(Canvas::Egrades).to receive(:background_job_id).and_return(background_job_id)
     end
 
+    it_should_behave_like 'an endpoint' do
+      let(:make_request) { post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :format => :csv }
+      let(:error_text) { 'Something went wrong' }
+      before { allow_any_instance_of(Canvas::Egrades).to receive(:background_job_initialize).and_raise(RuntimeError, error_text) }
+    end
+
+    it_should_behave_like 'an authenticated endpoint' do
+      let(:make_request) { post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :format => :csv }
+    end
+
     it 'makes call to load canvas course student grades with forced cacheing' do
       expect(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).with(true).and_return(nil)
       allow_any_instance_of(Canvas::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
@@ -41,28 +51,6 @@ describe CanvasCourseGradeExportController do
       expect(json_response['jobRequestStatus']).to eq 'Success'
     end
 
-    it 'supports enableGradingScheme option' do
-      allow(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).with(true).and_return(nil)
-      fake_canvas_egrades = double
-      allow(fake_canvas_egrades).to receive(:background_job_initialize).and_return(nil)
-      allow(fake_canvas_egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
-      allow(fake_canvas_egrades).to receive(:background_job_id).and_return(background_job_id)
-      expect(Canvas::Egrades).to receive(:new).with(:canvas_course_id => canvas_course_id.to_i, :enable_grading_scheme => true, :unmute_assignments => false).and_return(fake_canvas_egrades)
-      post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :enableGradingScheme => 1, :format => :csv
-      expect(response.status).to eq(200)
-    end
-
-    it 'supports unmuteAssignments option' do
-      allow(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).with(true).and_return(nil)
-      fake_canvas_egrades = double
-      allow(fake_canvas_egrades).to receive(:background_job_initialize).and_return(nil)
-      allow(fake_canvas_egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
-      allow(fake_canvas_egrades).to receive(:background_job_id).and_return(background_job_id)
-      expect(Canvas::Egrades).to receive(:new).with(:canvas_course_id => canvas_course_id.to_i, :enable_grading_scheme => false, :unmute_assignments => true).and_return(fake_canvas_egrades)
-      post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :unmuteAssignments => 1, :format => :csv
-      expect(response.status).to eq(200)
-    end
-
     it 'returns background job id' do
       allow_any_instance_of(Canvas::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
       post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :format => :csv
@@ -71,6 +59,38 @@ describe CanvasCourseGradeExportController do
       expect(json_response).to be_an_instance_of Hash
       expect(json_response['jobRequestStatus']).to eq 'Success'
       expect(json_response['jobId']).to eq background_job_id
+    end
+  end
+
+  describe 'when resolving issues with course site state related to grade export' do
+    before { allow_any_instance_of(Canvas::Egrades).to receive(:resolve_issues).and_return(nil) }
+
+    it_should_behave_like 'an endpoint' do
+      let(:make_request) { post :resolve_issues, canvas_course_id: 'embedded', :enableGradingScheme => 1, :format => :csv }
+      let(:error_text) { 'Something went wrong' }
+      before { allow_any_instance_of(Canvas::Egrades).to receive(:resolve_issues).and_raise(RuntimeError, error_text) }
+    end
+
+    it_should_behave_like 'an authenticated endpoint' do
+      let(:make_request) { post :resolve_issues, canvas_course_id: 'embedded', :enableGradingScheme => 1, :format => :csv }
+    end
+
+    it 'supports enableGradingScheme option' do
+      expect_any_instance_of(Canvas::Egrades).to receive(:resolve_issues).with(true, false)
+      post :resolve_issues, :canvas_course_id => canvas_course_id, :enableGradingScheme => 1, :format => :csv
+      expect(response.status).to eq(200)
+      json_response = JSON.parse(response.body)
+      expect(json_response).to be_an_instance_of Hash
+      expect(json_response['status']).to eq 'Resolved'
+    end
+
+    it 'supports unmuteAssignments option' do
+      expect_any_instance_of(Canvas::Egrades).to receive(:resolve_issues).with(false, true)
+      post :resolve_issues, :canvas_course_id => canvas_course_id, :unmuteAssignments => 1, :format => :csv
+      expect(response.status).to eq(200)
+      json_response = JSON.parse(response.body)
+      expect(json_response).to be_an_instance_of Hash
+      expect(json_response['status']).to eq 'Resolved'
     end
   end
 
