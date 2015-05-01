@@ -36,7 +36,7 @@
     <div data-ng-controller="ApiTestController" data-ng-show="apiTest.enabled">
       <h3>Api Test</h3>
       <form class="api-test-form" data-ng-submit="runApiTest()">
-        <button class="cc-button cc-button-blue" id="cc-settings-run-api-test-submit" data-ng-disabled="apiTest.running" type="submit">Run test</button>
+        <button class="cc-button cc-button-blue" data-ng-disabled="apiTest.running" type="submit">Run test</button>
         <div class="cc-settings-section" data-ng-show="apiTest.showTests">
           <ul class="cc-settings-apitest-list">
             <li data-ng-class="{'cc-settings-apitest-failed': (route.status == 'failed'), 'cc-settings-apitest-success': (route.status == 'success')}"
