@@ -13,7 +13,6 @@ module Canvas
     def initialize(options = {})
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
-      @enable_grading_scheme = options[:enable_grading_scheme]
       @canvas_official_course = Canvas::OfficialCourse.new(:canvas_course_id => @canvas_course_id)
     end
 
