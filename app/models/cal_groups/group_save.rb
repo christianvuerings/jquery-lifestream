@@ -14,15 +14,9 @@ module CalGroups
           on_error: {rescue_status: 500}
         })
         if successful?(response) && response.code == 201
-          {
-            created: true,
-            group: response['WsGroupSaveLiteResult']['wsGroup']
-          }
+          build_response(response, true)
         elsif response.code == 500 && result_code(response) == 'GROUP_ALREADY_EXISTS'
-          {
-            created: false,
-            group: response['WsGroupSaveLiteResult']['wsGroup']
-          }
+          build_response(response, false)
         else
           raise Errors::ProxyError.new('Error response from CalGroups', {response: response})
         end
@@ -30,6 +24,13 @@ module CalGroups
     end
 
     private
+
+    def build_response(response, created)
+      {
+        created: created,
+        group: parse_group(response['WsGroupSaveLiteResult']['wsGroup'])
+      }
+    end
 
     def mock_json
       read_file('fixtures', 'json', 'cal_groups_group_save_success.json')

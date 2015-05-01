@@ -1,9 +1,11 @@
-describe CalGroups::MemberGet do
+include CalGroupsHelperModule
+
+describe CalGroups::MemberCheck do
   let(:stem_name) { 'edu:berkeley:app:bcourses' }
   let(:group_name) { "site-#{random_id}" }
   let(:member_id) { random_id }
   let(:proxy) { described_class.new(stem_name: stem_name, group_name: group_name, member_id: member_id, fake: fake) }
-  let(:result) { proxy.get[:response] }
+  let(:result) { proxy.check[:response] }
 
   after(:each) { WebMock.reset! }
 
@@ -15,12 +17,8 @@ describe CalGroups::MemberGet do
 
   shared_examples 'verbose response' do
     it 'includes member and group data' do
-      %w(displayExtension displayName extension idIndex name typeOfGroup uuid).each do |key|
-        expect(result[:group][key]).to be_present
-      end
-      %w(id name resultCode sourceId success).each do |key|
-        expect(result[:member][key]).to be_present
-      end
+      expect_valid_group_data(result[:group])
+      expect_valid_member_data(result[:member])
     end
   end
 

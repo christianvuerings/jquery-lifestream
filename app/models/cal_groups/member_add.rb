@@ -9,8 +9,8 @@ module CalGroups
         if successful?(response)
           {
             added: (result_code(response) == 'SUCCESS'),
-            group: response['WsAddMemberLiteResult']['wsGroupAssigned'],
-            member: response['WsAddMemberLiteResult']['wsSubject']
+            group: parse_group(response['WsAddMemberLiteResult']['wsGroupAssigned']),
+            member: parse_member(response['WsAddMemberLiteResult']['wsSubject'])
           }
         else
           raise Errors::ProxyError.new('Error response from CalGroups', {response: response})

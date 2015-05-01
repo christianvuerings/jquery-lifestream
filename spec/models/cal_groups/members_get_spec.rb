@@ -1,9 +1,11 @@
-describe CalGroups::GetMembers do
+include CalGroupsHelperModule
+
+describe CalGroups::MembersGet do
   let(:stem_name) { 'edu:berkeley:app:bcourses' }
   let(:group_name) { "site-#{random_id}" }
 
-  let(:proxy) { CalGroups::GetMembers.new(stem_name: stem_name, group_name: group_name, fake: fake) }
-  let(:result) { proxy.get_members[:response] }
+  let(:proxy) { described_class.new(stem_name: stem_name, group_name: group_name, fake: fake) }
+  let(:result) { proxy.get[:response] }
 
   after(:each) { WebMock.reset! }
 
@@ -11,17 +13,16 @@ describe CalGroups::GetMembers do
     it 'returns data for multiple members' do
       expect(result[:members]).to_not be_empty
       result[:members].each do |member|
-        expect(member['id']).to be_present
-        expect(member['resultCode']).to eq 'SUCCESS'
-        expect(member['sourceId']).to eq 'ldap'
-        expect(member['success']).to eq 'T'
+        expect(member[:id]).to be_present
       end
+      expect_valid_group_data(result[:group])
     end
   end
 
   shared_examples 'no members found' do
     it 'returns an empty dataset' do
       expect(result[:members]).to be_empty
+      expect_valid_group_data(result[:group])
     end
   end
 

@@ -21,8 +21,24 @@ module CalGroups
 
     def mock_response
       response = super
-      response[:headers].merge!({'Content-Type' => 'text/x-json;utf-8'})
+      response[:headers].merge!({'Content-Type' => 'text/x-json;charset=UTF-8'})
       response
+    end
+
+    def parse_group(group)
+      {
+        index: group['idIndex'],
+        name: group['extension'],
+        qualifiedName: group['name'],
+        uuid: group['uuid']
+      }
+    end
+
+    def parse_member(member)
+      {
+        id: member['id'],
+        name: member['name']
+      }
     end
 
     def qualify(name)

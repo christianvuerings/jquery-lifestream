@@ -1,3 +1,5 @@
+include CalGroupsHelperModule
+
 describe CalGroups::GroupSave do
   let(:stem_name) { 'edu:berkeley:app:bcourses' }
   let(:group_name) { "site-#{random_id}" }
@@ -11,9 +13,7 @@ describe CalGroups::GroupSave do
 
     it 'affirms creation and returns data for created group' do
       expect(result[:created]).to eq true
-      %w(displayExtension displayName extension idIndex name typeOfGroup uuid).each do |key|
-        expect(result[:group][key]).to be_present
-      end
+      expect_valid_group_data(result[:group])
     end
 
     context 'when group already exists' do
@@ -25,9 +25,8 @@ describe CalGroups::GroupSave do
       end
       it 'denies creation and returns minimal data' do
         expect(result[:created]).to eq false
-        %w(extension name).each do |key|
-          expect(result[:group][key]).to be_present
-        end
+        expect(result[:group][:qualifiedName]).to be_present
+        expect(result[:group][:name]).to be_present
       end
     end
 

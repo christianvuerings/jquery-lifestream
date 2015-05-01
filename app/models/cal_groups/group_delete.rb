@@ -7,7 +7,7 @@ module CalGroups
         if successful?(response) && response['WsGroupDeleteLiteResult']
           {
             deleted: (result_code(response) == 'SUCCESS'),
-            group: response['WsGroupDeleteLiteResult']['wsGroup']
+            group: parse_group(response['WsGroupDeleteLiteResult']['wsGroup'])
           }
         else
           raise Errors::ProxyError.new('Error response from CalGroups', {response: response})

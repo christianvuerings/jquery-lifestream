@@ -20,7 +20,11 @@ module CalGroups
         method: :post
       })
       if successful?(response) && response['WsFindGroupsResults']
-        response['WsFindGroupsResults']['groupResults'] || []
+        if (groups = response['WsFindGroupsResults']['groupResults'])
+          groups.map { |group| parse_group group }
+        else
+          []
+        end
       else
         raise Errors::ProxyError.new('Error response from CalGroups', {response: response})
       end
