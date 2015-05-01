@@ -51,26 +51,6 @@ describe Canvas::Egrades do
 
   it_should_behave_like 'a background job worker'
 
-  context "when setting the course user page total" do
-    context "when default grading scheme enable option specified" do
-      subject { Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :enable_grading_scheme => true) }
-      it "sets total steps to reflect grading scheme step plus number of pages" do
-        subject.background_job_initialize
-        subject.set_course_user_page_total('5')
-        subject.background_job_complete_step('step 1')
-        report = subject.background_job_report
-        expect(report[:percentComplete]).to eq 0.17
-      end
-    end
-    it "sets total steps to number of pages specified" do
-      subject.background_job_initialize
-      subject.set_course_user_page_total('5')
-      subject.background_job_complete_step('step 1')
-      report = subject.background_job_report
-      expect(report[:percentComplete]).to eq 0.2
-    end
-  end
-
   context "when serving official student grades csv" do
     before { allow(subject).to receive(:official_student_grades).with('C', '2014', '7309').and_return(official_student_grades_list) }
     it "raises error when called with invalid type argument" do
@@ -167,74 +147,36 @@ describe Canvas::Egrades do
     end
   end
 
-  context "when preparing downloads" do
-    let(:course_settings) do
-      {
-        'grading_standard_enabled' => true,
-        'grading_standard_id' => 0
-      }
-    end
-    let(:course_details) {
-      {'id' => 1121, 'name' => 'Just another course site'}
-    }
+  context "when resolving course state issues" do
+    let(:course_settings) { { 'id' => canvas_course_id } }
     let(:muted_assignments) { [] }
     before do
-      subject.background_job_initialize
-      allow_any_instance_of(Canvas::CourseSettings).to receive(:settings).and_return(course_settings)
-      allow_any_instance_of(Canvas::CourseAssignments).to receive(:muted_assignments).and_return(muted_assignments)
+      allow_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_settings)
+      allow(subject).to receive(:unmute_course_assignments).and_return(muted_assignments)
     end
 
-    context "when course grading scheme is not enabled" do
-      before do
-        course_settings['grading_standard_enabled'] = false
-        course_settings['grading_standard_id'] = nil
-        allow_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_details)
-        allow(subject).to receive(:canvas_course_student_grades).with(true)
+    context "when enabling grading scheme" do
+      it 'enables the grading scheme' do
+        expect_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_settings)
+        subject.resolve_issues(true, false)
       end
-      context "when grading scheme enable confirmed" do
-        subject { Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :enable_grading_scheme => true) }
-        it "enables grading scheme" do
-          expect_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_details)
-          subject.prepare_download
-        end
-        it "sets the total steps to 30 to temporarily ensure a low reported percentage complete" do
-          expect(subject).to receive(:background_job_set_total_steps).with(30).and_return(nil)
-          subject.prepare_download
-        end
-        it "completes the grading scheme enabling step" do
-          expect(subject).to receive(:background_job_complete_step).with('Enabled default grading scheme')
-          subject.prepare_download
-        end
-      end
-      context "when grading scheme enable not confirmed" do
-        it "raises bad request exception" do
-          expect { subject.prepare_download }.to raise_error(Errors::BadRequestError, 'Enable Grading Scheme action not specified')
-        end
+
+      it 'does not unmute assignments' do
+        expect(subject).to_not receive(:unmute_course_assignments)
+        subject.resolve_issues(true, false)
       end
     end
 
-    context 'when muted assignments are present for course site' do
-      let(:muted_assignments) { [{'id' => 1, 'name' => 'Assignment 1', 'muted' => true}] }
-      before do
-        allow_any_instance_of(Canvas::CourseAssignments).to receive(:muted_assignments).and_return(muted_assignments)
+    context "when unmuting assignments" do
+      it 'unmutes assignments' do
+        expect(subject).to receive(:unmute_course_assignments).and_return(muted_assignments)
+        subject.resolve_issues(false, true)
       end
-      context "when unmute assignments action specified" do
-        subject { Canvas::Egrades.new(:canvas_course_id => canvas_course_id, :unmute_assignments => true) }
-        it "unmutes assignments for course site" do
-          expect(subject).to receive(:unmute_course_assignments).with(canvas_course_id)
-          subject.prepare_download
-        end
-      end
-      context "when unmute assignments action not specified" do
-        it "raises bad request exception" do
-          expect { subject.prepare_download }.to raise_error(Errors::BadRequestError, 'Unmute assignments action not specified')
-        end
-      end
-    end
 
-    it "preloads canvas course users in cache" do
-      expect(subject).to receive(:canvas_course_student_grades).with(true)
-      subject.prepare_download
+      it 'does not enable the grading scheme' do
+        expect_any_instance_of(Canvas::CourseSettings).to_not receive(:set_grading_scheme)
+        subject.resolve_issues(false, true)
+      end
     end
   end
 

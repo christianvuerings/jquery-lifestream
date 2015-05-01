@@ -7,20 +7,13 @@ module Canvas
   class Egrades
     extend Cache::Cacheable
     include Canvas::BackgroundJob
+    include ClassLogger
 
     GRADE_TYPES = ['final','current']
 
     def initialize(options = {})
-      default_options = {
-        :enable_grading_scheme => false,
-        :unmute_assignments => false
-      }
-      options.reverse_merge!(default_options)
-
       raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
-      @enable_grading_scheme = options[:enable_grading_scheme]
-      @unmute_assignments = options[:unmute_assignments]
       @canvas_official_course = Canvas::OfficialCourse.new(:canvas_course_id => @canvas_course_id)
     end
 
@@ -49,36 +42,15 @@ module Canvas
       end
     end
 
-    def set_course_user_page_total(page_total)
-      @course_user_page_total = page_total.to_i
-      total_steps = page_total.to_i
-      total_steps += 1 if @enable_grading_scheme
-      background_job_set_total_steps(total_steps)
-    end
-
-    def prepare_download
-      course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
-      course_assignments = Canvas::CourseAssignments.new(:course_id => @canvas_course_id)
-      if course_settings.settings(:cache => false)['grading_standard_enabled'].blank?
-        if @enable_grading_scheme
-          # Background job not updated with total number of steps until obtained via callback
-          # called from Canvas::CourseUsers#course_users. Therefore faking 30 total steps here
-          # here to begin the background job at 3% complete before update
-          background_job_set_total_steps(30)
-          course_settings.set_grading_scheme
-          background_job_complete_step('Enabled default grading scheme')
-        else
-          raise Errors::BadRequestError, "Enable Grading Scheme action not specified"
-        end
+    def resolve_issues(enable_grading_scheme = false, unmute_assignments = false)
+      if enable_grading_scheme
+        course_settings = Canvas::CourseSettings.new(:course_id => @canvas_course_id)
+        course_settings.set_grading_scheme
+        logger.warn("Enabled default grading scheme for Canvas Course ID #{@canvas_course_id}")
       end
-      if course_assignments.muted_assignments.count > 0
-        if @unmute_assignments
-          unmute_course_assignments(@canvas_course_id)
-        else
-          raise Errors::BadRequestError, "Unmute assignments action not specified"
-        end
+      if unmute_assignments
+        unmute_course_assignments(@canvas_course_id)
       end
-      canvas_course_student_grades(true)
     end
 
     def canvas_course_student_grades(force = false)
@@ -151,8 +123,10 @@ module Canvas
     def unmute_course_assignments(canvas_course_id)
       worker = Canvas::CourseAssignments.new(:course_id => @canvas_course_id)
       muted_assignments = worker.muted_assignments
+      logger.warn("Unmuting #{muted_assignments.count} assignments for Canvas Course ID #{@canvas_course_id}")
       muted_assignments.each do |assignment|
         worker.unmute_assignment(assignment['id'])
+        logger.warn("Unmuted Assignment ID #{assignment['id']} for Canvas Course ID #{@canvas_course_id}")
       end
     end
 
