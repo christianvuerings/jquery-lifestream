@@ -21,7 +21,6 @@ module Webcast
             unhidden_date = record.webcast_tool_unhidden_at.strftime('%m/%d/%Y')
             Rails.logger.warn "Do nothing to course site #{@course_id} because Webcast tool was unhidden on #{unhidden_date}."
           else
-            Rails.logger.warn "#{@course_id}: and record = #{record.to_s}"
             if show_webcast_tool_on_course_site @course_id
               @course_site_log_entry = Webcast::CourseSiteLog.create({ canvas_course_site_id: @course_id, webcast_tool_unhidden_at: Time.zone.now })
               Rails.logger.warn "The Webcast tool has been un-hidden on course site #{@course_id}"
