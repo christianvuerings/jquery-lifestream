@@ -1,49 +1,16 @@
-# TODO collapse this class into Finaid::Proxy
 module Finaid
   class MyFinAid < UserSpecificModel
-    include ClassLogger
-    include Cache::LiveUpdatesEnabled
-    include Cache::JsonAddedCacher
+    include ClassLogger, DatedFeed
 
-    def get_feed_internal
-      feed = {
-        :activities => []
-      }
+    def append_feed!(feed)
+      feed[:activities] = []
       if Settings.features.my_fin_aid
         append!(feed[:activities])
-      end
-      if Settings.features.cs_fin_aid
-        append_cs_fin_aid!(feed)
       end
       feed
     end
 
-    def append_cs_fin_aid!(feed)
-      begin
-        proxy = CampusSolutions::Awards.new({user_id: @uid})
-        feed[:awards] = proxy.get[:feed]
-      rescue => e
-        self.class.handle_exception(e, self.class.cache_key(@uid), {
-                                       id: @uid,
-                                       user_message_on_exception: "Remote server unreachable",
-                                       return_nil_on_generic_error: true
-                                     })
-      end
-    end
-
     def append!(activities)
-      begin
-        append_activities!(activities)
-      rescue => e
-        self.class.handle_exception(e, self.class.cache_key(@uid), {
-          id: @uid,
-          user_message_on_exception: "Remote server unreachable",
-          return_nil_on_generic_error: true
-        })
-      end
-    end
-
-    def append_activities!(activities)
       proxies = TimeRange.current_years.collect do |year|
         Finaid::Proxy.new({user_id: @uid, term_year: year})
       end

@@ -70,44 +70,6 @@ describe Finaid::MyFinAid do
 
   end
 
-  describe 'non 2xx states' do
-    before { Settings.myfinaid_proxy.fake = false }
-    after { Settings.myfinaid_proxy.fake = true }
-    let(:activities) { ['some activity'] }
-
-    context 'non-student finaid' do
-      subject { Finaid::MyFinAid.new(non_student_uid).append!(activities); activities }
-      it { should eq(['some activity']) }
-    end
-
-    context 'student finaid with remote problems' do
-
-      subject { Finaid::MyFinAid.new(oski_uid).append!(activities); activities }
-
-      context 'dead remote proxy (5xx errors)' do
-        before(:each) { stub_request(:any, /#{Regexp.quote(Settings.myfinaid_proxy.base_url)}.*/).to_raise(Faraday::Error::ConnectionFailed) }
-        after(:each) { WebMock.reset! }
-
-        it { should eq(['some activity']) }
-        it 'should not write to cache' do
-          Rails.cache.should_not_receive(:write)
-        end
-      end
-
-      context '4xx errors on remote proxy' do
-        before(:each) { stub_request(:any, /#{Regexp.quote(Settings.myfinaid_proxy.base_url)}.*/).to_return(:status => 403) }
-        after(:each) { WebMock.reset! }
-
-        it { should eq(['some activity']) }
-        it 'should not write to cache' do
-          Rails.cache.should_not_receive(:write)
-        end
-
-      end
-
-    end
-  end
-
   describe '2xx states' do
     let!(:activities) { [] }
     before do
