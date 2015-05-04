@@ -98,7 +98,7 @@ namespace :canvas do
         Rails.logger.warn "Webcast tool (id = #{tool_id}) refreshed on Canvas course site #{course_id}"
       end
     else
-      Rails.logger.warn 'usage: rake webcast:canvas_integration course_id=[course_id]'
+      Rails.logger.warn 'usage: rake canvas:webcast_lti_refresh course_id=[course_id]'
     end
   end
 
