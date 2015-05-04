@@ -34,10 +34,9 @@ module Finaid
         return nil
       else
         logger.info "Fake = #{@fake}; Making request to #{request_url} on behalf of user #{@uid}, student_id = #{@student_id}, aidYear = #{@term_year}; cache expiration #{self.class.expires_in}"
-        request_options = {query: {
-          token: @settings.token,
-          aidYear: @term_year
-        }}
+        request_options = {
+          query: {aidYear: @term_year}
+        }
         if (@settings.app_id.present? && @settings.app_key.present?)
           request_options[:headers] = {
             'app_id' => @settings.app_id,
