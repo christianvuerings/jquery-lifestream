@@ -1,0 +1,16 @@
+require 'spec_helper'
+
+describe Finaid::MyAwards do
+
+  subject { feed = {}; Finaid::MyAwards.new(61889).append_feed!(feed); feed }
+
+  it 'should return some awards' do
+    expect(subject[:finaidAwards]).to be
+    expect(subject[:finaidAwards][:terms]['2015'][:categories]['Grant']).to be
+    expect(subject[:finaidAwards][:terms]['2015'][:categories]['Grant'][:items]).to be
+    expect(subject[:finaidAwards][:terms]['2015'][:categories]['Grant'][:items][0][:title]).to eq 'Jon Q. Reynolds Scholarship'
+    expect(subject[:finaidAwards][:terms]['2015'][:categories]['Grant'][:total]).to eq 6500
+    expect(subject[:finaidAwards][:terms]['2015'][:categories]['Loan'][:total]).to eq 5500
+  end
+
+end
