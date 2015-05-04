@@ -19,7 +19,7 @@ describe 'My Academics Status and Blocks', :testui => true do
     include ClassLogger
 
     begin
-      driver = WebDriverUtils.driver
+      driver = WebDriverUtils.launch_browser
       test_output = UserUtils.initialize_output_csv(self)
       test_users = UserUtils.load_test_users
 
@@ -262,8 +262,7 @@ describe 'My Academics Status and Blocks', :testui => true do
     rescue => e
       logger.error e.message + "\n" + e.backtrace.join("\n ")
     ensure
-      logger.info('Quitting the browser')
-      driver.quit
+      WebDriverUtils.quit_browser(driver)
     end
   end
 end

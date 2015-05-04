@@ -21,11 +21,11 @@ describe 'My Dashboard Up Next card', :testui => true do
     id = today.to_i.to_s
 
     before(:all) do
-      @driver = WebDriverUtils.driver
+      @driver = WebDriverUtils.launch_browser
     end
 
     after(:all) do
-      @driver.quit
+      WebDriverUtils.quit_browser(@driver)
     end
 
     before(:context) do

@@ -4,7 +4,7 @@ class WebDriverUtils
 
   include ClassLogger
 
-  def self.driver
+  def self.launch_browser
     if Settings.ui_selenium.webDriver == 'firefox'
       Rails.logger.info('Browser is Firefox')
       Selenium::WebDriver.for :firefox
@@ -18,6 +18,14 @@ class WebDriverUtils
   rescue => e
     Rails.logger.error('Unable to initialize the designated WebDriver')
     Rails.logger.error e.message + "\n" + e.backtrace.join("\n")
+  end
+
+  def self.quit_browser(driver)
+    logger.info 'Quitting the browser'
+    # If the browser did not start successfully, the quit method will fail.
+    driver.quit rescue NoMethodError
+    # Pause after quitting the browser to make sure it shuts down completely before the next test relaunches it
+    sleep(3)
   end
 
   def self.base_url
