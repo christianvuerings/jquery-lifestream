@@ -80,4 +80,26 @@ namespace :canvas do
     end
   end
 
+  desc 'Manage Webcast tool placement across all Canvas course sites'
+  task :webcast_lti_refresh => :environment do
+    course_id = ENV['course_id'].to_s.to_i
+    if course_id > 0
+      global_tools = Canvas::ExternalTools.public_list[:globalTools]
+      webcast_tool = global_tools && global_tools.select{ |tool, id| tool =~ /webcast/i }
+      if webcast_tool.empty?
+        Rails.logger.error 'Webcast tool not found within Canvas globalTools set'
+      elsif webcast_tool.length > 1
+        Rails.logger.error 'Why did we find multiple Webcast tools within Canvas globalTools set?! Abort!'
+      else
+        tool_id = webcast_tool.values.first
+        Rails.logger.warn "Updating Webcast tool (id = #{tool_id}) configuration on Canvas course site #{course_id}"
+        options = ENV.merge(course_id: course_id, canvas_webcast_tool_id: tool_id)
+        Canvas::WebcastLtiRefresh.new(options).refresh_canvas
+        Rails.logger.warn "Webcast tool (id = #{tool_id}) refreshed on Canvas course site #{course_id}"
+      end
+    else
+      Rails.logger.warn 'usage: rake canvas:webcast_lti_refresh course_id=[course_id]'
+    end
+  end
+
 end
