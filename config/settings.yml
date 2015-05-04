@@ -138,7 +138,6 @@ regstatus_proxy:
 
 myfinaid_proxy:
   fake: false
-  token: secret set per deployment layer
   app_id: ''
   app_key: ''
   base_url: "https://apis-qa.berkeley.edu/myfinaid"
