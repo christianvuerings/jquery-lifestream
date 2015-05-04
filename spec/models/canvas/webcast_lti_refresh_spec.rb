@@ -1,4 +1,4 @@
-describe Webcast::Recordings do
+describe Canvas::WebcastLtiRefresh do
 
   let(:term_yr) { 2014 }
   let(:term_cd) { 'B' }
@@ -15,7 +15,7 @@ describe Webcast::Recordings do
 
   # Refresh Webcast LTI configuration on Canvas course sites
   context 'a fake proxy' do
-    subject { Webcast::RefreshLTI.new({course_id: course_id, fake: true}) }
+    subject { Canvas::WebcastLtiRefresh.new({course_id: course_id, fake: true}) }
 
     context 'course site has webcast' do
       before do
@@ -24,7 +24,7 @@ describe Webcast::Recordings do
       it 'should show the Webcast tool' do
         expect(Webcast::CourseSiteLog).to receive(:find_by).with({ canvas_course_site_id: course_id }).and_return nil
         expect(Webcast::CourseSiteLog).to receive(:create).with({ canvas_course_site_id: course_id, webcast_tool_unhidden_at: anything }).and_return(:return_value)
-        allow_any_instance_of(Webcast::RefreshLTI).to receive(:show_webcast_tool_on_course_site).and_return true
+        allow_any_instance_of(Canvas::WebcastLtiRefresh).to receive(:show_webcast_tool_on_course_site).and_return true
         expect(subject.refresh_canvas).to eq(:return_value)
       end
 

@@ -71,7 +71,6 @@ canvas_proxy:
   projects_term_id: '5494'
   projects_owner_role_id: '1766'
   default_grading_scheme_id: '4068930'
-  webcast_app_id: '32692'
   export_directory: 'tmp/canvas'
   lti_key: 'someMumboJumbo'
   lti_secret: 'someMumboJumbo'
