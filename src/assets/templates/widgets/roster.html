@@ -8,10 +8,12 @@
   </h2>
 
   <form class="cc-roster-search" data-ng-hide="errorStatus">
-    <input class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />
+    <label for="roster-search" class="cc-visuallyhidden">Filter by Text</label>
+    <input id="roster-search" class="cc-roster-input cc-left" placeholder="Search People" data-ng-model="search.$" />
 
     <div class="cc-select cc-left">
-      <select data-ng-options="section as section.name for section in sections track by section.ccn" data-ng-model="searchSection">
+      <label for="section-select" class="cc-visuallyhidden">Filter by Section</label>
+      <select id="section-select" data-ng-options="section as section.name for section in sections track by section.ccn" data-ng-model="searchSection">
         <option value="">All Sections</option>
       </select>
     </div>
