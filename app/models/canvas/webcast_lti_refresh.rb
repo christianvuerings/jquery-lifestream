@@ -8,6 +8,7 @@ module Canvas
     end
 
     def refresh_canvas
+      course_site_log_entry = nil
       sections = Canvas::CourseSections.new(@options).official_section_identifiers
       if sections.any?
         term_yr = sections.first[:term_yr]
@@ -24,12 +25,12 @@ module Canvas
             Rails.logger.warn "Do nothing to course site #{@course_id} because Webcast tool was unhidden on #{unhidden_date}."
           else
             # TODO: Use Canvas Tabs API to un-hide Webcast tool @canvas_webcast_tool_id
-            @course_site_log_entry = Webcast::CourseSiteLog.create({ canvas_course_site_id: @course_id, webcast_tool_unhidden_at: Time.zone.now })
+            course_site_log_entry = Webcast::CourseSiteLog.create({ canvas_course_site_id: @course_id, webcast_tool_unhidden_at: Time.zone.now })
             Rails.logger.warn "The Webcast tool has been un-hidden on course site #{@course_id}"
           end
         end
       end
-      @course_site_log_entry
+      course_site_log_entry
     end
 
   end
