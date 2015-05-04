@@ -216,7 +216,6 @@ describe 'My Academics enrollments', :testui => true do
 
                       # CLASS PAGES
 
-                      # semester_courses.each do |course|
                       semester_card_courses.each do |course|
 
                         begin
