@@ -48,10 +48,10 @@ module CalCentralPages
       driver.find_element(:link_text => semester_name).click
     end
 
-    def click_class_link(driver, course_code)
+    def click_class_link(driver, url)
       wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
-      wait.until { driver.find_element(:link_text => course_code) }
-      driver.find_element(:link_text => course_code).click
+      wait.until { driver.find_element(:xpath => "//a[@href='#{url}']") }
+      driver.find_element(:xpath => "//a[@href='#{url}']").click
     end
   end
 end

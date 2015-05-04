@@ -14,15 +14,16 @@ module CalCentralPages
     include ClassLogger
 
     span(:class_breadcrumb, :xpath => '//h1/span[@data-ng-bind="selectedCourse.course_code"]')
+    span(:section_breadcrumb, :xpath => '//h1/span[@data-ng-bind="selectedSection"]')
 
     # CLASS INFO
-    h1(:class_info_heading, :xpath => '//h2[text()="Class information"]')
+    h2(:class_info_heading, :xpath => '//h2[text()="Class Information"]')
     div(:course_title, :xpath => '//h3[text()="Class Title"]/following-sibling::div[@data-ng-bind="selectedCourse.title"]')
     div(:role, :xpath => '//h3[text()="My Role"]/following-sibling::div[@data-ng-bind="selectedCourse.role"]')
     elements(:student_section_label, :td, :xpath => '//h3[text()="My Enrollment"]/following-sibling::div[@data-ng-if="selectedCourse.sections.length && !isInstructorOrGsi"]//td[@data-ng-bind="sec.section_label"]')
     elements(:student_section_ccn, :td, :xpath => '//h3[text()="My Enrollment"]/following-sibling::div[@data-ng-if="selectedCourse.sections.length && !isInstructorOrGsi"]//td[@data-ng-bind="sec.ccn"]')
-    elements(:section_units, :td, :xpath => '//h3[text()="Class Info"]/following-sibling::div[@data-ng-hide="isInstructorOrGsi"]//td[@data-ng-if="section.units"]')
-    elements(:section_grade_option, :td, :xpath => '//h4[text()="Course Offering"]/following-sibling::div[@data-ng-hide="isInstructorOrGsi"]//td[@data-ng-bind="section.gradeOption"]')
+    elements(:section_units, :td, :xpath => '//h3[text()="Class Info"]/following-sibling::div[@data-ng-if="!isInstructorOrGsi"]//td[@data-ng-if="section.units"]')
+    elements(:section_grade_option, :td, :xpath => '//h4[text()="Course Offering"]/following-sibling::div[@data-ng-if="!isInstructorOrGsi"]//td[@data-ng-bind="section.gradeOption"]')
     elements(:section_schedule_label, :div, :xpath => '//div[@data-ng-repeat="section in selectedCourse.sections"]/div[@data-ng-bind="section.section_label"]')
     elements(:section_schedule, :div, :xpath => '//h4[text()="Section Schedules"]/following-sibling::div[@data-ng-repeat="section in selectedCourse.sections"]//div[@data-ng-repeat="schedule in section.schedules"]')
     elements(:section_instructors_heading, :h3, :xpath => '//h3[@data-ng-bind="section.section_label"]')
@@ -81,10 +82,12 @@ module CalCentralPages
       schedules
     end
 
-    def all_section_instructors(driver, section_label)
+    def all_section_instructors(driver, section_labels)
       instructors = []
-      instructor_elements = driver.find_elements(:xpath => "//h3[text()='#{section_label}']/following-sibling::ul/li[@data-ng-repeat='instructor in section.instructors']/a")
-      instructor_elements.each { |instructor| instructors.push((instructor.text).gsub("\n- opens in new window", '')) }
+      section_labels.each do |section|
+        instructor_elements = driver.find_elements(:xpath => "//h3[text()='#{section}']/following-sibling::ul//a[@data-ng-bind='instructor.name']")
+        instructor_elements.each { |instructor| instructors.push((instructor.text).gsub("\n- opens in new window", '')) }
+      end
       instructors
     end
 
