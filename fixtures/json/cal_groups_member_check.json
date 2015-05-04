@@ -1,0 +1,29 @@
+{
+  "WsHasMemberLiteResult": {
+    "responseMetadata": {
+      "millis": "86",
+      "serverVersion": "2.2.1"
+    },
+    "resultMetadata": {
+      "resultCode": "IS_MEMBER",
+      "resultMessage": "Success for: clientVersion: 2.2.100, wsGroupLookup: WsGroupLookup[pitGroups=[],groupName=edu:berkeley:app:bcourses:testgroup], subjectLookups: Array size: 1: [0]: WsSubjectLookup[subjectId=242881]\n\n memberFilter: All, actAsSubject: null, fieldName: null, includeGroupDetail: false, includeSubjectDetail: false, subjectAttributeNames: null\n,params: null\n,pointInTimeFrom: null, pointInTimeTo: null",
+      "success": "T"
+    },
+    "wsGroup": {
+      "displayExtension": "testgroup",
+      "displayName": "edu:berkeley:app:bCourses:testgroup",
+      "extension": "testgroup",
+      "idIndex": "19235",
+      "name": "edu:berkeley:app:bcourses:testgroup",
+      "typeOfGroup": "group",
+      "uuid": "1cc4398e7aa246af945be1157f448561"
+    },
+    "wsSubject": {
+      "id": "242881",
+      "name": "242881",
+      "resultCode": "SUCCESS",
+      "sourceId": "ldap",
+      "success": "T"
+    }
+  }
+}

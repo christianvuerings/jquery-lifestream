@@ -77,7 +77,7 @@
       $scope.selectedType = type;
       $scope.appState = 'loading';
       $scope.jobStatus = 'New';
-      canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId, $scope.enableDefaultGradingScheme, $scope.unmuteAllAssignments).success(function(data) {
+      canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId).success(function(data) {
         if (data.jobRequestStatus === 'Success') {
           $scope.backgroundJobId = data.jobId;
           jobStatusLoader();
@@ -138,6 +138,33 @@
         $window.scrollTo(0, 0);
       }
       $scope.appState = 'selection';
+    };
+
+    $scope.resolveIssues = function() {
+      $scope.resolvingCourseState = true;
+      canvasCourseGradeExportFactory.resolveIssues($scope.canvasCourseId, $scope.enableDefaultGradingScheme, $scope.unmuteAllAssignments)
+        .success(function(data) {
+          if (data.status && data.status === 'Resolved') {
+            $scope.resolvingCourseState = false;
+            $scope.switchToSelection();
+          } else {
+            $scope.appState = 'error';
+            $scope.contactSupport = true;
+            $scope.errorStatus = 'Error resolving course site state for E-Grades Export.';
+          }
+        }).error(function() {
+          $scope.appState = 'error';
+          $scope.contactSupport = true;
+          if ($scope.enableDefaultGradingScheme) {
+            $scope.errorStatus = 'Error enabling grading scheme.';
+          }
+          if ($scope.unmuteAllAssignments) {
+            $scope.errorStatus = 'Error enabling unmuting assignments.';
+          }
+          if ($scope.enableDefaultGradingScheme && $scope.unmuteAllAssignments) {
+            $scope.errorStatus = 'Error enabling grading scheme and unmuting assignments.';
+          }
+        });
     };
 
     /*

@@ -14,10 +14,14 @@ module HttpRequester
         verify: verify_ssl?
       }.merge(additional_options)
       response = case request_type
+        when :delete
+          HTTParty.delete(url, request_options)
         when :get
           HTTParty.get(url, request_options)
         when :post
           HTTParty.post(url, request_options)
+        when :put
+          HTTParty.put(url, request_options)
         else
           raise Errors::ProxyError.new("Unhandled request type #{request_type}", error_options)
       end

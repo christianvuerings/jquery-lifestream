@@ -42,7 +42,7 @@ gem 'httparty', '~> 0.13.3'
 
 # OAuth2 support
 gem 'signet', '~> 0.6.0'
-gem 'google-api-client', '~> 0.8.2'
+gem 'google-api-client', '~> 0.8.6'
 
 # LTI support
 gem 'ims-lti', :git => 'https://github.com/instructure/ims-lti.git'

@@ -141,7 +141,6 @@ describe CanvasCourseAddUserController do
           it 'returns student and observer granting roles' do
             get :course_user_roles, request_params
             expect(response.status).to eq(200)
-            pp response.body
             response_json = JSON.parse(response.body)
             expect(response_json['grantingRoles']).to be_an_instance_of Array
             expect(response_json['grantingRoles']).to_not include({'id' => "TeacherEnrollment", "name" => "Teacher"})

@@ -4,9 +4,7 @@
 
     <div class="row collapse">
       <div class="medium-5 columns end">
-        <div class="cc-page-course-grade-export-header">
-          <h1>Preparing E-Grades for Download</h1>
-        </div>
+        <h1 class="cc-page-course-grade-export-header">Preparing E-Grades for Download</h1>
       </div>
     </div>
 
@@ -34,9 +32,7 @@
 
     <div class="row collapse">
       <div class="medium-5 columns end">
-        <div class="cc-page-course-grade-export-header">
-          <h1>What would you like to download?</h1>
-        </div>
+        <h1 class="cc-page-course-grade-export-header">What would you like to download?</h1>
       </div>
     </div>
 
@@ -152,10 +148,13 @@
 
             <div class="cc-page-course-grading-export-unmute-action-container cc-clearfix-container">
               <div class="cc-page-course-grading-export-error-resolution-action-container">
-                <input id="cc-page-course-grading-export-enable-grading-scheme" type="checkbox" data-ng-model="unmuteAllAssignments">
+                <input id="cc-page-course-grading-export-enable-grading-scheme" type="checkbox" data-ng-model="unmuteAllAssignments" data-ng-disabled="resolvingCourseState">
               </div>
               <div class="cc-page-course-grading-export-error-resolution-action-container">
                 <label for="cc-page-course-grading-export-enable-grading-scheme" class="cc-page-course-grading-export-error-resolution-action-label">Unmute All</label>
+              </div>
+              <div class="cc-page-course-grading-export-muted-assignments-see-gradebook">
+                <button class="cc-button-link" data-ng-click="goToGradebook()">See in Gradebook</a>
               </div>
             </div>
 
@@ -198,7 +197,7 @@
             </p>
             <div>
               <div class="cc-page-course-grading-export-error-resolution-action-container">
-                <input id="cc-page-course-grading-export-enable-grading-scheme" type="checkbox" data-ng-model="enableDefaultGradingScheme">
+                <input id="cc-page-course-grading-export-enable-grading-scheme" type="checkbox" data-ng-model="enableDefaultGradingScheme" data-ng-disabled="resolvingCourseState">
               </div>
               <div class="cc-page-course-grading-export-error-resolution-action-container">
                 <label for="cc-page-course-grading-export-enable-grading-scheme" class="cc-page-course-grading-export-error-resolution-action-label">Enable the default Letter Grades +/- grading scheme</label><br>
@@ -215,7 +214,10 @@
         <div class="medium-12 columns">
           <div class="cc-text-right">
             <button class="bc-canvas-button cc-page-course-grading-export-back-link" type="button" data-ng-click="goToGradebook()" type="button" aria-label="Go Back to Gradebook">Cancel</button>
-            <button data-ng-click="switchToSelection()" data-ng-disabled="notReadyForPreparation()" class="bc-canvas-button bc-canvas-button-primary" type="button">Continue</button>
+            <button data-ng-disabled="notReadyForPreparation() || resolvingCourseState" data-ng-click="resolveIssues()" class="bc-canvas-button bc-canvas-button-primary" type="button">
+              <span data-ng-if="!resolvingCourseState">Continue</span>
+              <span data-ng-if="resolvingCourseState"><i class="fa fa-spinner fa-spin"></i> Saving</span>
+            </button>
           </div>
         </div>
       </div>

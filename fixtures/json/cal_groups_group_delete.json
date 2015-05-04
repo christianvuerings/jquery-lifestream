@@ -1,0 +1,22 @@
+{
+  "WsGroupDeleteLiteResult": {
+    "responseMetadata": {
+      "millis": "974",
+      "serverVersion": "2.2.1"
+    },
+    "resultMetadata": {
+      "resultCode": "SUCCESS",
+      "resultMessage": "Success for: clientVersion: 2.2.100, wsGroupLookups: Array size: 1: [0]: WsGroupLookup[pitGroups=[],groupName=edu:berkeley:app:bcourses:testgroup]\n\n, actAsSubject: null, txType: NONE, includeGroupDetail: false, paramNames: \n, params: nullGroup 'edu:berkeley:app:bcourses:testgroup' was deleted.",
+      "success": "T"
+    },
+    "wsGroup": {
+      "displayExtension": "testgroup",
+      "displayName": "edu:berkeley:app:bCourses:testgroup",
+      "extension": "testgroup",
+      "idIndex": "19235",
+      "name": "edu:berkeley:app:bcourses:testgroup",
+      "typeOfGroup": "group",
+      "uuid": "1cc4398e7aa246af945be1157f448561"
+    }
+  }
+}

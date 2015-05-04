@@ -1,0 +1,17 @@
+{
+  "WsGroupSaveLiteResult": {
+    "responseMetadata": {
+      "millis": "152",
+      "serverVersion": "2.2.1"
+    },
+    "resultMetadata": {
+      "resultCode": "GROUP_ALREADY_EXISTS",
+      "resultMessage": "There were 0 successes and 1 failures of saving groups.edu.internet2.middleware.grouper.exception.GroupAddAlreadyExistsException: group already exists with name: 'edu:berkeley:app:bcourses:testgroup', stem name: edu:berkeley:app:bcourses, group extension: testgroup, group dExtension: testgroup, uuid: null, typeOfGroup: null,\nProblem in HibernateSession: HibernateSession (3164af87): notNew, notReadonly, READ_WRITE_NEW, activeTransaction, session (241dde06),\nProblem in HibernateSession: HibernateSession (419dba84): notNew, notReadonly, READ_WRITE_NEW, activeTransaction, session (241dde06),\nProblem saving group: edu:berkeley:app:bcourses:testgroup, thread: 176e05db,\nProblem in HibernateSession: HibernateSession (656f5956): new, notReadonly, READ_WRITE_NEW, notActiveTransaction, session (241dde06)",
+      "success": "F"
+    },
+    "wsGroup": {
+      "extension": "testgroup",
+      "name": "edu:berkeley:app:bcourses:testgroup"
+    }
+  }
+}
