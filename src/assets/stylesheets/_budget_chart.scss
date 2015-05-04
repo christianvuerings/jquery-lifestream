@@ -1,0 +1,30 @@
+$cc-color-chart: (
+  1: #e4f4fc,
+  2: #d3eefb,
+  3: #c1e8fa,
+  4: #aee1f8,
+  5: #a0ddf7,
+  6: #8ad6f6,
+  7: #72cff4
+);
+
+.cc-budget-chart {
+  display: flex;
+  flex-direction: column;
+
+  .cc-budget-chart-item {
+    align-content: center;
+    border-bottom: 1px solid $cc-color-white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2px 10px;
+
+    @each $index, $color in $cc-color-chart {
+      &:nth-child(#{$index}) {
+        background: $color;
+      }
+    }
+
+  }
+}

@@ -89,6 +89,10 @@
 @import "cal1card";
 @import "myfinances";
 
+// Finaid
+@import "finaid_award";
+@import "finaid_budget";
+
 // Settings
 @import "settings";
 
@@ -115,3 +119,6 @@
 
 // Student Lookup
 @import "student_lookup";
+
+// Directive - Budget Chart
+@import "budget_chart";
