@@ -35,6 +35,7 @@ module Finaid
         this_item = {
           title: award_detail['ITEM_TYPE_LOVDescr'],
           amount: award_detail['OFFER_BALANCE'],
+          amountAccepted: award_detail['ACCEPT_BALANCE'],
           type: award_detail['FIN_AID_TYPE_LOVDescr'],
           status: award_detail['SFA_AWARD_STATUS_LOVDescr']
         }
@@ -50,12 +51,16 @@ module Finaid
     end
 
     def calculate_totals!(aid_years)
+      # TODO during this loop figure out startTerm and endTerm. can CS STRM values be sorted and compared?
       aid_years.keys.each do |year|
-        p "year = #{year.inspect}"
+        aid_years[year][:totalOffered] ||= 0
+        aid_years[year][:totalAccepted] ||= 0
         aid_years[year][:categories].keys.each do |category|
           aid_years[year][:categories][category][:total] ||= 0
           aid_years[year][:categories][category][:items].each do |item|
             aid_years[year][:categories][category][:total] += item[:amount].to_i
+            aid_years[year][:totalOffered] += item[:amount].to_i
+            aid_years[year][:totalAccepted] += item[:amountAccepted].to_i
           end
         end
       end
