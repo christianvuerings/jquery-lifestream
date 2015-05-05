@@ -70,6 +70,18 @@ module User
       delete(user.recent_uids, uid, uid_to_delete)
     end
 
+    def self.delete_all_recent(uid)
+      user = get_user(uid)
+      return error_response("Could not find user #{uid}.") unless user
+      delete_all(user.recent_uids)
+    end
+
+    def self.delete_all_saved(uid)
+      user = get_user(uid)
+      return error_response("Could not find user #{uid}.") unless user
+      delete_all(user.saved_uids)
+    end
+
     private
 
     def self.get_stored_uid_entries(uid)
@@ -99,6 +111,11 @@ module User
       if (found.size > 0)
         found.first.destroy
       end
+      success_response
+    end
+
+    def self.delete_all(association)
+      association.destroy_all
       success_response
     end
 

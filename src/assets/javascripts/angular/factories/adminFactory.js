@@ -12,6 +12,8 @@
     var storedUsersUrl = '/stored_users';
     var storeSavedUserUrl = '/store_user/saved';
     var deleteSavedUserUrl = '/delete_user/saved';
+    var deleteAllRecentUsersUrl = '/delete_users/recent';
+    var deleteAllSavedUsersUrl = '/delete_users/saved';
 
     var actAs = function(user) {
       return $http.post(actAsUrl, user);
@@ -41,8 +43,18 @@
       return $http.post(deleteSavedUserUrl, options);
     };
 
+    var deleteAllRecentUsers = function() {
+      return $http.post(deleteAllRecentUsersUrl);
+    };
+
+    var deleteAllSavedUsers = function() {
+      return $http.post(deleteAllSavedUsersUrl);
+    };
+
     return {
       actAs: actAs,
+      deleteAllRecentUsers: deleteAllRecentUsers,
+      deleteAllSavedUsers: deleteAllSavedUsers,
       deleteUser: deleteUser,
       getStoredUsers: getStoredUsers,
       stopActAs: stopActAs,

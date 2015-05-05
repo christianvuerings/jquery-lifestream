@@ -122,19 +122,6 @@ button {
   }
 }
 
-.cc-button-star {
-  background: transparent;
-  border: 0;
-  color: $body-font-color !important;
-  padding: 0;
-  &:focus, &:hover {
-    background: transparent;
-  }
-  .cc-button-star-grey {
-    color: $cc-color-lighter-medium-grey;
-  }
-}
-
 .cc-button-group {
   li {
     float: left;
