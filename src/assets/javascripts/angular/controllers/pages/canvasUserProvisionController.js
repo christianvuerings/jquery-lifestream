@@ -7,6 +7,10 @@
   angular.module('calcentral.controllers').controller('CanvasUserProvisionController', function(apiService, $http, $scope) {
     apiService.util.setTitle('bCourses User Provision');
 
+    $scope.importButtonDisabled = function() {
+      return $scope.importProcessing || !$scope.rawUids;
+    };
+
     $scope.importUsers = function(list) {
       list = list.match(/\w+/g);
       checkListValidity(list);
