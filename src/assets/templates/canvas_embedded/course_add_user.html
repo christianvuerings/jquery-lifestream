@@ -140,30 +140,33 @@
         <div data-ng-show="userSearchResults.length > 0">
           <form data-ng-submit="addUser()" class="bc-form">
 
-            <table class="bc-user-search-table">
-              <thead>
-                <tr>
-                  <th><span class="cc-visuallyhidden">Actions</span></th>
-                  <th>Name</th>
-                  <th>Calnet UID</th>
-                  <th>Email</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-ng-repeat="user in userSearchResults">
-                  <td>
-                    <label for="user-{{$index}}" class="cc-visuallyhidden">
-                      Select <span data-ng-bind="user.firstName + ' ' + user.lastName"></span>
-                      UID <span data-ng-bind="user.ldapUid"></span>
-                    </label>
-                    <input id="user-{{$index}}" type="radio" name="selectedUser" data-ng-model="$parent.selectedUser" data-ng-value="user" data-ng-required="true">
-                  </td>
-                  <td data-ng-bind="user.firstName + ' ' + user.lastName"></td>
-                  <td data-ng-bind="user.ldapUid"></td>
-                  <td data-ng-bind="user.emailAddress"></td>
-                </tr>
-              </tbody>
-            </table>
+            <fieldset class="bc-page-course-add-user-fieldset">
+              <legend class="cc-visuallyhidden">Select the user you wish to add to the course site:</legend>
+              <table class="bc-user-search-table">
+                <thead>
+                  <tr>
+                    <th><span class="cc-visuallyhidden">Actions</span></th>
+                    <th>Name</th>
+                    <th>Calnet UID</th>
+                    <th>Email</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-ng-repeat="user in userSearchResults">
+                    <td>
+                      <label for="user-{{$index}}" class="cc-visuallyhidden">
+                        Select <span data-ng-bind="user.firstName + ' ' + user.lastName"></span>
+                        UID <span data-ng-bind="user.ldapUid"></span>
+                      </label>
+                      <input id="user-{{$index}}" type="radio" name="selectedUser" data-ng-model="$parent.selectedUser" data-ng-value="user" data-ng-required="true">
+                    </td>
+                    <td data-ng-bind="user.firstName + ' ' + user.lastName"></td>
+                    <td data-ng-bind="user.ldapUid"></td>
+                    <td data-ng-bind="user.emailAddress"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </fieldset>
 
             <div class="medium-5 columns">
 
