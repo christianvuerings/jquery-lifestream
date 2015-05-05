@@ -36,8 +36,8 @@ module Finaid
         }
         this_item = {
           title: award_detail['ITEM_TYPE_LOVDescr'],
-          amount: award_detail['OFFER_BALANCE'],
-          amountAccepted: award_detail['ACCEPT_BALANCE'],
+          amount: award_detail['OFFER_BALANCE'].to_i,
+          amountAccepted: award_detail['ACCEPT_BALANCE'].to_i,
           type: award_detail['FIN_AID_TYPE_LOVDescr'],
           status: award_detail['SFA_AWARD_STATUS_LOVDescr']
         }
@@ -91,9 +91,9 @@ module Finaid
         this_year[:categories].each do |this_category|
           this_category[:total] ||= 0
           this_category[:items].each do |item|
-            this_category[:total] += item[:amount].to_i
-            this_year[:totalOffered] += item[:amount].to_i
-            this_year[:totalAccepted] += item[:amountAccepted].to_i
+            this_category[:total] += item[:amount]
+            this_year[:totalOffered] += item[:amount]
+            this_year[:totalAccepted] += item[:amountAccepted]
           end
         end
       end
