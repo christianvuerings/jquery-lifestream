@@ -31,8 +31,8 @@ module Canvas
     def update_hidden_on_webcast_tab(show_tab, tab)
       modified_tab = nil
       if tab
-        is_tab_showing = tab.has_key?('hidden') && tab['hidden']
-        if is_tab_showing == show_tab
+        is_tab_showing = !tab.has_key?('hidden') || !tab['hidden']
+        if show_tab == is_tab_showing
           Rails.logger.warn "Webcast tab on course site #{@canvas_course_id} is already hidden=#{show_tab}. Do nothing."
         else
           Rails.logger.info "Set hidden=#{show_tab} on Webcast tab in course site #{@canvas_course_id}"
@@ -57,8 +57,7 @@ module Canvas
     end
 
     def is_eligible_for_webcast?(ccn_list)
-      # TODO: implement this!!
-      true
+      Webcast::Rooms.new(@options).any_in_webcast_enabled_room? ccn_list
     end
 
   end

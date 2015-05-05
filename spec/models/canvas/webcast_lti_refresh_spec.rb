@@ -24,21 +24,18 @@ describe Canvas::WebcastLtiRefresh do
       end
 
       it 'should show the Webcast tool because it has videos' do
-        allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return({ 'id' => 1 })
+        allow_any_instance_of(Webcast::Rooms).to receive(:any_in_webcast_enabled_room?).and_return false
+        allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return({ 'id' => 1, 'hidden' => true })
         expect(Webcast::CourseSiteLog).to receive(:find_by).with({ canvas_course_site_id: canvas_course_id }).and_return nil
         allow_any_instance_of(Canvas::ExternalTools).to receive(:show_course_site_tab).and_return(:return_value)
         expect(subject.refresh_canvas).to eq(:return_value)
       end
 
       it 'should not un-hide the Webcast tool because it was previously un-hidden' do
+        allow_any_instance_of(Webcast::Rooms).to receive(:any_in_webcast_enabled_room?).and_return true
         log_entry = Webcast::CourseSiteLog.new(webcast_tool_unhidden_at: Time.zone.yesterday)
         expect(Webcast::CourseSiteLog).to receive(:find_by).with(anything).and_return log_entry
         # Canvas docs say 'hidden' property not present when value is false
-        allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return({ 'id' => 1 })
-        expect(subject.refresh_canvas).to be_nil
-      end
-
-      it 'should not un-hide the Webcast tool because it is already un-hidden' do
         allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return({ 'id' => 1, 'hidden' => true })
         expect(subject.refresh_canvas).to be_nil
       end
@@ -48,7 +45,15 @@ describe Canvas::WebcastLtiRefresh do
       before do
         allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return course_without_webcast
       end
-      it 'should skip course sites that have no webcast recordings' do
+      it 'should skip courses with no recordings' do
+        allow_any_instance_of(Webcast::Rooms).to receive(:any_in_webcast_enabled_room?).and_return false
+        expect(subject.refresh_canvas).to be_nil
+      end
+
+      it 'should not hide Webcast tool for course that missed sign up opportunity and is already hidden' do
+        allow_any_instance_of(Webcast::Rooms).to receive(:any_in_webcast_enabled_room?).and_return true
+        allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return({ 'id' => 1, 'hidden' => true })
+        allow_any_instance_of(Webcast::SystemStatus).to receive(:get).and_return({ 'is_sign_up_active' => false })
         expect(subject.refresh_canvas).to be_nil
       end
     end
@@ -56,10 +61,11 @@ describe Canvas::WebcastLtiRefresh do
     context 'course site has no webcast but course is eligible and sign up is active' do
       before do
         allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return course_without_webcast
+        allow_any_instance_of(Webcast::Rooms).to receive(:any_in_webcast_enabled_room?).and_return true
       end
       it 'should un-hide Webcast tool because course is in eligible room' do
         allow_any_instance_of(Canvas::WebcastLtiRefresh).to receive(:is_canvas_tab_hidden?).and_return true
-        allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return({ 'id' => 1 })
+        allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return({ 'id' => 1, 'hidden' => true })
         expect(Webcast::CourseSiteLog).to receive(:find_by).with({ canvas_course_site_id: canvas_course_id }).and_return nil
         allow_any_instance_of(Canvas::ExternalTools).to receive(:show_course_site_tab).and_return(:return_value)
         expect(subject.refresh_canvas).to eq(:return_value)
