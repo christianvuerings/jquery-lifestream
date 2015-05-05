@@ -1,13 +1,14 @@
 .bc-page-course-add-user {
-
   background: $cc-color-white;
-  font-family: $header-font-family;
-  font-weight: normal;
+  font-family: $bc-header-font-family;
+  font-size: 14px;
+  font-weight: 300;
   padding: 10px;
 
-  h2 {
+  .bc-page-course-add-user-header {
     color: $bc-color-off-black;
     font-size: 24px;
+    font-weight: normal;
     line-height: 40px;
     margin: 8px 0;
   }
