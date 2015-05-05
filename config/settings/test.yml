@@ -54,6 +54,7 @@ features:
   cal1card: true
   audio: true
   advising: true
+  cs_fin_aid: true
 
 cache:
   store: "memory"

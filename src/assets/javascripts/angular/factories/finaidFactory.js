@@ -5,7 +5,7 @@
    * Financial Aid Factory
    */
   angular.module('calcentral.factories').factory('finaidFactory', function(apiService) {
-    var urlAward = '/dummy/json/finaid_award.json';
+    var urlAward = '/api/my/finaid';
     var urlBudget = '/dummy/json/finaid_budget.json';
 
     var getBudget = function(options) {

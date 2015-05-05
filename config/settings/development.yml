@@ -85,6 +85,7 @@ features:
   audio: true
   advising: true
   course_manage_official_sections: true
+  cs_fin_aid: true
 
 advising_proxy:
   fake: true
