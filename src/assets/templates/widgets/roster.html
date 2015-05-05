@@ -1,5 +1,7 @@
 <div data-ng-controller="RosterController" data-ng-class="{'cc-page-roster': !isLoading}" data-cc-spinner-directive>
 
+  <h1 class="cc-visuallyhidden">Roster Photos for <span data-ng-bind="canvas_course.name"></span></h1>
+
   <h2 class="cc-roster-header">
     <span data-ng-bind="course.name"></span> -
     <span data-ng-if="searchSection.name" data-ng-bind="searchSection.name"></span>
