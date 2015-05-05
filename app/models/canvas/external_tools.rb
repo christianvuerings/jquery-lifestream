@@ -77,7 +77,7 @@ module Canvas
     end
 
     def show_course_site_tab(tab_id)
-      update_course_site_tab_hidden(tab_id, true)
+      update_course_site_tab_hidden(tab_id, false)
     end
 
     def create_external_tool_by_xml(tool_name, xml_string)
