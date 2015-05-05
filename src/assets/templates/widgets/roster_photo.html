@@ -1,2 +1,4 @@
 <img data-ng-if="student.photo" data-ng-src="{{student.photo}}" width="72" height="96" data-ng-attr-alt="Photo of {{student.first_name}} {{student.last_name}}"/>
-<div data-ng-if="!student.photo" class="cc-image-responsive cc-page-roster-image-unavailable" title="Photo unavailable"></div>
+<div data-ng-if="!student.photo" class="cc-image-responsive cc-page-roster-image-unavailable" title="Photo unavailable">
+  <span class="cc-visuallyhidden">No Official Photo is Available</span>
+</div>
