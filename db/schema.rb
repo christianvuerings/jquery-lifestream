@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430222956) do
+ActiveRecord::Schema.define(version: 20150430231721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "canvas_site_mailing_lists", force: true do |t|
+    t.string   "canvas_site_id"
+    t.string   "list_name"
+    t.string   "state"
+    t.datetime "populated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "canvas_site_mailing_lists", ["canvas_site_id"], name: "index_canvas_site_mailing_lists_on_canvas_site_id", unique: true, using: :btree
 
   create_table "canvas_synchronization", force: true do |t|
     t.datetime "last_guest_user_sync"

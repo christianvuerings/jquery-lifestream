@@ -17,11 +17,11 @@ describe 'My Finances landing page', :testui => true do
   if ENV["UI_TEST"] && Settings.ui_selenium.layer != 'production'
 
     before(:all) do
-      @driver = WebDriverUtils.driver
+      @driver = WebDriverUtils.launch_browser
     end
 
     after(:all) do
-      @driver.quit
+      WebDriverUtils.quit_browser(@driver)
     end
 
     before(:context) do

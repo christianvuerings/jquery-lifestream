@@ -10,7 +10,7 @@ class Ability
       can :access, :all
       can :dashboard, :all
       if user.policy.can_administrate?
-        can :manage, [User::Auth, Finaid::FinAidYear, Calendar::User, Calendar::QueuedEntry, Calendar::LoggedEntry, Calendar::Job]
+        can :manage, [User::Auth, Finaid::FinAidYear, Calendar::User, Calendar::QueuedEntry, Calendar::LoggedEntry, Calendar::Job, MailingLists::SiteMailingList]
       end
       if user.policy.can_author?
         can :manage, [Links::Link, Links::LinkCategory, Links::LinkSection, Links::UserRole]
@@ -63,7 +63,8 @@ RailsAdmin.config do |config|
   # Include specific models (exclude the others):
   config.included_models = ['Links::Link', 'Links::LinkCategory', 'Links::LinkSection', 'Links::UserRole',
                             'Finaid::FinAidYear', 'User::Auth',
-                            'Calendar::User', 'Calendar::QueuedEntry', 'Calendar::LoggedEntry', 'Calendar::Job']
+                            'Calendar::User', 'Calendar::QueuedEntry', 'Calendar::LoggedEntry', 'Calendar::Job',
+                            'MailingLists::SiteMailingList']
 
   # Label methods for model instances:
   # config.label_methods << :description # Default is [:name, :title]
@@ -211,6 +212,10 @@ RailsAdmin.config do |config|
         end
       end
     end
+  end
+
+  config.model 'MailingLists::SiteMailingList' do
+    label 'Site Mailing List'
   end
 
   config.navigation_static_label = 'Tools'

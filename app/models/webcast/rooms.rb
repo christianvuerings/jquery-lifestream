@@ -19,5 +19,9 @@ module Webcast
       building_map
     end
 
+    def any_in_webcast_enabled_room?(ccn_list)
+      raise RuntimeError, 'Method not implemented'
+    end
+
   end
 end

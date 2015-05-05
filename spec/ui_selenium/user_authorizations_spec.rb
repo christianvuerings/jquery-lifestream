@@ -14,11 +14,11 @@ describe 'User authorization', :testui => true do
   if ENV["UI_TEST"]
 
     before(:each) do
-      @driver = WebDriverUtils.driver
+      @driver = WebDriverUtils.launch_browser
     end
 
     after(:each) do
-      @driver.quit
+      WebDriverUtils.quit_browser(@driver)
     end
 
     describe 'View-as' do

@@ -18,6 +18,7 @@ module CalCentralPages
     elements(:enrolled_grade_options, :td, :xpath => '//tbody[@data-ng-repeat="course in enrolledCourses"]//td[@data-ng-bind="course.gradeOption"]')
     elements(:enrolled_units, :td, :xpath => '//tbody[@data-ng-repeat="course in enrolledCourses"]//td[@data-ng-bind="course.units | number:1"]')
     elements(:enrolled_sections, :span, :xpath => '//tbody[@data-ng-repeat="course in enrolledCourses"]//div[@data-ng-repeat="section in course.sections"]/span[@data-ng-bind="section.section_label"]')
+    div(:no_enrollment_message, :xpath => '//div[contains(text(),"You are not currently enrolled in any courses")]')
     elements(:waitlist_course_codes, :link, :xpath => '//h3[text()="Wait Lists"]/following-sibling::div//a[@data-ng-bind="course.course_code"]')
     elements(:waitlist_sections, :span, :xpath => '//h3[text()="Wait Lists"]/following-sibling::div//span[@data-ng-bind="section.section_label"]')
     elements(:waitlist_course_titles, :td, :xpath => '//h3[text()="Wait Lists"]/following-sibling::div//td[@data-ng-bind="course.title"]')
