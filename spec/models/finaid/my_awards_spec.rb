@@ -13,6 +13,10 @@ describe Finaid::MyAwards do
     expect(subject[:finaidAwards][:terms]['2015'][:categories]['Loan'][:total]).to eq 5500
     expect(subject[:finaidAwards][:terms]['2015'][:totalOffered]).to eq 12000
     expect(subject[:finaidAwards][:terms]['2015'][:totalAccepted]).to eq 6500
+    expect(subject[:finaidAwards][:terms]['2015'][:startTerm]).to eq 'Fall'
+    expect(subject[:finaidAwards][:terms]['2015'][:startTermYear]).to eq '2014'
+    expect(subject[:finaidAwards][:terms]['2015'][:endTerm]).to eq 'Spring'
+    expect(subject[:finaidAwards][:terms]['2015'][:endTermYear]).to eq '2015'
   end
 
 end
