@@ -46,7 +46,8 @@
           </div>
         </div>
         <form data-ng-submit="fetchFeed()" class="cc-page-form">
-          <textarea data-ng-model="admin_by_ccns"
+          <label for="ccn-list" class="cc-visuallyhidden">CCN List Separated by Commas or Spaces</label>
+          <textarea id="ccn-list" data-ng-model="admin_by_ccns"
             placeholder="Paste your list of CCNs here, separated by commas or spaces">
           </textarea>
           <button class="cc-button cc-button-blue" type="submit">Review matching CCNs</button>
