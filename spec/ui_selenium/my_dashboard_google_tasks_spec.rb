@@ -21,11 +21,11 @@ describe 'The My Dashboard task manager', :testui => true do
     wait_for_task = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.google_task_timeout)
 
     before(:all) do
-      @driver = WebDriverUtils.driver
+      @driver = WebDriverUtils.launch_browser
     end
 
     after(:all) do
-      @driver.quit
+      WebDriverUtils.quit_browser(@driver)
     end
 
     before(:context) do

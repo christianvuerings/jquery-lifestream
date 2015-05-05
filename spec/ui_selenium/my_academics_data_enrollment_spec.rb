@@ -22,7 +22,7 @@ describe 'My Academics enrollments', :testui => true do
 
     begin
 
-      driver = WebDriverUtils.driver
+      driver = WebDriverUtils.launch_browser
 
       test_users = UserUtils.load_test_users
       test_output = UserUtils.initialize_output_csv(self)
@@ -424,8 +424,7 @@ describe 'My Academics enrollments', :testui => true do
     rescue => e
       logger.error e.message + "\n" + e.backtrace.join("\n ")
     ensure
-      logger.info('Quitting the browser')
-      driver.quit
+      WebDriverUtils.quit_browser(driver)
     end
   end
 end

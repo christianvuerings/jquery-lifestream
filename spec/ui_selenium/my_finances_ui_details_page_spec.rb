@@ -20,11 +20,11 @@ describe 'My Finances details page', :testui => true do
     wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_event_timeout)
 
     before(:all) do
-      @driver = WebDriverUtils.driver
+      @driver = WebDriverUtils.launch_browser
     end
 
     after(:all) do
-      @driver.quit
+      WebDriverUtils.quit_browser(@driver)
     end
 
     before(:context) do
