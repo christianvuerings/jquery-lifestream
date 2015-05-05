@@ -12,14 +12,18 @@
         <div data-ng-show="noSearchTextAlert" class="cc-notice-box cc-notice-error cc-radius">
           You did not enter any search terms. Please try again.
           <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="noSearchTextAlert=''"></button>
+            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="noSearchTextAlert=''">
+              <span class="cc-visuallyhidden">Hide Alert</span>
+            </button>
           </div>
         </div>
 
         <div data-ng-show="noUserSelectedAlert" class="cc-notice-box cc-notice-error cc-radius">
           Please select a user.
           <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="noUserSelectedAlert=''"></button>
+            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="noUserSelectedAlert=''">
+              <span class="cc-visuallyhidden">Hide Alert</span>
+            </button>
           </div>
         </div>
 
@@ -28,7 +32,9 @@
           <span data-ng-bind="searchTypeNotice"></span>
           Please try again.
           <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="noSearchResultsNotice=''"></button>
+            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="noSearchResultsNotice=''">
+              <span class="cc-visuallyhidden">Hide Alert</span>
+            </button>
           </div>
         </div>
 
@@ -42,7 +48,9 @@
           <span data-ng-bind="userAdded.fullName"></span> was added to the
           &ldquo;<span data-ng-bind="userAdded.sectionName"></span>&rdquo; section of this course as a <span data-ng-bind="userAdded.roleName"></span>.
           <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="additionSuccessMessage=''"></button>
+            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="additionSuccessMessage=''">
+              <span class="cc-visuallyhidden">Hide Alert</span>
+            </button>
           </div>
         </div>
 
@@ -50,7 +58,9 @@
           <i class="fa fa-exclamation-triangle cc-icon-red cc-canvas-notice-icon"></i>
           <span data-ng-bind="errorStatus"></span>
           <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="additionFailureMessage=''"></button>
+            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="additionFailureMessage=''">
+              <span class="cc-visuallyhidden">Hide Alert</span>
+            </button>
           </div>
         </div>
       </div>
