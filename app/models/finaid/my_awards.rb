@@ -14,6 +14,7 @@ module Finaid
       proxy = CampusSolutions::Awards.new({user_id: @uid})
       proxy_feed = proxy.get[:feed]
       aid_years = gather_aid_years proxy_feed
+      convert_categories_to_array!(aid_years)
       calculate_totals!(aid_years)
       feed[:finaidAwards] = {
         terms: aid_years
@@ -43,6 +44,7 @@ module Finaid
         this_year[:categories][type][:items] << this_item
         find_terms_for_aid_year(award_detail, this_year)
       end
+      aid_years = aid_years.values
       logger.debug "aid_years before totals= #{aid_years}"
       aid_years
     end
@@ -74,13 +76,19 @@ module Finaid
       this_year[:endTermYear] = last_term[:year]
     end
 
+    def convert_categories_to_array!(aid_years)
+      aid_years.each do |year|
+        category_array = year[:categories].values
+        year[:categories] = category_array
+      end
+      aid_years
+    end
+
     def calculate_totals!(aid_years)
-      aid_years.keys.each do |year|
-        this_year = aid_years[year]
+      aid_years.each do |this_year|
         this_year[:totalOffered] ||= 0
         this_year[:totalAccepted] ||= 0
-        this_year[:categories].keys.each do |category|
-          this_category = this_year[:categories][category]
+        this_year[:categories].each do |this_category|
           this_category[:total] ||= 0
           this_category[:items].each do |item|
             this_category[:total] += item[:amount].to_i
