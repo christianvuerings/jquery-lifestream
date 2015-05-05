@@ -93,7 +93,7 @@ namespace :canvas do
       else
         tool_id = webcast_tool.values.first
         Rails.logger.warn "Updating Webcast tool (id = #{tool_id}) configuration on Canvas course site #{course_id}"
-        options = ENV.merge(course_id: course_id, canvas_webcast_tool_id: tool_id)
+        options = ENV.merge(canvas_course_id: course_id, canvas_webcast_tool_id: tool_id)
         Canvas::WebcastLtiRefresh.new(options).refresh_canvas
         Rails.logger.warn "Webcast tool (id = #{tool_id}) refreshed on Canvas course site #{course_id}"
       end
