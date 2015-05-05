@@ -152,7 +152,11 @@
               <tbody>
                 <tr data-ng-repeat="user in userSearchResults">
                   <td>
-                    <input type="radio" name="selectedUser" data-ng-model="$parent.selectedUser" data-ng-value="user" data-ng-required="true">
+                    <label for="user-{{$index}}" class="cc-visuallyhidden">
+                      Select <span data-ng-bind="user.firstName + ' ' + user.lastName"></span>
+                      UID <span data-ng-bind="user.ldapUid"></span>
+                    </label>
+                    <input id="user-{{$index}}" type="radio" name="selectedUser" data-ng-model="$parent.selectedUser" data-ng-value="user" data-ng-required="true">
                   </td>
                   <td data-ng-bind="user.firstName + ' ' + user.lastName"></td>
                   <td data-ng-bind="user.ldapUid"></td>
