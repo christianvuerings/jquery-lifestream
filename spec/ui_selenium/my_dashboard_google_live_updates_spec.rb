@@ -36,7 +36,7 @@ describe 'My Dashboard bConnected live updates', :testui => true do
       cal_net_auth_page.login(UserUtils.qa_username, UserUtils.qa_password)
       settings_page = CalCentralPages::SettingsPage.new(@driver)
       settings_page.load_page(@driver)
-      settings_page.disconnect_bconnected(@driver)
+      settings_page.disconnect_bconnected
 
       @google = GooglePage.new(@driver)
       @google.connect_calcentral_to_google(@driver, UserUtils.qa_gmail_username, UserUtils.qa_gmail_password)
