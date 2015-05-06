@@ -212,4 +212,47 @@ describe User::StoredUsers do
 
   end
 
+  describe '#delete_all_recent' do
+
+    it 'should delete recent uids successfully' do
+      stub_model = double
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return(stub_model)
+      stub_model.should_receive(:recent_uids).and_return(stub_model)
+      stub_model.should_receive(:destroy_all)
+
+      response = User::StoredUsers.delete_all_recent(owner_uid)
+      expect(response).to eq success_response
+    end
+
+    it 'should return error if owner_uid does not exist' do
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return(nil)
+
+      response = User::StoredUsers.delete_all_recent(owner_uid)
+      expect(response).to eq not_found_error
+    end
+
+  end
+
+
+  describe '#delete_all_saved' do
+
+    it 'should delete saved uids successfully' do
+      stub_model = double
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return(stub_model)
+      stub_model.should_receive(:saved_uids).and_return(stub_model)
+      stub_model.should_receive(:destroy_all)
+
+      response = User::StoredUsers.delete_all_saved(owner_uid)
+      expect(response).to eq success_response
+    end
+
+    it 'should return error if owner_uid does not exist' do
+      User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return(nil)
+
+      response = User::StoredUsers.delete_all_saved(owner_uid)
+      expect(response).to eq not_found_error
+    end
+
+  end
+
 end
