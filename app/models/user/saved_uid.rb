@@ -1,7 +1,6 @@
 module User
   class SavedUid < ActiveRecord::Base
     include ActiveRecordHelper
-    after_initialize :log_access, :log_threads
 
     self.table_name = 'saved_uids'
 

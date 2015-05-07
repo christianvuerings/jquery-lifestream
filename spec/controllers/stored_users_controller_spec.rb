@@ -94,4 +94,26 @@ describe StoredUsersController do
 
   end
 
+  describe '#delete_all_recent' do
+    it 'should return success_response' do
+      User::StoredUsers.should_receive(:delete_all_recent).with('1234').and_return(success_response)
+
+      post :delete_all_recent, { format: 'json' }
+      expect(response.status).to eq(200)
+      json_response = JSON.parse(response.body)
+      expect(json_response['success']).to eq true
+    end
+  end
+
+  describe '#delete_all_saved' do
+    it 'should return success_response' do
+      User::StoredUsers.should_receive(:delete_all_saved).with('1234').and_return(success_response)
+
+      post :delete_all_saved, { format: 'json' }
+      expect(response.status).to eq(200)
+      json_response = JSON.parse(response.body)
+      expect(json_response['success']).to eq true
+    end
+  end
+
 end

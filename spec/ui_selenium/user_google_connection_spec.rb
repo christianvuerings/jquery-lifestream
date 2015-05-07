@@ -32,7 +32,7 @@ describe 'Google apps', :testui => true do
         @cal_net.login(UserUtils.qa_username, UserUtils.qa_password)
         @settings_page = CalCentralPages::SettingsPage.new(@driver)
         @settings_page.load_page(@driver)
-        @settings_page.disconnect_bconnected(@driver)
+        @settings_page.disconnect_bconnected
         google = GooglePage.new(@driver)
         google.connect_calcentral_to_google(@driver, UserUtils.qa_gmail_username, UserUtils.qa_gmail_password)
       end
@@ -113,7 +113,7 @@ describe 'Google apps', :testui => true do
           cal_net.login(UserUtils.oski_username, UserUtils.oski_password)
           @settings_page = CalCentralPages::SettingsPage.new(@driver)
           @settings_page.load_page(@driver)
-          @settings_page.disconnect_bconnected(@driver)
+          @settings_page.disconnect_bconnected
           google = GooglePage.new(@driver)
           google.connect_calcentral_to_google(@driver, UserUtils.oski_gmail_username, UserUtils.oski_gmail_password)
         end
