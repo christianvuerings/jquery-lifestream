@@ -1,8 +1,18 @@
 .cc-page-course-official-sections {
   background-color: $bc-color-white;
+  font-family: $bc-header-font-family;
+  font-size: 14px;
+  font-weight: 300;
   padding: 20px;
   .cc-button {
     padding: 10px;
+  }
+
+  .cc-page-course-official-sections-header1 {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 30px;
+    margin: 15px 0 16px;
   }
 
   .cc-page-course-official-sections-button {
