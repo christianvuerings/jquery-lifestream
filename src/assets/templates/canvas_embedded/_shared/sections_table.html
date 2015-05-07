@@ -26,7 +26,8 @@
           <span data-ng-bind="section.courseCode"></span>
         </td>
         <td class="cc-template-sections-table-cell-section-label">
-          <label class="cc-template-sections-table-cell-section-label-label" for="cc-template-canvas-manage-sections-checkbox-{{section.ccn}}" data-ng-bind="section.section_label"></label>
+          <label class="cc-template-sections-table-cell-section-label-label" for="cc-template-canvas-manage-sections-checkbox-{{section.ccn}}" data-ng-bind="section.section_label" data-ng-if="listMode === 'createCourseForm'"></label>
+          <span data-ng-bind="section.section_label" data-ng-if="listMode !== 'createCourseForm'"></span>
         </td>
         <td class="cc-template-sections-table-cell-section-ccn" data-ng-bind="section.ccn"></td>
         <td class="cc-template-sections-table-cell-section-timestamps show-for-medium-up" >
