@@ -9,8 +9,7 @@
         <th>Schedule</th>
         <th>Location</th>
         <th>Instructors</th>
-        <th data-ng-if="listMode !== 'createCourseForm'">
-          <span data-ng-if="listMode === 'preview'">&nbsp;</span>
+        <th data-ng-if="listMode !== 'createCourseForm' && listMode !== 'preview'">
           <span data-ng-if="listMode !== 'preview'">Actions</span>
         </th>
       </tr>
@@ -39,9 +38,7 @@
         <td class="cc-template-sections-table-cell-section-instructors show-for-large-up" >
           <div data-ng-repeat="instructor in section.instructors" data-ng-bind="instructor.name"></div>
         </td>
-        <td class="cc-template-sections-table-cell-section-action-option" data-ng-if="listMode !== 'createCourseForm'">
-          <span data-ng-if="listMode === 'preview'">&nbsp;</span>
-
+        <td class="cc-template-sections-table-cell-section-action-option" data-ng-if="listMode !== 'createCourseForm' && listMode !== 'preview'">
           <!-- Current Staging Actions -->
           <div data-ng-if="listMode === 'currentStaging' && section.isCourseSection">
             <button class="bc-canvas-button cc-template-sections-table-button cc-canvas-no-decoration" data-ng-click="stageDeleteAction({section: section})" aria-label="Add {{section.courseCode}} {{section.section_label}} to list of sections to be deleted">Delete</button>
