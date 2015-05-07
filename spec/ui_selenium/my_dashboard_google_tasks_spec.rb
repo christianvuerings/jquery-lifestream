@@ -36,7 +36,7 @@ describe 'The My Dashboard task manager', :testui => true do
       cal_net_auth_page.login(UserUtils.qa_username, UserUtils.qa_password)
       settings_page = CalCentralPages::SettingsPage.new(@driver)
       settings_page.load_page(@driver)
-      settings_page.disconnect_bconnected(@driver)
+      settings_page.disconnect_bconnected
       google_page = GooglePage.new(@driver)
       google_page.connect_calcentral_to_google(@driver, UserUtils.qa_gmail_username, UserUtils.qa_gmail_password)
       @to_do_card = CalCentralPages::MyDashboardPage::MyDashboardToDoCard.new(@driver)
