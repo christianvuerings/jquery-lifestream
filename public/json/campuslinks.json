@@ -18,23 +18,6 @@
       ]
     },
     {
-      "name": "ASUC",
-      "description": "Student government",
-      "url": "http://asuc.org/",
-      "roles": {
-        "student": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Student Engagement",
-          "subcategory": "Student Government"
-        }
-      ]
-    },
-    {
       "name": "Academic Calendar",
       "description": "Academic Calendars Future Campus Calendars",
       "url": "http://registrar.berkeley.edu/CalendarDisp.aspx?terms=current",
@@ -154,6 +137,23 @@
       ]
     },
     {
+      "name": "ASUC",
+      "description": "Student government",
+      "url": "http://asuc.org/",
+      "roles": {
+        "student": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Student Engagement",
+          "subcategory": "Student Government"
+        }
+      ]
+    },
+    {
       "name": "At Your Service",
       "description": "Benefits, Earnings, Taxes \u0026 Retirement",
       "url": "https://atyourserviceonline.ucop.edu",
@@ -167,6 +167,23 @@
         {
           "topcategory": "HR \u0026 Benefits",
           "subcategory": "Benefits"
+        }
+      ]
+    },
+    {
+      "name": "Athletic Study Center",
+      "description": "Advising and tutoring for student athletes",
+      "url": "https://asc.berkeley.edu/",
+      "roles": {
+        "student": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Support Services",
+          "subcategory": "Students"
         }
       ]
     },
@@ -188,36 +205,70 @@
       ]
     },
     {
-      "name": "BETS - equipment tracking",
-      "description": "Equipment Tracking System of inventorial and non-inventorial equipment",
-      "url": "http://bets.berkeley.edu/BETS/home/BetsHome.cfm",
+      "name": "bCal",
+      "description": "Your campus calendar",
+      "url": "http://bcal.berkeley.edu",
       "roles": {
-        "student": false,
+        "student": true,
         "staff": true,
-        "faculty": false,
-        "exStudent": false
+        "faculty": true,
+        "exStudent": true
       },
       "categories": [
         {
-          "topcategory": "Tools \u0026 Resources",
-          "subcategory": "Asset Management"
+          "topcategory": "Communication \u0026 Collaboration",
+          "subcategory": "bConnected Tools"
         }
       ]
     },
     {
-      "name": "BFS",
-      "description": "Berkeley Financial System",
-      "url": "http://www.bai.berkeley.edu/BFS/index.htm",
+      "name": "bConnected Support",
+      "description": "Information and resources site for Berkeley's email, calendar and shared drive solutions, powered by Google Apps for Education",
+      "url": "http://ist.berkeley.edu/bconnected",
       "roles": {
-        "student": false,
+        "student": true,
         "staff": true,
         "faculty": true,
-        "exStudent": false
+        "exStudent": true
       },
       "categories": [
         {
-          "topcategory": "Tools \u0026 Resources",
-          "subcategory": "Financial"
+          "topcategory": "Communication \u0026 Collaboration",
+          "subcategory": "bConnected Tools"
+        }
+      ]
+    },
+    {
+      "name": "bCourses",
+      "description": "Campus Learning Management System (LMS) powered by Canvas",
+      "url": "http://bcourses.berkeley.edu",
+      "roles": {
+        "student": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Classes",
+          "subcategory": "Classes"
+        }
+      ]
+    },
+    {
+      "name": "bDrive",
+      "description": "An area to store files that can be shared and collaborated",
+      "url": "http://bdrive.berkeley.edu",
+      "roles": {
+        "student": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Communication \u0026 Collaboration",
+          "subcategory": "bConnected Tools"
         }
       ]
     },
@@ -307,23 +358,6 @@
       ]
     },
     {
-      "name": "Berkeley Online Tour",
-      "description": "Instructor and student perspectives and virtual campus tours of Berkeley",
-      "url": "http://www.berkeley.edu/tour/",
-      "roles": {
-        "student": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Getting Around",
-          "subcategory": "Points of Interest"
-        }
-      ]
-    },
-    {
       "name": "Berkeley Research",
       "description": "Research information and opportunities",
       "url": "http://vcresearch.berkeley.edu/",
@@ -337,6 +371,23 @@
         {
           "topcategory": "Academic Departments",
           "subcategory": "Research"
+        }
+      ]
+    },
+    {
+      "name": "Berkeley Self-Guided Tours",
+      "description": "Mobile, podcast, cell phone, and other tours of the Berkeley campus",
+      "url": "http://visitors.berkeley.edu/tour/self.shtml",
+      "roles": {
+        "student": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Getting Around",
+          "subcategory": "Points of Interest"
         }
       ]
     },
@@ -371,6 +422,40 @@
         {
           "topcategory": "Food \u0026 Housing",
           "subcategory": "Housing"
+        }
+      ]
+    },
+    {
+      "name": "BETS - equipment tracking",
+      "description": "Equipment Tracking System of inventorial and non-inventorial equipment",
+      "url": "http://bets.berkeley.edu/BETS/home/BetsHome.cfm",
+      "roles": {
+        "student": false,
+        "staff": true,
+        "faculty": false,
+        "exStudent": false
+      },
+      "categories": [
+        {
+          "topcategory": "Tools \u0026 Resources",
+          "subcategory": "Asset Management"
+        }
+      ]
+    },
+    {
+      "name": "BFS",
+      "description": "Berkeley Financial System",
+      "url": "http://www.bai.berkeley.edu/BFS/index.htm",
+      "roles": {
+        "student": false,
+        "staff": true,
+        "faculty": true,
+        "exStudent": false
+      },
+      "categories": [
+        {
+          "topcategory": "Tools \u0026 Resources",
+          "subcategory": "Financial"
         }
       ]
     },
@@ -426,6 +511,23 @@
       ]
     },
     {
+      "name": "bMail",
+      "description": "Your campus email account",
+      "url": "http://bmail.berkeley.edu",
+      "roles": {
+        "student": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Communication \u0026 Collaboration",
+          "subcategory": "bConnected Tools"
+        }
+      ]
+    },
+    {
       "name": "Bookstore - Berkeley Law",
       "description": "Textbooks and other learning resources for Berkeley Law students",
       "url": "http://www.law.berkeley.edu/15687.htm",
@@ -460,19 +562,61 @@
       ]
     },
     {
-      "name": "CARE Services",
-      "description": "free, confidential problem assessment and referral for UC Berkeley faculty and staff",
-      "url": "http://uhs.berkeley.edu/facstaff/care/",
+      "name": "bSpace",
+      "description": "Homework assignments, lecture slides, syllabi and class resources",
+      "url": "http://bspace.berkeley.edu",
+      "roles": {
+        "student": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Classes"
+        },
+        {
+          "topcategory": "Classes",
+          "subcategory": "Classes"
+        },
+        {
+          "topcategory": "Communication \u0026 Collaboration",
+          "subcategory": "Collaboration Tools"
+        }
+      ]
+    },
+    {
+      "name": "bSpace Grade book",
+      "description": "A tool to enter, upload, and calculate student grades on bSpace",
+      "url": "http://gsi.berkeley.edu/teachingguide/tech/bspace-gradebook.html",
       "roles": {
         "student": false,
-        "staff": true,
+        "staff": false,
         "faculty": true,
         "exStudent": false
       },
       "categories": [
         {
-          "topcategory": "Wellness",
-          "subcategory": "Campus Health Center"
+          "topcategory": "Faculty",
+          "subcategory": "Tools"
+        }
+      ]
+    },
+    {
+      "name": "bSpace Support",
+      "description": "A communication and collaboration program that supports teaching and learning",
+      "url": "http://ets.berkeley.edu/bspace",
+      "roles": {
+        "student": false,
+        "staff": false,
+        "faculty": true,
+        "exStudent": false
+      },
+      "categories": [
+        {
+          "topcategory": "Faculty",
+          "subcategory": "Resources"
         }
       ]
     },
@@ -710,6 +854,23 @@
       ]
     },
     {
+      "name": "Callisto \u0026 CalJobs",
+      "description": "Official Berkeley website for all things job-related",
+      "url": "https://career.berkeley.edu/CareerApps/Callisto/CallistoLogin.aspx",
+      "roles": {
+        "student": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Career",
+          "subcategory": "Jobs"
+        }
+      ]
+    },
+    {
       "name": "CalMail",
       "description": "Campus email management",
       "url": "http://calmail.berkeley.edu",
@@ -808,23 +969,6 @@
         {
           "topcategory": "Tools \u0026 Resources",
           "subcategory": "Payroll"
-        }
-      ]
-    },
-    {
-      "name": "Callisto \u0026 CalJobs",
-      "description": "Official Berkeley website for all things job-related",
-      "url": "https://career.berkeley.edu/CareerApps/Callisto/CallistoLogin.aspx",
-      "roles": {
-        "student": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Career",
-          "subcategory": "Jobs"
         }
       ]
     },
@@ -965,6 +1109,23 @@
       ]
     },
     {
+      "name": "CARE Services",
+      "description": "free, confidential problem assessment and referral for UC Berkeley faculty and staff",
+      "url": "http://uhs.berkeley.edu/facstaff/care/",
+      "roles": {
+        "student": false,
+        "staff": true,
+        "faculty": true,
+        "exStudent": false
+      },
+      "categories": [
+        {
+          "topcategory": "Wellness",
+          "subcategory": "Campus Health Center"
+        }
+      ]
+    },
+    {
       "name": "Career Center",
       "description": "Cal jobs, internships \u0026 career counseling",
       "url": "http://career.berkeley.edu/",
@@ -1075,6 +1236,23 @@
       ]
     },
     {
+      "name": "Class Enrollment Rules and Guides",
+      "description": "Registrar guide to Tele-BEARS, enrollment periods, add-drop deadlines, and other tips",
+      "url": "http://registrar.berkeley.edu/StudentSystems/tbinfo.html",
+      "roles": {
+        "student": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Planning"
+        }
+      ]
+    },
+    {
       "name": "Class pass",
       "description": "AC Transit Pass to bus for free",
       "url": "http://pt.berkeley.edu/pay/transit/classpass/",
@@ -1139,6 +1317,27 @@
         {
           "topcategory": "Policies \u0026 Procedures",
           "subcategory": "Policies"
+        }
+      ]
+    },
+    {
+      "name": "Counseling \u0026 Psychological Services",
+      "description": "Individual, group, \u0026 self-help from Tang Center",
+      "url": "http://uhs.berkeley.edu/students/counseling/cps.shtml",
+      "roles": {
+        "student": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Support Services",
+          "subcategory": "Students"
+        },
+        {
+          "topcategory": "Wellness",
+          "subcategory": "Campus Health Center"
         }
       ]
     },
@@ -1215,6 +1414,23 @@
       ]
     },
     {
+      "name": "e-bills",
+      "description": "Pay your CARS bill online with either Electronic Billing (e-Bill) or Electronic Payment (e-Check)",
+      "url": "https://bearfacts.berkeley.edu/bearfacts/student/CARS/ebill.do?bfaction=accessEBill ",
+      "roles": {
+        "student": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "Billing \u0026 Payments"
+        }
+      ]
+    },
+    {
       "name": "Educational Opportunity Program",
       "description": "Guidance and resources for first generation and low-income college students.",
       "url": "http://eop.berkeley.edu",
@@ -1253,9 +1469,9 @@
       ]
     },
     {
-      "name": "Emergency Preparedness",
-      "description": "How to be prepared and ready for emergencies",
-      "url": "http://oep.berkeley.edu/",
+      "name": "Emergency information",
+      "description": "Go-to site for emergency response information",
+      "url": "http://emergency.berkeley.edu/",
       "roles": {
         "student": true,
         "staff": true,
@@ -1270,9 +1486,9 @@
       ]
     },
     {
-      "name": "Emergency information",
-      "description": "Go-to site for emergency response information",
-      "url": "http://emergency.berkeley.edu/",
+      "name": "Emergency Preparedness",
+      "description": "How to be prepared and ready for emergencies",
+      "url": "http://oep.berkeley.edu/",
       "roles": {
         "student": true,
         "staff": true,
@@ -1372,23 +1588,6 @@
       ]
     },
     {
-      "name": "FAFSA",
-      "description": "Free Application for Federal Student Aid (FAFSA),annual form submission required to receive financial aid",
-      "url": "https://fafsa.ed.gov/",
-      "roles": {
-        "student": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Finances",
-          "subcategory": "Financial Assistance"
-        }
-      ]
-    },
-    {
       "name": "Facilities Services",
       "description": "Cleaning, landscaping and other services to maintain exceptional physical appearance",
       "url": "http://www.cp.berkeley.edu/",
@@ -1423,6 +1622,23 @@
       ]
     },
     {
+      "name": "FAFSA",
+      "description": "Free Application for Federal Student Aid (FAFSA),annual form submission required to receive financial aid",
+      "url": "https://fafsa.ed.gov/",
+      "roles": {
+        "student": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Finances",
+          "subcategory": "Financial Assistance"
+        }
+      ]
+    },
+    {
       "name": "Financial Aid \u0026 Scholarships Office",
       "description": "Start here to learn about Financial Aid and for step-by-step guidance about financial aid and select scholarships at UC Berkeley",
       "url": "http://financialaid.berkeley.edu",
@@ -1453,6 +1669,27 @@
         {
           "topcategory": "Academic Planning",
           "subcategory": "Planning"
+        }
+      ]
+    },
+    {
+      "name": "Gender Equity Resource Center",
+      "description": "Community center for students, faculty, staff, \u0026 alumni",
+      "url": "http://geneq.berkeley.edu/",
+      "roles": {
+        "student": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Support Services",
+          "subcategory": "Students"
+        },
+        {
+          "topcategory": "Wellness",
+          "subcategory": "Staff Support Services"
         }
       ]
     },
@@ -1542,36 +1779,19 @@
       ]
     },
     {
-      "name": "HR System",
-      "description": "Recording personal information and action for the Berkeley community",
-      "url": "http://hrweb.berkeley.edu/hcm",
+      "name": "GSI, Reader, Tutor, and GSR Positions",
+      "description": "Graduate Student Instructor (GSI), Researcher (GSR), Reader, and Tutor appointments at Berkeley",
+      "url": "http://grad.berkeley.edu/professional-development/appointments/",
       "roles": {
-        "student": false,
-        "staff": true,
-        "faculty": true,
-        "exStudent": false
+        "student": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true
       },
       "categories": [
         {
-          "topcategory": "Tools \u0026 Resources",
-          "subcategory": "Human Resources"
-        }
-      ]
-    },
-    {
-      "name": "HR Web",
-      "description": "Human Resources at Berkeley",
-      "url": "http://hrweb.berkeley.edu/",
-      "roles": {
-        "student": false,
-        "staff": true,
-        "faculty": true,
-        "exStudent": false
-      },
-      "categories": [
-        {
-          "topcategory": "Tools \u0026 Resources",
-          "subcategory": "Human Resources"
+          "topcategory": "Career",
+          "subcategory": "Student Employees"
         }
       ]
     },
@@ -1614,36 +1834,36 @@
       ]
     },
     {
-      "name": "IST Knowledge Base",
-      "description": "Contains answers to Berkeley computing and IT questions",
-      "url": "http://ist.berkeley.edu/support/kb",
+      "name": "HR System",
+      "description": "Recording personal information and action for the Berkeley community",
+      "url": "http://hrweb.berkeley.edu/hcm",
       "roles": {
-        "student": true,
+        "student": false,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": false
       },
       "categories": [
         {
           "topcategory": "Tools \u0026 Resources",
-          "subcategory": "Computing"
+          "subcategory": "Human Resources"
         }
       ]
     },
     {
-      "name": "IST Support",
-      "description": "Information Technology support for services and systems",
-      "url": "http://ist.berkeley.edu/support/",
+      "name": "HR Web",
+      "description": "Human Resources at Berkeley",
+      "url": "http://hrweb.berkeley.edu/",
       "roles": {
-        "student": true,
+        "student": false,
         "staff": true,
         "faculty": true,
-        "exStudent": true
+        "exStudent": false
       },
       "categories": [
         {
           "topcategory": "Tools \u0026 Resources",
-          "subcategory": "Computing"
+          "subcategory": "Human Resources"
         }
       ]
     },
@@ -1682,6 +1902,57 @@
       ]
     },
     {
+      "name": "IST Knowledge Base",
+      "description": "Contains answers to Berkeley computing and IT questions",
+      "url": "http://ist.berkeley.edu/support/kb",
+      "roles": {
+        "student": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Tools \u0026 Resources",
+          "subcategory": "Computing"
+        }
+      ]
+    },
+    {
+      "name": "IST Support",
+      "description": "Information Technology support for services and systems",
+      "url": "http://ist.berkeley.edu/support/",
+      "roles": {
+        "student": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Tools \u0026 Resources",
+          "subcategory": "Computing"
+        }
+      ]
+    },
+    {
+      "name": "iTunesU - Berkeley",
+      "description": "Audio files of recordings from lectures or events",
+      "url": "http://itunes.berkeley.edu",
+      "roles": {
+        "student": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Classes",
+          "subcategory": "Learning Resources"
+        }
+      ]
+    },
+    {
       "name": "KALX",
       "description": "90.7 MHz. Berkeley's campus radio station",
       "url": "http://kalx.berkeley.edu/",
@@ -1716,6 +1987,23 @@
         {
           "topcategory": "Staff Learning",
           "subcategory": "Health \u0026 Safety"
+        }
+      ]
+    },
+    {
+      "name": "LEAD Center",
+      "description": "Student leadership programs and workshops",
+      "url": "http://lead.berkeley.edu/",
+      "roles": {
+        "student": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Student Engagement",
+          "subcategory": "Activities"
         }
       ]
     },
@@ -1877,23 +2165,6 @@
       ]
     },
     {
-      "name": "Office of Undergraduate Advising",
-      "description": "Advising provided for students under the college of Letters and Science",
-      "url": "http://ls-advise.berkeley.edu/",
-      "roles": {
-        "student": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Academic Planning",
-          "subcategory": "Student Advising"
-        }
-      ]
-    },
-    {
       "name": "Office of the Chancellor",
       "description": "Meet Chancellor Nicholas B. Dirks",
       "url": "http://chancellor.berkeley.edu/",
@@ -1924,6 +2195,23 @@
         {
           "topcategory": "Academic Planning",
           "subcategory": "Academic Record"
+        }
+      ]
+    },
+    {
+      "name": "Office of Undergraduate Advising",
+      "description": "Advising provided for students under the college of Letters and Science",
+      "url": "http://ls-advise.berkeley.edu/",
+      "roles": {
+        "student": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Academic Planning",
+          "subcategory": "Student Advising"
         }
       ]
     },
@@ -2306,23 +2594,6 @@
       ]
     },
     {
-      "name": "SARA - request system access",
-      "description": "Form that grants access to different systems for employees",
-      "url": "http://www.bai.berkeley.edu/BFS/systems/systemAccess.htm",
-      "roles": {
-        "student": false,
-        "staff": true,
-        "faculty": true,
-        "exStudent": false
-      },
-      "categories": [
-        {
-          "topcategory": "Tools \u0026 Resources",
-          "subcategory": "Security \u0026 Access"
-        }
-      ]
-    },
-    {
       "name": "Safety",
       "description": "Safety information and programs",
       "url": "http://police.berkeley.edu/index.html",
@@ -2336,6 +2607,23 @@
         {
           "topcategory": "Safety \u0026 Emergency Information",
           "subcategory": "Emergency Preparedness"
+        }
+      ]
+    },
+    {
+      "name": "SARA - request system access",
+      "description": "Form that grants access to different systems for employees",
+      "url": "http://www.bai.berkeley.edu/BFS/systems/systemAccess.htm",
+      "roles": {
+        "student": false,
+        "staff": true,
+        "faculty": true,
+        "exStudent": false
+      },
+      "categories": [
+        {
+          "topcategory": "Tools \u0026 Resources",
+          "subcategory": "Security \u0026 Access"
         }
       ]
     },
@@ -2641,7 +2929,7 @@
       ]
     },
     {
-      "name": "TeleBears",
+      "name": "Tele-BEARS",
       "description": "Register for classes",
       "url": "https://telebears.berkeley.edu",
       "roles": {
@@ -2777,23 +3065,6 @@
       ]
     },
     {
-      "name": "UC Berkeley Wellness Letter",
-      "description": "Tips and information on how to stay healthy",
-      "url": "http://www.wellnessletter.com/ucberkeley/",
-      "roles": {
-        "student": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Wellness",
-          "subcategory": "News \u0026 Information"
-        }
-      ]
-    },
-    {
       "name": "UC Berkeley museums",
       "description": "Berkeley's national history museums ",
       "url": "http://bnhm.berkeley.edu/",
@@ -2807,6 +3078,23 @@
         {
           "topcategory": "Recreation \u0026 Entertainment",
           "subcategory": "Points of Interest"
+        }
+      ]
+    },
+    {
+      "name": "UC Berkeley Wellness Letter",
+      "description": "Tips and information on how to stay healthy",
+      "url": "http://www.wellnessletter.com/ucberkeley/",
+      "roles": {
+        "student": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Wellness",
+          "subcategory": "News \u0026 Information"
         }
       ]
     },
@@ -2904,6 +3192,23 @@
       ]
     },
     {
+      "name": "Undocumented Students Program",
+      "description": "Personalized services for undocumented undergraduates",
+      "url": "http://undocu.berkeley.edu/",
+      "roles": {
+        "student": true,
+        "staff": false,
+        "faculty": false,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Support Services",
+          "subcategory": "Students"
+        }
+      ]
+    },
+    {
       "name": "University Relations",
       "description": "Berkeley's Public Affairs and fundraising Development division",
       "url": "http://www.urel.berkeley.edu/",
@@ -2983,184 +3288,6 @@
         "student": true,
         "staff": false,
         "faculty": false,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Classes",
-          "subcategory": "Learning Resources"
-        }
-      ]
-    },
-    {
-      "name": "bCal",
-      "description": "Your campus calendar",
-      "url": "http://bcal.berkeley.edu",
-      "roles": {
-        "student": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Communication \u0026 Collaboration",
-          "subcategory": "bConnected Tools"
-        }
-      ]
-    },
-    {
-      "name": "bConnected Support",
-      "description": "Information and resources site for Berkeley's email, calendar and shared drive solutions, powered by Google Apps for Education",
-      "url": "http://ist.berkeley.edu/bconnected",
-      "roles": {
-        "student": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Communication \u0026 Collaboration",
-          "subcategory": "bConnected Tools"
-        }
-      ]
-    },
-    {
-      "name": "bCourses",
-      "description": "Campus Learning Management System (LMS) powered by Canvas",
-      "url": "http://bcourses.berkeley.edu",
-      "roles": {
-        "student": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Classes",
-          "subcategory": "Classes"
-        }
-      ]
-    },
-    {
-      "name": "bDrive",
-      "description": "An area to store files that can be shared and collaborated",
-      "url": "http://bdrive.berkeley.edu",
-      "roles": {
-        "student": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Communication \u0026 Collaboration",
-          "subcategory": "bConnected Tools"
-        }
-      ]
-    },
-    {
-      "name": "bMail",
-      "description": "Your campus email account",
-      "url": "http://bmail.berkeley.edu",
-      "roles": {
-        "student": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Communication \u0026 Collaboration",
-          "subcategory": "bConnected Tools"
-        }
-      ]
-    },
-    {
-      "name": "bSpace",
-      "description": "Homework assignments, lecture slides, syllabi and class resources",
-      "url": "http://bspace.berkeley.edu",
-      "roles": {
-        "student": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Academic Planning",
-          "subcategory": "Classes"
-        },
-        {
-          "topcategory": "Classes",
-          "subcategory": "Classes"
-        },
-        {
-          "topcategory": "Communication \u0026 Collaboration",
-          "subcategory": "Collaboration Tools"
-        }
-      ]
-    },
-    {
-      "name": "bSpace Grade book",
-      "description": "A tool to enter, upload, and calculate student grades on bSpace",
-      "url": "http://gsi.berkeley.edu/teachingguide/tech/bspace-gradebook.html",
-      "roles": {
-        "student": false,
-        "staff": false,
-        "faculty": true,
-        "exStudent": false
-      },
-      "categories": [
-        {
-          "topcategory": "Faculty",
-          "subcategory": "Tools"
-        }
-      ]
-    },
-    {
-      "name": "bSpace Support",
-      "description": "A communication and collaboration program that supports teaching and learning",
-      "url": "http://ets.berkeley.edu/bspace",
-      "roles": {
-        "student": false,
-        "staff": false,
-        "faculty": true,
-        "exStudent": false
-      },
-      "categories": [
-        {
-          "topcategory": "Faculty",
-          "subcategory": "Resources"
-        }
-      ]
-    },
-    {
-      "name": "e-bills",
-      "description": "Pay your CARS bill online with either Electronic Billing (e-Bill) or Electronic Payment (e-Check)",
-      "url": "https://bearfacts.berkeley.edu/bearfacts/student/CARS/ebill.do?bfaction=accessEBill ",
-      "roles": {
-        "student": true,
-        "staff": false,
-        "faculty": false,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Finances",
-          "subcategory": "Billing \u0026 Payments"
-        }
-      ]
-    },
-    {
-      "name": "iTunesU - Berkeley",
-      "description": "Audio files of recordings from lectures or events",
-      "url": "http://itunes.berkeley.edu",
-      "roles": {
-        "student": true,
-        "staff": true,
-        "faculty": true,
         "exStudent": true
       },
       "categories": [
