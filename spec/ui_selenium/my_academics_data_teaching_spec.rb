@@ -209,7 +209,7 @@ describe 'My Academics teaching', :testui => true do
                       end
                     end
 
-                    teaching_card.back
+                    semester_page.back
 
                   end
                 end
