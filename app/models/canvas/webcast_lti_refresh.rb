@@ -1,11 +1,13 @@
 module Canvas
   class WebcastLtiRefresh
+    include ClassLogger
 
     def initialize(sis_term_ids, webcast_tool_id, options = {})
       @options = options
       @sis_term_ids = sis_term_ids
       @canvas_webcast_tool_id = webcast_tool_id
       @is_webcast_sign_up_active = Webcast::SystemStatus.new(@options).get['is_sign_up_active']
+      logger.info "Webcast sign-up period #{@is_webcast_sign_up_active ? 'is' : 'is not'} active."
     end
 
     def refresh_canvas
@@ -32,28 +34,28 @@ module Canvas
       external_tools = Canvas::ExternalTools.new @options.merge(canvas_course_id: canvas_course_id)
       tab = external_tools.find_canvas_course_tab @canvas_webcast_tool_id
       if tab
-        is_tab_showing = !tab.has_key?('hidden') || !tab['hidden']
+        is_tab_showing = !tab.has_key?('hidden')
         if show_tab == is_tab_showing
-          Rails.logger.warn "Webcast tab on course site #{canvas_course_id} is already hidden=#{show_tab}. Do nothing."
+          logger.warn "Webcast tab on course site #{canvas_course_id} is already show_tab=#{show_tab}. Do nothing."
         else
-          Rails.logger.info "Set hidden=#{show_tab} on Webcast tab in course site #{canvas_course_id}"
+          logger.info "Set hidden=#{show_tab} on Webcast tab in course site #{canvas_course_id}"
           record = Webcast::CourseSiteLog.find_by canvas_course_site_id: canvas_course_id
           if record
             unhidden_date = record.webcast_tool_unhidden_at.strftime('%m/%d/%Y')
-            Rails.logger.warn "Do nothing to course site #{canvas_course_id} because Webcast tool was un-hidden on #{unhidden_date}."
+            logger.warn "Do nothing to course site #{canvas_course_id} because Webcast tool was un-hidden on #{unhidden_date}."
           else
             if show_tab
               modified_tab = external_tools.show_course_site_tab tab['id']
-              Rails.logger.warn "The Webcast tool has been un-hidden on course site #{canvas_course_id}"
+              logger.warn "The Webcast tool #{modified_tab ? 'has been' : 'FAILED to be' } un-hidden on course site #{canvas_course_id}"
             else
               modified_tab = external_tools.hide_course_site_tab tab['id']
-              Webcast::CourseSiteLog.create({ canvas_course_site_id: canvas_course_id, webcast_tool_unhidden_at: Time.zone.now })
-              Rails.logger.warn "The Webcast tool has been hidden on course site #{canvas_course_id}"
+              logger.warn "The Webcast tool #{modified_tab ? 'has been' : 'FAILED to be' } hidden on course site #{canvas_course_id}"
+              Webcast::CourseSiteLog.create({ canvas_course_site_id: canvas_course_id, webcast_tool_unhidden_at: Time.zone.now }) if modified_tab
             end
           end
         end
       else
-        Rails.logger.warn "No Webcast tab, hidden or otherwise, found on course site #{canvas_course_id}"
+        logger.warn "No Webcast tab, hidden or otherwise, found on course site #{canvas_course_id}"
       end
       modified_tab
     end
