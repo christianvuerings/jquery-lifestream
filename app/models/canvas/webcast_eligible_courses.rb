@@ -54,7 +54,7 @@ module Canvas
             ccn = section[:ccn].to_s.to_i
             if ccn > 0
               section_key = "#{key[:term_yr]}-#{key[:term_cd]}-#{ccn}"
-              has_recordings = recordings_per_ccn.has_key? section_key && recordings_per_ccn[section_key][:videos].present?
+              has_recordings = recordings_per_ccn.has_key?(section_key) && recordings_per_ccn[section_key][:videos].present?
               logger.warn "#{section_key} has Webcast recordings (canvas_course_id = #{canvas_course_id})" if has_recordings
               in_webcast_enabled_room = webcast_enabled_room_ccn_set.include? section_key
               if has_recordings || in_webcast_enabled_room
