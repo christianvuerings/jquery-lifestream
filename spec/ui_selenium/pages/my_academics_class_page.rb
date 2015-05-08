@@ -3,7 +3,6 @@ require 'selenium-webdriver'
 require 'page-object'
 require_relative 'cal_central_pages'
 require_relative 'my_academics_page'
-require_relative '../util/web_driver_utils'
 
 module CalCentralPages
 
@@ -11,7 +10,6 @@ module CalCentralPages
 
     include PageObject
     include CalCentralPages
-    include ClassLogger
 
     span(:class_breadcrumb, :xpath => '//h1/span[@data-ng-bind="selectedCourse.course_code"]')
     span(:section_breadcrumb, :xpath => '//h1/span[@data-ng-bind="selectedSection"]')
@@ -25,7 +23,12 @@ module CalCentralPages
     elements(:section_units, :td, :xpath => '//h3[text()="Class Info"]/following-sibling::div[@data-ng-if="!isInstructorOrGsi"]//td[@data-ng-if="section.units"]')
     elements(:section_grade_option, :td, :xpath => '//h4[text()="Course Offering"]/following-sibling::div[@data-ng-if="!isInstructorOrGsi"]//td[@data-ng-bind="section.gradeOption"]')
     elements(:section_schedule_label, :div, :xpath => '//div[@data-ng-repeat="section in selectedCourse.sections"]/div[@data-ng-bind="section.section_label"]')
-    elements(:section_schedule, :div, :xpath => '//h4[text()="Section Schedules"]/following-sibling::div[@data-ng-repeat="section in selectedCourse.sections"]//div[@data-ng-repeat="schedule in section.schedules"]')
+    elements(:student_section_schedule, :div, :xpath => '//h4[text()="Section Schedules"]/following-sibling::div[@data-ng-repeat="section in selectedCourse.sections"]//div[@data-ng-repeat="schedule in section.schedules"]')
+    elements(:teaching_section_schedule, :div, :xpath => '//h3[text()="Section Schedules"]/following-sibling::div[@data-ng-repeat="section in selectedCourse.sections"]//div[@data-ng-repeat="schedule in section.schedules"]')
+    h3(:cross_listing_heading, :xpath => '//h3[text()="Cross-listed As"]')
+    elements(:cross_listing, :span, :xpath => '//span[@data-ng-bind="listing.course_code"]')
+
+    # INSTRUCTORS
     elements(:section_instructors_heading, :h3, :xpath => '//h3[@data-ng-bind="section.section_label"]')
 
     # WEBCAST
@@ -76,9 +79,15 @@ module CalCentralPages
       labels
     end
 
-    def all_section_schedules
+    def all_student_section_schedules
       schedules = []
-      section_schedule_elements.each { |schedule| schedules.push(schedule.text) }
+      student_section_schedule_elements.each { |schedule| schedules.push(schedule.text) }
+      schedules
+    end
+
+    def all_teaching_section_schedules
+      schedules = []
+      teaching_section_schedule_elements.each { |schedule| schedules.push(schedule.text) }
       schedules
     end
 
@@ -97,6 +106,12 @@ module CalCentralPages
         instructors.push(all_section_instructors(driver, section))
       end
       instructors
+    end
+
+    def all_cross_listings
+      listings = []
+      cross_listing_elements.each { |listing| listings.push(listing.text) }
+      listings
     end
 
     def wait_for_webcasts

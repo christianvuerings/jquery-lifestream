@@ -13,7 +13,6 @@ module CalCentralPages
     wait_for_expected_title('My Academics | CalCentral')
 
     h1(:page_heading, :xpath => '//h1[contains(.,"My Academics")]')
-    link(:first_student_semester_link, :xpath => '//div[@class="cc-academics-semesters"]//a')
 
     def load_page(driver)
       logger.info('Loading My Academics page')
@@ -41,16 +40,25 @@ module CalCentralPages
       end
     end
 
-    def click_semester_link(driver, semester_name)
+    def click_student_semester_link(driver, semester_name)
       logger.info("Clicking link for #{semester_name}")
-      wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
-      wait.until { driver.find_element(:link_text => semester_name) }
+      wait_until(timeout=WebDriverUtils.page_load_timeout) { driver.find_element(:xpath => "//div[@data-ng-if='api.user.profile.hasStudentHistory && semesters.length']//a[text()='#{semester_name}']") }
       driver.find_element(:link_text => semester_name).click
     end
 
-    def click_class_link(driver, url)
-      wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
-      wait.until { driver.find_element(:xpath => "//a[@href='#{url}']") }
+    def click_teaching_semester_link(driver, semester_name)
+      logger.info("Clicking link for #{semester_name}")
+      wait_until(timeout=WebDriverUtils.page_load_timeout) { driver.find_element(:xpath => "//div[@data-ng-if='hasTeachingClasses']//a[text()='#{semester_name}']") }
+      driver.find_element(:xpath => "//div[@data-ng-if='hasTeachingClasses']//a[text()='#{semester_name}']").click
+    end
+
+    def click_class_link_by_text(driver, link_text)
+      wait_until(timeout=WebDriverUtils.page_load_timeout) { driver.find_element(:link_text => link_text) }
+      driver.find_element(:link_text => link_text).click
+    end
+
+    def click_class_link_by_url(driver, url)
+      wait_until(timeout=WebDriverUtils.page_load_timeout) { driver.find_element(:xpath => "//a[@href='#{url}']") }
       driver.find_element(:xpath => "//a[@href='#{url}']").click
     end
   end
