@@ -54,7 +54,9 @@ module Canvas
       if @fake
         csv = CSV.read("fixtures/pretty_vcr_recordings/Canvas_#{report_type}_report_#{object_type}_csv.csv", {headers: true})
       else
-        conn = Faraday.new(file_info["url"], @options) do |c|
+        # Faraday requires nil when options hash is empty. For now, we only allow ssl options.
+        conn_options = @options.any? && @options[:ssl].present? ? @options : nil
+        conn = Faraday.new(file_info["url"], conn_options) do |c|
           c.use FaradayMiddleware::FollowRedirects
           c.use Faraday::Adapter::NetHttp
         end
