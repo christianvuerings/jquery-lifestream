@@ -93,7 +93,7 @@ namespace :canvas do
       tool_id = webcast_tool.values.first
       Rails.logger.warn "Updating Webcast tool (id = #{tool_id}) configs on all Canvas course sites"
       sis_term_ids = Canvas::Proxy.current_sis_term_ids
-      refresh = Canvas::WebcastLtiRefresh.new(sis_term_ids, tool_id, options).refresh_canvas
+      refresh = Canvas::WebcastLtiRefresh.new(sis_term_ids, tool_id).refresh_canvas
       Rails.logger.warn "Webcast tool (id = #{tool_id}) refreshed on #{refresh.length} Canvas course sites"
     end
   end
