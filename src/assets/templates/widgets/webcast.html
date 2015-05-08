@@ -20,7 +20,8 @@
         <div data-ng-if="currentSelection === 'Video'">
           <div data-ng-if="videos.length">
             <div class="cc-select cc-widget-webcast-select">
-              <select data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
+              <label for="cc-widget-webcast-video-selection" class="cc-visuallyhidden">Select Video</label>
+              <select id="cc-widget-webcast-video-selection" data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
             </div>
             <div class="cc-youtube-video">
               <div data-cc-youtube-directive="selectedVideo.youTubeId" data-cc-youtube-directive-title="{{selectedVideo.lecture}}"></div>
