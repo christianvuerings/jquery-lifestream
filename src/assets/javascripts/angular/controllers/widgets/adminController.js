@@ -34,6 +34,10 @@
       return adminFactory.deleteAllRecentUsers().success(getStoredUsersUncached);
     };
 
+    $scope.admin.updateIDField = function(id) {
+      $scope.admin.actAs.id = parseInt(id, 10);
+    };
+
     /**
      * Get stored recent/saved users
      */
