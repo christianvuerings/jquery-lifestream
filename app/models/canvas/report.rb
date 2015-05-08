@@ -3,6 +3,11 @@ module Canvas
     require 'csv'
     include ClassLogger, SafeJsonParser
 
+    def initialize(options = {})
+      super options
+      @options = options
+    end
+
     def get_sis_export_csv(object_type, term_id = nil)
       get_account_csv('sis_export', object_type, term_id)
     end
@@ -49,7 +54,7 @@ module Canvas
       if @fake
         csv = CSV.read("fixtures/pretty_vcr_recordings/Canvas_#{report_type}_report_#{object_type}_csv.csv", {headers: true})
       else
-        conn = Faraday.new(file_info["url"]) do |c|
+        conn = Faraday.new(file_info["url"], @options) do |c|
           c.use FaradayMiddleware::FollowRedirects
           c.use Faraday::Adapter::NetHttp
         end
