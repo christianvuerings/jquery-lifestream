@@ -1,5 +1,8 @@
 <div class="cc-widget-padding cc-widget-webcast-content" data-ng-controller="WebcastController">
   <div data-cc-spinner-directive>
+
+    <h1 class="cc-visuallyhidden">Webcasts</h1>
+
     <div data-ng-bind="proxyErrorMessage"></div>
     <div data-ng-if="!proxyErrorMessage">
       <div data-ng-if="!videos.length && !audio.length">There are no webcasts available.</div>
