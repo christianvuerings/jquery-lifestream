@@ -17,16 +17,17 @@ module Webcast
 
     private
 
-    def request_internal(params = {})
-      if !Settings.features.audio || @audio_rss.blank?
-        return {
-          :audio => []
-        }
+    def request_internal
+      audio_items = []
+      if Settings.features.audio && @audio_rss.present?
+        response = get_response @audio_rss
+        if response
+          audio_items = filter_audio response unless response.code == 404
+          logger.debug "Remote server status #{response.code}, Body = #{response.body}"
+        end
       end
-      response = get_response(@audio_rss)
-      logger.debug "Remote server status #{response.code}, Body = #{response.body}"
       {
-        audio: filter_audio(response)
+        audio: audio_items
       }
     end
 
@@ -35,7 +36,7 @@ module Webcast
     end
 
     def get_download_url(play_url)
-      parsed_uri = Addressable::URI.parse(play_url)
+      parsed_uri = Addressable::URI.parse play_url
       # Replace the path that starts with /media/
       parsed_uri.path = parsed_uri.path.sub(/^\/media\//, '/download/')
       parsed_uri.to_s
@@ -43,19 +44,24 @@ module Webcast
 
     def filter_audio(response)
       rss = MultiXml.parse response.body
-      items = rss['rss']['channel']['item'].map do |i|
-        # Older versions of the RSS have an empty link tag
-        # so we need to use the enclosure tag instead
-        url = convert_to_https(i['enclosure']['url'])
-        title = i['title']
-        title = title.first if title.is_a? Array
-        {
-          :downloadUrl => get_download_url(url),
-          :playUrl => url,
-          :title => title
-        }
+      lectures = rss['rss']['channel']['item']
+      if lectures
+        items = lectures.map do |i|
+          # Older versions of the RSS have an empty link tag
+          # so we need to use the enclosure tag instead
+          url = convert_to_https(i['enclosure']['url'])
+          title = i['title']
+          title = title.first if title.is_a? Array
+          {
+            :downloadUrl => get_download_url(url),
+            :playUrl => url,
+            :title => title
+          }
+        end
+        items.reverse
+      else
+        []
       end
-      items.reverse
     end
 
   end

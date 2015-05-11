@@ -20,7 +20,7 @@ module Links
       links = []
       navigation = []
 
-      @maincats = Links::LinkCategory.where("root_level = ?", true).order(:name)
+      @maincats = Links::LinkCategory.where("root_level = ?", true).order('LOWER(name)')
       @maincats.each do |cat|
         @section = {
           "label" => cat.name,
@@ -33,7 +33,7 @@ module Links
       # End Navigation section
 
       # Begin Links section
-      @all_links = Links::Link.where("published = ?", true).order(:name)
+      @all_links = Links::Link.where("published = ?", true).order('LOWER(name)')
       @all_links.each do |link|
         links.push({
                      "name" => link.name,

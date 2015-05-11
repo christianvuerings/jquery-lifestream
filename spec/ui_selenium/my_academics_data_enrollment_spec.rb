@@ -8,7 +8,7 @@ require_relative 'util/user_utils'
 require_relative 'pages/cal_central_pages'
 require_relative 'pages/splash_page'
 require_relative 'pages/my_academics_semesters_card'
-require_relative 'pages/my_academics_enrollments_card'
+require_relative 'pages/my_academics_classes_card'
 require_relative 'pages/my_academics_class_page'
 require_relative 'pages/api_my_status_page'
 require_relative 'pages/api_my_classes_page'
@@ -29,7 +29,7 @@ describe 'My Academics enrollments', :testui => true do
       testable_users = []
 
       CSV.open(test_output, 'wb') do |user_info_csv|
-        user_info_csv << ['UID', 'Semester', 'CCN', 'Course Code', 'Course Title', 'Section', 'Grade Option', 'Units', 'Wait List Position']
+        user_info_csv << ['UID', 'Semester', 'CCN', 'Course Code', 'Course Title', 'Section', 'Grade Option', 'Units', 'Schedule', 'Wait List Position']
       end
 
       test_users.each do |user|
@@ -48,8 +48,6 @@ describe 'My Academics enrollments', :testui => true do
               academics_api_page = ApiMyAcademicsPageSemesters.new(driver)
               academics_api_page.get_json(driver)
               all_semesters = academics_api_page.all_semesters
-              all_semester_names = academics_api_page.semester_names(all_semesters)
-              default_semester_names = academics_api_page.semester_names academics_api_page.default_semesters_in_ui
 
               my_academics = CalCentralPages::MyAcademicsSemestersCard.new(driver)
               my_academics.load_page(driver)
@@ -57,11 +55,16 @@ describe 'My Academics enrollments', :testui => true do
 
               # MY ACADEMICS PAGE SEMESTER CARDS
 
-              shows_default_semesters = my_academics.student_terms_visible?(default_semester_names)
               if all_semesters.any?
+                all_semester_names = academics_api_page.semester_names(all_semesters)
+                default_semesters = academics_api_page.default_semesters_in_ui(all_semesters)
+                default_semester_names = academics_api_page.semester_names(default_semesters)
+                shows_default_semesters = my_academics.student_terms_visible?(default_semester_names)
+
                 it "shows future, current, and most recent past semester by default for UID #{uid}" do
                   expect(shows_default_semesters).to be true
                 end
+
                 show_more_button_visible = my_academics.show_more_element.visible?
                 if all_semester_names.length > default_semester_names.length || !academics_api_page.addl_credits.nil?
                   it "offers a 'Show More' button for UID #{uid}" do
@@ -87,10 +90,10 @@ describe 'My Academics enrollments', :testui => true do
                     semester_courses = academics_api_page.semester_courses(semester)
                     semester_card_courses = academics_api_page.semester_card_courses(semester, semester_courses)
 
-                    api_course_codes = academics_api_page.semester_card_course_codes(semester)
+                    api_course_codes = academics_api_page.semester_card_course_codes(all_semesters, semester)
                     api_course_titles = academics_api_page.course_titles(semester_card_courses)
                     api_units = academics_api_page.units_by_transcript(semester_courses)
-                    api_grades = academics_api_page.semester_grades(semester_courses, semester)
+                    api_grades = academics_api_page.semester_grades(all_semesters, semester_courses, semester)
 
                     academics_page_course_codes = my_academics.prim_sec_course_codes(driver, semester_name)
                     academics_page_course_titles = my_academics.course_titles(driver, semester_name)
@@ -134,8 +137,8 @@ describe 'My Academics enrollments', :testui => true do
                     # SEMESTER PAGES
 
                     if academics_api_page.has_enrollment_data?(semester)
-                      my_academics.click_semester_link(driver, semester_name)
-                      semester_page = CalCentralPages::MyAcademicsPage::MyAcademicsEnrollmentsCard.new(driver)
+                      my_academics.click_student_semester_link(driver, semester_name)
+                      semester_page = CalCentralPages::MyAcademicsPage::MyAcademicsClassesCard.new(driver)
                       wait_list_courses = academics_api_page.wait_list_courses(semester_courses)
                       enrolled_courses = (semester_courses - wait_list_courses)
                       semester_page_enrolled_courses = academics_api_page.semester_page_courses(enrolled_courses)
@@ -144,7 +147,7 @@ describe 'My Academics enrollments', :testui => true do
 
                       api_enrolled_course_codes = academics_api_page.course_codes(semester_page_enrolled_courses)
                       api_enrolled_course_titles = academics_api_page.course_titles(semester_page_enrolled_courses)
-                      api_enrolled_grade_options = academics_api_page.semester_grade_options(enrolled_courses)
+                      api_enrolled_grade_options = academics_api_page.grade_options(enrolled_courses)
                       api_enrolled_units = academics_api_page.units_by_enrollment(enrolled_courses)
                       api_enrolled_section_labels = academics_api_page.all_section_labels(enrolled_courses)
 
@@ -236,7 +239,7 @@ describe 'My Academics enrollments', :testui => true do
                               api_grade_options = academics_api_page.section_grade_options(api_sections)
 
                               class_page_url = academics_api_page.section_url(prim_section)
-                              semester_page.click_class_link(driver, class_page_url)
+                              semester_page.click_class_link_by_url(driver, class_page_url)
                               class_page = CalCentralPages::MyAcademicsClassPage.new(driver)
                               class_page.class_info_heading_element.when_visible(WebDriverUtils.page_load_timeout)
 
@@ -247,7 +250,7 @@ describe 'My Academics enrollments', :testui => true do
                               class_page_section_ccns = class_page.all_student_section_ccns
                               class_page_section_units = class_page.all_section_units
                               class_page_grade_options = class_page.all_section_grade_options
-                              class_page_section_schedules = class_page.all_section_schedules
+                              class_page_section_schedules = class_page.all_student_section_schedules
                               class_page_course_instructors = class_page.all_section_instructors(driver, api_section_labels)
 
                               it "shows #{api_course_code} in the class page breadcrumb for #{semester_name} for UID #{uid}" do
@@ -295,12 +298,12 @@ describe 'My Academics enrollments', :testui => true do
                                 expect(class_page_section_schedules).to eql(api_section_schedules)
                               end
 
-                              if academics_api_page.current_semester.include?(semester) || academics_api_page.future_semesters.include?(semester)
+                              if semester == academics_api_page.current_semester(all_semesters) || academics_api_page.future_semesters(all_semesters).include?(semester)
                                 api_sections.each do |api_section|
                                   i = api_sections.index(api_section)
                                   CSV.open(test_output, 'a+') do |user_info_csv|
                                     user_info_csv << [uid, semester_name, api_section_ccns[i], api_course_code, api_course_title, api_section_labels[i],
-                                                      api_grade_options[i], api_section_units[i], academics_api_page.wait_list_position(api_section)]
+                                                      api_grade_options[i], api_section_units[i], api_section_schedules[i], academics_api_page.wait_list_position(api_section)]
                                   end
                                 end
                               end
@@ -319,7 +322,7 @@ describe 'My Academics enrollments', :testui => true do
                             api_grade_options = academics_api_page.section_grade_options(api_sections)
 
                             class_page_url = academics_api_page.course_url(course)
-                            semester_page.click_class_link(driver, class_page_url)
+                            semester_page.click_class_link_by_url(driver, class_page_url)
                             class_page = CalCentralPages::MyAcademicsClassPage.new(driver)
                             class_page.class_info_heading_element.when_visible(WebDriverUtils.page_load_timeout)
 
@@ -330,7 +333,7 @@ describe 'My Academics enrollments', :testui => true do
                             class_page_section_ccns = class_page.all_student_section_ccns
                             class_page_section_units = class_page.all_section_units
                             class_page_grade_options = class_page.all_section_grade_options
-                            class_page_section_schedules = class_page.all_section_schedules
+                            class_page_section_schedules = class_page.all_student_section_schedules
                             class_page_course_instructors = class_page.all_section_instructors(driver, api_section_labels)
 
                             it "shows #{api_course_code} in the class page breadcrumb for #{semester_name} for UID #{uid}" do
@@ -378,12 +381,12 @@ describe 'My Academics enrollments', :testui => true do
                               expect(class_page_section_schedules).to eql(api_section_schedules)
                             end
 
-                            if academics_api_page.current_semester.include?(semester) || academics_api_page.future_semesters.include?(semester)
+                            if semester == academics_api_page.current_semester(all_semesters) || academics_api_page.future_semesters(all_semesters).include?(semester)
                               api_sections.each do |api_section|
                                 i = api_sections.index(api_section)
                                 CSV.open(test_output, 'a+') do |user_info_csv|
                                   user_info_csv << [uid, semester_name, api_section_ccns[i], api_course_code, api_course_title, api_section_labels[i],
-                                                    api_grade_options[i], api_section_units[i], academics_api_page.wait_list_position(api_section)]
+                                                    api_grade_options[i], api_section_units[i], api_section_schedules[i], academics_api_page.wait_list_position(api_section)]
                                 end
                               end
                             end
@@ -396,18 +399,14 @@ describe 'My Academics enrollments', :testui => true do
 
                       semester_page.back
 
-                    elsif academics_api_page.current_semester.include?(semester) || academics_api_page.future_semesters.include?(semester)
+                    elsif academics_api_page.current_semester(all_semesters).include?(semester) || academics_api_page.future_semesters(all_semesters).include?(semester)
                       logger.info "Found non-official enrollments for #{semester_name}"
                       semester_card_courses.each do |course|
                         i = semester_card_courses.index(course)
-                        CSV.open(test_output, 'a+') << [uid, semester_name, nil, api_course_codes[i], api_course_titles[i], nil, nil, api_units[i], nil]
+                        CSV.open(test_output, 'a+') << [uid, semester_name, nil, api_course_codes[i], api_course_titles[i], nil, nil, api_units[i],nil, nil]
                       end
                     end
                   end
-                end
-              else
-                it "shows no semesters for UID #{uid}" do
-                  expect(shows_default_semesters).to be false
                 end
               end
             end

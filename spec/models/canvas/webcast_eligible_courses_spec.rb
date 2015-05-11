@@ -2,7 +2,7 @@ describe Canvas::WebcastEligibleCourses do
 
   context 'fake data' do
 
-    subject { Canvas::WebcastEligibleCourses.new(%w(TERM:2014-B TERM:2014-D) ,{:user_id => @user_id}).fetch }
+    subject { Canvas::WebcastEligibleCourses.new(%w(TERM:2014-B TERM:2014-D) ,{:user_id => @user_id, fake: true}).fetch }
 
     context 'csv files exist' do
       before do

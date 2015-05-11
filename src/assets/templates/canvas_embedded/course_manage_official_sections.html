@@ -8,16 +8,18 @@
       <div data-ng-include src="'canvas_embedded/_shared/maintenance_notice.html'"></div>
     </div>
 
-    <h2 class="cc-page-site-provisioning-header cc-page-site-provisioning-header2">Official Sections</h2>
+    <h1 class="cc-page-course-official-sections-header1">Official Sections</h1>
 
     <!-- ############################################################################################# -->
 
     <div data-ng-if="currentWorkflowStep === 'preview'">
 
-      <div data-ng-show="jobStatusMessage !== ''" class="cc-notice-box cc-radius" data-ng-class="{'cc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'cc-notice-success':(lastJobStatus === 'sectionEditsCompleted')}">
+      <div data-ng-show="jobStatusMessage !== ''" class="cc-notice-box cc-radius" data-ng-class="{'cc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'cc-notice-success':(lastJobStatus === 'sectionEditsCompleted')}" id="cc-page-course-official-sections-job-status-notice" aria-hidden="{{jobStatusMessage === ''}}">
         <span data-ng-bind="jobStatusMessage"></span>
         <div class="cc-notice-close-button">
-          <button class="fa fa-times-circle button cc-close-button small" data-ng-click="jobStatusMessage=''" aria-label="Close"></button>
+          <button class="fa fa-times-circle button cc-close-button small" data-ng-click="jobStatusMessage=''" aria-controls="cc-page-course-official-sections-job-status-notice">
+            <span class="cc-visuallyhidden">Close Notice</span>
+          </button>
         </div>
       </div>
 
@@ -25,9 +27,9 @@
       <div class="cc-page-course-official-sections-sections-area cc-page-course-official-sections-current-sections-white-border">
         <div class="row">
           <div class="medium-4 columns">
-            <h3 class="cc-page-site-provisioning-header cc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="cc-page-site-provisioning-header cc-page-course-official-sections-existing-sections-header-label">
               Sections in this Course Site
-            </h3>
+            </h2>
           </div>
           <div class="medium-2 columns cc-text-right">
             <button data-ng-click="changeWorkflowStep('staging')" class="bc-canvas-button bc-canvas-button-primary cc-canvas-no-decoration" data-ng-if="isTeacher">
@@ -60,9 +62,9 @@
 
         <div class="row">
           <div class="medium-3 columns">
-            <h3 class="cc-page-site-provisioning-header cc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="cc-page-site-provisioning-header cc-page-course-official-sections-existing-sections-header-label">
               Sections in this Course Site
-            </h3>
+            </h2>
           </div>
           <div class="medium-3 columns cc-text-right">
             <button class="bc-canvas-button cc-canvas-no-decoration" data-ng-click="cancel()" type="submit" aria-label="Cancel section modifications for this course site">
@@ -103,9 +105,9 @@
       <div class="cc-page-course-official-sections-sections-area">
         <div class="row">
           <div class="medium-12 columns">
-            <h3 class="cc-page-site-provisioning-header cc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="cc-page-site-provisioning-header cc-page-course-official-sections-existing-sections-header-label">
               All sections available to add to this Course Site
-            </h3>
+            </h2>
           </div>
         </div>
 
@@ -153,9 +155,9 @@
       <div class="cc-page-course-official-sections-sections-area cc-page-course-official-sections-current-sections-grey-border">
         <div class="row">
           <div class="medium-4 columns">
-            <h3 class="cc-page-site-provisioning-header cc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="cc-page-site-provisioning-header cc-page-course-official-sections-existing-sections-header-label">
               Updating Official Sections in Course Site
-            </h3>
+            </h2>
           </div>
         </div>
 

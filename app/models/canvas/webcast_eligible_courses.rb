@@ -1,5 +1,6 @@
 module Canvas
   class WebcastEligibleCourses
+    include ClassLogger
 
     def initialize(sis_term_ids, options = {})
       @sis_term_ids = sis_term_ids
@@ -17,7 +18,7 @@ module Canvas
     def fetch_term_to_course_sections_hash
       courses_by_term = {}
       @sis_term_ids.each do |term_id|
-        canvas_sections = Canvas::SectionsReport.new.get_csv term_id
+        canvas_sections = Canvas::SectionsReport.new(@options).get_csv term_id
         if canvas_sections
           course_id_to_csv = canvas_sections.group_by { |row| row['canvas_course_id'] }
           course_id_to_csv.each do |canvas_course_id, csv_rows|
@@ -35,6 +36,8 @@ module Canvas
               end
             end
           end
+        else
+          logger.error "No Canvas sections found where term_id = #{term_id}"
         end
       end
       courses_by_term
@@ -51,7 +54,8 @@ module Canvas
             ccn = section[:ccn].to_s.to_i
             if ccn > 0
               section_key = "#{key[:term_yr]}-#{key[:term_cd]}-#{ccn}"
-              has_recordings = recordings_per_ccn.has_key? section_key
+              has_recordings = recordings_per_ccn.has_key?(section_key) && recordings_per_ccn[section_key][:videos].present?
+              logger.warn "#{section_key} has Webcast recordings (canvas_course_id = #{canvas_course_id})" if has_recordings
               in_webcast_enabled_room = webcast_enabled_room_ccn_set.include? section_key
               if has_recordings || in_webcast_enabled_room
                 section[:has_webcast_recordings] = has_recordings
@@ -69,7 +73,6 @@ module Canvas
     def extract_ccn_set(courses)
       ccn_set = Set.new
       courses.values.each do |course|
-        Rails.logger.warn "course = #{course.to_s}"
         course.map { |section| section[:ccn] }.each { |ccn| ccn_set << ccn.to_i }
       end
       ccn_set

@@ -1,12 +1,10 @@
 require 'selenium-webdriver'
 require 'page-object'
 require_relative 'api_my_academics_page'
-require_relative '../util/web_driver_utils'
 
 class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
 
   include PageObject
-  include ClassLogger
 
   # SEMESTERS
 
@@ -14,26 +12,35 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     @parsed['semesters']
   end
 
-  def semesters_in_time_bucket(time_bucket)
-    all_semesters.select { |semester| semester['timeBucket'] == time_bucket }
+  def all_teaching_semesters
+    @parsed['teachingSemesters']
   end
 
-  def past_semesters
-    semesters_in_time_bucket('past')
+  def semesters_in_time_bucket(semesters, time_bucket)
+    semesters.select { |semester| semester['timeBucket'] == time_bucket }
   end
 
-  def current_semester
-    semesters_in_time_bucket('current')
+  def past_semesters(semesters)
+    semesters_in_time_bucket(semesters, 'past')
   end
 
-  def future_semesters
-    semesters_in_time_bucket('future')
+  def current_semester(semesters)
+    semesters_in_time_bucket(semesters, 'current')[0]
   end
 
-  def default_semesters_in_ui
-    default_semesters = future_semesters + current_semester
-    if past_semesters.any?
-      default_semesters.push(past_semesters[0])
+  def future_semesters(semesters)
+    semesters_in_time_bucket(semesters, 'future')
+  end
+
+  # The semesters visible by default on the My Academics page
+  def default_semesters_in_ui(semesters)
+    default_semesters = []
+    default_semesters.concat future_semesters(semesters)
+    unless current_semester(semesters).nil?
+      default_semesters.push current_semester(semesters)
+    end
+    if past_semesters(semesters).any?
+      default_semesters.push(past_semesters(semesters)[0])
     end
     default_semesters
   end
@@ -98,18 +105,19 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     codes
   end
 
-  def semester_card_course_codes(semester)
+  # Semester cards show course codes differently depending on enrollment data, primary sections, and transcript data
+  def semester_card_course_codes(semesters, semester)
     codes = []
     courses = semester_courses(semester)
     courses.each do |course|
       if has_enrollment_data?(semester)
-        if past_semesters.include?(semester)
+        if past_semesters(semesters).include?(semester)
           if course_transcripts(course).nil?
             primary_sections(course).each { codes.push(course_code(course)) }
           else
             course_transcripts(course).each { codes.push(course_code(course)) }
           end
-        elsif !past_semesters.include?(semester) && multiple_primaries?(course)
+        elsif !past_semesters(semesters).include?(semester) && multiple_primaries?(course)
           primary_sections(course).each { |section| codes.push("#{course_code(course)} #{section_label(section)}") }
         else
           codes.push(course_code(course))
@@ -139,7 +147,7 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     course['transcript']
   end
 
-  def semester_grade_options(courses)
+  def grade_options(courses)
     options = []
     courses.each { |course| options.concat(section_grade_options(sections(course))) }
     options.compact
@@ -149,6 +157,7 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     course['multiplePrimaries']
   end
 
+  # Enrollment records associate units with primary sections
   def units_by_enrollment(courses)
     units = []
     courses.each do |course|
@@ -157,6 +166,7 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     units
   end
 
+  # Transcripts do not necessarily associate units with primary sections
   def units_by_transcript(courses)
     units = []
     courses.each do |course|
@@ -181,10 +191,10 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     grades
   end
 
-  def semester_grades(courses, semester)
+  def semester_grades(semesters, courses, semester)
     grades = []
     courses.each do |course|
-      if past_semesters.include?(semester)
+      if past_semesters(semesters).include?(semester)
         if course_transcripts(course).nil?
           primary_sections(course).each { | | grades.push('--') }
         else
@@ -204,6 +214,18 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     grades
   end
 
+  def course_listing_course_codes(course)
+    codes = []
+    course['listings'].each { |listing| codes.push(listing['course_code']) }
+    codes
+  end
+
+  def semester_listing_course_codes(semester)
+    codes = []
+    semester_courses(semester).each { |course| codes.concat(course_listing_course_codes(course)) }
+    codes
+  end
+
   # SECTIONS
 
   def sections(course)
@@ -220,6 +242,7 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     prim_sections
   end
 
+  # Courses with multiple primary sections can have secondaries associated with only one of the primaries
   def associated_sections(course, primary_section)
     assoc_sections = []
     assoc_sections.push(primary_section)
@@ -232,19 +255,29 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     assoc_sections
   end
 
+  def sections_by_listing(course)
+    sections = []
+    sections(course).each do |section|
+      if section_course_code(section) == course_code(course)
+        sections.push(section)
+      end
+    end
+    sections
+  end
+
   def section_ccns(sections)
     ccns = []
     sections.each { |section| ccns.push(section['ccn']) }
     ccns
   end
 
-  def section_unit(section)
-    section['units']
+  def section_course_code(section)
+    section['courseCode']
   end
 
   def section_units(sections)
     units = []
-    sections.each { |section| units.push(section_unit(section)) }
+    sections.each { |section| units.push(section['units']) }
     units.compact
   end
 
@@ -255,6 +288,17 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
   def section_labels(sections)
     labels = []
     sections.each { |section| labels.push(section_label(section)) }
+    labels
+  end
+
+  # Section labels are omitted from class page section schedules if the section has no schedule
+  def section_schedule_labels(sections)
+    labels = []
+    sections.each do |section|
+      unless section_schedules(section).empty?
+        labels.push(section_label(section))
+      end
+    end
     labels
   end
 
@@ -328,13 +372,9 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     names
   end
 
-  def section_grade_option(section)
-    section['gradeOption']
-  end
-
   def section_grade_options(sections)
     options = []
-    sections.each { |section| options.push(section_grade_option(section)) }
+    sections.each { |section| options.push(section['gradeOption']) }
     options.compact
   end
 
@@ -404,7 +444,7 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     limits
   end
 
-  # ADDITIONAL CREDITS
+  # ADDITIONAL CREDITS (e.g., AP course work)
 
   def addl_credits
     @parsed['additionalCredits']

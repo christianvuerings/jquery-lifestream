@@ -90,7 +90,7 @@ describe 'My Academics Final Exams card', :testui => true do
                 end
 
                 # EXAM SCHEDULES ON SEMESTER PAGE
-                my_academics_page.click_semester_link(driver, current_term)
+                my_academics_page.click_student_semester_link(driver, current_term)
                 my_academics_page.final_exams_card_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
                 semester_exam_dates = my_academics_page.all_exam_dates
                 semester_exam_times = my_academics_page.all_exam_times
