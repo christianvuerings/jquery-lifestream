@@ -64,7 +64,7 @@ $bc-canvas-button-selected-color: #fff;
     padding: 9px 0;
   }
   input[type="text"] {
-    border: 1px solid #ccc;
+    border: 1px solid $bc-color-grey;
     border-radius: 3px;
     color: $bc-canvas-off-black;
     display: inline-block;

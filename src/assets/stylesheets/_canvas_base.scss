@@ -171,7 +171,7 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
   .cc-template-progress-bar-display {
     background: linear-gradient($bc-color-progressbar-bg-gradient1, $bc-color-progressbar-bg-gradient2);
-    border: 2px solid #c6c7c7;
+    border: 2px solid $bc-color-progressbar-border;
     border-radius: 5px;
     height: 25px;
     overflow: hidden;
@@ -179,7 +179,7 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
   .cc-template-progress-bar-status {
-    color: #2f2e2e;
+    color: $bc-color-progressbar-status-color;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 13px;
     font-weight: bold;
@@ -211,7 +211,7 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .cc-notice-text-header {
-  color: #333;
+  color: $bc-color-grey-text;
   font-size: 16px;
   font-weight: 500;
   line-height: 20px;

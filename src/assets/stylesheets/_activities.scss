@@ -75,7 +75,7 @@
     margin-top: 15px;
     li {
       .cc-widget-activities-sub-activity-date-string {
-        color: #999;
+        color: $cc-color-lighter-medium-grey;
         float: right;
         font-size: 10px;
         text-align: right;
@@ -93,7 +93,7 @@
   .cc-widget-activities-text-column {
     line-height: 1.4;
     i {
-      color: #afc5d2;
+      color: $cc-color-popover-icon;
       font-size: 20px;
     }
     .fa-usd {

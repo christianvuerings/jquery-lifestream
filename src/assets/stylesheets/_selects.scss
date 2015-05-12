@@ -37,7 +37,7 @@
   }
 }
 :-moz-any(.cc-select):before {
-  background-color: #fff;
+  background-color: $cc-color-white;
   pointer-events: none;
   z-index: 1;
 }
