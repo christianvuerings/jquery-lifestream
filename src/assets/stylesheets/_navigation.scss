@@ -11,9 +11,9 @@
       margin: 0;
       padding: 0;
       &.active a, a:hover, a:focus {
-        background: #61889e;
+        background: $cc-color-navigation-hover-background;
         border-radius: 5px;
-        color: #fff;
+        color: $cc-color-white;
       }
       &.active a {
         font-weight: bold;

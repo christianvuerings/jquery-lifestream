@@ -1,7 +1,7 @@
 .cc-list-bullets {
   margin: 10px 10px 0 15px;
   li:before {
-    color: #61889d;
+    color: $cc-color-list-block;
     content: '\25A0';
     float: left;
     margin-left: -16px;
@@ -15,7 +15,7 @@
     display: block;
     margin-left: 16px;
     &:before {
-      color: #61889d;
+      color: $cc-color-list-block;
       content: '\25A0';
       float: left;
       margin-left: -16px;

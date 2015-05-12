@@ -75,27 +75,13 @@
 }
 
 // Spinner
-@-webkit-keyframes spin-normal {
-  to {
-    -webkit-transform: rotate(1turn);
-    transform: rotate(1turn);
-  }
-}
 @keyframes spin-normal {
   to {
-    -webkit-transform: rotate(1turn);
     transform: rotate(1turn);
-  }
-}
-@-webkit-keyframes spin-extra {
-  to {
-    -webkit-transform: rotate(1.125turn);
-    transform: rotate(1.125turn);
   }
 }
 @keyframes spin-extra {
   to {
-    -webkit-transform: rotate(1.125turn);
     transform: rotate(1.125turn);
   }
 }
@@ -121,24 +107,21 @@
     width: .5em;
   }
   &:before {
-    -webkit-animation: spin-extra 1s infinite steps(8);
     animation: spin-extra 1s infinite steps(8);
     // 1 3 5 7
-    box-shadow: 0 1em #ccc, -1em 0 #ccc, 0 -1em #ccc, 1em 0 #444;
-    -webkit-transform: rotate(45deg);
+    box-shadow: 0 1em $cc-color-spinner1, -1em 0 $cc-color-spinner1, 0 -1em $cc-color-spinner1, 1em 0 $cc-color-spinner2;
     transform: rotate(45deg);
   }
   &:after {
-    -webkit-animation: spin-normal 1s infinite steps(8);
     animation: spin-normal 1s infinite steps(8);
     // 2 4 6 8
-    box-shadow: -1em 0 #ccc, 0 -1em #ccc, 1em 0 #888, 0 1em #000;
+    box-shadow: -1em 0 $cc-color-spinner1, 0 -1em $cc-color-spinner1, 1em 0 $cc-color-spinner3, 0 1em $cc-color-black;
   }
 }
 
 // Popover
 .cc-popover {
-  background: #ececec;
+  background: $cc-color-popover-background;
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
   padding: 0;
@@ -167,13 +150,13 @@
   // This allows us to create an arrow for the popover
   // We also add a border by painting another arrow behind the first one
   &:after {
-    border-bottom: 10px solid $cc-color-popover-title-background;
+    border-bottom: 10px solid $cc-color-popover-background;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     margin-left: -10px;
   }
   &:before {
-    border-bottom: 11px solid #cbcbcb;
+    border-bottom: 11px solid $cc-color-popover-triangle;
     border-left: 11px solid transparent;
     border-right: 11px solid transparent;
     margin-left: -11px;

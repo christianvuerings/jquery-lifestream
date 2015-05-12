@@ -81,7 +81,7 @@ a {
 // Form
 form {
   background: $cc-color-widget-more-background;
-  border: 1px solid #dedede;
+  border: 1px solid $cc-color-form-border;
   padding: 10px 5px;
 
   input[type="number"],
