@@ -43,7 +43,7 @@
             <label for="course-sections">Select Section:</label>
           </div>
           <div class="cc-left cc-page-course-grade-export-section-select">
-            <select id="course-sections" data-ng-model="selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
+            <select id="course-sections" data-ng-model="$parent.selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
           </div>
         </div>
       </div>
