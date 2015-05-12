@@ -1,10 +1,6 @@
 module Webcast
   class Rooms < Proxy
 
-    def initialize(options = {})
-      super(options)
-    end
-
     def get_json_path
       'rooms.json'
     end

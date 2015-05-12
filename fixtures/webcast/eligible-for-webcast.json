@@ -1,0 +1,25 @@
+{
+  "semesters": [
+    {
+      "year": 2015,
+      "semester": "Spring",
+      "ccnSet": [
+        5916,
+        51991
+      ]
+    },
+    {
+      "year": 2015,
+      "semester": "Fall",
+      "ccnSet": [
+        5917,
+        51992
+      ]
+    },
+    {
+      "year": 2016,
+      "semester": "Spring",
+      "ccnSet": []
+    }
+  ]
+}
