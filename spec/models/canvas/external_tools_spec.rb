@@ -55,14 +55,6 @@ describe Canvas::ExternalTools do
   describe '#tabs_api' do
     subject { Canvas::ExternalTools.new options }
 
-    context 'when updating tab with unspecified canvas_course_id' do
-      let(:options) { {canvas_account_id: '98765'} }
-
-      it 'should raise error when canvas_course_id is nil' do
-        expect{subject.hide_course_site_tab 123}.to raise_exception
-      end
-    end
-
     context 'when modifying tab settings per canvas_course_id' do
       let(:tab_id) { 'my_tab_external_tool_4' }
       let(:canvas_course_id) { 98765 }
