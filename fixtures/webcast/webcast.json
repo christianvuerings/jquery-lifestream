@@ -1729,6 +1729,314 @@
       "youTubePlaylist": "PL-XXv-cvA_iDy-rACIy-kh40XJJDp3Y0X",
       "iTunesVideo": 819827828,
       "videoRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/statistics_131a_001_screen.rss"
+    },
+    {
+      "year": 2015,
+      "semester": "Spring",
+      "ccn": 51990,
+      "deptName": "L & S",
+      "catalogId": "C70U",
+      "public": false,
+      "youTubePlaylist": "PL-XXv-cvA_iAn6Qt6B7D-phRT0Ld1GOUV",
+      "audioRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/2015B/rss/5915_audio.rss",
+      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/2015B/rss/5915_screen.rss",
+      "recordings": [
+        {
+          "lecture": "2015-01-21: A Grand Tour of the Cosmos",
+          "youTubeId": "E8WBr8u7YoI",
+          "recordingStartUTC": "2015-01-21T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-01-23: Journey Through Space and Time",
+          "youTubeId": "hoLFZNm3lsk",
+          "recordingStartUTC": "2015-01-23T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-01-26: Light â€“ The Supreme Informant",
+          "youTubeId": "a5arg3cSFeg",
+          "recordingStartUTC": "2015-01-26T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-01-28: The Fingerprints of Atoms",
+          "youTubeId": "ibG9xrcKs2g",
+          "recordingStartUTC": "2015-01-28T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-01-30: Thermal Radiation; Doppler Effect",
+          "youTubeId": "MGUFdWgjEyU",
+          "recordingStartUTC": "2015-01-30T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-01-30: Telescopes: Tools of the Trade",
+          "youTubeId": "OX2fKZNIXLA",
+          "recordingStartUTC": "2015-01-30T16:07:00-08:00"
+        },
+        {
+          "lecture": "2015-02-02: Telescopes; Twinkling; Lunar Phases",
+          "youTubeId": "5LF4QaTTR80",
+          "recordingStartUTC": "2015-02-02T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-02-04: Glorious Total Solar Eclipses",
+          "youTubeId": "IEK2sThtnB8",
+          "recordingStartUTC": "2015-02-04T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-02-06: Eclipses; Celestial Phenomena",
+          "youTubeId": "cISHdRPoml8",
+          "recordingStartUTC": "2015-02-06T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-09: Seasons; The Copernican Revolution",
+          "youTubeId": "CB-FypT3TwY",
+          "recordingStartUTC": "2015-02-09T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-11: On the Shoulders of Giants",
+          "youTubeId": "zE6PuqmEgIo",
+          "recordingStartUTC": "2015-02-11T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-18: Newton; Origin of Solar System; Earth",
+          "youTubeId": "aPs816-AzLg",
+          "recordingStartUTC": "2015-02-18T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-20: (Part 1) The Moon, Mercury, Venus, Mars",
+          "youTubeId": "Sb7_aZlZXjk",
+          "recordingStartUTC": "2015-02-20T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-20: (Part 2) Mars, Jupiter, Saturn",
+          "youTubeId": "LYUuTlcAgUk",
+          "recordingStartUTC": "2015-02-20T16:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-23: Uranus, Neptune, Pluto",
+          "youTubeId": "piwH4DTIx2Q",
+          "recordingStartUTC": "2015-02-23T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-25: Comets, Space Debris, Collisions",
+          "youTubeId": "1r3d3uq1gKQ",
+          "recordingStartUTC": "2015-02-25T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-27: Collisions; Exoplanets",
+          "youTubeId": "ZaRnqiMPzuE",
+          "recordingStartUTC": "2015-02-27T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-03-02: Other Worlds",
+          "youTubeId": "Dr3y8TNoWvs",
+          "recordingStartUTC": "2015-03-02T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-03-04: Our Sun and other Stars",
+          "youTubeId": "jq-1XmLFkMI",
+          "recordingStartUTC": "2015-03-04T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-03-06: (Part 1) Social Stars: Binaries and Clusters",
+          "youTubeId": "XEJvZ1H0BcU",
+          "recordingStartUTC": "2015-03-06T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-03-06: (Part 2) How Stars Shine: Cosmic Furnaces",
+          "youTubeId": "oPIOnqW1b1k",
+          "recordingStartUTC": "2015-03-06T16:06:00-08:00"
+        },
+        {
+          "lecture": "2015-03-09: The Fate of Our Sun: Stellar Evolution",
+          "youTubeId": "c7rHGsrqBU4",
+          "recordingStartUTC": "2015-03-09T15:06:00-07:00"
+        },
+        {
+          "lecture": "2015-03-11: Exploding Stars: Celestial Fireworks!",
+          "youTubeId": "EqBdNSI8YQ4",
+          "recordingStartUTC": "2015-03-11T15:07:00-07:00"
+        },
+        {
+          "lecture": "2015-03-13: The Corpses of Massive Stars",
+          "youTubeId": "NR2nUQ-OXq8",
+          "recordingStartUTC": "2015-03-13T15:06:00-07:00"
+        },
+        {
+          "lecture": "2015-03-18: The Milky Way and Other Galaxies",
+          "youTubeId": "vXr-DTe5D2E",
+          "recordingStartUTC": "2015-03-18T15:06:00-07:00"
+        },
+        {
+          "lecture": "2015-03-20: The Dark Side of Matter",
+          "youTubeId": "yg2EPjsAJGs",
+          "recordingStartUTC": "2015-03-20T15:06:00-07:00"
+        },
+        {
+          "lecture": "2015-03-30: The Expansion of the Universe",
+          "youTubeId": "DWbYMmXgx8k",
+          "recordingStartUTC": "2015-03-30T15:06:00-07:00"
+        },
+        {
+          "lecture": "2015-04-01: Black Holes: Hearts of Darkness",
+          "youTubeId": "Ax670ei7h2Q",
+          "recordingStartUTC": "2015-04-01T15:06:00-07:00"
+        }
+      ],
+      "audioOnly": false
+    },
+    {
+      "year": 2015,
+      "semester": "Spring",
+      "ccn": 5915,
+      "deptName": "ASTRON",
+      "catalogId": "C10",
+      "public": false,
+      "youTubePlaylist": "PL-XXv-cvA_iAn6Qt6B7D-phRT0Ld1GOUV",
+      "audioRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/2015B/rss/5915_audio.rss",
+      "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/2015B/rss/5915_screen.rss",
+      "recordings": [
+        {
+          "lecture": "2015-01-21: A Grand Tour of the Cosmos",
+          "youTubeId": "E8WBr8u7YoI",
+          "recordingStartUTC": "2015-01-21T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-01-23: Journey Through Space and Time",
+          "youTubeId": "hoLFZNm3lsk",
+          "recordingStartUTC": "2015-01-23T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-01-26: Light â€“ The Supreme Informant",
+          "youTubeId": "a5arg3cSFeg",
+          "recordingStartUTC": "2015-01-26T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-01-28: The Fingerprints of Atoms",
+          "youTubeId": "ibG9xrcKs2g",
+          "recordingStartUTC": "2015-01-28T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-01-30: Thermal Radiation; Doppler Effect",
+          "youTubeId": "MGUFdWgjEyU",
+          "recordingStartUTC": "2015-01-30T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-01-30: Telescopes: Tools of the Trade",
+          "youTubeId": "OX2fKZNIXLA",
+          "recordingStartUTC": "2015-01-30T16:07:00-08:00"
+        },
+        {
+          "lecture": "2015-02-02: Telescopes; Twinkling; Lunar Phases",
+          "youTubeId": "5LF4QaTTR80",
+          "recordingStartUTC": "2015-02-02T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-02-04: Glorious Total Solar Eclipses",
+          "youTubeId": "IEK2sThtnB8",
+          "recordingStartUTC": "2015-02-04T15:07:00-08:00"
+        },
+        {
+          "lecture": "2015-02-06: Eclipses; Celestial Phenomena",
+          "youTubeId": "cISHdRPoml8",
+          "recordingStartUTC": "2015-02-06T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-09: Seasons; The Copernican Revolution",
+          "youTubeId": "CB-FypT3TwY",
+          "recordingStartUTC": "2015-02-09T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-11: On the Shoulders of Giants",
+          "youTubeId": "zE6PuqmEgIo",
+          "recordingStartUTC": "2015-02-11T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-18: Newton; Origin of Solar System; Earth",
+          "youTubeId": "aPs816-AzLg",
+          "recordingStartUTC": "2015-02-18T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-20: (Part 1) The Moon, Mercury, Venus, Mars",
+          "youTubeId": "Sb7_aZlZXjk",
+          "recordingStartUTC": "2015-02-20T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-20: (Part 2) Mars, Jupiter, Saturn",
+          "youTubeId": "LYUuTlcAgUk",
+          "recordingStartUTC": "2015-02-20T16:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-23: Uranus, Neptune, Pluto",
+          "youTubeId": "piwH4DTIx2Q",
+          "recordingStartUTC": "2015-02-23T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-25: Comets, Space Debris, Collisions",
+          "youTubeId": "1r3d3uq1gKQ",
+          "recordingStartUTC": "2015-02-25T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-02-27: Collisions; Exoplanets",
+          "youTubeId": "ZaRnqiMPzuE",
+          "recordingStartUTC": "2015-02-27T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-03-02: Other Worlds",
+          "youTubeId": "Dr3y8TNoWvs",
+          "recordingStartUTC": "2015-03-02T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-03-04: Our Sun and other Stars",
+          "youTubeId": "jq-1XmLFkMI",
+          "recordingStartUTC": "2015-03-04T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-03-06: (Part 1) Social Stars: Binaries and Clusters",
+          "youTubeId": "XEJvZ1H0BcU",
+          "recordingStartUTC": "2015-03-06T15:06:00-08:00"
+        },
+        {
+          "lecture": "2015-03-06: (Part 2) How Stars Shine: Cosmic Furnaces",
+          "youTubeId": "oPIOnqW1b1k",
+          "recordingStartUTC": "2015-03-06T16:06:00-08:00"
+        },
+        {
+          "lecture": "2015-03-09: The Fate of Our Sun: Stellar Evolution",
+          "youTubeId": "c7rHGsrqBU4",
+          "recordingStartUTC": "2015-03-09T15:06:00-07:00"
+        },
+        {
+          "lecture": "2015-03-11: Exploding Stars: Celestial Fireworks!",
+          "youTubeId": "EqBdNSI8YQ4",
+          "recordingStartUTC": "2015-03-11T15:07:00-07:00"
+        },
+        {
+          "lecture": "2015-03-13: The Corpses of Massive Stars",
+          "youTubeId": "NR2nUQ-OXq8",
+          "recordingStartUTC": "2015-03-13T15:06:00-07:00"
+        },
+        {
+          "lecture": "2015-03-18: The Milky Way and Other Galaxies",
+          "youTubeId": "vXr-DTe5D2E",
+          "recordingStartUTC": "2015-03-18T15:06:00-07:00"
+        },
+        {
+          "lecture": "2015-03-20: The Dark Side of Matter",
+          "youTubeId": "yg2EPjsAJGs",
+          "recordingStartUTC": "2015-03-20T15:06:00-07:00"
+        },
+        {
+          "lecture": "2015-03-30: The Expansion of the Universe",
+          "youTubeId": "DWbYMmXgx8k",
+          "recordingStartUTC": "2015-03-30T15:06:00-07:00"
+        },
+        {
+          "lecture": "2015-04-01: Black Holes: Hearts of Darkness",
+          "youTubeId": "Ax670ei7h2Q",
+          "recordingStartUTC": "2015-04-01T15:06:00-07:00"
+        }
+      ],
+      "audioOnly": false
     }
   ]
 }

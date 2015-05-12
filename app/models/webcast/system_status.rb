@@ -1,10 +1,6 @@
 module Webcast
   class SystemStatus < Proxy
 
-    def initialize(options = {})
-      super(options)
-    end
-
     def get_json_path
       'webcast-system-status.json'
     end
