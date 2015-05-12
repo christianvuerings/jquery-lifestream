@@ -20,6 +20,7 @@ module Canvas
       @sis_term_ids.each do |term_id|
         canvas_sections = Canvas::SectionsReport.new(@options).get_csv term_id
         if canvas_sections
+          logger.error "#{canvas_sections.length} courses in Canvas where term_id = #{term_id}"
           course_id_to_csv = canvas_sections.group_by { |row| row['canvas_course_id'] }
           course_id_to_csv.each do |canvas_course_id, csv_rows|
             if canvas_course_id
@@ -55,8 +56,9 @@ module Canvas
             if ccn > 0
               section_key = "#{key[:term_yr]}-#{key[:term_cd]}-#{ccn}"
               has_recordings = recordings_per_ccn.has_key?(section_key) && recordings_per_ccn[section_key][:videos].present?
-              logger.warn "#{section_key} has Webcast recordings (canvas_course_id = #{canvas_course_id})" if has_recordings
               in_webcast_enabled_room = webcast_enabled_room_ccn_set.include? section_key
+              logger.warn "#{section_key} has Webcast recordings (canvas_course_id = #{canvas_course_id})" if has_recordings
+              logger.warn "#{section_key} is in Webcast-enabled room (canvas_course_id = #{canvas_course_id})" if in_webcast_enabled_room
               if has_recordings || in_webcast_enabled_room
                 section[:has_webcast_recordings] = has_recordings
                 section[:in_webcast_enabled_room] = in_webcast_enabled_room
@@ -67,6 +69,7 @@ module Canvas
           end
         end
       end
+      logger.error "#{eligible_courses.length} courses in Canvas are eligible, or signed up, for Webcast"
       eligible_courses
     end
 

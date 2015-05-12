@@ -130,15 +130,16 @@ module Canvas
           :method => :put,
           :body => { 'hidden' => set_to_hidden },
         }
-        response = request_uncached("#{@api_root}/tabs/#{tab_id}", '_update_course_site_tab_hidden', options)
+        url = "#{@api_root}/tabs/#{tab_id}"
+        response = request_uncached(url, '_update_course_site_tab_hidden', options)
         tab = response && safe_json(response.body)
-        is_tab_now_hidden = tab && tab['hidden']
-        unless is_tab_now_hidden == set_to_hidden
-          raise Errors::ProxyError.new("Failed to set hidden=#{set_to_hidden} on Canvas course site nav tab", response: response, url: url, uid: @uid)
+        is_tab_now_showing = tab && !tab['hidden']
+        if is_tab_now_showing == set_to_hidden
+          raise Errors::ProxyError.new("Failed to set hidden=#{set_to_hidden} on tab #{tab_id} of Canvas:#{@api_root}", response: response, url: url, uid: @uid)
         end
         tab
       rescue => exception
-        logger.error "#{self.class.name} Problem updating hidden=#{set_to_hidden} on tab #{tab_id} of Canvas #{@api_root}. Abort!"
+        logger.error "#{self.class.name} Problem updating hidden=#{set_to_hidden} on tab #{tab_id} of Canvas:#{@api_root}. Abort!"
         raise exception
       end
     end
