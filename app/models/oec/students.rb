@@ -12,7 +12,7 @@ module Oec
     end
 
     def headers
-      'LDAP_UID,FIRST_NAME,LAST_NAME,EMAIL_ADDRESS'
+      'LDAP_UID,SIS_ID,FIRST_NAME,LAST_NAME,EMAIL_ADDRESS'
     end
 
     def append_records(output)
