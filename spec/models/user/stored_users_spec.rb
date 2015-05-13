@@ -76,6 +76,24 @@ describe User::StoredUsers do
       expect(users[:recent][0]['ldap_uid']).to eq stored_uid
     end
 
+    it 'should report whether recent uids are saved' do
+      saved_uid = random_id
+      unsaved_uid = random_id
+      User::Data.create(uid: owner_uid)
+      User::Data.create(uid: saved_uid)
+      User::Data.create(uid: unsaved_uid)
+      allow_any_instance_of(User::SearchUsersByUid).to receive(:search_users_by_uid_batch).
+          and_return [{'ldap_uid' => owner_uid}, {'ldap_uid' => saved_uid}, {'ldap_uid' => unsaved_uid}]
+
+      User::StoredUsers.store_saved_uid(owner_uid, saved_uid)
+      User::StoredUsers.store_recent_uid(owner_uid, saved_uid)
+      User::StoredUsers.store_recent_uid(owner_uid, unsaved_uid)
+
+      users = User::StoredUsers.get(owner_uid)
+      expect(users[:recent]).to include({'ldap_uid' => saved_uid, 'saved' => true})
+      expect(users[:recent]).to include({'ldap_uid' => unsaved_uid, 'saved' => false})
+    end
+
   end
 
   describe '#store_saved_uid' do
