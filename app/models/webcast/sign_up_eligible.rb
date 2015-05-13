@@ -17,7 +17,7 @@ module Webcast
       ccn_set_by_term = {}
       data = get_json_data
       data['semesters'].each do |term|
-        slug = "#{term['year']}-#{term['semester'].downcase}"
+        slug = "#{term['semester'].downcase}-#{term['year']}"
         ccn_set_by_term[slug] = term['ccnSet'].to_a
       end
       ccn_set_by_term

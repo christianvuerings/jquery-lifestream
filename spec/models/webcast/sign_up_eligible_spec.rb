@@ -9,9 +9,9 @@ describe Webcast::SignUpEligible do
       it 'should return all test data' do
         terms = subject.get
         expect(terms).to have(3).items
-        expect(terms['2015-spring']).to contain_exactly(5916, 51991)
-        expect(terms['2015-fall']).to contain_exactly(5917, 51992)
-        expect(terms['2016-spring']).to be_empty
+        expect(terms['spring-2015']).to contain_exactly(5916, 51991)
+        expect(terms['fall-2015']).to contain_exactly(5917, 51992)
+        expect(terms['spring-2016']).to be_empty
       end
 
     end
