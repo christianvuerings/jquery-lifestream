@@ -1,6 +1,5 @@
 class ConfigController < ApplicationController
   before_filter :get_settings, :initialize_calcentral_config
-  skip_before_filter :check_reauthentication
 
   def get
     render json: @calcentral_config.merge({
