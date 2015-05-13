@@ -11,9 +11,6 @@ class StoredUsersController < ApplicationController
 
   def store_saved_uid
     response = User::StoredUsers.store_saved_uid(current_user.real_user_id, params['uid'])
-    if response[:success]
-      User::StoredUsers.delete_recent_uid(session['original_user_id'], params['uid'])
-    end
     render json: response.to_json
   end
 
