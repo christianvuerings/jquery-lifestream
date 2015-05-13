@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div data-ng-if="appState === 'selection'">
+  <div data-ng-show="appState === 'selection'">
     <div class="row collapse">
       <div class="medium-12 columns">
         <div data-ng-include src="'canvas_embedded/_shared/back_to_gradebook_link.html'"></div>
@@ -43,7 +43,7 @@
             <label for="course-sections">Select Section:</label>
           </div>
           <div class="cc-left cc-page-course-grade-export-section-select">
-            <select id="course-sections" data-ng-model="$parent.selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
+            <select id="course-sections" data-ng-model="selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
           </div>
         </div>
       </div>
