@@ -123,6 +123,25 @@ describe User::StoredUsers do
       expect(response).to eq success_response
     end
 
+    it 'should limit number of uids per owner, removing oldest first' do
+      owner = User::Data.create(uid: owner_uid)
+      uid = uid_to_store
+      User::RecentUid::MAX_PER_OWNER_ID.times do
+        User::StoredUsers.store_recent_uid(owner_uid, uid)
+        uid = uid.next
+      end
+
+      all_recent = owner.recent_uids.order(:created_at).all
+      expect(all_recent.count).to eq User::RecentUid::MAX_PER_OWNER_ID
+      oldest, second_oldest = all_recent[0,2]
+
+      User::StoredUsers.store_recent_uid(owner_uid, uid.next)
+
+      expect(owner.recent_uids.count).to eq User::RecentUid::MAX_PER_OWNER_ID
+      expect(owner.recent_uids.find_by id: oldest.id).to be_blank
+      expect(owner.recent_uids.find_by id: second_oldest.id).to be_present
+    end
+
     it 'should return error if owner_uid does not exist' do
       User::StoredUsers.should_receive(:get_user).with(owner_uid).and_return(nil)
 
