@@ -63,16 +63,17 @@
   }
 
   @media print {
+    padding: 0;
+
     .cc-page-roster-image-unavailable:before {
       content: url('../images/svg/photo_unavailable_official_72x96.svg');
     }
+
     .cc-page-roster-list {
       a[href]:after {
         content: "";
       }
     }
-
-    padding: 0;
 
     .cc-page-roster-student-name {
       display: block;

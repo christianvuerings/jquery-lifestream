@@ -35,12 +35,12 @@ module Webcast
 
     def merge(course, media_type)
       return [] if course.empty?
-      all_recordings = []
+      all_recordings = Set.new
       course.values.each do |section|
         recordings = section[media_type]
         recordings.each { |r| all_recordings << r } if recordings
       end
-      all_recordings
+      all_recordings.to_a
     end
 
     def merge_itunes(course)

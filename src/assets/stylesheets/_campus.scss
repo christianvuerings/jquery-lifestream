@@ -30,17 +30,17 @@
     padding-left: 0;
     padding-right: 0;
     h3 {
-      border-top: 1px solid #b9c8d0;
-      color: #b9c8d0;
+      border-top: 1px solid $cc-color-navigation-sub-header;
+      color: $cc-color-navigation-sub-header;
       font-size: 16px;
       margin: 0;
       padding: 10px 15px 0;
     }
     li {
       &.active a, a:hover, a:focus {
-        background: #61889e;
+        background: $cc-color-navigation-hover-background;
         border-radius: 5px;
-        color: #fff;
+        color: $cc-color-white;
       }
       &.active a {
         font-weight: bold;

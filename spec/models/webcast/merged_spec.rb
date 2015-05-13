@@ -59,5 +59,22 @@ describe Webcast::Merged do
       end
     end
 
+    context 'cross-listed CCNs in merged feed' do
+      let(:feed) do
+        Webcast::Merged.new(2015, 'B', [51990, 5915], options).get_feed
+      end
+      it 'returns course media' do
+        expect(feed[:video_error_message]).to be_nil
+        ls_C70U = feed[:media]['2015-B-51990']
+        astro_C10 = feed[:media]['2015-B-5915']
+        expect(ls_C70U[:videos]).to have(28).items
+        expect(astro_C10[:videos]).to have(28).items
+        # These are cross-listed CCNs so we only include unique recordings
+        expect(feed[:videos]).to have(28).items
+        expect(feed[:videos]).to match_array astro_C10[:videos]
+        expect(feed[:audio]).to match_array astro_C10[:audio]
+      end
+    end
+
   end
 end

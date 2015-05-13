@@ -47,7 +47,7 @@ body {
   }
 
   .cc-popover-title {
-    background: $cc-color-popover-title-background;
+    background: $cc-color-popover-background;
     border-bottom: 1px solid $cc-color-popover-border;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -261,7 +261,7 @@ body {
   .cc-popover-gear {
     .cc-header-icon {
       &.cc-header-icon-selected {
-        background: $cc-color-popover-title-background;
+        background: $cc-color-popover-background;
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
         color: $cc-color-popover-text;

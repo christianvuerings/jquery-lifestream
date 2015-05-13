@@ -69,8 +69,14 @@ module Oec
       use_pooled_connection {
         sql = <<-SQL
         select distinct person.first_name, person.last_name,
-          person.email_address, person.ldap_uid
-        from calcentral_person_info_vw person, calcentral_class_roster_vw r, calcentral_course_info_vw c
+          person.email_address, person.ldap_uid,
+          CASE WHEN person.student_id IS NULL
+                 THEN 'UID:' || person.ldap_uid
+                 ELSE '' || person.student_id
+          END AS sis_id
+        from calcentral_class_roster_vw r
+        left outer join calcentral_person_info_vw person ON (person.ldap_uid = r.student_ldap_uid)
+        left outer join calcentral_course_info_vw c ON (r.course_cntl_num = c.course_cntl_num)
         where
           c.section_cancel_flag is null
           #{terms_query_clause('c', Settings.oec.current_terms_codes)}
@@ -78,8 +84,6 @@ module Oec
           and (r.enroll_status = 'E' OR r.enroll_status = 'C')
           and r.term_yr = c.term_yr
           and r.term_cd = c.term_cd
-          and r.course_cntl_num = c.course_cntl_num
-          and r.student_ldap_uid = person.ldap_uid
         order by ldap_uid
         SQL
         result = connection.select_all(sql)
@@ -93,7 +97,8 @@ module Oec
         sql = <<-SQL
       select distinct r.term_yr || '-' || r.term_cd || '-' || lpad(r.course_cntl_num, 5, '0') AS course_id,
         r.student_ldap_uid AS ldap_uid
-      from calcentral_course_info_vw c, calcentral_class_roster_vw r
+      from calcentral_class_roster_vw r
+      left outer join calcentral_course_info_vw c ON (c.course_cntl_num = r.course_cntl_num)
       where
           c.section_cancel_flag is null
           #{terms_query_clause('c', Settings.oec.current_terms_codes)}
@@ -101,7 +106,6 @@ module Oec
           and (r.enroll_status = 'E' OR r.enroll_status = 'C')
           and r.term_yr = c.term_yr
           and r.term_cd = c.term_cd
-          and r.course_cntl_num = c.course_cntl_num
       order by ldap_uid
         SQL
         result = connection.select_all(sql)
@@ -124,6 +128,10 @@ module Oec
         c.section_num,
         c.primary_secondary_cd,
         c.course_title_short,
+        CASE WHEN p.student_id IS NULL
+               THEN 'UID:' || p.ldap_uid
+               ELSE '' || p.student_id
+        END AS sis_id,
         p.first_name,
         p.last_name,
         p.email_address,
