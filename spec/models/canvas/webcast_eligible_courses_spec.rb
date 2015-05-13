@@ -28,7 +28,7 @@ describe Canvas::WebcastEligibleCourses do
         expect(section[:term_cd]).to eq 'B'
         expect(section[:ccn].to_i).to eq 5916
         expect(section[:has_webcast_recordings]).to be false
-        expect(section[:is_sign_up_eligible]).to be true
+        expect(section[:is_webcast_eligible]).to be true
       end
 
       it 'should not flag sign-up eligible sections when is_sign_up_active = false' do
@@ -43,7 +43,7 @@ describe Canvas::WebcastEligibleCourses do
         expect(section[:term_cd]).to eq 'B'
         expect(section[:ccn].to_i).to eq 51990
         expect(section[:has_webcast_recordings]).to be true
-        expect(section[:is_sign_up_eligible]).to be false
+        expect(section[:is_webcast_eligible]).to be false
       end
     end
 

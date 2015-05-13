@@ -58,10 +58,10 @@ module Canvas
               section_key = "#{term_yr}-#{term_cd}-#{ccn}"
               has_recordings = recordings_per_ccn.has_key?(section_key) && recordings_per_ccn[section_key][:videos].present?
               logger.warn "#{section_key} has Webcast recordings (canvas_course_id = #{canvas_course_id})" if has_recordings
-              is_sign_up_eligible = !has_recordings && !sign_up_eligible_ccn_set.nil? && sign_up_eligible_ccn_set.include?(ccn)
-              if has_recordings || is_sign_up_eligible
+              is_webcast_eligible = !has_recordings && !sign_up_eligible_ccn_set.nil? && sign_up_eligible_ccn_set.include?(ccn)
+              if has_recordings || is_webcast_eligible
                 section[:has_webcast_recordings] = has_recordings
-                section[:is_sign_up_eligible] = is_sign_up_eligible
+                section[:is_webcast_eligible] = is_webcast_eligible
                 eligible_courses[canvas_course_id] ||= Set.new
                 eligible_courses[canvas_course_id] << section
               end
