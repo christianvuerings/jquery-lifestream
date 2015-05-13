@@ -6,8 +6,6 @@ module Canvas
       @options = options
       @sis_term_ids = sis_term_ids
       @canvas_webcast_tool_id = webcast_tool_id
-      @is_webcast_sign_up_active = Webcast::SystemStatus.new(@options).get['is_sign_up_active']
-      logger.info "Webcast sign-up period #{@is_webcast_sign_up_active ? 'is' : 'is not'} active."
     end
 
     def refresh_canvas
@@ -16,7 +14,7 @@ module Canvas
       eligible_courses_hash.each do |canvas_course_id, sections|
         if sections.any?
           sections.each do |section|
-            show_tab = section[:has_webcast_recordings] || @is_webcast_sign_up_active && section[:in_webcast_enabled_room]
+            show_tab = section[:has_webcast_recordings] || section[:is_sign_up_eligible]
             modified_tab = update_hidden_on_webcast_tab(show_tab, canvas_course_id)
             modifications_per_course_site[canvas_course_id] = modified_tab if modified_tab
             # Break because this course site has been updated

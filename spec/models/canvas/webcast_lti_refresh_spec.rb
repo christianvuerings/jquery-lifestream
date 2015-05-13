@@ -29,7 +29,6 @@ describe Canvas::WebcastLtiRefresh do
       end
 
       it 'should show the Webcast tool because it has videos' do
-        allow_any_instance_of(Webcast::Rooms).to receive(:any_in_webcast_enabled_room?).and_return false
         allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return({ 'id' => 1, 'hidden' => true })
         expect(Webcast::CourseSiteLog).to receive(:find_by).with(anything).and_return nil
         allow_any_instance_of(Canvas::ExternalTools).to receive(:show_course_site_tab).and_return :return
@@ -38,7 +37,6 @@ describe Canvas::WebcastLtiRefresh do
       end
 
       it 'should not un-hide the Webcast tool because it was previously un-hidden' do
-        allow_any_instance_of(Webcast::Rooms).to receive(:any_in_webcast_enabled_room?).and_return true
         log_entry = Webcast::CourseSiteLog.new(webcast_tool_unhidden_at: Time.zone.yesterday)
         expect(Webcast::CourseSiteLog).to receive(:find_by).with(anything).and_return log_entry
         # Canvas docs say 'hidden' property not present when value is false
