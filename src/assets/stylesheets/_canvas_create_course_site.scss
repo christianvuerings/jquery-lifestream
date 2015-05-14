@@ -1,5 +1,4 @@
 .cc-page-create-course-site {
-  background: $cc-color-white;
   padding: 20px;
 
   .cc-button {
@@ -8,7 +7,7 @@
 
   .cc-page-create-course-site-header {
     color: $bc-color-headers;
-    font-family: $bc-header-font-family;
+    font-family: $bc-base-font-family;
     font-weight: normal;
     line-height: 40px;
     margin: 5px 0;
@@ -34,7 +33,6 @@
     margin: 5px 0;
     input[type="text"] {
       margin: 2px 10px 0 0;
-      padding: 3px 2px;
       width: 140px;
     }
   }
@@ -86,7 +84,7 @@
 
   .cc-page-create-course-site-no-courses {
     color: $bc-color-headers;
-    font-family: $bc-header-font-family;
+    font-family: $bc-base-font-family;
     font-size: 14px;
     font-weight: normal;
     padding: 20px;

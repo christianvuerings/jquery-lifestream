@@ -1,6 +1,23 @@
 // Canvas Fonts
 $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
+.bc-canvas-application {
+  background: $cc-color-white;
+  font-family: $bc-base-font-family;
+  font-size: 14px;
+  font-weight: 300;
+
+  input, input[type="text"], button {
+    font-family: $bc-base-font-family;
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  input[type="text"] {
+    padding: 8px 12px;
+  }
+}
+
 // Canvas Tables
 // https://canvas.instructure.com/styleguide#tables
 .bc-table {
