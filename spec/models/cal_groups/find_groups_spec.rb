@@ -61,7 +61,8 @@ describe CalGroups::FindGroups do
     end
   end
 
-  context 'using real data feed', testext: true do
+  # This testext group is disabled until CLC-5251 is resolved.
+  context 'using real data feed', testext: true, ignore: true do
     let(:fake) { false }
 
     context 'a known test group' do
