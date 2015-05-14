@@ -14,7 +14,7 @@
       </p>
 
       <div class="cc-widget">
-        <button class="cc-button cc-page-create-course-site-admin-mode-switch"
+        <button class="bc-canvas-button bc-canvas-button-small cc-page-create-course-site-admin-mode-switch"
                 data-ng-click="toggleAdminMode()">
           <span data-ng-if="adminMode !== 'by_ccn'">Switch to CCN input</span>
           <span data-ng-if="adminMode === 'by_ccn'">Switch to acting as instructor</span>
@@ -33,9 +33,9 @@
             <div class="medium-5 columns">
               <ul role="tablist">
                 <li class="cc-page-create-course-site-term-button-element" data-ng-repeat="semester in admin_semesters">
-                  <button class="cc-button cc-page-create-course-site-term-button"
+                  <button class="bc-canvas-button cc-page-create-course-site-term-button"
                           data-ng-click="switchAdminSemester(semester)"
-                          data-ng-class="{'cc-button-selected':(currentAdminSemester==semester.slug)}"
+                          data-ng-class="{'bc-canvas-button-primary bc-canvas-button-selected':(currentAdminSemester==semester.slug)}"
                           aria-selected="{{currentAdminSemester==semester.slug}}"
                           role="tab"
                           data-ng-bind="semester.name" aria-label="Select {{semester.name}} term">
@@ -77,9 +77,9 @@
                   <div class="cc-page-create-course-site-step-indent">
                     <ul role="tablist">
                       <li class="cc-page-create-course-site-term-button-element" data-ng-repeat="semester in teachingSemesters">
-                        <button class="cc-button cc-page-create-course-site-term-button"
+                        <button class="bc-canvas-button cc-page-create-course-site-term-button"
                                 data-ng-click="switchSemester(semester)"
-                                data-ng-class="{'cc-button-selected':(currentSemester==semester.slug)}"
+                                data-ng-class="{'bc-canvas-button-primary bc-canvas-button-selected':(currentSemester==semester.slug)}"
                                 aria-selected="{{currentSemester==semester.slug}}"
                                 role="tab"
                                 data-ng-bind="semester.name" aria-label="Load sections for {{semester.name}} term">
