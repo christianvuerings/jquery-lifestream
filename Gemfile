@@ -8,19 +8,19 @@ gem 'actionpack-action_caching', '~>1.1.1'
 gem 'actionpack-page_caching', '~>1.0.2'
 gem 'actionpack-xml_parser', '~>1.0.1'
 gem 'actionview-encoded_mail_to', '~>1.0.5'
-gem 'activerecord-session_store', '~>0.1.0'
+gem 'activerecord-session_store', '~>0.1.1'
 gem 'activeresource', '~>4.0.0'
 gem 'protected_attributes', '~> 1.0.8'
 gem 'rails-observers', '~>0.1.2'
 gem 'rails-perftest', '~>0.0.5'
 
-gem 'activerecord-jdbc-adapter', '~> 1.3.13'
+gem 'activerecord-jdbc-adapter', '~> 1.3.16'
 
 # Postgresql adapter
-gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.13'
+gem 'activerecord-jdbcpostgresql-adapter', '~> 1.3.16'
 
 # H2 adapter
-gem 'activerecord-jdbch2-adapter', '~> 1.3.13'
+gem 'activerecord-jdbch2-adapter', '~> 1.3.16'
 
 # A JSON implementation as a Ruby extension in C
 # http://flori.github.com/json/
@@ -107,7 +107,7 @@ gem 'closure-compiler', '~> 1.1.11'
 # Oracle adapter
 # Purposely excluding this for test environments since folks have to install ojdbc6
 group :development, :testext, :production do
-  gem 'activerecord-oracle_enhanced-adapter', '1.5.5'
+  gem 'activerecord-oracle_enhanced-adapter', '~> 1.5.6'
   gem 'rvm-capistrano', '~> 1.3.1'
   gem 'capistrano', '~> 2.15.4'
 end
@@ -151,7 +151,7 @@ group :development do
 end
 
 group :test do
-  gem 'activerecord-jdbcsqlite3-adapter', '~> 1.3.13'
+  gem 'activerecord-jdbcsqlite3-adapter', '~> 1.3.16'
   gem 'page-object', '~> 1.0.3'
 end
 
