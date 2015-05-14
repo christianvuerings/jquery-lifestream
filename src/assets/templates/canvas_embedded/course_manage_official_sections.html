@@ -14,7 +14,7 @@
 
     <div data-ng-if="currentWorkflowStep === 'preview'">
 
-      <div data-ng-show="jobStatusMessage !== ''" class="cc-notice-box cc-radius" data-ng-class="{'cc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'cc-notice-success':(lastJobStatus === 'sectionEditsCompleted')}" id="cc-page-course-official-sections-job-status-notice" aria-hidden="{{jobStatusMessage === ''}}">
+      <div data-ng-show="jobStatusMessage !== ''" class="cc-notice-box cc-radius" data-ng-class="{'cc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'cc-notice-success':(lastJobStatus === 'sectionEditsCompleted')}" id="cc-page-course-official-sections-job-status-notice" data-ng-attr-aria-hidden="{{jobStatusMessage === ''}}">
         <span data-ng-bind="jobStatusMessage"></span>
         <div class="cc-notice-close-button">
           <button class="fa fa-times-circle button cc-close-button small" data-ng-click="jobStatusMessage=''" aria-controls="cc-page-course-official-sections-job-status-notice">
