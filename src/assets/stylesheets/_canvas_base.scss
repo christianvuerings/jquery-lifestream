@@ -1,5 +1,5 @@
 // Canvas Fonts
-$bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 // Canvas Tables
 // https://canvas.instructure.com/styleguide#tables
@@ -119,7 +119,7 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .cc-template-back-link {
-  font-family: $bc-header-font-family;
+  font-family: $bc-base-font-family;
   font-size: 14px;
 }
 
