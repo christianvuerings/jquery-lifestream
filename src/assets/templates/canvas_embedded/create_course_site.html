@@ -3,7 +3,7 @@
   <div data-ng-if="!feedFetched" data-cc-spinner-directive></div>
 
   <div data-ng-show="feedFetched && !displayError">
-    <div data-ng-show="is_admin">
+    <div class="cc-page-create-course-site-admin-options" data-ng-show="is_admin">
 
       <p class="cc-visuallyhidden" role="alert" aria-live="polite" aria-relevant="text" data-ng-if="adminMode === 'by_ccn'">
         Mode Activated: Create Site using a list of CCNs
@@ -24,7 +24,7 @@
       <form data-ng-show="adminMode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-form cc-page-create-course-site-actas-form">
         <label for="instructor-uid" class="cc-visuallyhidden">Instructor UID</label>
         <input class="cc-left" placeholder="Instructor UID" data-ng-model="admin_acting_as" type="text" role="search" id="instructor-uid" />
-        <button class="cc-button cc-button-blue" type="submit" aria-label="Load official sections for instructor">As instructor</button>
+        <button class="bc-canvas-button bc-canvas-button-primary" type="submit" aria-label="Load official sections for instructor">As instructor</button>
       </form>
 
       <div data-ng-show="adminMode === 'by_ccn'">
@@ -254,7 +254,7 @@
                 <li>Access your sites anytime at: <a href="http://bcourses.berkeley.edu">http://bcourses.berkeley.edu</a></li>
               </ul>
               <div>
-                <button class="cc-button cc-button-blue" type="button" data-ng-click="fetchFeed()" type="button" aria-control="cc-page-create-course-site-selecting-step" aria-label="Start over to create another course site">Create another Course Site</button>
+                <button class="bc-canvas-button bc-canvas-button-primary" type="button" data-ng-click="fetchFeed()" type="button" aria-control="cc-page-create-course-site-selecting-step" aria-label="Start over to create another course site">Create another Course Site</button>
               </div>
             </div>
 
