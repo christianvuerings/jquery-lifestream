@@ -79,18 +79,16 @@ module MailingLists
     private
 
     def build_creation_url
-      Settings.calmail_proxy.base_url.sub(
-        /api1\Z/,
-        [
-          "list/domain_create_list2?domain_name=#{Settings.calmail_proxy.domain}",
-          "listname=#{self.list_name}",
-          "owner_address=#{Settings.calmail_proxy.owner_address}",
-          "advertised=0",
-          "subscribe_policy=3",
-          "moderate=0",
-          "generic_nonmember_action=1"
-        ].join('&')
-      )
+      params = {
+        domain_name: Settings.calmail_proxy.domain,
+        listname: self.list_name,
+        owner_address: Settings.calmail_proxy.owner_address,
+        advertised: 0,
+        subscribe_policy: 3,
+        moderate: 0,
+        generic_nonmember_action: 1
+      }
+      Settings.calmail_proxy.base_url.sub(/api1\Z/, "list/domain_create_list2?#{params.to_param}")
     end
 
     def check_for_creation
@@ -105,9 +103,7 @@ module MailingLists
       if @canvas_site
         normalized_name = I18n.transliterate(@canvas_site['name']).downcase.split(/[^a-z0-9]+/).reject(&:blank?).join('_')
         term = Canvas::Proxy.sis_term_id_to_term(@canvas_site['term']['sis_term_id'])
-        short_term_name = Berkeley::TermCodes.codes[term[:term_cd].to_sym].downcase[0,2]
-        short_term_year = term[:term_yr][-2,2]
-        "#{normalized_name}-#{short_term_name}#{short_term_year}"
+        "#{normalized_name}-#{Berkeley::TermCodes.to_abbreviation(term[:term_yr], term[:term_cd])}"
       end
     end
 
@@ -161,14 +157,15 @@ module MailingLists
       course_users.map{ |user| user['login_id'] }.each_slice(1000) do |uid_slice|
         user_slice = CampusOracle::Queries.get_basic_people_attributes uid_slice
         user_slice.each do |user|
-          addresses_to_remove.delete user['email_address']
-          unless list_address_set.include? user['email_address']
+          user_address = user['email_address'].downcase
+          addresses_to_remove.delete user_address
+          unless list_address_set.include? user_address
             population_results[:add][:total] += 1
-            proxy_response = add_member_proxy.add_member(self.list_name, user['email_address'], "#{user['first_name']} #{user['last_name']}")
+            proxy_response = add_member_proxy.add_member(self.list_name, user_address, "#{user['first_name']} #{user['last_name']}")
             if proxy_response[:response] && proxy_response[:response][:added]
               population_results[:add][:success] += 1
             else
-              population_results[:add][:failure] << user['email_address']
+              population_results[:add][:failure] << user_address
             end
           end
         end
@@ -176,7 +173,7 @@ module MailingLists
 
       logger.info "Added #{population_results[:add][:success]} of #{population_results[:add][:total]} new site members."
       if population_results[:add][:failure].any?
-        logger.error "Failed to add #{population_results[:add][:failure]} addresses to #{self.list_name}: #{population_results[:add][:failure].join(' , ')}"
+        logger.error "Failed to add #{population_results[:add][:failure].count} addresses to #{self.list_name}: #{population_results[:add][:failure].join(' , ')}"
       end
 
       remove_member_proxy = Calmail::RemoveListMember.new
@@ -193,7 +190,7 @@ module MailingLists
 
       logger.info "Removed #{population_results[:remove][:success]} of #{population_results[:remove][:total]} former site members."
       if population_results[:remove][:failure].any?
-        logger.error "Failed to remove #{population_results[:remove][:failure]} addresses from #{self.list_name}: #{population_results[:remove][:failure].join(' , ')}"
+        logger.error "Failed to remove #{population_results[:remove][:failure].count} addresses from #{self.list_name}: #{population_results[:remove][:failure].join(' , ')}"
       end
 
       logger.info "Finished population of mailing list #{self.list_name}."
