@@ -1,11 +1,30 @@
 // Canvas Fonts
 $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-.bc-canvas-application {
-  background: $cc-color-white;
+// Placeholder Selectors
+%bc-canvas-base-typography {
   font-family: $bc-base-font-family;
   font-size: 14px;
   font-weight: 300;
+}
+
+%bc-form-input-text {
+  @extend %bc-canvas-base-typography;
+  padding: 8px 12px;
+}
+
+%bc-form-input-select {
+  @extend %bc-canvas-base-typography;
+  background: url('../images/canvas/ic-icon-arrow-down.svg') no-repeat calc(100% - 8px) 50% $cc-color-white;
+  background-size: 10px 5.667px;
+  border-color: $bc-color-table-cell-border-grey;
+  padding: 8px 12px;
+}
+
+// Applies Canvas styling to Canvas only applications
+.bc-canvas-application {
+  @extend %bc-canvas-base-typography;
+  background: $cc-color-white;
 
   input, input[type="text"], button {
     &, &:hover, &:focus {
@@ -25,7 +44,23 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 }
 
-// Canvas Tables
+// Form Elements
+// https://ucberkeley.instructure.com/styleguide#forms
+.bc-canvas-page-form {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.bc-form-input-text {
+  @extend %bc-form-input-text;
+}
+
+.bc-form-input-select {
+  @extend %bc-form-input-select;
+}
+
+// Tables
 // https://canvas.instructure.com/styleguide#tables
 .bc-table {
   border: 1px solid $bc-color-table-border-grey;
@@ -82,12 +117,6 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       }
     }
   }
-}
-
-.cc-page-form {
-  background: transparent;
-  border: 0;
-  padding: 0;
 }
 
 .cc-canvas-no-decoration {

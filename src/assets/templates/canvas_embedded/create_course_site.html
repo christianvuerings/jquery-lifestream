@@ -21,7 +21,7 @@
         </button>
       </div>
 
-      <form data-ng-show="adminMode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="cc-page-form cc-page-create-course-site-actas-form">
+      <form data-ng-show="adminMode !== 'by_ccn'" data-ng-submit="fetchFeed()" class="bc-canvas-page-form cc-page-create-course-site-actas-form">
         <label for="instructor-uid" class="cc-visuallyhidden">Instructor UID</label>
         <input class="cc-left" placeholder="Instructor UID" data-ng-model="admin_acting_as" type="text" role="search" id="instructor-uid" />
         <button class="bc-canvas-button bc-canvas-button-primary" type="submit" aria-label="Load official sections for instructor">As instructor</button>
@@ -45,7 +45,7 @@
             </div>
           </div>
         </div>
-        <form data-ng-submit="fetchFeed()" class="cc-page-form">
+        <form data-ng-submit="fetchFeed()" class="bc-canvas-page-form">
           <label for="cc-page-create-course-site-ccn-list" class="cc-visuallyhidden">CCN List Separated by Commas or Spaces</label>
           <textarea id="cc-page-create-course-site-ccn-list" data-ng-model="admin_by_ccns"
             placeholder="Paste your list of CCNs here, separated by commas or spaces">
@@ -114,7 +114,7 @@
                   </div>
                 </div>
 
-                <form data-ng-submit="showConfirmation()" class="cc-page-form">
+                <form data-ng-submit="showConfirmation()" class="bc-canvas-page-form">
 
                   <ul class="cc-page-create-course-site-section-margin">
                     <li data-ng-repeat="course in coursesList" class="cc-page-create-course-site-form-course">
@@ -174,7 +174,7 @@
             </ul>
           </div>
 
-          <form name="createCourseSiteForm" data-ng-submit="createCourseSiteJob()" class="cc-page-form cc-page-create-course-site-site-labels-form">
+          <form name="createCourseSiteForm" data-ng-submit="createCourseSiteJob()" class="bc-canvas-page-form cc-page-create-course-site-site-labels-form">
             <div class="row">
               <div class="medium-6">
 

@@ -11,8 +11,8 @@ $bc-canvas-button-selected-background: #6b6b6b;
 $bc-canvas-button-selected-border: #525252;
 $bc-canvas-button-selected-color: #fff;
 
-// Canvas Button Styles
-.bc-canvas-button, .bc-main .cc-widget-webcast .cc-button {
+// Placeholder Selectors
+%bc-canvas-button {
   background: $bc-color-feature-icon-box-background;
   border: 1px solid $bc-canvas-button-border;
   border-radius: 3px;
@@ -38,18 +38,7 @@ $bc-canvas-button-selected-color: #fff;
   }
 }
 
-.bc-canvas-button-small {
-  font-size: 12px;
-  padding: 2px 8px;
-}
-
-.bc-canvas-button-selected, .bc-main .cc-widget-webcast .cc-button-selected {
-  background: $bc-canvas-button-selected-background;
-  border-color: $bc-canvas-button-selected-border;
-  color: $bc-canvas-button-selected-color;
-}
-
-.bc-canvas-button-primary {
+%bc-canvas-button-primary {
   background: $bc-canvas-button-primary-background;
   border: 1px solid $bc-canvas-button-primary-border;
   color: $bc-color-white;
@@ -62,6 +51,26 @@ $bc-canvas-button-selected-color: #fff;
   &[disabled] {
     color: $bc-color-white;
   }
+}
+
+// Canvas Button Styles
+.bc-canvas-button, .bc-main .cc-widget-webcast .cc-button {
+  @extend %bc-canvas-button;
+}
+
+.bc-canvas-button-primary {
+  @extend %bc-canvas-button-primary;
+}
+
+.bc-canvas-button-small {
+  font-size: 12px;
+  padding: 2px 8px;
+}
+
+.bc-canvas-button-selected, .bc-main .cc-widget-webcast .cc-button-selected {
+  background: $bc-canvas-button-selected-background;
+  border-color: $bc-canvas-button-selected-border;
+  color: $bc-canvas-button-selected-color;
 }
 
 .bc-canvas-form {
