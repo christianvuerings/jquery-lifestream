@@ -14,6 +14,8 @@ module Calmail
 
     def request(path, options = {})
       url = "#{@settings.base_url}/#{path}"
+      logger.info "Fake = #{@fake}; Making request to #{url}"
+
       body_options = options.delete(:body) || {}
       body_options.reverse_merge!(
         apikey: @settings.api_key,
@@ -24,7 +26,10 @@ module Calmail
         body: body_options,
         parser: LegacyJsonParser
       }.merge(options)
-      get_response(url, request_options)
+
+      response = get_response(url, request_options)
+      logger.debug "Remote server status #{response.code}, Body = #{response.body}"
+      response
     end
 
     def mock_request

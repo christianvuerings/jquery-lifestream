@@ -25,6 +25,15 @@ module Berkeley
       "#{term} #{term_yr}"
     end
 
+    def to_abbreviation(term_yr, term_cd)
+      # 'fa14', 'sp15'
+      term = codes[term_cd.to_sym]
+      unless term
+        raise ArgumentError, "No such term code: #{term_cd}"
+      end
+      "#{term.downcase[0,2]}#{term_yr[-2,2]}"
+    end
+
     def to_slug(term_yr, term_cd)
       term = codes[term_cd.to_sym]
       unless term
