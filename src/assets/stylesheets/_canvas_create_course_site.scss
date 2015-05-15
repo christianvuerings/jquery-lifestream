@@ -1,5 +1,4 @@
 .cc-page-create-course-site {
-  background: $cc-color-white;
   padding: 20px;
 
   .cc-button {
@@ -8,7 +7,7 @@
 
   .cc-page-create-course-site-header {
     color: $bc-color-headers;
-    font-family: $bc-header-font-family;
+    font-family: $bc-base-font-family;
     font-weight: normal;
     line-height: 40px;
     margin: 5px 0;
@@ -23,6 +22,10 @@
     margin: 10px 0;
   }
 
+  .cc-page-create-course-site-admin-options {
+    margin-bottom: 15px;
+  }
+
   .cc-page-button-grey {
     background: linear-gradient($bc-color-button-grey-gradient-1, $bc-color-button-grey-gradient-2);
     border: 1px solid $bc-color-button-grey-border;
@@ -30,17 +33,18 @@
   }
 
   .cc-page-create-course-site-actas-form {
-    background: $cc-color-white;
     margin: 5px 0;
     input[type="text"] {
+      font-family: $bc-base-font-family;
+      font-size: 14px;
       margin: 2px 10px 0 0;
-      padding: 3px 2px;
+      padding: 8px 12px;
       width: 140px;
     }
   }
 
   .cc-page-create-course-site-admin-mode-switch {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     outline: none;
   }
 
@@ -86,7 +90,7 @@
 
   .cc-page-create-course-site-no-courses {
     color: $bc-color-headers;
-    font-family: $bc-header-font-family;
+    font-family: $bc-base-font-family;
     font-size: 14px;
     font-weight: normal;
     padding: 20px;
@@ -132,7 +136,7 @@
 
   .cc-page-create-course-site-form-course {
     background: $bc-color-roster-background;
-    border: 1px solid $bc-color-roster-background;
+    border: 1px solid $bc-color-roster-border;
     margin: 0 0 20px;
     padding: 15px;
   }

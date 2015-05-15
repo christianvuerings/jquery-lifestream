@@ -1,5 +1,32 @@
 // Canvas Fonts
-$bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+.bc-canvas-application {
+  background: $cc-color-white;
+  font-family: $bc-base-font-family;
+  font-size: 14px;
+  font-weight: 300;
+
+  input, input[type="text"], button {
+    font-family: $bc-base-font-family;
+    font-size: 14px;
+    font-weight: 300;
+    &:hover, &:focus {
+      font-family: $bc-base-font-family;
+      font-size: 14px;
+      font-weight: 300;
+    }
+  }
+
+  input[type="text"], form input[type="text"] {
+    padding: 8px 12px;
+  }
+
+  form label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
 
 // Canvas Tables
 // https://canvas.instructure.com/styleguide#tables
@@ -119,7 +146,7 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .cc-template-back-link {
-  font-family: $bc-header-font-family;
+  font-family: $bc-base-font-family;
   font-size: 14px;
 }
 
@@ -288,6 +315,7 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 // Maintenance Notice
 .cc-template-canvas-maintenance-notice-text {
+  font-size: 14px;
   font-weight: normal;
 }
 
@@ -443,6 +471,9 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: $bc-color-help-link-blue;
     font-size: 13px;
     outline: none;
+    &:hover, &:focus {
+      font-size: 13px;
+    }
   }
 
   .cc-page-help-notice-left-margin {

@@ -1,16 +1,22 @@
 .cc-page-course-grade-export {
   background-color: $bc-color-white;
-  font-family: $bc-header-font-family;
+  font-family: $bc-base-font-family;
   font-size: 14px;
   font-weight: 300;
   padding: 15px 25px;
 
   // Reset to avoid default Foundation form styling
   p {
-    font-family: $bc-header-font-family;
+    font-family: $bc-base-font-family;
     font-size: 14px;
     font-weight: 300;
     margin-bottom: 10px;
+  }
+
+  button {
+    font-family: $bc-base-font-family;
+    font-size: 14px;
+    font-weight: 300;
   }
 
   .cc-page-course-grade-export-back-link {
@@ -96,11 +102,6 @@
     th, td {
       padding: 14px 20px;
     }
-  }
-
-  .cc-page-course-grade-export-gradebook-button {
-    font-family: $bc-header-font-family;
-    font-size: 14px;
   }
 
   .cc-page-course-grading-export-assignments-name-column {

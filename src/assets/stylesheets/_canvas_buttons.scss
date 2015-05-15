@@ -38,6 +38,11 @@ $bc-canvas-button-selected-color: #fff;
   }
 }
 
+.bc-canvas-button-small {
+  font-size: 12px;
+  padding: 2px 8px;
+}
+
 .bc-canvas-button-selected, .bc-main .cc-widget-webcast .cc-button-selected {
   background: $bc-canvas-button-selected-background;
   border-color: $bc-canvas-button-selected-border;
