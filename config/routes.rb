@@ -85,6 +85,9 @@ Calcentral::Application.routes.draw do
   get '/api/academics/canvas/course_add_user/:canvas_course_id/course_sections' => 'canvas_course_add_user#course_sections', :via => :get, :as => :canvas_course_add_user_course_sections, :defaults => { :format => 'json' }
   post '/api/academics/canvas/course_add_user/:canvas_course_id/add_user' => 'canvas_course_add_user#add_user', :via => :post, :as => :canvas_course_add_user_add_user, :defaults => { :format => 'json' }
   get '/api/canvas/media/:canvas_course_id' => 'canvas_webcast_recordings#get_media', :defaults => { :format => 'json' }
+  get '/api/academics/canvas/mailing_lists/:canvas_course_id' => 'canvas_mailing_lists#show', :defaults => { :format => 'json' }
+  post '/api/academics/canvas/mailing_lists/:canvas_course_id/create' => 'canvas_mailing_lists#create', :defaults => { :format => 'json' }
+  post '/api/academics/canvas/mailing_lists/:canvas_course_id/populate' => 'canvas_mailing_lists#populate', :defaults => { :format => 'json' }
 
   # System utility endpoints
   get '/api/cache/clear' => 'cache#clear', :defaults => { :format => 'json' }
