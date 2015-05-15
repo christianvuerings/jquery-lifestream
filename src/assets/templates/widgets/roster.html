@@ -15,7 +15,7 @@
 
     <div class="cc-select cc-left">
       <label for="section-select" class="cc-visuallyhidden">Filter by Section</label>
-      <select id="section-select" data-ng-options="section as section.name for section in sections track by section.ccn" data-ng-model="searchSection">
+      <select id="section-select" class="cc-roster-select" data-ng-options="section as section.name for section in sections track by section.ccn" data-ng-model="searchSection">
         <option value="">All Sections</option>
       </select>
     </div>

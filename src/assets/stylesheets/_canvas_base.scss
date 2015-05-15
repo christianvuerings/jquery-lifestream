@@ -1,11 +1,15 @@
 // Canvas Fonts
 $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-.bc-canvas-application {
-  background: $cc-color-white;
+.bc-canvas-base-typography {
   font-family: $bc-base-font-family;
   font-size: 14px;
   font-weight: 300;
+}
+
+.bc-canvas-application {
+  background: $cc-color-white;
+  @extend .bc-canvas-base-typography;
 
   input, input[type="text"], button {
     &, &:hover, &:focus {
@@ -23,6 +27,19 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 14px;
     font-weight: 500;
   }
+}
+
+.bc-form-input-text {
+  @extend .bc-canvas-base-typography;
+  padding: 8px 12px;
+}
+
+.bc-form-input-select {
+  @extend .bc-canvas-base-typography;
+  background: url('../images/canvas/ic-icon-arrow-down.svg') no-repeat calc(100% - 8px) 50% $cc-color-white;
+  background-size: 10px 5.667px;
+  border-color: $bc-color-table-cell-border-grey;
+  padding: 8px 12px;
 }
 
 // Canvas Tables
