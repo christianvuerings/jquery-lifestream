@@ -106,15 +106,19 @@
 // see _canvas_base.scss, _canvas_buttons.scss for extensions
 .cc-canvas-embedded {
   .cc-page-roster .cc-roster-search .cc-roster-input {
-    @extend .bc-form-input-text;
+    @extend %bc-form-input-text;
   }
 
   .cc-page-roster .cc-roster-search .cc-roster-select {
-    @extend .bc-form-input-select;
+    @extend %bc-form-input-select;
+  }
+
+  .cc-page-roster .cc-roster-search .cc-button-blue {
+    @extend %bc-canvas-button-primary;
   }
 
   .cc-page-roster .cc-roster-search .cc-button {
-    @extend .bc-canvas-button;
+    @extend %bc-canvas-button;
   }
 
   .cc-page-roster .cc-roster-search .cc-right {
