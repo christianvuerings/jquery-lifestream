@@ -25,7 +25,7 @@ describe 'My Academics L&S Advising card', :testui => true do
       test_output = UserUtils.initialize_output_csv(self)
 
       CSV.open(test_output, 'wb') do |user_info_csv|
-        user_info_csv << ['UID', 'L&S', 'Has Current Appt', 'Has Past Appt', 'Has Advisor', 'No Data', 'Error?']
+        user_info_csv << ['UID', 'L&S', 'Has Current Appt', 'Has Past Appt', 'Has Advisor', 'Error?']
       end
 
       test_users.each do |user|
@@ -36,7 +36,6 @@ describe 'My Academics L&S Advising card', :testui => true do
           has_future_appt = false
           has_past_appt = false
           has_advisor = false
-          no_data = false
           threw_error = false
 
           begin
@@ -212,7 +211,7 @@ describe 'My Academics L&S Advising card', :testui => true do
             threw_error = true
           ensure
             CSV.open(test_output, 'a+') do |user_info_csv|
-              user_info_csv << [uid, is_l_and_s, has_future_appt, has_past_appt, has_advisor, no_data, threw_error]
+              user_info_csv << [uid, is_l_and_s, has_future_appt, has_past_appt, has_advisor, threw_error]
             end
           end
         end

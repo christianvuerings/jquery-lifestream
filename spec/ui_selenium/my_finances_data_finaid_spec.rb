@@ -22,6 +22,7 @@ describe 'My Finances financial aid messages', :testui => true do
       driver = WebDriverUtils.launch_browser
       test_output = UserUtils.initialize_output_csv(self)
       test_users = UserUtils.load_test_users
+      testable_users = []
 
       CSV.open(test_output, 'wb') do |user_info_csv|
         user_info_csv << ['UID', 'Finances Tab', 'Has Messages', 'Has Dupe Messages', 'Has Popover Alert', 'Has Alert Msg',
@@ -64,6 +65,7 @@ describe 'My Finances financial aid messages', :testui => true do
                 end
               else
                 has_messages = true
+                testable_users.push(uid)
                 it "shows no 'no messages' message for UID #{uid}" do
                   expect(has_no_messages_message).to be false
                 end
@@ -180,6 +182,11 @@ describe 'My Finances financial aid messages', :testui => true do
           end
         end
       end
+
+        it 'has FinAid messages for at least one of the test UIDs' do
+          expect(testable_users.any?).to be true
+        end
+
     rescue => e
       logger.error e.message + "\n" + e.backtrace.join("\n ")
     ensure
