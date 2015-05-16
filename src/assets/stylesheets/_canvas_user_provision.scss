@@ -6,19 +6,23 @@
   padding: 10px 20px;
 
   .cc-page-user-provision-heading {
-    font-size: 19px;
-    font-weight: 400;
-    margin: 2px 0;
-    padding: 5px 15px;
+    font-size: 23px;
+    font-weight: normal;
+    margin: 10px 0;
+  }
+
+  .cc-page-user-provision-uid-list-input {
+    padding: 8px 12px;
+  }
+
+  .cc-page-user-provision-feedback {
+    padding: 5px 0 15px;
+    i {
+      margin-right: 5px;
+    }
+    > div {
+      margin-top: 5px;
+    }
   }
 }
 
-.cc-page-user-provision-feedback {
-  padding: 5px 0 15px;
-  i {
-    margin-right: 5px;
-  }
-  > div {
-    margin-top: 5px;
-  }
-}
