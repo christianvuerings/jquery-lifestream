@@ -131,12 +131,7 @@
      * Switches to 'selection' step and scrolls to top of page
      */
     $scope.switchToSelection = function() {
-      // issue scroll to top based on Canvas or CalCentral context
-      if (apiService.util.isInIframe) {
-        apiService.util.iframeScrollToTop();
-      } else {
-        $window.scrollTo(0, 0);
-      }
+      apiService.util.iframeScrollToTop();
       $scope.appState = 'selection';
     };
 
