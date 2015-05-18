@@ -1,4 +1,4 @@
-<div class="bc-page-course-add-user">
+<div class="bc-canvas-application bc-page-course-add-user">
 
   <div data-ng-include src="'canvas_embedded/_shared/maintenance_notice.html'"></div>
 
@@ -69,12 +69,12 @@
     <div class="row collapse" data-ng-show="showSearchForm">
 
       <div class="medium-6 columns">
-        <form data-ng-submit="searchUsers()" class="bc-form">
+        <form data-ng-submit="searchUsers()" class="bc-canvas-page-form">
 
           <div class="row bc-horizontal-form">
             <div class="medium-5 columns">
               <label for="search-text" class="cc-visuallyhidden">Search users</label>
-              <input id="search-text" class="bc-form-entity bc-input" type="{{searchTextType}}" placeholder="Find a person to add" data-ng-model="searchText">
+              <input id="search-text" class="bc-form-input-text" type="{{searchTextType}}" placeholder="Find a person to add" data-ng-model="searchText">
             </div>
 
             <div class="medium-6 columns">
@@ -83,7 +83,7 @@
                   <label for="search-type" class="bc-label bc-label-horizontal bc-form-entities">By:</label>
                 </div>
                 <div class="medium-10 columns">
-                  <select id="search-type" data-ng-model="searchType" data-ng-change="updateSearchTextType()" class="bc-form-entity">
+                  <select id="search-type" data-ng-model="searchType" data-ng-change="updateSearchTextType()" class="bc-form-input-select">
                     <option value="name">Last Name, First Name</option>
                     <option value="email">Email</option>
                     <option value="ldap_user_id">CalNet UID</option>
@@ -93,7 +93,7 @@
             </div>
 
             <div class="medium-1 columns bc-column-align-center">
-              <button id="submit-search" type="submit" class="bc-form-entity bc-button bc-full-wide">Go</button>
+              <button id="submit-search" type="submit" class="bc-canvas-button bc-canvas-button-primary bc-full-wide">Go</button>
             </div>
           </div>
 
@@ -138,7 +138,7 @@
       <div data-cc-spinner-directive>
 
         <div data-ng-show="userSearchResults.length > 0">
-          <form data-ng-submit="addUser()" class="bc-form">
+          <form data-ng-submit="addUser()" class="bc-canvas-page-form">
 
             <fieldset>
               <legend class="cc-visuallyhidden">Select the user you wish to add to the course site:</legend>
