@@ -140,7 +140,7 @@
         <div data-ng-show="userSearchResults.length > 0">
           <form data-ng-submit="addUser()" class="bc-canvas-page-form">
 
-            <fieldset>
+            <fieldset class="bc-form-fieldset">
               <legend class="cc-visuallyhidden">Select the user you wish to add to the course site:</legend>
               <table class="bc-table bc-table-striped">
                 <thead>
@@ -175,7 +175,7 @@
                   <label for="user-role"><strong><span class="cc-required-field-indicator">*</span> Role</strong>:</label>
                 </div>
                 <div class="small-10 columns">
-                  <select id="user-role" data-ng-model="selectedRole" data-ng-options="role as role.name for role in grantingRoles"></select>
+                  <select id="user-role" class="bc-form-input-select" data-ng-model="selectedRole" data-ng-options="role as role.name for role in grantingRoles"></select>
                 </div>
               </div>
 
@@ -184,15 +184,15 @@
                   <label for="course-section"><strong><span class="cc-required-field-indicator">*</span> Section</strong>:</label>
                 </div>
                 <div class="small-10 columns">
-                  <select id="course-section" data-ng-model="selectedSection" data-ng-options="section as section.name for section in courseSections">
+                  <select id="course-section" class="bc-form-input-select" data-ng-model="selectedSection" data-ng-options="section as section.name for section in courseSections">
                   </select>
                 </div>
               </div>
 
               <div class="row collapse bc-form-options">
                 <div class="small-10 small-offset-2 columns">
-                  <button type="submit" class="button tiny">Add User</button>
-                  <button type="button" class="button tiny bc-start-over-button" data-ng-click="resetForm()">Start Over</button>
+                  <button type="submit" class="bc-canvas-button bc-canvas-button-primary ">Add User</button>
+                  <button type="button" class="bc-canvas-button bc-start-over-button" data-ng-click="resetForm()">Start Over</button>
                 </div>
               </div>
 
