@@ -42,10 +42,13 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 .bc-form-input-select,
 .cc-canvas-embedded .cc-page-roster .cc-roster-search .cc-roster-select {
+  -webkit-appearance: none;
   background: url('../images/canvas/ic-icon-arrow-down.svg') no-repeat calc(100% - 8px) 50% $cc-color-white;
   background-size: 10px 5.667px;
   border-color: $bc-color-table-cell-border-grey;
+  margin: 0 0 8px;
   padding: 8px 12px;
+
 }
 
 .bc-canvas-page-form {
