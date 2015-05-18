@@ -168,35 +168,38 @@
               </table>
             </fieldset>
 
-            <div class="medium-5 columns">
+            <div class="row collapse">
+              <div class="medium-5 columns">
 
-              <div class="row collapse">
-                <div class="small-2 columns">
-                  <label for="user-role"><strong><span class="cc-required-field-indicator">*</span> Role</strong>:</label>
+                <div class="row collapse">
+                  <div class="small-2 columns">
+                    <label for="user-role"><strong><span class="cc-required-field-indicator">*</span> Role</strong>:</label>
+                  </div>
+                  <div class="small-10 columns">
+                    <select id="user-role" class="bc-form-input-select" data-ng-model="selectedRole" data-ng-options="role as role.name for role in grantingRoles"></select>
+                  </div>
                 </div>
-                <div class="small-10 columns">
-                  <select id="user-role" class="bc-form-input-select" data-ng-model="selectedRole" data-ng-options="role as role.name for role in grantingRoles"></select>
+
+                <div class="row collapse">
+                  <div class="small-2 columns">
+                    <label for="course-section"><strong><span class="cc-required-field-indicator">*</span> Section</strong>:</label>
+                  </div>
+                  <div class="small-10 columns">
+                    <select id="course-section" class="bc-form-input-select" data-ng-model="selectedSection" data-ng-options="section as section.name for section in courseSections">
+                    </select>
+                  </div>
                 </div>
+
               </div>
-
-              <div class="row collapse">
-                <div class="small-2 columns">
-                  <label for="course-section"><strong><span class="cc-required-field-indicator">*</span> Section</strong>:</label>
-                </div>
-                <div class="small-10 columns">
-                  <select id="course-section" class="bc-form-input-select" data-ng-model="selectedSection" data-ng-options="section as section.name for section in courseSections">
-                  </select>
-                </div>
-              </div>
-
-              <div class="row collapse bc-form-options">
-                <div class="small-10 small-offset-2 columns">
-                  <button type="submit" class="bc-canvas-button bc-canvas-button-primary ">Add User</button>
-                  <button type="button" class="bc-canvas-button bc-start-over-button" data-ng-click="resetForm()">Start Over</button>
-                </div>
-              </div>
-
             </div>
+
+            <div class="row collapse">
+              <div class="bc-form-actions medium-12">
+                <button type="submit" class="bc-canvas-button bc-canvas-button-primary">Add User</button>
+                <button type="button" class="bc-canvas-button bc-start-over-button" data-ng-click="resetForm()">Start Over</button>
+              </div>
+            </div>
+
           </form>
         </div>
 
