@@ -13,6 +13,7 @@ module CalCentralPages
     wait_for_expected_title('My Academics | CalCentral')
 
     h1(:page_heading, :xpath => '//h1[contains(.,"My Academics")]')
+    h2(:no_data_heading, :xpath => '//h2[contains(text(),"Data not available")]')
 
     def load_page(driver)
       logger.info('Loading My Academics page')
