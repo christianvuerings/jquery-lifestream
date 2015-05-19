@@ -1,62 +1,61 @@
-<div class="cc-page-user-provision">
+<div class="bc-canvas-application cc-page-user-provision">
 
-  <div class="cc-widget">
-    <div class="cc-widget-title">
+  <div class="row collapse">
+    <div class="medium-12 columns end">
+
       <h1 class="cc-page-user-provision-heading">Add Users to bCourses</h1>
-    </div>
-    <div class="cc-widget-padding">
 
       <form name="userImportForm" data-ng-submit="importUsers(rawUids)">
-        <div class="row">
-          <div class="small-10 small-centered">
+          <div class="row">
+            <div class="small-10 small-centered">
 
-            <div class="row">
-              <div class="small-4 columns">
-                <label for="cc-page-user-provision-uid-list">UID List</label>
-              </div>
-              <div class="small-8 columns">
-                <textarea id="cc-page-user-provision-uid-list" name="uids" data-ng-model="rawUids"
-                  placeholder="Paste your list of UIDs here organized one UID per a line, or separated by spaces or commas."></textarea>
+              <div class="row">
+                <div class="small-2 columns">
+                  <label for="cc-page-user-provision-uid-list" class="bc-form-label">UID List</label>
+                </div>
+                <div class="small-10 columns">
+                  <textarea id="cc-page-user-provision-uid-list" class="cc-page-user-provision-uid-list-input" rows="4" name="uids" data-ng-model="rawUids"
+                    placeholder="Paste your list of UIDs here organized one UID per a line, or separated by spaces or commas."></textarea>
 
-                <small class="error" data-ng-show="checkPerformed && userImportForm.uids.$error.required">
-                  You must provide at least one UID.
-                </small>
-                <small class="error" data-ng-show="userImportForm.uids.$error.ccNumericList">
-                  The following items in your list are not numeric: <span data-ng-bind="invalidValues.join(', ')"></span>
-                </small>
-                <small class="error" data-ng-show="userImportForm.uids.$error.ccListLimit">
-                  Maximum IDs: 200. <span data-ng-bind="listLength"></span> IDs found in list.
-                </small>
+                  <small class="error" data-ng-show="checkPerformed && userImportForm.uids.$error.required">
+                    You must provide at least one UID.
+                  </small>
+                  <small class="error" data-ng-show="userImportForm.uids.$error.ccNumericList">
+                    The following items in your list are not numeric: <span data-ng-bind="invalidValues.join(', ')"></span>
+                  </small>
+                  <small class="error" data-ng-show="userImportForm.uids.$error.ccListLimit">
+                    Maximum IDs: 200. <span data-ng-bind="listLength"></span> IDs found in list.
+                  </small>
+                </div>
               </div>
-            </div>
 
-            <div class="row">
-              <div class="small-2 small-offset-4 columns">
-                <button type="submit" class="bc-canvas-button bc-canvas-button-primary" data-ng-disabled="importButtonDisabled()">Import Users</button>
-              </div>
-              <div class="small-6 columns" data-ng-show="displayImportResult">
-                <div data-cc-spinner-directive>
-                  <div class="row">
-                    <div class="small-11 small-offset-1 columns">
-                      <div class="cc-page-user-provision-feedback">
-                        <div data-ng-show="status === 'error'">
-                          <i class="cc-left fa fa-exclamation-circle cc-icon-red"></i>
-                          <strong>Error : <span data-ng-bind="error"></span></strong>
-                        </div>
-                        <div data-ng-show="status === 'success'">
-                          <i class="cc-left fa fa-check-circle cc-icon-green"></i>
-                          Success : The users specified were imported into bCourses.
+              <div class="row">
+                <div class="small-2 small-offset-2 columns">
+                  <button type="submit" class="bc-canvas-button bc-canvas-button-primary" data-ng-disabled="importButtonDisabled()">Import Users</button>
+                </div>
+                <div class="small-8 columns" data-ng-show="displayImportResult">
+                  <div data-cc-spinner-directive>
+                    <div class="row">
+                      <div class="small-11 small-offset-1 columns">
+                        <div class="cc-page-user-provision-feedback" role="alert">
+                          <div data-ng-show="status === 'error'">
+                            <i class="cc-left fa fa-exclamation-circle cc-icon-red"></i>
+                            <strong>Error : <span data-ng-bind="error"></span></strong>
+                          </div>
+                          <div data-ng-show="status === 'success'">
+                            <i class="cc-left fa fa-check-circle cc-icon-green"></i>
+                            Success : The users specified were imported into bCourses.
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
 
     </div>
   </div>
