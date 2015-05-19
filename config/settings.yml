@@ -156,7 +156,7 @@ textbooks_proxy:
 
 webcast_proxy:
   fake: false
-  base_url: 'https://video-dev.ets.berkeley.edu/warehouse'
+  base_url: 'https://webcast-cc-dev.ets.berkeley.edu/warehouse'
   username: 'secret'
   password: 'secret'
 
