@@ -16,32 +16,44 @@ class ApiMyStatusPage
     @parsed = JSON.parse(body)
   end
 
+  def full_name
+    @parsed['fullName']
+  end
+
+  def sid
+    @parsed['sid']
+  end
+
+  def roles
+    @parsed['roles']
+  end
+
   def is_student?
-    @parsed['roles']['student']
+    roles['student']
   end
 
   def is_registered?
-    @parsed['roles']['registered']
+    roles['registered']
   end
 
   def is_ex_student?
-    @parsed['roles']['exStudent']
+    roles['exStudent']
   end
 
   def is_faculty?
-    @parsed['roles']['faculty']
+    roles['faculty']
   end
 
   def is_staff?
-    @parsed['roles']['staff']
+    roles['staff']
   end
 
   def is_guest?
-    @parsed['roles']['guest']
+    roles['guest']
   end
 
   def is_concurrent_enroll_student?
-    @parsed['roles']['concurrentEnrollmentStudent']
+    roles['concurrentEnrollmentStudent']
   end
 
   def has_student_history?
