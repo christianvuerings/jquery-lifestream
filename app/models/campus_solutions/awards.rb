@@ -26,7 +26,7 @@ module CampusSolutions
 
     def build_feed(response)
       #HTTParty won't parse automatically because the application/xml header is missing
-      MultiXml.parse(response.parsed_response)
+      MultiXml.parse response.body
     end
 
   end
