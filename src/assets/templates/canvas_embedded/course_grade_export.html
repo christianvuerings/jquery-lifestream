@@ -82,7 +82,7 @@
 
     <div class="row collapse">
       <div class="medium-12 columns bc-page-course-grade-export-grade-link" data-ng-if="canvasCourseId && parentHostUrl">
-        <button class="cc-button-link" data-ng-click="goToGradebook()">Back to Gradebook</a>
+        <button class="bc-button-link" data-ng-click="goToGradebook()">Back to Gradebook</a>
       </div>
     </div>
   </div>
@@ -104,7 +104,7 @@
 
       <div class="row collapse">
         <div class="medium-12 columns">
-          <div class="bc-page-course-grade-export-back-link">
+          <div>
             <div data-ng-include src="'canvas_embedded/_shared/back_to_gradebook_link.html'"></div>
           </div>
         </div>
@@ -153,7 +153,7 @@
                 <label for="bc-page-course-grade-export-unmute-assignments" class="bc-page-course-grade-export-error-resolution-action-label">Unmute All</label>
               </div>
               <div class="bc-page-course-grade-export-muted-assignments-see-gradebook">
-                <button class="cc-button-link" data-ng-click="goToGradebook()">See in Gradebook</a>
+                <button class="bc-button-link" data-ng-click="goToGradebook()">See in Gradebook</a>
               </div>
             </div>
 
@@ -200,7 +200,7 @@
               </div>
               <div class="bc-page-course-grade-export-error-resolution-action-container">
                 <label for="bc-page-course-grade-export-enable-grading-scheme" class="bc-page-course-grade-export-error-resolution-action-label">Enable the default Letter Grades +/- grading scheme</label><br>
-                <strong>or</strong> set a custom grading scheme in <button class="cc-button-link" data-ng-click="goToCourseSettings()">Course Settings</button> and return here once completed.
+                <strong>or</strong> set a custom grading scheme in <button class="bc-button-link" data-ng-click="goToCourseSettings()">Course Settings</button> and return here once completed.
               </div>
               <div class="cc-clearfix"></div>
             </div>
@@ -212,7 +212,7 @@
       <div class="row collapse">
         <div class="medium-12 columns">
           <div class="cc-text-right">
-            <button class="bc-canvas-button bc-page-course-grade-export-back-link" type="button" data-ng-click="goToGradebook()" type="button" aria-label="Go Back to Gradebook">Cancel</button>
+            <button class="bc-canvas-button" type="button" data-ng-click="goToGradebook()" type="button" aria-label="Go Back to Gradebook">Cancel</button>
             <button data-ng-disabled="notReadyForPreparation() || resolvingCourseState" data-ng-click="resolveIssues()" class="bc-canvas-button bc-canvas-button-primary" type="button">
               <span data-ng-if="!resolvingCourseState">Continue</span>
               <span data-ng-if="resolvingCourseState"><i class="fa fa-spinner fa-spin"></i> Saving</span>
