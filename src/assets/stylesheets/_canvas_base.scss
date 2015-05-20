@@ -7,7 +7,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 .bc-page-create-course-site,
 .bc-page-create-project-site,
 .bc-page-course-add-user,
-.cc-page-course-official-sections,
+.bc-page-course-official-sections,
 .cc-page-course-grade-export,
 .bc-form-input-text,
 .bc-form-input-select {
@@ -388,15 +388,15 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       vertical-align: top;
     }
 
-    .cc-page-course-official-sections-table-row-disabled td {
+    .cc-template-sections-table-row-disabled td {
       color: $bc-color-grey-disabled;
     }
 
-    .cc-page-course-official-sections-table-row-added td {
+    .cc-template-sections-table-row-added td {
       background-color: $bc-color-yellow-row-highlighted;
     }
 
-    .cc-page-course-official-sections-table-row-deleted td {
+    .cc-template-sections-table-row-deleted td {
       background-color: $bc-color-red-row-highlighted;
     }
 
