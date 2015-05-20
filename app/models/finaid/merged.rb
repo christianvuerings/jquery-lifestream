@@ -11,7 +11,8 @@ module Finaid
       super(uid, options)
       @proxies = [
         Finaid::MyFinAid,
-        Finaid::MyAwards
+        Finaid::MyAwards,
+        Finaid::MyBudget
       ]
     end
 

@@ -1,13 +1,13 @@
 module CampusSolutions
-  class Awards < IntegrationHubProxy
+  class Budget < IntegrationHubProxy
 
     def initialize(options = {})
-      super(Settings.cs_awards_proxy, options)
+      super(Settings.cs_budget_proxy, options)
       initialize_mocks if @fake
     end
 
     def xml_filename
-      'cs_awards.xml'
+      'cs_budget.xml'
     end
 
   end
