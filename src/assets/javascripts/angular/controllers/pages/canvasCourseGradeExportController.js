@@ -77,6 +77,7 @@
       $scope.selectedType = type;
       $scope.appState = 'loading';
       $scope.jobStatus = 'New';
+      apiService.util.iframeScrollToTop();
       canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId).success(function(data) {
         if (data.jobRequestStatus === 'Success') {
           $scope.backgroundJobId = data.jobId;

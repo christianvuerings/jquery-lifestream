@@ -1,11 +1,11 @@
-.cc-page-create-course-site {
+.bc-page-create-course-site {
   padding: 20px;
 
   .cc-button {
     padding: 10px;
   }
 
-  .cc-page-create-course-site-header {
+  .bc-page-create-course-site-header {
     color: $bc-color-headers;
     font-family: $bc-base-font-family;
     font-weight: normal;
@@ -13,16 +13,16 @@
     margin: 5px 0;
   }
 
-  .cc-page-create-course-site-header1 {
+  .bc-page-create-course-site-header1 {
     font-size: 23px;
   }
 
-  .cc-page-create-course-site-header2 {
+  .bc-page-create-course-site-header2 {
     font-size: 18px;
     margin: 10px 0;
   }
 
-  .cc-page-create-course-site-admin-options {
+  .bc-page-create-course-site-admin-options {
     margin-bottom: 15px;
   }
 
@@ -32,7 +32,7 @@
     color: $bc-color-button-grey-text;
   }
 
-  .cc-page-create-course-site-actas-form {
+  .bc-page-create-course-site-actas-form {
     margin: 5px 0;
     input[type="text"] {
       font-family: $bc-base-font-family;
@@ -43,12 +43,12 @@
     }
   }
 
-  .cc-page-create-course-site-admin-mode-switch {
+  .bc-page-create-course-site-admin-mode-switch {
     margin-bottom: 5px;
     outline: none;
   }
 
-  .cc-page-create-course-site-choices {
+  .bc-page-create-course-site-choices {
     overflow: hidden;
     li {
       border-left: 1px solid $cc-color-popover-border;
@@ -62,33 +62,33 @@
     }
   }
 
-  .cc-page-create-course-site-confirmation {
+  .bc-page-create-course-site-confirmation {
     background: linear-gradient($bc-color-notice-yellow-bg-gradient1, $bc-color-notice-yellow-bg-gradient2);
     border-radius: 5px;
     padding: 20px;
-    .cc-page-create-course-site-section-list {
+    .bc-page-create-course-site-section-list {
       list-style-type: disc;
       margin: 10px 0 0 39px;
     }
   }
 
-  .cc-page-create-course-site-help-notice {
+  .bc-page-create-course-site-help-notice {
     margin-bottom: 20px;
-    .cc-page-create-course-site-help-notice-ordered-list {
+    .bc-page-create-course-site-help-notice-ordered-list {
       margin-bottom: 10px;
       margin-left: 20px;
     }
 
-    .cc-page-create-course-site-help-notice-paragraph {
+    .bc-page-create-course-site-help-notice-paragraph {
       margin-bottom: 7px;
     }
   }
 
-  .cc-page-create-course-site-site-labels-form {
+  .bc-page-create-course-site-site-labels-form {
     margin-top: 10px;
   }
 
-  .cc-page-create-course-site-no-courses {
+  .bc-page-create-course-site-no-courses {
     color: $bc-color-headers;
     font-family: $bc-base-font-family;
     font-size: 14px;
@@ -96,32 +96,32 @@
     padding: 20px;
   }
 
-  .cc-page-create-course-site-pending-request {
+  .bc-page-create-course-site-pending-request {
     margin: 15px auto;
   }
 
-  .cc-page-create-course-site-select-sections {
+  .bc-page-create-course-site-select-sections {
     border-top: 1px solid $bc-color-top-border;
     padding: 10px 0;
   }
 
-  .cc-page-create-course-site-step-indent {
+  .bc-page-create-course-site-step-indent {
     padding-left: 18px;
   }
 
-  .cc-page-create-course-site-step-options {
+  .bc-page-create-course-site-step-options {
     padding: 20px 0;
   }
 
-  .cc-page-create-course-site-success-intro {
+  .bc-page-create-course-site-success-intro {
     margin: 15px 0 0;
   }
 
-  .cc-page-create-course-site-term-button {
+  .bc-page-create-course-site-term-button {
     width: 135px;
   }
 
-  .cc-page-create-course-site-term-button-element {
+  .bc-page-create-course-site-term-button-element {
     float: left;
     margin-bottom: 5px;
     width: 140px;
@@ -129,19 +129,19 @@
 
   // Form with Expandable Courses & Sections
 
-  .cc-page-create-course-site-section-margin {
+  .bc-page-create-course-site-section-margin {
     margin: 0;
     overflow: hidden;
   }
 
-  .cc-page-create-course-site-form-course {
+  .bc-page-create-course-site-form-course {
     background: $bc-color-roster-background;
     border: 1px solid $bc-color-roster-border;
     margin: 0 0 20px;
     padding: 15px;
   }
 
-  .cc-page-create-course-site-form-course-button {
+  .bc-page-create-course-site-form-course-button {
     color: $bc-color-body-black;
 
     &:focus, &:hover {
@@ -149,26 +149,26 @@
     }
   }
 
-  .cc-page-create-course-site-form-collapse-icon {
+  .bc-page-create-course-site-form-collapse-icon {
     font-size: 18px;
     margin-left: 2px;
   }
 
-  .cc-page-create-course-site-form-course-title {
+  .bc-page-create-course-site-form-course-title {
     margin-left: 10px;
   }
 
-  .cc-page-create-course-site-form-collapsible-container {
+  .bc-page-create-course-site-form-collapsible-container {
     margin-top: 7px;
   }
 
-  .cc-page-create-course-site-form-select-all-option {
+  .bc-page-create-course-site-form-select-all-option {
     font-size: 12px;
     font-weight: normal;
     margin: 6px 0 4px 2px;
   }
 
-  .cc-page-create-course-site-form-select-all-option-button {
+  .bc-page-create-course-site-form-select-all-option-button {
     outline: none;
   }
 

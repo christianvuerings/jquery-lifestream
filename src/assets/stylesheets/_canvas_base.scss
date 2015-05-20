@@ -1,10 +1,20 @@
 // Canvas Typography
 $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
-.bc-canvas-base-typography, .bc-canvas-application, .bc-form-input-text, .bc-form-input-select {
+.bc-canvas-base-typography,
+.bc-canvas-application,
+.bc-canvas-embedded,
+.bc-page-create-course-site,
+.bc-page-create-project-site,
+.bc-page-course-add-user,
+.bc-page-course-official-sections,
+.bc-page-course-grade-export,
+.bc-form-input-text,
+.bc-form-input-select {
   font-family: $bc-base-font-family;
   font-size: 14px;
   font-weight: 300;
+  line-height: 20px;
 }
 
 // Applies Canvas styling to Canvas only applications
@@ -29,10 +39,27 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 }
 
+.bc-canvas-application a,
+.bc-canvas-embedded a,
+.bc-button-link {
+  color: $bc-color-link;
+  &, &:hover, &:focus, &:visited {
+    background-color: transparent;
+    border: 0;
+    font-family: $bc-base-font-family;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0;
+  }
+  &:hover, &:focus {
+    color: $bc-color-link-hover;
+  }
+}
+
 // Form Elements
 // https://ucberkeley.instructure.com/styleguide#forms
 .bc-form-input-text,
-.cc-canvas-embedded .cc-page-roster .cc-roster-search .cc-roster-input {
+.bc-canvas-embedded .cc-page-roster .cc-roster-search .cc-roster-input {
   padding: 8px 12px;
 }
 
@@ -41,7 +68,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .bc-form-input-select,
-.cc-canvas-embedded .cc-page-roster .cc-roster-search .cc-roster-select {
+.bc-canvas-embedded .cc-page-roster .cc-roster-search .cc-roster-select {
   -moz-appearance: none;
   -webkit-appearance: none;
   background: url('../images/canvas/ic-icon-arrow-down.svg') no-repeat calc(100% - 8px) 50% $cc-color-white;
@@ -59,6 +86,13 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 .bc-form-fieldset {
   margin: 0 0 15px;
   padding: 0;
+}
+
+.bc-form-actions {
+  background: $bc-color-roster-background;
+  border: 1px solid $bc-color-roster-background;
+  padding: 10px 5px;
+  text-align: right;
 }
 
 // Tables
@@ -118,13 +152,6 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       }
     }
   }
-}
-
-.bc-form-actions {
-  background: $bc-color-roster-background;
-  border: 1px solid $bc-color-roster-background;
-  padding: 10px 5px;
-  text-align: right;
 }
 
 .cc-canvas-no-decoration {
@@ -378,15 +405,15 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       vertical-align: top;
     }
 
-    .cc-page-course-official-sections-table-row-disabled td {
+    .cc-template-sections-table-row-disabled td {
       color: $bc-color-grey-disabled;
     }
 
-    .cc-page-course-official-sections-table-row-added td {
+    .cc-template-sections-table-row-added td {
       background-color: $bc-color-yellow-row-highlighted;
     }
 
-    .cc-page-course-official-sections-table-row-deleted td {
+    .cc-template-sections-table-row-deleted td {
       background-color: $bc-color-red-row-highlighted;
     }
 

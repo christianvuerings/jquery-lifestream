@@ -1,19 +1,18 @@
-<div class="cc-page-course-grade-export">
+<div class="bc-page-course-grade-export">
 
   <div data-ng-if="appState === 'loading'">
-
     <div class="row collapse">
       <div class="medium-5 columns end">
-        <h1 class="cc-page-course-grade-export-header">Preparing E-Grades for Download</h1>
+        <h1 class="bc-page-course-grade-export-header">Preparing E-Grades for Download</h1>
       </div>
     </div>
 
-    <div data-ng-hide="jobStatus" class="cc-page-course-grade-export-notice-pending-request">
+    <div data-ng-hide="jobStatus" class="bc-page-course-grade-export-notice-pending-request">
       <i class="fa fa-spinner fa-spin"></i>
       Sending preparation request...
     </div>
 
-    <div data-ng-if="jobStatus === 'New'" class="cc-page-course-grade-export-notice-pending-request">
+    <div data-ng-if="jobStatus === 'New'" class="bc-page-course-grade-export-notice-pending-request">
       <i class="fa fa-spinner fa-spin"></i>
       Preparation request sent. Awaiting processing....
     </div>
@@ -32,17 +31,17 @@
 
     <div class="row collapse">
       <div class="medium-5 columns end">
-        <h1 class="cc-page-course-grade-export-header">What would you like to download?</h1>
+        <h1 class="bc-page-course-grade-export-header">What would you like to download?</h1>
       </div>
     </div>
 
     <div class="row collapse" data-ng-show="officialSections.length > 1">
       <div class="medium-4 columns">
-        <div class="cc-page-course-grade-export-section">
+        <div class="bc-page-course-grade-export-section">
           <div class="cc-left">
             <label for="course-sections">Select Section:</label>
           </div>
-          <div class="cc-left cc-page-course-grade-export-section-select">
+          <div class="cc-left bc-page-course-grade-export-section-select">
             <select id="course-sections" data-ng-model="selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
           </div>
         </div>
@@ -51,8 +50,8 @@
 
     <div class="row collapse">
       <div class="medium-5 columns end">
-        <h2 class="cc-page-course-grade-export-download-header">Current Grades Download</h2>
-        <p class="cc-page-course-grade-export-download-description">
+        <h2 class="bc-page-course-grade-export-download-header">Current Grades Download</h2>
+        <p class="bc-page-course-grade-export-download-description">
           Current grades download ignores unsubmitted assignments when calculating grades.
           Use this download when you want to excuse unsubmitted assignments.
         </p>
@@ -62,8 +61,8 @@
 
     <div class="row collapse">
       <div class="medium-5 columns">
-        <h2 class="cc-page-course-grade-export-download-header">Final Grades Download</h2>
-        <p class="cc-page-course-grade-export-download-description">
+        <h2 class="bc-page-course-grade-export-download-header">Final Grades Download</h2>
+        <p class="bc-page-course-grade-export-download-description">
           Final grades download counts unsubmitted assignments as zeroes when calculating grades.
           Use this download when you want to include all unsubmitted assignments as part of the grade.
         </p>
@@ -73,8 +72,8 @@
 
     <div class="row collapse">
       <div class="medium-12 columns">
-        <div class="cc-page-course-grade-export-more-info-container">
-          <p class="cc-page-course-grade-export-more-info">
+        <div class="bc-page-course-grade-export-more-info-container">
+          <p class="bc-page-course-grade-export-more-info">
             For more information, see <a href="http://ets.berkeley.edu/bcourses/how-do-i-submit-grades-e-grades-bcourses">How do I Submit Grades to E-Grades from bCourses?</a>
           </p>
         </div>
@@ -82,8 +81,8 @@
     </div>
 
     <div class="row collapse">
-      <div class="medium-12 columns cc-page-course-grade-export-grade-link" data-ng-if="canvasCourseId && parentHostUrl">
-        <button class="cc-button-link" data-ng-click="goToGradebook()">Back to Gradebook</a>
+      <div class="medium-12 columns bc-page-course-grade-export-grade-link" data-ng-if="canvasCourseId && parentHostUrl">
+        <button class="bc-button-link" data-ng-click="goToGradebook()">Back to Gradebook</a>
       </div>
     </div>
   </div>
@@ -105,7 +104,7 @@
 
       <div class="row collapse">
         <div class="medium-12 columns">
-          <div class="cc-page-course-grade-export-back-link">
+          <div>
             <div data-ng-include src="'canvas_embedded/_shared/back_to_gradebook_link.html'"></div>
           </div>
         </div>
@@ -113,52 +112,52 @@
 
       <div class="row collapse">
         <div class="medium-12 columns">
-          <h1 class="cc-page-course-grade-export-header">Required adjustments before downloading E-Grades</h1>
+          <h1 class="bc-page-course-grade-export-header">Required adjustments before downloading E-Grades</h1>
         </div>
       </div>
 
       <div class="row collapse">
         <div class="medium-12 columns">
-          <div class="cc-notice-box cc-notice-warning cc-radius cc-page-course-grading-export-error-notice cc-clearfix-container">
-            <div class="cc-left cc-page-course-grading-export-error-notice-cell">
-              <i class="fa fa-exclamation-triangle cc-icon-yellow cc-page-course-grade-export-error-notice-icon"></i>
+          <div class="cc-notice-box cc-notice-warning cc-radius bc-page-course-grade-export-error-notice cc-clearfix-container">
+            <div class="cc-left bc-page-course-grade-export-error-notice-cell">
+              <i class="fa fa-exclamation-triangle cc-icon-yellow bc-page-course-grade-export-error-notice-icon"></i>
             </div>
-            <div class="cc-page-course-grading-export-error-notice-cell" data-ng-if="noGradingStandardEnabled && !mutedAssignmentsPresent">
+            <div class="bc-page-course-grade-export-error-notice-cell" data-ng-if="noGradingStandardEnabled && !mutedAssignmentsPresent">
               In order to download E-Grades, a <strong>grading scheme</strong> must be <strong>enabled</strong>.
             </div>
-            <div class="cc-page-course-grading-export-error-notice-cell" data-ng-if="!noGradingStandardEnabled && mutedAssignmentsPresent">
+            <div class="bc-page-course-grade-export-error-notice-cell" data-ng-if="!noGradingStandardEnabled && mutedAssignmentsPresent">
               In order to download E-Grades, all <strong>assignments</strong> must be <strong>unmuted</strong>.
             </div>
-            <div class="cc-page-course-grading-export-error-notice-cell" data-ng-if="noGradingStandardEnabled && mutedAssignmentsPresent">
+            <div class="bc-page-course-grade-export-error-notice-cell" data-ng-if="noGradingStandardEnabled && mutedAssignmentsPresent">
               In order to download E-Grades, a <strong>grading scheme</strong> must be <strong>enabled</strong> and all <strong>assignments</strong> must be <strong>unmuted</strong>.
             </div>
           </div>
         </div>
       </div>
 
-      <div data-ng-show="mutedAssignmentsPresent" class="cc-page-course-grading-export-error">
+      <div data-ng-show="mutedAssignmentsPresent" class="bc-page-course-grade-export-error">
 
         <div class="row collapse">
           <div class="medium-12 columns">
-            <h2 class="cc-page-course-grade-export-sub-header">Unmute All Assignments</h2>
-            <p class="cc-page-course-grade-export-error-description">
+            <h2 class="bc-page-course-grade-export-sub-header">Unmute All Assignments</h2>
+            <p class="bc-page-course-grade-export-error-description">
               E-Grade.csv exports cannot be properly calculated when assignments within the Gradebook are muted.<br>
               <a href="http://guides.instructure.com/m/4152/l/45130-how-do-i-mute-an-assignment-in-the-gradebook#UnmuteAssignment">How to mute assignments in Gradebook</a>
             </p>
 
-            <div class="cc-page-course-grading-export-unmute-action-container cc-clearfix-container">
-              <div class="cc-page-course-grading-export-error-resolution-action-container">
-                <input id="cc-page-course-grading-export-unmute-assignments" type="checkbox" data-ng-model="unmuteAllAssignments" data-ng-disabled="resolvingCourseState">
+            <div class="bc-page-course-grade-export-unmute-action-container cc-clearfix-container">
+              <div class="bc-page-course-grade-export-error-resolution-action-container">
+                <input id="bc-page-course-grade-export-unmute-assignments" type="checkbox" data-ng-model="unmuteAllAssignments" data-ng-disabled="resolvingCourseState">
               </div>
-              <div class="cc-page-course-grading-export-error-resolution-action-container">
-                <label for="cc-page-course-grading-export-unmute-assignments" class="cc-page-course-grading-export-error-resolution-action-label">Unmute All</label>
+              <div class="bc-page-course-grade-export-error-resolution-action-container">
+                <label for="bc-page-course-grade-export-unmute-assignments" class="bc-page-course-grade-export-error-resolution-action-label">Unmute All</label>
               </div>
-              <div class="cc-page-course-grading-export-muted-assignments-see-gradebook">
-                <button class="cc-button-link" data-ng-click="goToGradebook()">See in Gradebook</a>
+              <div class="bc-page-course-grade-export-muted-assignments-see-gradebook">
+                <button class="bc-button-link" data-ng-click="goToGradebook()">See in Gradebook</a>
               </div>
             </div>
 
-            <table class="bc-table bc-table-striped cc-page-course-grading-export-muted-assignments-table">
+            <table class="bc-table bc-table-striped bc-page-course-grade-export-muted-assignments-table">
               <thead>
                 <tr>
                   <th scope="col">Assignment</th>
@@ -186,22 +185,22 @@
         </div>
       </div>
 
-      <div data-ng-show="noGradingStandardEnabled" class="cc-page-course-grading-export-error">
+      <div data-ng-show="noGradingStandardEnabled" class="bc-page-course-grade-export-error">
         <div class="row collapse">
           <div class="medium-12 columns">
 
-            <h2 class="cc-page-course-grade-export-sub-header">Set Grading Scheme</h2>
-            <p class="cc-page-course-grade-export-error-description">
+            <h2 class="bc-page-course-grade-export-sub-header">Set Grading Scheme</h2>
+            <p class="bc-page-course-grade-export-error-description">
               A grading scheme must be set before student letter grades can be calculated.<br>
               <a href="http://guides.instructure.com/m/4152/l/57089-how-do-i-enable-a-grading-scheme-for-my-course">How to set a Grading Scheme</a>
             </p>
             <div>
-              <div class="cc-page-course-grading-export-error-resolution-action-container">
-                <input id="cc-page-course-grading-export-enable-grading-scheme" type="checkbox" data-ng-model="enableDefaultGradingScheme" data-ng-disabled="resolvingCourseState">
+              <div class="bc-page-course-grade-export-error-resolution-action-container">
+                <input id="bc-page-course-grade-export-enable-grading-scheme" type="checkbox" data-ng-model="enableDefaultGradingScheme" data-ng-disabled="resolvingCourseState">
               </div>
-              <div class="cc-page-course-grading-export-error-resolution-action-container">
-                <label for="cc-page-course-grading-export-enable-grading-scheme" class="cc-page-course-grading-export-error-resolution-action-label">Enable the default Letter Grades +/- grading scheme</label><br>
-                <strong>or</strong> set a custom grading scheme in <button class="cc-button-link" data-ng-click="goToCourseSettings()">Course Settings</button> and return here once completed.
+              <div class="bc-page-course-grade-export-error-resolution-action-container">
+                <label for="bc-page-course-grade-export-enable-grading-scheme" class="bc-page-course-grade-export-error-resolution-action-label">Enable the default Letter Grades +/- grading scheme</label><br>
+                <strong>or</strong> set a custom grading scheme in <button class="bc-button-link" data-ng-click="goToCourseSettings()">Course Settings</button> and return here once completed.
               </div>
               <div class="cc-clearfix"></div>
             </div>
@@ -213,7 +212,7 @@
       <div class="row collapse">
         <div class="medium-12 columns">
           <div class="cc-text-right">
-            <button class="bc-canvas-button cc-page-course-grading-export-back-link" type="button" data-ng-click="goToGradebook()" type="button" aria-label="Go Back to Gradebook">Cancel</button>
+            <button class="bc-canvas-button" type="button" data-ng-click="goToGradebook()" type="button" aria-label="Go Back to Gradebook">Cancel</button>
             <button data-ng-disabled="notReadyForPreparation() || resolvingCourseState" data-ng-click="resolveIssues()" class="bc-canvas-button bc-canvas-button-primary" type="button">
               <span data-ng-if="!resolvingCourseState">Continue</span>
               <span data-ng-if="resolvingCourseState"><i class="fa fa-spinner fa-spin"></i> Saving</span>

@@ -1,4 +1,4 @@
-<div class="cc-page-course-official-sections">
+<div class="bc-page-course-official-sections">
 
   <div data-ng-if="!feedFetched" data-cc-spinner-directive></div>
 
@@ -8,26 +8,26 @@
       <div data-ng-include src="'canvas_embedded/_shared/maintenance_notice.html'"></div>
     </div>
 
-    <h1 class="cc-page-course-official-sections-header1">Official Sections</h1>
+    <h1 class="bc-page-course-official-sections-header1">Official Sections</h1>
 
     <!-- ############################################################################################# -->
 
     <div data-ng-if="currentWorkflowStep === 'preview'">
 
-      <div data-ng-show="jobStatusMessage !== ''" class="cc-notice-box cc-radius" data-ng-class="{'cc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'cc-notice-success':(lastJobStatus === 'sectionEditsCompleted')}" id="cc-page-course-official-sections-job-status-notice" data-ng-attr-aria-hidden="{{jobStatusMessage === ''}}">
+      <div data-ng-show="jobStatusMessage !== ''" class="cc-notice-box cc-radius" data-ng-class="{'cc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'cc-notice-success':(lastJobStatus === 'sectionEditsCompleted')}" id="bc-page-course-official-sections-job-status-notice" data-ng-attr-aria-hidden="{{jobStatusMessage === ''}}">
         <span data-ng-bind="jobStatusMessage"></span>
         <div class="cc-notice-close-button">
-          <button class="fa fa-times-circle button cc-close-button small" data-ng-click="jobStatusMessage=''" aria-controls="cc-page-course-official-sections-job-status-notice">
+          <button class="fa fa-times-circle button cc-close-button small" data-ng-click="jobStatusMessage=''" aria-controls="bc-page-course-official-sections-job-status-notice">
             <span class="cc-visuallyhidden">Close Notice</span>
           </button>
         </div>
       </div>
 
       <!-- Current Sections Preview Area -->
-      <div class="cc-page-course-official-sections-sections-area cc-page-course-official-sections-current-sections-white-border">
+      <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-white-border">
         <div class="row">
           <div class="medium-4 columns">
-            <h2 class="cc-page-site-provisioning-header cc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="cc-page-site-provisioning-header bc-page-course-official-sections-existing-sections-header-label">
               Sections in this Course Site
             </h2>
           </div>
@@ -38,8 +38,8 @@
           </div>
         </div>
 
-        <div class="cc-page-course-official-sections-courses-container">
-          <div class="cc-page-course-official-sections-current-course">
+        <div class="bc-page-course-official-sections-courses-container">
+          <div class="bc-page-course-official-sections-current-course">
             <div class="row">
               <div class="medium-12 columns">
                 <!-- *!*!*!*!*!*!* PREVIEW CURRENT SECTIONS *!*!*!*!*!*!* -->
@@ -58,11 +58,11 @@
     <div data-ng-if="currentWorkflowStep === 'staging'">
 
       <!-- Current Sections Area -->
-      <div class="cc-page-course-official-sections-sections-area cc-page-course-official-sections-current-sections-grey-border">
+      <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-grey-border">
 
         <div class="row">
           <div class="medium-3 columns">
-            <h2 class="cc-page-site-provisioning-header cc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="cc-page-site-provisioning-header bc-page-course-official-sections-existing-sections-header-label">
               Sections in this Course Site
             </h2>
           </div>
@@ -76,8 +76,8 @@
           </div>
         </div>
 
-        <div class="cc-page-course-official-sections-courses-container">
-          <div class="cc-page-course-official-sections-current-course">
+        <div class="bc-page-course-official-sections-courses-container">
+          <div class="bc-page-course-official-sections-current-course">
             <div class="row">
               <div class="medium-12 columns">
                 <!-- *!*!*!*!*!*!* STAGING CURRENT SECTIONS *!*!*!*!*!*!* -->
@@ -102,23 +102,23 @@
       </div>
 
       <!-- Available Sections Area -->
-      <div class="cc-page-course-official-sections-sections-area">
+      <div class="bc-page-course-official-sections-sections-area">
         <div class="row">
           <div class="medium-12 columns">
-            <h2 class="cc-page-site-provisioning-header cc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="cc-page-site-provisioning-header bc-page-course-official-sections-existing-sections-header-label">
               All sections available to add to this Course Site
             </h2>
           </div>
         </div>
 
-        <div data-ng-if="courseSemester.classes.length > 0" class="cc-page-course-official-sections-courses-container">
-          <div class="cc-page-course-official-sections-course-available" data-ng-repeat="course in courseSemester.classes">
+        <div data-ng-if="courseSemester.classes.length > 0" class="bc-page-course-official-sections-courses-container">
+          <div class="bc-page-course-official-sections-course-available" data-ng-repeat="course in courseSemester.classes">
 
-            <div class="cc-page-course-official-sections-course">
-              <button type="button" class="cc-button-link cc-page-course-official-sections-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
-                <i class="fa cc-left cc-page-course-official-sections-form-collapse-icon"
+            <div class="bc-page-course-official-sections-course">
+              <button type="button" class="cc-button-link bc-page-course-official-sections-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
+                <i class="fa cc-left bc-page-course-official-sections-form-collapse-icon"
                   data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
-                <strong class="cc-page-course-official-sections-form-course-title">
+                <strong class="bc-page-course-official-sections-form-course-title">
                   <span data-ng-bind="course.course_code"></span>
                   <span data-ng-if="course.title" data-ng-bind-template=" : {{course.title}}"></span>
                 </strong>
@@ -127,9 +127,9 @@
                 </span>
               </button>
 
-              <div data-ng-attr-id="{{course.course_id}}" class="cc-page-course-official-sections-form-collapsible-container" data-ng-if="!course.collapsed" data-ng-attr-aria-expanded="{{!course.collapsed}}" role="region">
-                <div class="cc-page-course-official-sections-form-select-all-option" data-ng-if="course.sections.length > 1">
-                  <button class="cc-button-link cc-page-course-official-sections-form-select-all-option-button" type="button" data-ng-click="addAllSections(course)" data-ng-if="!allSectionsAdded(course)" aria-label="Add all sections for this course to the list of sections to be added">Add All</button>
+              <div data-ng-attr-id="{{course.course_id}}" class="bc-page-course-official-sections-form-collapsible-container" data-ng-if="!course.collapsed" data-ng-attr-aria-expanded="{{!course.collapsed}}" role="region">
+                <div class="bc-page-course-official-sections-form-select-all-option" data-ng-if="course.sections.length > 1">
+                  <button class="cc-button-link bc-page-course-official-sections-form-select-all-option-button" type="button" data-ng-click="addAllSections(course)" data-ng-if="!allSectionsAdded(course)" aria-label="Add all sections for this course to the list of sections to be added">Add All</button>
                   <span data-ng-if="allSectionsAdded(course)">All Added</span>
                 </div>
 
@@ -152,16 +152,16 @@
     <!-- ############################################################################################# -->
 
     <div data-ng-if="currentWorkflowStep === 'processing'">
-      <div class="cc-page-course-official-sections-sections-area cc-page-course-official-sections-current-sections-grey-border">
+      <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-grey-border">
         <div class="row">
           <div class="medium-4 columns">
-            <h2 class="cc-page-site-provisioning-header cc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="cc-page-site-provisioning-header bc-page-course-official-sections-existing-sections-header-label">
               Updating Official Sections in Course Site
             </h2>
           </div>
         </div>
 
-        <div data-ng-if="jobStatus === 'sendingRequest' || percent_complete === 0" class="cc-page-course-official-sections-pending-request">
+        <div data-ng-if="jobStatus === 'sendingRequest' || percent_complete === 0" class="bc-page-course-official-sections-pending-request">
           <i class="fa fa-spinner fa-spin"></i>
           Sending request...
         </div>
