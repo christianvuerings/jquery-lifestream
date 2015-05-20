@@ -302,9 +302,9 @@
      */
     $scope.rowClassLogic = function(listMode, section) {
       return {
-        'cc-template-sections-table-row-added': (listMode === 'currentStaging' && section.stagedState === 'add'),
-        'cc-template-sections-table-row-deleted': (listMode === 'availableStaging' && section.stagedState === 'delete'),
-        'cc-template-sections-table-row-disabled': (
+        'bc-template-sections-table-row-added': (listMode === 'currentStaging' && section.stagedState === 'add'),
+        'bc-template-sections-table-row-deleted': (listMode === 'availableStaging' && section.stagedState === 'delete'),
+        'bc-template-sections-table-row-disabled': (
           listMode === 'availableStaging' &&
           (
             section.stagedState === 'add' ||

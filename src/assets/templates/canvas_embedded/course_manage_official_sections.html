@@ -14,7 +14,7 @@
 
     <div data-ng-if="currentWorkflowStep === 'preview'">
 
-      <div data-ng-show="jobStatusMessage !== ''" class="cc-notice-box cc-radius" data-ng-class="{'cc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'cc-notice-success':(lastJobStatus === 'sectionEditsCompleted')}" id="bc-page-course-official-sections-job-status-notice" data-ng-attr-aria-hidden="{{jobStatusMessage === ''}}">
+      <div data-ng-show="jobStatusMessage !== ''" class="bc-notice-box bc-radius" data-ng-class="{'bc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'bc-notice-success':(lastJobStatus === 'sectionEditsCompleted')}" id="bc-page-course-official-sections-job-status-notice" data-ng-attr-aria-hidden="{{jobStatusMessage === ''}}">
         <span data-ng-bind="jobStatusMessage"></span>
         <div class="cc-notice-close-button">
           <button class="fa fa-times-circle button cc-close-button small" data-ng-click="jobStatusMessage=''" aria-controls="bc-page-course-official-sections-job-status-notice">
@@ -27,12 +27,12 @@
       <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-white-border">
         <div class="row">
           <div class="medium-4 columns">
-            <h2 class="cc-page-site-provisioning-header bc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
               Sections in this Course Site
             </h2>
           </div>
           <div class="medium-2 columns cc-text-right">
-            <button data-ng-click="changeWorkflowStep('staging')" class="bc-canvas-button bc-canvas-button-primary cc-canvas-no-decoration" data-ng-if="isTeacher">
+            <button data-ng-click="changeWorkflowStep('staging')" class="bc-canvas-button bc-canvas-button-primary bc-canvas-no-decoration" data-ng-if="isTeacher">
               Edit Sections
             </button>
           </div>
@@ -62,15 +62,15 @@
 
         <div class="row">
           <div class="medium-3 columns">
-            <h2 class="cc-page-site-provisioning-header bc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
               Sections in this Course Site
             </h2>
           </div>
           <div class="medium-3 columns cc-text-right">
-            <button class="bc-canvas-button cc-canvas-no-decoration" data-ng-click="cancel()" type="submit" aria-label="Cancel section modifications for this course site">
+            <button class="bc-canvas-button bc-canvas-no-decoration" data-ng-click="cancel()" type="submit" aria-label="Cancel section modifications for this course site">
               Cancel
             </button>
-            <button class="bc-canvas-button bc-canvas-button-primary cc-canvas-no-decoration" data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" type="submit" aria-label="Apply pending modifications to this course site">
+            <button class="bc-canvas-button bc-canvas-button-primary bc-canvas-no-decoration" data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" type="submit" aria-label="Apply pending modifications to this course site">
               Save Changes
             </button>
           </div>
@@ -90,10 +90,10 @@
 
         <div data-ng-if="currentStagedCount() > 12" class="row">
           <div class="medium-12 columns cc-text-right">
-            <button data-ng-click="changeWorkflowStep('preview')" class="bc-canvas-button cc-canvas-no-decoration" aria-label="Cancel section modifications for this course site">
+            <button data-ng-click="changeWorkflowStep('preview')" class="bc-canvas-button bc-canvas-no-decoration" aria-label="Cancel section modifications for this course site">
               Cancel
             </button>
-            <button data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" class="bc-canvas-button bc-canvas-button-primary cc-canvas-no-decoration" aria-label="Apply pending modifications to this course site">
+            <button data-ng-click="saveChanges()" data-ng-disabled="totalStagedCount() === 0" class="bc-canvas-button bc-canvas-button-primary bc-canvas-no-decoration" aria-label="Apply pending modifications to this course site">
               Save Changes
             </button>
           </div>
@@ -105,7 +105,7 @@
       <div class="bc-page-course-official-sections-sections-area">
         <div class="row">
           <div class="medium-12 columns">
-            <h2 class="cc-page-site-provisioning-header bc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
               All sections available to add to this Course Site
             </h2>
           </div>
@@ -155,7 +155,7 @@
       <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-grey-border">
         <div class="row">
           <div class="medium-4 columns">
-            <h2 class="cc-page-site-provisioning-header bc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
               Updating Official Sections in Course Site
             </h2>
           </div>
@@ -174,13 +174,13 @@
 
   </div>
 
-  <div data-ng-if="displayError" class="cc-notice-error-container">
+  <div data-ng-if="displayError" class="bc-notice-error-container">
     <div data-ng-include src="'canvas_embedded/_shared/canvas_errors.html'"></div>
 
-    <div data-ng-if="displayError === 'invalidAction'" class="cc-notice-error-container">
-      <i class="fa fa-warning cc-canvas-notice-icon"></i>
-      <div class="cc-notice-text-container">
-        <h1 class="cc-notice-text-header">Invalid Action</h1>
+    <div data-ng-if="displayError === 'invalidAction'" class="bc-notice-error-container">
+      <i class="fa fa-warning bc-canvas-notice-icon"></i>
+      <div class="bc-notice-text-container">
+        <h1 class="bc-notice-text-header">Invalid Action</h1>
         <p data-ng-if="invalidActionError" data-ng-bind="invalidActionError"></p>
         <p data-ng-if="!invalidActionError">An error was detected with the action you attempted to take. Please contact bCourses support for further assistance.</p>
       </div>

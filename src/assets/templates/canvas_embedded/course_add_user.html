@@ -9,56 +9,56 @@
     <div class="row collapse" data-ng-show="showAlerts">
       <div data-cc-spinner-directive>
 
-        <div data-ng-show="noSearchTextAlert" class="cc-notice-box cc-notice-error cc-radius">
+        <div data-ng-show="noSearchTextAlert" class="bc-notice-box bc-notice-error bc-radius">
           You did not enter any search terms. Please try again.
-          <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="noSearchTextAlert=''">
+          <div class="bc-notice-close-button">
+            <button class="fa fa-times-circle button bc-close-button small" data-ng-click="noSearchTextAlert=''">
               <span class="cc-visuallyhidden">Hide Alert</span>
             </button>
           </div>
         </div>
 
-        <div data-ng-show="noUserSelectedAlert" class="cc-notice-box cc-notice-error cc-radius">
+        <div data-ng-show="noUserSelectedAlert" class="bc-notice-box bc-notice-error bc-radius">
           Please select a user.
-          <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="noUserSelectedAlert=''">
+          <div class="bc-notice-close-button">
+            <button class="fa fa-times-circle button bc-close-button small" data-ng-click="noUserSelectedAlert=''">
               <span class="cc-visuallyhidden">Hide Alert</span>
             </button>
           </div>
         </div>
 
-        <div data-ng-show="noSearchResultsNotice" class="cc-notice-box cc-notice-error cc-radius">
+        <div data-ng-show="noSearchResultsNotice" class="bc-notice-box bc-notice-error bc-radius">
           Your search did not match any users with a CalNet ID.
           <span data-ng-bind="searchTypeNotice"></span>
           Please try again.
-          <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="noSearchResultsNotice=''">
+          <div class="bc-notice-close-button">
+            <button class="fa fa-times-circle button bc-close-button small" data-ng-click="noSearchResultsNotice=''">
               <span class="cc-visuallyhidden">Hide Alert</span>
             </button>
           </div>
         </div>
 
-        <div data-ng-show="userSearchResultsCount > userSearchResults.length" class="cc-notice-box cc-notice-warning cc-radius">
+        <div data-ng-show="userSearchResultsCount > userSearchResults.length" class="bc-notice-box bc-notice-warning bc-radius">
           Your search returned <span data-ng-bind="userSearchResultsCount"></span> results, but only the first
           <span data-ng-bind="userSearchResults.length"></span> are shown.
           Please refine your search to limit the number of results.
         </div>
 
-        <div data-ng-show="additionSuccessMessage" class="cc-notice-box cc-notice-success cc-radius">
+        <div data-ng-show="additionSuccessMessage" class="bc-notice-box bc-notice-success bc-radius">
           <span data-ng-bind="userAdded.fullName"></span> was added to the
           &ldquo;<span data-ng-bind="userAdded.sectionName"></span>&rdquo; section of this course as a <span data-ng-bind="userAdded.roleName"></span>.
-          <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="additionSuccessMessage=''">
+          <div class="bc-notice-close-button">
+            <button class="fa fa-times-circle button bc-close-button small" data-ng-click="additionSuccessMessage=''">
               <span class="cc-visuallyhidden">Hide Alert</span>
             </button>
           </div>
         </div>
 
-        <div data-ng-show="additionFailureMessage" class="cc-notice-box cc-notice-error cc-radius">
-          <i class="fa fa-exclamation-triangle cc-icon-red cc-canvas-notice-icon"></i>
+        <div data-ng-show="additionFailureMessage" class="bc-notice-box bc-notice-error bc-radius">
+          <i class="fa fa-exclamation-triangle cc-icon-red bc-canvas-notice-icon"></i>
           <span data-ng-bind="errorStatus"></span>
-          <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="additionFailureMessage=''">
+          <div class="bc-notice-close-button">
+            <button class="fa fa-times-circle button bc-close-button small" data-ng-click="additionFailureMessage=''">
               <span class="cc-visuallyhidden">Hide Alert</span>
             </button>
           </div>
@@ -209,7 +209,7 @@
   </div>
 
   <p data-ng-show="showError">
-    <i class="fa fa-exclamation-triangle cc-icon-red cc-canvas-notice-icon"></i>
+    <i class="fa fa-exclamation-triangle cc-icon-red bc-canvas-notice-icon"></i>
     <span data-ng-bind="errorStatus"></span>
   </p>
 

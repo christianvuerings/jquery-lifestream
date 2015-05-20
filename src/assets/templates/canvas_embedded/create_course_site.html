@@ -184,8 +184,8 @@
                   </div>
                   <div class="medium-8 columns">
                     <input type="text" name="siteName" id="siteName" data-ng-model="siteName" data-ng-required="true">
-                    <div data-ng-if="createCourseSiteForm.siteName.$error.required" class="cc-notice-box cc-notice-error cc-radius">
-                      <i class="cc-left fa fa-exclamation-circle cc-icon-red cc-canvas-notice-icon"></i>
+                    <div data-ng-if="createCourseSiteForm.siteName.$error.required" class="bc-notice-box bc-notice-error bc-radius">
+                      <i class="cc-left fa fa-exclamation-circle cc-icon-red bc-canvas-notice-icon"></i>
                       Please fill out a site name.
                     </div>
                   </div>
@@ -241,9 +241,9 @@
 
             <div data-ng-if="jobStatus === 'courseCreationCompleted'" data-ng-aria-expanded="{{jobStatus === 'courseCreationCompleted'}}" role="region">
 
-              <div class="cc-notice-box cc-notice-success cc-radius">
+              <div class="bc-notice-box bc-notice-success bc-radius">
                 Success : <span data-ng-bind="course_site.short_name"></span> site created
-                <i class="cc-left fa fa-check-circle cc-icon-green cc-canvas-notice-icon"></i>
+                <i class="cc-left fa fa-check-circle cc-icon-green bc-canvas-notice-icon"></i>
               </div>
 
               <div class="bc-page-create-course-site-success-intro">
@@ -266,7 +266,7 @@
     </div>
   </div>
 
-  <div data-ng-if="displayError" class="cc-notice-error-container">
+  <div data-ng-if="displayError" class="bc-notice-error-container">
     <div data-ng-include src="'canvas_embedded/_shared/canvas_errors.html'"></div>
   </div>
 
