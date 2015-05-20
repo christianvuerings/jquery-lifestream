@@ -526,17 +526,17 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 // Collapsed / Toggled Help Notice
-.cc-page-help-notice {
+.bc-page-help-notice {
   margin: 4px 1px;
   min-height: 15px;
 
-  .cc-page-help-notice-icon {
+  .bc-page-help-notice-icon {
     color: $bc-color-help-link-blue;
     font-size: 15px;
     margin-top: 2px;
   }
 
-  .cc-page-help-notice-toggle-button {
+  .bc-page-help-notice-toggle-button {
     color: $bc-color-help-link-blue;
     font-size: 13px;
     outline: none;
@@ -545,11 +545,11 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
   }
 
-  .cc-page-help-notice-left-margin {
+  .bc-page-help-notice-left-margin {
     margin-left: 16px;
   }
 
-  .cc-page-help-notice-content {
+  .bc-page-help-notice-content {
     border: $bc-color-button-grey-border solid 1px;
     margin: 10px 0 20px;
     padding: 10px;
