@@ -138,7 +138,8 @@ class ApiMyFinancialsPage
   end
 
   def trans_disburse_date(item)
-    item['transPotentialDisbursementDate']
+    disburse_date = item['transPotentialDisbursementDate']
+    (disburse_date == '') ? nil : Date.parse(disburse_date).strftime("%m/%d/%y")
   end
 
   def trans_disputed(item)

@@ -5,19 +5,20 @@ class WebDriverUtils
   include ClassLogger
 
   def self.launch_browser
+    # Sometimes browser does not launch successfully, so try twice
+    tries ||= 2
+    logger.info('Launching browser')
     if Settings.ui_selenium.webDriver == 'firefox'
-      Rails.logger.info('Browser is Firefox')
       Selenium::WebDriver.for :firefox
     elsif Settings.ui_selenium.webDriver == 'chrome'
-      Rails.logger.info('Browser is Chrome')
       Selenium::WebDriver.for :chrome
     elsif Settings.ui_selenium.webDriver == 'safari'
-      Rails.logger.info('Browser is Safari')
       Selenium::WebDriver.for :safari
     end
   rescue => e
-    Rails.logger.error('Unable to initialize the designated WebDriver')
-    Rails.logger.error e.message + "\n" + e.backtrace.join("\n")
+    logger.error('Browser failed to launch')
+    logger.error e.message + "\n" + e.backtrace.join("\n")
+    retry unless (tries -= 1).zero?
   end
 
   def self.quit_browser(driver)

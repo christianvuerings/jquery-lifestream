@@ -46,7 +46,7 @@ describe 'My Academics L&S Advising card', :testui => true do
             status_api.get_json(driver)
             academics_api = ApiMyAcademicsPage.new(driver)
             academics_api.get_json(driver)
-            if status_api.is_student? && !academics_api.has_no_standing
+            if status_api.is_student? && !academics_api.has_no_standing?
               advising_api = ApiMyAdvisingPage.new(driver)
               advising_api.get_json(driver)
               if advising_api.all_future_appts == nil

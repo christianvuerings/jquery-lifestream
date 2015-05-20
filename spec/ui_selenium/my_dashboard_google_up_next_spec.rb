@@ -129,6 +129,7 @@ describe 'My Dashboard Up Next card', :testui => true do
 
       before(:example) do
         @up_next_card.click_bcal_link(@driver, id)
+        @up_next_card.wait_until(timeout=WebDriverUtils.page_event_timeout) { @driver.window_handles.length > 1 }
         @driver.switch_to.window(@driver.window_handles.last)
         @google.event_title_displayed_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       end

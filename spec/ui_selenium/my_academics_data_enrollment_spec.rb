@@ -399,7 +399,7 @@ describe 'My Academics enrollments', :testui => true do
 
                       semester_page.back
 
-                    elsif academics_api_page.current_semester(all_semesters).include?(semester) || academics_api_page.future_semesters(all_semesters).include?(semester)
+                    elsif academics_api_page.current_semester(all_semesters) == semester || academics_api_page.future_semesters(all_semesters).include?(semester)
                       logger.info "Found non-official enrollments for #{semester_name}"
                       semester_card_courses.each do |course|
                         i = semester_card_courses.index(course)
