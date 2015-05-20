@@ -107,7 +107,7 @@ class GooglePage
     sign_out_link
   end
 
-  def send_email(driver, recipient, subject, body)
+  def send_email(recipient, subject, body)
     logger.info("Sending an email with the subject #{subject}")
     compose_email_button_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     compose_email_button
@@ -118,9 +118,9 @@ class GooglePage
       self.recipient
     end
     to_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    self.to = recipient
-    self.subject = subject
-    self.body = body
+    self.to_element.value = recipient
+    self.subject_element.value = subject
+    self.body_element.value = body
     sleep(WebDriverUtils.page_event_timeout)
     send_email_button
     mail_sent_link_element.when_present(timeout=WebDriverUtils.page_event_timeout)
@@ -132,11 +132,11 @@ class GooglePage
     create_event_button
     event_title_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     event_title
-    self.event_title = event_name
+    self.event_title_element.value = event_name
     sleep(WebDriverUtils.page_event_timeout)
     event_location_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     event_location
-    self.event_location = location
+    self.event_location_element.value = location
     sleep(WebDriverUtils.page_event_timeout)
     add_video_link
     sleep(WebDriverUtils.page_event_timeout)
@@ -160,7 +160,7 @@ class GooglePage
     add_task_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     add_task
     wait_until(timeout=WebDriverUtils.page_event_timeout, nil) { task_one_title_input == nil }
-    self.task_one_title_input = title
+    self.task_one_title_input_element.value = title
     edit_task_details
     sleep(WebDriverUtils.google_task_timeout)
     back_to_tasks
