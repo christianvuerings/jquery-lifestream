@@ -114,6 +114,7 @@
       if (invalidAddUserForm()) {
         return false;
       }
+      apiService.util.iframeScrollToTop();
       $scope.showUsersArea = false;
       $scope.isLoading = true;
       $scope.showAlerts = true;

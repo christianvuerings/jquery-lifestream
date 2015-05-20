@@ -7,10 +7,18 @@
 
   .bc-page-course-add-user-header {
     color: $bc-color-off-black;
-    font-size: 24px;
-    font-weight: normal;
+    font-size: 23px;
+    font-weight: 400;
     line-height: 40px;
     margin: 8px 0;
+  }
+
+  button {
+    &, &:hover, &:active, &:focus {
+      font-family: $bc-base-font-family;
+      font-size: 14px;
+      font-weight: 300;
+    }
   }
 
   p {
@@ -19,45 +27,16 @@
     margin: 0 0 10px;
   }
 
-  .bc-fa-black {
-    color: $bc-color-off-black !important;
-  }
-
-  .bc-user-search-notice {
-    font-size: 13px;
-    .bc-user-search-notice-description-list {
-      margin-bottom: 0;
+  .bc-canvas-page-form {
+    form input[type="text"] {
+      font-family: $bc-base-font-family;
+      font-size: 14px;
+      margin: 2px 10px 0 0;
+      padding: 8px 12px;
     }
-    .bc-user-search-notice-description-term {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-    .bc-user-search-notice-description {
-      margin-left: 15px;
-    }
-  }
 
-  .bc-user-search-table {
-    overflow-x: auto;
-    table-layout: auto;
-    width: auto;
-  }
-
-  .bc-column-align-center {
-    text-align: center;
-  }
-
-  .bc-form {
-    background: transparent;
-    border: 0;
-    padding: 2px 0;
-
-    .bc-form-options {
-      margin-top: 5px;
-
-      .bc-start-over-button {
-        background-color: $bc-color-grey;
-      }
+    .bc-form-input-select {
+      margin-bottom: 8px;
     }
 
   }
@@ -79,22 +58,28 @@
       margin: 3px 0;
       padding: 5px;
     }
+  }
 
-    .bc-button {
-      background-color: $bc-color-medium-blue;
-      border-color: $bc-color-dark-blue;
-      color: $bc-color-white;
-      cursor: pointer;
-      display: inline-block;
-      font-family: Arial, sans-serif;
-      font-size: 12px;
-      font-weight: bold;
-      line-height: normal;
-      position: relative;
-      text-align: center;
-      text-decoration: none;
+  .bc-fa-black {
+    color: $bc-color-off-black !important;
+  }
+
+  .bc-user-search-notice {
+    font-size: 13px;
+    .bc-user-search-notice-description-list {
+      margin-bottom: 0;
     }
+    .bc-user-search-notice-description-term {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .bc-user-search-notice-description {
+      margin-left: 15px;
+    }
+  }
 
+  .bc-column-align-center {
+    text-align: center;
   }
 
   @media #{$small-only} {

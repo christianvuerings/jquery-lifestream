@@ -42,6 +42,8 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 .bc-form-input-select,
 .cc-canvas-embedded .cc-page-roster .cc-roster-search .cc-roster-select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
   background: url('../images/canvas/ic-icon-arrow-down.svg') no-repeat calc(100% - 8px) 50% $cc-color-white;
   background-size: 10px 5.667px;
   border-color: $bc-color-table-cell-border-grey;
@@ -51,6 +53,11 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 .bc-canvas-page-form {
   background: transparent;
   border: 0;
+  padding: 0;
+}
+
+.bc-form-fieldset {
+  margin: 0 0 15px;
   padding: 0;
 }
 
@@ -113,6 +120,13 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 }
 
+.bc-form-actions {
+  background: $bc-color-roster-background;
+  border: 1px solid $bc-color-roster-background;
+  padding: 10px 5px;
+  text-align: right;
+}
+
 .cc-canvas-no-decoration {
   &:hover, &:focus {
     text-decoration: none;
@@ -146,14 +160,6 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 .cc-page-site-provisioning-header4 {
   font-size: 14px;
   line-height: 16px;
-}
-
-// Site Provisioning Forms
-.cc-page-site-provisioning-form-actions {
-  background: $bc-color-roster-background;
-  border: 1px solid $bc-color-roster-background;
-  padding: 10px 5px;
-  text-align: right;
 }
 
 // ***********************************
