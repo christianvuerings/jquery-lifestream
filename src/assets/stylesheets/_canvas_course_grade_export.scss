@@ -1,8 +1,5 @@
 .cc-page-course-grade-export {
   background-color: $bc-color-white;
-  font-family: $bc-base-font-family;
-  font-size: 14px;
-  font-weight: 300;
   padding: 15px 25px;
 
   // Reset to avoid default Foundation form styling
@@ -56,7 +53,6 @@
   }
 
   .cc-page-course-grade-export-download-description {
-    line-height: 16px;
     margin-bottom: 20px;
     padding: 4px 0;
   }
