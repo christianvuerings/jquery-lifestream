@@ -359,7 +359,7 @@ describe 'My Finances activity details', :testui => true do
                   it "shows the payment term for UID #{uid}" do
                     expect(my_fin_payment_term).to eql("Term: #{api_payment_term}")
                   end
-                  if api_payment_disburse == ''
+                  if api_payment_disburse.nil?
                     it "shows no payment potential disbursement date for UID #{uid}" do
                       expect(my_fin_has_payment_disburse).to be false
                     end

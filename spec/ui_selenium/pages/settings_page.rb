@@ -35,7 +35,7 @@ module CalCentralPages
     # UID/SID Lookup
     text_area(:lookup_input, :id => 'cc-settings-id')
     button(:lookup_button, :xpath => '//button[text()="Look Up"]')
-    table(:lookup_results_table, :class => 'cc-settings-table')
+    table(:lookup_results_table, :xpath => '//form[@data-ng-submit="admin.lookupUser()"]//table')
 
     def load_page(driver)
       logger.info('Loading settings page')

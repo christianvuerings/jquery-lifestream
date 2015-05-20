@@ -60,7 +60,7 @@ describe 'My Academics Status and Blocks', :testui => true do
               dashboard_page = CalCentralPages::MyDashboardPage.new(driver)
               dashboard_page.load_page(driver)
               has_popover = dashboard_page.status_popover_visible?
-              has_no_standing = academics_api_page.has_no_standing
+              has_no_standing = academics_api_page.has_no_standing?
               if has_no_standing
                 it "is not available via a person icon in the header for UID #{uid}" do
                   expect(has_popover).to be false
