@@ -14,7 +14,7 @@ $bc-canvas-button-selected-color: #fff;
 // Canvas Button Styles
 .bc-canvas-button,
 .bc-main .cc-widget-webcast .cc-button,
-.cc-canvas-embedded .cc-page-roster .cc-roster-search .cc-button {
+.bc-canvas-embedded .cc-page-roster .cc-roster-search .cc-button {
   background: $bc-color-feature-icon-box-background;
   border: 1px solid $bc-canvas-button-border;
   border-radius: 3px;
@@ -41,7 +41,7 @@ $bc-canvas-button-selected-color: #fff;
 }
 
 .bc-canvas-button-primary,
-.cc-canvas-embedded .cc-page-roster .cc-roster-search .cc-button-blue {
+.bc-canvas-embedded .cc-page-roster .cc-roster-search .cc-button-blue {
   background: $bc-canvas-button-primary-background;
   border: 1px solid $bc-canvas-button-primary-border;
   color: $bc-color-white;
