@@ -34,3 +34,13 @@
     }
   }
 }
+.cc-sidebar-content {
+  padding: 15px 25px;
+}
+@media #{$small-only} {
+  .cc-sidebar-content {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+  }
+}
