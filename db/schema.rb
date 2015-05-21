@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150507215402) do
+ActiveRecord::Schema.define(version: 20150521163404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,9 @@ ActiveRecord::Schema.define(version: 20150507215402) do
     t.datetime "populated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "members_count"
+    t.integer  "populate_add_errors"
+    t.integer  "populate_remove_errors"
   end
 
   add_index "canvas_site_mailing_lists", ["canvas_site_id"], name: "index_canvas_site_mailing_lists_on_canvas_site_id", unique: true, using: :btree
