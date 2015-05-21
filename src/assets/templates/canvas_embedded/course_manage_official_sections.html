@@ -112,13 +112,13 @@
         </div>
 
         <div data-ng-if="courseSemester.classes.length > 0" class="bc-page-course-official-sections-courses-container">
-          <div class="bc-page-course-official-sections-course-available" data-ng-repeat="course in courseSemester.classes">
+          <div class="bc-sections-course-container-bottom-margin" data-ng-repeat="course in courseSemester.classes">
 
-            <div class="bc-page-course-official-sections-course">
+            <div class="bc-sections-course-container">
               <button type="button" class="cc-button-link bc-page-course-official-sections-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
-                <i class="fa cc-left bc-page-course-official-sections-form-collapse-icon"
+                <i class="fa cc-left bc-sections-triangle-icon"
                   data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
-                <h3 class="bc-page-course-official-sections-form-course-title">
+                <h3 class="bc-sections-course-title">
                   <span data-ng-bind="course.course_code"></span>
                   <span data-ng-if="course.title" data-ng-bind-template=" : {{course.title}}"></span>
                 </h3>
