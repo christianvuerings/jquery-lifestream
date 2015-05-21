@@ -189,7 +189,6 @@
       });
     };
 
-    apiService.util.iframeUpdateHeight();
     checkAuthorization();
   });
 })(window.angular);

@@ -252,7 +252,6 @@
       return (courseUserRoles.globalAdmin || courseUserRoles.teacher);
     };
 
-    apiService.util.iframeUpdateHeight();
     checkAuthorization();
   });
 })(window.angular);

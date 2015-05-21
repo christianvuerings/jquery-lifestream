@@ -164,7 +164,6 @@
         } else {
           if (sectionsFeed.data) {
             angular.extend($scope, sectionsFeed.data);
-            apiService.util.iframeUpdateHeight();
             if ($scope.teachingSemesters && $scope.teachingSemesters.length > 0) {
               $scope.switchSemester($scope.teachingSemesters[0]);
             }

@@ -59,6 +59,5 @@
     };
 
     loadAuthorization();
-    apiService.util.iframeUpdateHeight();
   });
 })(window.angular);

@@ -113,11 +113,20 @@
      * bCourses LTI tools. The message is formatted to be received by a listener
      * in Canvas's public/javascripts/tool_inline.js file; unless it exceeds the
      * Canvas 5000px limit, in which case our own listener handles it.
+     *
+     * See bc-iframe-resize directive for easy application to Canvas embedded LTI Tools
+     *
+     * @param  {Object}    alternativeElement         DOM element that provides scrollHeight used to resize iframe
      */
-    var iframeUpdateHeight = function() {
+    var iframeUpdateHeight = function(alternativeElement) {
       if (isInIframe) {
         $window.setInterval(function updateHeight() {
-          var frameHeight = document.body.scrollHeight;
+          var heightElement = document.body;
+          // use element argument to provide scrollHeight rather than body
+          if (alternativeElement !== undefined && alternativeElement[0] !== undefined) {
+            heightElement = alternativeElement[0];
+          }
+          var frameHeight = heightElement.scrollHeight;
           var messageSubject = frameHeight > 5000 ? 'resizeLargeFrame' : 'lti.frameResize';
           var message = {subject: messageSubject, height: frameHeight};
           iframePostMessage(JSON.stringify(message));

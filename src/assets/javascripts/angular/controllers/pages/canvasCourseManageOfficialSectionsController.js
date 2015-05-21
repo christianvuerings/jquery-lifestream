@@ -201,7 +201,6 @@
               $scope.canvasCourse = sectionsFeed.data.canvas_course;
               $scope.isTeacher = $scope.canvasCourse.canEdit;
               refreshFromFeed(sectionsFeed.data);
-              apiService.util.iframeUpdateHeight();
             } else {
               $scope.displayError = 'failure';
             }
