@@ -13,6 +13,7 @@ module Finaid
     def append!(feed)
       proxy = CampusSolutions::Awards.new({user_id: @uid})
       proxy_feed = proxy.get[:feed]
+      return if proxy_feed.blank?
       aid_years = gather_aid_years proxy_feed
       convert_categories_to_array!(aid_years)
       calculate_totals!(aid_years)
@@ -50,13 +51,16 @@ module Finaid
     end
 
     def find_terms_for_aid_year(award_detail, this_year)
+      return if award_detail['STUDENT_TERM_DETAIL'].blank?
       first_term = {
         id: 0,
         year: nil,
         term: nil
       }
       last_term = first_term
-      award_detail['STUDENT_TERM_DETAIL'].each do |term_detail|
+      details = award_detail['STUDENT_TERM_DETAIL'].is_a?(Array) ? award_detail['STUDENT_TERM_DETAIL'] : [award_detail['STUDENT_TERM_DETAIL'].clone]
+      details.each do |term_detail|
+        next if term_detail['STRM'].blank? || term_detail['STRM_LOVDescr'].blank?
         this_term = {
           id: term_detail['STRM'].to_i,
           year: term_detail['STRM_LOVDescr'].split[0],

@@ -30,23 +30,30 @@ module CampusSolutions
     end
 
     def get_internal
-      url = @settings.base_url
       logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-      request_options = {
-        query: {
-          'SCC_PROFILE_ID' => @uid,
-          'languageCd' => 'ENG'
-        }
-      }
       response = get_response(url, request_options)
       logger.debug "Remote server status #{response.code}, Body = #{response.body}"
       feed = build_feed response
       if feed.blank?
+        logger.error "Build_feed returned nothing; falling back on parsed response"
         feed = response.parsed_response
       end
       {
         statusCode: response.code,
         feed: feed
+      }
+    end
+
+    def url
+      @settings.base_url
+    end
+
+    def request_options
+      {
+        query: {
+          'SCC_PROFILE_ID' => @uid,
+          'languageCd' => 'ENG'
+        }
       }
     end
 
