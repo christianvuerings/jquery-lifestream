@@ -23,17 +23,17 @@ module Webcast
 
     def get_feed
       return {} unless Settings.features.videos
-      playlist_data_hash = get_playlist_hash
-      error_message = playlist_data_hash[:proxy_error_message]
-      unless error_message.blank? && playlist_data_hash[:body].blank?
+      media_hash = get_media_hash
+      error_message = media_hash[:proxy_error_message]
+      unless error_message.blank? && media_hash[:body].blank?
         return {
-          :proxyErrorMessage => error_message || playlist_data_hash[:body]
+          :proxyErrorMessage => error_message || media_hash[:body]
         }
       end
       feed = {}
       @ccn_list.each do |ccn|
         key = Webcast::CourseMedia.id_per_ccn(@year, @term, ccn)
-        data = playlist_data_hash[ccn]
+        data = media_hash[ccn]
         if data
           videos = get_videos_as_json data
           audio = get_audio_as_json data
@@ -46,17 +46,17 @@ module Webcast
       feed
     end
 
-    def get_playlist_hash
-      playlist_hash = {}
-      recordings = Webcast::Recordings.new(@options).get
-      if recordings && recordings[:courses]
+    def get_media_hash
+      media_hash = {}
+      all_media = Webcast::Recordings.new(@options).get
+      if all_media && all_media[:courses]
         @ccn_list.each do |ccn|
           key = Webcast::CourseMedia.id_per_ccn(@year, @term, ccn)
-          playlist = recordings[:courses][key]
-          playlist_hash[ccn] = playlist unless playlist.blank?
+          media = all_media[:courses][key]
+          media_hash[ccn] = media unless media.nil?
         end
       end
-      playlist_hash
+      media_hash
     end
 
     def get_itunes_url(id)
