@@ -21,51 +21,12 @@
   .cc-page-campus-content-explanation {
     max-width: 400px;
   }
-  .cc-page-campus-navigation, .cc-page-campus-content {
-    @include cc-column-sameheight;
-  }
-  .cc-page-campus-navigation {
-    background: $cc-color-navigation-sub;
-    margin-top: 1px;
-    padding-left: 0;
-    padding-right: 0;
-    h3 {
-      border-top: 1px solid $cc-color-navigation-sub-header;
-      color: $cc-color-navigation-sub-header;
-      font-size: 16px;
-      margin: 0;
-      padding: 10px 15px 0;
-    }
-    li {
-      &.active a, a:hover, a:focus {
-        background: $cc-color-navigation-hover-background;
-        border-radius: 5px;
-        color: $cc-color-white;
-      }
-      &.active a {
-        font-weight: bold;
-      }
-      > a {
-        color: $cc-color-lighter-grey;
-        display: block;
-        margin: 1px 10px 0;
-        padding: 2px 5px;
-        position: relative;
-        &:hover {
-          text-decoration: none;
-        }
-      }
-    }
-  }
   @media #{$small-only} {
     h1 {
       margin: 10px;
     }
     .cc-widget {
       width: 100%;
-    }
-    .cc-page-campus-navigation {
-      border-right: 0;
     }
     .cc-page-campus-content {
       padding-left: 0;
