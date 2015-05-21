@@ -1,5 +1,5 @@
-<div class="cc-template-sections-table-container">
-  <table class="cc-template-sections-table">
+<div class="bc-template-sections-table-container">
+  <table class="bc-template-sections-table">
     <thead class="cc-visuallyhidden">
       <tr>
         <th data-ng-if="listMode === 'createCourseForm'">Action</th>
@@ -16,42 +16,42 @@
     </thead>
     <tbody data-ng-repeat="section in sectionsList" data-ng-if="rowDisplayLogic({listMode: listMode, section: section})">
       <tr data-ng-class="rowClassLogic({listMode: listMode, section: section})">
-        <td class="cc-template-sections-table-cell-checkbox" data-ng-if="listMode === 'createCourseForm'">
+        <td class="bc-template-sections-table-cell-checkbox" data-ng-if="listMode === 'createCourseForm'">
           <input type="checkbox"
             id="cc-template-canvas-manage-sections-checkbox-{{section.ccn}}"
             data-ng-model="section.selected" data-ng-click="updateSelected()" aria-label="Checkbox for {{section.courseCode}} {{section.section_label}}"
             aria-checked="{{section.selected}}">
         </td>
-        <td class="cc-template-sections-table-cell-course-code">
+        <td class="bc-template-sections-table-cell-course-code">
           <span data-ng-bind="section.courseCode"></span>
         </td>
-        <td class="cc-template-sections-table-cell-section-label">
-          <label class="cc-template-sections-table-cell-section-label-label" for="cc-template-canvas-manage-sections-checkbox-{{section.ccn}}" data-ng-bind="section.section_label" data-ng-if="listMode === 'createCourseForm'"></label>
+        <td class="bc-template-sections-table-cell-section-label">
+          <label class="bc-template-sections-table-cell-section-label-label" for="cc-template-canvas-manage-sections-checkbox-{{section.ccn}}" data-ng-bind="section.section_label" data-ng-if="listMode === 'createCourseForm'"></label>
           <span data-ng-bind="section.section_label" data-ng-if="listMode !== 'createCourseForm'"></span>
         </td>
-        <td class="cc-template-sections-table-cell-section-ccn" data-ng-bind="section.ccn"></td>
-        <td class="cc-template-sections-table-cell-section-timestamps show-for-medium-up" >
+        <td class="bc-template-sections-table-cell-section-ccn" data-ng-bind="section.ccn"></td>
+        <td class="bc-template-sections-table-cell-section-timestamps show-for-medium-up" >
           <div data-ng-repeat="schedule in section.schedules" data-ng-bind="schedule.schedule"></div>
         </td>
-        <td class="cc-template-sections-table-cell-section-locations show-for-medium-up" >
+        <td class="bc-template-sections-table-cell-section-locations show-for-medium-up" >
           <div data-ng-repeat="schedule in section.schedules" data-ng-bind-template="{{schedule.buildingName}} {{schedule.roomNumber}}"></div>
          </td>
-        <td class="cc-template-sections-table-cell-section-instructors show-for-large-up" >
+        <td class="bc-template-sections-table-cell-section-instructors show-for-large-up" >
           <div data-ng-repeat="instructor in section.instructors" data-ng-bind="instructor.name"></div>
         </td>
-        <td class="cc-template-sections-table-cell-section-action-option" data-ng-if="listMode !== 'createCourseForm' && listMode !== 'preview'">
+        <td class="bc-template-sections-table-cell-section-action-option" data-ng-if="listMode !== 'createCourseForm' && listMode !== 'preview'">
           <!-- Current Staging Actions -->
           <div data-ng-if="listMode === 'currentStaging' && section.isCourseSection">
-            <button class="bc-canvas-button cc-template-sections-table-button cc-canvas-no-decoration" data-ng-click="stageDeleteAction({section: section})" aria-label="Add {{section.courseCode}} {{section.section_label}} to list of sections to be deleted">Delete</button>
+            <button class="bc-canvas-button bc-template-sections-table-button bc-canvas-no-decoration" data-ng-click="stageDeleteAction({section: section})" aria-label="Add {{section.courseCode}} {{section.section_label}} to list of sections to be deleted">Delete</button>
           </div>
 
           <div data-ng-if="listMode === 'currentStaging' && !section.isCourseSection">
-            <button class="bc-canvas-button cc-template-sections-table-button cc-template-sections-table-button-undo-add cc-canvas-no-decoration" data-ng-click="unstageAction({section: section})" aria-label="Remove {{section.courseCode}} {{section.section_label}} from list of sections to be added">Undo Add</button>
+            <button class="bc-canvas-button bc-template-sections-table-button bc-template-sections-table-button-undo-add bc-canvas-no-decoration" data-ng-click="unstageAction({section: section})" aria-label="Remove {{section.courseCode}} {{section.section_label}} from list of sections to be added">Undo Add</button>
           </div>
 
           <!-- Available Staging Actions -->
           <div data-ng-if="listMode === 'availableStaging' && section.isCourseSection && section.stagedState === 'delete'">
-            <button class="bc-canvas-button cc-template-sections-table-button cc-template-sections-table-button-undo-delete cc-canvas-no-decoration" data-ng-click="unstageAction({section: section})" aria-label="Remove {{section.courseCode}} {{section.section_label}} from list of sections to be deleted">Undo Delete</button>
+            <button class="bc-canvas-button bc-template-sections-table-button bc-template-sections-table-button-undo-delete bc-canvas-no-decoration" data-ng-click="unstageAction({section: section})" aria-label="Remove {{section.courseCode}} {{section.section_label}} from list of sections to be deleted">Undo Delete</button>
           </div>
 
           <div data-ng-if="listMode === 'availableStaging' && !section.isCourseSection && section.stagedState === 'add'">
@@ -59,16 +59,16 @@
           </div>
 
           <div data-ng-if="listMode === 'availableStaging' && !section.isCourseSection && section.stagedState === null">
-            <button class="bc-canvas-button bc-canvas-button-primary cc-template-sections-table-button cc-canvas-no-decoration" data-ng-class="{'cc-template-sections-table-button-undo-add':(section.stagedState === 'add')}" data-ng-click="stageAddAction({section: section})" aria-label="Add {{section.courseCode}} {{section.section_label}} to list of sections to be added">
+            <button class="bc-canvas-button bc-canvas-button-primary bc-template-sections-table-button bc-canvas-no-decoration" data-ng-class="{'bc-template-sections-table-button-undo-add':(section.stagedState === 'add')}" data-ng-click="stageAddAction({section: section})" aria-label="Add {{section.courseCode}} {{section.section_label}} to list of sections to be added">
               Add
             </button>
           </div>
         </td>
       </tr>
       <tr data-ng-if="(listMode !== 'preview' && listMode !== 'currentStaging' && section.sites)">
-        <td colspan="7" class="cc-template-sections-table-sites-cell">
-          <div data-ng-repeat="site in section.sites" class="cc-template-sections-table-sites-container">
-            <i class="fa fa-info-circle cc-template-sections-table-sited-icon"></i>
+        <td colspan="7" class="bc-template-sections-table-sites-cell">
+          <div data-ng-repeat="site in section.sites" class="bc-template-sections-table-sites-container">
+            <i class="fa fa-info-circle bc-template-sections-table-sited-icon"></i>
             This section is already in use by <a data-ng-bind="site.name" data-ng-href="{{site.site_url}}"></a>
           </div>
         </td>

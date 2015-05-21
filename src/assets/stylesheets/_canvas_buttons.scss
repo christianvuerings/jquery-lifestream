@@ -40,6 +40,10 @@ $bc-canvas-button-selected-color: #fff;
   }
 }
 
+a.bc-canvas-button {
+  padding: 10px 14px;
+}
+
 .bc-canvas-button-primary,
 .bc-canvas-embedded .cc-page-roster .cc-roster-search .cc-button-blue {
   background: $bc-canvas-button-primary-background;
