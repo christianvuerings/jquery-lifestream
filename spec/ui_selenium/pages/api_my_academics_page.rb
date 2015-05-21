@@ -30,15 +30,61 @@ class ApiMyAcademicsPage
     time
   end
 
-  # STANDING
+  # PROFILE
+
+  def college_and_level
+    @parsed['collegeAndLevel']
+  end
+
+  def standing
+    college_and_level['standing']
+  end
+
+  def has_no_standing?
+    college_and_level['empty']
+  end
+
+  def level
+    college_and_level['level']
+  end
+
+  def non_ap_level
+    college_and_level['nonApLevel']
+  end
+
+  def gpa_units
+    @parsed['gpaUnits']
+  end
+
+  def gpa
+    gpa_units['cumulativeGpa']
+  end
+
+  def ttl_units
+    units = gpa_units['totalUnits']
+    if units.nil?
+      nil
+    else
+      (units == units.floor) ? units.floor : units
+    end
+  end
+
+  def units_attempted
+    gpa_units['totalUnitsAttempted']
+  end
 
   def colleges_and_majors
-    @parsed['collegeAndLevel']['colleges']
+    college_and_level['colleges']
   end
 
   def colleges
     colleges = []
-    colleges_and_majors.each { |college| colleges.push(college['college']) }
+    colleges_and_majors.each do |college|
+      # For double majors within the same college, only show the college once
+      unless college['college'] == ''
+        colleges.push(college['college'])
+      end
+    end
     colleges
   end
 
@@ -48,9 +94,56 @@ class ApiMyAcademicsPage
     majors
   end
 
-  def has_no_standing
-    @parsed['collegeAndLevel']['empty']
+  def term_name
+    college_and_level['termName']
   end
+
+  def term_transition?
+    (@parsed['transitionRegStatus'].present?) ? true : false
+  end
+
+  # UNDERGRAD REQUIREMENTS
+
+  def requirements
+    @parsed['requirements'].inject({}) { |map, reqt| map[reqt['name']] = reqt; map }
+  end
+
+  def writing_reqt_met?
+    reqt = requirements['UC Entry Level Writing']
+    if reqt['status'] == 'met'
+      true
+    else
+      false
+    end
+  end
+
+  def history_reqt_met?
+    reqt = requirements['American History']
+    if reqt['status'] == 'met'
+      true
+    else
+      false
+    end
+  end
+
+  def institutions_reqt_met?
+    reqt = requirements['American Institutions']
+    if reqt['status'] == 'met'
+      true
+    else
+      false
+    end
+  end
+
+  def cultures_reqt_met?
+    reqt = requirements['American Cultures']
+    if reqt['status'] == 'met'
+      true
+    else
+      false
+    end
+  end
+
 
   # BLOCKS
 

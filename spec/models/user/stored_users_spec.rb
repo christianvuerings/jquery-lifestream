@@ -76,6 +76,24 @@ describe User::StoredUsers do
       expect(users[:recent][0]['ldap_uid']).to eq stored_uid
     end
 
+    it 'should report whether recent uids are saved' do
+      saved_uid = random_id
+      unsaved_uid = random_id
+      User::Data.create(uid: owner_uid)
+      User::Data.create(uid: saved_uid)
+      User::Data.create(uid: unsaved_uid)
+      allow_any_instance_of(User::SearchUsersByUid).to receive(:search_users_by_uid_batch).
+          and_return [{'ldap_uid' => owner_uid}, {'ldap_uid' => saved_uid}, {'ldap_uid' => unsaved_uid}]
+
+      User::StoredUsers.store_saved_uid(owner_uid, saved_uid)
+      User::StoredUsers.store_recent_uid(owner_uid, saved_uid)
+      User::StoredUsers.store_recent_uid(owner_uid, unsaved_uid)
+
+      users = User::StoredUsers.get(owner_uid)
+      expect(users[:recent]).to include({'ldap_uid' => saved_uid, 'saved' => true})
+      expect(users[:recent]).to include({'ldap_uid' => unsaved_uid, 'saved' => false})
+    end
+
   end
 
   describe '#store_saved_uid' do
@@ -121,6 +139,25 @@ describe User::StoredUsers do
 
       response = User::StoredUsers.store_recent_uid(owner_uid, uid_to_store)
       expect(response).to eq success_response
+    end
+
+    it 'should limit number of uids per owner, removing oldest first' do
+      owner = User::Data.create(uid: owner_uid)
+      uid = uid_to_store
+      User::RecentUid::MAX_PER_OWNER_ID.times do
+        User::StoredUsers.store_recent_uid(owner_uid, uid)
+        uid = uid.next
+      end
+
+      all_recent = owner.recent_uids.order(:created_at).all
+      expect(all_recent.count).to eq User::RecentUid::MAX_PER_OWNER_ID
+      oldest, second_oldest = all_recent[0,2]
+
+      User::StoredUsers.store_recent_uid(owner_uid, uid.next)
+
+      expect(owner.recent_uids.count).to eq User::RecentUid::MAX_PER_OWNER_ID
+      expect(owner.recent_uids.find_by id: oldest.id).to be_blank
+      expect(owner.recent_uids.find_by id: second_oldest.id).to be_present
     end
 
     it 'should return error if owner_uid does not exist' do

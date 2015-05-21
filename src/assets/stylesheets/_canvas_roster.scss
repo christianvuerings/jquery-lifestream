@@ -1,3 +1,10 @@
+// Canvas Embedded Overrides
+.bc-canvas-embedded {
+  .cc-page-roster .cc-roster-search .cc-right {
+    margin-top: 8px;
+  }
+}
+
 .cc-page-roster {
   background: $cc-color-white;
   overflow: hidden;
@@ -101,3 +108,4 @@
 .cc-button-selected-roster {
   z-index: 0;
 }
+

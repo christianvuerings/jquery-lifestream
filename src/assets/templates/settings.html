@@ -71,7 +71,7 @@
                 UID: <button type="submit" class="cc-button-link" data-ng-click="admin.updateIDField(user.ldap_uid)" data-ng-bind="user.ldap_uid"></button>
                 (SID: <span data-ng-bind="user.student_id || 'none'"></span>)
               </span>
-              <span data-ng-if="block.storeUser">(<button type="button" class="cc-button-link" data-ng-click="block.storeUser(user)">save</button>)</span>
+              <span data-ng-if="block.storeUser && !user.saved">(<button type="button" class="cc-button-link" data-ng-click="block.storeUser(user)">save</button>)</span>
               <span data-ng-if="block.clearUser">(<button type="button" class="cc-button-link" data-ng-click="block.clearUser(user)">delete</button>)</span>
             </li>
           </ul>

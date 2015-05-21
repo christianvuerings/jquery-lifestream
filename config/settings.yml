@@ -128,6 +128,7 @@ calmail_proxy:
   api_key: '99999'
   base_url: 'https://example.com/manage/api1'
   domain: 'bcourses-lists.berkeley.edu'
+  owner_address: 'owner@example.com'
   owner_uid: '211159'
 
 regstatus_proxy:
@@ -155,7 +156,7 @@ textbooks_proxy:
 
 webcast_proxy:
   fake: false
-  base_url: 'https://video-dev.ets.berkeley.edu/warehouse'
+  base_url: 'https://webcast-cc-dev.ets.berkeley.edu/warehouse'
   username: 'secret'
   password: 'secret'
 

@@ -32,10 +32,10 @@ describe Canvas::WebcastRecordings do
         expect(law_27171[:itunes][:video]).to end_with('354822509')
 
         sociol_150A = feed[:media]['2009-B-81853']
-        expect(law_27171[:audio]).to have_at_least(10).items
-        expect(law_27171[:audio][12][:title]).to_not be_nil
-        expect(law_27171[:itunes][:audio]).to_not be_nil
-        expect(law_27171[:itunes][:video]).to_not be_nil
+        expect(sociol_150A[:audio]).to have_at_least(10).items
+        expect(sociol_150A[:audio][12][:title]).to_not be_nil
+        expect(sociol_150A[:itunes][:audio]).to_not be_nil
+        expect(sociol_150A[:itunes][:video]).to_not be_nil
       end
     end
 

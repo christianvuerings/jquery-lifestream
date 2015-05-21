@@ -1,0 +1,20 @@
+{
+  "canvasSite": {
+    "canvasCourseId": 1302228,
+    "sisCourseId": "CRS:CHEM-3A-2015-B-7A31AEBF",
+    "name": "3A - Spring 15 - Chemical Structure and Reactivity",
+    "courseCode": "Chem 3A",
+    "url": "https://bcourses.example.com/courses/1302228",
+    "term": {
+      "term_yr": "2015",
+      "term_cd": "B",
+      "name": "Spring 2015"
+    }
+  },
+  "mailingList": {
+    "name": "chem_3a-spring-2015",
+    "domain": "bcourses-lists.example.com",
+    "state": "pending",
+    "creationUrl": "https://mailman.example.com/manage/list/domain_create_list2?domain_name=bcourses-lists.example.com&listname=chem_3a-spring-2015&owner_address=joe%40example.com&advertised=0&subscribe_policy=3&moderate=0&generic_nonmember_action=1"
+  }
+}

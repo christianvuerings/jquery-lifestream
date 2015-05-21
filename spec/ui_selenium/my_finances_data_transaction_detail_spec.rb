@@ -21,6 +21,7 @@ describe 'My Finances activity details', :testui => true do
       driver = WebDriverUtils.launch_browser
       test_output = UserUtils.initialize_output_csv(self)
       test_users = UserUtils.load_test_users
+      testable_users = []
 
       CSV.open(test_output, 'wb') do |user_info_csv|
         user_info_csv << ['UID', 'Has Adjustment', 'Has Award', 'Has Charge', 'Has Payment', 'Has Refund', 'Has Waiver',
@@ -55,6 +56,7 @@ describe 'My Finances activity details', :testui => true do
               has_partial_payment = false
               has_potential_disburse = false
               threw_error = false
+              testable_users.push(uid)
 
               my_finances_page.select_transactions_filter('All Transactions')
               my_finances_page.keep_showing_more
@@ -357,7 +359,7 @@ describe 'My Finances activity details', :testui => true do
                   it "shows the payment term for UID #{uid}" do
                     expect(my_fin_payment_term).to eql("Term: #{api_payment_term}")
                   end
-                  if api_payment_disburse == ''
+                  if api_payment_disburse.nil?
                     it "shows no payment potential disbursement date for UID #{uid}" do
                       expect(my_fin_has_payment_disburse).to be false
                     end
@@ -558,6 +560,11 @@ describe 'My Finances activity details', :testui => true do
           end
         end
       end
+
+        it 'has CARS data for at least one of the test UIDs' do
+          expect(testable_users.any?).to be true
+        end
+
     rescue => e
       logger.error e.message + "\n" + e.backtrace.join("\n ")
     ensure

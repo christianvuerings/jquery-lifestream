@@ -5,7 +5,6 @@ module Canvas
     def initialize(sis_term_ids, options = {})
       @sis_term_ids = sis_term_ids
       @options = options
-      @webcast_enabled_rooms = Webcast::Rooms.new @options
     end
 
     def fetch
@@ -20,7 +19,6 @@ module Canvas
       @sis_term_ids.each do |term_id|
         canvas_sections = Canvas::SectionsReport.new(@options).get_csv term_id
         if canvas_sections
-          logger.error "#{canvas_sections.length} courses in Canvas where term_id = #{term_id}"
           course_id_to_csv = canvas_sections.group_by { |row| row['canvas_course_id'] }
           course_id_to_csv.each do |canvas_course_id, csv_rows|
             if canvas_course_id
@@ -31,7 +29,7 @@ module Canvas
                 unless section.nil? || section[:ccn].nil?
                   key = { term_yr: section[:term_yr], term_cd: section[:term_cd] }
                   courses_by_term[key] ||= {}
-                  courses_by_term[key][canvas_course_id] ||= []
+                  courses_by_term[key][canvas_course_id] ||= Set.new
                   courses_by_term[key][canvas_course_id] << section
                 end
               end
@@ -46,30 +44,31 @@ module Canvas
 
     def extract_webcast_eligible_courses(courses_by_term)
       eligible_courses = {}
-      webcast_enabled_room_ccn_set = %w(2015-B-65560 2015-B-5762)
+      sign_up_eligible = Webcast::SignUpEligible.new(@options).get
       courses_by_term.each do |key, courses|
         ccn_set = extract_ccn_set courses
-        recordings_per_ccn = Webcast::CourseMedia.new(key[:term_yr], key[:term_cd], ccn_set, @options).get_feed
+        term_yr = key[:term_yr]
+        term_cd = key[:term_cd]
+        recordings_per_ccn = Webcast::CourseMedia.new(term_yr, term_cd, ccn_set, @options).get_feed
+        sign_up_eligible_ccn_set = sign_up_eligible[Berkeley::TermCodes.to_slug(term_yr, term_cd)]
         courses.each do |canvas_course_id, sections|
           sections.each do |section|
             ccn = section[:ccn].to_s.to_i
             if ccn > 0
-              section_key = "#{key[:term_yr]}-#{key[:term_cd]}-#{ccn}"
+              section_key = "#{term_yr}-#{term_cd}-#{ccn}"
               has_recordings = recordings_per_ccn.has_key?(section_key) && recordings_per_ccn[section_key][:videos].present?
-              in_webcast_enabled_room = webcast_enabled_room_ccn_set.include? section_key
               logger.warn "#{section_key} has Webcast recordings (canvas_course_id = #{canvas_course_id})" if has_recordings
-              logger.warn "#{section_key} is in Webcast-enabled room (canvas_course_id = #{canvas_course_id})" if in_webcast_enabled_room
-              if has_recordings || in_webcast_enabled_room
+              is_webcast_eligible = !has_recordings && !sign_up_eligible_ccn_set.nil? && sign_up_eligible_ccn_set.include?(ccn)
+              if has_recordings || is_webcast_eligible
                 section[:has_webcast_recordings] = has_recordings
-                section[:in_webcast_enabled_room] = in_webcast_enabled_room
-                eligible_courses[canvas_course_id] ||= []
+                section[:is_webcast_eligible] = is_webcast_eligible
+                eligible_courses[canvas_course_id] ||= Set.new
                 eligible_courses[canvas_course_id] << section
               end
             end
           end
         end
       end
-      logger.error "#{eligible_courses.length} courses in Canvas are eligible, or signed up, for Webcast"
       eligible_courses
     end
 

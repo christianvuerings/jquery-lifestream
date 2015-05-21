@@ -169,10 +169,6 @@
       templateUrl: 'canvas_embedded/course_mediacasts.html',
       isBcourses: true
     }).
-    when('/canvas/webcast_sign_up/:canvasCourseId', {
-      templateUrl: 'canvas_embedded/course_webcast_sign_up.html',
-      isBcourses: true
-    }).
     // Redirect to a 404 page
     otherwise({
       templateUrl: '404.html',

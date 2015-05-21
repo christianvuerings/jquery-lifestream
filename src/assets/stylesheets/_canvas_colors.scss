@@ -1,5 +1,7 @@
 // bCourses Colors
 $bc-color-body-black: #474747;
+$bc-color-link: #0087c2;
+$bc-color-link-hover: #00648e;
 $bc-color-button-grey-gradient-1: #fefefe;
 $bc-color-button-grey-gradient-2: #ececec;
 $bc-color-button-grey-text: #464646;
@@ -39,11 +41,9 @@ $bc-color-orange-button-bg-selected: #a16e1e;
 $bc-color-orange-button-border: #705012;
 $bc-color-orange-button-border-selected: #553d0d;
 
-$bc-color-progressbar-bg-gradient1: #fff;
-$bc-color-progressbar-bg-gradient2: #c5d8e2;
-$bc-color-progressbar-border: #c6c7c7;
-$bc-color-progressbar-fg-gradient1: #88cef7;
-$bc-color-progressbar-fg-gradient2: #4baff6;
+$bc-color-progressbar-border: #aaa;
+$bc-color-progressbar-fg-gradient1: #0abeff;
+$bc-color-progressbar-fg-gradient2: #0a99ff;
 $bc-color-progressbar-status-color: #2f2e2e;
 $bc-color-red-row-highlighted: #f2dddf;
 $bc-color-red-button-bg: #af333a;
@@ -52,6 +52,7 @@ $bc-color-red-button-border: #6c232b;
 $bc-color-red-button-border-selected: #4e191f;
 
 $bc-color-roster-background: #edf0f2;
+$bc-color-roster-border: #d3dbe0;
 $bc-color-section-list-border: #d1d5d8;
 $bc-color-section-list-secondary-bg: #f7f9f8;
 $bc-color-section-list-alert: #7e4702;

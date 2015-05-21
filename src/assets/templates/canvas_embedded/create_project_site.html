@@ -1,27 +1,27 @@
-<div class="cc-page-create-project-site" data-cc-spinner-directive>
+<div class="bc-canvas-application bc-page-create-project-site" data-cc-spinner-directive>
 
   <div data-ng-show="!displayError">
-    <h1 class="cc-page-site-provisioning-header cc-page-site-provisioning-header2">Create a Project Site</h1>
+    <h1 class="bc-header bc-header2">Create a Project Site</h1>
 
     <div role="alert" id="cc-page-reader-alert" aria-live="polite" class="cc-visuallyhidden" data-ng-if="creatingSite">
       <span data-ng-bind="actionStatus"></span>
     </div>
 
-    <form class="cc-page-form bc-canvas-form">
-      <div class="row cc-page-create-project-form-fields">
+    <form class="bc-canvas-page-form bc-canvas-form">
+      <div class="row bc-page-create-project-site-form-fields">
         <div class="small-12 medium-3 columns">
-          <div class="cc-page-create-project-site-form-area-container">
-            <label for="cc-page-create-project-site-name" class="cc-page-create-project-site-form-label">Project Site Name</label>
+          <div class="bc-page-create-project-site-form-area-container">
+            <label for="bc-page-create-project-site-name" class="bc-page-create-project-site-form-label">Project Site Name</label>
           </div>
         </div>
         <div class="small-12 medium-4 columns end">
-          <div class="cc-page-create-project-site-form-area-container">
-            <input type="text" id="cc-page-create-project-site-name" name="projectSiteName" data-ng-model="projectSiteName" data-ng-disabled="creatingSite" placeholder="Enter a name for your site" class="bc-canvas-form-input-text">
+          <div class="bc-page-create-project-site-form-area-container">
+            <input type="text" id="bc-page-create-project-site-name" name="projectSiteName" data-ng-model="projectSiteName" data-ng-disabled="creatingSite" placeholder="Enter a name for your site" class="bc-canvas-form-input-text">
           </div>
         </div>
       </div>
 
-      <div class="cc-page-site-provisioning-form-actions">
+      <div class="bc-form-actions">
         <a data-cc-disabled="creatingSite" data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button">Cancel</a>
         <button data-ng-disabled="disableSubmit()" data-ng-click="createProjectSite()" class="bc-canvas-button bc-canvas-button-primary" aria-controls="cc-page-reader-alert" type="submit">
           <span data-ng-if="!creatingSite">Create a Project Site</span>
@@ -31,7 +31,7 @@
     </form>
   </div>
 
-  <div data-ng-if="displayError" class="cc-notice-error-container">
+  <div data-ng-if="displayError" class="bc-notice-error-container">
     <div data-ng-include src="'canvas_embedded/_shared/canvas_errors.html'"></div>
   </div>
 

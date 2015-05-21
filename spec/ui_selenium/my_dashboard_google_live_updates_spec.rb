@@ -58,7 +58,7 @@ describe 'My Dashboard bConnected live updates', :testui => true do
       @google.load_gmail(@driver)
       @email_subject = "Test email #{id}"
       @email_summary = "This is the subject of test email #{id}"
-      @google.send_email(@driver, UserUtils.qa_gmail_username, @email_subject, @email_summary)
+      @google.send_email(UserUtils.qa_gmail_username, @email_subject, @email_summary)
       @task_title = "Test task #{id}"
       @google.load_calendar(@driver)
       @google.create_unsched_task(@driver, @task_title)

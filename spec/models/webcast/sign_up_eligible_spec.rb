@@ -9,15 +9,17 @@ describe Webcast::SignUpEligible do
       it 'should return all test data' do
         terms = subject.get
         expect(terms).to have(3).items
-        expect(terms['2015-spring']).to contain_exactly(5916, 51991)
-        expect(terms['2015-fall']).to contain_exactly(5917, 51992)
-        expect(terms['2016-spring']).to be_empty
+        expect(terms['spring-2015']).to contain_exactly(5916, 51991)
+        expect(terms['fall-2015']).to contain_exactly(5917, 51992)
+        expect(terms['spring-2016']).to be_empty
       end
-
     end
   end
 
   context 'a real, non-fake proxy' do
+    before {
+      allow_any_instance_of(Webcast::SystemStatus).to receive(:get).and_return({ 'is_sign_up_active' => true })
+    }
     subject { Webcast::SignUpEligible.new }
 
     context 'real data', :testext => true do

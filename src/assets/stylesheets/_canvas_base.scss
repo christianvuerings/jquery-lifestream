@@ -1,7 +1,116 @@
-// Canvas Fonts
-$bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+.bc-main {
+  background-color: $bc-color-white;
+}
 
-// Canvas Tables
+// Canvas Typography
+$bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+.bc-canvas-base-typography,
+.bc-canvas-application,
+.bc-canvas-embedded,
+.bc-page-create-course-site,
+.bc-page-create-project-site,
+.bc-page-course-add-user,
+.bc-page-course-official-sections,
+.bc-page-course-grade-export,
+.bc-form-input-text,
+.bc-form-input-select {
+  font-family: $bc-base-font-family;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 20px;
+}
+
+// Applies Canvas styling to Canvas only applications
+.bc-canvas-application {
+  background: $cc-color-white;
+
+  form input,
+  form input[type="text"],
+  form input[type="number"],
+  form input[type="password"] {
+    padding: 8px 12px;
+  }
+
+  form input,
+  form input[type="text"],
+  form input[type="number"],
+  form input[type="password"],
+  button {
+    &, &:hover, &:focus {
+      font-family: $bc-base-font-family;
+      font-size: 14px;
+      font-weight: 300;
+    }
+  }
+
+  form label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+.bc-button-link {
+  color: $bc-color-link;
+  &, &:hover, &:focus, &:visited {
+    background-color: transparent;
+    border: 0;
+    font-family: $bc-base-font-family;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 0;
+  }
+  &:hover, &:focus {
+    color: $bc-color-link-hover;
+  }
+}
+
+// Form Elements
+// https://ucberkeley.instructure.com/styleguide#forms
+.bc-form-input-text,
+.bc-canvas-embedded .cc-page-roster .cc-roster-search .cc-roster-input {
+  font-family: $bc-base-font-family;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 8px 12px;
+}
+
+.bc-form-label {
+  font-weight: 500;
+}
+
+.bc-form-input-select,
+.bc-canvas-embedded .cc-page-roster .cc-roster-search .cc-roster-select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: url('../images/canvas/select-menu-arrow-down.svg') no-repeat calc(100% - 8px) 50% $cc-color-white;
+  background-size: 10px 5.667px;
+  border-color: $bc-color-table-cell-border-grey;
+  font-family: $bc-base-font-family;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 8px 12px;
+}
+
+.bc-canvas-page-form {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.bc-form-fieldset {
+  margin: 0 0 15px;
+  padding: 0;
+}
+
+.bc-form-actions {
+  background: $bc-color-roster-background;
+  border: 1px solid $bc-color-roster-background;
+  padding: 10px 5px;
+  text-align: right;
+}
+
+// Tables
 // https://canvas.instructure.com/styleguide#tables
 .bc-table {
   border: 1px solid $bc-color-table-border-grey;
@@ -60,71 +169,57 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 }
 
-.cc-page-form {
-  background: transparent;
-  border: 0;
-  padding: 0;
-}
-
-.cc-canvas-no-decoration {
+.bc-canvas-no-decoration {
   &:hover, &:focus {
     text-decoration: none;
   }
 }
 
-// Site Provisioning Headers
-.cc-page-site-provisioning-header {
+// Headers
+.bc-header {
   color: $bc-color-off-black;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: normal;
 }
 
-.cc-page-site-provisioning-header1 {
+.bc-header1 {
   font-size: 24px;
   line-height: 30px;
   margin: 15px 0 16px;
 }
 
-.cc-page-site-provisioning-header2 {
+.bc-header2 {
   font-size: 24px;
   line-height: 30px;
   margin: 15px 0 16px;
 }
 
-.cc-page-site-provisioning-header3 {
+.bc-header3 {
   font-size: 20px;
   margin: 0 0 13px;
 }
 
-.cc-page-site-provisioning-header4 {
+.bc-header4 {
   font-size: 14px;
   line-height: 16px;
-}
-
-// Site Provisioning Forms
-.cc-page-site-provisioning-form-actions {
-  background: $bc-color-roster-background;
-  border: 1px solid $bc-color-roster-background;
-  padding: 10px 5px;
-  text-align: right;
 }
 
 // ***********************************
 // bCourses Shared Template Styles
 // ***********************************
 
-.cc-template-back-icon {
+.bc-template-back-icon {
   color: $bc-color-link-blue;
   font-size: 15px;
 }
 
-.cc-template-back-link {
-  font-family: $bc-header-font-family;
+.bc-template-back-link {
+  font-family: $bc-base-font-family;
   font-size: 14px;
 }
 
 // Error display for remote background jobs
-.cc-template-background-job-error {
+.bc-template-background-job-error {
   background-color: $bc-color-notice-red-bg;
   border: 1px solid $bc-color-notice-red-border;
   border-radius: 5px;
@@ -146,71 +241,72 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     margin: 5px 20px;
   }
 
-  .cc-template-background-job-error-paragraph {
+  .bc-template-background-job-error-paragraph {
     margin-bottom: 10px;
   }
 
-  .cc-template-background-job-error-icon {
+  .bc-template-background-job-error-icon {
     color: $bc-color-notice-red-header;
     font-size: 17px;
     line-height: 27px;
   }
 
-  .cc-template-background-job-error-header {
+  .bc-template-background-job-error-header {
     color: $bc-color-notice-red-header;
     font-size: 17px;
   }
 }
 
 // Progress Bar
-.cc-template-progress-bar {
-  .cc-template-progress-bar-container {
+.bc-template-progress-bar {
+  .bc-template-progress-bar-container {
     margin: 35px auto;
     width: 75%;
   }
 
-  .cc-template-progress-bar-display {
-    background: linear-gradient($bc-color-progressbar-bg-gradient1, $bc-color-progressbar-bg-gradient2);
-    border: 2px solid $bc-color-progressbar-border;
-    border-radius: 5px;
-    height: 25px;
+  .bc-template-progress-bar-display {
+    border: 1px solid $bc-color-progressbar-border;
+    border-radius: 3px;
+    height: 30px;
     overflow: hidden;
     position: relative;
   }
 
-  .cc-template-progress-bar-status {
+  .bc-template-progress-bar-status {
     color: $bc-color-progressbar-status-color;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
     font-weight: bold;
     left: 50%;
-    line-height: 25px;
+    line-height: 28px;
     margin-left: -75px;
     position: absolute;
     text-align: center;
     width: 150px;
   }
 
-  .cc-template-progress-bar-value {
-    background: linear-gradient($bc-color-progressbar-fg-gradient1, $bc-color-progressbar-fg-gradient2);
+  .bc-template-progress-bar-value {
+    background-image: linear-gradient(to bottom, $bc-color-progressbar-fg-gradient1, $bc-color-progressbar-fg-gradient2);
     height: 100%;
   }
 }
 
 // Notices
-.cc-notice-text-container {
+.bc-notice-text-container {
   line-height: 18px;
   margin-left: 52px;
 }
 
-.cc-canvas-error-notice-icon {
+.bc-canvas-error-notice-icon {
   float: left;
   font-size: 38px;
   line-height: 45px;
   margin-right: 5px;
 }
 
-.cc-notice-text-header {
+.bc-notice-text-header {
   color: $bc-color-grey-text;
   font-size: 16px;
   font-weight: 500;
@@ -218,13 +314,13 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin: 4px 0;
 }
 
-.cc-canvas-notice-icon {
+.bc-canvas-notice-icon {
   font-size: 20px;
   line-height: 20px;
   margin-right: 5px;
 }
 
-.cc-notice-box {
+.bc-notice-box {
   background-color: $bc-color-notice-default;
   border: 0;
   color: $bc-color-white;
@@ -233,14 +329,14 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: bold;
   margin-bottom: 8px;
   padding: 10px;
-  .cc-close-button {
+  .bc-close-button {
     background-color: transparent;
     font-size: 20px;
     &:hover {
       text-decoration: none;
     }
   }
-  .cc-notice-close-button {
+  .bc-notice-close-button {
     display: inline-block;
     float: right;
     .small {
@@ -250,19 +346,19 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 }
 
-.cc-notice-success {
+.bc-notice-success {
   background-color: $bc-color-success-background;
   border: 1px solid $bc-color-success-border;
   color: $bc-color-success-foreground;
 }
 
-.cc-notice-warning {
+.bc-notice-warning {
   background-color: $bc-color-warning-background;
   border: 1px solid $bc-color-warning-border;
   color: $bc-color-warning-foreground;
 }
 
-.cc-notice-warning-button {
+.bc-notice-warning-button {
   color: $bc-color-warning-foreground;
   text-decoration: none;
 
@@ -272,39 +368,40 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 }
 
-.cc-notice-error {
+.bc-notice-error {
   background-color: $bc-color-error-background;
   border: 1px solid $bc-color-error-border;
   color: $bc-color-error-foreground;
 }
 
-.cc-notice-error-container {
+.bc-notice-error-container {
   margin: 10px 0;
 }
 
-.cc-radius {
+.bc-radius {
   border-radius: 3px;
 }
 
 // Maintenance Notice
-.cc-template-canvas-maintenance-notice-text {
+.bc-template-canvas-maintenance-notice-text {
+  font-size: 14px;
   font-weight: normal;
 }
 
-.cc-template-canvas-maintenance-notice-collapse-icon {
+.bc-template-canvas-maintenance-notice-collapse-icon {
   font-size: 18px;
   margin: 0 11px 0 5px;
 }
 
-.cc-template-canvas-maintenance-notice-details {
+.bc-template-canvas-maintenance-notice-details {
   margin: 10px 26px 0;
 }
 
 
 // Styling for Sections Form used by Course Provisioning and Official Sections LTI tools
-.cc-template-sections-table-container {
+.bc-template-sections-table-container {
 
-  .cc-template-sections-table {
+  .bc-template-sections-table {
     border-spacing: 0;
     margin: 0;
     width: 100%;
@@ -324,31 +421,31 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       vertical-align: top;
     }
 
-    .cc-page-course-official-sections-table-row-disabled td {
+    .bc-template-sections-table-row-disabled td {
       color: $bc-color-grey-disabled;
     }
 
-    .cc-page-course-official-sections-table-row-added td {
+    .bc-template-sections-table-row-added td {
       background-color: $bc-color-yellow-row-highlighted;
     }
 
-    .cc-page-course-official-sections-table-row-deleted td {
+    .bc-template-sections-table-row-deleted td {
       background-color: $bc-color-red-row-highlighted;
     }
 
-    .cc-template-sections-table-cell-section-action-option {
+    .bc-template-sections-table-cell-section-action-option {
       height: 45px;
       text-align: right;
       width: 85px;
     }
 
-    .cc-template-sections-table-button {
+    .bc-template-sections-table-button {
       font-size: 12px;
       margin: 0;
       padding: 2px 4px;
     }
 
-    .cc-template-sections-table-button-undo-add {
+    .bc-template-sections-table-button-undo-add {
       background-color: $bc-color-orange-button-bg;
       border: $bc-color-orange-button-border solid 1px;
       color: $bc-color-white;
@@ -358,7 +455,7 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       }
     }
 
-    .cc-template-sections-table-button-undo-delete {
+    .bc-template-sections-table-button-undo-delete {
       background-color: $bc-color-red-button-bg;
       border: $bc-color-red-button-border solid 1px;
       color: $bc-color-white;
@@ -368,60 +465,60 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       }
     }
 
-    .cc-template-sections-table-cell-checkbox {
+    .bc-template-sections-table-cell-checkbox {
       width: 30px;
     }
 
-    .cc-template-sections-table-cell-course-code {
+    .bc-template-sections-table-cell-course-code {
       width: 115px;
     }
 
-    .cc-template-sections-table-cell-course-code-label {
+    .bc-template-sections-table-cell-course-code-label {
       cursor: pointer;
       font-weight: bold;
       margin: 0;
       text-align: left;
     }
 
-    .cc-template-sections-table-cell-section-label {
+    .bc-template-sections-table-cell-section-label {
       width: 75px;
     }
 
-    .cc-template-sections-table-cell-section-ccn {
+    .bc-template-sections-table-cell-section-ccn {
       width: 70px;
     }
 
-    .cc-template-sections-table-cell-section-timestamps {
+    .bc-template-sections-table-cell-section-timestamps {
       width: 155px;
     }
 
-    .cc-template-sections-table-cell-section-locations {
+    .bc-template-sections-table-cell-section-locations {
       width: 150px;
     }
 
-    .cc-template-sections-table-cell-section-instructors {
+    .bc-template-sections-table-cell-section-instructors {
       width: 190px;
     }
 
-    .cc-template-sections-table-cell-section-label-label {
+    .bc-template-sections-table-cell-section-label-label {
       cursor: pointer;
       font-size: 13px;
       margin: 0;
       text-align: left;
     }
 
-    .cc-template-sections-table-sited-icon {
+    .bc-template-sections-table-sited-icon {
       color: $bc-color-help-link-blue;
       font-size: 15px;
       margin-right: 4px;
       margin-top: 2px;
     }
 
-    .cc-template-sections-table-sites-cell {
-      padding: 0 10px;
+    .bc-template-sections-table-sites-cell {
+      padding: 0 14px;
     }
 
-    .cc-template-sections-table-sites-container {
+    .bc-template-sections-table-sites-container {
       margin-bottom: 5px;
     }
   }
@@ -429,30 +526,33 @@ $bc-header-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 // Collapsed / Toggled Help Notice
-.cc-page-help-notice {
+.bc-page-help-notice {
   margin: 4px 1px;
   min-height: 15px;
 
-  .cc-page-help-notice-icon {
+  .bc-page-help-notice-icon {
     color: $bc-color-help-link-blue;
     font-size: 15px;
     margin-top: 2px;
   }
 
-  .cc-page-help-notice-toggle-button {
+  .bc-page-help-notice-toggle-button {
     color: $bc-color-help-link-blue;
     font-size: 13px;
     outline: none;
+    &:hover, &:focus {
+      font-size: 13px;
+    }
   }
 
-  .cc-page-help-notice-left-margin {
+  .bc-page-help-notice-left-margin {
     margin-left: 16px;
   }
 
-  .cc-page-help-notice-content {
+  .bc-page-help-notice-content {
     border: $bc-color-button-grey-border solid 1px;
     margin: 10px 0 20px;
-    padding: 10px;
+    padding: 15px;
   }
 }
 

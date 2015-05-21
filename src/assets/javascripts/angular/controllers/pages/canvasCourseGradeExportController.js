@@ -77,6 +77,7 @@
       $scope.selectedType = type;
       $scope.appState = 'loading';
       $scope.jobStatus = 'New';
+      apiService.util.iframeScrollToTop();
       canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId).success(function(data) {
         if (data.jobRequestStatus === 'Success') {
           $scope.backgroundJobId = data.jobId;
@@ -131,12 +132,7 @@
      * Switches to 'selection' step and scrolls to top of page
      */
     $scope.switchToSelection = function() {
-      // issue scroll to top based on Canvas or CalCentral context
-      if (apiService.util.isInIframe) {
-        apiService.util.iframeScrollToTop();
-      } else {
-        $window.scrollTo(0, 0);
-      }
+      apiService.util.iframeScrollToTop();
       $scope.appState = 'selection';
     };
 

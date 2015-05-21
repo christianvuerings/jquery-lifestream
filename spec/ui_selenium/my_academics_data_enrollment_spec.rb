@@ -44,7 +44,6 @@ describe 'My Academics enrollments', :testui => true do
             status_api_page = ApiMyStatusPage.new(driver)
             status_api_page.get_json(driver)
             if status_api_page.has_student_history? && status_api_page.has_academics_tab?
-              testable_users.push(uid)
               academics_api_page = ApiMyAcademicsPageSemesters.new(driver)
               academics_api_page.get_json(driver)
               all_semesters = academics_api_page.all_semesters
@@ -56,6 +55,7 @@ describe 'My Academics enrollments', :testui => true do
               # MY ACADEMICS PAGE SEMESTER CARDS
 
               if all_semesters.any?
+                testable_users.push(uid)
                 all_semester_names = academics_api_page.semester_names(all_semesters)
                 default_semesters = academics_api_page.default_semesters_in_ui(all_semesters)
                 default_semester_names = academics_api_page.semester_names(default_semesters)
@@ -399,7 +399,7 @@ describe 'My Academics enrollments', :testui => true do
 
                       semester_page.back
 
-                    elsif academics_api_page.current_semester(all_semesters).include?(semester) || academics_api_page.future_semesters(all_semesters).include?(semester)
+                    elsif academics_api_page.current_semester(all_semesters) == semester || academics_api_page.future_semesters(all_semesters).include?(semester)
                       logger.info "Found non-official enrollments for #{semester_name}"
                       semester_card_courses.each do |course|
                         i = semester_card_courses.index(course)
@@ -417,7 +417,7 @@ describe 'My Academics enrollments', :testui => true do
       end
 
       it 'has enrollment information for at least one of the test UIDs' do
-        expect(testable_users.length).to be > 0
+        expect(testable_users.any?).to be true
       end
 
     rescue => e

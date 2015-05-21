@@ -22,6 +22,7 @@ describe 'My Academics Status and Blocks', :testui => true do
       driver = WebDriverUtils.launch_browser
       test_output = UserUtils.initialize_output_csv(self)
       test_users = UserUtils.load_test_users
+      testable_users = []
 
       CSV.open(test_output, 'wb') do |user_info_csv|
         user_info_csv << ['UID', 'Student', 'Registered', 'Resident', 'Active Block', 'Block Types', 'Block History', 'Error?']
@@ -59,7 +60,7 @@ describe 'My Academics Status and Blocks', :testui => true do
               dashboard_page = CalCentralPages::MyDashboardPage.new(driver)
               dashboard_page.load_page(driver)
               has_popover = dashboard_page.status_popover_visible?
-              has_no_standing = academics_api_page.has_no_standing
+              has_no_standing = academics_api_page.has_no_standing?
               if has_no_standing
                 it "is not available via a person icon in the header for UID #{uid}" do
                   expect(has_popover).to be false
@@ -71,6 +72,7 @@ describe 'My Academics Status and Blocks', :testui => true do
               end
 
               if has_popover
+                testable_users.push(uid)
                 dashboard_page.open_status_popover
 
                 # REGISTRATION STATUS
@@ -259,6 +261,11 @@ describe 'My Academics Status and Blocks', :testui => true do
           end
         end
       end
+
+      it 'has status information for at least one of the test UIDs' do
+        expect(testable_users.any?).to be true
+      end
+
     rescue => e
       logger.error e.message + "\n" + e.backtrace.join("\n ")
     ensure

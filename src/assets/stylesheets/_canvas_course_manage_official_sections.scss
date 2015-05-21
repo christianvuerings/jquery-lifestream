@@ -1,60 +1,57 @@
-.cc-page-course-official-sections {
+.bc-page-course-official-sections {
   background-color: $bc-color-white;
-  font-family: $bc-header-font-family;
-  font-size: 14px;
-  font-weight: 300;
   padding: 20px;
   .cc-button {
     padding: 10px;
   }
 
-  .cc-page-course-official-sections-header1 {
+  .bc-page-course-official-sections-header1 {
     font-size: 24px;
     font-weight: 400;
     line-height: 30px;
     margin: 15px 0 16px;
   }
 
-  .cc-page-course-official-sections-button {
+  .bc-page-course-official-sections-button {
     text-decoration: none;
   }
 
-  .cc-page-course-official-sections-courses-container {
+  .bc-page-course-official-sections-courses-container {
     margin: 10px 0;
   }
 
-  .cc-page-course-official-sections-course {
+  .bc-page-course-official-sections-course {
     margin: 10px;
   }
 
-  .cc-page-course-official-sections-course-available {
+  .bc-page-course-official-sections-course-available {
     background-color: $bc-color-off-white-background;
     border: $bc-color-grey-area-border-light solid 1px;
     margin: 0 0 20px;
   }
 
-  .cc-page-course-official-sections-current-course {
+  .bc-page-course-official-sections-current-course {
     margin-left: 10px;
   }
 
-  .cc-page-course-official-sections-current-sections-grey-border {
+  .bc-page-course-official-sections-current-sections-grey-border {
     border: $bc-color-grey-area-border-dark solid 1px;
   }
 
-  .cc-page-course-official-sections-current-sections-white-border {
+  .bc-page-course-official-sections-current-sections-white-border {
     border: $cc-color-white solid 1px;
   }
 
-  .cc-page-course-official-sections-sections-area {
+  .bc-page-course-official-sections-sections-area {
     padding: 18px;
   }
 
-  .cc-page-course-official-sections-existing-sections-header-label {
-    font-size: 16px;
+  .bc-page-course-official-sections-existing-sections-header-label {
+    font-size: 17px;
     margin-top: 10px;
   }
 
-  .cc-page-course-official-sections-form-course-button {
+  .bc-page-course-official-sections-form-course-button {
     color: $bc-color-body-black;
 
     &:focus, &:hover {
@@ -62,34 +59,34 @@
     }
   }
 
-  .cc-page-course-official-sections-form-collapse-icon {
+  .bc-page-course-official-sections-form-collapse-icon {
     font-size: 18px;
     margin-left: 2px;
   }
 
-  .cc-page-course-official-sections-form-course-title {
+  .bc-page-course-official-sections-form-course-title {
     margin-left: 10px;
   }
 
-  .cc-page-course-official-sections-form-collapsible-container {
+  .bc-page-course-official-sections-form-collapsible-container {
     margin-top: 7px;
   }
 
-  .cc-page-course-official-sections-form-select-all-option {
+  .bc-page-course-official-sections-form-select-all-option {
     font-size: 12px;
     margin: 6px 0 4px 2px;
   }
 
-  .cc-page-course-official-sections-form-select-all-option-button {
+  .bc-page-course-official-sections-form-select-all-option-button {
     outline: none;
   }
 
-  .cc-page-course-official-sections-pending-request {
+  .bc-page-course-official-sections-pending-request {
     margin: 10px 0;
   }
 
   @media #{$small-only} {
-    .cc-page-course-official-sections-small-only-align-left {
+    .bc-page-course-official-sections-small-only-align-left {
       text-align: left;
     }
   }

@@ -126,11 +126,14 @@
     };
 
     /**
-     * Send a message triggering the parent page to scroll to the top
+     * Send a message triggering the parent page to scroll to the top.
+     * Assumes iframe environment only applies to bCourses / Canvas LTI
      */
     var iframeScrollToTop = function() {
       if (isInIframe) {
         iframePostMessage(JSON.stringify({subject: 'changeParent', scrollToTop: true}));
+      } else {
+        $window.scrollTo(0, 0);
       }
     };
 
