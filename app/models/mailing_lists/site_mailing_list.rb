@@ -6,7 +6,7 @@ module MailingLists
 
     self.table_name = 'canvas_site_mailing_lists'
 
-    attr_accessible :canvas_site_id, :list_name, :state, :populated_at
+    attr_accessible :canvas_site_id, :list_name, :state, :members_count, :populated_at, :populate_add_errors, :populate_remove_errors
     attr_accessor :bad_request_error
     attr_accessor :population_results
 
