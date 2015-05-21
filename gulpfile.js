@@ -72,6 +72,8 @@
           'node_modules/pikaday/pikaday.js',
           // Angular
           'node_modules/angular/angular.js',
+          // Angular Aria
+          'node_modules/angular-aria/angular-aria.js',
           // Angular Routing
           'node_modules/angular-route/angular-route.js',
           // Angular Sanitize (avoid XSS exploits)
