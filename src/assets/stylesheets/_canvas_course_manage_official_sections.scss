@@ -17,16 +17,17 @@
   }
 
   .bc-page-course-official-sections-courses-container {
-    margin: 10px 0;
+    margin: 0;
   }
 
   .bc-page-course-official-sections-course {
-    margin: 10px;
+    padding: 9px;
   }
 
   .bc-page-course-official-sections-course-available {
-    background-color: $bc-color-off-white-background;
-    border: $bc-color-grey-area-border-light solid 1px;
+    background: $bc-color-container-grey-background;
+    border: 1px solid $bc-color-roster-border;
+    border-radius: 3px;
     margin: 0 0 20px;
   }
 
@@ -36,6 +37,10 @@
 
   .bc-page-course-official-sections-current-sections-grey-border {
     border: $bc-color-grey-area-border-dark solid 1px;
+  }
+
+  .bc-page-course-official-sections-current-sections-header {
+    margin-bottom: 5px;
   }
 
   .bc-page-course-official-sections-current-sections-white-border {
@@ -60,12 +65,15 @@
   }
 
   .bc-page-course-official-sections-form-collapse-icon {
-    font-size: 18px;
-    margin-left: 2px;
+    font-size: 13px;
+    margin: 4px 5px 0 2px;
   }
 
   .bc-page-course-official-sections-form-course-title {
-    margin-left: 10px;
+    display: inline;
+    font-size: 15px;
+    font-weight: bold;
+    width: 100%;
   }
 
   .bc-page-course-official-sections-form-collapsible-container {

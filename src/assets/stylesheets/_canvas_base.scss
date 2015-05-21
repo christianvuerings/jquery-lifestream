@@ -104,8 +104,8 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .bc-form-actions {
-  background: $bc-color-roster-background;
-  border: 1px solid $bc-color-roster-background;
+  background: $bc-color-container-grey-background;
+  border: 1px solid $bc-color-container-grey-border;
   padding: 10px 5px;
   text-align: right;
 }
@@ -402,6 +402,8 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 .bc-template-sections-table-container {
 
   .bc-template-sections-table {
+    border: 1px solid $bc-color-container-grey-border;
+    border-radius: 3px;
     border-spacing: 0;
     margin: 0;
     width: 100%;
@@ -412,7 +414,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     tbody tr:last-child td {
-      border-bottom: $bc-color-grey-border-table-bottom solid 1px;
+      border-bottom: $bc-color-item-group-item-border solid 1px;
       vertical-align: top;
     }
 
