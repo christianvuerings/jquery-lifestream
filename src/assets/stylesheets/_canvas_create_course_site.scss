@@ -134,28 +134,12 @@
     overflow: hidden;
   }
 
-  .bc-page-create-course-site-form-course {
-    background: $bc-color-roster-background;
-    border: 1px solid $bc-color-roster-border;
-    margin: 0 0 20px;
-    padding: 15px;
-  }
-
   .bc-page-create-course-site-form-course-button {
     color: $bc-color-body-black;
 
     &:focus, &:hover {
       text-decoration: none;
     }
-  }
-
-  .bc-page-create-course-site-form-collapse-icon {
-    font-size: 18px;
-    margin-left: 2px;
-  }
-
-  .bc-page-create-course-site-form-course-title {
-    margin-left: 10px;
   }
 
   .bc-page-create-course-site-form-collapsible-container {

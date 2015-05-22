@@ -25,7 +25,7 @@
 
       <!-- Current Sections Preview Area -->
       <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-white-border">
-        <div class="row">
+        <div class="row bc-page-course-official-sections-current-sections-header">
           <div class="medium-4 columns">
             <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
               Sections in this Course Site
@@ -60,7 +60,7 @@
       <!-- Current Sections Area -->
       <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-grey-border">
 
-        <div class="row">
+        <div class="row bc-page-course-official-sections-current-sections-header">
           <div class="medium-3 columns">
             <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
               Sections in this Course Site
@@ -112,16 +112,16 @@
         </div>
 
         <div data-ng-if="courseSemester.classes.length > 0" class="bc-page-course-official-sections-courses-container">
-          <div class="bc-page-course-official-sections-course-available" data-ng-repeat="course in courseSemester.classes">
+          <div class="bc-sections-course-container-bottom-margin" data-ng-repeat="course in courseSemester.classes">
 
-            <div class="bc-page-course-official-sections-course">
+            <div class="bc-sections-course-container">
               <button type="button" class="cc-button-link bc-page-course-official-sections-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
-                <i class="fa cc-left bc-page-course-official-sections-form-collapse-icon"
+                <i class="fa cc-left bc-sections-triangle-icon"
                   data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
-                <strong class="bc-page-course-official-sections-form-course-title">
+                <h3 class="bc-sections-course-title">
                   <span data-ng-bind="course.course_code"></span>
                   <span data-ng-if="course.title" data-ng-bind-template=" : {{course.title}}"></span>
-                </strong>
+                </h3>
                 <span data-ng-if="course.sections">
                   (<span data-ng-pluralize count="course.sections.length" when="{'one': '1 section', 'other': '{{course.sections.length}} sections'}"></span>)
                 </span>
@@ -153,7 +153,7 @@
 
     <div data-ng-if="currentWorkflowStep === 'processing'">
       <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-grey-border">
-        <div class="row">
+        <div class="row bc-page-course-official-sections-current-sections-header">
           <div class="medium-4 columns">
             <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
               Updating Official Sections in Course Site
