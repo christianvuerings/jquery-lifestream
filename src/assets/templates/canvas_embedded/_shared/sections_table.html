@@ -65,7 +65,7 @@
           </div>
         </td>
       </tr>
-      <tr data-ng-if="(listMode !== 'preview' && listMode !== 'currentStaging' && section.sites)">
+      <tr data-ng-if="(listMode !== 'preview' && listMode !== 'currentStaging' && section.sites)" data-ng-class="rowClassLogic({listMode: listMode, section: section})">
         <td colspan="7" class="bc-template-sections-table-sites-cell">
           <div data-ng-repeat="site in section.sites" class="bc-template-sections-table-sites-container">
             <i class="fa fa-info-circle bc-template-sections-table-sited-icon"></i>
