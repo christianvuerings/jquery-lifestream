@@ -7,7 +7,7 @@ module CampusSolutions
     end
 
     def xml_filename
-      'cs_budget.xml'
+      'budget.xml'
     end
 
   end

@@ -7,7 +7,7 @@ module CampusSolutions
     end
 
     def xml_filename
-      'cs_awards.xml'
+      'awards.xml'
     end
 
   end

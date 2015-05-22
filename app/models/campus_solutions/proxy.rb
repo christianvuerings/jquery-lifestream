@@ -13,7 +13,7 @@ module CampusSolutions
     end
 
     def mock_xml
-      read_file('fixtures', 'xml', xml_filename)
+      read_file('fixtures', 'xml', 'campus_solutions', xml_filename)
     end
 
     def get
