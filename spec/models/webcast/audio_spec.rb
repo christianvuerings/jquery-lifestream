@@ -33,13 +33,12 @@ describe Webcast::Audio do
     context 'on remote server errors' do
       let! (:body) { 'An unknown error occurred.' }
       let! (:status) { 506 }
-      include_context 'expecting logs from server errors'
       before(:each) {
         stub_request(:any, rss_url).to_return(status: status, body: body)
       }
-      it 'should return a 503 status code' do
+      it 'should deliver empty ' do
         proxy_response = proxy.get
-        expect(proxy_response[:statusCode]).to eq 503
+        expect(proxy_response[:audio]).to be_empty
       end
     end
 
@@ -47,9 +46,9 @@ describe Webcast::Audio do
       before(:each) {
         stub_request(:any, rss_url).to_return(status: 200, body: 'bogus xml')
       }
-      it 'should return a 503 status code' do
+      it 'should return empty array when RSS parsing fails' do
         proxy_response = proxy.get
-        expect(proxy_response[:statusCode]).to eq 503
+        expect(proxy_response[:audio]).to be_empty
       end
     end
 
@@ -58,9 +57,9 @@ describe Webcast::Audio do
         stub_request(:any, /.#{audio_base_url.hostname}./).to_raise(Errno::ECONNREFUSED)
       }
 
-      it 'should return a 503 status code' do
+      it 'should return empty content when HTTP GET fails' do
         proxy_response = proxy.get
-        expect(proxy_response[:statusCode]).to eq 503
+        expect(proxy_response[:audio]).to be_empty
       end
     end
   end
@@ -70,7 +69,7 @@ describe Webcast::Audio do
 
     it 'should return an empty audio array' do
       proxy_response = proxy.get
-      expect(proxy_response[:audio]).to have(0).items
+      expect(proxy_response[:audio]).to be_empty
     end
   end
 
