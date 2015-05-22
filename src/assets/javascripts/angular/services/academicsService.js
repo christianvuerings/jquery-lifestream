@@ -192,10 +192,6 @@
       return count;
     };
 
-    var returnSection = function(section) {
-      return section.section_number;
-    };
-
     var splitMultiplePrimaries = function(originalCourse, enrolledSections) {
       var classes = {};
       for (var i = 0; i < enrolledSections.length; i++) {
@@ -225,9 +221,23 @@
     };
 
     var textbookRequestInfo = function(course, semester) {
-      var sectionNumbers = course.sections.map(returnSection);
+      // Collect unique section numbers (e.g, "001") of primary sections only.
+      var primarySectionNumbers = [];
+      for (var i = 0; i < course.sections.length; i++) {
+        var section = course.sections[i];
+        if (section.is_primary_section) {
+          var sectionNumber = section.section_number;
+          // We check for uniqueness because a cross-listed course will have sections
+          // with different CCNs and catalog IDs, but each matching section number
+          // (such as "L & S C30T LEC 001" and "PSYCH C19 LEC 001") will fetch the
+          // same bookstore list.
+          if (primarySectionNumbers.indexOf(sectionNumber) === -1) {
+            primarySectionNumbers.push(sectionNumber);
+          }
+        }
+      }
       var courseInfo = {
-        'sectionNumbers[]': sectionNumbers,
+        'sectionNumbers[]': primarySectionNumbers,
         'department': course.dept,
         'courseCatalog': course.courseCatalog,
         'slug': semester.slug
