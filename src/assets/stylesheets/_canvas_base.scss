@@ -68,7 +68,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 // Form Elements
 // https://ucberkeley.instructure.com/styleguide#forms
 .bc-form-input-text,
-.bc-canvas-embedded .cc-page-roster .cc-roster-search .cc-roster-input {
+.bc-canvas-embedded .bc-canvas-embedded-roster-input {
   font-family: $bc-base-font-family;
   font-size: 14px;
   font-weight: normal;
@@ -80,7 +80,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .bc-form-input-select,
-.bc-canvas-embedded .cc-page-roster .cc-roster-search .cc-roster-select {
+.bc-canvas-embedded .bc-canvas-embedded-roster-select {
   -moz-appearance: none;
   -webkit-appearance: none;
   background: url('../images/canvas/select-menu-arrow-down.svg') no-repeat calc(100% - 8px) 50% $cc-color-white;
