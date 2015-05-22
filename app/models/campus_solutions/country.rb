@@ -7,7 +7,7 @@ module CampusSolutions
     end
 
     def xml_filename
-      'cs_country.xml'
+      'country.xml'
     end
 
     def build_feed(response)

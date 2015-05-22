@@ -7,7 +7,7 @@ module CampusSolutions
     end
 
     def xml_filename
-      'cs_checklist_feed.xml'
+      'checklist.xml'
     end
 
     def build_feed(response)
