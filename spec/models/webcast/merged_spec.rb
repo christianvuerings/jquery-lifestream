@@ -1,8 +1,7 @@
 describe Webcast::Merged do
 
-  let(:options) { {:fake => true} }
-
-  context '#authenticated' do
+  context 'a fake proxy' do
+    let(:options) { {:fake => true} }
 
     context 'no matching course' do
       let(:feed) do
@@ -77,4 +76,23 @@ describe Webcast::Merged do
     end
 
   end
+
+  context 'a real, non-fake proxy', :testext => true do
+    context 'course with zero recordings is different than course not scheduled for recordings' do
+      let(:feed) do
+        Webcast::Merged.new(2015, 'B', [1, 58301, 56745]).get_feed
+      end
+      it 'identifies course that is scheduled for recordings' do
+        non_existent = feed[:media]['2015-B-1']
+        recordings_planned = feed[:media]['2015-B-58301']
+        recordings_exist = feed[:media]['2015-B-56745']
+        expect(non_existent).to eq Webcast::Recordings::ERRORS
+        expect(recordings_planned[:videos]).to be_empty
+        expect(recordings_planned[:body]).to be_nil
+        expect(recordings_exist[:videos]).to have_at_least(10).items
+        expect(recordings_exist[:body]).to be_nil
+      end
+    end
+  end
+
 end

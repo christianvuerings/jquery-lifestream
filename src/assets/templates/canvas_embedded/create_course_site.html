@@ -117,15 +117,15 @@
                 <form data-ng-submit="showConfirmation()" class="bc-canvas-page-form">
 
                   <ul class="bc-page-create-course-site-section-margin">
-                    <li data-ng-repeat="course in coursesList" class="bc-page-create-course-site-form-course">
+                    <li data-ng-repeat="course in coursesList" class="bc-sections-course-container bc-sections-course-container-bottom-margin">
 
                       <button type="button" class="cc-button-link bc-page-create-course-site-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}" aria-label="Toggle course sections list for {{course.course_code}} {{course.title}}">
-                        <i class="fa cc-left bc-page-create-course-site-form-collapse-icon"
+                        <i class="fa cc-left bc-sections-triangle-icon"
                           data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
-                        <strong class="bc-page-create-course-site-form-course-title">
+                        <h3 class="bc-sections-course-title">
                           <span data-ng-bind="course.course_code"></span>
                           <span data-ng-if="course.title" data-ng-bind-template=" : {{course.title}}"></span>
-                        </strong>
+                        </h3>
                         <span data-ng-if="course.sections">
                           (<span data-ng-pluralize count="course.sections.length" when="{'one': '1 section', 'other': '{{course.sections.length}} sections'}"></span>)
                         </span>

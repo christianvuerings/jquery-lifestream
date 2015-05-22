@@ -30,6 +30,5 @@
 
     loadAuthorizations();
     apiService.util.iframeScrollToTop();
-    apiService.util.iframeUpdateHeight();
   });
 })(window.angular);

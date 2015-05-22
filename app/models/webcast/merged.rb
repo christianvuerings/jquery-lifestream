@@ -21,9 +21,6 @@ module Webcast
         :audio => merge(course, :audio),
         :itunes => merge_itunes(course)
       }
-      if merged_feeds[:videos].empty? && merged_feeds[:audio].empty?
-        merged_feeds.merge! Webcast::Recordings::ERRORS
-      end
       merged_feeds
     end
 
