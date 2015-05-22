@@ -5,6 +5,16 @@
   }
 }
 
+.cc-roster-input {
+  background: $cc-color-white;
+  border: 1px solid $cc-color-button-border;
+  border-radius: 5px;
+  font-size: 12px;
+  margin: 0 15px 0 0;
+  padding: 4px 10px 5px 4px;
+  width: 200px;
+}
+
 .cc-page-roster {
   background: $cc-color-white;
   overflow: hidden;
@@ -26,15 +36,6 @@
       margin: 0 5px;
     }
 
-    .cc-roster-input {
-      background: $cc-color-white;
-      border: 1px solid $cc-color-button-border;
-      border-radius: 5px;
-      font-size: 12px;
-      margin: 0 15px 0 0;
-      padding: 4px 10px 5px 4px;
-      width: 200px;
-    }
     .cc-select {
       width: 200px;
     }
