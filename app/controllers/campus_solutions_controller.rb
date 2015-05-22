@@ -6,4 +6,8 @@ class CampusSolutionsController < ApplicationController
     render json: CampusSolutions::Country.new.get
   end
 
+  def state
+    render json: CampusSolutions::State.new.get
+  end
+
 end

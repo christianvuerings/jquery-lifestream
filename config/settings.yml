@@ -364,7 +364,7 @@ cs_budget_proxy:
   username: secret
   password: secret
 
-cs_country_proxy:
+cs_lookups_proxy:
   fake: true
   base_url: 'http://sis-demo-02.is.berkeley.edu'
   username: secret

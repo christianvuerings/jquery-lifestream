@@ -131,6 +131,7 @@ Calcentral::Application.routes.draw do
 
   # Campus Solutions general purpose endpoints
   get '/api/campus_solutions/country' => 'campus_solutions#country', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/state' => 'campus_solutions#state', :via => :get, :defaults => { :format => 'json' }
 
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true
