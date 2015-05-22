@@ -1,7 +1,3 @@
-.bc-main {
-  background-color: $bc-color-white;
-}
-
 // Canvas Typography
 $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
@@ -68,7 +64,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 // Form Elements
 // https://ucberkeley.instructure.com/styleguide#forms
 .bc-form-input-text,
-.bc-canvas-embedded .cc-page-roster .cc-roster-search .cc-roster-input {
+.bc-canvas-embedded .bc-canvas-embedded-roster-input {
   font-family: $bc-base-font-family;
   font-size: 14px;
   font-weight: normal;
@@ -80,7 +76,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .bc-form-input-select,
-.bc-canvas-embedded .cc-page-roster .cc-roster-search .cc-roster-select {
+.bc-canvas-embedded .bc-canvas-embedded-roster-select {
   -moz-appearance: none;
   -webkit-appearance: none;
   background: url('../images/canvas/select-menu-arrow-down.svg') no-repeat calc(100% - 8px) 50% $cc-color-white;
@@ -104,8 +100,8 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .bc-form-actions {
-  background: $bc-color-roster-background;
-  border: 1px solid $bc-color-roster-background;
+  background: $bc-color-container-grey-background;
+  border: 1px solid $bc-color-container-grey-border;
   padding: 10px 5px;
   text-align: right;
 }
@@ -397,11 +393,36 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin: 10px 26px 0;
 }
 
-
 // Styling for Sections Form used by Course Provisioning and Official Sections LTI tools
+
+.bc-sections-course-container {
+  background: $bc-color-container-grey-background;
+  border: 1px solid $bc-color-container-grey-border;
+  border-radius: 3px;
+  padding: 9px;
+}
+
+.bc-sections-course-container-bottom-margin {
+  margin: 0 0 20px;
+}
+
+.bc-sections-triangle-icon {
+  font-size: 13px;
+  margin: 4px 5px 0 2px;
+}
+
+.bc-sections-course-title {
+  display: inline;
+  font-size: 15px;
+  font-weight: bold;
+  width: 100%;
+}
+
 .bc-template-sections-table-container {
 
   .bc-template-sections-table {
+    border: 1px solid $bc-color-container-grey-border;
+    border-radius: 3px;
     border-spacing: 0;
     margin: 0;
     width: 100%;
@@ -412,7 +433,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     tbody tr:last-child td {
-      border-bottom: $bc-color-grey-border-table-bottom solid 1px;
+      border-bottom: $bc-color-item-group-item-border solid 1px;
       vertical-align: top;
     }
 
@@ -436,13 +457,13 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     .bc-template-sections-table-cell-section-action-option {
       height: 45px;
       text-align: right;
-      width: 85px;
+      width: 88px;
     }
 
     .bc-template-sections-table-button {
       font-size: 12px;
       margin: 0;
-      padding: 2px 4px;
+      padding: 2px 8px;
     }
 
     .bc-template-sections-table-button-undo-add {
@@ -470,6 +491,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .bc-template-sections-table-cell-course-code {
+      font-size: 13px;
       width: 115px;
     }
 
@@ -497,7 +519,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .bc-template-sections-table-cell-section-instructors {
-      width: 190px;
+      width: 187px;
     }
 
     .bc-template-sections-table-cell-section-label-label {

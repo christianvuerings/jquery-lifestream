@@ -28,7 +28,7 @@ describe Webcast::CourseMedia do
     context 'when proxy error message is not blank' do
       before do
         proxy_error_hash = {:proxy_error_message => 'Proxy Error'}
-        subject.should_receive(:get_playlist_hash).and_return proxy_error_hash
+        subject.should_receive(:get_media_hash).and_return proxy_error_hash
       end
       it 'should return the proxy error message' do
         response = subject.get_feed
@@ -97,13 +97,12 @@ describe Webcast::CourseMedia do
     end
   end
 
-  context 'with non-fake proxy' do
-
+  context 'with non-fake proxy', :testext => true do
     context 'when serving multiple sets of Webcast recordings' do
       let (:playlist_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/webcast.json" }
       subject { Webcast::CourseMedia.new(2014, 'B', [7502, 11147, 1]) }
 
-      context 'normal return of real data', :testext => true do
+      context 'normal return of real data' do
         it 'should return correct recordings' do
           result = subject.get_feed['2014-B-11147']
           expect(result[:videos]).to be_an_instance_of Array

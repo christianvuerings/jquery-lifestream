@@ -20,10 +20,12 @@ module Webcast
     def request_internal
       audio_items = []
       if Settings.features.audio && @audio_rss.present?
-        response = get_response @audio_rss
-        if response
-          audio_items = filter_audio response unless response.code == 404
+        begin
+          response = get_response @audio_rss
           logger.debug "Remote server status #{response.code}, Body = #{response.body}"
+          audio_items = filter_audio response if response && response.code < 400
+        rescue => e
+          logger.error "HTTP GET of Webcast audio RSS (#{@audio_rss}) failed: #{e.to_s}"
         end
       end
       {
