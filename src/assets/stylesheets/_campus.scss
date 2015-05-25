@@ -1,27 +1,9 @@
 .cc-page-campus {
   overflow: hidden;
-  h1 {
-    line-height: .9em;
-    margin-left: 0;
-    margin-top: 0;
-  }
   .cc-widget {
     width: 40%;
   }
-  ul {
-    margin: 10px 0;
-    padding-left: 0;
-    a {
-      display: block;
-    }
-  }
-  .cc-page-campus-content-explanation {
-    max-width: 400px;
-  }
   @media #{$small-only} {
-    h1 {
-      margin: 10px;
-    }
     .cc-widget {
       width: 100%;
     }
