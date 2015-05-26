@@ -16,8 +16,8 @@
 
       <div data-ng-show="jobStatusMessage !== ''" class="bc-notice-box bc-radius" data-ng-class="{'bc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'bc-notice-success':(lastJobStatus === 'sectionEditsCompleted')}" id="bc-page-course-official-sections-job-status-notice" data-ng-attr-aria-hidden="{{jobStatusMessage === ''}}">
         <span data-ng-bind="jobStatusMessage"></span>
-        <div class="cc-notice-close-button">
-          <button class="fa fa-times-circle button cc-close-button small" data-ng-click="jobStatusMessage=''" aria-controls="bc-page-course-official-sections-job-status-notice">
+        <div class="bc-notice-close-button">
+          <button class="fa fa-times-circle bc-close-button" data-ng-click="jobStatusMessage=''" aria-controls="bc-page-course-official-sections-job-status-notice">
             <span class="cc-visuallyhidden">Close Notice</span>
           </button>
         </div>
@@ -115,7 +115,7 @@
           <div class="bc-sections-course-container-bottom-margin" data-ng-repeat="course in courseSemester.classes">
 
             <div class="bc-sections-course-container">
-              <button type="button" class="cc-button-link bc-page-course-official-sections-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
+              <button type="button" class="bc-button-link bc-page-course-official-sections-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}">
                 <i class="fa cc-left bc-sections-triangle-icon"
                   data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
                 <h3 class="bc-sections-course-title">
@@ -129,7 +129,7 @@
 
               <div data-ng-attr-id="{{course.course_id}}" class="bc-page-course-official-sections-form-collapsible-container" data-ng-if="!course.collapsed" data-ng-attr-aria-expanded="{{!course.collapsed}}" role="region">
                 <div class="bc-page-course-official-sections-form-select-all-option" data-ng-if="course.sections.length > 1">
-                  <button class="cc-button-link bc-page-course-official-sections-form-select-all-option-button" type="button" data-ng-click="addAllSections(course)" data-ng-if="!allSectionsAdded(course)" aria-label="Add all sections for this course to the list of sections to be added">Add All</button>
+                  <button class="bc-button-link bc-page-course-official-sections-form-select-all-option-button" type="button" data-ng-click="addAllSections(course)" data-ng-if="!allSectionsAdded(course)" aria-label="Add all sections for this course to the list of sections to be added">Add All</button>
                   <span data-ng-if="allSectionsAdded(course)">All Added</span>
                 </div>
 

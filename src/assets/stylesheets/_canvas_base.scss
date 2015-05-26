@@ -325,13 +325,20 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: bold;
   margin-bottom: 8px;
   padding: 10px;
+
   .bc-close-button {
     background-color: transparent;
-    font-size: 20px;
-    &:hover {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    &, &:hover {
+      color: $bc-color-success-foreground;
+      font-family: FontAwesome;
+      font-size: 20px;
       text-decoration: none;
     }
   }
+
   .bc-notice-close-button {
     display: inline-block;
     float: right;
