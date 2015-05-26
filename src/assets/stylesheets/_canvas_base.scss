@@ -106,6 +106,49 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-align: right;
 }
 
+.bc-buttonset {
+  margin: 10px 0;
+
+  .bc-buttonset-button {
+    -webkit-user-select: none;
+    background: $bc-color-feature-icon-box-background;
+    color: $bc-color-off-black;
+    border: 1px solid $bc-color-buttonset-border;
+    border-radius: 0;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: -5px;
+    overflow: hidden;
+    position: relative;
+    padding: 8px 14px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: none;
+    transition: background-color 0.2s ease-in-out;
+    vertical-align: middle;
+  }
+
+  .bc-buttonset-button-active {
+    background: $bc-color-buttonset-active-background;
+    border-color: $bc-color-buttonset-active-border;
+    color: $bc-color-white;
+  }
+
+  .bc-buttonset-corner-right {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+  }
+
+  .bc-buttonset-corner-left {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
+}
+
 // Tables
 // https://canvas.instructure.com/styleguide#tables
 .bc-table {
@@ -227,7 +270,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     margin-top: 5px;
   }
   p {
-    color: $bc-color-grey-text;
+    color: $bc-color-off-black;
     font-size: 15px;
     margin: 0 10px 10px 0;
   }
@@ -303,7 +346,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .bc-notice-text-header {
-  color: $bc-color-grey-text;
+  color: $bc-color-off-black;
   font-size: 16px;
   font-weight: 500;
   line-height: 20px;

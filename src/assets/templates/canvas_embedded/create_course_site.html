@@ -31,17 +31,20 @@
         <div data-ng-if="admin_semesters && admin_semesters.length > 0">
           <div class="row collapse">
             <div class="medium-5 columns">
-              <ul role="tablist">
-                <li class="bc-page-create-course-site-term-button-element" data-ng-repeat="semester in admin_semesters">
-                  <button class="bc-canvas-button bc-page-create-course-site-term-button"
-                          data-ng-click="switchAdminSemester(semester)"
-                          data-ng-class="{'bc-canvas-button-primary bc-canvas-button-selected':(currentAdminSemester==semester.slug)}"
-                          aria-selected="{{currentAdminSemester==semester.slug}}"
-                          role="tab"
-                          data-ng-bind="semester.name" aria-label="Select {{semester.name}} term">
-                  </button>
-                </li>
-              </ul>
+
+              <div class="bc-buttonset">
+                <span data-ng-repeat="semester in admin_semesters">
+                  <input type="radio" id="semester{{$index}}" name="adminSemester" class="cc-visuallyhidden"
+                    aria-selected="{{currentAdminSemester==semester.slug}}"
+                    data-ng-click="switchAdminSemester(semester)"
+                    role="tab">
+                  <label for="semester{{$index}}" class="bc-buttonset-button" role="button" aria-disabled="false"
+                    data-ng-class="{'bc-buttonset-button-active':(currentAdminSemester==semester.slug),'bc-buttonset-corner-left':($first),'bc-buttonset-corner-right':($last)}" aria-label="Select {{semester.name}} term">
+                    <span data-ng-bind="semester.name"></span>
+                  </label>
+                </span>
+              </div>
+
             </div>
           </div>
         </div>
@@ -75,17 +78,20 @@
 
                 <div class="medium-5 columns">
                   <div class="bc-page-create-course-site-step-indent">
-                    <ul role="tablist">
-                      <li class="bc-page-create-course-site-term-button-element" data-ng-repeat="semester in teachingSemesters">
-                        <button class="bc-canvas-button bc-page-create-course-site-term-button"
-                                data-ng-click="switchSemester(semester)"
-                                data-ng-class="{'bc-canvas-button-primary bc-canvas-button-selected':(currentSemester==semester.slug)}"
-                                aria-selected="{{currentSemester==semester.slug}}"
-                                role="tab"
-                                data-ng-bind="semester.name" aria-label="Load sections for {{semester.name}} term">
-                        </button>
-                      </li>
-                    </ul>
+
+                    <div class="bc-buttonset">
+                      <span data-ng-repeat="semester in teachingSemesters">
+                        <input type="radio" id="semester{{$index}}" name="semester" class="cc-visuallyhidden"
+                          aria-selected="{{currentSemester==semester.slug}}"
+                          data-ng-click="switchSemester(semester)"
+                          role="tab">
+                        <label for="semester{{$index}}" class="bc-buttonset-button" role="button" aria-disabled="false"
+                          data-ng-class="{'bc-buttonset-button-active':(currentSemester==semester.slug),'bc-buttonset-corner-left':($first),'bc-buttonset-corner-right':($last)}" aria-label="Load sections for {{semester.name}} term">
+                          <span data-ng-bind="semester.name"></span>
+                        </label>
+                      </span>
+                    </div>
+
                   </div>
                 </div>
               </div>

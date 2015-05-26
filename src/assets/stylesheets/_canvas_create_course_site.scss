@@ -101,8 +101,7 @@
   }
 
   .bc-page-create-course-site-select-sections {
-    border-top: 1px solid $bc-color-top-border;
-    padding: 10px 0;
+    padding: 0;
   }
 
   .bc-page-create-course-site-step-indent {
@@ -115,16 +114,6 @@
 
   .bc-page-create-course-site-success-intro {
     margin: 15px 0 0;
-  }
-
-  .bc-page-create-course-site-term-button {
-    width: 135px;
-  }
-
-  .bc-page-create-course-site-term-button-element {
-    float: left;
-    margin-bottom: 5px;
-    width: 140px;
   }
 
   // Form with Expandable Courses & Sections
