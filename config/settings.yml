@@ -370,6 +370,12 @@ cs_lookups_proxy:
   username: secret
   password: secret
 
+cs_address_proxy:
+  fake: true
+  base_url: 'http://sis-demo-02.is.berkeley.edu'
+  username: secret
+  password: secret
+
 slate_checklist_proxy:
   fake: true
   base_url: 'https://ucb.test.technolutions.net/manage/query/process?id=3c37bfd5-a42d-42d7-9f66-86dd87d41b7f&h=df64a234-1365-6a1a-0084-685307371123&output=raw.xml'

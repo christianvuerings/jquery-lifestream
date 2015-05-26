@@ -1,0 +1,82 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "states": [
+      {
+        "COUNTRY": "CAN",
+        "STATE": "AB",
+        "DESCR": "Alberta"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "BC",
+        "DESCR": "British Columbia"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "MB",
+        "DESCR": "Manitoba"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "NB",
+        "DESCR": "New Brunswick"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "NF",
+        "DESCR": "Newfoundland (NF)"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "NL",
+        "DESCR": "Newfoundland (NL)"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "NN",
+        "DESCR": "Nunavut (NN)"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "NS",
+        "DESCR": "Nova Scotia"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "NT",
+        "DESCR": "Northwest Territories"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "NU",
+        "DESCR": "Nunavut (NU)"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "ON",
+        "DESCR": "Ontario"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "PE",
+        "DESCR": "Prince Edward Island"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "QC",
+        "DESCR": "Quebec"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "SK",
+        "DESCR": "Saskatchewan"
+      },
+      {
+        "COUNTRY": "CAN",
+        "STATE": "YT",
+        "DESCR": "Yukon"
+      }
+    ]
+  }
+}
