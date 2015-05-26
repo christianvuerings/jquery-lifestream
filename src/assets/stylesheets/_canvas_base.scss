@@ -31,13 +31,19 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   form input,
   form input[type="text"],
   form input[type="number"],
-  form input[type="password"],
-  button {
+  form input[type="password"] {
     &, &:hover, &:focus {
+      border-radius: 3px;
       font-family: $bc-base-font-family;
       font-size: 14px;
       font-weight: 300;
     }
+  }
+
+  button {
+    font-family: $bc-base-font-family;
+    font-size: 14px;
+    font-weight: 400;
   }
 
   form label {
