@@ -50,4 +50,16 @@ describe CampusSolutionsController do
     end
   end
 
+  context 'address feed' do
+    let(:feed) { :address }
+    context 'non-authenticated user' do
+      it_behaves_like 'an empty feed'
+    end
+
+    context 'authenticated user' do
+      let(:user) { @user_id }
+      let(:feed_key) { 'addresses' }
+      it_behaves_like 'a successful feed'
+    end
+  end
 end
