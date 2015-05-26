@@ -174,41 +174,46 @@
             </ul>
           </div>
 
-          <form name="createCourseSiteForm" data-ng-submit="createCourseSiteJob()" class="bc-canvas-page-form bc-page-create-course-site-site-labels-form">
+          <form name="createCourseSiteForm" data-ng-submit="createCourseSiteJob()" class="bc-canvas-page-form">
             <div class="row">
               <div class="medium-6">
 
-                <div class="row">
-                  <div class="medium-offset-1 medium-3 columns">
-                    <label for="siteName" class="right">Site Name:</label>
-                  </div>
-                  <div class="medium-8 columns">
-                    <input type="text" name="siteName" id="siteName" data-ng-model="siteName" data-ng-required="true">
-                    <div data-ng-if="createCourseSiteForm.siteName.$error.required" class="bc-notice-box bc-notice-error bc-radius">
-                      <i class="cc-left fa fa-exclamation-circle cc-icon-red bc-canvas-notice-icon"></i>
-                      Please fill out a site name.
+                <div class="bc-page-create-course-site-form-fields-container">
+                  <div class="row">
+                    <div class="medium-offset-1 medium-4 columns">
+                      <label for="siteName" class="right">Site Name:</label>
+                    </div>
+                    <div class="medium-7 columns">
+                      <input type="text" name="siteName" id="siteName" data-ng-model="siteName" data-ng-required="true">
+                      <div data-ng-if="createCourseSiteForm.siteName.$error.required" class="bc-notice-box bc-notice-error bc-radius">
+                        <i class="cc-left fa fa-exclamation-circle cc-icon-red bc-canvas-notice-icon"></i>
+                        Please fill out a site name.
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="medium-offset-1 medium-3 columns">
-                    <label for="siteAbbreviation" class="right">Site Abbreviation:</label>
-                  </div>
-                  <div class="medium-8 columns">
-                    <input type="text" id="siteAbbreviation" data-ng-model="siteAbbreviation">
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="medium-offset-4 medium-8 columns">
-                    <button data-ng-disabled="createCourseSiteForm.$invalid" class="bc-canvas-button bc-canvas-button-primary" type="submit"
-                    role="button" aria-label="Create Course Site" aria-controls="bc-page-create-course-site-monitor-step">Create Course Site</button>
-                    <button class="bc-canvas-button" type="button" data-ng-click="showSelecting()">Go Back</button>
+                  <div class="row">
+                    <div class="medium-offset-1 medium-4 columns">
+                      <label for="siteAbbreviation" class="right">Site Abbreviation:</label>
+                    </div>
+                    <div class="medium-7 columns">
+                      <input type="text" id="siteAbbreviation" data-ng-model="siteAbbreviation">
+                    </div>
                   </div>
                 </div>
 
               </div>
             </div>
+
+            <div class="row">
+              <div class="medium-12 columns">
+                <div class="bc-form-actions">
+                  <button class="bc-canvas-button" type="button" data-ng-click="showSelecting()">Go Back</button>
+                  <button data-ng-disabled="createCourseSiteForm.$invalid" class="bc-canvas-button bc-canvas-button-primary" type="submit"
+                role="button" aria-label="Create Course Site" aria-controls="bc-page-create-course-site-monitor-step">Create Course Site</button>
+                </div>
+              </div>
+            </div>
+
 
           </form>
         </div>

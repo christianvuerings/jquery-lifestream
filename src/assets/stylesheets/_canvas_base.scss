@@ -103,6 +103,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background: $bc-color-container-grey-background;
   border: 1px solid $bc-color-container-grey-border;
   padding: 10px 5px;
+  margin: 5px 0;
   text-align: right;
 }
 
@@ -338,7 +339,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   border: 1px solid $bc-color-alert-background;
   border-radius: 3px;
   padding: 8px 35px 8px 14px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
