@@ -198,7 +198,7 @@ $.fn.lifestream.feeds.atom = function( config, callback ) {
 
   var template = $.extend({},
     {
-      posted: 'posted <a href="${link.href}">${title.content}</a>'
+      posted: 'posted <a href="${link.href}">${typeof title === "object" ? title.content : title}</a>'
     },
     config.template),
 
