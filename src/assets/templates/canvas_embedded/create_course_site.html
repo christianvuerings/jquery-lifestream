@@ -60,7 +60,9 @@
 
     <div>
 
-      <div data-ng-include src="'canvas_embedded/_shared/maintenance_notice.html'"></div>
+      <div data-ng-if="showMaintenanceNotice">
+        <div data-ng-include src="'canvas_embedded/_shared/maintenance_notice.html'"></div>
+      </div>
 
       <h1 class="bc-page-create-course-site-header bc-page-create-course-site-header1">Create a Course Site</h1>
 

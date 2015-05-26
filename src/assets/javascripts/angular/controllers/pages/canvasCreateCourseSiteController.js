@@ -11,6 +11,7 @@
     // initialize maintenance notice settings
     $scope.courseActionVerb = 'site is created';
     $scope.maintenanceCollapsed = true;
+    $scope.showMaintenanceNotice = true;
 
     $scope.accessDeniedError = 'This feature is currently only available to instructors with course sections scheduled in the current or upcoming terms.';
     $scope.linkToSiteOverview = canvasSiteCreationService.linkToSiteOverview($route.current.isEmbedded);
@@ -69,6 +70,7 @@
       delete $scope.jobStatus;
       delete $scope.completed_steps;
       delete $scope.percent_complete;
+      $scope.showMaintenanceNotice = true;
     };
 
     var selectAllSections = function() {
@@ -111,6 +113,7 @@
       if ($scope.createCourseSiteForm.$invalid) {
         return;
       }
+      $scope.showMaintenanceNotice = false;
       setErrorText();
       var ccns = selectedCcns();
       if (ccns.length > 0) {
