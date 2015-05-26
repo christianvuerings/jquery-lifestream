@@ -24,10 +24,10 @@ module Finaid
 
     def gather_aid_years(feed)
       aid_years = {}
-      award_details = feed['SFA_GET_STUDENT_AWARDS_RESP']['STUDENT_AWARD_SUMMARY']['STUDENT_AWARD_DETAIL']
+      award_details = feed[:sfaGetStudentAwardsResp][:studentAwardSummary][:studentAwardDetail]
       award_details.each do |award_detail|
-        year = award_detail['AID_YEAR']
-        type = award_detail['FIN_AID_TYPE_LOVDescr']
+        year = award_detail[:aidYear]
+        type = award_detail[:finAidTypeLovdescr]
         aid_years[year] ||= {}
         this_year = aid_years[year]
         this_year[:categories] ||= {}
@@ -36,11 +36,11 @@ module Finaid
           items: []
         }
         this_item = {
-          title: award_detail['ITEM_TYPE_LOVDescr'],
-          amount: award_detail['OFFER_BALANCE'].to_i,
-          amountAccepted: award_detail['ACCEPT_BALANCE'].to_i,
-          type: award_detail['FIN_AID_TYPE_LOVDescr'],
-          status: award_detail['SFA_AWARD_STATUS_LOVDescr']
+          title: award_detail[:itemTypeLovdescr],
+          amount: award_detail[:offerBalance].to_i,
+          amountAccepted: award_detail[:acceptBalance].to_i,
+          type: award_detail[:finAidTypeLovdescr],
+          status: award_detail[:sfaAwardStatusLovdescr]
         }
         this_year[:categories][type][:items] << this_item
         find_terms_for_aid_year(award_detail, this_year)
@@ -51,20 +51,20 @@ module Finaid
     end
 
     def find_terms_for_aid_year(award_detail, this_year)
-      return if award_detail['STUDENT_TERM_DETAIL'].blank?
+      return if award_detail[:studentTermDetail].blank?
       first_term = {
         id: 0,
         year: nil,
         term: nil
       }
       last_term = first_term
-      details = award_detail['STUDENT_TERM_DETAIL'].is_a?(Array) ? award_detail['STUDENT_TERM_DETAIL'] : [award_detail['STUDENT_TERM_DETAIL'].clone]
+      details = award_detail[:studentTermDetail].is_a?(Array) ? award_detail[:studentTermDetail] : [award_detail[:studentTermDetail].clone]
       details.each do |term_detail|
-        next if term_detail['STRM'].blank? || term_detail['STRM_LOVDescr'].blank?
+        next if term_detail[:strm].blank? || term_detail[:strmLovdescr].blank?
         this_term = {
-          id: term_detail['STRM'].to_i,
-          year: term_detail['STRM_LOVDescr'].split[0],
-          term: term_detail['STRM_LOVDescr'].split[1]
+          id: term_detail[:strm].to_i,
+          year: term_detail[:strmLovdescr].split[0],
+          term: term_detail[:strmLovdescr].split[1]
         }
         logger.debug "Processing term detail #{this_term.inspect}"
         if last_term[:id] == 0 || this_term[:id] > last_term[:id]

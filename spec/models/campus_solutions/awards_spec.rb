@@ -9,8 +9,7 @@ describe CampusSolutions::Awards do
     let(:feed) { fake_proxy.get[:feed] }
 
     it 'returns JSON fixture data by default' do
-      p "feed = #{feed.inspect}"
-      expect(feed['SFA_GET_STUDENT_AWARDS_RESP']).to be
+      expect(feed[:sfaGetStudentAwardsResp]).to be
     end
 
     it 'can be overridden to return errors' do
