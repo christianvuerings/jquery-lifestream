@@ -62,14 +62,9 @@
     }
   }
 
-  .bc-page-create-course-site-confirmation {
-    background: linear-gradient($bc-color-notice-yellow-bg-gradient1, $bc-color-notice-yellow-bg-gradient2);
-    border-radius: 5px;
-    padding: 20px;
-    .bc-page-create-course-site-section-list {
-      list-style-type: disc;
-      margin: 10px 0 0 39px;
-    }
+  .bc-page-create-course-site-section-list {
+    list-style-type: disc;
+    margin: 10px 0 0 39px;
   }
 
   .bc-page-create-course-site-help-notice {

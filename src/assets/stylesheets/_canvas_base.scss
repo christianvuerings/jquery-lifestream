@@ -332,7 +332,22 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 }
 
-// Notices
+// Alerts / Notices
+.bc-alert {
+  background-color: $bc-color-alert-border;
+  border: 1px solid $bc-color-alert-background;
+  border-radius: 3px;
+  padding: 8px 35px 8px 14px;
+  margin-bottom: 20px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.bc-alert-info {
+  background-color: $bc-color-alert-info-background;
+  border-color: $bc-color-alert-info-border;
+  color: $bc-color-alert-info-foreground;
+}
+
 .bc-notice-text-container {
   line-height: 18px;
   margin-left: 52px;
@@ -399,8 +414,8 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .bc-notice-warning {
-  background-color: $bc-color-warning-background;
-  border: 1px solid $bc-color-warning-border;
+  background-color: $bc-color-alert-background;
+  border: 1px solid $bc-color-alert-border;
   color: $bc-color-warning-foreground;
 }
 

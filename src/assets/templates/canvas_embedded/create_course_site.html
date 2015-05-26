@@ -151,7 +151,7 @@
                   <a data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button" type="reset" aria-label="Cancel and return to Site Creation Overview">Cancel</a>
                   <button class="bc-canvas-button bc-canvas-button-primary"
                     type="submit" data-ng-disabled="selectedSectionsList.length == 0" aria-controls="bc-page-create-course-site-confirmation-step"
-                    aria-label="Continue to confirm selected sections and provide course name" role="button">Next &gt;&gt;</button>
+                    aria-label="Continue to confirm selected sections and provide course name" role="button">Next</button>
                 </div>
 
               </form>
@@ -160,7 +160,7 @@
         </div>
 
         <div id="bc-page-create-course-site-confirmation-step" data-ng-show="currentWorkflowStep === 'confirmation'" data-ng-aria-expanded="{{currentWorkflowStep === 'confirmation'}}" role="region">
-          <div class="bc-page-create-course-site-confirmation">
+          <div class="bc-alert bc-alert-info">
             <div data-ng-if="selectedSections(coursesList).length === 1" aria-live="polite" region="alert">
               <strong>You are about to create 1 course site with 1 section:</strong>
             </div>
