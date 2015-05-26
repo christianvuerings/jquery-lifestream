@@ -40,7 +40,7 @@ module CampusSolutions
       end
       {
         statusCode: response.code,
-        feed: feed
+        feed: HashConverter.downcase_and_camelize(feed)
       }
     end
 

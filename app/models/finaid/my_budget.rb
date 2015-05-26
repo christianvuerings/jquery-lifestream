@@ -24,12 +24,14 @@ module Finaid
     def gather_aid_years(feed)
       aid_years = []
       this_year = {}
-      budget_details = feed['UC_STDNT_BUD_DTL_RESP']['UC_STDNT_BUD_DTL']
+
+      p "myfeed = #{feed}"
+      budget_details = feed[:ucStdntBudDtlResp][:ucStdntBudDtl]
       budget_details.each do |budget_detail|
         this_year[:items] ||= []
         this_year[:items] << {
-          title: budget_detail['BGT_ITEM_CATEGORY_DESCR'],
-          amount: budget_detail['BUDGET_ITEM_AMOUNT'].to_i
+          title: budget_detail[:bgtItemCategoryDescr],
+          amount: budget_detail[:budgetItemAmount].to_i
         }
       end
       aid_years << this_year
@@ -47,11 +49,11 @@ module Finaid
       last_term = first_term
       details = budget_details.is_a?(Array) ? budget_details : [budget_details.clone]
       details.each do |term_detail|
-        next if term_detail['TERM'].blank? || term_detail['TERM_DESCR'].blank?
+        next if term_detail[:term].blank? || term_detail[:termDescr].blank?
         this_term = {
-          id: term_detail['TERM'].to_i,
-          year: term_detail['TERM_DESCR'].split[0],
-          term: term_detail['TERM_DESCR'].split[1]
+          id: term_detail[:term].to_i,
+          year: term_detail[:termDescr].split[0],
+          term: term_detail[:termDescr].split[1]
         }
         logger.debug "Processing term detail #{this_term.inspect}"
         if last_term[:id] == 0 || this_term[:id] > last_term[:id]
