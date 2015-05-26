@@ -1,10 +1,68 @@
-(function(angular) {
+(function(angular, _) {
   'use strict';
 
   /**
-   * Photo controller
+   * Profile controller
    */
-  angular.module('calcentral.controllers').controller('ProfileController', function($scope) {
-    $scope.profilePictureLoading = true;
+  angular.module('calcentral.controllers').controller('ProfileController', function(apiService, $routeParams, $scope) {
+    var navigation = [{
+      'label': 'Profile',
+      'categories': [{
+        'id': 'basic',
+        'name': 'Basic Information'
+      },{
+        'id': 'contact',
+        'name': 'Contact Information'
+      },{
+        'id': 'academic',
+        'name': 'Academic Information'
+      }]
+    }];
+
+    /**
+     * Find the category object when we get a categoryId back
+     */
+    var findCategory = function(categoryId) {
+      return _.find(navigation[0].categories, function(category) {
+        return category.id === categoryId;
+      });
+    };
+
+    /**
+     * Get the category depending on the routeParam
+     */
+    var getCurrentCategory = function() {
+      if ($routeParams.category) {
+        return findCategory($routeParams.category);
+      } else {
+        return navigation[0].categories[0];
+      }
+    };
+
+    /**
+     * Set the page title
+     */
+    var setPageTitle = function() {
+      var title = $scope.header + ' - ' + $scope.currentCategory.name;
+      apiService.util.setTitle(title);
+    };
+
+    var init = function() {
+      var currentCategory = getCurrentCategory();
+
+      // If no category was found, redirect to the 404 page
+      if (!currentCategory) {
+        apiService.util.redirect('404');
+        return false;
+      }
+
+      $scope.header = navigation[0].label;
+      $scope.currentCategory = currentCategory;
+      $scope.navigation = navigation;
+
+      setPageTitle();
+    };
+
+    init();
   });
-})(window.angular);
+})(window.angular, window._);
