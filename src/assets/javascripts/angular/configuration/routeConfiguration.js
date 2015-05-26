@@ -57,6 +57,10 @@
       templateUrl: 'finaid.html',
       controller: 'MyFinancesController'
     }).
+    when('/profile/:category?', {
+      templateUrl: 'profile.html',
+      controller: 'ProfileController'
+    }).
     when('/settings', {
       templateUrl: 'settings.html',
       controller: 'SettingsController'
