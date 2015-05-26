@@ -1,10 +1,5 @@
 module CampusSolutions
-  class Address < Proxy
-
-    def initialize(options = {})
-      super(Settings.cs_address_proxy, options)
-      initialize_mocks if @fake
-    end
+  class Address < DirectProxy
 
     def xml_filename
       'address.xml'
@@ -19,6 +14,10 @@ module CampusSolutions
         feed[:addresses] << address
       end
       feed
+    end
+
+    def url
+      "#{@settings.base_url}/UC_PER_ADDR_GET.v1/person/address/get/?EMPLID=00000176"
     end
 
   end

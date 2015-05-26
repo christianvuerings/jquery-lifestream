@@ -1,10 +1,5 @@
 module CampusSolutions
-  class State < Proxy
-
-    def initialize(options = {})
-      super(Settings.cs_lookups_proxy, options)
-      initialize_mocks if @fake
-    end
+  class State < DirectProxy
 
     def xml_filename
       'state.xml'
@@ -20,6 +15,10 @@ module CampusSolutions
         feed[:states] << state
       end
       feed
+    end
+
+    def url
+      "#{@settings.base_url}/UC_STATE_GET.v1/state/get"
     end
 
   end

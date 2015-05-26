@@ -1,0 +1,44 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "addresses": [
+      {
+        "emplid": "00000176",
+        "addressType": "ISIR",
+        "effdt": "2015-04-27",
+        "effStatus": "A",
+        "country": "USA",
+        "address1": "27763 Melbourne Avenue",
+        "address2": null,
+        "address3": null,
+        "address4": null,
+        "city": "Hayward",
+        "state": "CA",
+        "postal": "94545"
+      },
+      {
+        "emplid": "00000176",
+        "addressType": "LOCL",
+        "effdt": "2015-04-07",
+        "effStatus": "A",
+        "country": "USA",
+        "address1": "27763 Melbourne Avenue",
+        "address2": null,
+        "address3": null,
+        "address4": null,
+        "city": "Hayward",
+        "state": "CA",
+        "postal": "94545"
+      }
+    ]
+  },
+  "lastModified": {
+    "hash": "af8429674c029345bd14a3d6286e995a5cf0c468",
+    "timestamp": {
+      "epoch": 1432684117,
+      "dateTime": "2015-05-26T16:48:37-07:00",
+      "dateString": "5/26"
+    }
+  },
+  "feedName": "CampusSolutions::MyAddress"
+}
