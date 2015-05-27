@@ -7,10 +7,6 @@ module Webcast
       :proxy_error_message => 'There was a problem fetching the Webcast-related data'
     }
 
-    ERRORS = {
-      :video_error_message => 'No Webcast data found.'
-    }
-
     def initialize(options = {})
       super(Settings.webcast_proxy, options)
     end

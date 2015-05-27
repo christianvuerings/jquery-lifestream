@@ -176,7 +176,8 @@ describe Webcast::Merged do
         non_existent = spring_2015[1]
         recordings_planned = spring_2015[58301]
         recordings_exist = spring_2015[56745]
-        expect(non_existent).to eq Webcast::Recordings::ERRORS
+        expect(non_existent).to be_nil
+        expect(recordings_planned).not_to be_nil
         expect(recordings_planned[:videos]).to be_empty
         expect(recordings_planned[:body]).to be_nil
         expect(recordings_exist[:videos]).to have_at_least(10).items
