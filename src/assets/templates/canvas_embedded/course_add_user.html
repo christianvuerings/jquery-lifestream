@@ -7,9 +7,9 @@
   <div data-ng-hide="showError">
 
     <div class="row collapse" data-ng-show="showAlerts">
-      <div data-cc-spinner-directive class="bc-page-course-add-user-alerts-container">
+      <div data-cc-spinner-directive>
 
-        <div data-ng-show="noSearchTextAlert" class="bc-alert bc-alert-error">
+        <div data-ng-show="noSearchTextAlert" class="bc-alert bc-alert-error bc-page-course-add-user-alert">
           You did not enter any search terms. Please try again.
           <div class="bc-alert-close-button-container">
             <button class="fa fa-times-circle bc-close-button" data-ng-click="noSearchTextAlert=''">
@@ -18,7 +18,7 @@
           </div>
         </div>
 
-        <div data-ng-show="noUserSelectedAlert" class="bc-alert bc-alert-error">
+        <div data-ng-show="noUserSelectedAlert" class="bc-alert bc-alert-error bc-page-course-add-user-alert">
           Please select a user.
           <div class="bc-alert-close-button-container">
             <button class="fa fa-times-circle bc-close-button" data-ng-click="noUserSelectedAlert=''">
@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <div data-ng-show="noSearchResultsNotice" class="bc-alert bc-alert-error">
+        <div data-ng-show="noSearchResultsNotice" class="bc-alert bc-alert-error bc-page-course-add-user-alert">
           Your search did not match any users with a CalNet ID.
           <span data-ng-bind="searchTypeNotice"></span>
           Please try again.
@@ -38,13 +38,13 @@
           </div>
         </div>
 
-        <div data-ng-show="userSearchResultsCount > userSearchResults.length" class="bc-alert">
+        <div data-ng-show="userSearchResultsCount > userSearchResults.length" class="bc-alert bc-page-course-add-user-alert">
           Your search returned <span data-ng-bind="userSearchResultsCount"></span> results, but only the first
           <span data-ng-bind="userSearchResults.length"></span> are shown.
           Please refine your search to limit the number of results.
         </div>
 
-        <div data-ng-show="additionSuccessMessage" class="bc-alert bc-alert-success">
+        <div data-ng-show="additionSuccessMessage" class="bc-alert bc-alert-success bc-page-course-add-user-alert">
           <span data-ng-bind="userAdded.fullName"></span> was added to the
           &ldquo;<span data-ng-bind="userAdded.sectionName"></span>&rdquo; section of this course as a <span data-ng-bind="userAdded.roleName"></span>.
           <div class="bc-alert-close-button-container">
@@ -54,7 +54,7 @@
           </div>
         </div>
 
-        <div data-ng-show="additionFailureMessage" class="bc-alert bc-alert-error">
+        <div data-ng-show="additionFailureMessage" class="bc-alert bc-alert-error bc-page-course-add-user-alert">
           <i class="fa fa-exclamation-triangle cc-icon-red bc-canvas-notice-icon"></i>
           <span data-ng-bind="errorStatus"></span>
           <div class="bc-alert-close-button-container">
