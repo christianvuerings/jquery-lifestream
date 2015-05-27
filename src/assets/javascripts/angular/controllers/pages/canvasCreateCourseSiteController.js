@@ -113,6 +113,7 @@
       if ($scope.createCourseSiteForm.$invalid) {
         return;
       }
+      $scope.currentWorkflowStep = 'monitoring_job';
       $scope.showMaintenanceNotice = false;
       setErrorText();
       var ccns = selectedCcns();
