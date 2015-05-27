@@ -102,8 +102,8 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 .bc-form-actions {
   background: $bc-color-container-grey-background;
   border: 1px solid $bc-color-container-grey-border;
-  padding: 10px 5px;
   margin: 5px 0;
+  padding: 10px 5px;
   text-align: right;
 }
 
@@ -111,11 +111,10 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin: 10px 0;
 
   .bc-buttonset-button {
-    -webkit-user-select: none;
     background: $bc-color-feature-icon-box-background;
-    color: $bc-color-off-black;
     border: 1px solid $bc-color-buttonset-border;
     border-radius: 0;
+    color: $bc-color-off-black;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
@@ -124,12 +123,12 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     margin-left: 0;
     margin-right: -5px;
     overflow: hidden;
-    position: relative;
     padding: 8px 14px;
+    position: relative;
     text-align: center;
     text-decoration: none;
     text-shadow: none;
-    transition: background-color 0.2s ease-in-out;
+    transition: background-color .2s ease-in-out;
     vertical-align: middle;
   }
 
@@ -140,13 +139,13 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
   .bc-buttonset-corner-right {
-    border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
   }
 
   .bc-buttonset-corner-left {
-    border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
   }
 }
 
@@ -339,11 +338,11 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   border: 1px solid $bc-color-alert-border;
   border-radius: 3px;
   color: $bc-color-alert-foreground;
-  font-weight: normal;
   font-size: 14px;
-  padding: 8px 15px 8px 14px;
+  font-weight: normal;
   margin: 10px 0;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  padding: 8px 15px 8px 14px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 }
 
 .bc-notice-warning-button {
