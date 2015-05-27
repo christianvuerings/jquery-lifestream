@@ -30,14 +30,31 @@
         "state": "CA",
         "postal": "94545"
       }
-    ]
+    ],
+    "fields": {
+      "country": {
+        "fieldName": "country",
+        "campusSolutionsName": "COUNTRY",
+        "isRequired": true
+      },
+      "address1": {
+        "fieldName": "address1",
+        "campusSolutionsName": "ADDRESS1",
+        "isRequired": true
+      },
+      "address2": {
+        "fieldName": "address2",
+        "campusSolutionsName": "ADDRESS2",
+        "isRequired": false
+      }
+    }
   },
   "lastModified": {
-    "hash": "af8429674c029345bd14a3d6286e995a5cf0c468",
+    "hash": "14b95d287890dfa6b7d3b21335ce4333fac7eafc",
     "timestamp": {
-      "epoch": 1432684117,
-      "dateTime": "2015-05-26T16:48:37-07:00",
-      "dateString": "5/26"
+      "epoch": 1432743778,
+      "dateTime": "2015-05-27T09:22:58-07:00",
+      "dateString": "5/27"
     }
   },
   "feedName": "CampusSolutions::MyAddress"
