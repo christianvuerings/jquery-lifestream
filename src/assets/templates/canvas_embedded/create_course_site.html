@@ -187,7 +187,7 @@
                     </div>
                     <div class="medium-7 columns">
                       <input type="text" name="siteName" id="siteName" data-ng-model="siteName" data-ng-required="true">
-                      <div data-ng-if="createCourseSiteForm.siteName.$error.required" class="bc-notice-box bc-notice-error bc-radius">
+                      <div data-ng-if="createCourseSiteForm.siteName.$error.required" class="bc-alert bc-notice-error">
                         <i class="cc-left fa fa-exclamation-circle cc-icon-red bc-canvas-notice-icon"></i>
                         Please fill out a site name.
                       </div>
@@ -248,7 +248,7 @@
 
             <div data-ng-if="jobStatus === 'courseCreationCompleted'" data-ng-aria-expanded="{{jobStatus === 'courseCreationCompleted'}}" role="region">
 
-              <div class="bc-notice-box bc-notice-success bc-radius">
+              <div class="bc-alert bc-alert-success">
                 Success : <span data-ng-bind="course_site.short_name"></span> site created
                 <i class="cc-left fa fa-check-circle cc-icon-green bc-canvas-notice-icon"></i>
               </div>
@@ -273,7 +273,7 @@
     </div>
   </div>
 
-  <div data-ng-if="displayError" class="bc-notice-error-container">
+  <div data-ng-if="displayError" class="bc-alert-container">
     <div data-ng-include src="'canvas_embedded/_shared/canvas_errors.html'"></div>
   </div>
 

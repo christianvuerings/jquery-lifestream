@@ -101,7 +101,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .bc-form-fieldset {
-  margin: 0 0 15px;
+  margin: 0 0 20px;
   padding: 0;
 }
 
@@ -341,12 +341,22 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 // Alerts / Notices
 .bc-alert {
-  background-color: $bc-color-alert-border;
-  border: 1px solid $bc-color-alert-background;
+  background-color: $bc-color-alert-background;
+  border: 1px solid $bc-color-alert-border;
   border-radius: 3px;
-  padding: 8px 35px 8px 14px;
-  margin-bottom: 10px;
+  color: $bc-color-alert-foreground;
+  font-weight: normal;
+  font-size: 14px;
+  padding: 8px 15px 8px 14px;
+  margin: 10px 0;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.bc-notice-warning-button {
+  &, &:hover,&:focus {
+    color: $bc-color-alert-foreground;
+    text-decoration: none;
+  }
 }
 
 .bc-alert-info {
@@ -355,12 +365,28 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: $bc-color-alert-info-foreground;
 }
 
+.bc-alert-success {
+  background-color: $bc-color-alert-success-background;
+  border: 1px solid $bc-color-alert-success-border;
+  color: $bc-color-alert-success-foreground;
+}
+
+.bc-alert-error {
+  background-color: $bc-color-alert-error-background;
+  border: 1px solid $bc-color-alert-error-border;
+  color: $bc-color-alert-error-foreground;
+}
+
+.bc-alert-container {
+  margin: 10px 0;
+}
+
 .bc-notice-text-container {
   line-height: 18px;
   margin-left: 52px;
 }
 
-.bc-canvas-error-notice-icon {
+.bc-alert-error-icon {
   float: left;
   font-size: 38px;
   line-height: 45px;
@@ -381,15 +407,9 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin-right: 5px;
 }
 
-.bc-notice-box {
-  background-color: $bc-color-notice-default;
-  border: 0;
-  color: $bc-color-white;
-  display: block;
-  font-size: 13px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  padding: 10px;
+.bc-alert-close-button-container {
+  display: inline-block;
+  float: right;
 
   .bc-close-button {
     background-color: transparent;
@@ -403,51 +423,6 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
       text-decoration: none;
     }
   }
-
-  .bc-notice-close-button {
-    display: inline-block;
-    float: right;
-    .small {
-      margin: 0;
-      padding: 0;
-    }
-  }
-}
-
-.bc-notice-success {
-  background-color: $bc-color-success-background;
-  border: 1px solid $bc-color-success-border;
-  color: $bc-color-success-foreground;
-}
-
-.bc-notice-warning {
-  background-color: $bc-color-alert-background;
-  border: 1px solid $bc-color-alert-border;
-  color: $bc-color-warning-foreground;
-}
-
-.bc-notice-warning-button {
-  color: $bc-color-warning-foreground;
-  text-decoration: none;
-
-  &:hover,&:focus {
-    color: $bc-color-warning-foreground-selected;
-    text-decoration: none;
-  }
-}
-
-.bc-notice-error {
-  background-color: $bc-color-error-background;
-  border: 1px solid $bc-color-error-border;
-  color: $bc-color-error-foreground;
-}
-
-.bc-notice-error-container {
-  margin: 10px 0;
-}
-
-.bc-radius {
-  border-radius: 3px;
 }
 
 // Maintenance Notice
@@ -529,7 +504,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     .bc-template-sections-table-cell-section-action-option {
       height: 45px;
       text-align: right;
-      width: 88px;
+      width: 92px;
     }
 
     .bc-template-sections-table-button {
@@ -591,7 +566,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     .bc-template-sections-table-cell-section-instructors {
-      width: 187px;
+      width: 183px;
     }
 
     .bc-template-sections-table-cell-section-label-label {

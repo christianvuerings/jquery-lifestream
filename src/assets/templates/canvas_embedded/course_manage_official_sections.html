@@ -14,9 +14,9 @@
 
     <div data-ng-if="currentWorkflowStep === 'preview'">
 
-      <div data-ng-show="jobStatusMessage !== ''" class="bc-notice-box bc-radius" data-ng-class="{'bc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'bc-notice-success':(lastJobStatus === 'sectionEditsCompleted')}" id="bc-page-course-official-sections-job-status-notice" data-ng-attr-aria-hidden="{{jobStatusMessage === ''}}">
+      <div data-ng-show="jobStatusMessage !== ''" class="bc-alert" data-ng-class="{'bc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'bc-alert-success':(lastJobStatus === 'sectionEditsCompleted')}" id="bc-page-course-official-sections-job-status-notice" data-ng-attr-aria-hidden="{{jobStatusMessage === ''}}">
         <span data-ng-bind="jobStatusMessage"></span>
-        <div class="bc-notice-close-button">
+        <div class="bc-alert-close-button-container">
           <button class="fa fa-times-circle bc-close-button" data-ng-click="jobStatusMessage=''" aria-controls="bc-page-course-official-sections-job-status-notice">
             <span class="cc-visuallyhidden">Close Notice</span>
           </button>
@@ -174,10 +174,10 @@
 
   </div>
 
-  <div data-ng-if="displayError" class="bc-notice-error-container">
+  <div data-ng-if="displayError" class="bc-alert-container">
     <div data-ng-include src="'canvas_embedded/_shared/canvas_errors.html'"></div>
 
-    <div data-ng-if="displayError === 'invalidAction'" class="bc-notice-error-container">
+    <div data-ng-if="displayError === 'invalidAction'" class="bc-alert-container">
       <i class="fa fa-warning bc-canvas-notice-icon"></i>
       <div class="bc-notice-text-container">
         <h1 class="bc-notice-text-header">Invalid Action</h1>
