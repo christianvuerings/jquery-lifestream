@@ -66,6 +66,7 @@ canvas_proxy:
   url_root: "http://localhost:12345"
   fake: false
   account_id: '90242'
+  admin_tools_account_id: '12960'
   official_courses_account_id: '129410'
   projects_account_id: '129407'
   projects_term_id: '5494'
@@ -292,6 +293,7 @@ features:
   advising: false
   background_jobs_check: true
   course_manage_official_sections: false
+  manage_site_mailing_lists: false
 
 youtube_splash_id: 'EQ-a7xrfVag'
 
