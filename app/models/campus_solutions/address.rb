@@ -1,10 +1,11 @@
 module CampusSolutions
-  class Address < Proxy
+  class Address < DirectProxy
 
-    def initialize(options = {})
-      super(Settings.cs_address_proxy, options)
-      initialize_mocks if @fake
-    end
+    FIELD_MAPPINGS = [
+      FieldMapping.required(:country, :COUNTRY),
+      FieldMapping.required(:address1, :ADDRESS1),
+      FieldMapping.optional(:address2, :ADDRESS2)
+    ]
 
     def xml_filename
       'address.xml'
@@ -12,13 +13,18 @@ module CampusSolutions
 
     def build_feed(response)
       feed = {
-        addresses: []
+        addresses: [],
+        fields: FieldMapping.to_hash(FIELD_MAPPINGS)
       }
       return feed if response.parsed_response.blank?
       response.parsed_response['UC_PER_ADDR_GET_RESP']['ADDRESS'].each do |address|
         feed[:addresses] << address
       end
       feed
+    end
+
+    def url
+      "#{@settings.base_url}/UC_PER_ADDR_GET.v1/person/address/get/?EMPLID=00000176"
     end
 
   end

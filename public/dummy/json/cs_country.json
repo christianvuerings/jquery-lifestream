@@ -1,0 +1,1561 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "countries": [
+      {
+        "country": "BGD",
+        "descr": "Bangladesh",
+        "descrshort": "Bangladesh",
+        "country2char": "BD"
+      },
+      {
+        "country": "BGR",
+        "descr": "Bulgaria",
+        "descrshort": "Bulgaria",
+        "country2char": "BG"
+      },
+      {
+        "country": "BHR",
+        "descr": "Bahrain",
+        "descrshort": "Bahrain",
+        "country2char": "BH"
+      },
+      {
+        "country": "BHS",
+        "descr": "Bahamas",
+        "descrshort": "Bahamas",
+        "country2char": "BS"
+      },
+      {
+        "country": "BIH",
+        "descr": "Bosnia and Herzegovina",
+        "descrshort": "Bosnia Her",
+        "country2char": "BA"
+      },
+      {
+        "country": "BLR",
+        "descr": "Belarus",
+        "descrshort": "Belarus",
+        "country2char": "BY"
+      },
+      {
+        "country": "BLZ",
+        "descr": "Belize",
+        "descrshort": "Belize",
+        "country2char": "BZ"
+      },
+      {
+        "country": "BMU",
+        "descr": "Bermuda",
+        "descrshort": "Bermuda",
+        "country2char": "BM"
+      },
+      {
+        "country": "BOL",
+        "descr": "Bolivia",
+        "descrshort": "Bolivia",
+        "country2char": "BO"
+      },
+      {
+        "country": "BRA",
+        "descr": "Brazil",
+        "descrshort": "Brazil",
+        "country2char": "BR"
+      },
+      {
+        "country": "BRB",
+        "descr": "Barbados",
+        "descrshort": "Barbados",
+        "country2char": "BB"
+      },
+      {
+        "country": "BRN",
+        "descr": "Brunei Darussalam",
+        "descrshort": "Brunei",
+        "country2char": "BN"
+      },
+      {
+        "country": "BTN",
+        "descr": "Bhutan",
+        "descrshort": "Bhutan",
+        "country2char": "BT"
+      },
+      {
+        "country": "BVT",
+        "descr": "Bouvet Island",
+        "descrshort": "Bouvet Is.",
+        "country2char": "BV"
+      },
+      {
+        "country": "BWA",
+        "descr": "Botswana",
+        "descrshort": "Botswana",
+        "country2char": "BW"
+      },
+      {
+        "country": "CAF",
+        "descr": "Central African Republic",
+        "descrshort": "Central Af",
+        "country2char": "CF"
+      },
+      {
+        "country": "CAN",
+        "descr": "Canada",
+        "descrshort": "Canada",
+        "country2char": "CA"
+      },
+      {
+        "country": "CCK",
+        "descr": "Cocos (Keeling) Islands",
+        "descrshort": "Cocos Is.",
+        "country2char": "CC"
+      },
+      {
+        "country": "CHE",
+        "descr": "Switzerland",
+        "descrshort": "Switzerlan",
+        "country2char": "CH"
+      },
+      {
+        "country": "CHL",
+        "descr": "Chile",
+        "descrshort": "Chile",
+        "country2char": "CL"
+      },
+      {
+        "country": "CHN",
+        "descr": "China",
+        "descrshort": "China",
+        "country2char": "CN"
+      },
+      {
+        "country": "CIV",
+        "descr": "Cote D'Ivoire",
+        "descrshort": "Cote D'Ivo",
+        "country2char": "CI"
+      },
+      {
+        "country": "CMR",
+        "descr": "Cameroon",
+        "descrshort": "Cameroon",
+        "country2char": "CM"
+      },
+      {
+        "country": "COD",
+        "descr": "Congo, The Democratic Republic",
+        "descrshort": "Congo, The",
+        "country2char": "CD"
+      },
+      {
+        "country": "COG",
+        "descr": "Congo",
+        "descrshort": "Congo",
+        "country2char": "CG"
+      },
+      {
+        "country": "COK",
+        "descr": "Cook Islands",
+        "descrshort": "Cook Is.",
+        "country2char": "CK"
+      },
+      {
+        "country": "COL",
+        "descr": "Colombia",
+        "descrshort": "Colombia",
+        "country2char": "CO"
+      },
+      {
+        "country": "COM",
+        "descr": "Comoros",
+        "descrshort": "Comoros",
+        "country2char": "KM"
+      },
+      {
+        "country": "CPV",
+        "descr": "Cape Verde",
+        "descrshort": "Cape Verde",
+        "country2char": "CV"
+      },
+      {
+        "country": "CRI",
+        "descr": "Costa Rica",
+        "descrshort": "Costa Rica",
+        "country2char": "CR"
+      },
+      {
+        "country": "CUB",
+        "descr": "Cuba",
+        "descrshort": "Cuba",
+        "country2char": "CU"
+      },
+      {
+        "country": "CXR",
+        "descr": "Christmas Island",
+        "descrshort": "Christmas",
+        "country2char": "CX"
+      },
+      {
+        "country": "CYM",
+        "descr": "Cayman Islands",
+        "descrshort": "Cayman Is.",
+        "country2char": "KY"
+      },
+      {
+        "country": "CYP",
+        "descr": "Cyprus",
+        "descrshort": "Cyprus",
+        "country2char": "CY"
+      },
+      {
+        "country": "CZE",
+        "descr": "Czech Republic",
+        "descrshort": "Czech Rep",
+        "country2char": "CZ"
+      },
+      {
+        "country": "DEU",
+        "descr": "Germany",
+        "descrshort": "Germany",
+        "country2char": "DE"
+      },
+      {
+        "country": "DJI",
+        "descr": "Djibouti",
+        "descrshort": "Djibouti",
+        "country2char": "DJ"
+      },
+      {
+        "country": "DMA",
+        "descr": "Dominica",
+        "descrshort": "Dominica",
+        "country2char": "DM"
+      },
+      {
+        "country": "DNK",
+        "descr": "Denmark",
+        "descrshort": "Denmark",
+        "country2char": "DK"
+      },
+      {
+        "country": "DOM",
+        "descr": "Dominican Republic",
+        "descrshort": "Dominican",
+        "country2char": "DO"
+      },
+      {
+        "country": "DZA",
+        "descr": "Algeria",
+        "descrshort": "Algeria",
+        "country2char": "DZ"
+      },
+      {
+        "country": "ECU",
+        "descr": "Ecuador",
+        "descrshort": "Ecuador",
+        "country2char": "EC"
+      },
+      {
+        "country": "EGY",
+        "descr": "Egypt",
+        "descrshort": "Egypt",
+        "country2char": "EG"
+      },
+      {
+        "country": "ERI",
+        "descr": "Eritrea",
+        "descrshort": "Eritrea",
+        "country2char": "ER"
+      },
+      {
+        "country": "ESH",
+        "descr": "Western Sahara",
+        "descrshort": "W Sahara",
+        "country2char": "EH"
+      },
+      {
+        "country": "ESP",
+        "descr": "Spain",
+        "descrshort": "Spain",
+        "country2char": "ES"
+      },
+      {
+        "country": "EST",
+        "descr": "Estonia",
+        "descrshort": "Estonia",
+        "country2char": "EE"
+      },
+      {
+        "country": "ETH",
+        "descr": "Ethiopia",
+        "descrshort": "Ethiopia",
+        "country2char": "ET"
+      },
+      {
+        "country": "FIN",
+        "descr": "Finland",
+        "descrshort": "Finland",
+        "country2char": "FI"
+      },
+      {
+        "country": "FJI",
+        "descr": "Fiji",
+        "descrshort": "Fiji",
+        "country2char": "FJ"
+      },
+      {
+        "country": "FLK",
+        "descr": "Falkland Islands (Malvinas)",
+        "descrshort": "Falkland I",
+        "country2char": "FK"
+      },
+      {
+        "country": "FRA",
+        "descr": "France",
+        "descrshort": "France",
+        "country2char": "FR"
+      },
+      {
+        "country": "FRO",
+        "descr": "Faroe Islands",
+        "descrshort": "Faroe Is.",
+        "country2char": "FO"
+      },
+      {
+        "country": "FSM",
+        "descr": "Micronesia, Federated States",
+        "descrshort": "Micronesia",
+        "country2char": "FM"
+      },
+      {
+        "country": "GAB",
+        "descr": "Gabon",
+        "descrshort": "Gabon",
+        "country2char": "GA"
+      },
+      {
+        "country": "GBR",
+        "descr": "United Kingdom",
+        "descrshort": "UK",
+        "country2char": "GB"
+      },
+      {
+        "country": "GEO",
+        "descr": "Georgia",
+        "descrshort": "Georgia",
+        "country2char": "GE"
+      },
+      {
+        "country": "GHA",
+        "descr": "Ghana",
+        "descrshort": "Ghana",
+        "country2char": "GH"
+      },
+      {
+        "country": "GIB",
+        "descr": "Gibraltar",
+        "descrshort": "Gibraltar",
+        "country2char": "GI"
+      },
+      {
+        "country": "GIN",
+        "descr": "Guinea",
+        "descrshort": "Guinea",
+        "country2char": "GN"
+      },
+      {
+        "country": "GLP",
+        "descr": "Guadeloupe",
+        "descrshort": "Guadeloupe",
+        "country2char": "GP"
+      },
+      {
+        "country": "GMB",
+        "descr": "Gambia",
+        "descrshort": "Gambia",
+        "country2char": "GM"
+      },
+      {
+        "country": "GNB",
+        "descr": "Guinea-Bissau",
+        "descrshort": "Guinea-Bis",
+        "country2char": "GW"
+      },
+      {
+        "country": "GNQ",
+        "descr": "Equatorial Guinea",
+        "descrshort": "Guinea",
+        "country2char": "GQ"
+      },
+      {
+        "country": "GRC",
+        "descr": "Greece",
+        "descrshort": "Greece",
+        "country2char": "GR"
+      },
+      {
+        "country": "GRD",
+        "descr": "Grenada",
+        "descrshort": "Grenada",
+        "country2char": "GD"
+      },
+      {
+        "country": "GRL",
+        "descr": "Greenland",
+        "descrshort": "Greenland",
+        "country2char": "GL"
+      },
+      {
+        "country": "GTM",
+        "descr": "Guatemala",
+        "descrshort": "Guatemala",
+        "country2char": "GT"
+      },
+      {
+        "country": "GUF",
+        "descr": "French Guiana",
+        "descrshort": "Fr Guiana",
+        "country2char": "GF"
+      },
+      {
+        "country": "GUM",
+        "descr": "Guam",
+        "descrshort": "Guam",
+        "country2char": "GU"
+      },
+      {
+        "country": "GUY",
+        "descr": "Guyana",
+        "descrshort": "Guyana",
+        "country2char": "GY"
+      },
+      {
+        "country": "HKG",
+        "descr": "Hong Kong",
+        "descrshort": "Hong Kong",
+        "country2char": "HK"
+      },
+      {
+        "country": "HMD",
+        "descr": "Heard and McDonald Islands",
+        "descrshort": "Heard Is",
+        "country2char": "HM"
+      },
+      {
+        "country": "HND",
+        "descr": "Honduras",
+        "descrshort": "Honduras",
+        "country2char": "HN"
+      },
+      {
+        "country": "HRV",
+        "descr": "Croatia",
+        "descrshort": "Croatia",
+        "country2char": "HR"
+      },
+      {
+        "country": "HTI",
+        "descr": "Haiti",
+        "descrshort": "Haiti",
+        "country2char": "HT"
+      },
+      {
+        "country": "HUN",
+        "descr": "Hungary",
+        "descrshort": "Hungary",
+        "country2char": "HU"
+      },
+      {
+        "country": "IDN",
+        "descr": "Indonesia",
+        "descrshort": "Indonesia",
+        "country2char": "ID"
+      },
+      {
+        "country": "IND",
+        "descr": "India",
+        "descrshort": "India",
+        "country2char": "IN"
+      },
+      {
+        "country": "IOT",
+        "descr": "British Indian Ocean Territory",
+        "descrshort": "BritishIOT",
+        "country2char": "IO"
+      },
+      {
+        "country": "IRL",
+        "descr": "Ireland",
+        "descrshort": "Ireland",
+        "country2char": "IE"
+      },
+      {
+        "country": "IRN",
+        "descr": "Iran (Islamic Republic Of)",
+        "descrshort": "Iran",
+        "country2char": "IR"
+      },
+      {
+        "country": "IRQ",
+        "descr": "Iraq",
+        "descrshort": "Iraq",
+        "country2char": "IQ"
+      },
+      {
+        "country": "ISL",
+        "descr": "Iceland",
+        "descrshort": "Iceland",
+        "country2char": "IS"
+      },
+      {
+        "country": "ISR",
+        "descr": "Israel",
+        "descrshort": "Israel",
+        "country2char": "IL"
+      },
+      {
+        "country": "ITA",
+        "descr": "Italy",
+        "descrshort": "Italy",
+        "country2char": "IT"
+      },
+      {
+        "country": "JAM",
+        "descr": "Jamaica",
+        "descrshort": "Jamaica",
+        "country2char": "JM"
+      },
+      {
+        "country": "JOR",
+        "descr": "Jordan",
+        "descrshort": "Jordan",
+        "country2char": "JO"
+      },
+      {
+        "country": "JPN",
+        "descr": "Japan",
+        "descrshort": "Japan",
+        "country2char": "JP"
+      },
+      {
+        "country": "KEN",
+        "descr": "Kenya",
+        "descrshort": "Kenya",
+        "country2char": "KE"
+      },
+      {
+        "country": "KGZ",
+        "descr": "Kyrgyzstan",
+        "descrshort": "Kyrgyzstan",
+        "country2char": "KG"
+      },
+      {
+        "country": "KHM",
+        "descr": "Cambodia",
+        "descrshort": "Cambodia",
+        "country2char": "KH"
+      },
+      {
+        "country": "KIR",
+        "descr": "Kiribati",
+        "descrshort": "Kiribati",
+        "country2char": "KI"
+      },
+      {
+        "country": "KNA",
+        "descr": "Saint Kitts and Nevis",
+        "descrshort": "St Kitts",
+        "country2char": "KN"
+      },
+      {
+        "country": "KOR",
+        "descr": "Korea, Republic of",
+        "descrshort": "Sth Korea",
+        "country2char": "KR"
+      },
+      {
+        "country": "KWT",
+        "descr": "Kuwait",
+        "descrshort": "Kuwait",
+        "country2char": "KW"
+      },
+      {
+        "country": "LAO",
+        "descr": "Lao People's Democratic Rep",
+        "descrshort": "Lao",
+        "country2char": "LA"
+      },
+      {
+        "country": "LBN",
+        "descr": "Lebanon",
+        "descrshort": "Lebanon",
+        "country2char": "LB"
+      },
+      {
+        "country": "LBR",
+        "descr": "Liberia",
+        "descrshort": "Liberia",
+        "country2char": "LR"
+      },
+      {
+        "country": "LBY",
+        "descr": "Libyan Arab Jamahiriya",
+        "descrshort": "Libyan Ara",
+        "country2char": "LY"
+      },
+      {
+        "country": "LCA",
+        "descr": "Saint Lucia",
+        "descrshort": "St Lucia",
+        "country2char": "LC"
+      },
+      {
+        "country": "LIE",
+        "descr": "Liechtenstein",
+        "descrshort": "Liechtenst",
+        "country2char": "LI"
+      },
+      {
+        "country": "LKA",
+        "descr": "Sri Lanka",
+        "descrshort": "Sri Lanka",
+        "country2char": "LK"
+      },
+      {
+        "country": "LSO",
+        "descr": "Lesotho",
+        "descrshort": "Lesotho",
+        "country2char": "LS"
+      },
+      {
+        "country": "LTU",
+        "descr": "Lithuania",
+        "descrshort": "Lithuania",
+        "country2char": "LT"
+      },
+      {
+        "country": "LUX",
+        "descr": "Luxembourg",
+        "descrshort": "Luxembourg",
+        "country2char": "LU"
+      },
+      {
+        "country": "LVA",
+        "descr": "Latvia",
+        "descrshort": "Latvia",
+        "country2char": "LV"
+      },
+      {
+        "country": "MAC",
+        "descr": "Macao",
+        "descrshort": "Macao",
+        "country2char": "MO"
+      },
+      {
+        "country": "MAR",
+        "descr": "Morocco",
+        "descrshort": "Morocco",
+        "country2char": "MA"
+      },
+      {
+        "country": "ALA",
+        "descr": "Aland Islands",
+        "descrshort": "Aland Is.",
+        "country2char": "AX"
+      },
+      {
+        "country": "BLM",
+        "descr": "Saint Barthelemy",
+        "descrshort": "St Barth",
+        "country2char": "BL"
+      },
+      {
+        "country": "GGY",
+        "descr": "Guernsey",
+        "descrshort": "Guernsey",
+        "country2char": "GG"
+      },
+      {
+        "country": "IMN",
+        "descr": "Isle of Man",
+        "descrshort": "IoM",
+        "country2char": "IM"
+      },
+      {
+        "country": "JEY",
+        "descr": "Jersey",
+        "descrshort": "Jersey",
+        "country2char": "JE"
+      },
+      {
+        "country": "KAZ",
+        "descr": "Kazakhstan",
+        "descrshort": "Kazakhstan",
+        "country2char": "KZ"
+      },
+      {
+        "country": "MAF",
+        "descr": "Saint Martin",
+        "descrshort": "St Martin",
+        "country2char": "MF"
+      },
+      {
+        "country": "KOS",
+        "descr": "Kosovo",
+        "descrshort": "Kosovo",
+        "country2char": "XK"
+      },
+      {
+        "country": "ENG",
+        "descr": "England",
+        "descrshort": "England",
+        "country2char": null
+      },
+      {
+        "country": "NIR",
+        "descr": "Northern Ireland",
+        "descrshort": "Northern I",
+        "country2char": null
+      },
+      {
+        "country": "SCT",
+        "descr": "Scotland",
+        "descrshort": "Scotland",
+        "country2char": null
+      },
+      {
+        "country": "WAL",
+        "descr": "Wales",
+        "descrshort": "Wales",
+        "country2char": null
+      },
+      {
+        "country": "NAP",
+        "descr": "Not Applicable",
+        "descrshort": "Not App",
+        "country2char": null
+      },
+      {
+        "country": "NRE",
+        "descr": "Not Reported",
+        "descrshort": "Not Rep",
+        "country2char": null
+      },
+      {
+        "country": "BES",
+        "descr": "Bonaire, Sint Eustatius and Sa",
+        "descrshort": "Bonaire",
+        "country2char": "BQ"
+      },
+      {
+        "country": "CUW",
+        "descr": "Curacao",
+        "descrshort": "Curacao",
+        "country2char": "CW"
+      },
+      {
+        "country": "SSD",
+        "descr": "South Sudan",
+        "descrshort": "S Sudan",
+        "country2char": "SS"
+      },
+      {
+        "country": "SXM",
+        "descr": "Saint Maarten",
+        "descrshort": "St Maarten",
+        "country2char": "SX"
+      },
+      {
+        "country": "XXA",
+        "descr": "Stateless",
+        "descrshort": "Stateless",
+        "country2char": "XS"
+      },
+      {
+        "country": "MCO",
+        "descr": "Monaco",
+        "descrshort": "Monaco",
+        "country2char": "MC"
+      },
+      {
+        "country": "MDA",
+        "descr": "Moldova, Republic of",
+        "descrshort": "Moldova",
+        "country2char": "MD"
+      },
+      {
+        "country": "MDG",
+        "descr": "Madagascar",
+        "descrshort": "Madagascar",
+        "country2char": "MG"
+      },
+      {
+        "country": "MDV",
+        "descr": "Maldives",
+        "descrshort": "Maldives",
+        "country2char": "MV"
+      },
+      {
+        "country": "MEX",
+        "descr": "Mexico",
+        "descrshort": "Mexico",
+        "country2char": "MX"
+      },
+      {
+        "country": "MHL",
+        "descr": "Marshall Islands",
+        "descrshort": "Marshall I",
+        "country2char": "MH"
+      },
+      {
+        "country": "MKD",
+        "descr": "Fmr Yugoslav Rep of Macedonia",
+        "descrshort": "Macedonia",
+        "country2char": "MK"
+      },
+      {
+        "country": "MLI",
+        "descr": "Mali",
+        "descrshort": "Mali",
+        "country2char": "ML"
+      },
+      {
+        "country": "MLT",
+        "descr": "Malta",
+        "descrshort": "Malta",
+        "country2char": "MT"
+      },
+      {
+        "country": "MMR",
+        "descr": "Myanmar",
+        "descrshort": "Myanmar",
+        "country2char": "MM"
+      },
+      {
+        "country": "MNG",
+        "descr": "Mongolia",
+        "descrshort": "Mongolia",
+        "country2char": "MN"
+      },
+      {
+        "country": "MNP",
+        "descr": "Northern Mariana Islands",
+        "descrshort": "N Marina I",
+        "country2char": "MP"
+      },
+      {
+        "country": "MOZ",
+        "descr": "Mozambique",
+        "descrshort": "Mozambique",
+        "country2char": "MZ"
+      },
+      {
+        "country": "MRT",
+        "descr": "Mauritania",
+        "descrshort": "Mauritania",
+        "country2char": "MR"
+      },
+      {
+        "country": "MSR",
+        "descr": "Montserrat",
+        "descrshort": "Montserrat",
+        "country2char": "MS"
+      },
+      {
+        "country": "MTQ",
+        "descr": "Martinique",
+        "descrshort": "Martinique",
+        "country2char": "MQ"
+      },
+      {
+        "country": "MUS",
+        "descr": "Mauritius",
+        "descrshort": "Mauritius",
+        "country2char": "MU"
+      },
+      {
+        "country": "MWI",
+        "descr": "Malawi",
+        "descrshort": "Malawi",
+        "country2char": "MW"
+      },
+      {
+        "country": "MYS",
+        "descr": "Malaysia",
+        "descrshort": "Malaysia",
+        "country2char": "MY"
+      },
+      {
+        "country": "MYT",
+        "descr": "Mayotte",
+        "descrshort": "Mayotte",
+        "country2char": "YT"
+      },
+      {
+        "country": "NAM",
+        "descr": "Namibia",
+        "descrshort": "Namibia",
+        "country2char": "NA"
+      },
+      {
+        "country": "NCL",
+        "descr": "New Caledonia",
+        "descrshort": "New Caledo",
+        "country2char": "NC"
+      },
+      {
+        "country": "NER",
+        "descr": "Niger",
+        "descrshort": "Niger",
+        "country2char": "NE"
+      },
+      {
+        "country": "NFK",
+        "descr": "Norfolk Island",
+        "descrshort": "Norfolk Is",
+        "country2char": "NF"
+      },
+      {
+        "country": "NGA",
+        "descr": "Nigeria",
+        "descrshort": "Nigeria",
+        "country2char": "NG"
+      },
+      {
+        "country": "NIC",
+        "descr": "Nicaragua",
+        "descrshort": "Nicaragua",
+        "country2char": "NI"
+      },
+      {
+        "country": "NIU",
+        "descr": "Niue",
+        "descrshort": "Niue",
+        "country2char": "NU"
+      },
+      {
+        "country": "NLD",
+        "descr": "Netherlands",
+        "descrshort": "Netherland",
+        "country2char": "NL"
+      },
+      {
+        "country": "NOR",
+        "descr": "Norway",
+        "descrshort": "Norway",
+        "country2char": "NO"
+      },
+      {
+        "country": "NPL",
+        "descr": "Nepal",
+        "descrshort": "Nepal",
+        "country2char": "NP"
+      },
+      {
+        "country": "NRU",
+        "descr": "Nauru",
+        "descrshort": "Nauru",
+        "country2char": "NR"
+      },
+      {
+        "country": "NZL",
+        "descr": "New Zealand",
+        "descrshort": "NZ",
+        "country2char": "NZ"
+      },
+      {
+        "country": "OMN",
+        "descr": "Oman",
+        "descrshort": "Oman",
+        "country2char": "OM"
+      },
+      {
+        "country": "PAK",
+        "descr": "Pakistan",
+        "descrshort": "Pakistan",
+        "country2char": "PK"
+      },
+      {
+        "country": "PAN",
+        "descr": "Panama",
+        "descrshort": "Panama",
+        "country2char": "PA"
+      },
+      {
+        "country": "PCN",
+        "descr": "Pitcairn",
+        "descrshort": "Pitcairn",
+        "country2char": "PN"
+      },
+      {
+        "country": "PER",
+        "descr": "Peru",
+        "descrshort": "Peru",
+        "country2char": "PE"
+      },
+      {
+        "country": "PHL",
+        "descr": "Philippines",
+        "descrshort": "Philippine",
+        "country2char": "PH"
+      },
+      {
+        "country": "PLW",
+        "descr": "Palau",
+        "descrshort": "Palau",
+        "country2char": "PW"
+      },
+      {
+        "country": "PNG",
+        "descr": "Papua New Guinea",
+        "descrshort": "PNG",
+        "country2char": "PG"
+      },
+      {
+        "country": "POL",
+        "descr": "Poland",
+        "descrshort": "Poland",
+        "country2char": "PL"
+      },
+      {
+        "country": "PRI",
+        "descr": "Puerto Rico",
+        "descrshort": "Puerto Rco",
+        "country2char": "PR"
+      },
+      {
+        "country": "PRK",
+        "descr": "Korea, Democratic People's Rep",
+        "descrshort": "Nth Korea",
+        "country2char": "KP"
+      },
+      {
+        "country": "PRT",
+        "descr": "Portugal",
+        "descrshort": "Portugal",
+        "country2char": "PT"
+      },
+      {
+        "country": "PRY",
+        "descr": "Paraguay",
+        "descrshort": "Paraguay",
+        "country2char": "PY"
+      },
+      {
+        "country": "PSE",
+        "descr": "Palestinian Territory, Occupie",
+        "descrshort": "Palestinia",
+        "country2char": "PS"
+      },
+      {
+        "country": "PYF",
+        "descr": "French Polynesia",
+        "descrshort": "Fr Polynes",
+        "country2char": "PF"
+      },
+      {
+        "country": "QAT",
+        "descr": "Qatar",
+        "descrshort": "Qatar",
+        "country2char": "QA"
+      },
+      {
+        "country": "REU",
+        "descr": "Reunion",
+        "descrshort": "Reunion",
+        "country2char": "RE"
+      },
+      {
+        "country": "ROU",
+        "descr": "Romania",
+        "descrshort": "Romania",
+        "country2char": "RO"
+      },
+      {
+        "country": "RUS",
+        "descr": "Russian Federation",
+        "descrshort": "Russian Fd",
+        "country2char": "RU"
+      },
+      {
+        "country": "RWA",
+        "descr": "Rwanda",
+        "descrshort": "Rwanda",
+        "country2char": "RW"
+      },
+      {
+        "country": "SAU",
+        "descr": "Saudi Arabia",
+        "descrshort": "Saudi Arab",
+        "country2char": "SA"
+      },
+      {
+        "country": "SDN",
+        "descr": "Sudan",
+        "descrshort": "Sudan",
+        "country2char": "SD"
+      },
+      {
+        "country": "SEN",
+        "descr": "Senegal",
+        "descrshort": "Senegal",
+        "country2char": "SN"
+      },
+      {
+        "country": "SGP",
+        "descr": "Singapore",
+        "descrshort": "Singapore",
+        "country2char": "SG"
+      },
+      {
+        "country": "SGS",
+        "descr": "Sth Georgia \u0026 Sth Sandwich Is",
+        "descrshort": "S Georgia",
+        "country2char": "GS"
+      },
+      {
+        "country": "SHN",
+        "descr": "Saint Helena",
+        "descrshort": "St Helena",
+        "country2char": "SH"
+      },
+      {
+        "country": "SJM",
+        "descr": "Svalbard and Jan Mayen",
+        "descrshort": "Svalbard",
+        "country2char": "SJ"
+      },
+      {
+        "country": "SLB",
+        "descr": "Solomon Islands",
+        "descrshort": "Solomon Is",
+        "country2char": "SB"
+      },
+      {
+        "country": "SLE",
+        "descr": "Sierra Leone",
+        "descrshort": "Sierra Leo",
+        "country2char": "SL"
+      },
+      {
+        "country": "SLV",
+        "descr": "El Salvador",
+        "descrshort": "ElSalvador",
+        "country2char": "SV"
+      },
+      {
+        "country": "SMR",
+        "descr": "San Marino",
+        "descrshort": "San Marino",
+        "country2char": "SM"
+      },
+      {
+        "country": "SOM",
+        "descr": "Somalia",
+        "descrshort": "Somalia",
+        "country2char": "SO"
+      },
+      {
+        "country": "SPM",
+        "descr": "Saint Pierre and Miquelon",
+        "descrshort": "St Pierre",
+        "country2char": "PM"
+      },
+      {
+        "country": "STP",
+        "descr": "Sao Tome and Principe",
+        "descrshort": "Sao Tome",
+        "country2char": "ST"
+      },
+      {
+        "country": "SUR",
+        "descr": "Suriname",
+        "descrshort": "Suriname",
+        "country2char": "SR"
+      },
+      {
+        "country": "SVK",
+        "descr": "Slovakia",
+        "descrshort": "Slovakia",
+        "country2char": "SK"
+      },
+      {
+        "country": "SVN",
+        "descr": "Slovenia",
+        "descrshort": "Slovenia",
+        "country2char": "SI"
+      },
+      {
+        "country": "SWE",
+        "descr": "Sweden",
+        "descrshort": "Sweden",
+        "country2char": "SE"
+      },
+      {
+        "country": "SWZ",
+        "descr": "Swaziland",
+        "descrshort": "Swaziland",
+        "country2char": "SZ"
+      },
+      {
+        "country": "SYC",
+        "descr": "Seychelles",
+        "descrshort": "Seychelles",
+        "country2char": "SC"
+      },
+      {
+        "country": "SYR",
+        "descr": "Syrian Arab Republic",
+        "descrshort": "Syrian Ara",
+        "country2char": "SY"
+      },
+      {
+        "country": "TCA",
+        "descr": "Turks and Caicos Islands",
+        "descrshort": "Turks Is",
+        "country2char": "TC"
+      },
+      {
+        "country": "TCD",
+        "descr": "Chad",
+        "descrshort": "Chad",
+        "country2char": "TD"
+      },
+      {
+        "country": "TGO",
+        "descr": "Togo",
+        "descrshort": "Togo",
+        "country2char": "TG"
+      },
+      {
+        "country": "THA",
+        "descr": "Thailand",
+        "descrshort": "Thailand",
+        "country2char": "TH"
+      },
+      {
+        "country": "TJK",
+        "descr": "Tajikistan",
+        "descrshort": "Tajikistan",
+        "country2char": "TJ"
+      },
+      {
+        "country": "TKL",
+        "descr": "Tokelau",
+        "descrshort": "Tokelau",
+        "country2char": "TK"
+      },
+      {
+        "country": "TKM",
+        "descr": "Turkmenistan",
+        "descrshort": "Turkmenstn",
+        "country2char": "TM"
+      },
+      {
+        "country": "TLS",
+        "descr": "East Timor",
+        "descrshort": "East Timor",
+        "country2char": "TL"
+      },
+      {
+        "country": "TON",
+        "descr": "Tonga",
+        "descrshort": "Tonga",
+        "country2char": "TO"
+      },
+      {
+        "country": "TTO",
+        "descr": "Trinidad and Tobago",
+        "descrshort": "Trinidad",
+        "country2char": "TT"
+      },
+      {
+        "country": "TUN",
+        "descr": "Tunisia",
+        "descrshort": "Tunisia",
+        "country2char": "TN"
+      },
+      {
+        "country": "TUR",
+        "descr": "Turkey",
+        "descrshort": "Turkey",
+        "country2char": "TR"
+      },
+      {
+        "country": "TUV",
+        "descr": "Tuvalu",
+        "descrshort": "Tuvalu",
+        "country2char": "TV"
+      },
+      {
+        "country": "TWN",
+        "descr": "Taiwan, Province of China",
+        "descrshort": "Taiwan",
+        "country2char": "TW"
+      },
+      {
+        "country": "TZA",
+        "descr": "Tanzania, United Republic of",
+        "descrshort": "Tanzania,",
+        "country2char": "TZ"
+      },
+      {
+        "country": "UGA",
+        "descr": "Uganda",
+        "descrshort": "Uganda",
+        "country2char": "UG"
+      },
+      {
+        "country": "UKR",
+        "descr": "Ukraine",
+        "descrshort": "Ukraine",
+        "country2char": "UA"
+      },
+      {
+        "country": "UMI",
+        "descr": "US Minor Outlying Islands",
+        "descrshort": "US Islands",
+        "country2char": "UM"
+      },
+      {
+        "country": "URY",
+        "descr": "Uruguay",
+        "descrshort": "Uruguay",
+        "country2char": "UY"
+      },
+      {
+        "country": "USA",
+        "descr": "United States",
+        "descrshort": "USA",
+        "country2char": "US"
+      },
+      {
+        "country": "UZB",
+        "descr": "Uzbekistan",
+        "descrshort": "Uzbekistan",
+        "country2char": "UZ"
+      },
+      {
+        "country": "VAT",
+        "descr": "Holy See (Vatican City State)",
+        "descrshort": "Vatican",
+        "country2char": "VA"
+      },
+      {
+        "country": "VCT",
+        "descr": "St Vincent and the Grenadines",
+        "descrshort": "St Vincent",
+        "country2char": "VC"
+      },
+      {
+        "country": "VEN",
+        "descr": "Venezuela",
+        "descrshort": "Venezuela",
+        "country2char": "VE"
+      },
+      {
+        "country": "VGB",
+        "descr": "Virgin Islands (British)",
+        "descrshort": "BrVirginIs",
+        "country2char": "VG"
+      },
+      {
+        "country": "VIR",
+        "descr": "Virgin Islands (U.S.)",
+        "descrshort": "VirginIsUS",
+        "country2char": "VI"
+      },
+      {
+        "country": "VNM",
+        "descr": "Viet Nam",
+        "descrshort": "Viet Nam",
+        "country2char": "VN"
+      },
+      {
+        "country": "VUT",
+        "descr": "Vanuatu",
+        "descrshort": "Vanuatu",
+        "country2char": "VU"
+      },
+      {
+        "country": "WLF",
+        "descr": "Wallis and Futuna Islands",
+        "descrshort": "Wallis and",
+        "country2char": "WF"
+      },
+      {
+        "country": "WSM",
+        "descr": "Samoa",
+        "descrshort": "Samoa",
+        "country2char": "WS"
+      },
+      {
+        "country": "YEM",
+        "descr": "Yemen",
+        "descrshort": "Yemen",
+        "country2char": "YE"
+      },
+      {
+        "country": "YUG",
+        "descr": "Yugoslavia",
+        "descrshort": "Yugoslavia",
+        "country2char": "YU"
+      },
+      {
+        "country": "ZAF",
+        "descr": "South Africa",
+        "descrshort": "Sth Africa",
+        "country2char": "ZA"
+      },
+      {
+        "country": "ZMB",
+        "descr": "Zambia",
+        "descrshort": "Zambia",
+        "country2char": "ZM"
+      },
+      {
+        "country": "ZWE",
+        "descr": "Zimbabwe",
+        "descrshort": "Zimbabwe",
+        "country2char": "ZW"
+      },
+      {
+        "country": "MNE",
+        "descr": "Republic of Montenegro",
+        "descrshort": "Montenegro",
+        "country2char": "ME"
+      },
+      {
+        "country": "SRB",
+        "descr": "Republic of Serbia",
+        "descrshort": "Serbia",
+        "country2char": "RS"
+      },
+      {
+        "country": "ABW",
+        "descr": "Aruba",
+        "descrshort": "Aruba",
+        "country2char": "AW"
+      },
+      {
+        "country": "AFG",
+        "descr": "Afghanistan",
+        "descrshort": "Afghanistn",
+        "country2char": "AF"
+      },
+      {
+        "country": "AGO",
+        "descr": "Angola",
+        "descrshort": "Angola",
+        "country2char": "AO"
+      },
+      {
+        "country": "AIA",
+        "descr": "Anguilla",
+        "descrshort": "Anguilla",
+        "country2char": "AI"
+      },
+      {
+        "country": "ALB",
+        "descr": "Albania",
+        "descrshort": "Albania",
+        "country2char": "AL"
+      },
+      {
+        "country": "AND",
+        "descr": "Andorra",
+        "descrshort": "Andorra",
+        "country2char": "AD"
+      },
+      {
+        "country": "ANT",
+        "descr": "Netherlands Antilles",
+        "descrshort": "Nth Antill",
+        "country2char": "AN"
+      },
+      {
+        "country": "ARE",
+        "descr": "United Arab Emirates",
+        "descrshort": "UEA",
+        "country2char": "AE"
+      },
+      {
+        "country": "ARG",
+        "descr": "Argentina",
+        "descrshort": "Argentina",
+        "country2char": "AR"
+      },
+      {
+        "country": "ARM",
+        "descr": "Armenia",
+        "descrshort": "Armenia",
+        "country2char": "AM"
+      },
+      {
+        "country": "ASM",
+        "descr": "American Samoa",
+        "descrshort": "Am Samoa",
+        "country2char": "AS"
+      },
+      {
+        "country": "ATA",
+        "descr": "Antarctica",
+        "descrshort": "Antarctica",
+        "country2char": "AQ"
+      },
+      {
+        "country": "ATF",
+        "descr": "French Southern Territories",
+        "descrshort": "Fr S Terr",
+        "country2char": "TF"
+      },
+      {
+        "country": "ATG",
+        "descr": "Antigua and Barbuda",
+        "descrshort": "Antigua",
+        "country2char": "AG"
+      },
+      {
+        "country": "AUS",
+        "descr": "Australia",
+        "descrshort": "Australia",
+        "country2char": "AU"
+      },
+      {
+        "country": "AUT",
+        "descr": "Austria",
+        "descrshort": "Austria",
+        "country2char": "AT"
+      },
+      {
+        "country": "AZE",
+        "descr": "Azerbaijan",
+        "descrshort": "Azerbaijan",
+        "country2char": "AZ"
+      },
+      {
+        "country": "BDI",
+        "descr": "Burundi",
+        "descrshort": "Burundi",
+        "country2char": "BI"
+      },
+      {
+        "country": "BEL",
+        "descr": "Belgium",
+        "descrshort": "Belgium",
+        "country2char": "BE"
+      },
+      {
+        "country": "BEN",
+        "descr": "Benin",
+        "descrshort": "Benin",
+        "country2char": "BJ"
+      },
+      {
+        "country": "BFA",
+        "descr": "Burkina Faso",
+        "descrshort": "Burkina F",
+        "country2char": "BF"
+      }
+    ]
+  }
+}

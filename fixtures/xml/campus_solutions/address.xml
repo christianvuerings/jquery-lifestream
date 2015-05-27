@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <UC_PER_ADDR_GET_RESP xmlns="http://bcs.is.berkeley.edu">
   <ADDRESS>
     <EMPLID>00000176</EMPLID>
@@ -6,9 +7,9 @@
     <EFF_STATUS>A</EFF_STATUS>
     <COUNTRY>USA</COUNTRY>
     <ADDRESS1>27763 Melbourne Avenue</ADDRESS1>
-    <ADDRESS2/>
-    <ADDRESS3/>
-    <ADDRESS4/>
+    <ADDRESS2></ADDRESS2>
+    <ADDRESS3></ADDRESS3>
+    <ADDRESS4></ADDRESS4>
     <CITY>Hayward</CITY>
     <STATE>CA</STATE>
     <POSTAL>94545</POSTAL>
@@ -20,9 +21,9 @@
     <EFF_STATUS>A</EFF_STATUS>
     <COUNTRY>USA</COUNTRY>
     <ADDRESS1>27763 Melbourne Avenue</ADDRESS1>
-    <ADDRESS2/>
-    <ADDRESS3/>
-    <ADDRESS4/>
+    <ADDRESS2></ADDRESS2>
+    <ADDRESS3></ADDRESS3>
+    <ADDRESS4></ADDRESS4>
     <CITY>Hayward</CITY>
     <STATE>CA</STATE>
     <POSTAL>94545</POSTAL>

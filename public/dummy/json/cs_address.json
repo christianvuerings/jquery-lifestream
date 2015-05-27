@@ -1,0 +1,61 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "addresses": [
+      {
+        "emplid": "00000176",
+        "addressType": "ISIR",
+        "effdt": "2015-04-27",
+        "effStatus": "A",
+        "country": "USA",
+        "address1": "27763 Melbourne Avenue",
+        "address2": null,
+        "address3": null,
+        "address4": null,
+        "city": "Hayward",
+        "state": "CA",
+        "postal": "94545"
+      },
+      {
+        "emplid": "00000176",
+        "addressType": "LOCL",
+        "effdt": "2015-04-07",
+        "effStatus": "A",
+        "country": "USA",
+        "address1": "27763 Melbourne Avenue",
+        "address2": null,
+        "address3": null,
+        "address4": null,
+        "city": "Hayward",
+        "state": "CA",
+        "postal": "94545"
+      }
+    ],
+    "fields": {
+      "country": {
+        "fieldName": "country",
+        "campusSolutionsName": "COUNTRY",
+        "isRequired": true
+      },
+      "address1": {
+        "fieldName": "address1",
+        "campusSolutionsName": "ADDRESS1",
+        "isRequired": true
+      },
+      "address2": {
+        "fieldName": "address2",
+        "campusSolutionsName": "ADDRESS2",
+        "isRequired": false
+      }
+    }
+  },
+  "lastModified": {
+    "hash": "14b95d287890dfa6b7d3b21335ce4333fac7eafc",
+    "timestamp": {
+      "epoch": 1432743778,
+      "dateTime": "2015-05-27T09:22:58-07:00",
+      "dateString": "5/27"
+    }
+  },
+  "feedName": "CampusSolutions::MyAddress"
+}
