@@ -13,7 +13,7 @@
   .bc-page-course-grade-export-header {
     font-size: 23px;
     font-weight: 400;
-    margin: 20px 0 0;
+    padding: 12px 0;
     text-transform: capitalize;
   }
 
@@ -52,8 +52,9 @@
     margin: 10px 0;
   }
 
-  .bc-page-course-grade-export-section-select {
-    padding-left: 5px;
+  .bc-page-course-grade-export-form-label {
+    display: inline-block;
+    margin: 8px 0;
   }
 
   .bc-page-course-grade-export-notice-pending-request {

@@ -30,21 +30,23 @@
     </div>
 
     <div class="row collapse">
-      <div class="medium-5 columns end">
+      <div class="medium-12 columns">
         <h1 class="bc-page-course-grade-export-header">What would you like to download?</h1>
       </div>
     </div>
 
-    <div class="row collapse" data-ng-show="officialSections.length > 1">
-      <div class="medium-4 columns">
-        <div class="bc-page-course-grade-export-section">
-          <div class="cc-left">
-            <label for="course-sections">Select Section:</label>
-          </div>
-          <div class="cc-left bc-page-course-grade-export-section-select">
-            <select id="course-sections" data-ng-model="selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
+    <div class="row collapse">
+      <div class="medium-5 small-12 columns">
+
+        <div class="row collapse" data-ng-show="officialSections.length > 1">
+          <div class="medium-12 columns">
+            <label for="course-sections" class="bc-page-course-grade-export-form-label">
+              <strong>Select Section</strong>:
+            </label>
+            <select id="course-sections" class="bc-form-input-select" data-ng-model="selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
           </div>
         </div>
+
       </div>
     </div>
 
