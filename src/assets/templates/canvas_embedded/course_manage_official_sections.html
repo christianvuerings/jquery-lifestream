@@ -61,12 +61,12 @@
       <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-grey-border">
 
         <div class="row bc-page-course-official-sections-current-sections-header">
-          <div class="medium-3 columns">
+          <div class="medium-4 columns">
             <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
               Sections in this Course Site
             </h2>
           </div>
-          <div class="medium-3 columns cc-text-right">
+          <div class="medium-8 columns cc-text-right">
             <button class="bc-canvas-button bc-canvas-no-decoration" data-ng-click="cancel()" type="submit" aria-label="Cancel section modifications for this course site">
               Cancel
             </button>
@@ -105,7 +105,7 @@
       <div class="bc-page-course-official-sections-sections-area">
         <div class="row">
           <div class="medium-12 columns">
-            <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
+            <h2 class="bc-header bc-page-course-official-sections-available-sections-header-label">
               All sections available to add to this Course Site
             </h2>
           </div>
@@ -152,22 +152,16 @@
     <!-- ############################################################################################# -->
 
     <div data-ng-if="currentWorkflowStep === 'processing'">
-      <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-grey-border">
-        <div class="row bc-page-course-official-sections-current-sections-header">
-          <div class="medium-4 columns">
-            <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
-              Updating Official Sections in Course Site
-            </h2>
-          </div>
-        </div>
+      <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
+        Updating Official Sections in Course Site
+      </h2>
 
-        <div data-ng-if="jobStatus === 'sendingRequest' || percent_complete === 0" class="bc-page-course-official-sections-pending-request">
-          <i class="fa fa-spinner fa-spin"></i>
-          Sending request...
-        </div>
-
-        <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>
+      <div data-ng-if="jobStatus === 'sendingRequest' || percent_complete === 0" class="bc-page-course-official-sections-pending-request">
+        <i class="fa fa-spinner fa-spin"></i>
+        Sending request...
       </div>
+
+      <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>
     </div>
 
     <!-- ################################################################################################################################ -->

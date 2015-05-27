@@ -41,8 +41,12 @@
   }
 
   .bc-page-course-official-sections-existing-sections-header-label {
-    font-size: 17px;
+    font-size: 19px;
     margin-top: 10px;
+  }
+
+  .bc-page-course-official-sections-available-sections-header-label {
+    margin-bottom: 15px;
   }
 
   .bc-page-course-official-sections-form-course-button {
@@ -67,7 +71,7 @@
   }
 
   .bc-page-course-official-sections-pending-request {
-    margin: 10px 0;
+    margin: 20px 0;
   }
 
   @media #{$small-only} {
