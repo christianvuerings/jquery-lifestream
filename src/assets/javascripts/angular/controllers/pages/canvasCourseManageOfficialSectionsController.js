@@ -104,7 +104,6 @@
       if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
         jobStatusLoader();
       } else {
-        delete $scope.percentCompleteRounded;
         $timeout.cancel(timeoutPromise);
         $scope.lastJobStatus = angular.copy($scope.jobStatus);
         $scope.jobStatusMessage = 'An error has occurred with your request. Please try again or contact bCourses support.';
@@ -195,6 +194,7 @@
           $scope.isLoading = false;
           $scope.displayError = 'failure';
         } else {
+          delete $scope.percentCompleteRounded;
           // get users feed
           if (sectionsFeed.data) {
             if (sectionsFeed.data && sectionsFeed.data.canvas_course) {

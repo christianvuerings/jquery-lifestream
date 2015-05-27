@@ -88,7 +88,8 @@ module CampusOracle
         found_instructors.each do |instructor|
           instructors << {
             :name => instructor['person_name'],
-            :uid => instructor['ldap_uid']
+            :uid => instructor['ldap_uid'],
+            :instructor_func => instructor['instructor_func']
           }
         end
       end

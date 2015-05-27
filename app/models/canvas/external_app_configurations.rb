@@ -10,6 +10,11 @@ module Canvas
           app_name: 'Create a Site',
           account: main_account_id
         },
+        'site_mailing_lists' => {
+          xml_name: 'lti_site_mailing_lists',
+          app_name: 'Site Mailing Lists',
+          account: Settings.features.manage_site_mailing_lists ? admin_tools_account_id : nil
+        },
         'rosters' => {
           xml_name: 'lti_roster_photos',
           app_name: 'Roster Photos',
@@ -45,6 +50,10 @@ module Canvas
 
     def main_account_id
       Settings.canvas_proxy.account_id
+    end
+
+    def admin_tools_account_id
+      Settings.canvas_proxy.admin_tools_account_id
     end
 
     def official_courses_account_id
