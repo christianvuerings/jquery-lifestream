@@ -66,7 +66,7 @@ canvas_proxy:
   url_root: "http://localhost:12345"
   fake: false
   account_id: '90242'
-  admin_tools_account_id: '12960'
+  admin_tools_account_id: '129607'
   official_courses_account_id: '129410'
   projects_account_id: '129407'
   projects_term_id: '5494'

@@ -81,6 +81,12 @@
       isBcourses: true,
       isEmbedded: true
     }).
+    when('/canvas/embedded/site_mailing_lists', {
+      templateUrl: 'canvas_embedded/site_mailing_list.html',
+      controller: 'CanvasSiteMailingListController',
+      isBcourses: true,
+      isEmbedded: true
+    }).
     when('/canvas/embedded/create_course_site', {
       templateUrl: 'canvas_embedded/create_course_site.html',
       controller: 'CanvasCreateCourseSiteController',
