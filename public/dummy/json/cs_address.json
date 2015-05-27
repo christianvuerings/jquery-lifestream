@@ -46,14 +46,39 @@
         "fieldName": "address2",
         "campusSolutionsName": "ADDRESS2",
         "isRequired": false
+      },
+      "address3": {
+        "fieldName": "address3",
+        "campusSolutionsName": "ADDRESS3",
+        "isRequired": false
+      },
+      "address4": {
+        "fieldName": "address4",
+        "campusSolutionsName": "ADDRESS4",
+        "isRequired": false
+      },
+      "city": {
+        "fieldName": "city",
+        "campusSolutionsName": "CITY",
+        "isRequired": false
+      },
+      "state": {
+        "fieldName": "state",
+        "campusSolutionsName": "STATE",
+        "isRequired": false
+      },
+      "postal": {
+        "fieldName": "postal",
+        "campusSolutionsName": "POSTAL",
+        "isRequired": false
       }
     }
   },
   "lastModified": {
-    "hash": "14b95d287890dfa6b7d3b21335ce4333fac7eafc",
+    "hash": "1819fadd747487b3fd263c9c7b4a547bbb63ad45",
     "timestamp": {
-      "epoch": 1432743778,
-      "dateTime": "2015-05-27T09:22:58-07:00",
+      "epoch": 1432761543,
+      "dateTime": "2015-05-27T14:19:03-07:00",
       "dateString": "5/27"
     }
   },
