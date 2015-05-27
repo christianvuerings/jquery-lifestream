@@ -6,11 +6,11 @@ describe CampusSolutionsController do
     @user_id = rand(99999).to_s
   end
 
-  shared_examples 'an empty feed' do
-    it 'has no content' do
+  shared_examples 'an unauthenticated user' do
+    it 'returns 401' do
       get feed
-      json = JSON.parse(response.body)
-      expect(json).to eq({})
+      expect(response.status).to eq 401
+      expect(response.body.strip).to eq ''
     end
   end
 
@@ -27,7 +27,7 @@ describe CampusSolutionsController do
   context 'country feed' do
     let(:feed) { :country }
     context 'non-authenticated user' do
-      it_behaves_like 'an empty feed'
+      it_behaves_like 'an unauthenticated user'
     end
 
     context 'authenticated user' do
@@ -40,7 +40,7 @@ describe CampusSolutionsController do
   context 'state feed' do
     let(:feed) { :state }
     context 'non-authenticated user' do
-      it_behaves_like 'an empty feed'
+      it_behaves_like 'an unauthenticated user'
     end
 
     context 'authenticated user' do
@@ -53,13 +53,59 @@ describe CampusSolutionsController do
   context 'address feed' do
     let(:feed) { :address }
     context 'non-authenticated user' do
-      it_behaves_like 'an empty feed'
+      it_behaves_like 'an unauthenticated user'
     end
 
     context 'authenticated user' do
       let(:user) { @user_id }
       let(:feed_key) { 'addresses' }
       it_behaves_like 'a successful feed'
+      it 'has some field mapping info' do
+        session['user_id'] = user
+        get feed
+        json = JSON.parse(response.body)
+        expect(json['feed']['fields']['country']['campusSolutionsName']).to eq 'COUNTRY'
+      end
+    end
+  end
+
+  context 'updating an address' do
+    it 'should not let an unauthenticated user post' do
+      post :address, {format: 'json', uid: '100'}
+      expect(response.status).to eq 401
+    end
+
+    context 'authenticated user' do
+      before do
+        session['user_id'] = '1234'
+        User::Auth.stub(:where).and_return([User::Auth.new(uid: '1234', is_superuser: true, active: true)])
+      end
+      it 'should let an authenticated user post' do
+        post :update_address,
+             {
+               bogus_field: 'abc',
+               country: 'USA',
+               address1: '1 Test Lane',
+               address2: 'Suite F',
+               address3: 'Box 4',
+               address4: 'Pigeonhole Delta',
+               city: 'Testville',
+               state: 'TN',
+               postal: '12345'
+             }
+        expect(response.status).to eq 200
+        json = JSON.parse(response.body)
+        expect(json['updated']).to eq true
+        expect(json['updatedFields']['country']).to eq 'USA'
+        expect(json['updatedFields']['address1']).to eq '1 Test Lane'
+        expect(json['updatedFields']['address2']).to eq 'Suite F'
+        expect(json['updatedFields']['address3']).to eq 'Box 4'
+        expect(json['updatedFields']['address4']).to eq 'Pigeonhole Delta'
+        expect(json['updatedFields']['city']).to eq 'Testville'
+        expect(json['updatedFields']['state']).to eq 'TN'
+        expect(json['updatedFields']['postal']).to eq '12345'
+        expect(json['updatedFields']['bogus_field']).to be_nil
+      end
     end
   end
 end
