@@ -143,11 +143,7 @@
     };
 
     $scope.noUserSelected = function() {
-      if ($scope.selectedUser) {
-        return false;
-      } else {
-        return true;
-      }
+      return !$scope.selectedUser;
     };
 
     var checkAuthorization = function() {
