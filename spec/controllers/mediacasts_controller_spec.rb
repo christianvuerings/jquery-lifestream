@@ -55,7 +55,7 @@ describe MediacastsController do
               ]
             }
           ]
-          MyAcademics::Teaching.any_instance.should_receive(:courses_list_from_ccns).once.and_return courses_list
+          expect_any_instance_of(MyAcademics::Teaching).to receive(:courses_list_from_ccns).once.and_return courses_list
         end
         it 'should escape special characters in dept name' do
           json = post_course malay_100A

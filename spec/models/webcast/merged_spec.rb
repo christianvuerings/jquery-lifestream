@@ -10,7 +10,7 @@ describe Webcast::Merged do
         Webcast::Merged.new(ldap_uid, 2014, 'B', [1], options).get_feed
       end
       before do
-        MyAcademics::Teaching.should_not_receive :new
+        expect_any_instance_of(MyAcademics::Teaching).not_to receive :new
       end
       it 'returns system status when authenticated' do
         expect(feed[:system_status]['is_sign_up_active']).to be true
@@ -47,7 +47,7 @@ describe Webcast::Merged do
             ]
           }
         ]
-        MyAcademics::Teaching.any_instance.should_receive(:courses_list_from_ccns).once.and_return courses_list
+        expect_any_instance_of(MyAcademics::Teaching).to receive(:courses_list_from_ccns).once.and_return courses_list
       end
       it 'returns one match media' do
         spring_2014 = feed[:media][2014]['B']
@@ -101,7 +101,7 @@ describe Webcast::Merged do
             ]
           }
         ]
-        MyAcademics::Teaching.any_instance.should_receive(:courses_list_from_ccns).once.and_return courses_list
+        expect_any_instance_of(MyAcademics::Teaching).to receive(:courses_list_from_ccns).once.and_return courses_list
       end
       it 'returns course media' do
         expect(feed[:video_error_message]).to be_nil
@@ -149,7 +149,7 @@ describe Webcast::Merged do
             ]
           }
         ]
-        MyAcademics::Teaching.any_instance.should_receive(:courses_list_from_ccns).once.and_return courses_list
+        expect_any_instance_of(MyAcademics::Teaching).to receive(:courses_list_from_ccns).once.and_return courses_list
       end
       it 'returns course media' do
         expect(feed[:video_error_message]).to be_nil
