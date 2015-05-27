@@ -32,7 +32,7 @@ module Canvas
           end
         end
       end
-      Webcast::Merged.new(@term_yr, @term_cd, ccn_list, @options).get_feed
+      Webcast::Merged.new(@uid, @term_yr, @term_cd, ccn_list, @options).get_feed
     end
 
     def empty_feed

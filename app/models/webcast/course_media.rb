@@ -30,20 +30,17 @@ module Webcast
           :proxyErrorMessage => error_message || media_hash[:body]
         }
       end
-      feed = {}
+      media_per_ccn = {}
       @ccn_list.each do |ccn|
-        key = Webcast::CourseMedia.id_per_ccn(@year, @term, ccn)
         data = media_hash[ccn]
         if data
           videos = get_videos_as_json data
           audio = get_audio_as_json data
           itunes = get_itunes_as_json data
-          feed[key] = videos.merge(audio).merge(itunes)
-        else
-          feed[key] = Webcast::Recordings::ERRORS
+          media_per_ccn[ccn] = videos.merge(audio).merge(itunes)
         end
       end
-      feed
+      media_per_ccn
     end
 
     def get_media_hash
