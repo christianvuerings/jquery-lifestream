@@ -76,7 +76,8 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .bc-form-input-select,
-.bc-canvas-embedded .bc-canvas-embedded-roster-select {
+.bc-canvas-embedded .bc-canvas-embedded-roster-select,
+.bc-canvas-embedded .bc-canvas-embedded-form-select {
   -moz-appearance: none;
   -webkit-appearance: none;
   background: url('../images/canvas/select-menu-arrow-down.svg') no-repeat calc(100% - 8px) 50% $cc-color-white;
