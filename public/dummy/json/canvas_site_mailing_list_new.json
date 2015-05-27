@@ -12,10 +12,8 @@
     }
   },
   "mailingList": {
-    "name": "chem_3a-spring-2015",
+    "name": "3a_spring_15_chemical_structure_and_reactivity-sp15",
     "domain": "bcourses-lists.example.com",
     "state": "unregistered"
-  },
-  "displayError": "badRequest",
-  "badRequestError": "Mailing list name \"lab_goes_boom\" is already taken."
+  }
 }

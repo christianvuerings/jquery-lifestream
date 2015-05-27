@@ -62,7 +62,7 @@ describe CanvasMailingListsController do
     include_examples 'authorization and error handling'
 
     it 'returns a fake mailing list with time last populated' do
-      fake_created_list = fake_mailing_list('canvas_site_mailing_list_created.json')
+      fake_created_list = fake_mailing_list('canvas_site_mailing_list_populated_success.json')
       allow(MailingLists::SiteMailingList).to receive(:find_by).and_return fake_created_list
       allow(fake_created_list).to receive(:populate)
 
@@ -70,6 +70,21 @@ describe CanvasMailingListsController do
       expect(response.status).to eq 200
       expect(response.body).to include '"state":"created"'
       expect(response.body).to include '"timeLastPopulated"'
+    end
+  end
+
+  describe '#delete' do
+    let(:make_request) { delete :destroy, canvas_course_id: course_id  }
+    include_examples 'authorization and error handling'
+
+    it 'returns a success response' do
+      fake_list = instance_double('MailingLists::SiteMailingList')
+      allow(MailingLists::SiteMailingList).to receive(:find_by).and_return fake_list
+      allow(fake_list).to receive(:destroy).and_return true
+
+      make_request
+      expect(response.status).to eq 200
+      expect(response.body).to include '"success":true'
     end
   end
 
