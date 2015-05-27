@@ -151,6 +151,11 @@
       controller: 'CanvasCourseGradeExportController',
       isBcourses: true
     }).
+    when('/canvas/site_mailing_list', {
+      templateUrl: 'canvas_embedded/site_mailing_list.html',
+      controller: 'CanvasSiteMailingListController',
+      isBcourses: true
+    }).
     when('/canvas/user_provision', {
       templateUrl: 'canvas_embedded/user_provision.html',
       controller: 'CanvasUserProvisionController',

@@ -10,7 +10,6 @@ class CanvasMailingListsController < ApplicationController
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def authorize_mailing_list_administration
-    raise ArgumentError, 'No Canvas Course ID in request' if canvas_course_id.blank?
     authorize current_user, :can_administrate_canvas?
   end
 
@@ -24,7 +23,7 @@ class CanvasMailingListsController < ApplicationController
   # POST /api/academics/canvas/mailing_lists/:canvas_course_id/create
 
   def create
-    list = MailingLists::SiteMailingList.create canvas_site_id: canvas_course_id.to_s, list_name: params['list_name']
+    list = MailingLists::SiteMailingList.create canvas_site_id: canvas_course_id.to_s, list_name: params['listName']
     render json: list.to_json
   end
 
@@ -34,6 +33,16 @@ class CanvasMailingListsController < ApplicationController
     if (list = MailingLists::SiteMailingList.find_by canvas_site_id: canvas_course_id.to_s)
       list.populate
       render json: list.to_json
+    else
+      raise Errors::BadRequestError, "Bad course site ID #{canvas_course_id}"
+    end
+  end
+
+ # POST /api/academics/canvas/mailing_lists/:canvas_course_id/delete
+
+  def destroy
+    if (list = MailingLists::SiteMailingList.find_by canvas_site_id: canvas_course_id.to_s)
+      render json: {success: list.destroy}
     else
       raise Errors::BadRequestError, "Bad course site ID #{canvas_course_id}"
     end
