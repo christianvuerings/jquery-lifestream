@@ -5,6 +5,15 @@
 
 /* Note: Canvas files need to referenced with a full URL because the origin for this file is the CalCentral server */
 
+/*
+  Hides scrollbar applied to LTI embedded iframe in Canvas
+  Resolves issue with embedded iframe resizing where scrollbar in Chrome causes scrollHeight to shift between two values
+  with each height update applied by bcIframeResize directive.
+*/
+#tool_content::-webkit-scrollbar {
+  display: none;
+}
+
 /* Canvas Header */
 #header {
   background: #003262 url(/canvas/bcourses_background_2628x72.png) no-repeat 0 0;
