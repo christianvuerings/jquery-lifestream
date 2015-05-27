@@ -142,6 +142,10 @@
       });
     };
 
+    $scope.noUserSelected = function() {
+      return !$scope.selectedUser;
+    };
+
     var checkAuthorization = function() {
       canvasSharedFactory.courseUserRoles($scope.canvasCourseId).success(function(data) {
         $scope.courseUserRoles = data.roles;
