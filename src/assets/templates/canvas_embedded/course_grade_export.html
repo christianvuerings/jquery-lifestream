@@ -118,19 +118,17 @@
 
       <div class="row collapse">
         <div class="medium-12 columns">
-          <div class="bc-notice-box bc-notice-warning bc-radius bc-page-course-grade-export-error-notice cc-clearfix-container">
-            <div class="cc-left bc-page-course-grade-export-error-notice-cell">
-              <i class="fa fa-exclamation-triangle cc-icon-yellow bc-page-course-grade-export-error-notice-icon"></i>
-            </div>
-            <div class="bc-page-course-grade-export-error-notice-cell" data-ng-if="noGradingStandardEnabled && !mutedAssignmentsPresent">
+          <div class="bc-alert cc-clearfix-container">
+            <i class="fa fa-exclamation-triangle cc-icon-yellow"></i>
+            <span data-ng-if="noGradingStandardEnabled && !mutedAssignmentsPresent">
               In order to download E-Grades, a <strong>grading scheme</strong> must be <strong>enabled</strong>.
-            </div>
-            <div class="bc-page-course-grade-export-error-notice-cell" data-ng-if="!noGradingStandardEnabled && mutedAssignmentsPresent">
+            </span>
+            <span data-ng-if="!noGradingStandardEnabled && mutedAssignmentsPresent">
               In order to download E-Grades, all <strong>assignments</strong> must be <strong>unmuted</strong>.
-            </div>
-            <div class="bc-page-course-grade-export-error-notice-cell" data-ng-if="noGradingStandardEnabled && mutedAssignmentsPresent">
+            </span>
+            <span data-ng-if="noGradingStandardEnabled && mutedAssignmentsPresent">
               In order to download E-Grades, a <strong>grading scheme</strong> must be <strong>enabled</strong> and all <strong>assignments</strong> must be <strong>unmuted</strong>.
-            </div>
+            </span>
           </div>
         </div>
       </div>
