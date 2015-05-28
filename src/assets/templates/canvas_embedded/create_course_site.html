@@ -247,8 +247,10 @@
             <div data-ng-include src="'canvas_embedded/_shared/background_job_error.html'"></div>
             <div class="row bc-page-create-course-site-step-options">
               <div class="medium-12 columns">
-                <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showConfirmation()" type="button" aria-control="bc-page-create-course-site-confirmation-step" aria-label="Go Back to Site Details Confirmation">&lt;&lt; Back</button>
-                <button class="bc-canvas-button bc-canvas-button-primary" type="button" data-ng-click="fetchFeed()" type="button" aria-control="bc-page-create-course-site-selecting-step" aria-label="Start over course site creation process">Start Over</button>
+                <div class="bc-form-actions">
+                  <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showConfirmation()" type="button" aria-control="bc-page-create-course-site-confirmation-step" aria-label="Go Back to Site Details Confirmation">Back</button>
+                  <button class="bc-canvas-button bc-canvas-button-primary" type="button" data-ng-click="fetchFeed()" type="button" aria-control="bc-page-create-course-site-selecting-step" aria-label="Start over course site creation process">Start Over</button>
+                </div>
               </div>
             </div>
           </div>
