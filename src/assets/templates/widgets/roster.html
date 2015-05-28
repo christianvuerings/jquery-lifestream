@@ -44,7 +44,10 @@
       </div>
       <div class="cc-page-roster-student-name" data-ng-bind="student.first_name"></div>
       <div class="cc-page-roster-student-name"><strong data-ng-bind="student.last_name"></strong></div>
-      <div class="cc-print-hide" data-ng-bind="student.student_id"></div>
+      <div class="cc-print-hide">
+        <span class="cc-visuallyhidden">Student ID: </span>
+        <span data-ng-bind="student.student_id"></span>
+      </div>
     </li>
   </ul>
 
