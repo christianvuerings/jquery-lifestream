@@ -96,10 +96,15 @@
                 <div class="bc-page-help-notice bc-page-create-course-site-help-notice">
                   <i class="fa fa-question-circle cc-left bc-page-help-notice-icon"></i>
                   <div class="bc-page-help-notice-left-margin">
-                    <button class="bc-button-link" data-ng-click="toggle.displayHelp = !toggle.displayHelp" aria-controls="section-selection-help">
-                      Need help deciding which official sections to select?
+                    <button class="bc-button-link" data-ng-click="toggle.displayHelp = !toggle.displayHelp"
+                      aria-haspopup="true"
+                      aria-controls="section-selection-help"
+                      data-ng-attr-aria-expanded="{{toggle.displayHelp}}">
+                      <span data-ng-if="!toggle.displayHelp" class="cc-visuallyhidden">Show Section Selection Help</span>
+                      <span data-ng-if="toggle.displayHelp" class="cc-visuallyhidden">Hide Section Selection Help</span>
+                      <span data-ng-attr-aria-hidden="{{true}}">Need help deciding which official sections to select?</span>
                     </button>
-                    <div id="section-selection-help" class="bc-page-help-notice-content" data-ng-if="toggle.displayHelp" data-ng-attr-aria-expanded="{{toggle.displayHelp}}" role="region">
+                    <div id="section-selection-help" class="bc-page-help-notice-content" data-ng-if="toggle.displayHelp" aria-live="polite">
                       <p>If you have a course with multiple sections, you will need to decide whether you want to:</p>
                       <ol class="bc-page-create-course-site-help-notice-ordered-list">
                         <li>Create one, single course site which includes official sections for both your primary and secondary sections, or</li>
@@ -110,6 +115,7 @@
                       </p>
                     </div>
                   </div>
+
                 </div>
 
               </div>
