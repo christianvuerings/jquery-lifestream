@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Canvas::TurnitinReporter do
   let!(:fake_courses_report_proxy) { Canvas::CoursesReport.new(fake: true, account_id: Settings.canvas_proxy.turnitin_account_id) }
+  let(:term_id) {'TERM:2015-B'}
+  subject {Canvas::TurnitinReporter.new(term_id)}
 
   context 'with recorded test data' do
-    let(:term_id) {'TERM:2015-B'}
-    subject {Canvas::TurnitinReporter.new(term_id)}
     before do
       allow(Settings.canvas_proxy).to receive(:fake).and_return(true)
     end
@@ -37,6 +37,25 @@ describe Canvas::TurnitinReporter do
         expect(parsed_csv.length).to eq 3
       end
     end
+  end
+
+  describe '#generate_csv' do
+    context 'when no enabled assignments were found' do
+      before do
+        allow(subject).to receive(:generate_report).and_return(
+          [{
+            'Total Enabled Courses' => 0,
+            'Total Enabled Assignments' => 0
+          }]
+        )
+      end
+      it 'produces a good CSV file' do
+        csv_filename = subject.generate_csv
+        parsed_csv = CSV.read(csv_filename, {headers: true})
+        expect(parsed_csv.length).to eq 1
+      end
+    end
+
   end
 
 end

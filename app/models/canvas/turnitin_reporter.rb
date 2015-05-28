@@ -52,7 +52,7 @@ module Canvas
 
     def generate_csv
       data_rows = generate_report
-      header_row = data_rows.first.keys if data_rows.length > 1
+      header_row = (data_rows.length > 1) ? data_rows.first.keys : []
       header_row.concat data_rows.last.keys
       csv_filename = "#{@export_dir}/turnitin-#{file_safe(@sis_term_id)}-#{DateTime.now.strftime('%F')}.csv"
       make_csv(csv_filename, header_row, data_rows)
