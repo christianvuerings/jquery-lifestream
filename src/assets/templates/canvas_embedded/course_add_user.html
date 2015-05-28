@@ -6,7 +6,7 @@
 
   <div data-ng-hide="showError">
 
-    <div class="row collapse" data-ng-show="showAlerts">
+    <div class="row collapse" data-ng-show="showAlerts" role="alert">
       <div data-cc-spinner-directive>
 
         <div data-ng-show="noSearchTextAlert" class="bc-alert bc-alert-error bc-page-course-add-user-alert">
@@ -86,14 +86,14 @@
                   <select id="search-type" data-ng-model="searchType" data-ng-change="updateSearchTextType()" class="bc-form-input-select">
                     <option value="name">Last Name, First Name</option>
                     <option value="email">Email</option>
-                    <option value="ldap_user_id">CalNet UID</option>
+                    <option value="ldap_user_id" aria-label="CalNet U I D">CalNet UID</option>
                   </select>
                 </div>
               </div>
             </div>
 
             <div class="medium-2 columns bc-column-align-center">
-              <button id="submit-search" type="submit" class="bc-canvas-button bc-canvas-button-primary bc-full-wide">Go</button>
+              <button id="submit-search" type="submit" class="bc-canvas-button bc-canvas-button-primary bc-full-wide" aria-label="Perform User Search">Go</button>
             </div>
           </div>
 
@@ -105,31 +105,38 @@
     <div class="bc-page-help-notice">
       <i class="fa fa-question-circle cc-left bc-page-help-notice-icon"></i>
       <div class="bc-page-help-notice-left-margin">
-        <button class="bc-button-link" data-ng-click="toggle.displayHelp = !toggle.displayHelp" aria-controls="bc-page-help-notice">
-          Need help finding someone?
+        <button class="bc-button-link" data-ng-click="toggle.displayHelp = !toggle.displayHelp"
+          aria-controls="bc-page-help-notice"
+          aria-haspopup="true"
+          data-ng-attr-aria-expanded="{{toggle.displayHelp}}">
+          <span data-ng-if="!toggle.displayHelp" class="cc-visuallyhidden">Show User Search Help</span>
+          <span data-ng-if="toggle.displayHelp" class="cc-visuallyhidden">Hide User Search Help</span>
+          <span aria-hidden="true">Need help finding someone?</span>
         </button>
-        <div id="bc-page-help-notice" class="bc-page-help-notice-content bc-user-search-notice" data-ng-show="toggle.displayHelp" data-ng-attr-aria-expanded="{{toggle.displayHelp}}" role="region">
-          <!-- Note: This help text content is also maintained in the public/canvas/canvas-customization.js script -->
-          <dl class="bc-user-search-notice-description-list">
-            <dt class="bc-user-search-notice-description-term">UC Berkeley Faculty, Staff and Students</dt>
-            <dd class="bc-user-search-notice-description">
-              UC Berkeley faculty, staff and students <em>(regular and concurrent enrollment)</em> can be found in the
-              <a href="http://directory.berkeley.edu/">CalNet Directory</a>
-              and be added to your site using their CalNet UID or official email address.
-            </dd>
-            <dt class="bc-user-search-notice-description-term">Guests</dt>
-            <dd class="bc-user-search-notice-description">
-              Peers from other institutions or guests from the community must be sponsored with a
-              <a href="https://idc.berkeley.edu/guests/">CalNet Guest Account</a>.
-              Do NOT request a CalNet Guest Account for concurrent enrollment students.
-            </dd>
-            <dt class="bc-user-search-notice-description-term">More Information</dt>
-            <dd class="bc-user-search-notice-description">
-              Go to the
-              <a href="http://ets.berkeley.edu/bcourses/how-add-people-your-course">bCourses FAQ</a>
-              for more information about adding people to bCourse sites.
-            </dd>
-          </dl>
+        <div aria-live="polite">
+          <div id="bc-page-help-notice" class="bc-page-help-notice-content bc-user-search-notice" data-ng-show="toggle.displayHelp">
+            <!-- Note: This help text content is also maintained in the public/canvas/canvas-customization.js script -->
+            <dl class="bc-user-search-notice-description-list">
+              <dt class="bc-user-search-notice-description-term">UC Berkeley Faculty, Staff and Students</dt>
+              <dd class="bc-user-search-notice-description">
+                UC Berkeley faculty, staff and students <em>(regular and concurrent enrollment)</em> can be found in the
+                <a href="http://directory.berkeley.edu/">CalNet Directory</a>
+                and be added to your site using their CalNet UID or official email address.
+              </dd>
+              <dt class="bc-user-search-notice-description-term">Guests</dt>
+              <dd class="bc-user-search-notice-description">
+                Peers from other institutions or guests from the community must be sponsored with a
+                <a href="https://idc.berkeley.edu/guests/">CalNet Guest Account</a>.
+                Do NOT request a CalNet Guest Account for concurrent enrollment students.
+              </dd>
+              <dt class="bc-user-search-notice-description-term">More Information</dt>
+              <dd class="bc-user-search-notice-description">
+                Go to the
+                <a href="http://ets.berkeley.edu/bcourses/how-add-people-your-course">bCourses FAQ</a>
+                for more information about adding people to bCourse sites.
+              </dd>
+            </dl>
+          </div>
         </div>
       </div>
     </div>
