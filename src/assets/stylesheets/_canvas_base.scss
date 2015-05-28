@@ -24,7 +24,8 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   form input,
   form input[type="text"],
   form input[type="number"],
-  form input[type="password"] {
+  form input[type="password"],
+  form textarea {
     padding: 8px 12px;
     &, &:hover, &:focus {
       border-radius: 3px;
