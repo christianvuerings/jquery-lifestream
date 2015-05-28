@@ -3,7 +3,7 @@
     {
       "request": {
         "method": "get",
-        "uri": "https://ucberkeley.beta.instructure.com/api/v1/courses/1234001/assignments?per_page=100",
+        "uri": "http://localhost:12345/api/v1/courses/1234001/assignments?per_page=100",
         "body": {
           "encoding": "US-ASCII",
           "string": ""
@@ -42,7 +42,7 @@
             "\"00b0d80f94c21a8601709930d3ffdb61\""
           ],
           "link": [
-            "<https://ucberkeley.beta.instructure.com/api/v1/courses/1234001/assignments?page=1&per_page=100>; rel=\"current\",<https://ucberkeley.beta.instructure.com/api/v1/courses/1234001/assignments?page=1&per_page=100>; rel=\"first\",<https://ucberkeley.beta.instructure.com/api/v1/courses/1234001/assignments?page=1&per_page=100>; rel=\"last\""
+            "<http://localhost:12345/api/v1/courses/1234001/assignments?page=1&per_page=100>; rel=\"current\",<http://localhost:12345/api/v1/courses/1234001/assignments?page=1&per_page=100>; rel=\"first\",<http://localhost:12345/api/v1/courses/1234001/assignments?page=1&per_page=100>; rel=\"last\""
           ],
           "p3p": [
             "CP=\"None, see http://www.instructure.com/privacy-policy\""
@@ -126,7 +126,7 @@
               ],
               "has_submitted_submissions": false,
               "muted": false,
-              "html_url": "https://ucberkeley.beta.instructure.com/courses/1234001/assignments/6175848",
+              "html_url": "http://localhost:12345/courses/1234001/assignments/6175848",
               "has_overrides": false,
               "needs_grading_count": 0,
               "integration_id": null,
@@ -163,7 +163,7 @@
               ],
               "has_submitted_submissions": false,
               "muted": true,
-              "html_url": "https://ucberkeley.beta.instructure.com/courses/1234001/assignments/6175849",
+              "html_url": "http://localhost:12345/courses/1234001/assignments/6175849",
               "has_overrides": false,
               "needs_grading_count": 0,
               "integration_id": null,
@@ -179,6 +179,277 @@
         "http_version": null
       },
       "recorded_at": "Sat, 11 Apr 2015 03:01:23 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "http://localhost:12345/api/v1/courses/999999/assignments?per_page=100",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "must-revalidate, private, max-age=0"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Tue, 26 May 2015 20:22:43 GMT"
+          ],
+          "etag": [
+            "\"e14a488839c25d59fec9000454f7ff10\""
+          ],
+          "link": [
+            "<http://localhost:12345/api/v1/courses/999999/assignments?page=1&per_page=100>; rel=\"current\",<http://localhost:12345/api/v1/courses/999999/assignments?page=1&per_page=100>; rel=\"first\",<http://localhost:12345/api/v1/courses/999999/assignments?page=1&per_page=100>; rel=\"last\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "_csrf_token=No%2BQ0B1wQUB9F2nigLYP7IrmXzkSe8u7TfljHf7mUxICtvG%2FdyByeBt0XKnr5nWlv7EHbD0apOp0rDJ3tZAGeA%3D%3D; path=/; secure, canvas_session=ZEsRuuhLKYN96fR1gGDENA.2ZD1uY73vWgrLY6iLaKj4kE4IKe4jTtbQl6MNxqdUxaRYA2CKBoCgOgvAjo0qHlqVMxrTpmuU6KQJXqHWeGOcSVBFneFZx1-wIJD6P8hRGx-POBMF0ZYwlP18Lewd1zy.vZYj326ZJ9ERe_7Wse7xVJIsl5Y.VWTWGQ; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "at=190000000086506;dk=170000000000016;a=90242;g=yGkEvpxAPyTeKLHaHOxZqJNjMXbA5ZV86ZZ6139o;s=19;c=cluster19;z=us-east-1c;b=928756;m=928500;u=2.44;y=0.07;d=1.80;"
+          ],
+          "x-canvas-user-id": [
+            "190000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-rack-cache": [
+            "miss"
+          ],
+          "x-rate-limit-remaining": [
+            "700"
+          ],
+          "x-request-context-id": [
+            "66a6eefb-f37d-4b44-a7d8-bfd57f998a35"
+          ],
+          "x-request-cost": [
+            "4.242734047999998"
+          ],
+          "x-robots-tag": [
+            "none"
+          ],
+          "x-runtime": [
+            "6.042039"
+          ],
+          "x-session-id": [
+            "fa08ced0db6600818865557d35d68aa7"
+          ],
+          "x-ua-compatible": [
+            "IE=Edge,chrome=1"
+          ],
+          "transfer-encoding": [
+            "chunked"
+          ],
+          "connection": [
+            "keep-alive"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "x-sakai-token": [
+
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": [
+            {
+              "anonymous_peer_reviews": false,
+              "assignment_group_id": 1785,
+              "automatic_peer_reviews": false,
+              "created_at": "2015-05-21T14:59:47Z",
+              "description": "<p>The big kahuna.</p>",
+              "due_at": "2015-05-14T15:00:00Z",
+              "grade_group_students_individually": false,
+              "grading_standard_id": null,
+              "grading_type": "points",
+              "group_category_id": null,
+              "id": 99999991,
+              "lock_at": "2015-05-14T18:10:00Z",
+              "peer_reviews": false,
+              "points_possible": 40,
+              "position": 1,
+              "post_to_sis": null,
+              "unlock_at": "2015-05-14T18:00:00Z",
+              "updated_at": "2015-05-21T14:59:47Z",
+              "course_id": 999999,
+              "name": "Final Examination",
+              "submission_types": [
+                "online_text_entry",
+                "online_upload"
+              ],
+              "has_submitted_submissions": false,
+              "turnitin_enabled": true,
+              "turnitin_settings": {
+                "originality_report_visibility": "immediate",
+                "s_paper_check": true,
+                "internet_check": true,
+                "journal_check": true,
+                "exclude_biblio": true,
+                "exclude_quoted": true,
+                "exclude_small_matches_type": null,
+                "exclude_small_matches_value": null,
+                "submit_papers_to": true
+              },
+              "muted": false,
+              "html_url": "http://localhost:12345/courses/999999/assignments/99999991",
+              "has_overrides": false,
+              "needs_grading_count": 0,
+              "integration_id": null,
+              "integration_data": {
+
+              },
+              "published": true,
+              "unpublishable": true,
+              "locked_for_user": false,
+              "submissions_download_url": "http://localhost:12345/courses/999999/assignments/99999991/submissions?zip=1"
+            },
+            {
+              "anonymous_peer_reviews": null,
+              "assignment_group_id": 1744,
+              "automatic_peer_reviews": false,
+              "created_at": "2015-01-14T22:57:17Z",
+              "description": "<p>This assignment was created by Roll Call. Scores are automatically updated each time you take attendance. Please do not remove or rename this assignment.</p>",
+              "due_at": null,
+              "grade_group_students_individually": false,
+              "grading_standard_id": null,
+              "grading_type": "percent",
+              "group_category_id": null,
+              "id": 99999992,
+              "lock_at": null,
+              "peer_reviews": false,
+              "points_possible": 100,
+              "position": 14,
+              "post_to_sis": null,
+              "unlock_at": null,
+              "updated_at": "2015-03-11T17:22:20Z",
+              "course_id": 999999,
+              "name": "Roll Call Attendance",
+              "submission_types": [
+                "none"
+              ],
+              "has_submitted_submissions": false,
+              "turnitin_enabled": false,
+              "turnitin_settings": {
+                "originality_report_visibility": "immediate",
+                "s_paper_check": true,
+                "internet_check": true,
+                "journal_check": true,
+                "exclude_biblio": true,
+                "exclude_quoted": true,
+                "exclude_small_matches_type": null,
+                "exclude_small_matches_value": null,
+                "submit_papers_to": true
+              },
+              "muted": true,
+              "html_url": "http://localhost:12345/courses/999999/assignments/99999992",
+              "has_overrides": false,
+              "needs_grading_count": 0,
+              "integration_id": null,
+              "integration_data": {
+
+              },
+              "published": true,
+              "unpublishable": true,
+              "locked_for_user": false,
+              "submissions_download_url": "http://localhost:12345/courses/999999/assignments/99999992/submissions?zip=1"
+            },
+            {
+              "anonymous_peer_reviews": false,
+              "assignment_group_id": 1716,
+              "automatic_peer_reviews": false,
+              "created_at": "2015-01-20T22:24:36Z",
+              "description": "<p>Write an original paper.</p>",
+              "due_at": "2015-03-13T06:59:00Z",
+              "grade_group_students_individually": false,
+              "grading_standard_id": null,
+              "grading_type": "points",
+              "group_category_id": null,
+              "id": 99999993,
+              "lock_at": "2015-03-13T06:59:00Z",
+              "peer_reviews": false,
+              "points_possible": 6,
+              "position": 1,
+              "post_to_sis": null,
+              "unlock_at": null,
+              "updated_at": "2015-05-09T19:10:28Z",
+              "course_id": 999999,
+              "name": "WEEK 3: Extra Credit Assignment",
+              "submission_types": [
+                "online_text_entry",
+                "online_upload"
+              ],
+              "has_submitted_submissions": true,
+              "turnitin_enabled": true,
+              "turnitin_settings": {
+                "originality_report_visibility": "immediate",
+                "s_paper_check": true,
+                "internet_check": true,
+                "journal_check": true,
+                "exclude_biblio": true,
+                "exclude_quoted": true,
+                "exclude_small_matches_type": null,
+                "exclude_small_matches_value": null,
+                "submit_papers_to": true
+              },
+              "muted": false,
+              "html_url": "http://localhost:12345/courses/999999/assignments/99999993",
+              "has_overrides": false,
+              "needs_grading_count": 0,
+              "integration_id": null,
+              "integration_data": {
+
+              },
+              "allowed_extensions": [
+                "doc",
+                "docx"
+              ],
+              "published": true,
+              "unpublishable": false,
+              "locked_for_user": false,
+              "submissions_download_url": "http://localhost:12345/courses/999999/assignments/99999993/submissions?zip=1"
+            }
+          ]
+        },
+        "http_version": null
+      },
+      "recorded_at": "Tue, 26 May 2015 20:22:49 GMT"
     }
   ],
   "recorded_with": "VCR 2.9.3"

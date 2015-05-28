@@ -1,0 +1,3 @@
+canvas_course_id,course_id,short_name,long_name,canvas_account_id,account_id,canvas_term_id,term_id,status,start_date,end_date
+1234001,CRS:MEC_ENG-124A-2015-B,MEC ENG 124A - LEC 001,Introduction to Patent Applications,129440,,5343,TERM:2015-B,active,,
+999999,CRS:CLASSICS-45C-2015-B,CLASSICS 45C - LEC 002,Hellenism and Its Discontents,129440,,5343,TERM:2015-B,active,,
