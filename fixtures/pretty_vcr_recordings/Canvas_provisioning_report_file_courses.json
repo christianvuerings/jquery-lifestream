@@ -1,0 +1,104 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "http://localhost:12345/api/v1/files/57734545",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": "",
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "private, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Thu, 06 Jun 2013 23:10:22 GMT"
+          ],
+          "etag": [
+            "\"2943e4dabbeae47d3957157d244f1d91\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=FquPcbOJ3LZalYliqcCFfg.K-1nTMA6khUf6sZhKudTDyxLoqeAL1aGUFg0QyhlgnsfpA_iKnz5cb66mGDhCwSJ02s-Qcsyw13DPGs0kGIQtg.yCpolG7E4tJuH9Ewh5ZOliADEGM.UbEW3g; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-user-id": [
+            "10000003075918"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "30309520-b12c-0130-e424-02f885779982"
+          ],
+          "x-runtime": [
+            "60"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "525"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "id": 57734545,
+            "content-type": "text/csv",
+            "display_name": "provisioning_csv_26_May_2015_3904920150526.csv",
+            "filename": "provisioning_csv_26_May_2015_3904920150526.csv",
+            "url": "http://localhost:12345/files/57734545/download?download_frd=1&verifier=xx",
+            "size": 1596,
+            "created_at": "2013-06-06T16:10:17-07:00",
+            "updated_at": "2013-06-06T16:10:17-07:00",
+            "unlock_at": null,
+            "locked": false,
+            "hidden": false,
+            "lock_at": null,
+            "locked_for_user": false,
+            "hidden_for_user": false,
+            "thumbnail_url": null
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 06 Jun 2013 23:10:22 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}

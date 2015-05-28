@@ -1,0 +1,126 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://ucberkeley.beta.instructure.com/api/v1/accounts/129440/reports/provisioning_csv/39050",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "Authorization": [
+            ""
+          ],
+          "Cache-Control": [
+            "no-store"
+          ],
+          "Content-Type": [
+            "application/x-www-form-urlencoded"
+          ],
+          "x-sakai-token": [
+
+          ]
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "must-revalidate, private, max-age=0"
+          ],
+          "content-type": [
+            "application/json; charset=utf-8"
+          ],
+          "date": [
+            "Tue, 26 May 2015 19:54:19 GMT"
+          ],
+          "etag": [
+            "\"f9a0b4a4e7f978d5cafe64cd9d31e1d4\""
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "_csrf_token=O5%%2FPHJ5ogIAWvpM8BjSlzAcq%2BPWXZf%2FpNzaAQcBM0opQ%3D%3D; path=/; secure, canvas_session=_kNvwXbuu_M8UZeF_Ot56A.R0lL-rY-WuGy7FWRuePxMb7UeYQ0qFloqNGcIfOUxKqMPva8bvwQrbufedmJVKRx0qVHBJIScM4KXQLXJ5foFbAR2kaVYv5tLwhGxf9Uk4h5i8MXUe7etMGcNBvuv222.oMX6clMtFJAL-vrhPLJCfW9Lw2s.VWTPaw; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "200 OK"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-canvas-meta": [
+            "at=190000000086506;dk=170000000000016;a=90242;g=yGkEvpxAPyTeKLHaHOxZqJNjMXbA5ZV86ZZ6139o;s=19;c=cluster19;z=us-east-1b;b=883208;m=883272;u=0.13;y=0.01;d=0.05;"
+          ],
+          "x-canvas-user-id": [
+            "190000003057506"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-rack-cache": [
+            "miss"
+          ],
+          "x-rate-limit-remaining": [
+            "700"
+          ],
+          "x-request-context-id": [
+            "e93e073f-8e7f-4cd7-b2f0-dcbf88eadff9"
+          ],
+          "x-request-cost": [
+            "0.17964892099999544"
+          ],
+          "x-robots-tag": [
+            "none"
+          ],
+          "x-runtime": [
+            "0.216050"
+          ],
+          "x-session-id": [
+            "2e61a5d919ec4b274791147c57356892"
+          ],
+          "x-ua-compatible": [
+            "IE=Edge,chrome=1"
+          ],
+          "transfer-encoding": [
+            "chunked"
+          ],
+          "connection": [
+            "keep-alive"
+          ],
+          "Authorization": [
+            ""
+          ],
+          "x-sakai-token": [
+
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_json": {
+            "id": 39050,
+            "parameters": {
+              "courses": "1",
+              "enrollment_term": "sis_term_id:TERM:2015-B"
+            },
+            "progress": 100,
+            "status": "complete",
+            "report": "provisioning_csv",
+            "file_url": "http://localhost:12345/accounts/129440/files/57734545/download"
+          }
+        },
+        "http_version": null
+      },
+      "recorded_at": "Tue, 26 May 2015 19:54:19 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.9.3"
+}

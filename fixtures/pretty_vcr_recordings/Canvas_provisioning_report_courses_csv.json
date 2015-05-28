@@ -1,0 +1,224 @@
+{
+  "http_interactions": [
+    {
+      "request": {
+        "method": "get",
+        "uri": "http://localhost:12345/files/57734545/download?download_frd=1&verifier=xx",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "Faraday v0.8.7"
+          ],
+          "Authorization": "",
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 302,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "no-cache, no-store, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "text/html; charset=utf-8"
+          ],
+          "date": [
+            "Thu, 06 Jun 2013 23:10:23 GMT"
+          ],
+          "location": [
+            "https://cluster1-files.test.instructure.com/files/57734545/download?download_frd=1&verifier=xx"
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "pragma": [
+            "no-cache"
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=d_D5dc2ig0QCibIc6V1luA._SmNflnE4cXv7a6g5Z5OQJF4Bc4emYq5W2EcKEBZGYuBJGB-60D-CQb61HXOvjtU6uaPrUwCWAii8wNDqlhC1w.mVppXIG1YUuVyNFMoKtViEYbEG0.UbEW3w; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "302 Found"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-frame-options": [
+            "SAMEORIGIN"
+          ],
+          "x-request-context-id": [
+            "30c13e90-b12c-0130-e424-02f885779982"
+          ],
+          "x-runtime": [
+            "17"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "188"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "ASCII-8BIT",
+          "string": "",
+          "debug_xml": "<?xml version=\"1.0\"?>\n<html>\n  <body>You are being   <a href=\"https://cluster1-files.test.instructure.com/files/57734545/download?download_frd=1&amp;verifier=xx\">redirected</a>\n.</body>\n</html>\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 06 Jun 2013 23:10:23 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://cluster1-files.test.instructure.com/files/57734545/download?download_frd=1&verifier=xx",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "Faraday v0.8.7"
+          ],
+          "Authorization": "",
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 302,
+          "message": null
+        },
+        "headers": {
+          "cache-control": [
+            "no-cache, no-store, max-age=0, must-revalidate"
+          ],
+          "content-type": [
+            "text/html; charset=utf-8"
+          ],
+          "date": [
+            "Thu, 06 Jun 2013 23:10:24 GMT"
+          ],
+          "location": [
+            "https://instructure-uploads.s3.amazonaws.com/account_90242/attachments/57734545/provisioning_csv_06_Jun_2013_11924_16733-0.csv?AWSAccessKeyId=XX&Expires=1371078624&Signature=6%XX%3D&response-content-disposition=attachment%3B%20filename%3D%22provisioning_csv_06_Jun_2013_11938_.csv%22%3B%20filename%2A%3DUTF-8%27%27provisioning%255Fcsv%255F06%255FJun%255F2013%255F11938%255F.csv"
+          ],
+          "p3p": [
+            "CP=\"None, see http://www.instructure.com/privacy-policy\""
+          ],
+          "pragma": [
+            "no-cache"
+          ],
+          "server": [
+            "Apache"
+          ],
+          "set-cookie": [
+            "canvas_session=FnkfRyvCIrL5vbXhEr8Ijw.s6P_TFEER3YNkC32kRxbQXuEfoHPyuGa_-YuxWNw7J2bM8ibf4mOe0uIXeKSQomx_cuHUyMj5ivV0P6NQ9uNBg.C4AT_LFdca1ibRnCNuxsHGrac_Q.UbEW4A; path=/; secure; HttpOnly"
+          ],
+          "status": [
+            "302 Found"
+          ],
+          "vary": [
+            "Accept-Encoding"
+          ],
+          "x-request-context-id": [
+            "313af420-b12c-0130-1d53-02f885576c21"
+          ],
+          "x-runtime": [
+            "22"
+          ],
+          "x-ua-compatible": [
+            "IE=edge,chrome=1"
+          ],
+          "content-length": [
+            "361"
+          ],
+          "connection": [
+            "keep-alive"
+          ]
+        },
+        "body": {
+          "encoding": "ASCII-8BIT",
+          "string": "",
+          "debug_xml": "<?xml version=\"1.0\"?>\n<html>\n  <body>You are being   <a href=\"https://instructure-uploads.s3.amazonaws.com/account_90242/attachments/57734545/provisioning_csv_06_Jun_2013_11924_16733-0.csv?AWSAccessKeyId=xx&amp;Expires=1371078624&amp;Signature=6%xx%3D&amp;response-content-disposition=attachment%3B%20filename%3D%22provisioning_csv_06_Jun_2013_11938_.csv%22%3B%20filename%2A%3DUTF-8%27%27provisioning%255Fcsv%255F06%255FJun%255F2013%255F11938%255F.csv\">redirected</a>\n.</body>\n</html>\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 06 Jun 2013 23:10:24 GMT"
+    },
+    {
+      "request": {
+        "method": "get",
+        "uri": "https://instructure-uploads.s3.amazonaws.com/account_90242/attachments/57734545/provisioning_csv_06_Jun_2013_11924_16733-0.csv?AWSAccessKeyId=xx&Expires=1371078624&Signature=6%xx%3D&response-content-disposition=attachment%3B%20filename%3D%22provisioning_csv_06_Jun_2013_11938_.csv%22%3B%20filename%2A%3DUTF-8%27%27provisioning%255Fcsv%255F06%255FJun%255F2013%255F11938%255F.csv",
+        "body": {
+          "encoding": "US-ASCII",
+          "string": ""
+        },
+        "headers": {
+          "User-Agent": [
+            "Faraday v0.8.7"
+          ],
+          "Authorization": "",
+          "x-sakai-token": null
+        }
+      },
+      "response": {
+        "status": {
+          "code": 200,
+          "message": null
+        },
+        "headers": {
+          "x-amz-id-2": [
+            "uLT46/ycPlHAlI9g15s4o21pGDllTr58PBnFiDpQUcw8hOobFnQaCMW0Y9MAMPqi"
+          ],
+          "x-amz-request-id": [
+            "890955B639B8D63F"
+          ],
+          "date": [
+            "Thu, 06 Jun 2013 23:10:26 GMT"
+          ],
+          "content-disposition": [
+            "attachment; filename=\"provisioning_csv_06_Jun_2013_11938_.csv\"; filename*=UTF-8''provisioning%5Fcsv%5F06%5FJun%5F2013%5F11938%5F.csv"
+          ],
+          "last-modified": [
+            "Thu, 06 Jun 2013 16:46:28 GMT"
+          ],
+          "etag": [
+            "\"dd2f921d83071ed29f9fcc9ff4cd5a1e\""
+          ],
+          "accept-ranges": [
+            "bytes"
+          ],
+          "content-type": [
+            "text/csv"
+          ],
+          "content-length": [
+            "1596"
+          ],
+          "server": [
+            "AmazonS3"
+          ]
+        },
+        "body": {
+          "encoding": "US-ASCII",
+          "string": "",
+          "debug_xml": "<?xml version=\"1.0\"?>\n"
+        },
+        "http_version": null
+      },
+      "recorded_at": "Thu, 06 Jun 2013 23:10:25 GMT"
+    }
+  ],
+  "recorded_with": "VCR 2.5.0"
+}
