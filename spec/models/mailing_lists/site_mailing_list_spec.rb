@@ -131,6 +131,14 @@ describe MailingLists::SiteMailingList do
     before { described_class.create(canvas_site_id: canvas_site_id)  }
     let(:list) { described_class.find_by(canvas_site_id: canvas_site_id) }
 
+    context 'error from Calmail' do
+      before { allow_any_instance_of(Calmail::CheckNamespace).to receive(:name_available?).and_return(response: {statusCode: 503}) }
+
+      it 'reports the error' do
+        expect(response['errorMessages']).to include('There was an error connecting to Calmail.')
+      end
+    end
+
     context 'name does not exist in Calmail' do
       before { allow_any_instance_of(Calmail::CheckNamespace).to receive(:name_available?).and_return(response: true) }
 

@@ -80,7 +80,7 @@
       return canvasSiteMailingListFactory.getSiteMailingList($scope.canvasSite.canvasCourseId).success(function(data) {
         $scope.isConfirmingCreation = false;
         setStateFromData(data);
-        if (!$scope.listCreated) {
+        if (!$scope.listCreated && !$scope.alerts.error.count) {
           $scope.alerts.error.push('You cannot update memberships before the list is created in CalMail.');
         }
       }).error(function() {

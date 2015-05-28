@@ -115,7 +115,7 @@ module MailingLists
     end
 
     def check_for_creation
-      self.state = 'created' if !name_available?
+      self.state = 'created' if name_available? == false
     end
 
     def generate_list_name
@@ -150,14 +150,18 @@ module MailingLists
       self.state = 'unregistered'
       get_canvas_site
       self.list_name ||= generate_list_name
-      if !name_available?
+      if name_available? == false
         self.request_failure = "Mailing list name \"#{self.list_name}\" is already taken."
       end
     end
 
     def name_available?
-      if (check_namespace = Calmail::CheckNamespace.new.name_available? self.list_name)
+      if (check_namespace = Calmail::CheckNamespace.new.name_available? self.list_name) &&
+          (check_namespace[:response] == true || check_namespace[:response] == false)
         check_namespace[:response]
+      else
+        self.request_failure = 'There was an error connecting to Calmail.'
+        nil
       end
     end
 
