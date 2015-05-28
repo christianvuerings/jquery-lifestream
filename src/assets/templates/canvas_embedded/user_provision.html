@@ -11,14 +11,21 @@
 
               <div class="row">
                 <div class="small-2 columns">
-                  <label for="cc-page-user-provision-uid-list" class="bc-form-label">UID List</label>
+                  <label for="cc-page-user-provision-uid-list" class="bc-form-label">
+                    <span aria-hidden="true">UID</span>
+                    <span class="cc-visuallyhidden">U I D</span>
+                    List
+                  </label>
                 </div>
                 <div class="small-10 columns">
                   <textarea id="cc-page-user-provision-uid-list" class="cc-page-user-provision-uid-list-input" rows="4" name="uids" data-ng-model="rawUids"
                     placeholder="Paste your list of UIDs here organized one UID per a line, or separated by spaces or commas."></textarea>
 
                   <small class="error" data-ng-show="checkPerformed && userImportForm.uids.$error.required">
-                    You must provide at least one UID.
+                    You must provide at least one
+                    <span aria-hidden="true">UID</span>
+                    <span class="cc-visuallyhidden">U I D</span>
+                    .
                   </small>
                   <small class="error" data-ng-show="userImportForm.uids.$error.ccNumericList">
                     The following items in your list are not numeric: <span data-ng-bind="invalidValues.join(', ')"></span>
