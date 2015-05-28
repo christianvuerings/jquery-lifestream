@@ -28,6 +28,7 @@ module CampusOracle
         result[:education_level] = educ_level_translator.translate(result["educ_level"])
         result[:california_residency] = cal_residency_translator.translate(result["cal_residency_flag"])
         result[:roles] = roles_from_campus_row(result)
+        result.merge!(Berkeley::SpecialRegistrationProgram.attributes_from_code(result['reg_special_pgm_cd']))
         result
       else
         {}
