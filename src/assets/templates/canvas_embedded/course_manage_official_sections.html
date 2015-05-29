@@ -2,7 +2,7 @@
 
   <div data-ng-if="!feedFetched" data-cc-spinner-directive></div>
 
-  <div data-ng-if="feedFetched && !displayError">
+  <div data-ng-if="feedFetched && !displayError" aria-live="polite">
 
     <div data-ng-if="currentWorkflowStep === 'staging'">
       <div data-ng-include src="'canvas_embedded/_shared/maintenance_notice.html'"></div>
@@ -14,11 +14,11 @@
 
     <div data-ng-if="currentWorkflowStep === 'preview'">
 
-      <div data-ng-show="jobStatusMessage !== ''" class="bc-alert" data-ng-class="{'bc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'bc-alert-success':(lastJobStatus === 'sectionEditsCompleted')}" id="bc-page-course-official-sections-job-status-notice" data-ng-attr-aria-hidden="{{jobStatusMessage === ''}}">
+      <div data-ng-show="jobStatusMessage !== ''" class="bc-alert" data-ng-class="{'bc-notice-error':(lastJobStatus !== 'sectionEditsCompleted'), 'bc-alert-success':(lastJobStatus === 'sectionEditsCompleted')}" id="bc-page-course-official-sections-job-status-notice" data-ng-attr-aria-hidden="{{jobStatusMessage === ''}}" role="alert">
         <span data-ng-bind="jobStatusMessage"></span>
         <div class="bc-alert-close-button-container">
           <button class="fa fa-times-circle bc-close-button" data-ng-click="jobStatusMessage=''" aria-controls="bc-page-course-official-sections-job-status-notice">
-            <span class="cc-visuallyhidden">Close Notice</span>
+            <span class="cc-visuallyhidden">Hide Notice</span>
           </button>
         </div>
       </div>
@@ -56,7 +56,6 @@
     <!-- ############################################################################################# -->
 
     <div data-ng-if="currentWorkflowStep === 'staging'">
-
       <!-- Current Sections Area -->
       <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-grey-border">
 
@@ -146,7 +145,6 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- ############################################################################################# -->
@@ -168,7 +166,7 @@
 
   </div>
 
-  <div data-ng-if="displayError" class="bc-alert-container">
+  <div data-ng-if="displayError" class="bc-alert-container" role="alert">
     <div data-ng-include src="'canvas_embedded/_shared/canvas_errors.html'"></div>
 
     <div data-ng-if="displayError === 'invalidAction'" class="bc-alert-container">
