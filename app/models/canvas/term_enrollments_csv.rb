@@ -12,9 +12,7 @@ module Canvas
 
     # Provides term enrollments CSV file path for given date and term_id
     def enrollment_csv_filepath(date, term_id)
-      # Prevent collisions between the SIS_ID code and the filesystem.
-      sanitized_term_id = term_id.gsub(/[^a-z0-9\-.]+/i, '_')
-      "#{@export_dir}/canvas-#{date.to_date.strftime('%F')}-#{sanitized_term_id}-term-enrollments-export.csv"
+      "#{@export_dir}/canvas-#{date.to_date.strftime('%F')}-#{file_safe(term_id)}-term-enrollments-export.csv"
     end
 
     # Returns hash containing generate CSV file paths intended for each term

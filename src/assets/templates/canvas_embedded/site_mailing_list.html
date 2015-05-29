@@ -3,25 +3,25 @@
   <div data-ng-show="!displayError">
     <h1 class="bc-header bc-header1">Manage a Site Mailing List</h1>
 
-    <div role="alert" class="bc-notice-box bc-notice-error bc-radius bc-page-site-mailing-list-notice" data-ng-if="alerts.error.length">
+    <div role="alert" class="bc-alert bc-alert-error" data-ng-if="alerts.error.length">
       <i class="fa fa-error fa-exclamation-triangle cc-left bc-icon-red bc-canvas-notice-icon"></i>
       <div class="bc-page-site-mailing-list-notice-message">
         <div data-ng-repeat="error in alerts.error" data-ng-bind="error"></div>
       </div>
     </div>
 
-    <div role="alert" class="bc-notice-box bc-notice-success bc-radius bc-page-site-mailing-list-notice" data-ng-if="alerts.success.length">
+    <div role="alert" class="bc-alert bc-alert-success" data-ng-if="alerts.success.length">
       <i class="cc-left fa fa-error fa-check-circle bc-icon-green bc-canvas-notice-icon"></i>
       <div class="bc-page-site-mailing-list-notice-message">
         <div data-ng-repeat="success in alerts.success" data-ng-bind="success"></div>
       </div>
     </div>
 
-    <div data-ng-if="listPending" class="bc-page-site-mailing-list-confirmation">
+    <div data-ng-if="listPending" class="bc-alert bc-alert-info">
       The list <strong data-ng-bind-template="{{mailingList.name}}@{{mailingList.domain}}"></strong> has been reserved, but not yet created.
     </div>
 
-    <div data-ng-if="listCreated && !mailingList.timeLastPopulated" class="bc-page-site-mailing-list-confirmation">
+    <div data-ng-if="listCreated && !mailingList.timeLastPopulated" class="bc-alert bc-alert-info">
       The list <strong data-ng-bind-template="{{mailingList.name}}@{{mailingList.domain}}"></strong> has been created. Choose "Update membership from course site" to add members.
     </div>
 
