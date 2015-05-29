@@ -98,4 +98,9 @@ namespace :canvas do
     end
   end
 
+  desc 'Report TurnItIn usage for a term'
+  task :report_turnitin => :environment do
+    Canvas::TurnitinReporter.print_term_report(ENV['TERM_ID'])
+  end
+
 end

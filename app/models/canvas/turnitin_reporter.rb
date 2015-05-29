@@ -2,12 +2,24 @@ module Canvas
   class TurnitinReporter < Csv
     include ClassLogger
 
-    def self.print_current_term
-      current_term_id = Canvas::Proxy.current_sis_term_ids.first
-      worker = TurnitinReporter.new(current_term_id)
+    def self.print_term_report(term_id = nil)
+      term_id ||= default_term_id
+      worker = TurnitinReporter.new(term_id)
       csv_filename = worker.generate_csv
       parsed_csv = CSV.read(csv_filename, {headers: true})
+      logger.error("Generated file: #{csv_filename}; #{parsed_csv[parsed_csv.length - 1].to_hash.compact}")
       print parsed_csv.to_csv
+    end
+
+    def self.default_term_id
+      current_date = Settings.terms.fake_now || DateTime.now
+      terms = Berkeley::Terms.fetch.campus.values
+      # Pick the most recent term that started more than two weeks ago.
+      report_term_idx = terms.index do |term|
+        term.start <= current_date.advance(weeks: -2)
+      end
+      term = report_term_idx ? terms[report_term_idx] : terms.last
+      Canvas::Proxy.term_to_sis_id(term.year, term.code)
     end
 
     def initialize(sis_term_id)
@@ -22,6 +34,8 @@ module Canvas
 
       # Download Canvas Courses in the TurnItIn-enabled sub-account for the current term.
       canvas_courses = Canvas::CoursesReport.new(account_id: Settings.canvas_proxy.turnitin_account_id).get_csv(@sis_term_id);
+      # TODO Temporary workaround for development
+      # canvas_courses = Canvas::CoursesReport.new(account_id: Settings.canvas_proxy.turnitin_account_id, ssl: {verify: false}).get_csv(@sis_term_id);
 
       # Loop through the Course Sites which are in the special TurnItIn-enabled sub-account.
       canvas_courses.each do |course_row|
