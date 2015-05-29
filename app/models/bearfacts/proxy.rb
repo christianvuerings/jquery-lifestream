@@ -6,7 +6,7 @@ module Bearfacts
     include Cache::UserCacheExpiry
     include Proxies::MockableXml
 
-    APP_ID = "Bearfacts"
+    APP_ID = 'Bearfacts'
 
     def initialize(options = {})
       super(Settings.bearfacts_proxy, options)
@@ -31,7 +31,7 @@ module Bearfacts
     end
 
     def request(path, params)
-      raw_response = self.class.smart_fetch_from_cache({id: instance_key, user_message_on_exception: "Remote server unreachable"}) do
+      raw_response = self.class.smart_fetch_from_cache({id: instance_key, user_message_on_exception: 'Remote server unreachable'}) do
         request_internal(request_path, request_params)
       end
       if raw_response[:noStudentId]
@@ -49,16 +49,16 @@ module Bearfacts
         logger.info "Lookup of student_id for uid #{@uid} failed, cannot call Bearfacts API path #{path}"
         {noStudentId: true}
       else
-        url = "#{Settings.bearfacts_proxy.base_url}#{path}"
+        url = "#{@settings.base_url}#{path}"
         logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}, student_id = #{student_id}; cache expiration #{self.class.expires_in}"
 
         request_options = {
-          query: params.merge(token: Settings.bearfacts_proxy.token)
+          query: params
         }
-        if (Settings.bearfacts_proxy.app_id.present? && Settings.bearfacts_proxy.app_key.present?)
+        if (@settings.app_id.present? && @settings.app_key.present?)
           request_options[:headers] = {
-            'app_id' => Settings.bearfacts_proxy.app_id,
-            'app_key' => Settings.bearfacts_proxy.app_key
+            'app_id' => @settings.app_id,
+            'app_key' => @settings.app_key
           }
         end
 
