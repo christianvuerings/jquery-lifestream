@@ -20,7 +20,7 @@ module CampusSolutions
       updateable_params = filter_updateable_params params
       logger.debug "Updateable params from POST: #{updateable_params.inspect}"
       cs_post = construct_cs_post updateable_params
-      logger.debug "CS Post: #{cs_post}"
+      logger.debug "Converted CS Post Params: #{cs_post}"
       {
         updated: true,
         updatedFields: updateable_params
@@ -31,9 +31,9 @@ module CampusSolutions
     def filter_updateable_params(params)
       updateable = {}
       known_fields = self.class.field_mappings
-      params.keys.each do |param_name|
-        if known_fields[param_name.to_sym].present?
-          updateable[param_name.to_sym] = params[param_name]
+      params.each do |calcentral_param_name, value|
+        if known_fields[calcentral_param_name.to_sym].present?
+          updateable[calcentral_param_name.to_sym] = value
         end
       end
       updateable
@@ -41,11 +41,11 @@ module CampusSolutions
 
     def construct_cs_post(filtered_params)
       cs_post = {}
-      filtered_params.keys.each do |calcentral_param_name|
+      filtered_params.each do |calcentral_param_name, value|
         mapping = self.class.field_mappings[calcentral_param_name]
         next if mapping.blank?
         cs_param_name = mapping[:campus_solutions_name]
-        cs_post[cs_param_name] = filtered_params[calcentral_param_name]
+        cs_post[cs_param_name] = value
       end
       cs_post
     end
