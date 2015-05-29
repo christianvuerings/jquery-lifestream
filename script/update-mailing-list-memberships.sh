@@ -24,6 +24,6 @@ echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
 echo "`date`: About to run the mailing list population update script..." | $LOGIT
 
-# cd deploy
+cd deploy
 
 bundle exec rake mailing_lists:populate | $LOGIT
