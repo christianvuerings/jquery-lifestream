@@ -7,6 +7,7 @@
   <div data-ng-hide="showError">
 
     <div class="row collapse" data-ng-show="showAlerts" role="alert">
+      <div data-ng-show="isLoading" class="cc-visuallyhidden">Performing request. Please wait.</div>
       <div data-cc-spinner-directive>
 
         <div data-ng-show="noSearchTextAlert" class="bc-alert bc-alert-error bc-page-course-add-user-alert">
