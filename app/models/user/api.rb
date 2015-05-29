@@ -110,6 +110,7 @@ module User
         ),
         :hasFinancialsTab => (roles[:student] || roles[:exStudent]),
         :hasPhoto => User::Photo.has_photo?(@uid),
+        :inEducationAbroadProgram => @campus_attributes[:education_abroad],
         :googleEmail => google_mail,
         :canvasEmail => canvas_mail,
         :last_name => @last_name,
