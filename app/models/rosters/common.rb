@@ -17,7 +17,7 @@ module Rosters
     end
 
     def get_feed
-      self.class.fetch_from_cache "#{@course_id}" do
+      self.class.fetch_from_cache "#{@course_id}-#{@uid}" do
         get_feed_internal
       end
     end

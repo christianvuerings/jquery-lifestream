@@ -55,7 +55,30 @@ describe Canvas::TurnitinReporter do
         expect(parsed_csv.length).to eq 1
       end
     end
+  end
 
+  describe '#default_term_id' do
+    before do
+      allow(Settings.terms).to receive(:fake_now).and_return(fake_now)
+    end
+    context 'at the very beginning of a term' do
+      let(:fake_now) {DateTime.parse('2014-06-10')}
+      it 'picks the previous term' do
+        expect(described_class.default_term_id).to eq 'TERM:2014-B'
+      end
+    end
+    context 'between terms' do
+      let(:fake_now) {DateTime.parse('2014-05-16')}
+      it 'picks the previous term' do
+        expect(described_class.default_term_id).to eq 'TERM:2014-B'
+      end
+    end
+    context 'within a term' do
+      let(:fake_now) {DateTime.parse('2014-06-30')}
+      it 'picks the running term' do
+        expect(described_class.default_term_id).to eq 'TERM:2014-C'
+      end
+    end
   end
 
 end

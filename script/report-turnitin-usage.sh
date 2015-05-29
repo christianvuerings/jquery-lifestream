@@ -1,6 +1,5 @@
 #!/bin/bash
-# Script to update all site mailing list memberships with the current roster of site users
-# in bCourses. New users will be added; former users will be removed.
+# Script to generate a CSV report on TurnItIn usage for a term in bCourses.
 
 # Make sure the normal shell environment is in place, since it may not be
 # when running as a cron job.
@@ -8,7 +7,7 @@ source "$HOME/.bash_profile"
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-LOG=`date +"$PWD/log/mailing_list_population_update_%Y-%m-%d.log"`
+LOG=`date +"$PWD/log/report_turnitin_usage_%Y-%m-%d.log"`
 LOGIT="tee -a $LOG"
 
 # Enable rvm and use the correct Ruby version and gem set.
@@ -22,8 +21,8 @@ export JRUBY_OPTS="-Xcext.enabled=true -J-client -X-C"
 
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
-echo "`date`: About to run the mailing list population update script..." | $LOGIT
+echo "`date`: About to run the TurnItIn usage reporting script..." | $LOGIT
 
 cd deploy
 
-bundle exec rake mailing_lists:populate | $LOGIT
+bundle exec rake canvas:report_turnitin | $LOGIT
