@@ -35,10 +35,7 @@ describe Calmail::CheckNamespace do
   end
 
   describe '#check_namespace' do
-    # These testext tests are disabled because they fail for unknown reasons when they're run as part
-    # of a full suite by our continuous integration server. Run by themselves, they're still useful.
-    # TODO Figure out the cause of the failure. See CLC-5170 for details.
-    context 'using real data feed', testext: true, ignore: true do
+    context 'using real data feed', testext: true do
       let(:response) { subject.check_namespace(list_name) }
       context 'known mailing list' do
         let(:list_name) {'raytest'}
