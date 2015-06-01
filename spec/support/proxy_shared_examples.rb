@@ -47,11 +47,6 @@ shared_examples 'a student data proxy' do
     expect(response[:feed]).to be_nil
   end
 
-  it 'should get Oski data from real server', :testext => true do
-    response = real_proxy('61889').get
-    expect(response).to be_present
-  end
-
   context 'connection failure' do
     before(:each) { stub_request(:any, /.*/).to_raise(Errno::EHOSTUNREACH) }
     after(:each) { WebMock.reset! }
