@@ -5,6 +5,7 @@
       {
         "emplid": "00000176",
         "addressType": "ISIR",
+        "addressTypeDescr": "FA ISIR Address",
         "effdt": "2015-04-27",
         "effStatus": "A",
         "country": "USA",
@@ -19,6 +20,7 @@
       {
         "emplid": "00000176",
         "addressType": "LOCL",
+        "addressTypeDescr": "Local",
         "effdt": "2015-04-07",
         "effStatus": "A",
         "country": "USA",
@@ -71,15 +73,25 @@
         "fieldName": "postal",
         "campusSolutionsName": "POSTAL",
         "isRequired": false
+      },
+      "addressType": {
+        "fieldName": "address_type",
+        "campusSolutionsName": "ADDRESS_TYPE",
+        "isRequired": false
+      },
+      "addressTypeDescr": {
+        "fieldName": "address_type_descr",
+        "campusSolutionsName": "ADDRESS_TYPE_DESCR",
+        "isRequired": false
       }
     }
   },
   "lastModified": {
-    "hash": "1819fadd747487b3fd263c9c7b4a547bbb63ad45",
+    "hash": "a2f654e13a274b144ab40a280e2cb7c43cdaccf4",
     "timestamp": {
-      "epoch": 1432761543,
-      "dateTime": "2015-05-27T14:19:03-07:00",
-      "dateString": "5/27"
+      "epoch": 1433190149,
+      "dateTime": "2015-06-01T13:22:29-07:00",
+      "dateString": "6/01"
     }
   },
   "feedName": "CampusSolutions::MyAddress"

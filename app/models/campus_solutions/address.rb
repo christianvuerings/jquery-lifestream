@@ -11,7 +11,9 @@ module CampusSolutions
           FieldMapping.optional(:address4, :ADDRESS4),
           FieldMapping.optional(:city, :CITY),
           FieldMapping.optional(:state, :STATE),
-          FieldMapping.optional(:postal, :POSTAL)
+          FieldMapping.optional(:postal, :POSTAL),
+          FieldMapping.optional(:address_type, :ADDRESS_TYPE),
+          FieldMapping.optional(:address_type_descr, :ADDRESS_TYPE_DESCR)
         ]
       )
     end
