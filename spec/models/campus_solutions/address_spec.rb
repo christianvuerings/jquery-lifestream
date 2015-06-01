@@ -8,7 +8,9 @@ describe CampusSolutions::Address do
 
     it 'returns JSON fixture data by default' do
       expect(feed[:addresses]).to be
-      expect(feed[:fields].keys.length).to eq 8
+      expect(feed[:addresses][0][:addressType]).to eq 'ISIR'
+      expect(feed[:addresses][0][:addressTypeDescr]).to eq 'FA ISIR Address'
+      expect(feed[:fields].keys.length).to eq 10
       expect(feed[:fields][:country]).to be
     end
 
