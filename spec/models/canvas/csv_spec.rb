@@ -38,7 +38,7 @@ describe Canvas::Csv do
     context 'when querying many user records from the DB' do
       it "should find all available ones" do
         known_first = ['238382', '2040']
-        known_last = ['3060', '211159', '322279']
+        known_last = ['3060', '211159', '238382']
         lotsa = []
         lotsa.concat(known_first)
         (1..1000).each {|u| lotsa << u}
