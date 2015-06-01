@@ -11,6 +11,7 @@
     $scope.appState = 'initializing';
     $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
     $scope.enableDefaultGradingScheme = false;
+    $scope.resolvingCourseState = false;
 
     /**
      * Sends message to parent window to switch to gradebook
