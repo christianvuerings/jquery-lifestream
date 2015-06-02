@@ -324,7 +324,6 @@ To help another user debug an issue, you can "become" them on CalCentral. To ass
 
 - Currently be logged in as a designated superuser
 - Be accessing a machine/server which the other user has previously logged into (e.g. from localhost, you can't act as a random student, since that student has probably never logged in at your terminal)
-- Have enabled `act_as` in `settings.yml` (`features:`)
 
 Access the URL:
 

@@ -43,7 +43,6 @@ app_alerts_proxy:
   base_url: "http://ets-dev.berkeley.edu/calcentral-alerts/feed"
 
 features:
-  act_as: true
   bearfacts: true
   financials: true
   telebears: true
