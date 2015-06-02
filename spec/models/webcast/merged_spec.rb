@@ -52,7 +52,7 @@ describe Webcast::Merged do
       it 'returns one match media' do
         spring_2014 = feed[:media][2014]['B']
         expect(spring_2014[1]).to be_nil
-        videos = spring_2014[87432][:videos]
+        videos = spring_2014['87432'][:videos]
         expect(videos).to have(31).items
         # Verify backwards compatibility
         expect(feed[:videos]).to eq videos
@@ -109,13 +109,13 @@ describe Webcast::Merged do
         expect(spring_2014[1]).to be_nil
         expect(spring_2014[2]).to be_nil
 
-        stat_131A = spring_2014[87432]
+        stat_131A = spring_2014['87432']
         expect(stat_131A[:videos]).to have(31).items
         expect(stat_131A[:instruction_format]).to eq 'LEC'
         expect(stat_131A[:section_number]).to eq '101'
         expect(stat_131A[:webcast_authorized_instructors]).to be_empty
 
-        pb_hlth_241 = spring_2014[76207]
+        pb_hlth_241 = spring_2014['76207']
         expect(pb_hlth_241[:videos]).to have(35).items
         # Feed excludes instructors per instructor_func
         authorized_instructors = pb_hlth_241[:webcast_authorized_instructors]
@@ -142,7 +142,7 @@ describe Webcast::Merged do
             :classes=>[
               {
                 :sections=>[
-                  { :ccn=>'5915', :section_number=>'101', :instruction_format=>'LEC' },
+                  { :ccn=>'05915', :section_number=>'101', :instruction_format=>'LEC' },
                   { :ccn=>'51990', :section_number=>'201', :instruction_format=>'LEC' }
                 ]
               }
@@ -155,13 +155,13 @@ describe Webcast::Merged do
         expect(feed[:video_error_message]).to be_nil
         spring_2015 = feed[:media][2015]['B']
         # These are cross-listed CCNs so we only include unique recordings
-        ccn_5915_videos = spring_2015[5915][:videos]
+        ccn_5915_videos = spring_2015['05915'][:videos]
         expect(ccn_5915_videos).to have(28).items
-        expect(ccn_5915_videos).to match_array spring_2015[51990][:videos]
+        expect(ccn_5915_videos).to match_array spring_2015['51990'][:videos]
         # TODO: remove these deprecated properties from the Webcast feed
         expect(feed[:videos]).to have(28).items
         expect(feed[:videos]).to match_array ccn_5915_videos
-        expect(feed[:audio]).to match_array spring_2015[5915][:audio]
+        expect(feed[:audio]).to match_array spring_2015['05915'][:audio]
       end
     end
   end
@@ -174,8 +174,8 @@ describe Webcast::Merged do
       it 'identifies course that is scheduled for recordings' do
         spring_2015 = feed[:media][2015]['B']
         non_existent = spring_2015[1]
-        recordings_planned = spring_2015[58301]
-        recordings_exist = spring_2015[56745]
+        recordings_planned = spring_2015['58301']
+        recordings_exist = spring_2015['56745']
         expect(non_existent).to be_nil
         expect(recordings_planned).not_to be_nil
         expect(recordings_planned[:videos]).to be_empty
