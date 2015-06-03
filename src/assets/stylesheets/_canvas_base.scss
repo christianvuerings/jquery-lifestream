@@ -113,8 +113,13 @@ button.bc-button-link {
   text-align: right;
 }
 
+.bc-main .bc-canvas-embedded .bc-canvas-embedded-buttonset,
 .bc-buttonset {
   margin: 10px 0;
+
+  button {
+    border-radius: initial;
+  }
 
   .bc-buttonset-button {
     background: $bc-color-feature-icon-box-background;
@@ -139,9 +144,11 @@ button.bc-button-link {
   }
 
   .bc-buttonset-button-active {
-    background: $bc-color-buttonset-active-background;
-    border-color: $bc-color-buttonset-active-border;
-    color: $bc-color-white;
+    &, &:active, &:focus, &:hover, &:visited {
+      background: $bc-color-buttonset-active-background;
+      border-color: $bc-color-buttonset-active-border;
+      color: $bc-color-white;
+    }
   }
 
   .bc-buttonset-corner-right {
@@ -419,7 +426,7 @@ button.bc-button-link {
 
 // Maintenance Notice
 button.bc-template-canvas-maintenance-notice-button {
-  &, &:hover,&:focus {
+  &, &:hover, &:focus {
     color: $bc-color-alert-foreground;
     text-decoration: none;
   }
