@@ -17,12 +17,11 @@ describe Webcast::Merged do
         # TODO: Bring 'rooms' back in the feed as needed by front-end
         # expect(feed[:rooms]).to have(26).items
         # expect(feed[:rooms]['VALLEY LSB']).to contain_exactly('2040', '2050', '2060')
-        expect(feed[:media][2014]['B']).to be_empty
+        expect(feed[:media]).to be_nil
         # Verify backwards compatibility
-        expect(feed[:videos]).to be_empty
-        expect(feed[:audio]).to be_empty
-        expect(feed[:itunes]['audio']).to be_nil
-        expect(feed[:itunes]['video']).to be_nil
+        expect(feed[:videos]).to be_nil
+        expect(feed[:audio]).to be_nil
+        expect(feed[:itunes]).to be_nil
       end
     end
 
@@ -35,7 +34,9 @@ describe Webcast::Merged do
           {
             :classes=>[
               {
-                :sections=>[
+                :dept => 'PLANTBI',
+                :courseCatalog => '150',
+                :sections => [
                   { :ccn=>'87435', :section_number=>'101', :instruction_format=>'LAB' },
                   { :ccn=>'87438', :section_number=>'102', :instruction_format=>'LAB' },
                   { :ccn=>'87444', :section_number=>'201', :instruction_format=>'LAB' },
@@ -52,11 +53,32 @@ describe Webcast::Merged do
       it 'returns one match media' do
         spring_2014 = feed[:media][2014]['B']
         expect(spring_2014[1]).to be_nil
-        videos = spring_2014['87432'][:videos]
+        stat_131A = spring_2014['87432']
+        expect(stat_131A[:dept_name]).to eq 'PLANTBI'
+        expect(stat_131A[:catalog_id]).to eq '150'
+        videos = stat_131A[:videos]
         expect(videos).to have(31).items
         # Verify backwards compatibility
         expect(feed[:videos]).to eq videos
         expect(feed[:video_error_message]).to be_nil
+      end
+    end
+
+    context 'ccn formatting per convention' do
+      let(:feed) do
+        Webcast::Merged.new(ldap_uid, 2008, 'D', [9688], options).get_feed
+      end
+      before do
+        courses_list = [{
+            :classes=>[{ :sections => [{ :ccn=>'09688', :section_number=>'101', :instruction_format=>'LEC' }] }]
+          }
+        ]
+        expect_any_instance_of(MyAcademics::Teaching).to receive(:courses_list_from_ccns).once.and_return courses_list
+      end
+      it 'pads ccn with zeroes' do
+        law_course = feed[:media][2008]['D']['09688']
+        expect(law_course).to_not be_nil
+        expect(law_course[:videos]).to be_empty
       end
     end
 
@@ -72,8 +94,8 @@ describe Webcast::Merged do
                 :sections=>[
                   {
                     :ccn=>'87432',
-                    :section_number=>'101',
-                    :instruction_format=>'LEC' },
+                    :instruction_format=>'LEC',
+                    :section_number=>'101' },
                   {
                     :ccn=>'76207',
                     :section_number=>'102',
@@ -134,7 +156,7 @@ describe Webcast::Merged do
 
     context 'cross-listed CCNs in merged feed' do
       let(:feed) do
-        Webcast::Merged.new(ldap_uid, 2015, 'B', [51990, 5915], options).get_feed
+        Webcast::Merged.new(ldap_uid, 2015, 'B', [51990, 5915, 51992], options).get_feed
       end
       before do
         courses_list = [
@@ -143,7 +165,8 @@ describe Webcast::Merged do
               {
                 :sections=>[
                   { :ccn=>'05915', :section_number=>'101', :instruction_format=>'LEC' },
-                  { :ccn=>'51990', :section_number=>'201', :instruction_format=>'LEC' }
+                  { :ccn=>'51990', :section_number=>'201', :instruction_format=>'LEC' },
+                  { :ccn=>'51992', :section_number=>'401', :instruction_format=>'DIS' }
                 ]
               }
             ]
@@ -158,10 +181,10 @@ describe Webcast::Merged do
         ccn_5915_videos = spring_2015['05915'][:videos]
         expect(ccn_5915_videos).to have(28).items
         expect(ccn_5915_videos).to match_array spring_2015['51990'][:videos]
-        # TODO: remove these deprecated properties from the Webcast feed
-        expect(feed[:videos]).to have(28).items
-        expect(feed[:videos]).to match_array ccn_5915_videos
-        expect(feed[:audio]).to match_array spring_2015['05915'][:audio]
+        # Verify CCNs not yet signed up for Webcast
+        eligible = feed[:eligible_for_sign_up]
+        expect(eligible).to_not be_nil
+        expect(eligible).to contain_exactly '51992'
       end
     end
   end

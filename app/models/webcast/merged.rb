@@ -2,55 +2,76 @@ module Webcast
   class Merged < UserSpecificModel
     include Cache::CachedFeed
 
-    def initialize(uid, year, term, ccn_list, options = {})
+    def initialize(uid, term_yr, term_cd, ccn_list, options = {})
       super(uid, options)
-      @year = year.to_i unless year.nil?
-      @term = term
+      @term_yr = term_yr.to_i unless term_yr.nil?
+      @term_cd = term_cd
       @ccn_list = ccn_list
       @options = options
     end
 
     def get_feed_internal
-      media = get_media_per_ccn
-      merged_feeds = {
-        :system_status => Webcast::SystemStatus.new(@options).get,
-        :media => media,
-        # TODO: Bring 'rooms' back in the feed when needed by front-end
-        # :rooms => Webcast::Rooms.new(@options).get,
-        # TODO: Remove the deprecated elements below when the front-end no longer needs them.
-        :videos => merge(media, :videos),
-        :audio => merge(media, :audio),
-        :itunes => merge_itunes(media)
-      }
-      merged_feeds
+      feed = { :system_status => Webcast::SystemStatus.new(@options).get }
+      feed.merge get_media_feed
     end
 
     private
 
-    def get_media_per_ccn
-      return {} unless @year && @term
-      media_per_ccn = Webcast::CourseMedia.new(@year, @term, @ccn_list, @options).get_feed
-      media_per_confirmed_ccn = {}
+    def get_media_feed
+      feed = {}
+      media_per_ccn = get_media_per_confirmed_ccn
       if media_per_ccn.any?
-        sections = MyAcademics::Teaching.new(@uid).courses_list_from_ccns(@year, @term, media_per_ccn.keys)
-        if sections.any? && sections[0][:classes].present?
-          sections[0][:classes].each do |next_class|
-            if next_class[:sections].any?
-              next_class[:sections].each do |section|
-                section_metadata = {
-                  :webcast_authorized_instructors => extract_authorized(section[:instructors]),
-                  :instruction_format => section[:instruction_format],
-                  :section_number => section[:section_number],
-                }
-                ccn = section[:ccn]
-                media = media_per_ccn[ccn.to_i]
-                media_per_confirmed_ccn[ccn] = media.merge section_metadata if media
+        # Put CCNs eligible for Webcast sign-up
+        slug = Berkeley::TermCodes.to_slug(@term_yr, @term_cd)
+        all_eligible = Webcast::SignUpEligible.new(@options).get[slug]
+        unless all_eligible.nil?
+          eligible_ccn_set = []
+          all_eligible.each do |eligible_ccn|
+            ccn_padded = sprintf('%05d', eligible_ccn)
+            eligible_ccn_set << ccn_padded unless media_per_ccn.has_key? ccn_padded
+          end
+          feed.merge!({ :eligible_for_sign_up => eligible_ccn_set }) if eligible_ccn_set.any?
+        end
+        # Put video and audio
+        media_per_term = { @term_yr => { @term_cd => media_per_ccn } }
+        media_hash = {
+          :media => media_per_term,
+          :videos => merge(media_per_term, :videos),
+          :audio => merge(media_per_term, :audio),
+          :itunes => merge_itunes(media_per_term)
+        }
+        feed.merge! media_hash
+      end
+      feed
+    end
+
+    def get_media_per_confirmed_ccn
+      feed = {}
+      if @term_yr && @term_cd
+        media_per_ccn = Webcast::CourseMedia.new(@term_yr, @term_cd, @ccn_list, @options).get_feed
+        if media_per_ccn.any?
+          sections = MyAcademics::Teaching.new(@uid).courses_list_from_ccns(@term_yr, @term_cd, media_per_ccn.keys)
+          if sections.any? && sections[0][:classes].present?
+            sections[0][:classes].each do |next_class|
+              if next_class[:sections].any?
+                next_class[:sections].each do |section|
+                  section_metadata = {
+                    :webcast_authorized_instructors => extract_authorized(section[:instructors]),
+                    :dept_name => next_class[:dept],
+                    :catalog_id => next_class[:courseCatalog],
+                    :instruction_format => section[:instruction_format],
+                    :section_number => section[:section_number]
+                  }
+                  ccn = section[:ccn]
+                  media = media_per_ccn[ccn.to_i]
+                  feed[ccn] = media.merge section_metadata if media
+                end
               end
             end
           end
         end
       end
-      { @year => { @term => media_per_confirmed_ccn } }
+      feed
     end
 
     def extract_authorized(instructors)
@@ -58,13 +79,13 @@ module Webcast
     end
 
     def instance_key
-      @year && @term ? Webcast::CourseMedia.id_per_ccn(@year, @term, @ccn_list.to_s) : @options[:user_id]
+      @term_yr && @term_cd ? Webcast::CourseMedia.id_per_ccn(@term_yr, @term_cd, @ccn_list.to_s) : @options[:user_id]
     end
 
     def merge(media_by_term, media_type)
-      return [] if media_by_term.empty? || media_by_term[@year][@term].empty?
+      return [] if media_by_term.empty? || media_by_term[@term_yr][@term_cd].empty?
       all_recordings = Set.new
-      media_by_term[@year][@term].values.each do |section|
+      media_by_term[@term_yr][@term_cd].values.each do |section|
         recordings = section[media_type]
         recordings.each { |r| all_recordings << r } if recordings
       end

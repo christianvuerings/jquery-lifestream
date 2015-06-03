@@ -8,10 +8,9 @@ describe Webcast::SignUpEligible do
     context 'fake data' do
       it 'should return all test data' do
         terms = subject.get
-        expect(terms).to have(3).items
-        expect(terms['spring-2015']).to contain_exactly(5916, 51991)
-        expect(terms['fall-2015']).to contain_exactly(5917, 51992)
-        expect(terms['spring-2016']).to be_empty
+        expect(terms).to have(2).items
+        expect(terms['fall-2015']).to be_empty
+        expect(terms['spring-2015']).to contain_exactly(5915, 51992)
       end
     end
   end

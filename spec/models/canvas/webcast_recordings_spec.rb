@@ -64,7 +64,7 @@ describe Canvas::WebcastRecordings do
       it 'is empty' do
         feed = subject.get_feed
         expect(feed[:system_status]['is_sign_up_active']).to be true
-        expect(feed[:media]).to be_empty
+        expect(feed[:media]).to be_nil
       end
     end
   end
