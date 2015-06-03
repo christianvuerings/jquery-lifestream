@@ -115,7 +115,10 @@ module MailingLists
     end
 
     def check_for_creation
-      self.state = 'created' if name_available? == false
+      if name_available? == false
+        self.state = 'created'
+        save
+      end
     end
 
     def generate_list_name
@@ -156,6 +159,7 @@ module MailingLists
     end
 
     def name_available?
+      return if list_name.blank?
       if (check_namespace = Calmail::CheckNamespace.new.name_available? self.list_name) &&
           (check_namespace[:response] == true || check_namespace[:response] == false)
         check_namespace[:response]
