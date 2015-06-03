@@ -69,6 +69,7 @@ module CalCentralPages
     def clear_all_saved_users
       saved_users_element.when_present(timeout=WebDriverUtils.page_load_timeout)
       if clear_saved_users_button?
+        clear_saved_users_button_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
         clear_saved_users_button
       end
     end

@@ -62,8 +62,6 @@ describe 'User authorization', :testui => true do
           splash_page.basic_auth(@driver, UserUtils.admin_uid)
           settings_page = CalCentralPages::SettingsPage.new(@driver)
           settings_page.load_page(@driver)
-          settings_page.clear_all_saved_users
-          settings_page.clear_all_recent_users
           settings_page.view_as_user('61889')
         end
         it 'logs the admin out of CalCentral' do
@@ -80,8 +78,6 @@ describe 'User authorization', :testui => true do
           splash_page.basic_auth(@driver, UserUtils.admin_uid)
           settings_page = CalCentralPages::SettingsPage.new(@driver)
           settings_page.load_page(@driver)
-          settings_page.clear_all_saved_users
-          settings_page.clear_all_recent_users
           settings_page.view_as_user('61889')
         end
         it 'locks the admin out of CalCentral' do
