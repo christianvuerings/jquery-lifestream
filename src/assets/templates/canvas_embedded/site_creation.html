@@ -15,14 +15,14 @@
       <div class="small-12 medium-5 columns end">
         <div class="bc-page-site-creation-feature-details">
           <h3 class="bc-header bc-header3">Course Sites</h3>
-          <h4 class="bc-header bc-header4" data-ng-if="authorizations.canCreateCourseSite">
+          <p class="bc-page-site-creation-feature-description" data-ng-if="authorizations.canCreateCourseSite">
             Set up course sites to communicate with and manage the work of students enrolled in your classes.
-          </h4>
-          <h4 class="bc-header bc-header4" data-ng-if="!authorizations.canCreateCourseSite">
+          </p>
+          <p class="bc-page-site-creation-feature-description" data-ng-if="!authorizations.canCreateCourseSite">
             It appears that you do not have permissions to create a Course Site in the current or upcoming terms.
             If you still wish to request a Course Site, please contact the
             <a href="http://ets.berkeley.edu/bcourses/support">bCourses Helpdesk</a>.
-          </h4>
+          </p>
           <div class="bc-page-site-creation-feature-button-wrapper">
             <a data-cc-disabled="!authorizations.canCreateCourseSite" data-ng-href="{{linkToCreateCourseSite}}" class="bc-canvas-button bc-canvas-button-primary">Create a Course Site</a>
           </div>
@@ -50,10 +50,10 @@
       <div class="small-12 medium-5 columns end">
         <div class="bc-page-site-creation-feature-details">
           <h3 class="bc-header bc-header3">Project Sites</h3>
-          <h4 class="bc-header bc-header4">
+          <p class="bc-page-site-creation-feature-description">
             Share files and collaborate with your project or teaching team. Projects are best suited for instructors and GSIs who already use bCourses for their courses.
-          </h4>
-          <p>
+          </p>
+          <p class="bc-page-site-creation-feature-description">
             <a href="https://kb.berkeley.edu/page.php?id=44390">
               Learn more about your online collaboration options.
             </a>

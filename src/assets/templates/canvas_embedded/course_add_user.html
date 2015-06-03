@@ -39,7 +39,7 @@
           </div>
         </div>
 
-        <div data-ng-show="userSearchResultsCount > userSearchResults.length" class="bc-alert bc-page-course-add-user-alert">
+        <div data-ng-show="userSearchResultsCount > userSearchResults.length" class="bc-alert bc-alert-info bc-page-course-add-user-alert">
           Your search returned <span data-ng-bind="userSearchResultsCount"></span> results, but only the first
           <span data-ng-bind="userSearchResults.length"></span> are shown.
           Please refine your search to limit the number of results.
@@ -103,7 +103,7 @@
 
     </div>
 
-    <div class="bc-page-help-notice">
+    <div class="bc-page-help-notice" data-ng-show="showSearchForm">
       <i class="fa fa-question-circle cc-left bc-page-help-notice-icon"></i>
       <div class="bc-page-help-notice-left-margin">
         <button class="bc-button-link" data-ng-click="toggle.displayHelp = !toggle.displayHelp"
