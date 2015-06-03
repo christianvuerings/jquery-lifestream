@@ -37,13 +37,14 @@ module Webcast
           sections[0][:classes].each do |next_class|
             if next_class[:sections].any?
               next_class[:sections].each do |section|
-                ccn = section[:ccn].to_i
                 section_metadata = {
                   :webcast_authorized_instructors => extract_authorized(section[:instructors]),
                   :instruction_format => section[:instruction_format],
                   :section_number => section[:section_number],
                 }
-                media_per_confirmed_ccn[ccn] = media_per_ccn[ccn].merge section_metadata if media_per_ccn[ccn]
+                ccn = section[:ccn]
+                media = media_per_ccn[ccn.to_i]
+                media_per_confirmed_ccn[ccn] = media.merge section_metadata if media
               end
             end
           end
