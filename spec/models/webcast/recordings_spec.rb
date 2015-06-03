@@ -6,7 +6,7 @@ describe Webcast::Recordings do
     context 'data organized by ccn' do
       let(:recordings) { Webcast::Recordings.new({:fake => true}).get }
       it 'should return a lot of playlists' do
-        expect(recordings[:courses].keys.length).to eq 21
+        expect(recordings[:courses].keys.length).to eq 22
         law_2723 = recordings[:courses]['2008-D-49688']
         expect(law_2723).to_not be_nil
         expect(law_2723[:recordings]).to have(12).items

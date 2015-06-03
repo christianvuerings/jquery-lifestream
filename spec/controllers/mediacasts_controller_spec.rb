@@ -20,7 +20,7 @@ describe MediacastsController do
 
     context 'fetching fake data' do
       before do
-        expect(Settings.webcast_proxy).to receive(:fake).at_most(3).and_return(true)
+        expect(Settings.webcast_proxy).to receive(:fake).at_most(4).and_return(true)
       end
 
       context 'when no Webcast recordings found' do
@@ -33,12 +33,12 @@ describe MediacastsController do
           post :get_media, year: term_yr, term_code: term_cd, dept: dept_name, catalog_id: catalog_id
           expect(response.status).to eq 200
           json = JSON.parse response.body
-          expect(json['media']['2014']['D']).to be_empty
+          expect(json['media']).to be_nil
         end
 
         it 'should pay attention to term code' do
           json = post_course chem_101
-          expect(json['media']['2014']['B']).to be_empty
+          expect(json['media']).to be_nil
         end
       end
 

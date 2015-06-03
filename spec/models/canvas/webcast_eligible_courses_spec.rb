@@ -26,7 +26,7 @@ describe Canvas::WebcastEligibleCourses do
         section = sign_up_eligible.first
         expect(section[:term_yr].to_i).to eq 2015
         expect(section[:term_cd]).to eq 'B'
-        expect(section[:ccn].to_i).to eq 5916
+        expect(section[:ccn].to_i).to eq 51992
         expect(section[:has_webcast_recordings]).to be false
         expect(section[:is_webcast_eligible]).to be true
       end
