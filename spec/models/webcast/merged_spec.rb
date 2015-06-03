@@ -70,13 +70,15 @@ describe Webcast::Merged do
       end
       before do
         courses_list = [{
-            :classes=>[{ :sections => [{ :ccn=>'9688', :section_number=>'101', :instruction_format=>'LEC' }] }]
+            :classes=>[{ :sections => [{ :ccn=>'09688', :section_number=>'101', :instruction_format=>'LEC' }] }]
           }
         ]
         expect_any_instance_of(MyAcademics::Teaching).to receive(:courses_list_from_ccns).once.and_return courses_list
       end
       it 'pads ccn with zeroes' do
-        expect(feed[:media][2008]['D']['09688']).to be_nil
+        law_course = feed[:media][2008]['D']['09688']
+        expect(law_course).to_not be_nil
+        expect(law_course[:videos]).to be_empty
       end
     end
 
