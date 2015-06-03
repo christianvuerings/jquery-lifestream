@@ -108,7 +108,7 @@
         $scope.lastJobStatus = angular.copy($scope.jobStatus);
         $scope.jobStatusMessage = 'An error has occurred with your request. Please try again or contact bCourses support.';
         if ($scope.lastJobStatus === 'sectionEditsCompleted') {
-          $scope.jobStatusMessage = 'Your request was completed successfully.';
+          $scope.jobStatusMessage = 'The sections in this course site have been updated successfully.';
         }
         fetchFeed();
       }
