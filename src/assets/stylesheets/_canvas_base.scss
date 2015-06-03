@@ -351,13 +351,6 @@ button.bc-button-link {
   text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 }
 
-.bc-notice-warning-button {
-  &, &:hover,&:focus {
-    color: $bc-color-alert-foreground;
-    text-decoration: none;
-  }
-}
-
 .bc-alert-info {
   background-color: $bc-color-alert-info-background;
   border-color: $bc-color-alert-info-border;
@@ -425,6 +418,13 @@ button.bc-button-link {
 }
 
 // Maintenance Notice
+button.bc-template-canvas-maintenance-notice-button {
+  &, &:hover,&:focus {
+    color: $bc-color-alert-foreground;
+    text-decoration: none;
+  }
+}
+
 .bc-template-canvas-maintenance-notice-text {
   font-size: 14px;
   font-weight: normal;
