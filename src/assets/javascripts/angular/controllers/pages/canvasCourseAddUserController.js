@@ -129,6 +129,7 @@
         $scope.userAdded.roleName = submittedRole.name;
         $scope.userAdded.sectionName = submittedSection.name;
         $scope.additionSuccessMessage = true;
+        $scope.showSearchForm = true;
         $scope.isLoading = false;
         resetSearchState();
       }).error(function(data) {
