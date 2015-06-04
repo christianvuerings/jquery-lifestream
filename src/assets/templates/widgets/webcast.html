@@ -9,14 +9,10 @@
         There are no Webcasts scheduled.
       </div>
       <div data-ng-if="media">
-        <div data-ng-repeat="(year, termHash) in media">
-          <div data-ng-repeat="(term, ccnHash) in termHash">
-            <div data-ng-repeat="(ccn, course) in ccnHash">
-              <div data-ng-if="!course.videos.length && !course.audio.length">
-                Webcasts for {{course.dept_name}} {{course.catalog_id}} {{course.instruction_format}} {{course.section_number}} will appear here after classes start.
-              </div>
+        <div data-ng-repeat="section in media">
+            <div data-ng-if="!section.videos.length && !section.audio.length">
+              Webcasts for {{section.deptName}} {{section.catalogId}} {{course.instructionFormat}} {{section.sectionNumber}} will appear here after classes start.
             </div>
-          </div>
         </div>
       </div>
 
