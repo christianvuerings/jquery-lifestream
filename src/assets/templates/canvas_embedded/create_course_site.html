@@ -64,8 +64,8 @@
 
       <div id="bc-page-create-course-site-selecting-step" data-ng-show="currentWorkflowStep === 'selecting'" data-ng-aria-expanded="{{currentWorkflowStep === 'selecting'}}">
         <div data-cc-spinner-directive>
-          <div data-ng-if="teachingSemesters && teachingSemesters.length < 1" class="bc-page-create-course-site-no-courses">
-            You are currently not listed as the instructor of record for any courses, so you cannot create a course site in bCourses.
+          <div data-ng-if="teachingSemesters && teachingSemesters.length < 1">
+            <p>You are currently not listed as the instructor of record for any courses, so you cannot create a course site in bCourses.</p>
           </div>
 
           <div data-ng-if="teachingSemesters && teachingSemesters.length > 0">
