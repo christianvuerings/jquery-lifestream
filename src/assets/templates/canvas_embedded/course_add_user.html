@@ -6,59 +6,60 @@
 
   <div data-ng-hide="showError">
 
-    <div class="row collapse" data-ng-show="showAlerts">
+    <div class="row collapse" data-ng-show="showAlerts" role="alert">
+      <div data-ng-show="isLoading" class="cc-visuallyhidden">Performing request. Please wait.</div>
       <div data-cc-spinner-directive>
 
-        <div data-ng-show="noSearchTextAlert" class="cc-notice-box cc-notice-error cc-radius">
+        <div data-ng-show="noSearchTextAlert" class="bc-alert bc-alert-error bc-page-course-add-user-alert">
           You did not enter any search terms. Please try again.
-          <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="noSearchTextAlert=''">
+          <div class="bc-alert-close-button-container">
+            <button class="fa fa-times-circle bc-close-button" data-ng-click="noSearchTextAlert=''">
               <span class="cc-visuallyhidden">Hide Alert</span>
             </button>
           </div>
         </div>
 
-        <div data-ng-show="noUserSelectedAlert" class="cc-notice-box cc-notice-error cc-radius">
+        <div data-ng-show="noUserSelectedAlert" class="bc-alert bc-alert-error bc-page-course-add-user-alert">
           Please select a user.
-          <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="noUserSelectedAlert=''">
+          <div class="bc-alert-close-button-container">
+            <button class="fa fa-times-circle bc-close-button" data-ng-click="noUserSelectedAlert=''">
               <span class="cc-visuallyhidden">Hide Alert</span>
             </button>
           </div>
         </div>
 
-        <div data-ng-show="noSearchResultsNotice" class="cc-notice-box cc-notice-error cc-radius">
+        <div data-ng-show="noSearchResultsNotice" class="bc-alert bc-alert-error bc-page-course-add-user-alert">
           Your search did not match any users with a CalNet ID.
           <span data-ng-bind="searchTypeNotice"></span>
           Please try again.
-          <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="noSearchResultsNotice=''">
+          <div class="bc-alert-close-button-container">
+            <button class="fa fa-times-circle bc-close-button" data-ng-click="noSearchResultsNotice=''">
               <span class="cc-visuallyhidden">Hide Alert</span>
             </button>
           </div>
         </div>
 
-        <div data-ng-show="userSearchResultsCount > userSearchResults.length" class="cc-notice-box cc-notice-warning cc-radius">
+        <div data-ng-show="userSearchResultsCount > userSearchResults.length" class="bc-alert bc-alert-info bc-page-course-add-user-alert">
           Your search returned <span data-ng-bind="userSearchResultsCount"></span> results, but only the first
           <span data-ng-bind="userSearchResults.length"></span> are shown.
           Please refine your search to limit the number of results.
         </div>
 
-        <div data-ng-show="additionSuccessMessage" class="cc-notice-box cc-notice-success cc-radius">
+        <div data-ng-show="additionSuccessMessage" class="bc-alert bc-alert-success bc-page-course-add-user-alert">
           <span data-ng-bind="userAdded.fullName"></span> was added to the
           &ldquo;<span data-ng-bind="userAdded.sectionName"></span>&rdquo; section of this course as a <span data-ng-bind="userAdded.roleName"></span>.
-          <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="additionSuccessMessage=''">
+          <div class="bc-alert-close-button-container">
+            <button class="fa fa-times-circle bc-close-button" data-ng-click="additionSuccessMessage=''">
               <span class="cc-visuallyhidden">Hide Alert</span>
             </button>
           </div>
         </div>
 
-        <div data-ng-show="additionFailureMessage" class="cc-notice-box cc-notice-error cc-radius">
-          <i class="fa fa-exclamation-triangle cc-icon-red cc-canvas-notice-icon"></i>
+        <div data-ng-show="additionFailureMessage" class="bc-alert bc-alert-error bc-page-course-add-user-alert">
+          <i class="fa fa-exclamation-triangle cc-icon-red bc-canvas-notice-icon"></i>
           <span data-ng-bind="errorStatus"></span>
-          <div class="cc-notice-close-button">
-            <button class="fa fa-times-circle button cc-close-button small" data-ng-click="additionFailureMessage=''">
+          <div class="bc-alert-close-button-container">
+            <button class="fa fa-times-circle bc-close-button" data-ng-click="additionFailureMessage=''">
               <span class="cc-visuallyhidden">Hide Alert</span>
             </button>
           </div>
@@ -86,14 +87,14 @@
                   <select id="search-type" data-ng-model="searchType" data-ng-change="updateSearchTextType()" class="bc-form-input-select">
                     <option value="name">Last Name, First Name</option>
                     <option value="email">Email</option>
-                    <option value="ldap_user_id">CalNet UID</option>
+                    <option value="ldap_user_id" aria-label="CalNet U I D">CalNet UID</option>
                   </select>
                 </div>
               </div>
             </div>
 
             <div class="medium-2 columns bc-column-align-center">
-              <button id="submit-search" type="submit" class="bc-canvas-button bc-canvas-button-primary bc-full-wide">Go</button>
+              <button id="submit-search" type="submit" class="bc-canvas-button bc-canvas-button-primary bc-full-wide" aria-label="Perform User Search">Go</button>
             </div>
           </div>
 
@@ -102,34 +103,41 @@
 
     </div>
 
-    <div class="cc-page-help-notice">
-      <i class="fa fa-question-circle cc-left cc-page-help-notice-icon"></i>
-      <div class="cc-page-help-notice-left-margin">
-        <button class="cc-button-link cc-page-help-notice-toggle-button" data-ng-click="toggle.displayHelp = !toggle.displayHelp" aria-controls="cc-page-help-notice">
-          Need help finding someone?
+    <div class="bc-page-help-notice" data-ng-show="showSearchForm">
+      <i class="fa fa-question-circle cc-left bc-page-help-notice-icon"></i>
+      <div class="bc-page-help-notice-left-margin">
+        <button class="bc-button-link" data-ng-click="toggle.displayHelp = !toggle.displayHelp"
+          aria-controls="bc-page-help-notice"
+          aria-haspopup="true"
+          data-ng-attr-aria-expanded="{{toggle.displayHelp}}">
+          <span data-ng-if="!toggle.displayHelp" class="cc-visuallyhidden">Show User Search Help</span>
+          <span data-ng-if="toggle.displayHelp" class="cc-visuallyhidden">Hide User Search Help</span>
+          <span aria-hidden="true">Need help finding someone?</span>
         </button>
-        <div id="cc-page-help-notice" class="cc-page-help-notice-content bc-user-search-notice" data-ng-show="toggle.displayHelp" data-ng-attr-aria-expanded="{{toggle.displayHelp}}" role="region">
-          <!-- Note: This help text content is also maintained in the public/canvas/canvas-customization.js script -->
-          <dl class="bc-user-search-notice-description-list">
-            <dt class="bc-user-search-notice-description-term">UC Berkeley Faculty, Staff and Students</dt>
-            <dd class="bc-user-search-notice-description">
-              UC Berkeley faculty, staff and students <em>(regular and concurrent enrollment)</em> can be found in the
-              <a href="http://directory.berkeley.edu/">CalNet Directory</a>
-              and be added to your site using their CalNet UID or official email address.
-            </dd>
-            <dt class="bc-user-search-notice-description-term">Guests</dt>
-            <dd class="bc-user-search-notice-description">
-              Peers from other institutions or guests from the community must be sponsored with a
-              <a href="https://idc.berkeley.edu/guests/">CalNet Guest Account</a>.
-              Do NOT request a CalNet Guest Account for concurrent enrollment students.
-            </dd>
-            <dt class="bc-user-search-notice-description-term">More Information</dt>
-            <dd class="bc-user-search-notice-description">
-              Go to the
-              <a href="http://ets.berkeley.edu/bcourses/how-add-people-your-course">bCourses FAQ</a>
-              for more information about adding people to bCourse sites.
-            </dd>
-          </dl>
+        <div aria-live="polite">
+          <div id="bc-page-help-notice" class="bc-page-help-notice-content bc-user-search-notice" data-ng-show="toggle.displayHelp">
+            <!-- Note: This help text content is also maintained in the public/canvas/canvas-customization.js script -->
+            <dl class="bc-user-search-notice-description-list">
+              <dt class="bc-user-search-notice-description-term">UC Berkeley Faculty, Staff and Students</dt>
+              <dd class="bc-user-search-notice-description">
+                UC Berkeley faculty, staff and students <em>(regular and concurrent enrollment)</em> can be found in the
+                <a href="http://directory.berkeley.edu/">CalNet Directory</a>
+                and be added to your site using their CalNet UID or official email address.
+              </dd>
+              <dt class="bc-user-search-notice-description-term">Guests</dt>
+              <dd class="bc-user-search-notice-description">
+                Peers from other institutions or guests from the community must be sponsored with a
+                <a href="https://idc.berkeley.edu/guests/">CalNet Guest Account</a>.
+                Do NOT request a CalNet Guest Account for concurrent enrollment students.
+              </dd>
+              <dt class="bc-user-search-notice-description-term">More Information</dt>
+              <dd class="bc-user-search-notice-description">
+                Go to the
+                <a href="http://ets.berkeley.edu/bcourses/how-add-people-your-course">bCourses FAQ</a>
+                for more information about adding people to bCourse sites.
+              </dd>
+            </dl>
+          </div>
         </div>
       </div>
     </div>
@@ -169,22 +177,22 @@
             </fieldset>
 
             <div class="row collapse">
-              <div class="medium-5 columns">
+              <div class="medium-7 columns">
 
                 <div class="row collapse">
-                  <div class="small-2 columns">
+                  <div class="small-3 columns">
                     <label for="user-role"><strong><span class="cc-required-field-indicator">*</span> Role</strong>:</label>
                   </div>
-                  <div class="small-10 columns">
+                  <div class="small-9 columns">
                     <select id="user-role" class="bc-form-input-select" data-ng-model="selectedRole" data-ng-options="role as role.name for role in grantingRoles"></select>
                   </div>
                 </div>
 
                 <div class="row collapse">
-                  <div class="small-2 columns">
+                  <div class="small-3 columns">
                     <label for="course-section"><strong><span class="cc-required-field-indicator">*</span> Section</strong>:</label>
                   </div>
-                  <div class="small-10 columns">
+                  <div class="small-9 columns">
                     <select id="course-section" class="bc-form-input-select" data-ng-model="selectedSection" data-ng-options="section as section.name for section in courseSections">
                     </select>
                   </div>
@@ -195,8 +203,8 @@
 
             <div class="row collapse">
               <div class="bc-form-actions medium-12">
-                <button type="submit" class="bc-canvas-button bc-canvas-button-primary">Add User</button>
                 <button type="button" class="bc-canvas-button bc-start-over-button" data-ng-click="resetForm()">Start Over</button>
+                <button data-ng-disabled="noUserSelected()" type="submit" class="bc-canvas-button bc-canvas-button-primary">Add User</button>
               </div>
             </div>
 
@@ -209,7 +217,7 @@
   </div>
 
   <p data-ng-show="showError">
-    <i class="fa fa-exclamation-triangle cc-icon-red cc-canvas-notice-icon"></i>
+    <i class="fa fa-exclamation-triangle cc-icon-red bc-canvas-notice-icon"></i>
     <span data-ng-bind="errorStatus"></span>
   </p>
 

@@ -1,0 +1,31 @@
+{
+  "canvasSite": {
+    "canvasCourseId": 1302228,
+    "sisCourseId": "CRS:CHEM-3A-2015-B-7A31AEBF",
+    "name": "3A - Spring 15 - Chemical Structure and Reactivity",
+    "courseCode": "Chem 3A",
+    "url": "https://bcourses.example.com/courses/1302228",
+    "term": {
+      "term_yr": "2015",
+      "term_cd": "B",
+      "name": "Spring 2015"
+    }
+  },
+  "mailingList": {
+    "name": "chem_3a_structure_and_reactivity-sp15",
+    "domain": "bcourses-lists.berkeley.edu",
+    "state": "created",
+    "membersCount": 17,
+    "timeLastPopulated": {
+      "epoch":1430771400,
+      "dateTime":"2015-05-04T13:30:00-07:00",
+      "dateString":"5/04"
+    }
+  },
+  "populationResults": {
+    "messages": [
+      "2 new members could not be added."
+    ],
+    "success": false
+  }
+}

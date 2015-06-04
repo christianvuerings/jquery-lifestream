@@ -12,25 +12,8 @@
     }
   },
   "mailingList": {
-    "name": "chem_3a-spring-2015",
+    "name": "chem_3a_structure_and_reactivity-sp15",
     "domain": "bcourses-lists.berkeley.edu",
-    "state": "created",
-    "timeLastPopulated": {
-      "epoch":1430771400,
-      "dateTime":"2015-05-04T13:30:00-07:00",
-      "dateString":"5/04"
-    }
-  },
-  "populationResults": {
-    "add": {
-      "total": 17,
-      "success": 17,
-      "failure": []
-    },
-    "remove": {
-      "total": 1,
-      "success": 1,
-      "failure": []
-    }
+    "state": "created"
   }
 }

@@ -1,24 +1,24 @@
-<div data-ng-if="displayError === 'unauthorized'" class="cc-notice-error-container">
-  <i class="fa fa-warning cc-canvas-error-notice-icon"></i>
-  <div class="cc-notice-text-container">
-    <h1 class="cc-notice-text-header">Access Denied</h1>
+<div data-ng-if="displayError === 'unauthorized'" class="bc-alert-container">
+  <i class="fa fa-warning bc-alert-error-icon"></i>
+  <div class="bc-notice-text-container">
+    <h1 class="bc-notice-text-header">Access Denied</h1>
     <p data-ng-if="accessDeniedError" data-ng-bind="accessDeniedError"></p>
     <p data-ng-if="!accessDeniedError">You are unauthorized to use this feature. Please contact bCourses support for further assistance.</p>
   </div>
 </div>
 
-<div data-ng-if="displayError === 'badRequest'" class="cc-notice-error-container">
-  <i class="fa fa-warning cc-canvas-error-notice-icon"></i>
-  <div class="cc-notice-text-container">
-    <h1 class="cc-notice-text-header">Bad Request</h1>
+<div data-ng-if="displayError === 'badRequest'" class="bc-alert-container">
+  <i class="fa fa-warning bc-alert-error-icon"></i>
+  <div class="bc-notice-text-container">
+    <h1 class="bc-notice-text-header">Bad Request</h1>
     <p data-ng-if="badRequestError" data-ng-bind="badRequestError"></p>
   </div>
 </div>
 
-<div data-ng-if="displayError === 'failure'" class="cc-notice-error-container">
-  <i class="fa fa-warning cc-canvas-error-notice-icon"></i>
-  <div class="cc-notice-text-container">
-    <h1 class="cc-notice-text-header">Unexpected Error</h1>
+<div data-ng-if="displayError === 'failure'" class="bc-alert-container">
+  <i class="fa fa-warning bc-alert-error-icon"></i>
+  <div class="bc-notice-text-container">
+    <h1 class="bc-notice-text-header">Unexpected Error</h1>
     <p>Please contact <a href="http://ets.berkeley.edu/bcourses/support">bCourses support</a> for further assistance.</p>
   </div>
 </div>

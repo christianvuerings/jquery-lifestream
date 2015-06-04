@@ -1,8 +1,5 @@
 {
-  "canvasSite": {
-    "canvasCourseId": 9999999999999
-    }
-  },
-  "displayError": "badRequest",
-  "badRequestError": "No bCourses site found with ID \"9999999999999\"."
+  "errorMessages": [
+    "No bCourses site with ID \"9999999999999\" was found."
+  ]
 }

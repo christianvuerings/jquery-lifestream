@@ -1,17 +1,28 @@
-<div class="cc-notice-box cc-notice-warning cc-radius">
+<div class="bc-alert">
 
-  <button class="cc-button-link cc-notice-warning-button" data-ng-click="maintenanceCollapsed = !maintenanceCollapsed" data-ng-attr-aria-controls="maintenance-details" role="button">
-    <i class="fa cc-left cc-template-canvas-maintenance-notice-collapse-icon"
+  <button class="bc-button-link bc-notice-warning-button" data-ng-click="maintenanceCollapsed = !maintenanceCollapsed" aria-haspopup="true" aria-controls="maintenance-details" data-ng-attr-aria-expanded="{{!maintenanceCollapsed}}">
+    <i class="fa cc-left bc-template-canvas-maintenance-notice-collapse-icon"
       data-ng-class="{'fa-caret-right': maintenanceCollapsed, 'fa-caret-down': !maintenanceCollapsed}"></i>
 
-    <i class="fa fa-exclamation-triangle cc-icon-yellow"></i>
-    <span class="cc-template-canvas-maintenance-notice-text">
-      From 8 - 9 AM, you may experience delays of up to 10 minutes before your <span data-ng-bind="courseActionVerb"></span>.
+    <span data-ng-if="maintenanceCollapsed" class="cc-visuallyhidden">Show Scheduled Maintenance Notice</span>
+    <span data-ng-if="!maintenanceCollapsed" class="cc-visuallyhidden">Hide Scheduled Maintenance Notice</span>
+    <span aria-hidden="true">
+      <i class="fa fa-exclamation-triangle cc-icon-yellow"></i>
+      <span class="bc-template-canvas-maintenance-notice-text">
+        From 8 - 9 AM, you may experience delays of up to 10 minutes before your <span data-ng-bind="courseActionVerb"></span>.
+      </span>
     </span>
   </button>
 
-  <div id="maintenance-details" data-ng-show="!maintenanceCollapsed" data-ng-attr-aria-expanded="{{maintenanceCollapsed}}" role="region" class="cc-template-canvas-maintenance-notice-details cc-template-canvas-maintenance-notice-text">
-    bCourses performs scheduled maintenance every day between 8-9AM, during which time bCourses user and enrollment information is synchronized with other campus systems. This process may cause delays of up to 10 minutes before your request is completed.
-    For more information, go to <a href="http://ets.berkeley.edu/bcourses/system-status">bCourses System Status</a>.
+  <div id="maintenance-details" aria-live="polite">
+    <div data-ng-if="!maintenanceCollapsed" class="bc-template-canvas-maintenance-notice-details bc-template-canvas-maintenance-notice-text">
+      <p class="cc-visuallyhidden">
+        From 8 - 9 AM, you may experience delays of up to 10 minutes before your <span data-ng-bind="courseActionVerb"></span>.
+      </p>
+      <p>
+        bCourses performs scheduled maintenance every day between 8-9AM, during which time bCourses user and enrollment information is synchronized with other campus systems. This process may cause delays of up to 10 minutes before your request is completed.
+        For more information, go to <a href="http://ets.berkeley.edu/bcourses/system-status">bCourses System Status</a>.
+      </p>
+    </div>
   </div>
 </div>

@@ -3,6 +3,7 @@
     margin-top: 15px;
   }
   .cc-widget-webcast-button-group {
+    padding-bottom: 10px;
     width: 200px;
   }
   .cc-widget-webcast-content {
@@ -21,7 +22,9 @@
     margin-top: 10px;
   }
   .cc-widget-webcast-select {
-    margin-top: 15px;
     max-width: 300px;
+  }
+  .cc-widget-webcast-outbound-link {
+    padding: 10px 0 0;
   }
 }

@@ -3,6 +3,13 @@
     {
       "year": 2008,
       "semester": "Fall",
+      "ccn": 9688,
+      "catalogId": "2722",
+      "deptName": "LAW"
+    },
+    {
+      "year": 2008,
+      "semester": "Fall",
       "ccn": 49688,
       "catalogId": "2723",
       "deptName": "LAW",

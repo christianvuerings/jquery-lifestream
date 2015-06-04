@@ -10,31 +10,20 @@
     margin-bottom: 10px;
   }
 
+  .bc-page-course-grade-export-button-link {
+    font-weight: 300;
+  }
+
   .bc-page-course-grade-export-header {
     font-size: 23px;
     font-weight: 400;
-    margin: 20px 0 0;
-    text-transform: capitalize;
+    padding: 12px 0 0;
   }
 
   .bc-page-course-grade-export-sub-header {
     font-size: 20px;
     font-weight: 400;
-    margin: 20px 0 15px;
-  }
-
-  .bc-page-course-grade-export-error-notice {
-    font-size: 14px;
-    font-weight: normal;
-    margin: 17px 0 0;
-  }
-
-  .bc-page-course-grade-export-error-notice-icon {
-    margin-right: 7px;
-  }
-
-  .bc-page-course-grade-export-error-notice-cell {
-    padding: 3px;
+    margin: 15px 0;
   }
 
   .bc-page-course-grade-export-download-button-container {
@@ -43,15 +32,14 @@
   }
 
   .bc-page-course-grade-export-download-description {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 4px 0;
   }
 
   .bc-page-course-grade-export-download-header {
     font-size: 20px;
     font-weight: 400;
-    margin-top: 24px;
-    padding: 10px 0;
+    margin: 30px 0 5px;
   }
 
   .bc-page-course-grade-export-more-info-container {
@@ -66,8 +54,9 @@
     margin: 10px 0;
   }
 
-  .bc-page-course-grade-export-section-select {
-    padding-left: 5px;
+  .bc-page-course-grade-export-form-label {
+    display: inline-block;
+    margin: 8px 0;
   }
 
   .bc-page-course-grade-export-notice-pending-request {

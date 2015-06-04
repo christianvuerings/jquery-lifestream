@@ -72,6 +72,8 @@
           'node_modules/pikaday/pikaday.js',
           // Angular
           'node_modules/angular/angular.js',
+          // Angular Aria
+          'node_modules/angular-aria/angular-aria.js',
           // Angular Routing
           'node_modules/angular-route/angular-route.js',
           // Angular Sanitize (avoid XSS exploits)
@@ -305,30 +307,35 @@
     }
 
     var path = require('path');
-    var revall = require('gulp-rev-all');
+    var RevAll = require('gulp-rev-all');
+    var revAllAssets = new RevAll({
+      dontGlobal: [
+        /favicon\.ico/g,
+        'manifest.json'
+      ],
+      dontRenameFile: [
+        /^(.+)\.html$/g
+      ],
+      // Increase the hashlength from 5 to 20 to avoid collisions
+      hashLength: 20,
+      // We can't have dots in our filenames, other wise we get a InvalidCrossOriginRequest response
+      transformFilename: function(file, hash) {
+        var extension = path.extname(file.path);
+        // filename-6546259a4f83fd81debc.extension
+        return path.basename(file.path, extension) + '-'  + hash.substr(0, 20) + extension;
+      }
+    });
 
     return gulp.src([
         paths.src.assetsPublic,
         paths.src.mainTemplates.bcoursesEmbeddedPublic,
         paths.src.mainTemplates.indexPublic
-      ])
-      .pipe(revall({
-        ignore: [
-          /^\/favicon.ico$/g,
-          'manifest.json',
-          '.html'
-        ],
-        base: 'assets/',
-        // Increase the hashlength from 5 to 20 to avoid collisions
-        hashLength: 20,
-        // We can't have dots in our filenames, other wise we get a InvalidCrossOriginRequest response
-        transformFilename: function(file, hash) {
-          var extension = path.extname(file.path);
-          // filename-6546259a4f83fd81debc.extension
-          return path.basename(file.path, extension) + '-'  + hash.substr(0, 20) + extension;
-        }
-      }))
-      .pipe(gulp.dest('public/assets/'));
+      ], {
+        base: 'assets'
+      })
+      .pipe(revAllAssets.revision())
+      .pipe(gulp.dest('public/')
+    );
 
     // Keep the following lines for debugging purposes
     // This puts out a manifest file with the links to all the resources

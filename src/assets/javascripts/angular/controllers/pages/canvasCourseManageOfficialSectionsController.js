@@ -104,12 +104,11 @@
       if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
         jobStatusLoader();
       } else {
-        delete $scope.percentCompleteRounded;
         $timeout.cancel(timeoutPromise);
         $scope.lastJobStatus = angular.copy($scope.jobStatus);
         $scope.jobStatusMessage = 'An error has occurred with your request. Please try again or contact bCourses support.';
         if ($scope.lastJobStatus === 'sectionEditsCompleted') {
-          $scope.jobStatusMessage = 'Your request was completed successfully.';
+          $scope.jobStatusMessage = 'The sections in this course site have been updated successfully.';
         }
         fetchFeed();
       }
@@ -195,13 +194,13 @@
           $scope.isLoading = false;
           $scope.displayError = 'failure';
         } else {
+          delete $scope.percentCompleteRounded;
           // get users feed
           if (sectionsFeed.data) {
             if (sectionsFeed.data && sectionsFeed.data.canvas_course) {
               $scope.canvasCourse = sectionsFeed.data.canvas_course;
               $scope.isTeacher = $scope.canvasCourse.canEdit;
               refreshFromFeed(sectionsFeed.data);
-              apiService.util.iframeUpdateHeight();
             } else {
               $scope.displayError = 'failure';
             }
@@ -302,9 +301,9 @@
      */
     $scope.rowClassLogic = function(listMode, section) {
       return {
-        'cc-template-sections-table-row-added': (listMode === 'currentStaging' && section.stagedState === 'add'),
-        'cc-template-sections-table-row-deleted': (listMode === 'availableStaging' && section.stagedState === 'delete'),
-        'cc-template-sections-table-row-disabled': (
+        'bc-template-sections-table-row-added': (listMode === 'currentStaging' && section.stagedState === 'add'),
+        'bc-template-sections-table-row-deleted': (listMode === 'availableStaging' && section.stagedState === 'delete'),
+        'bc-template-sections-table-row-disabled': (
           listMode === 'availableStaging' &&
           (
             section.stagedState === 'add' ||

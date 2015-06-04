@@ -2,6 +2,10 @@
   background: $cc-color-white;
   padding: 10px;
 
+  .bc-page-course-add-user-alert {
+    margin-bottom: 20px;
+  }
+
   .bc-page-course-add-user-header {
     color: $bc-color-off-black;
     font-size: 23px;
@@ -62,13 +66,12 @@
   }
 
   .bc-user-search-notice {
-    font-size: 13px;
     .bc-user-search-notice-description-list {
       margin-bottom: 0;
     }
     .bc-user-search-notice-description-term {
       font-weight: bold;
-      margin-bottom: 5px;
+      margin: 5px 0;
     }
     .bc-user-search-notice-description {
       margin-left: 15px;

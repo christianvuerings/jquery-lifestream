@@ -1,5 +1,5 @@
 .bc-page-create-course-site {
-  padding: 20px;
+  padding: 25px;
 
   .cc-button {
     padding: 10px;
@@ -62,14 +62,9 @@
     }
   }
 
-  .bc-page-create-course-site-confirmation {
-    background: linear-gradient($bc-color-notice-yellow-bg-gradient1, $bc-color-notice-yellow-bg-gradient2);
-    border-radius: 5px;
-    padding: 20px;
-    .bc-page-create-course-site-section-list {
-      list-style-type: disc;
-      margin: 10px 0 0 39px;
-    }
+  .bc-page-create-course-site-section-list {
+    list-style-type: disc;
+    margin: 10px 0 0 39px;
   }
 
   .bc-page-create-course-site-help-notice {
@@ -84,8 +79,8 @@
     }
   }
 
-  .bc-page-create-course-site-site-labels-form {
-    margin-top: 10px;
+  .bc-page-create-course-site-form-fields-container {
+    margin: 10px 0;
   }
 
   .bc-page-create-course-site-no-courses {
@@ -93,20 +88,14 @@
     font-family: $bc-base-font-family;
     font-size: 14px;
     font-weight: normal;
-    padding: 20px;
   }
 
   .bc-page-create-course-site-pending-request {
     margin: 15px auto;
   }
 
-  .bc-page-create-course-site-select-sections {
-    border-top: 1px solid $bc-color-top-border;
-    padding: 10px 0;
-  }
-
-  .bc-page-create-course-site-step-indent {
-    padding-left: 18px;
+  .bc-page-create-course-site-steps-container {
+    padding: 0;
   }
 
   .bc-page-create-course-site-step-options {
@@ -117,28 +106,11 @@
     margin: 15px 0 0;
   }
 
-  .bc-page-create-course-site-term-button {
-    width: 135px;
-  }
-
-  .bc-page-create-course-site-term-button-element {
-    float: left;
-    margin-bottom: 5px;
-    width: 140px;
-  }
-
   // Form with Expandable Courses & Sections
 
   .bc-page-create-course-site-section-margin {
     margin: 0;
     overflow: hidden;
-  }
-
-  .bc-page-create-course-site-form-course {
-    background: $bc-color-roster-background;
-    border: 1px solid $bc-color-roster-border;
-    margin: 0 0 20px;
-    padding: 15px;
   }
 
   .bc-page-create-course-site-form-course-button {
@@ -147,15 +119,6 @@
     &:focus, &:hover {
       text-decoration: none;
     }
-  }
-
-  .bc-page-create-course-site-form-collapse-icon {
-    font-size: 18px;
-    margin-left: 2px;
-  }
-
-  .bc-page-create-course-site-form-course-title {
-    margin-left: 10px;
   }
 
   .bc-page-create-course-site-form-collapsible-container {

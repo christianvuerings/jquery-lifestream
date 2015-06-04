@@ -21,6 +21,7 @@
     'calcentral.factories',
     'calcentral.filters',
     'calcentral.services',
+    'ngAria',
     'ngRoute',
     'ngSanitize',
     'ngTouch',

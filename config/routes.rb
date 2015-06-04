@@ -49,6 +49,7 @@ Calcentral::Application.routes.draw do
   post '/canvas/embedded/*url' => 'canvas_lti#embedded', :defaults => { :format => 'html' }
   get '/canvas/lti_roster_photos' => 'canvas_lti#lti_roster_photos', :defaults => { :format => 'xml' }
   get '/canvas/lti_site_creation' => 'canvas_lti#lti_site_creation', :defaults => { :format => 'xml' }
+  get '/canvas/lti_site_mailing_lists' => 'canvas_lti#lti_site_mailing_lists', :defaults => { :format => 'xml' }
   get '/canvas/lti_user_provision' => 'canvas_lti#lti_user_provision', :defaults => { :format => 'xml' }
   get '/canvas/lti_course_add_user' => 'canvas_lti#lti_course_add_user', :defaults => { :format => 'xml' }
   get '/canvas/lti_course_mediacasts' => 'canvas_lti#lti_course_mediacasts', :defaults => { :format => 'xml' }
@@ -87,6 +88,7 @@ Calcentral::Application.routes.draw do
   get '/api/academics/canvas/mailing_lists/:canvas_course_id' => 'canvas_mailing_lists#show', :defaults => { :format => 'json' }
   post '/api/academics/canvas/mailing_lists/:canvas_course_id/create' => 'canvas_mailing_lists#create', :defaults => { :format => 'json' }
   post '/api/academics/canvas/mailing_lists/:canvas_course_id/populate' => 'canvas_mailing_lists#populate', :defaults => { :format => 'json' }
+  post '/api/academics/canvas/mailing_lists/:canvas_course_id/delete' => 'canvas_mailing_lists#destroy', :defaults => { :format => 'json' }
 
   # System utility endpoints
   get '/api/cache/clear' => 'cache#clear', :defaults => { :format => 'json' }

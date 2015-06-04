@@ -1,0 +1,53 @@
+.bc-page-site-mailing-list {
+  padding: 20px;
+
+  .bc-page-site-mailing-list-button-primary {
+    margin: 0 4px;
+  }
+
+  .bc-page-site-mailing-list-header2 {
+    font-size: 17px;
+    line-height: 25px;
+  }
+
+  .bc-page-site-mailing-list-header3 {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .bc-page-site-mailing-list-info-box {
+    border: 1px solid $bc-color-container-grey-border;
+    margin: 24px 0;
+    padding: 6px 10px;
+  }
+
+  .bc-page-site-mailing-list-form {
+    margin: 20px 0;
+  }
+
+  .bc-page-site-mailing-list-form-input-row {
+    margin: 20px 0;
+    text-align: right;
+  }
+
+  .bc-page-site-mailing-list-form-label {
+    text-align: right;
+  }
+
+  .bc-page-site-mailing-list-notice-message {
+    margin-left: 30px;
+  }
+
+  .bc-page-site-mailing-list-text {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.6;
+    margin: 15px;
+  }
+
+  @media #{$small-only} {
+    .bc-page-site-mailing-list-form-label {
+      text-align: left;
+    }
+  }
+}

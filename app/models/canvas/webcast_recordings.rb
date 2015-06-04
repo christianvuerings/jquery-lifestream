@@ -32,21 +32,7 @@ module Canvas
           end
         end
       end
-      Webcast::Merged.new(@term_yr, @term_cd, ccn_list, @options).get_feed
-    end
-
-    def empty_feed
-      {
-        system_status: {
-          is_sign_up_active: false
-        },
-        rooms: {},
-        media: {}
-      }
-    end
-
-    def empty_feed?(feed)
-      feed[:audio].blank? && (feed[:itunes].blank? || (feed[:itunes][:audio].blank? && feed[:itunes][:video].blank?))
+      Webcast::Merged.new(@uid, @term_yr, @term_cd, ccn_list, @options).get_feed
     end
 
   end

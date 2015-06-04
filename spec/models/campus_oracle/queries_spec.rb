@@ -230,7 +230,7 @@ describe CampusOracle::Queries do
   end
 
   it 'should be able to get a whole lot of user records' do
-    known_uids = %w(238382 2040 3060 211159 322279)
+    known_uids = %w(238382 2040 3060 211159 238382)
     lotsa_uids = Array.new(1000 - known_uids.length) {|i| i + 1 }
     lotsa_uids.concat known_uids
     user_data = CampusOracle::Queries.get_basic_people_attributes lotsa_uids

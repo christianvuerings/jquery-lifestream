@@ -14,9 +14,7 @@ module Canvas
       @batch_mode = (batch_or_incremental == 'batch')
       term_ids = Canvas::Proxy.current_sis_term_ids
       term_ids.each do |term_id|
-        # Prevent collisions between the SIS_ID code and the filesystem.
-        sanitized_term_id = term_id.gsub(/[^a-z0-9\-.]+/i, '_')
-        csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{sanitized_term_id}-enrollments-#{batch_or_incremental}.csv"
+        csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{file_safe(term_id)}-enrollments-#{batch_or_incremental}.csv"
         @term_to_memberships_csv_filename[term_id] = csv_filename
       end
     end

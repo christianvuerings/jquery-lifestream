@@ -116,6 +116,7 @@
       }
       apiService.util.iframeScrollToTop();
       $scope.showUsersArea = false;
+      $scope.showSearchForm = false;
       $scope.isLoading = true;
       $scope.showAlerts = true;
       var submittedUser = $scope.selectedUser;
@@ -136,10 +137,15 @@
         } else {
           $scope.errorStatus = 'Request to add user failed';
         }
+        $scope.showSearchForm = true;
         $scope.additionFailureMessage = true;
         $scope.isLoading = false;
         resetSearchState();
       });
+    };
+
+    $scope.noUserSelected = function() {
+      return !$scope.selectedUser;
     };
 
     var checkAuthorization = function() {
@@ -189,7 +195,6 @@
       });
     };
 
-    apiService.util.iframeUpdateHeight();
     checkAuthorization();
   });
 })(window.angular);

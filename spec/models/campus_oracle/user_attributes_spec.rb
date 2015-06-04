@@ -27,6 +27,12 @@ describe CampusOracle::UserAttributes do
           expect(subject[:california_residency][:summary]).to eq 'Non-Resident'
         end
       end
+      context 'student with Education Abroad REG_SPECIAL_PGM_CD' do
+        let(:uid) {300853}
+        it 'includes expected feed values' do
+          expect(subject[:education_abroad]).to be_truthy
+        end
+      end
       describe 'roles' do
         context 'student' do
           let(:uid) {300846}

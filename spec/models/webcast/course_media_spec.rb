@@ -27,8 +27,8 @@ describe Webcast::CourseMedia do
 
     context 'when proxy error message is not blank' do
       before do
-        proxy_error_hash = {:proxy_error_message => 'Proxy Error'}
-        subject.should_receive(:get_playlist_hash).and_return proxy_error_hash
+        proxy_error_hash = {:proxyErrorMessage => 'Proxy Error'}
+        expect(subject).to receive(:get_media_hash).and_return proxy_error_hash
       end
       it 'should return the proxy error message' do
         response = subject.get_feed
@@ -49,9 +49,9 @@ describe Webcast::CourseMedia do
     subject { Webcast::CourseMedia.new(2008, 'D', [49688], {:fake => true}) }
 
     context 'when proxy error message is blank' do
-      before { subject.should_receive(:get_audio_as_json).with(anything).and_return audio_as_json }
+      before { expect(subject).to receive(:get_audio_as_json).with(anything).and_return audio_as_json }
       it 'should parse Webcast JSON per normal procedure' do
-        response = subject.get_feed['2008-D-49688']
+        response = subject.get_feed[49688]
         expect(response).not_to be_nil
         expect(response[:videos]).to have(12).items
         expect(response[:videos][0]['youTubeId']).to eq 'bBithUtaaas'
@@ -66,21 +66,21 @@ describe Webcast::CourseMedia do
   context 'when serving multiple sets of Webcast recordings' do
     context 'when ccn matches a set of Webcast recordings' do
       subject { Webcast::CourseMedia.new(2014, 'B', [1, 87432, 2, 76207], {:fake => true}) }
-      before { subject.should_receive(:get_audio_as_json).with(anything).twice.and_return audio_as_json }
+      before { expect(subject).to receive(:get_audio_as_json).with(anything).twice.and_return audio_as_json }
       it 'should return youtube videos' do
         response = subject.get_feed
-        expect(response['2014-B-1']).to eq Webcast::Recordings::ERRORS
-        expect(response['2014-B-87432'][:videos]).to have(31).items
-        expect(response['2014-B-2']).to eq Webcast::Recordings::ERRORS
-        expect(response['2014-B-76207'][:videos]).to have(35).items
+        expect(response[1]).to be_nil
+        expect(response[87432][:videos]).to have(31).items
+        expect(response[2]).to be_nil
+        expect(response[76207][:videos]).to have(35).items
       end
     end
 
     context 'when videos are not present' do
       subject { Webcast::CourseMedia.new(2014, 'D', [123], {:fake => true}) }
-      before { subject.should_receive(:get_audio_as_json).with(anything).and_return audio_as_json }
+      before { expect(subject).to receive(:get_audio_as_json).with(anything).and_return audio_as_json }
       it 'should return an empty array' do
-        response = subject.get_feed['2014-D-123']
+        response = subject.get_feed[123]
         expect(response[:videos]).to be_empty
         itunes = response[:itunes]
         expect(itunes[:audio]).to be_nil
@@ -90,29 +90,29 @@ describe Webcast::CourseMedia do
 
     context 'when course title has a _slash_' do
       subject { Webcast::CourseMedia.new(2014, 'D', [85006], {:fake => true}) }
-      before { subject.should_receive(:get_audio_as_json).with(anything).and_return audio_as_json }
+      before { expect(subject).to receive(:get_audio_as_json).with(anything).and_return audio_as_json }
       it 'should decode _slash_ to /' do
-        expect(subject.get_feed['2014-D-85006']).to be_an_instance_of Hash
+        expect(subject.get_feed[85006]).to be_an_instance_of Hash
       end
     end
   end
 
-  context 'with non-fake proxy' do
-
+  context 'with non-fake proxy', :testext => true do
     context 'when serving multiple sets of Webcast recordings' do
       let (:playlist_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/webcast.json" }
       subject { Webcast::CourseMedia.new(2014, 'B', [7502, 11147, 1]) }
 
-      context 'normal return of real data', :testext => true do
+      context 'normal return of real data' do
         it 'should return correct recordings' do
-          result = subject.get_feed['2014-B-11147']
+          result = subject.get_feed[11147]
           expect(result[:videos]).to be_an_instance_of Array
           expect(result[:videos].size).to eq 14
           recording = result[:videos][0]
           expect(recording).to be_an_instance_of Hash
           expect(recording['youTubeId']).to eq 'mYZS-y6RuGI'
           expect(recording['lecture']).to eq '2014-05-02: Review for Final Exam'
-          expect(recording['recordingStartUTC']).to eq '2014-05-02T12:07:00-07:00'
+          # TODO: Bring this back once Webcast's QA env have recordingStartUTC up and running again
+          # expect(recording['recordingStartUTC']).to eq '2014-05-02T12:07:00-07:00'
         end
       end
 
@@ -122,10 +122,7 @@ describe Webcast::CourseMedia do
         }
         after(:each) { WebMock.reset! }
         it 'should return the fetch error message' do
-          response = subject.get_feed
-          response.each do |key, json|
-            expect(json).to eq(Webcast::Recordings::ERRORS), "Unexpected message with #{key}: #{json.inspect}"
-          end
+          expect(subject.get_feed).to be_empty
         end
       end
 
@@ -135,10 +132,7 @@ describe Webcast::CourseMedia do
         }
         after(:each) { WebMock.reset! }
         it 'should return the fetch error message' do
-          response = subject.get_feed
-          response.each do |key, json|
-            expect(json).to eq(Webcast::Recordings::ERRORS), "Unexpected message with #{key}: #{json.inspect}"
-          end
+          expect(subject.get_feed).to be_empty
         end
       end
 

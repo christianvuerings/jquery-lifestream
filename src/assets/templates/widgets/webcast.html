@@ -5,7 +5,17 @@
 
     <div data-ng-bind="proxyErrorMessage"></div>
     <div data-ng-if="!proxyErrorMessage">
-      <div data-ng-if="!videos.length && !audio.length">There are no webcasts available.</div>
+      <div data-ng-if="!videos && !audio">
+        There are no Webcasts scheduled.
+      </div>
+      <div data-ng-if="media">
+        <div data-ng-repeat="section in media">
+            <div data-ng-if="!section.videos.length && !section.audio.length">
+              Webcasts for {{section.deptName}} {{section.catalogId}} {{course.instructionFormat}} {{section.sectionNumber}} will appear here after classes start.
+            </div>
+        </div>
+      </div>
+
       <div data-ng-if="videos.length || audio.length">
         <div data-ng-if="videos.length && audio.length" class="cc-widget-webcast-button-group cc-clearfix-container">
           <ul class="cc-button-group cc-even-2" role="tablist">
@@ -24,7 +34,7 @@
           <div data-ng-if="videos.length">
             <div class="cc-select cc-widget-webcast-select">
               <label for="cc-widget-webcast-video-selection" class="cc-visuallyhidden">Select Video</label>
-              <select id="cc-widget-webcast-video-selection" data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
+              <select id="cc-widget-webcast-video-selection" class="bc-canvas-embedded-form-select" data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
             </div>
             <div class="cc-youtube-video">
               <div data-cc-youtube-directive="selectedVideo.youTubeId" data-cc-youtube-directive-title="{{selectedVideo.lecture}}"></div>
@@ -68,6 +78,9 @@
           <div data-ng-if="!audio.length && !itunes.audio" class="cc-widget-webcast-error">
             No audio content available.
           </div>
+        </div>
+        <div class="cc-widget-webcast-outbound-link">
+          <a href="http://ets.berkeley.edu/forms/get-webcastpodcast-support-or-give-feedback">Report a problem with this recording</a>
         </div>
       </div>
     </div>

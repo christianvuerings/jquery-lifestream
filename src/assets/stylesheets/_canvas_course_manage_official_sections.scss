@@ -1,6 +1,6 @@
 .bc-page-course-official-sections {
   background-color: $bc-color-white;
-  padding: 20px;
+  padding: 25px;
   .cc-button {
     padding: 10px;
   }
@@ -17,17 +17,7 @@
   }
 
   .bc-page-course-official-sections-courses-container {
-    margin: 10px 0;
-  }
-
-  .bc-page-course-official-sections-course {
-    margin: 10px;
-  }
-
-  .bc-page-course-official-sections-course-available {
-    background-color: $bc-color-off-white-background;
-    border: $bc-color-grey-area-border-light solid 1px;
-    margin: 0 0 20px;
+    margin: 0;
   }
 
   .bc-page-course-official-sections-current-course {
@@ -36,6 +26,10 @@
 
   .bc-page-course-official-sections-current-sections-grey-border {
     border: $bc-color-grey-area-border-dark solid 1px;
+  }
+
+  .bc-page-course-official-sections-current-sections-header {
+    margin-bottom: 5px;
   }
 
   .bc-page-course-official-sections-current-sections-white-border {
@@ -47,8 +41,12 @@
   }
 
   .bc-page-course-official-sections-existing-sections-header-label {
-    font-size: 17px;
+    font-size: 19px;
     margin-top: 10px;
+  }
+
+  .bc-page-course-official-sections-available-sections-header-label {
+    margin-bottom: 15px;
   }
 
   .bc-page-course-official-sections-form-course-button {
@@ -57,15 +55,6 @@
     &:focus, &:hover {
       text-decoration: none;
     }
-  }
-
-  .bc-page-course-official-sections-form-collapse-icon {
-    font-size: 18px;
-    margin-left: 2px;
-  }
-
-  .bc-page-course-official-sections-form-course-title {
-    margin-left: 10px;
   }
 
   .bc-page-course-official-sections-form-collapsible-container {
@@ -82,7 +71,7 @@
   }
 
   .bc-page-course-official-sections-pending-request {
-    margin: 10px 0;
+    margin: 20px 0;
   }
 
   @media #{$small-only} {

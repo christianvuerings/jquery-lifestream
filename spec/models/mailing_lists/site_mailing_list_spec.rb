@@ -12,9 +12,7 @@ describe MailingLists::SiteMailingList do
     let(:list) { described_class.new(canvas_site_id: canvas_site_id) }
 
     it 'is valid' do
-      expect(response).not_to include 'displayError'
-      expect(response).not_to include 'badRequestError'
-      expect(response).not_to include 'validationError'
+      expect(response).not_to include 'errorMessages'
     end
 
     it 'returns Canvas site data' do
@@ -34,8 +32,7 @@ describe MailingLists::SiteMailingList do
 
     it 'returns error on attempt to populate before save' do
       list.populate
-      expect(response['displayError']).to eq 'badRequest'
-      expect(response['badRequestError']).to eq "Mailing list \"#{list.list_name}\" must be created before being populated."
+      expect(response['errorMessages']).to include("Mailing list \"#{list.list_name}\" must be created before being populated.")
       expect(response['mailingList']).not_to include('timeLastPopulated')
     end
 
@@ -66,8 +63,7 @@ describe MailingLists::SiteMailingList do
 
       it 'returns error data' do
         expect(response).not_to include :mailingList
-        expect(response['displayError']).to eq 'badRequest'
-        expect(response['badRequestError']).to eq "No bCourses site found with ID \"#{canvas_site_id}\"."
+        expect(response['errorMessages']).to include("No bCourses site with ID \"#{canvas_site_id}\" was found.")
       end
     end
   end
@@ -91,8 +87,7 @@ describe MailingLists::SiteMailingList do
         count = described_class.count
         create_list
         expect(described_class.count).to eq count
-        expect(response['displayError']).to eq 'badRequest'
-        expect(response['validationErrors']['list_name']).to be_present
+        expect(response['errorMessages']).to include('List name may contain only lowercase, numeric, underscore and hyphen characters.')
       end
     end
 
@@ -103,8 +98,7 @@ describe MailingLists::SiteMailingList do
         count = described_class.count
         create_list
         expect(described_class.count).to eq count
-        expect(response['displayError']).to eq 'badRequest'
-        expect(response['badRequestError']).to eq "Mailing list name \"#{list.list_name}\" is already taken."
+        expect(response['errorMessages']).to include("Mailing list name \"#{list.list_name}\" is already taken.")
       end
     end
 
@@ -117,8 +111,7 @@ describe MailingLists::SiteMailingList do
         count = described_class.count
         create_list
         expect(described_class.count).to eq count
-        expect(response['displayError']).to eq 'badRequest'
-        expect(response['validationErrors']['list_name']).to be_present
+        expect(response['errorMessages']).to include("List name \"#{list_name}\" has already been reserved.")
       end
     end
 
@@ -129,8 +122,7 @@ describe MailingLists::SiteMailingList do
         count = described_class.count
         create_list
         expect(described_class.count).to eq count
-        expect(response['displayError']).to eq 'badRequest'
-        expect(response['validationErrors']['canvas_site_id']).to be_present
+        expect(response['errorMessages']).to include("Canvas site ID \"#{canvas_site_id}\" has already reserved a mailing list.")
       end
     end
   end
@@ -138,6 +130,14 @@ describe MailingLists::SiteMailingList do
   context 'an existing list record' do
     before { described_class.create(canvas_site_id: canvas_site_id)  }
     let(:list) { described_class.find_by(canvas_site_id: canvas_site_id) }
+
+    context 'error from Calmail' do
+      before { allow_any_instance_of(Calmail::CheckNamespace).to receive(:name_available?).and_return(response: {statusCode: 503}) }
+
+      it 'reports the error' do
+        expect(response['errorMessages']).to include('There was an error connecting to Calmail.')
+      end
+    end
 
     context 'name does not exist in Calmail' do
       before { allow_any_instance_of(Calmail::CheckNamespace).to receive(:name_available?).and_return(response: true) }
@@ -149,8 +149,7 @@ describe MailingLists::SiteMailingList do
 
       it 'returns error on attempt to populate' do
         list.populate
-        expect(response['displayError']).to eq 'badRequest'
-        expect(response['badRequestError']).to eq "Mailing list \"#{list.list_name}\" must be created before being populated."
+        expect(response['errorMessages']).to include("Mailing list \"#{list.list_name}\" must be created before being populated.")
         expect(response['mailingList']).not_to include('timeLastPopulated')
       end
     end
@@ -183,19 +182,22 @@ describe MailingLists::SiteMailingList do
           allow(Calmail::RemoveListMember).to receive(:new).and_return fake_remove_proxy
 
           expect(course_users).to receive(:course_users).exactly(1).times.and_return fake_site_users
-          expect(list_members).to receive(:list_members).exactly(1).times.and_return fake_list_members
           expect(CampusOracle::Queries).to receive(:get_basic_people_attributes).exactly(1).times.and_return fake_site_users
         end
 
-        def expect_empty_population_results(action)
-          expect(response['populationResults'][action]['total']).to eq 0
-          expect(response['populationResults'][action]['success']).to eq 0
-          expect(response['populationResults'][action]['failure']).to eq []
+        def expect_empty_population_results(list, action)
+          expect(list.population_results[action][:total]).to eq 0
+          expect(list.population_results[action][:success]).to eq 0
+          expect(list.population_results[action][:failure]).to eq []
         end
 
         context 'no change in list membership' do
           let(:fake_site_users) { [oliver, ray, paul] }
           let(:fake_list_members) { {response: {addresses: ['kerschen@berkeley.edu', 'oheyer@berkeley.edu', 'raydavis@berkeley.edu']}} }
+
+          before do
+            expect(list_members).to receive(:list_members).exactly(1).times.and_return fake_list_members
+          end
 
           it 'makes no requests' do
             expect(fake_add_proxy).not_to receive(:add_member)
@@ -206,10 +208,11 @@ describe MailingLists::SiteMailingList do
           it 'returns time, no errors and empty results' do
             list.populate
             expect(response['mailingList']['timeLastPopulated']).to be_present
-            expect(response).not_to include 'displayError'
-            expect(response).not_to include 'badRequestError'
-            expect_empty_population_results 'add'
-            expect_empty_population_results 'remove'
+            expect(response).not_to include 'errorMessages'
+            expect_empty_population_results(list, :add)
+            expect_empty_population_results(list, :remove)
+            expect(response['populationResults']['success']).to eq true
+            expect(response['populationResults']['messages']).to eq []
           end
         end
 
@@ -218,27 +221,60 @@ describe MailingLists::SiteMailingList do
           let(:fake_list_members) { {response: {addresses: []}} }
 
           it 'requests addition and reports success' do
+            expect(list_members).to receive(:list_members).exactly(1).times.and_return fake_list_members
             expect(fake_add_proxy).to receive(:add_member).exactly(3).times.and_call_original
             expect(fake_remove_proxy).not_to receive(:remove_member)
             list.populate
-            expect(response['populationResults']['add']['total']).to eq 3
-            expect(response['populationResults']['add']['success']).to eq 3
-            expect(response['populationResults']['add']['failure']).to eq []
-            expect_empty_population_results 'remove'
+            expect(list.population_results[:add][:success]).to eq 3
+            expect_empty_population_results(list, :remove)
+            expect(response['populationResults']['success']).to eq true
+            expect(response['populationResults']['messages']).to eq ['3 new members were added.']
           end
 
-          context 'failures from proxy' do
+          context 'proxy reporting failure' do
             before do
               expect(fake_add_proxy).to receive(:add_member).exactly(3).times.
                and_return({response: {added: false}}, {response: {added: true}}, {response: {added: true}})
             end
 
-            it 'reports failure' do
-              list.populate
-              expect(response['populationResults']['add']['total']).to eq 3
-              expect(response['populationResults']['add']['success']).to eq 2
-              expect(response['populationResults']['add']['failure']).to eq ['oheyer@berkeley.edu']
-              expect_empty_population_results 'remove'
+            context 'reported failure is a real failure' do
+              before do
+                expect(list_members).to receive(:list_members).exactly(2).times.and_return(
+                  {response: {addresses: []}},
+                  {response: {addresses: ['raydavis@berkeley.edu', 'kerschen@berkeley.edu']}}
+                )
+              end
+
+              it 'reports failure' do
+                list.populate
+                expect(list.population_results[:add][:total]).to eq 3
+                expect(list.population_results[:add][:success]).to eq 2
+                expect(list.population_results[:add][:failure]).to eq ['oheyer@berkeley.edu']
+                expect_empty_population_results(list, :remove)
+                expect(list.populate_add_errors).to eq 1
+                expect(response['populationResults']['success']).to eq false
+                expect(response['populationResults']['messages']).to eq ['1 new member could not be added.']
+              end
+            end
+
+            context 'reported failure is not a real failure' do
+              before do
+                expect(list_members).to receive(:list_members).exactly(2).times.and_return(
+                  {response: {addresses: []}},
+                  {response: {addresses: ['oheyer@berkeley.edu', 'raydavis@berkeley.edu', 'kerschen@berkeley.edu']}}
+                )
+              end
+
+              it 'reports success' do
+                list.populate
+                expect(list.population_results[:add][:total]).to eq 3
+                expect(list.population_results[:add][:success]).to eq 3
+                expect(list.population_results[:add][:failure]).to eq []
+                expect_empty_population_results(list, :remove)
+                expect(list.populate_add_errors).to eq 0
+                expect(response['populationResults']['success']).to eq true
+                expect(response['populationResults']['messages']).to eq ['3 new members were added.']
+              end
             end
           end
         end
@@ -248,16 +284,19 @@ describe MailingLists::SiteMailingList do
           let(:fake_list_members) { {response: {addresses: ['oheyer@berkeley.edu']}} }
 
           it 'requests addition of new users only' do
+            expect(list_members).to receive(:list_members).exactly(1).times.and_return fake_list_members
             expect(fake_add_proxy).to receive(:add_member).
               exactly(1).times.with(list.list_name, 'raydavis@berkeley.edu', 'Ray Davis').and_call_original
             expect(fake_add_proxy).to receive(:add_member).
               exactly(1).times.with(list.list_name, 'kerschen@berkeley.edu', 'Paul Kerschen').and_call_original
             expect(fake_remove_proxy).not_to receive(:remove_member)
             list.populate
-            expect(response['populationResults']['add']['total']).to eq 2
-            expect(response['populationResults']['add']['success']).to eq 2
-            expect(response['populationResults']['add']['failure']).to eq []
-            expect_empty_population_results 'remove'
+            expect(list.population_results[:add][:total]).to eq 2
+            expect(list.population_results[:add][:success]).to eq 2
+            expect(list.population_results[:add][:failure]).to eq []
+            expect_empty_population_results(list, :remove)
+            expect(response['populationResults']['success']).to eq true
+            expect(response['populationResults']['messages']).to eq ['2 new members were added.']
           end
         end
 
@@ -266,14 +305,17 @@ describe MailingLists::SiteMailingList do
           let(:fake_list_members) { {response: {addresses: ['kerschen@berkeley.edu', 'oheyer@berkeley.edu', 'raydavis@berkeley.edu']}} }
 
           it 'requests removal of departed users only' do
+            expect(list_members).to receive(:list_members).exactly(1).times.and_return fake_list_members
             expect(fake_add_proxy).not_to receive(:add_member)
             expect(fake_remove_proxy).to receive(:remove_member).
               exactly(1).times.with(list.list_name, 'kerschen@berkeley.edu').and_call_original
             list.populate
-            expect_empty_population_results 'add'
-            expect(response['populationResults']['remove']['total']).to eq 1
-            expect(response['populationResults']['remove']['success']).to eq 1
-            expect(response['populationResults']['remove']['failure']).to eq []
+            expect_empty_population_results(list, :add)
+            expect(list.population_results[:remove][:total]).to eq 1
+            expect(list.population_results[:remove][:success]).to eq 1
+            expect(list.population_results[:remove][:failure]).to eq []
+            expect(response['populationResults']['success']).to eq true
+            expect(response['populationResults']['messages']).to eq ['1 former member was removed.']
           end
         end
       end

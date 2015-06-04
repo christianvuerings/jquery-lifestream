@@ -66,7 +66,7 @@ describe Webcast::Rooms do
       after(:each) { WebMock.reset! }
       it 'should return the fetch error message' do
         buildings = subject.get
-        expect(buildings[:proxy_error_message]).to include 'There was a problem'
+        expect(buildings[:proxyErrorMessage]).to include 'There was a problem'
       end
     end
 
@@ -77,7 +77,7 @@ describe Webcast::Rooms do
       after(:each) { WebMock.reset! }
       it 'should return the fetch error message' do
         buildings = subject.get
-        expect(buildings[:proxy_error_message]).to include 'There was a problem'
+        expect(buildings[:proxyErrorMessage]).to include 'There was a problem'
       end
     end
 

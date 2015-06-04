@@ -1,0 +1,132 @@
+<div class="bc-canvas-application bc-page-site-mailing-list">
+
+  <div data-ng-show="!displayError">
+    <h1 class="bc-header bc-header1">Manage a Site Mailing List</h1>
+
+    <div role="alert" class="bc-alert bc-alert-error" data-ng-if="alerts.error.length">
+      <i class="fa fa-error fa-exclamation-triangle cc-left bc-icon-red bc-canvas-notice-icon"></i>
+      <div class="bc-page-site-mailing-list-notice-message">
+        <div data-ng-repeat="error in alerts.error" data-ng-bind="error"></div>
+      </div>
+    </div>
+
+    <div role="alert" class="bc-alert bc-alert-success" data-ng-if="alerts.success.length">
+      <i class="cc-left fa fa-error fa-check-circle bc-icon-green bc-canvas-notice-icon"></i>
+      <div class="bc-page-site-mailing-list-notice-message">
+        <div data-ng-repeat="success in alerts.success" data-ng-bind="success"></div>
+      </div>
+    </div>
+
+    <div data-ng-if="listPending" class="bc-alert bc-alert-info">
+      The list <strong data-ng-bind-template="{{mailingList.name}}@{{mailingList.domain}}"></strong> has been reserved, but not yet created.
+    </div>
+
+    <div data-ng-if="listCreated && !mailingList.timeLastPopulated" class="bc-alert bc-alert-info">
+      The list <strong data-ng-bind-template="{{mailingList.name}}@{{mailingList.domain}}"></strong> has been created. Choose "Update membership from course site" to add members.
+    </div>
+
+    <div data-ng-if="!siteSelected">
+      <form class="bc-page-site-mailing-list-form">
+        <div class="row">
+          <div class="small-12 medium-3 columns">
+            <label for="bc-page-site-mailing-list-site-id" class="bc-page-site-mailing-list-form-label">Course Site ID:</label>
+          </div>
+          <div class="small-12 medium-6 columns end">
+            <input type="text" id="bc-page-site-mailing-list-site-id" class="cc-left bc-canvas-form-input-text" data-ng-model="canvasSite.canvasCourseId"
+                   placeholder="Enter numeric site ID" required aria-required="true" />
+            <button class="bc-canvas-button bc-canvas-button-primary" data-ng-click="findSiteMailingList()" data-ng-disabled="isProcessing || !canvasSite.canvasCourseId">
+              <span data-ng-if="!isProcessing">Get Mailing List</span>
+              <span data-ng-if="isProcessing"><i class="fa fa-spinner fa-spin"></i> Finding ...</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div data-ng-if="siteSelected">
+
+      <div class="bc-page-site-mailing-list-info-box">
+        <h2 class="bc-header bc-page-site-mailing-list-header2">
+          <span data-ng-if="!listRegistered" class="cc-ellipsis" data-ng-bind="canvasSite.name"></span>
+          <span data-ng-if="listRegistered" class="cc-ellipsis" data-ng-bind-template="{{mailingList.name}}@{{mailingList.domain}}"></span>
+        </h2>
+        <h3 class="bc-header bc-page-site-mailing-list-header3" data-ng-if="listRegistered && !listCreated">Not yet created</h3>
+        <div data-ng-if="listCreated">
+          <div data-ng-pluralize count="mailingList.membersCount||0" when="{'0':'No members','one':'1 member','other':'{} members'}"></div>
+          <div>Membership last updated: <strong data-ng-bind="listLastPopulated | lowercase"></strong></div>
+          <a data-ng-href="{{mailingList.administrationUrl}}" data-ng-click="api.analytics.trackExternalLink('Canvas Site Mailing List', 'Calmail', mailingList.administrationUrl)">
+            View in CalMail
+          </a>
+        </div>
+        <div data-ng-if="listRegistered">
+          Course site:
+          <a data-ng-if="listRegistered" data-ng-href="{{canvasSite.url}}" data-ng-click="api.analytics.trackExternalLink('Canvas Site Mailing List', 'bCourses', canvasSite.url)"
+             data-ng-bind="canvasSite.name"></a>
+        </div>
+        <div class="row">
+          <div class="small-12 medium-4 columns" data-ng-bind="canvasSite.codeAndTerm"></div>
+          <div class="small-12 medium-6 columns end" data-ng-bind-template="Site ID: {{canvasSite.canvasCourseId}}"></div>
+        </div>
+        <a data-ng-if="!listRegistered" data-ng-href="{{canvasSite.url}}" data-ng-click="api.analytics.trackExternalLink('Canvas Site Mailing List', 'bCourses', canvasSite.url)">
+          View course site
+        </a>
+      </div>
+
+      <div class="bc-page-site-mailing-list-text" data-ng-if="!listRegistered">
+        No mailing list name has been reserved for this site. Choose a name to reserve before creating a list.
+      </div>
+
+      <div data-ng-if="listPending">
+        <div class="bc-page-site-mailing-list-text">
+          <strong>Mailing lists can only be created at the CalMail management site.</strong>
+          When you choose "Create mailing list," a new browser window will open at the CalMail site.
+          If you are not logged in to that site, you will have to log in, close the CalMail browser window, and return to this window to try again.
+        </div>
+        <div class="bc-page-site-mailing-list-text">
+          When the list is first created, it will have no members.
+          <strong>After</strong> you create the list in CalMail, return to this window and choose "I've created the list, go to memberships" to update memberships from the course site.
+        </div>
+      </div>
+
+      <form class="bc-canvas-page-form bc-canvas-form">
+        <div class="row bc-page-site-mailing-list-form-input-row" data-ng-if="!listRegistered">
+          <div class="medium-3 small-12 columns">
+            <label for="mailingListName" class="bc-page-site-mailing-list-form-label">New Mailing List Name:</label>
+          </div>
+          <div class="medium-9 small-12 columns">
+            <input type="text" id="mailingListName" class="cc-left bc-canvas-form-input-text" data-ng-model="mailingList.name" required aria-required="true" />
+          </div>
+        </div>
+
+        <div class="bc-form-actions">
+          <button data-ng-if="!listPending" class="bc-canvas-button" data-ng-click="resetForm()">Cancel</button>
+          <button data-ng-if="!listRegistered" data-ng-click="registerMailingList()" class="bc-canvas-button bc-canvas-button-primary" aria-controls="cc-page-reader-alert">
+            <span data-ng-if="!isProcessing">Reserve mailing list name</span>
+            <span data-ng-if="isProcessing"><i class="fa fa-spinner fa-spin"></i> Reserving ...</span>
+          </button>
+          <div data-ng-if="listPending">
+            <button data-ng-if="listPending" class="bc-canvas-button" data-ng-click="unregisterMailingList()">
+              <span data-ng-if="!isProcessing">Cancel registration</span>
+              <span data-ng-if="isProcessing"><i class="fa fa-spinner fa-spin"></i> Cancelling ...</span>
+            </button>
+            <a data-ng-href="{{mailingList.creationUrl}}" class="bc-canvas-button bc-canvas-button-primary bc-page-site-mailing-list-button-primary" aria-controls="cc-page-reader-alert">Create mailing list</a>
+            <button data-ng-click="confirmCreation()" class="bc-canvas-button" aria-controls="cc-page-reader-alert">
+              <i data-ng-if="isConfirmingCreation" class="fa fa-spinner fa-spin"></i>
+              I've created the list, go to memberships
+            </button>
+          </div>
+          <button data-ng-if="listCreated" data-ng-click="populateMailingList()" class="bc-canvas-button bc-canvas-button-primary" aria-controls="cc-page-reader-alert">
+            <span data-ng-if="!isProcessing">Update membership from course site</span>
+            <span data-ng-if="isProcessing"><i class="fa fa-spinner fa-spin"></i> Updating ...</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <div data-ng-if="displayError" class="bc-notice-error-container">
+    <div data-ng-include="'canvas_embedded/_shared/canvas_errors.html'"></div>
+  </div>
+
+</div>
