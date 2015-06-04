@@ -158,9 +158,11 @@ describe Webcast::Merged do
         expect(stat_131A[:eligibleForSignUp]).to be_nil
         expect(pb_hlth_241[:ccn]).to eq '76207'
         expect(pb_hlth_241[:videos]).to have(35).items
+        expect(pb_hlth_241[:iTunes][:video]).to include('805328862')
         expect(feed[:videos]).to match_array(pb_hlth_241[:videos] + stat_131A[:videos])
         expect(feed[:audio]).to be_empty
         expect(feed[:iTunes][:audio]).to be_nil
+        expect(feed[:iTunes][:video]).to include('805328862')
 
         # Instructors that can sign up for Webcast
         eligible_for_sign_up = feed[:eligibleForSignUp]

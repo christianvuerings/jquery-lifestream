@@ -56,7 +56,7 @@ describe Webcast::CourseMedia do
         expect(response[:videos]).to have(12).items
         expect(response[:videos][0]['youTubeId']).to eq 'bBithUtaaas'
         expect(response[:audio]).to_not be_nil
-        itunes = response[:itunes]
+        itunes = response[:iTunes]
         expect(itunes[:audio]).to include('354822467')
         expect(itunes[:video]).to include('354822464')
       end
@@ -82,7 +82,7 @@ describe Webcast::CourseMedia do
       it 'should return an empty array' do
         response = subject.get_feed[123]
         expect(response[:videos]).to be_empty
-        itunes = response[:itunes]
+        itunes = response[:iTunes]
         expect(itunes[:audio]).to be_nil
         expect(itunes[:video]).to include('789')
       end
