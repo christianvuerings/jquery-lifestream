@@ -18,11 +18,16 @@
 
       <div data-ng-if="videos.length || audio.length">
         <div data-ng-if="videos.length && audio.length" class="cc-widget-webcast-button-group cc-clearfix-container">
-          <ul class="cc-button-group cc-even-2" role="tablist">
+          <ul class="cc-button-group cc-even-2 bc-canvas-embedded-buttonset" role="tablist">
             <li data-ng-repeat="selectOption in selectOptions">
               <button class="cc-button"
                       data-ng-click="switchSelectedOption(selectOption)"
-                      data-ng-class="{'cc-button-selected':(currentSelection === selectOption)}"
+                      data-ng-class="{
+                        'cc-button-selected':(currentSelection === selectOption),
+                        'bc-buttonset-button-active':(currentSelection === selectOption),
+                        'bc-buttonset-corner-left':($first),
+                        'bc-buttonset-corner-right':($last)
+                      }"
                       aria-selected="{{currentSelection === selectOption}}"
                       role="tab"
                       data-ng-bind="selectOption">
@@ -56,7 +61,7 @@
           <div data-ng-show="audio.length">
             <div class="cc-select cc-widget-webcast-select">
               <label for="cc-widget-webcast-audio-selection" class="cc-visuallyhidden">Select Audio</label>
-              <select id="cc-widget-webcast-audio-selection" data-ng-model="selectedAudio" data-ng-options="item.title for item in audio"></select>
+              <select id="cc-widget-webcast-audio-selection" class="bc-canvas-embedded-form-select" data-ng-model="selectedAudio" data-ng-options="item.title for item in audio"></select>
             </div>
             <div class="cc-widget-webcast-audio" controls>
               <div data-cc-audio-directive="selectedAudio.playUrl"></div>
