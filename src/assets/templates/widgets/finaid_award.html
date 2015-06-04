@@ -99,7 +99,7 @@
       </div>
       <div class="cc-clearfix-container cc-widget-finaid-award-table-total">
         <div class="cc-left" data-ng-if="category.link.title">
-          <a data-ng-href="{{category.link.url}}">
+          <a data-ng-href="{{category.link.url}}" data-cc-outbound-disable="true">
             <i data-ng-if="category.link.type === 'add'" class="fa fa-plus"></i>
             <span data-ng-bind="category.link.title"></span>
           </a>
