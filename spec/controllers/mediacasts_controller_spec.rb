@@ -63,8 +63,8 @@ describe MediacastsController do
           course = json['media'][0]
           expect(course['ccn']).to eq '85006'
           expect(course['videos']).to be_empty
-          expect(course['itunes']['audio']).to be_nil
-          expect(course['itunes']['video']).to include '819827828'
+          expect(course['iTunes']['audio']).to be_nil
+          expect(course['iTunes']['video']).to include '819827828'
         end
       end
     end

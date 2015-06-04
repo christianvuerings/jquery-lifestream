@@ -45,15 +45,15 @@
               <div data-cc-youtube-directive="selectedVideo.youTubeId" data-cc-youtube-directive-title="{{selectedVideo.lecture}}"></div>
             </div>
           </div>
-          <ul class="cc-widget-webcast-links" data-ng-if="itunes.video">
+          <ul class="cc-widget-webcast-links" data-ng-if="iTunes.video">
             <li class="cc-widget-webcast-itunes-link">
               Also available at
-              <a data-ng-href="{{itunes.video}}">
+              <a data-ng-href="{{iTunes.video}}">
                 <i class="fa fa-apple cc-widget-webcast-icon-link"></i> iTunes U
               </a>
             </li>
           </ul>
-          <div data-ng-if="!videos.length && !itunes.video" class="cc-widget-webcast-error">
+          <div data-ng-if="!videos.length && !iTunes.video" class="cc-widget-webcast-error">
             No video content available.
           </div>
         </div>
@@ -73,14 +73,14 @@
                 <i class="fa fa-download cc-widget-webcast-icon-link"></i> Download audio
               </a>
             </li>
-            <li data-ng-if="itunes.audio" class="cc-widget-webcast-itunes-link">
+            <li data-ng-if="iTunes.audio" class="cc-widget-webcast-itunes-link">
               Also available at
-              <a data-ng-href="{{itunes.audio}}">
+              <a data-ng-href="{{iTunes.audio}}">
                 <i class="fa fa-apple cc-widget-webcast-icon-link"></i> iTunes U
               </a>
             </li>
           </ul>
-          <div data-ng-if="!audio.length && !itunes.audio" class="cc-widget-webcast-error">
+          <div data-ng-if="!audio.length && !iTunes.audio" class="cc-widget-webcast-error">
             No audio content available.
           </div>
         </div>
