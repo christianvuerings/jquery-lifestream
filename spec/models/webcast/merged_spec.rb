@@ -49,8 +49,6 @@ describe Webcast::Merged do
         expect_any_instance_of(MyAcademics::Teaching).to receive(:courses_list_from_ccns).once.and_return courses_list
       end
       it 'returns one match media' do
-        # spring_2014 =
-        # expect(spring_2014[1]).to be_nil
         stat_131A = feed[:media][0]
         expect(stat_131A[:termYr]).to eq 2014
         expect(stat_131A[:termCd]).to eq 'B'
@@ -230,7 +228,7 @@ describe Webcast::Merged do
   context 'a real, non-fake proxy', :testext => true do
     context 'course with zero recordings is different than course not scheduled for recordings' do
       let(:feed) do
-        Webcast::Merged.new(ldap_uid, 2015, 'B', [1, 58301, 56745]).get_feed
+        Webcast::Merged.new(rand(99999).to_s, 2015, 'B', [1, 58301, 56745]).get_feed
       end
       it 'identifies course that is scheduled for recordings' do
         media = feed[:media]
