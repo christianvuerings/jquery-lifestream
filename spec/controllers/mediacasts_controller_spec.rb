@@ -60,7 +60,8 @@ describe MediacastsController do
         it 'should escape special characters in dept name' do
           json = post_course malay_100A
           # This course happens to have zero YouTube videos
-          course = json['media']['2014']['D']['85006']
+          course = json['media'][0]
+          expect(course['ccn']).to eq '85006'
           expect(course['videos']).to be_empty
           expect(course['itunes']['audio']).to be_nil
           expect(course['itunes']['video']).to include '819827828'

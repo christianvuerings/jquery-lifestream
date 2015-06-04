@@ -36,17 +36,19 @@ describe Canvas::WebcastRecordings do
 
       it 'contains two sets of recordings' do
         feed = subject.get_feed
-        expect(feed[:system_status]['is_sign_up_active']).to be true
-        media_by_ccn = feed[:media][2009]['B']
+        expect(feed[:system_status][:isSignUpActive]).to be true
+        media_by_ccn = feed[:media]
         expect(media_by_ccn).to have(2).items
 
-        law_27171 = media_by_ccn['49982']
+        law_27171 = media_by_ccn[0]
+        expect(law_27171[:ccn]).to eq '49982'
         expect(law_27171[:audio]).to have(13).items
         expect(law_27171[:audio][12][:title]).to match('Lecture 1')
         expect(law_27171[:itunes][:audio]).to end_with('354822513')
         expect(law_27171[:itunes][:video]).to end_with('354822509')
 
-        sociol_150A = media_by_ccn['81853']
+        sociol_150A = media_by_ccn[1]
+        expect(sociol_150A[:ccn]).to eq '81853'
         expect(sociol_150A[:audio]).to have_at_least(10).items
         expect(sociol_150A[:audio][12][:title]).to_not be_nil
         expect(sociol_150A[:itunes][:audio]).to_not be_nil
@@ -63,7 +65,7 @@ describe Canvas::WebcastRecordings do
       end
       it 'is empty' do
         feed = subject.get_feed
-        expect(feed[:system_status]['is_sign_up_active']).to be true
+        expect(feed[:system_status][:isSignUpActive]).to be true
         expect(feed[:media]).to be_nil
       end
     end

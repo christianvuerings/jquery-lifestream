@@ -4,7 +4,7 @@ module Webcast
     include ClassLogger, SafeJsonParser
 
     PROXY_ERROR = {
-      :proxy_error_message => 'There was a problem fetching the Webcast-related data'
+      :proxyErrorMessage => 'There was a problem fetching the Webcast-related data'
     }
 
     def initialize(options = {})
@@ -13,7 +13,7 @@ module Webcast
 
     def get
       self.class.smart_fetch_from_cache(
-        {user_message_on_exception: PROXY_ERROR[:proxy_error_message]}) do
+        {user_message_on_exception: PROXY_ERROR[:proxyErrorMessage]}) do
         request_internal
       end
     end

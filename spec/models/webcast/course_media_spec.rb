@@ -27,7 +27,7 @@ describe Webcast::CourseMedia do
 
     context 'when proxy error message is not blank' do
       before do
-        proxy_error_hash = {:proxy_error_message => 'Proxy Error'}
+        proxy_error_hash = {:proxyErrorMessage => 'Proxy Error'}
         expect(subject).to receive(:get_media_hash).and_return proxy_error_hash
       end
       it 'should return the proxy error message' do

@@ -12,6 +12,13 @@
       "year": 2015,
       "semester": "Fall",
       "ccnSet": []
+    },
+    {
+      "year": 2014,
+      "semester": "Spring",
+      "ccnSet": [
+        7620
+      ]
     }
   ]
 }
