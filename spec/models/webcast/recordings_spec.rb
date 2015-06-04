@@ -36,7 +36,7 @@ describe Webcast::Recordings do
       after(:each) { WebMock.reset! }
       it 'should return the fetch error message' do
         response = subject.get
-        expect(response[:proxy_error_message]).to include('There was a problem')
+        expect(response[:proxyErrorMessage]).to include('There was a problem')
       end
     end
 
@@ -47,7 +47,7 @@ describe Webcast::Recordings do
       after(:each) { WebMock.reset! }
       it 'should return the fetch error message' do
         response = subject.get
-        expect(response[:proxy_error_message]).to include('There was a problem')
+        expect(response[:proxyErrorMessage]).to include('There was a problem')
       end
     end
 
