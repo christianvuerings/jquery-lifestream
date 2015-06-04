@@ -129,6 +129,7 @@ button.bc-button-link {
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
+    font-weight: 400;
     line-height: 20px;
     margin-bottom: 0;
     margin-left: 0;
@@ -432,18 +433,19 @@ button.bc-template-canvas-maintenance-notice-button {
   }
 }
 
-.bc-template-canvas-maintenance-notice-text {
+.bc-template-canvas-maintenance-notice-details {
   font-size: 14px;
   font-weight: normal;
+  margin: 10px 26px 0;
+
+  p {
+    margin-bottom: 5px;
+  }
 }
 
 .bc-template-canvas-maintenance-notice-collapse-icon {
   font-size: 18px;
   margin: 0 11px 0 5px;
-}
-
-.bc-template-canvas-maintenance-notice-details {
-  margin: 10px 26px 0;
 }
 
 // Styling for Sections Form used by Course Provisioning and Official Sections LTI tools
@@ -630,4 +632,3 @@ button.bc-template-canvas-maintenance-notice-button {
     padding: 15px;
   }
 }
-
