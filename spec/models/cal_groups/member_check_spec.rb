@@ -81,6 +81,7 @@ describe CalGroups::MemberCheck do
   context 'using real data feed', testext: true, ignore: true do
     let(:fake) { false }
     let(:group_name) { 'testgroup' }
+    subject { result }
 
     context 'a known member' do
       let(:member_id) { '242881' }
@@ -98,8 +99,7 @@ describe CalGroups::MemberCheck do
       include_examples 'verbose response'
     end
 
-    it_behaves_like 'a proxy logging errors' do
-      subject { result }
-    end
+    it_behaves_like 'a proxy logging errors'
+    it_behaves_like 'a polite HTTP client'
   end
 end
