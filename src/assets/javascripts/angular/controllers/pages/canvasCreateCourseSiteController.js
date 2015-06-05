@@ -205,7 +205,8 @@
       angular.extend($scope, {
         currentSemester: semester.slug,
         coursesList: semester.classes,
-        selectedSectionsList: []
+        selectedSectionsList: [],
+        currentSemesterName: semester.name
       });
       $scope.updateSelected();
     };

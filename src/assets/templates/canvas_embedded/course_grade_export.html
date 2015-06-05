@@ -5,95 +5,6 @@
   </div>
 
   <div aria-live="polite">
-    <div data-ng-if="appState === 'loading'">
-      <div class="row collapse">
-        <div class="medium-5 columns end">
-          <h1 class="bc-page-course-grade-export-header">Preparing E-Grades for Download</h1>
-        </div>
-      </div>
-
-      <div data-ng-hide="jobStatus" class="bc-page-course-grade-export-notice-pending-request">
-        <i class="fa fa-spinner fa-spin"></i>
-        Sending preparation request...
-      </div>
-
-      <div data-ng-if="jobStatus === 'New'" class="bc-page-course-grade-export-notice-pending-request">
-        <i class="fa fa-spinner fa-spin"></i>
-        Preparation request sent. Awaiting processing....
-      </div>
-
-      <div data-ng-if="jobStatus">
-        <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>
-      </div>
-    </div>
-
-    <div data-ng-show="appState === 'selection'">
-      <div class="row collapse">
-        <div class="medium-12 columns">
-          <div data-ng-include src="'canvas_embedded/_shared/back_to_gradebook_link.html'"></div>
-        </div>
-      </div>
-
-      <div class="row collapse">
-        <div class="medium-12 columns">
-          <h1 class="bc-page-course-grade-export-header">What would you like to download?</h1>
-        </div>
-      </div>
-
-      <div class="row collapse">
-        <div class="medium-5 small-12 columns">
-
-          <div class="row collapse" data-ng-show="officialSections.length > 1">
-            <div class="medium-12 columns">
-              <label for="course-sections" class="bc-page-course-grade-export-form-label">
-                <strong>Select Section</strong>:
-              </label>
-              <select id="course-sections" class="bc-form-input-select" data-ng-model="selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="row collapse">
-        <div class="medium-5 columns end">
-          <h2 class="bc-page-course-grade-export-download-header">Current Grades Download</h2>
-          <p class="bc-page-course-grade-export-download-description">
-            Current grades download ignores unsubmitted assignments when calculating grades.
-            Use this download when you want to excuse unsubmitted assignments.
-          </p>
-          <button data-ng-click="preloadGrades('current')" class="bc-canvas-button bc-canvas-button-primary">Download Current Grades</button>
-        </div>
-      </div>
-
-      <div class="row collapse">
-        <div class="medium-5 columns">
-          <h2 class="bc-page-course-grade-export-download-header">Final Grades Download</h2>
-          <p class="bc-page-course-grade-export-download-description">
-            Final grades download counts unsubmitted assignments as zeroes when calculating grades.
-            Use this download when you want to include all unsubmitted assignments as part of the grade.
-          </p>
-          <button data-ng-click="preloadGrades('final')" class="bc-canvas-button bc-canvas-button-primary">Download Final Grades</button>
-        </div>
-      </div>
-
-      <div class="row collapse">
-        <div class="medium-12 columns">
-          <div class="bc-page-course-grade-export-more-info-container">
-            <p class="bc-page-course-grade-export-more-info">
-              For more information, see <a href="http://ets.berkeley.edu/bcourses/how-do-i-submit-grades-e-grades-bcourses">How do I submit grades to E-Grades from bCourses?</a>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="row collapse">
-        <div class="medium-12 columns bc-page-course-grade-export-grade-link" data-ng-if="canvasCourseId && parentHostUrl">
-          <button class="bc-button-link" data-ng-click="goToGradebook()">Back to Gradebook</a>
-        </div>
-      </div>
-    </div>
-
     <div data-ng-show="appState === 'error'">
 
       <!-- Standard Error -->
@@ -108,7 +19,6 @@
 
       <!-- No Grading Standard Enabled -->
       <div data-ng-show="!errorStatus && (noGradingStandardEnabled || mutedAssignmentsPresent)">
-
         <div class="row collapse">
           <div class="medium-12 columns">
             <div>
@@ -225,7 +135,95 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
+    <div data-ng-show="appState === 'selection'">
+      <div class="row collapse">
+        <div class="medium-12 columns">
+          <div data-ng-include src="'canvas_embedded/_shared/back_to_gradebook_link.html'"></div>
+        </div>
+      </div>
+
+      <div class="row collapse">
+        <div class="medium-12 columns">
+          <h1 class="bc-page-course-grade-export-header">What would you like to download?</h1>
+        </div>
+      </div>
+
+      <div class="row collapse">
+        <div class="medium-5 small-12 columns">
+
+          <div class="row collapse" data-ng-show="officialSections.length > 1">
+            <div class="medium-12 columns">
+              <label for="course-sections" class="bc-page-course-grade-export-form-label">
+                <strong>Select Section</strong>:
+              </label>
+              <select id="course-sections" class="bc-form-input-select" data-ng-model="selectedSection" data-ng-options="section as section.display_name for section in officialSections"></select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row collapse">
+        <div class="medium-5 columns end">
+          <h2 class="bc-page-course-grade-export-download-header">Current Grades Download</h2>
+          <p class="bc-page-course-grade-export-download-description">
+            Current grades download ignores unsubmitted assignments when calculating grades.
+            Use this download when you want to excuse unsubmitted assignments.
+          </p>
+          <button data-ng-click="preloadGrades('current')" class="bc-canvas-button bc-canvas-button-primary">Download Current Grades</button>
+        </div>
+      </div>
+
+      <div class="row collapse">
+        <div class="medium-5 columns">
+          <h2 class="bc-page-course-grade-export-download-header">Final Grades Download</h2>
+          <p class="bc-page-course-grade-export-download-description">
+            Final grades download counts unsubmitted assignments as zeroes when calculating grades.
+            Use this download when you want to include all unsubmitted assignments as part of the grade.
+          </p>
+          <button data-ng-click="preloadGrades('final')" class="bc-canvas-button bc-canvas-button-primary">Download Final Grades</button>
+        </div>
+      </div>
+
+      <div class="row collapse">
+        <div class="medium-12 columns">
+          <div class="bc-page-course-grade-export-more-info-container">
+            <p class="bc-page-course-grade-export-more-info">
+              For more information, see <a href="http://ets.berkeley.edu/bcourses/how-do-i-submit-grades-e-grades-bcourses">How do I submit grades to E-Grades from bCourses?</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row collapse">
+        <div class="medium-12 columns bc-page-course-grade-export-grade-link" data-ng-if="canvasCourseId && parentHostUrl">
+          <button class="bc-button-link" data-ng-click="goToGradebook()">Back to Gradebook</a>
+        </div>
+      </div>
+    </div>
+
+    <div data-ng-if="appState === 'loading'">
+      <div class="row collapse">
+        <div class="medium-5 columns end">
+          <h1 class="bc-page-course-grade-export-header">Preparing E-Grades for Download</h1>
+        </div>
+      </div>
+
+      <div data-ng-hide="jobStatus" class="bc-page-course-grade-export-notice-pending-request">
+        <i class="fa fa-spinner fa-spin"></i>
+        Sending preparation request...
+      </div>
+
+      <div data-ng-if="jobStatus === 'New'" class="bc-page-course-grade-export-notice-pending-request">
+        <i class="fa fa-spinner fa-spin"></i>
+        Preparation request sent. Awaiting processing....
+      </div>
+
+      <div data-ng-if="jobStatus">
+        <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>
       </div>
     </div>
   </div>

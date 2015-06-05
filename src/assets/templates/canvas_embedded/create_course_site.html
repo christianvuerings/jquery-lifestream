@@ -172,8 +172,9 @@
         <div class="row collapse">
           <div class="medium-12 columns">
             <div class="bc-alert bc-alert-info">
+              <h2 class="cc-visuallyhidden">Confirm Course Site Details</h2>
               <strong>
-                You are about to create a course site with <span data-ng-bind="selectedSections(coursesList).length"></span>
+                You are about to create a {{currentSemesterName}} course site with <span data-ng-bind="selectedSections(coursesList).length"></span>
                 <span data-ng-pluralize count="selectedSections(coursesList).length" when="{'1': 'section', 'other': 'sections'}">sections</span>:
               </strong>
               <ul class="bc-page-create-course-site-section-list">
