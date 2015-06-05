@@ -1,6 +1,6 @@
 describe Webcast::Recordings do
 
-  let (:webcast_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/webcast.json" }
+  let (:webcast_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/warehouse/webcast.json" }
 
   context 'a fake proxy' do
     context 'data organized by ccn' do

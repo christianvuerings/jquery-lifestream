@@ -7,7 +7,7 @@ module Webcast
     end
 
     def get_json_path
-      'eligible-for-webcast.json'
+      'warehouse/eligible-for-webcast.json'
     end
 
     def request_internal

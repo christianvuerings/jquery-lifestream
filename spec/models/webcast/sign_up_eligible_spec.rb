@@ -1,6 +1,6 @@
 describe Webcast::SignUpEligible do
 
-  let (:eligible_for_webcast_json_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/eligible-for-webcast.json" }
+  let (:eligible_for_webcast_json_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/warehouse/eligible-for-webcast.json" }
 
   context 'a fake proxy' do
 

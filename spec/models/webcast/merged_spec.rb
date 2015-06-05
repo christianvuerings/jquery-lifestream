@@ -56,10 +56,13 @@ describe Webcast::Merged do
         expect(stat_131A[:deptName]).to eq 'PLANTBI'
         expect(stat_131A[:catalogId]).to eq '150'
         videos = stat_131A[:videos]
+        itunes_audio_id = '819827828'
+        expect(stat_131A[:iTunes][:audio]).to include itunes_audio_id
         expect(videos).to have(31).items
         # Verify backwards compatibility
         expect(feed[:videos]).to eq videos
         expect(feed[:videoErrorMessage]).to be_nil
+        expect(feed[:iTunes][:audio]).to include itunes_audio_id
       end
     end
 
@@ -173,6 +176,9 @@ describe Webcast::Merged do
         expect(bio_lab[:catalogId]).to eq '1B'
         expect(bio_lab[:sectionNumber]).to eq '312'
         expect(bio_lab[:instructionFormat]).to eq 'LAB'
+        sign_up_url = bio_lab[:signUpURL]
+        expect(sign_up_url).to be_url
+        expect(sign_up_url).to include('http://', 'signUp', '2014B7620')
         instructors = bio_lab[:webcastAuthorizedInstructors]
         expect(instructors).to have(2).items
         expect(instructors).to have(2).items
