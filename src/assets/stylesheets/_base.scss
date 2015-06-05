@@ -7,14 +7,14 @@ html {
 body {
   background-color: $cc-color-main-background;
   color: $body-font-color;
-  padding: 0;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  line-height: 1.5;
-  position: relative;
   cursor: auto;
+  font-family: Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  position: relative;
 }
 
 // HTML & Body
