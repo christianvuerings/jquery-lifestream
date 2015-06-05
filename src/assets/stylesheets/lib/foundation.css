@@ -1,86 +1,22 @@
 @charset "UTF-8";
 
-meta.foundation-version {
-  font-family: "/5.4.5/";
-}
-
-meta.foundation-mq-small {
-  font-family: "/only screen/";
-  width: 0em;
-}
-
-meta.foundation-mq-medium {
-  font-family: "/only screen and (min-width:768px)/";
-  width: 40.063em;
-}
-
-meta.foundation-mq-large {
-  font-family: "/only screen and (min-width:64.063em)/";
-  width: 64.063em;
-}
-
-meta.foundation-mq-xlarge {
-  font-family: "/only screen and (min-width:90.063em)/";
-  width: 90.063em;
-}
-
-meta.foundation-mq-xxlarge {
-  font-family: "/only screen and (min-width:120.063em)/";
-  width: 120.063em;
-}
-
-meta.foundation-data-attribute-namespace {
-  font-family: false;
-}
-
-html, body {
-  height: 100%;
-}
-
 *,
 *:before,
 *:after {
   box-sizing: border-box;
 }
 
-html,
-body {
-  font-size: 13px;
-}
-
-body {
-  background: white;
-  color: #474747;
-  padding: 0;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  line-height: 1.5;
-  position: relative;
-  cursor: auto;
-}
-
-a:hover {
-  cursor: pointer;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
 img {
   -ms-interpolation-mode: bicubic;
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
 }
 
-#map_canvas img,
-#map_canvas embed,
-#map_canvas object,
-.map_canvas img,
-.map_canvas embed,
-.map_canvas object {
-  max-width: none !important;
+textarea {
+  height: auto;
+  min-height: 50px;
 }
 
 .left {
@@ -89,33 +25,6 @@ img {
 
 .right {
   float: right !important;
-}
-
-.clearfix:before, .clearfix:after {
-  content: " ";
-  display: table;
-}
-.clearfix:after {
-  clear: both;
-}
-
-.hide {
-  display: none;
-}
-
-.antialiased {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-img {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-textarea {
-  height: auto;
-  min-height: 50px;
 }
 
 select {
@@ -1565,173 +1474,6 @@ select {
   th.hide-for-small-only, td.hide-for-small-only, th.show-for-small-up, td.show-for-small-up, th.hide-for-small, td.hide-for-small, th.hide-for-small-down, td.hide-for-small-down, th.hide-for-medium-only, td.hide-for-medium-only, th.show-for-medium-up, td.show-for-medium-up, th.hide-for-medium, td.hide-for-medium, th.hide-for-medium-down, td.hide-for-medium-down, th.hide-for-large-only, td.hide-for-large-only, th.show-for-large-up, td.show-for-large-up, th.hide-for-large, td.hide-for-large, th.hide-for-large-down, td.hide-for-large-down, th.hide-for-xlarge-only, td.hide-for-xlarge-only, th.show-for-xlarge-up, td.show-for-xlarge-up, th.show-for-xxlarge-only, td.show-for-xxlarge-only, th.show-for-xxlarge-up, td.show-for-xxlarge-up {
     display: table-cell !important;
   }
-}
-/* Orientation targeting */
-.show-for-landscape,
-.hide-for-portrait {
-  display: inherit !important;
-}
-
-.hide-for-landscape,
-.show-for-portrait {
-  display: none !important;
-}
-
-/* Specific visibility for tables */
-table.hide-for-landscape, table.show-for-portrait {
-  display: table;
-}
-
-thead.hide-for-landscape, thead.show-for-portrait {
-  display: table-header-group !important;
-}
-
-tbody.hide-for-landscape, tbody.show-for-portrait {
-  display: table-row-group !important;
-}
-
-tr.hide-for-landscape, tr.show-for-portrait {
-  display: table-row !important;
-}
-
-td.hide-for-landscape, td.show-for-portrait,
-th.hide-for-landscape,
-th.show-for-portrait {
-  display: table-cell !important;
-}
-
-@media only screen and (orientation: landscape) {
-  .show-for-landscape,
-  .hide-for-portrait {
-    display: inherit !important;
-  }
-
-  .hide-for-landscape,
-  .show-for-portrait {
-    display: none !important;
-  }
-
-  /* Specific visibility for tables */
-  table.show-for-landscape, table.hide-for-portrait {
-    display: table;
-  }
-
-  thead.show-for-landscape, thead.hide-for-portrait {
-    display: table-header-group !important;
-  }
-
-  tbody.show-for-landscape, tbody.hide-for-portrait {
-    display: table-row-group !important;
-  }
-
-  tr.show-for-landscape, tr.hide-for-portrait {
-    display: table-row !important;
-  }
-
-  td.show-for-landscape, td.hide-for-portrait,
-  th.show-for-landscape,
-  th.hide-for-portrait {
-    display: table-cell !important;
-  }
-}
-@media only screen and (orientation: portrait) {
-  .show-for-portrait,
-  .hide-for-landscape {
-    display: inherit !important;
-  }
-
-  .hide-for-portrait,
-  .show-for-landscape {
-    display: none !important;
-  }
-
-  /* Specific visibility for tables */
-  table.show-for-portrait, table.hide-for-landscape {
-    display: table;
-  }
-
-  thead.show-for-portrait, thead.hide-for-landscape {
-    display: table-header-group !important;
-  }
-
-  tbody.show-for-portrait, tbody.hide-for-landscape {
-    display: table-row-group !important;
-  }
-
-  tr.show-for-portrait, tr.hide-for-landscape {
-    display: table-row !important;
-  }
-
-  td.show-for-portrait, td.hide-for-landscape,
-  th.show-for-portrait,
-  th.hide-for-landscape {
-    display: table-cell !important;
-  }
-}
-/* Touch-enabled device targeting */
-.show-for-touch {
-  display: none !important;
-}
-
-.hide-for-touch {
-  display: inherit !important;
-}
-
-.touch .show-for-touch {
-  display: inherit !important;
-}
-
-.touch .hide-for-touch {
-  display: none !important;
-}
-
-/* Specific visibility for tables */
-table.hide-for-touch {
-  display: table;
-}
-
-.touch table.show-for-touch {
-  display: table;
-}
-
-thead.hide-for-touch {
-  display: table-header-group !important;
-}
-
-.touch thead.show-for-touch {
-  display: table-header-group !important;
-}
-
-tbody.hide-for-touch {
-  display: table-row-group !important;
-}
-
-.touch tbody.show-for-touch {
-  display: table-row-group !important;
-}
-
-tr.hide-for-touch {
-  display: table-row !important;
-}
-
-.touch tr.show-for-touch {
-  display: table-row !important;
-}
-
-td.hide-for-touch {
-  display: table-cell !important;
-}
-
-.touch td.show-for-touch {
-  display: table-cell !important;
-}
-
-th.hide-for-touch {
-  display: table-cell !important;
-}
-
-.touch th.show-for-touch {
-  display: table-cell !important;
 }
 
 /* Print visibility */
