@@ -15,4 +15,7 @@ describe Calmail::ListMembers do
     end
   end
 
+  it_behaves_like 'a polite HTTP client' do
+    subject { described_class.new(fake: true).list_members(list_name) }
+  end
 end

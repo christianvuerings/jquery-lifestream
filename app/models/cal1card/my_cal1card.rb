@@ -2,8 +2,8 @@ module Cal1card
   class MyCal1card < UserSpecificModel
     include Cache::LiveUpdatesEnabled
     include Cache::FeedExceptionsHandled
+    include Proxies::HttpClient
     include Proxies::MockableXml
-    include HttpRequester
 
     def initialize(uid, options={})
       super(uid, options)

@@ -8,6 +8,8 @@ describe Cal1card::MyCal1card do
   before(:each) { Cal1card::MyCal1card.stub(:new).and_return(fake_proxy) }
   subject { Cal1card::MyCal1card.new(oski_uid).get_feed }
 
+  it_behaves_like 'a polite HTTP client'
+
   context "happy path with fake data" do
     include_context 'Live Updates cache'
     it {

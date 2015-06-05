@@ -65,8 +65,9 @@ describe CalGroups::MembersAdd do
 
   context 'real data feed' do
     let(:fake) { false }
-    it_behaves_like 'a proxy logging errors' do
-      subject { result }
-    end
+    subject { result }
+
+    it_behaves_like 'a proxy logging errors'
+    it_behaves_like 'a polite HTTP client'
   end
 end

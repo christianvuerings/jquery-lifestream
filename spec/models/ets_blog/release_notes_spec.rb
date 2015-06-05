@@ -9,6 +9,9 @@ describe EtsBlog::ReleaseNotes do
   context 'fetching fake data feed' do
     include_context 'it writes to the cache'
     subject { fake_proxy.get_latest_release_notes }
+    
+    it_behaves_like 'a polite HTTP client'
+
     it 'should have the expected fake data' do
       expect(subject[:entries][0][:title]).to eq 'CalCentral v.42 (Sprint 44) Release Notes, 8/27/14'
       expect(subject[:entries][0][:link]).to eq 'https://ets.berkeley.edu/article/calcentral-v42-sprint-44-release-notes-82714'

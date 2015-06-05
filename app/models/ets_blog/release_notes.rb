@@ -3,8 +3,8 @@ module EtsBlog
 
     include ClassLogger
     include HtmlSanitizer
+    include Proxies::HttpClient
     include Proxies::MockableXml
-    include HttpRequester
 
     def initialize(options = {})
       super(Settings.blog_latest_release_notes_feed_proxy, options)

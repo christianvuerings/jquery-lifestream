@@ -12,4 +12,7 @@ describe Calmail::DomainMailingLists do
     end
   end
 
+  it_behaves_like 'a polite HTTP client' do
+    subject { described_class.new(fake: true).get_list_names }
+  end
 end

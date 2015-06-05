@@ -2,8 +2,8 @@ module EtsBlog
   class Alerts < BaseProxy
 
     include DatedFeed
+    include Proxies::HttpClient
     include Proxies::MockableXml
-    include HttpRequester
 
     def initialize(options = {})
       super(Settings.app_alerts_proxy, options)

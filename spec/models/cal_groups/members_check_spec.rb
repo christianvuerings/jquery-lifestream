@@ -9,7 +9,6 @@ describe CalGroups::MembersCheck do
 
   after(:each) { WebMock.reset! }
 
-
   shared_examples 'error response' do
     it 'reports an error' do
       expect(result[:statusCode]).to eq 503
@@ -71,11 +70,11 @@ describe CalGroups::MembersCheck do
   # This testext group is disabled until CLC-5251 is resolved.
   context 'using real data feed', testext: true, ignore: true do
     let(:fake) { false }
+    subject { result }
 
     include_examples 'membership expectations'
 
-    it_behaves_like 'a proxy logging errors' do
-      subject { result }
-    end
+    it_behaves_like 'a proxy logging errors'
+    it_behaves_like 'a polite HTTP client'
   end
 end

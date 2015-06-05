@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe CalLink::Organization do
 
+  subject { CalLink::Organization.new(org_id: '65797', fake: false).get_organization }
+
   it 'should get the fake org feed from CalLink' do
     client = CalLink::Organization.new(org_id: '65797', fake: true)
     data = client.get_organization
@@ -16,8 +18,7 @@ describe CalLink::Organization do
     expect(data[:body]).to be_present
   end
 
-  it_should_behave_like 'a proxy logging errors' do
-    subject { CalLink::Organization.new(org_id: '65797', fake: false).get_organization }
-  end
+  it_behaves_like 'a polite HTTP client'
+  it_behaves_like 'a proxy logging errors'
 
 end
