@@ -6,6 +6,21 @@ html {
 // Body
 body {
   background-color: $cc-color-main-background;
+  color: $body-font-color;
+  padding: 0;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.5;
+  position: relative;
+  cursor: auto;
+}
+
+// HTML & Body
+html, body {
+  font-size: 13px;
+  height: 100%;
 }
 
 // Reset
@@ -73,6 +88,9 @@ ul {
 a {
   color: $primary-color;
   text-decoration: none;
+  &:hover {
+    cursor: pointer;
+  }
   &:hover, &:focus {
     text-decoration: underline;
   }
