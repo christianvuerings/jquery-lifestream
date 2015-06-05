@@ -99,7 +99,7 @@ describe Webcast::CourseMedia do
 
   context 'with non-fake proxy', :testext => true do
     context 'when serving multiple sets of Webcast recordings' do
-      let (:playlist_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/webcast.json" }
+      let (:playlist_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/warehouse/webcast.json" }
       subject { Webcast::CourseMedia.new(2014, 'B', [7502, 11147, 1]) }
 
       context 'normal return of real data' do

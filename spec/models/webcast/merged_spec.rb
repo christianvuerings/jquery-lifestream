@@ -56,10 +56,13 @@ describe Webcast::Merged do
         expect(stat_131A[:deptName]).to eq 'PLANTBI'
         expect(stat_131A[:catalogId]).to eq '150'
         videos = stat_131A[:videos]
+        itunes_audio_id = '819827828'
+        expect(stat_131A[:iTunes][:audio]).to include itunes_audio_id
         expect(videos).to have(31).items
         # Verify backwards compatibility
         expect(feed[:videos]).to eq videos
         expect(feed[:videoErrorMessage]).to be_nil
+        expect(feed[:iTunes][:audio]).to include itunes_audio_id
       end
     end
 

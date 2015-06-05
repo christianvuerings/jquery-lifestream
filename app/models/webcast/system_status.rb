@@ -2,7 +2,7 @@ module Webcast
   class SystemStatus < Proxy
 
     def get_json_path
-      'webcast-system-status.json'
+      'warehouse/webcast-system-status.json'
     end
 
     def request_internal

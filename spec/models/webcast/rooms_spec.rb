@@ -1,6 +1,6 @@
 describe Webcast::Rooms do
 
-  let (:rooms_json_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/rooms.json" }
+  let (:rooms_json_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/warehouse/rooms.json" }
 
   context 'a fake proxy' do
     subject { Webcast::Rooms.new({:fake => true}) }
