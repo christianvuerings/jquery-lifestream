@@ -55,14 +55,17 @@ module Webcast
             courses = @academics.courses_list_from_ccns(@term_yr, @term_cd, eligible_sections.map { |ccn| ccn.to_i })
             courses.each do |course|
               if course[:classes].present?
+                webcast_base_url = Settings.webcast_proxy.base_url.sub('https://', 'http://')
                 course[:classes].each do |next_class|
                   next_class[:sections].each do |section|
                     instructors = HashConverter.camelize extract_authorized(section[:instructors])
                     this_user_can_sign_up = instructors.map { |instructor| instructor[:uid].to_i }.include? @uid
+                    ccn = section[:ccn]
                     not_yet_signed_up << {
                       :termYr => @term_yr,
                       :termCd => @term_cd,
-                      :ccn => section[:ccn],
+                      :ccn => ccn,
+                      :signUpURL => "#{webcast_base_url}/signUp.html?id=#{@term_yr}#{@term_cd.upcase}#{ccn.to_i}",
                       :webcastAuthorizedInstructors => instructors,
                       :thisUserCanSignUp => this_user_can_sign_up,
                       :deptName => next_class[:dept],
