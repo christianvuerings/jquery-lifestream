@@ -77,6 +77,7 @@
     $scope.preloadGrades = function(type) {
       $scope.selectedType = type;
       $scope.appState = 'loading';
+      $scope.appfocus = true;
       $scope.jobStatus = 'New';
       apiService.util.iframeScrollToTop();
       canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId).success(function(data) {
@@ -135,6 +136,7 @@
     $scope.switchToSelection = function() {
       apiService.util.iframeScrollToTop();
       $scope.appState = 'selection';
+      $scope.appfocus = true;
     };
 
     $scope.resolveIssues = function() {

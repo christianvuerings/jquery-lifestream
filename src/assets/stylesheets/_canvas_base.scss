@@ -17,6 +17,12 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 20px;
 }
 
+// Used ONLY to remove outline from elements that
+// should not receive focus via tabIndex.
+.bc-accessibility-no-outline:focus {
+  outline: none;
+}
+
 // Applies Canvas styling to Canvas only applications
 .bc-canvas-application {
   background: $cc-color-white;
