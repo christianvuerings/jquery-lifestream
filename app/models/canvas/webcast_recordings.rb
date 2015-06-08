@@ -3,9 +3,9 @@ module Canvas
     extend Cache::Cacheable
     include ClassLogger
 
-    def initialize(options = {})
-      @uid = options[:user_id]
-      @canvas_course_id = options[:course_id]
+    def initialize(course_policy, canvas_course_id, options = {})
+      @course_policy = course_policy
+      @canvas_course_id = canvas_course_id
       @options = options
     end
 
@@ -32,7 +32,7 @@ module Canvas
           end
         end
       end
-      Webcast::Merged.new(@uid, @term_yr, @term_cd, ccn_list, @options).get_feed
+      Webcast::Merged.new(@course_policy, @term_yr, @term_cd, ccn_list, @options).get_feed
     end
 
   end
