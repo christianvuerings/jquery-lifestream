@@ -5,7 +5,7 @@
   /**
    * Canvas roster photos LTI app controller
    */
-  angular.module('calcentral.controllers').controller('RosterController', function(apiService, rosterFactory, $routeParams, $scope, $window) {
+  angular.module('calcentral.controllers').controller('RosterController', function(apiService, rosterFactory, $routeParams, $scope, $timeout, $window) {
     if ($routeParams.canvasCourseId) {
       apiService.util.setTitle('Roster Photos');
     }
@@ -15,6 +15,13 @@
         return true;
       }
       return (student.section_ccns.indexOf($scope.searchSection.ccn) !== -1);
+    };
+
+    $scope.accessibilityReset = function() {
+      $scope.screenReaderAlert = 'Rosters Filtered';
+      timeoutPromise = $timeout(function() {
+        $scope.screenReaderAlert = '';
+      }, 300);
     };
 
     var getRoster = function() {
