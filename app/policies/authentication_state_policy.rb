@@ -62,6 +62,6 @@ class AuthenticationStatePolicy
 
   def can_view_webcast_sign_up?
     # By default, only superusers can debug in non-prod. Sub-classes can override with, for example, Canvas-specific rules.
-    !Rails.env.production? && can_administrate?
+    !Rails.env.production? && (can_administrate? || @user.viewing_as?)
   end
 end
