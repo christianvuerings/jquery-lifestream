@@ -12,12 +12,20 @@ module MyBadges
       campus_attributes = CampusOracle::UserAttributes.new(user_id: @uid).get_feed
 
       result = {
-        :californiaResidency => campus_attributes[:california_residency],
-        :isLawStudent => law_student,
-        :regStatus => campus_attributes[:reg_status],
-        :regBlock => get_reg_blocks
+        californiaResidency: campus_attributes[:california_residency],
+        isLawStudent: law_student,
+        regBlock: get_reg_blocks,
+        regStatus: campus_attributes[:reg_status]
       }
-      return result
+      
+      if result[:regStatus] && result[:regStatus][:code].nil?
+        transition_status = MyAcademics::TransitionRegStatus.new(@uid).reg_status_from_feed
+        if (transition_status && transition_status[:registered])
+          result[:regStatus] = Notifications::RegStatusTranslator.new.translate_for_feed 'R'
+        end
+      end
+
+      result
     end
 
 
