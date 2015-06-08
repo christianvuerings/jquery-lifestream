@@ -30,7 +30,8 @@
     };
 
     var setSelectedOption = function() {
-      if (!$scope.videos.length && $scope.audio.length) {
+      var audioOnly = $scope.audio && ($scope.audio.length > 0) && (!$scope.videos || $scope.videos.length === 0);
+      if (audioOnly) {
         $scope.switchSelectedOption($scope.selectOptions[1]);
       } else {
         $scope.switchSelectedOption($scope.selectOptions[0]);
