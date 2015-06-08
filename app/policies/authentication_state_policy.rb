@@ -52,11 +52,16 @@ class AuthenticationStatePolicy
   end
 
   def can_refresh_log_settings?
-    # Only super-users are allowed to change logging settings in production, but in development mode, anyone can.
+    # Only superusers are allowed to change logging settings in production, but in development mode, anyone can.
     !Rails.env.production? || can_administrate?
   end
 
   def can_view_as?
     @user.real_user_auth.active? && (@user.real_user_auth.is_superuser? || @user.real_user_auth.is_viewer?)
+  end
+
+  def can_view_webcast_sign_up?
+    # By default, only superusers can debug in non-prod. Sub-classes can override with, for example, Canvas-specific rules.
+    !Rails.env.production? && can_administrate?
   end
 end
