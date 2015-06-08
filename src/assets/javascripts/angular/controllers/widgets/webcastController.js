@@ -30,7 +30,7 @@
     };
 
     var setSelectedOption = function() {
-      var audioOnly = $scope.audio && ($scope.audio.length > 0) && (!$scope.videos || $scope.videos.length == 0)
+      var audioOnly = $scope.audio && ($scope.audio.length > 0) && (!$scope.videos || $scope.videos.length === 0);
       if (audioOnly) {
         $scope.switchSelectedOption($scope.selectOptions[1]);
       } else {
