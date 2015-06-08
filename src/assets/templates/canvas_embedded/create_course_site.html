@@ -1,9 +1,9 @@
 <div class="bc-canvas-application bc-page-create-course-site">
+  <div data-ng-include src="'canvas_embedded/_shared/screenreader_alert.html'"></div>
 
   <div data-ng-if="!feedFetched" data-cc-spinner-directive></div>
 
-  <div data-ng-show="feedFetched && !displayError">
-
+  <div data-ng-show="feedFetched && !displayError" data-cc-focus-reset-directive="appfocus" class="bc-accessibility-no-outline">
     <div class="bc-page-create-course-site-admin-options" data-ng-show="is_admin">
 
       <h1 class="cc-visuallyhidden">Administrator Options</h1>
@@ -14,7 +14,7 @@
         <span data-ng-if="adminMode === 'by_ccn'">Switch to acting as instructor</span>
       </button>
 
-      <div id="bc-page-create-course-site-admin-section-loader-form" aria-live="polite">
+      <div id="bc-page-create-course-site-admin-section-loader-form">
         <div data-ng-if="adminMode !== 'by_ccn'">
           <h2 class="cc-visuallyhidden">Load Sections By Instructor UID</h2>
           <form data-ng-submit="fetchFeed()" class="bc-canvas-page-form bc-page-create-course-site-actas-form">
@@ -54,13 +54,13 @@
       </div>
     </div>
 
-    <div data-ng-if="showMaintenanceNotice">
+    <div data-ng-if="showMaintenanceNotice" role="alert">
       <div data-ng-include src="'canvas_embedded/_shared/maintenance_notice.html'"></div>
     </div>
 
     <h1 class="bc-page-create-course-site-header bc-page-create-course-site-header1">Create a Course Site</h1>
 
-    <div id="bc-page-create-course-site-steps-container" class="bc-page-create-course-site-steps-container" aria-live="polite">
+    <div id="bc-page-create-course-site-steps-container" class="bc-page-create-course-site-steps-container bc-accessibility-no-outline" data-cc-focus-reset-directive="stepfocus">
 
       <div id="bc-page-create-course-site-selecting-step" data-ng-show="currentWorkflowStep === 'selecting'" data-ng-aria-expanded="{{currentWorkflowStep === 'selecting'}}">
         <div data-cc-spinner-directive>
@@ -104,15 +104,17 @@
                       <span data-ng-if="toggle.displayHelp" class="cc-visuallyhidden">Hide Section Selection Help</span>
                       <span data-ng-attr-aria-hidden="{{true}}">Need help deciding which official sections to select?</span>
                     </button>
-                    <div id="section-selection-help" class="bc-page-help-notice-content" data-ng-if="toggle.displayHelp" aria-live="polite">
-                      <p>If you have a course with multiple sections, you will need to decide whether you want to:</p>
-                      <ol class="bc-page-create-course-site-help-notice-ordered-list">
-                        <li>Create one, single course site which includes official sections for both your primary and secondary sections, or</li>
-                        <li>Create multiple course sites, perhaps with one for each section.</li>
-                      </ol>
-                      <p class="bc-page-create-course-site-help-notice-paragraph">Read about the pros and cons of each choice in this Help document:
-                        <a href="http://ets.berkeley.edu/bcourses/official-sections-to-include">Which official sections should I include in my course site?</a>
-                      </p>
+                    <div aria-live="polite">
+                      <div id="section-selection-help" class="bc-page-help-notice-content" data-ng-if="toggle.displayHelp">
+                        <p>If you have a course with multiple sections, you will need to decide whether you want to:</p>
+                        <ol class="bc-page-create-course-site-help-notice-ordered-list">
+                          <li>Create one, single course site which includes official sections for both your primary and secondary sections, or</li>
+                          <li>Create multiple course sites, perhaps with one for each section.</li>
+                        </ol>
+                        <p class="bc-page-create-course-site-help-notice-paragraph">Read about the pros and cons of each choice in this Help document:
+                          <a href="http://ets.berkeley.edu/bcourses/official-sections-to-include">Which official sections should I include in my course site?</a>
+                        </p>
+                      </div>
                     </div>
                   </div>
 
@@ -236,56 +238,57 @@
 
       <div id="bc-page-create-course-site-monitor-step" data-ng-show="currentWorkflowStep === 'monitoring_job'" data-ng-aria-expanded="{{currentWorkflowStep === 'monitoring_job'}}">
 
-        <div data-ng-hide="jobStatus" class="bc-page-create-course-site-pending-request">
-          <i class="fa fa-spinner fa-spin"></i>
-          Sending request...
-        </div>
+        <div aria-live="polite">
+          <div data-ng-hide="jobStatus" class="bc-page-create-course-site-pending-request">
+            <i class="fa fa-spinner fa-spin"></i>
+            Sending request...
+          </div>
 
-        <div data-ng-if="jobStatus === 'New'" class="bc-page-create-course-site-pending-request">
-          <i class="fa fa-spinner fa-spin"></i>
-          Course provisioning request sent. Awaiting processing....
-        </div>
+          <div data-ng-if="jobStatus === 'New'" class="bc-page-create-course-site-pending-request">
+            <i class="fa fa-spinner fa-spin"></i>
+            Course provisioning request sent. Awaiting processing....
+          </div>
 
-        <div data-ng-if="jobStatus">
+          <div data-ng-if="jobStatus">
+            <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>
 
-          <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>
-
-          <div data-ng-if="jobStatus === 'courseCreationError' || jobStatus === 'jobNotFoundError'">
-            <div data-ng-include src="'canvas_embedded/_shared/background_job_error.html'"></div>
-            <div class="row bc-page-create-course-site-step-options">
-              <div class="medium-12 columns">
-                <div class="bc-form-actions">
-                  <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showConfirmation()" type="button" aria-control="bc-page-create-course-site-confirmation-step" aria-label="Go Back to Site Details Confirmation">Back</button>
-                  <button class="bc-canvas-button bc-canvas-button-primary" type="button" data-ng-click="fetchFeed()" type="button" aria-control="bc-page-create-course-site-selecting-step" aria-label="Start over course site creation process">Start Over</button>
+            <div data-ng-if="jobStatus === 'courseCreationError' || jobStatus === 'jobNotFoundError'">
+              <div data-ng-include src="'canvas_embedded/_shared/background_job_error.html'"></div>
+              <div class="row bc-page-create-course-site-step-options">
+                <div class="medium-12 columns">
+                  <div class="bc-form-actions">
+                    <button class="cc-button cc-page-button-grey" type="button" data-ng-click="showConfirmation()" type="button" aria-control="bc-page-create-course-site-confirmation-step" aria-label="Go Back to Site Details Confirmation">Back</button>
+                    <button class="bc-canvas-button bc-canvas-button-primary" type="button" data-ng-click="fetchFeed()" type="button" aria-control="bc-page-create-course-site-selecting-step" aria-label="Start over course site creation process">Start Over</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div data-ng-if="jobStatus === 'courseCreationCompleted'" data-ng-aria-expanded="{{jobStatus === 'courseCreationCompleted'}}" role="region">
-
-            <div class="bc-alert bc-alert-success">
-              Success : <span data-ng-bind="course_site.short_name"></span> site created
-              <i class="cc-left fa fa-check-circle cc-icon-green bc-canvas-notice-icon"></i>
-            </div>
-
-            <div class="bc-page-create-course-site-success-intro">
-              <strong>You may now:</strong>
-            </div>
-            <ul class="bc-page-create-course-site-choices">
-              <li>Go to <a data-ng-href="{{course_site.url}}" data-ng-bind="course_site.short_name"></a> to finish setting up your site.</li>
-              <li>Access your sites anytime at: <a href="http://bcourses.berkeley.edu">http://bcourses.berkeley.edu</a></li>
-            </ul>
-            <div>
-              <button class="bc-canvas-button bc-canvas-button-primary" type="button" data-ng-click="fetchFeed()" type="button" aria-control="bc-page-create-course-site-selecting-step" aria-label="Start over to create another course site">Create another Course Site</button>
-            </div>
+        <div data-ng-if="jobStatus === 'courseCreationCompleted'" data-ng-aria-expanded="{{jobStatus === 'courseCreationCompleted'}}" role="region">
+          <div class="bc-alert bc-alert-success">
+            Success : <span data-ng-bind="course_site.short_name"></span> site created
+            <i class="cc-left fa fa-check-circle cc-icon-green bc-canvas-notice-icon"></i>
           </div>
 
+          <div class="bc-page-create-course-site-success-intro">
+            <strong>You may now:</strong>
+          </div>
+
+          <ul class="bc-page-create-course-site-choices">
+            <li>Go to <a data-ng-href="{{course_site.url}}" data-ng-bind="course_site.short_name"></a> to finish setting up your site.</li>
+            <li>Access your sites anytime at: <a href="http://bcourses.berkeley.edu">http://bcourses.berkeley.edu</a></li>
+          </ul>
+
+          <div>
+            <button class="bc-canvas-button bc-canvas-button-primary" type="button" data-ng-click="fetchFeed()" type="button" aria-control="bc-page-create-course-site-selecting-step" aria-label="Start over to create another course site">Create another Course Site</button>
+          </div>
         </div>
       </div>
 
-    </div>
 
+    </div>
   </div>
 
   <div data-ng-if="displayError" class="bc-alert-container">

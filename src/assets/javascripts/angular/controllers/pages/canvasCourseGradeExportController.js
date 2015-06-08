@@ -11,7 +11,7 @@
     $scope.appState = 'initializing';
     $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
     $scope.enableDefaultGradingScheme = false;
-    $scope.resolvingCourseState = false;
+    $scope.screenReaderAlert = '';
 
     /**
      * Sends message to parent window to switch to gradebook
@@ -49,6 +49,7 @@
       } else {
         delete $scope.percentCompleteRounded;
         $timeout.cancel(timeoutPromise);
+        $scope.screenReaderAlert = 'Downloading export. You may choose to download another export.';
         $scope.switchToSelection();
         downloadGrades();
       }
@@ -140,11 +141,11 @@
     };
 
     $scope.resolveIssues = function() {
-      $scope.resolvingCourseState = true;
+      $scope.screenReaderAlert = 'Updating course site state.';
       canvasCourseGradeExportFactory.resolveIssues($scope.canvasCourseId, $scope.enableDefaultGradingScheme, $scope.unmuteAllAssignments)
         .success(function(data) {
           if (data.status && data.status === 'Resolved') {
-            $scope.resolvingCourseState = false;
+            $scope.screenReaderAlert = 'Choose download preferences.';
             $scope.switchToSelection();
           } else {
             $scope.appState = 'error';
