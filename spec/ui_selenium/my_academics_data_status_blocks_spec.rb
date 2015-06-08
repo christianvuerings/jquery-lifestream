@@ -72,13 +72,13 @@ describe 'My Academics Status and Blocks', :testui => true do
               end
 
               if has_popover
-                testable_users.push(uid)
                 dashboard_page.open_status_popover
 
                 # REGISTRATION STATUS
                 has_reg_alert = dashboard_page.reg_status_alert_element.visible?
                 if api_reg_status_type == 'Registered'
                   is_registered = true
+                  testable_users.push(uid)
                   it "does not show a registration alert for UID #{uid}" do
                     expect(has_reg_alert).to be false
                   end
@@ -262,7 +262,7 @@ describe 'My Academics Status and Blocks', :testui => true do
         end
       end
 
-      it 'has status information for at least one of the test UIDs' do
+      it 'shows "Registered" for at least one of the test UIDs' do
         expect(testable_users.any?).to be true
       end
 
