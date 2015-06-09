@@ -1,11 +1,11 @@
-<div class="cc-widget cc-academics-status-and-blocks" data-ng-if="!regblocks.noStudentId || studentInfo.regStatus.code !== null">
+<div class="cc-widget cc-academics-status-and-blocks" data-ng-if="!regblocks.noStudentId || studentInfo.regStatus.code !== null || studentInfo.californiaResidency">
 
   <div class="cc-widget-title">
-    <h2><span data-ng-if="studentInfo.regStatus.code !== null">Status and </span>Blocks</h2>
+    <h2><span data-ng-if="studentInfo.regStatus.code !== null || studentInfo.californiaResidency">Status and </span>Blocks</h2>
   </div>
 
   <div class="cc-widget-padding">
-    <div class="cc-table" data-ng-if="studentInfo.regStatus.code !== null">
+    <div class="cc-table" data-ng-if="studentInfo.regStatus.code !== null || studentInfo.californiaResidency">
       <h3>Status</h3>
       <table class="cc-academics-status-and-blocks-status-table">
         <thead>
@@ -15,7 +15,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr data-ng-if="api.user.profile.features.regstatus">
+          <tr data-ng-if="api.user.profile.features.regstatus && studentInfo.regStatus.code !== null">
             <th class="cc-table-subheader" scope="row">Registration</td>
             <td>
               <i class="cc-icon fa"
@@ -24,10 +24,10 @@
               <span data-ng-bind="studentInfo.regStatus.summary"></span>
             </td>
           </tr>
-          <tr>
+          <tr data-ng-if="api.user.profile.features.regstatus && studentInfo.regStatus.explanation">
             <td colspan="2" data-ng-bind-html="studentInfo.regStatus.explanation"></td>
           </tr>
-          <tr>
+          <tr data-ng-if="studentInfo.californiaResidency">
             <th class="cc-table-subheader" scope="row">California Residency</td>
             <td>
               <i class="cc-icon fa"
