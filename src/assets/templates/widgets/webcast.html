@@ -1,91 +1,139 @@
 <div class="cc-widget-padding cc-widget-webcast-content" data-ng-controller="WebcastController">
   <div data-cc-spinner-directive>
-
-    <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Webcasts</h1>
-
     <div data-ng-bind="proxyErrorMessage"></div>
     <div data-ng-if="!proxyErrorMessage">
-      <div data-ng-if="!videos && !audio">
-        There are no Webcasts scheduled.
-      </div>
-      <div data-ng-if="media">
-        <div data-ng-repeat="section in media">
-            <div data-ng-if="!section.videos.length && !section.audio.length">
-              Webcasts for {{section.deptName}} {{section.catalogId}} {{course.instructionFormat}} {{section.sectionNumber}} will appear here after classes start.
-            </div>
-        </div>
-      </div>
-
-      <div data-ng-if="videos.length || audio.length">
-        <div data-ng-if="videos.length && audio.length" class="cc-widget-webcast-button-group cc-clearfix-container">
+      <div data-ng-if="eligibleForSignUp && eligibleForSignUp.length > 0">
+        <div data-ng-if="videos || audio" class="cc-widget-webcast-outer-button-group cc-clearfix-container">
           <ul class="cc-button-group cc-even-2 bc-canvas-embedded-buttonset" role="tablist">
-            <li data-ng-repeat="selectOption in selectOptions">
+            <li data-ng-repeat="tabOption in outerTabOptions">
               <button class="cc-button"
-                      data-ng-click="switchSelectedOption(selectOption)"
+                      data-ng-click="switchTabOption(tabOption)"
                       data-ng-class="{
-                        'cc-button-selected':(currentSelection === selectOption),
-                        'bc-buttonset-button-active':(currentSelection === selectOption),
-                        'bc-buttonset-corner-left':($first),
-                        'bc-buttonset-corner-right':($last)
-                      }"
-                      aria-selected="{{currentSelection === selectOption}}"
+                          'cc-button-selected':(currentTabSelection === tabOption),
+                          'bc-buttonset-button-active':(currentTabSelection === tabOption),
+                          'bc-buttonset-corner-left':($first),
+                          'bc-buttonset-corner-right':($last)
+                        }"
+                      aria-selected="$first"
                       role="tab"
-                      data-ng-bind="selectOption">
+                      data-ng-bind="tabOption">
               </button>
             </li>
           </ul>
         </div>
-        <div data-ng-if="currentSelection === 'Video'">
-          <div data-ng-if="videos.length">
-            <div class="cc-select cc-widget-webcast-select">
-              <label for="cc-widget-webcast-video-selection" class="cc-visuallyhidden">Select Video</label>
-              <select id="cc-widget-webcast-video-selection" class="bc-canvas-embedded-form-select" data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
-            </div>
-            <div class="cc-youtube-video">
-              <div data-cc-youtube-directive="selectedVideo.youTubeId" data-cc-youtube-directive-title="{{selectedVideo.lecture}}"></div>
-            </div>
+        <div data-ng-if="currentTabSelection === 'Webcast Sign-up'">
+          <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Webcast Sign-up</h1>
+          <div data-ng-if="userCanSignUpOneOrMore">
+            <p>
+              Classes in this course site that you teach are eligible for Webcast. Find out more about Webcast.
+            </p>
+            <p>
+              If you wish to webcast any class below, please sign up before the semester starts to avoid missing
+              recordings. Deadline for sign-ups is 4th week of classes. You can hide this tool in Settings if you
+              don't intend to webcast any classes in this course site.
+            </p>
           </div>
-          <ul class="cc-widget-webcast-links" data-ng-if="iTunes.video">
-            <li class="cc-widget-webcast-itunes-link">
-              Also available at
-              <a data-ng-href="{{iTunes.video}}">
-                <i class="fa fa-apple cc-widget-webcast-icon-link"></i> iTunes U
-              </a>
-            </li>
-          </ul>
-          <div data-ng-if="!videos.length && !iTunes.video" class="cc-widget-webcast-error">
-            No video content available.
+          <div data-ng-if="!userCanSignUpOneOrMore">
+            Classes in this course site that you teach are eligible for Webcast but have not been signed up yet.
+            Find out more about Webcast. Only instructors of record can sign up. If you wish to webcast any
+            class below, please talk to the instructor of record for the classes you wish to webcast.
           </div>
-        </div>
-        <div data-ng-show="currentSelection === 'Audio'">
-          <div data-ng-show="audio.length">
-            <div class="cc-select cc-widget-webcast-select">
-              <label for="cc-widget-webcast-audio-selection" class="cc-visuallyhidden">Select Audio</label>
-              <select id="cc-widget-webcast-audio-selection" class="bc-canvas-embedded-form-select" data-ng-model="selectedAudio" data-ng-options="item.title for item in audio"></select>
-            </div>
-            <div class="cc-widget-webcast-audio" controls>
-              <div data-cc-audio-directive="selectedAudio.playUrl"></div>
-            </div>
-          </div>
-          <ul class="cc-widget-webcast-links">
-            <li data-ng-if="selectedAudio.downloadUrl">
-              <a data-ng-href="{{selectedAudio.downloadUrl}}">
-                <i class="fa fa-download cc-widget-webcast-icon-link"></i> Download audio
-              </a>
-            </li>
-            <li data-ng-if="iTunes.audio" class="cc-widget-webcast-itunes-link">
-              Also available at
-              <a data-ng-href="{{iTunes.audio}}">
-                <i class="fa fa-apple cc-widget-webcast-icon-link"></i> iTunes U
-              </a>
-            </li>
-          </ul>
-          <div data-ng-if="!audio.length && !iTunes.audio" class="cc-widget-webcast-error">
-            No audio content available.
+          <div data-ng-repeat="eligible in eligibleForSignUp">
+            <span data-ng-bind-template="{{eligible.deptName}} {{eligible.catalogId}} {{eligible.instructionFormat}} {{eligible.sectionNumber}}"></span>
+            <span data-ng-if="eligible.userCanSignUp">
+                | <a data-ng-href="{{eligible.signUpURL}}">Sign up</a>
+            </span><br/>
+            <span data-ng-if="eligible.webcastAuthorizedInstructors && eligible.webcastAuthorizedInstructors.length > 1">
+              This class has co-instructors. All instructors of record must sign up before classes are webcast.
+            </span>
           </div>
         </div>
-        <div class="cc-widget-webcast-outbound-link">
-          <a href="http://ets.berkeley.edu/forms/get-webcastpodcast-support-or-give-feedback">Report a problem with this recording</a>
+      </div>
+      <div data-ng-if="currentTabSelection === 'Webcasts'">
+        <div data-ng-if="(!eligibleForSignUp || eligibleForSignUp.length === 0) && !videos && !audio">
+          There are no webcasts scheduled.
+        </div>
+        <div data-ng-if="media">
+          <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Webcasts</h1>
+          <div data-ng-repeat="section in media">
+            <div data-ng-if="!section.videos.length && !section.audio.length">
+              <span ng-if="$first">Webcasts for </span>
+              <strong data-ng-bind-template="{{section.deptName}} {{section.catalogId}} {{section.instructionFormat}} {{section.sectionNumber}}"></strong>
+              <span ng-if="$last">will appear here after classes start.</span>
+            </div>
+          </div>
+        </div>
+        <div data-ng-if="videos || audio">
+          <div data-ng-if="videos.length && audio.length" class="cc-widget-webcast-inner-button-group cc-clearfix-container">
+            <ul class="cc-button-group cc-even-2 bc-canvas-embedded-buttonset" role="tablist">
+              <li data-ng-repeat="selectOption in selectOptions">
+                <button class="cc-button"
+                        data-ng-click="switchSelectedOption(selectOption)"
+                        data-ng-class="{
+                          'cc-button-selected':(currentSelection === selectOption),
+                          'bc-buttonset-button-active':(currentSelection === selectOption),
+                          'bc-buttonset-corner-left':($first),
+                          'bc-buttonset-corner-right':($last)
+                        }"
+                        aria-selected="{{currentSelection === selectOption}}"
+                        role="tab"
+                        data-ng-bind="selectOption">
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div data-ng-if="currentSelection === 'Video'">
+            <div data-ng-if="videos.length">
+              <div class="cc-select cc-widget-webcast-select">
+                <label for="cc-widget-webcast-video-selection" class="cc-visuallyhidden">Select Video</label>
+                <select id="cc-widget-webcast-video-selection" class="bc-canvas-embedded-form-select" data-ng-model="selectedVideo" data-ng-options="video.lecture for video in videos"></select>
+              </div>
+              <div class="cc-youtube-video">
+                <div data-cc-youtube-directive="selectedVideo.youTubeId" data-cc-youtube-directive-title="{{selectedVideo.lecture}}"></div>
+              </div>
+            </div>
+            <ul class="cc-widget-webcast-links" data-ng-if="iTunes.video">
+              <li class="cc-widget-webcast-itunes-link">
+                Also available at
+                <a data-ng-href="{{iTunes.video}}">
+                  <i class="fa fa-apple cc-widget-webcast-icon-link"></i> iTunes U
+                </a>
+              </li>
+            </ul>
+            <div data-ng-if="audio.length && !videos.length && !iTunes.video" class="cc-widget-webcast-error">
+              No video content available.
+            </div>
+          </div>
+          <div data-ng-show="currentSelection === 'Audio'">
+            <div data-ng-show="audio.length">
+              <div class="cc-select cc-widget-webcast-select">
+                <label for="cc-widget-webcast-audio-selection" class="cc-visuallyhidden">Select Audio</label>
+                <select id="cc-widget-webcast-audio-selection" class="bc-canvas-embedded-form-select" data-ng-model="selectedAudio" data-ng-options="item.title for item in audio"></select>
+              </div>
+              <div class="cc-widget-webcast-audio" controls>
+                <div data-cc-audio-directive="selectedAudio.playUrl"></div>
+              </div>
+            </div>
+            <ul class="cc-widget-webcast-links">
+              <li data-ng-if="selectedAudio.downloadUrl">
+                <a data-ng-href="{{selectedAudio.downloadUrl}}">
+                  <i class="fa fa-download cc-widget-webcast-icon-link"></i> Download audio
+                </a>
+              </li>
+              <li data-ng-if="iTunes.audio" class="cc-widget-webcast-itunes-link">
+                Also available at
+                <a data-ng-href="{{iTunes.audio}}">
+                  <i class="fa fa-apple cc-widget-webcast-icon-link"></i> iTunes U
+                </a>
+              </li>
+            </ul>
+            <div data-ng-if="(!audio || audio.length === 0) && !iTunes.audio" class="cc-widget-webcast-error">
+              No audio content available.
+            </div>
+          </div>
+          <div data-ng-if="(videos && videos.length > 0) || (audio && audio.length > 0)" class="cc-widget-webcast-outbound-link">
+            <a data-ng="http://ets.berkeley.edu/forms/get-webcastpodcast-support-or-give-feedback">Report a problem with this recording</a>
+          </div>
         </div>
       </div>
     </div>
