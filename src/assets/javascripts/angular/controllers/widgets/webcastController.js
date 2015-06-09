@@ -60,11 +60,19 @@
       getWebcasts(title);
     };
 
+    $scope.switchTabOption = function(tabOption) {
+      $scope.currentTabSelection = tabOption;
+    };
+
     $scope.switchSelectedOption = function(selectedOption) {
       $scope.currentSelection = selectedOption;
     };
 
     var setSelectOptions = function() {
+      var outerTabs = ['Webcast Sign-up', 'Webcasts'];
+      $scope.outerTabOptions = outerTabs;
+      var showSignUpTab = $scope.eligibleForSignUp && $scope.eligibleForSignUp.length > 0;
+      $scope.currentTabSelection = showSignUpTab ? outerTabs[0] : outerTabs[1];
       var options = ['Video', 'Audio'];
       $scope.selectOptions = options;
     };

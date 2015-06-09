@@ -3,13 +3,25 @@
     <div data-ng-bind="proxyErrorMessage"></div>
     <div data-ng-if="!proxyErrorMessage">
       <div data-ng-if="eligibleForSignUp && eligibleForSignUp.length > 0">
-        <div data-ng-if="videos || audio">
-          <ul>
-            <li><a href="#tabs-1">Webcast Sign-up</a></li>
-            <li><a href="#tabs-2">Webcasts</a></li>
+        <div data-ng-if="videos || audio" class="cc-widget-webcast-outer-button-group cc-clearfix-container">
+          <ul class="cc-button-group cc-even-2 bc-canvas-embedded-buttonset" role="tablist">
+            <li data-ng-repeat="tabOption in outerTabOptions">
+              <button class="cc-button"
+                      data-ng-click="switchTabOption(tabOption)"
+                      data-ng-class="{
+                          'cc-button-selected':(currentTabSelection === tabOption),
+                          'bc-buttonset-button-active':(currentTabSelection === tabOption),
+                          'bc-buttonset-corner-left':($first),
+                          'bc-buttonset-corner-right':($last)
+                        }"
+                      aria-selected="$first"
+                      role="tab"
+                      data-ng-bind="tabOption">
+              </button>
+            </li>
           </ul>
         </div>
-        <div id="tabs-1">
+        <div data-ng-if="currentTabSelection === 'Webcast Sign-up'">
           <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Webcast Sign-up</h1>
           <div data-ng-if="userCanSignUpOneOrMore">
             <p>
@@ -27,19 +39,17 @@
             class below, please talk to the instructor of record for the classes you wish to webcast.
           </div>
           <div data-ng-repeat="eligible in eligibleForSignUp">
-            <p>
-              {{eligible.deptName}} {{eligible.catalogId}} {{eligible.instructionFormat}} {{eligible.sectionNumber}}<br/>
-              <div data-ng-if="eligible.webcastAuthorizedInstructors && eligible.webcastAuthorizedInstructors.length > 1">
-                This class has co-instructors. All instructors of record must sign up before classes are webcast.
-              </div>
-            </p>
+            <span data-ng-bind-template="{{eligible.deptName}} {{eligible.catalogId}} {{eligible.instructionFormat}} {{eligible.sectionNumber}}"></span>
             <span data-ng-if="eligible.userCanSignUp">
-              <a href="{{eligible.signUpURL}}">Sign up</a>
+                | <a data-ng-href="{{eligible.signUpURL}}">Sign up</a>
+            </span><br/>
+            <span data-ng-if="eligible.webcastAuthorizedInstructors && eligible.webcastAuthorizedInstructors.length > 1">
+              This class has co-instructors. All instructors of record must sign up before classes are webcast.
             </span>
           </div>
         </div>
       </div>
-      <div id="tabs-2">
+      <div data-ng-if="currentTabSelection === 'Webcasts'">
         <div data-ng-if="(!eligibleForSignUp || eligibleForSignUp.length === 0) && !videos && !audio">
           There are no webcasts scheduled.
         </div>
@@ -48,13 +58,13 @@
           <div data-ng-repeat="section in media">
             <div data-ng-if="!section.videos.length && !section.audio.length">
               <span ng-if="$first">Webcasts for </span>
-              <b>{{section.deptName}} {{section.catalogId}} {{section.instructionFormat}} {{section.sectionNumber}}</b>
+              <strong data-ng-bind-template="{{section.deptName}} {{section.catalogId}} {{section.instructionFormat}} {{section.sectionNumber}}"></strong>
               <span ng-if="$last">will appear here after classes start.</span>
             </div>
           </div>
         </div>
         <div data-ng-if="videos || audio">
-          <div data-ng-if="videos.length && audio.length" class="cc-widget-webcast-button-group cc-clearfix-container">
+          <div data-ng-if="videos.length && audio.length" class="cc-widget-webcast-inner-button-group cc-clearfix-container">
             <ul class="cc-button-group cc-even-2 bc-canvas-embedded-buttonset" role="tablist">
               <li data-ng-repeat="selectOption in selectOptions">
                 <button class="cc-button"
@@ -117,12 +127,12 @@
                 </a>
               </li>
             </ul>
-            <div data-ng-if="!audio.length && !iTunes.audio" class="cc-widget-webcast-error">
+            <div data-ng-if="(!audio || audio.length === 0) && !iTunes.audio" class="cc-widget-webcast-error">
               No audio content available.
             </div>
           </div>
-          <div class="cc-widget-webcast-outbound-link">
-            <a href="http://ets.berkeley.edu/forms/get-webcastpodcast-support-or-give-feedback">Report a problem with this recording</a>
+          <div data-ng-if="(videos && videos.length > 0) || (audio && audio.length > 0)" class="cc-widget-webcast-outbound-link">
+            <a data-ng="http://ets.berkeley.edu/forms/get-webcastpodcast-support-or-give-feedback">Report a problem with this recording</a>
           </div>
         </div>
       </div>
