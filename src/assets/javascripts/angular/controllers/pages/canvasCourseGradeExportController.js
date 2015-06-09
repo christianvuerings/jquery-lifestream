@@ -7,11 +7,13 @@
    */
   angular.module('calcentral.controllers').controller('CanvasCourseGradeExportController', function(apiService, canvasCourseGradeExportFactory, canvasSharedFactory, $http, $routeParams, $scope, $timeout, $window) {
     apiService.util.setTitle('E-Grade Export');
+    $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
     $scope.appState = 'initializing';
     $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
     $scope.enableDefaultGradingScheme = false;
-    $scope.screenReaderAlert = '';
+    $scope.resolvingCourseState = false;
+    $scope.focusOnSelectionHeader = false;
 
     /**
      * Sends message to parent window to switch to gradebook
@@ -49,7 +51,7 @@
       } else {
         delete $scope.percentCompleteRounded;
         $timeout.cancel(timeoutPromise);
-        $scope.screenReaderAlert = 'Downloading export. You may choose to download another export.';
+        $scope.accessibilityAnnounceAnnounce('Downloading export. Export form options presented for an additional download.');
         $scope.switchToSelection();
         downloadGrades();
       }
@@ -137,15 +139,15 @@
     $scope.switchToSelection = function() {
       apiService.util.iframeScrollToTop();
       $scope.appState = 'selection';
-      $scope.appfocus = true;
+      $scope.focusOnSelectionHeader = true;
     };
 
     $scope.resolveIssues = function() {
-      $scope.screenReaderAlert = 'Updating course site state.';
+      $scope.accessibilityAnnounce('Updating course settings');
       canvasCourseGradeExportFactory.resolveIssues($scope.canvasCourseId, $scope.enableDefaultGradingScheme, $scope.unmuteAllAssignments)
         .success(function(data) {
           if (data.status && data.status === 'Resolved') {
-            $scope.screenReaderAlert = 'Choose download preferences.';
+            $scope.accessibilityAnnounce('Course settings updated. Export form options loaded.');
             $scope.switchToSelection();
           } else {
             $scope.appState = 'error';

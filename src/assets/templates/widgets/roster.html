@@ -1,7 +1,6 @@
 <div data-ng-controller="RosterController" data-ng-class="{'cc-page-roster': !isLoading}">
 
   <div data-cc-spinner-directive>
-    <div data-ng-include src="'canvas_embedded/_shared/screenreader_alert.html'"></div>
 
     <h1 class="cc-visuallyhidden">Roster Photos for <span data-ng-bind="canvas_course.name"></span></h1>
 
@@ -15,14 +14,14 @@
     <form class="cc-roster-search" data-ng-hide="errorStatus">
       <label for="roster-search" class="cc-visuallyhidden">Filter by Text</label>
       <input id="roster-search" class="cc-roster-input cc-left bc-canvas-embedded-roster-input" placeholder="Search People"
-        data-ng-model="search.$" data-ng-change="accessibilityReset()" />
+        data-ng-model="search.$" data-ng-change="accessibilityAnnounce('Rosters filtered by text')" />
 
       <div class="cc-select cc-left">
         <label for="section-select" class="cc-visuallyhidden">Filter by Section</label>
         <select id="section-select" class="cc-roster-select bc-canvas-embedded-roster-select"
           data-ng-options="section as section.name for section in sections track by section.ccn"
           data-ng-model="searchSection"
-          data-ng-change="accessibilityReset()">
+          data-ng-change="accessibilityAnnounce('Rosters filtered by section')">
           <option value="">All Sections</option>
         </select>
       </div>
@@ -36,6 +35,16 @@
         </a>
       </div>
     </form>
+
+    <div role="alert">
+      <p data-ng-show="errorStatus">
+        <i class="fa fa-exclamation-triangle cc-icon-red"></i> You must be a teacher in this bCourses course to view official student rosters.
+      </p>
+
+      <p data-ng-hide="students">
+        <i class="fa fa-exclamation-circle cc-icon-gold"></i> Students have not yet signed up for this class
+      </p>
+    </div>
   </div>
 
   <ul class="cc-page-roster-list">
@@ -58,15 +67,5 @@
       </div>
     </li>
   </ul>
-
-  <div role="alert">
-    <p data-ng-show="errorStatus">
-      <i class="fa fa-exclamation-triangle cc-icon-red"></i> You must be a teacher in this bCourses course to view official student rosters.
-    </p>
-
-    <p data-ng-hide="students">
-      <i class="fa fa-exclamation-circle cc-icon-gold"></i> Students have not yet signed up for this class
-    </p>
-  </div>
 
 </div>

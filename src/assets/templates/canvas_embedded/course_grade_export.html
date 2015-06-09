@@ -1,7 +1,6 @@
 <div class="bc-canvas-application bc-page-course-grade-export">
-  <div data-ng-include src="'canvas_embedded/_shared/screenreader_alert.html'"></div>
 
-  <div data-cc-focus-reset-directive="appfocus" class="bc-accessibility-no-outline">
+  <div>
     <div data-ng-show="appState === 'error'">
 
       <!-- Standard Error -->
@@ -136,7 +135,7 @@
     </div>
 
     <div data-ng-show="appState === 'selection'">
-      <div class="row collapse">
+      <div class="row collapse" aria-hidden="true">
         <div class="medium-12 columns">
           <div data-ng-include src="'canvas_embedded/_shared/back_to_gradebook_link.html'"></div>
         </div>
@@ -144,8 +143,12 @@
 
       <div class="row collapse">
         <div class="medium-12 columns">
-          <h1 class="bc-page-course-grade-export-header">What would you like to download?</h1>
+          <h1 class="bc-page-course-grade-export-header bc-accessibility-no-outline" data-cc-focus-reset-directive="focusOnSelectionHeader">What would you like to download?</h1>
         </div>
+      </div>
+
+      <div class="cc-visuallyhidden">
+        <a data-ng-click="goToGradebook()">Back to Gradebook</a>
       </div>
 
       <div class="row collapse">
