@@ -2,12 +2,13 @@ module Webcast
   class Merged < UserSpecificModel
     include Cache::CachedFeed
 
-    def initialize(uid, term_yr, term_cd, ccn_list, options = {})
-      super(uid.nil? ? nil : uid.to_i, options)
+    def initialize(course_policy, term_yr, term_cd, ccn_list, options = {})
+      super(course_policy.user.user_id.to_i, options)
       @term_yr = term_yr.to_i unless term_yr.nil?
       @term_cd = term_cd
       @ccn_list = ccn_list
       @options = options
+      @course_policy = course_policy
     end
 
     def get_feed_internal
@@ -19,10 +20,8 @@ module Webcast
     private
 
     def get_media_feed
-      feed = {}
       media = get_media
-      eligible_for_sign_up = get_sections_not_yet_signed_up media
-      feed.merge!({ :eligibleForSignUp => eligible_for_sign_up }) if eligible_for_sign_up.any?
+      feed = get_eligible_for_sign_up media
       if media.any?
         # Put video and audio
         media_hash = {
@@ -36,9 +35,10 @@ module Webcast
       feed
     end
 
-    def get_sections_not_yet_signed_up(media)
-      not_yet_signed_up = []
-      if @term_yr && @term_cd
+    def get_eligible_for_sign_up(media)
+      eligible_for_sign_up = []
+      can_sign_up_one_or_more = false
+      if @term_yr && @term_cd && @course_policy.can_view_webcast_sign_up?
         slug = Berkeley::TermCodes.to_slug(@term_yr, @term_cd)
         all_eligible = Webcast::SignUpEligible.new(@options).get[slug]
         unless all_eligible.nil?
@@ -59,20 +59,21 @@ module Webcast
                 course[:classes].each do |next_class|
                   next_class[:sections].each do |section|
                     instructors = HashConverter.camelize extract_authorized(section[:instructors])
-                    this_user_can_sign_up = instructors.map { |instructor| instructor[:uid].to_i }.include? @uid
+                    user_can_sign_up = instructors.map { |instructor| instructor[:uid].to_i }.include? @uid
                     ccn = section[:ccn]
-                    not_yet_signed_up << {
+                    eligible_for_sign_up << {
                       :termYr => @term_yr,
                       :termCd => @term_cd,
                       :ccn => ccn,
                       :signUpURL => "#{webcast_base_url}/signUp.html?id=#{@term_yr}#{@term_cd.upcase}#{ccn.to_i}",
                       :webcastAuthorizedInstructors => instructors,
-                      :thisUserCanSignUp => this_user_can_sign_up,
+                      :userCanSignUp => user_can_sign_up,
                       :deptName => next_class[:dept],
                       :catalogId => next_class[:courseCatalog],
                       :instructionFormat => section[:instruction_format],
                       :sectionNumber => section[:section_number]
                     }
+                    can_sign_up_one_or_more ||= user_can_sign_up
                   end
                 end
               end
@@ -80,7 +81,10 @@ module Webcast
           end
         end
       end
-      not_yet_signed_up
+      {
+        :userCanSignUpOneOrMore => can_sign_up_one_or_more,
+        :eligibleForSignUp => eligible_for_sign_up
+      }
     end
 
     def get_media

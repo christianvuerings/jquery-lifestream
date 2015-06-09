@@ -12,7 +12,7 @@ shared_examples 'a protected controller' do
       expect(Canvas::CourseUser).to receive(:new).with(user_id: user_id, course_id: canvas_course_id).and_return(
         double(course_user: {enrollments: [role: 'StudentEnrollment']})
       )
-      expect(Canvas::WebcastRecordings).to receive(:new).with(user_id: user_id, course_id: canvas_course_id).and_return(
+      expect(Canvas::WebcastRecordings).to receive(:new).with(anything, canvas_course_id).and_return(
         double(get_feed: {videos: []})
       )
     end
@@ -42,7 +42,7 @@ shared_examples 'a protected controller' do
       allow(Canvas::CourseUser).to receive(:new).with(user_id: user_id, course_id: canvas_course_id).and_return(
         double(course_user: nil)
       )
-      expect(Canvas::WebcastRecordings).to receive(:new).with(user_id: user_id, course_id: canvas_course_id).and_return(
+      expect(Canvas::WebcastRecordings).to receive(:new).with(anything, canvas_course_id).and_return(
         double(get_feed: {videos: []})
       )
     end

@@ -8,7 +8,10 @@ describe Canvas::WebcastRecordings do
       )
     end
 
-    subject { Canvas::WebcastRecordings.new({user_id: rand(99999).to_s, course_id: canvas_course_id, fake: true}) }
+    subject {
+      policy = AuthenticationStatePolicy.new(AuthenticationState.new('user_id' => rand(99999).to_s), nil)
+      Canvas::WebcastRecordings.new(policy, canvas_course_id, {fake: true})
+    }
 
     context 'when the Canvas course site maps to campus class sections' do
       let(:canvas_course_sections_list) do
