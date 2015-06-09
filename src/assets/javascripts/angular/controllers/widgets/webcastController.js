@@ -7,6 +7,7 @@
   angular.module('calcentral.controllers').controller('WebcastController', function(apiService, webcastFactory, $route, $routeParams, $scope) {
     // Is this for an official campus class or for a Canvas course site?
     var courseMode = 'campus';
+    var outerTabs = ['Webcast Sign-up', 'Webcasts'];
 
     /**
      * Select the first options in the video / audio feed
@@ -36,6 +37,8 @@
       } else {
         $scope.switchSelectedOption($scope.selectOptions[0]);
       }
+      var showSignUpTab = $scope.eligibleForSignUp && $scope.eligibleForSignUp.length > 0;
+      $scope.currentTabSelection = showSignUpTab ? outerTabs[0] : outerTabs[1];
     };
 
     var getWebcasts = function(title) {
@@ -69,10 +72,7 @@
     };
 
     var setSelectOptions = function() {
-      var outerTabs = ['Webcast Sign-up', 'Webcasts'];
       $scope.outerTabOptions = outerTabs;
-      var showSignUpTab = $scope.eligibleForSignUp && $scope.eligibleForSignUp.length > 0;
-      $scope.currentTabSelection = showSignUpTab ? outerTabs[0] : outerTabs[1];
       var options = ['Video', 'Audio'];
       $scope.selectOptions = options;
     };
