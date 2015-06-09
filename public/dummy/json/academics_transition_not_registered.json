@@ -6,11 +6,11 @@
         "major": "Civil Engineering"
       }
     ],
-    "empty": "false",
+    "empty": false,
     "errored": false,
     "level": "Senior",
     "nonApLevel": "Junior",
-    "noStudentId": "false",
+    "noStudentId": false,
     "standing": "Undergraduate",
     "termName": "Fall 2013"
   },

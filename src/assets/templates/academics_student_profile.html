@@ -8,7 +8,7 @@
       There was a problem reaching campus services.
       Please try again later, or check <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>.
     </div>
-    <div data-ng-if="collegeAndLevel.empty || collegeAndLevel.noStudentId">
+    <div data-ng-if="!collegeAndLevel.errored">
       <div data-ng-if="!api.user.profile.roles.student">
         <h3>Standing</h3>
         <div data-ng-if="api.user.profile.roles.exStudent" class="cc-widget-profile-message-text">
