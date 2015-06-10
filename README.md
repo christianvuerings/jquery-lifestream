@@ -25,7 +25,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
 1. Install postgres:
 
-    **Note**: To install postgres, you must first install homebrew.
+    **Note**: To install postgres, you must first install [Homebrew](http://brew.sh/).
 
     Install homebrew with the following command:
     ```bash
