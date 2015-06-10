@@ -15,7 +15,7 @@
 * [PostgreSQL](http://www.postgresql.org/)
 * [Rails 3.2.x](http://rubyonrails.org/download)
 * [Rubygems](http://rubyforge.org/frs/?group_id=126)
-* [Rvm](https://rvm.io/rvm/install/) - Ruby version managers
+* [RVM](https://rvm.io/rvm/install/) - Ruby version managers
 * [xvfb](http://xquartz.macosforge.org/landing/) - xvfb headless browser, included for Macs with XQuartz
 
 ## Installation
