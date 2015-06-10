@@ -3,6 +3,10 @@ describe Oec::Queries do
   let(:test_ccn) do
     Oec::Queries.test_data? ? '7309' : '7203'
   end
+  before do
+    term = OpenStruct.new({ :year => 2015, :code => 'B' })
+    expect(Settings.oec).to receive(:current_terms_codes).at_most(10).times.and_return([ term ])
+  end
 
   context 'limiting query to OEC departments' do
     subject { CampusOracle::Connection.depts_clause('c', Settings.oec.departments) }
