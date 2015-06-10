@@ -21,23 +21,26 @@ module Oec
         'instruction_format' => row[6],
         'section_num' => row[7],
         'primary_secondary_cd' => row[8],
-        'first_name' => row[10],
-        'last_name' => row[11],
-        'email_address' => row[12],
-        'blue_role' => row[14],
-        'evaluate' => row[15],
-        'dept_form' => row[16],
-        'evaluation_type' => row[17],
-        'modular_course' => row[18],
-        'start_date' => row[19],
-        'end_date' => row[20]
+        # See below for column 9 containing ldap_uid
+        'sis_id' =>  row[10],
+        'first_name' => row[11],
+        'last_name' => row[12],
+        'email_address' => row[13],
+        # See below for column 14 containing ldap_uid
+        'blue_role' => row[15],
+        'evaluate' => row[16],
+        'dept_form' => row[17],
+        'evaluation_type' => row[18],
+        'modular_course' => row[19],
+        'start_date' => row[20],
+        'end_date' => row[21]
       }
       # Validate certain fields
       @warnings = []
       put_valid_i(row, 'term_yr', split_course_id[0], '2\d{3}')
       put_valid_i(row, 'course_cntl_num', split_course_id[2].split('_')[0], '\d{4,5}')
       ldap_uid = row[9]
-      instructor_func = row[13]
+      instructor_func = row[14]
       put_valid_i(row, 'ldap_uid', ldap_uid, '\d{1,10}') unless ldap_uid.blank?
       put_valid_i(row, 'instructor_func', instructor_func, '[1-4]') unless instructor_func.blank?
     end
