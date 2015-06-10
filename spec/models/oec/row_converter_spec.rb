@@ -1,7 +1,7 @@
 describe Oec::RowConverter do
 
   it 'should load valid row data to hash, despite warnings' do
-    row = %w(2015-B-22303 course_name cross_listed_flag cross_listed_name\ (4567,\ 9876) dept_name catalog_id instruction_format section_num primary_secondary_cd ldap_uid first_name last_name email_address instructor_func blue_role evaluate dept_form evaluation_type modular_course start_date end_date)
+    row = %w(2015-B-22303 course_name cross_listed_flag cross_listed_name\ (4567,\ 9876) dept_name catalog_id instruction_format section_num primary_secondary_cd ldap_uid sis_id first_name last_name email_address instructor_func blue_role evaluate dept_form evaluation_type modular_course start_date end_date)
     c = Oec::RowConverter.new row
     h = c.hashed_row
     expect(h['term_yr']).to eq 2015
@@ -18,6 +18,7 @@ describe Oec::RowConverter do
     expect(h['section_num']).to eq 'section_num'
     expect(h['primary_secondary_cd']).to eq 'primary_secondary_cd'
     expect(h['ldap_uid']).to eq 'ldap_uid'
+    expect(h['sis_id']).to eq 'sis_id'
     expect(h['first_name']).to eq 'first_name'
     expect(h['last_name']).to eq 'last_name'
     expect(h['email_address']).to eq 'email_address'
@@ -34,7 +35,7 @@ describe Oec::RowConverter do
   end
 
   it 'should report invalid year, ccn, ldap and instructor_func' do
-    row = %w(1999-B-1234567 course_name cross_listed_flag cross_listed_name\ (4567,\ 9876) dept_name catalog_id instruction_format section_num primary_secondary_cd 999999999999 first_name last_name email_address 5 blue_role evaluate dept_form evaluation_type modular_course start_date end_date)
+    row = %w(1999-B-1234567 course_name cross_listed_flag cross_listed_name\ (4567,\ 9876) dept_name catalog_id instruction_format section_num primary_secondary_cd 999999999999 sis_id first_name last_name email_address 5 blue_role evaluate dept_form evaluation_type modular_course start_date end_date)
     c = Oec::RowConverter.new row
     expect(c.warnings).to have(4).items
     expect(c.warnings[0]).to include('term_yr', '1999')
@@ -44,7 +45,7 @@ describe Oec::RowConverter do
   end
 
   it 'should not consider blank ldap and instructor_func as invalid' do
-    row = %w(2015-b-12345 course_name cross_listed_flag cross_listed_name\ (4567,\ 9876) dept_name catalog_id instruction_format section_num primary_secondary_cd \  first_name last_name email_address \  blue_role evaluate dept_form evaluation_type modular_course start_date end_date)
+    row = %w(2015-b-12345 course_name cross_listed_flag cross_listed_name\ (4567,\ 9876) dept_name catalog_id instruction_format section_num primary_secondary_cd \  sis_id first_name last_name email_address \  blue_role evaluate dept_form evaluation_type modular_course start_date end_date)
     c = Oec::RowConverter.new row
     expect(c.warnings).to be_empty
   end
