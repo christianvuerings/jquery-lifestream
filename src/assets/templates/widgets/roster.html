@@ -4,12 +4,7 @@
 
     <h1 class="cc-visuallyhidden">Roster Photos for <span data-ng-bind="canvas_course.name"></span></h1>
 
-    <h2 class="cc-roster-header">
-      <span data-ng-bind="course.name"></span> -
-      <span data-ng-if="searchSection.name" data-ng-bind="searchSection.name"></span>
-      <span data-ng-if="!searchSection.name">All Sections</span>
-      <span data-ng-if="search.$" data-ng-bind-template=" - Matching '{{search.$}}'"></span>
-    </h2>
+    <h2 class="cc-visuallyhidden">Filter Options</h2>
 
     <form class="cc-roster-search" data-ng-hide="errorStatus">
       <label for="roster-search" class="cc-visuallyhidden">Filter by Text</label>
@@ -46,6 +41,13 @@
       </p>
     </div>
   </div>
+
+  <h2 class="cc-visuallyhidden">
+    <span data-ng-bind="course.name"></span> -
+    <span data-ng-if="searchSection.name" data-ng-bind="searchSection.name"></span>
+    <span data-ng-if="!searchSection.name">All Sections</span>
+    <span data-ng-if="search.$" data-ng-bind-template=" - Matching '{{search.$}}'"></span>
+  </h2>
 
   <ul class="cc-page-roster-list">
     <li data-ng-repeat="student in students | filter:search | filter:studentInSectionFilter | orderBy:'last_name'">
