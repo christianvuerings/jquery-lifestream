@@ -25,17 +25,17 @@
         </div>
       </div>
       <div data-ng-if="api.user.profile.roles.student">
-        <div data-ng-if="transitionRegStatus">
-          <div data-ng-if="transitionRegStatus.registered" class="cc-widget-profile-message-text">
-            You are registered for the <span data-ng-bind="transitionRegStatus.termName"></span> term, but updated profile information is not yet available. Please check
+        <div data-ng-if="!isProfileCurrent">
+          <div data-ng-if="transitionTerm.registered" class="cc-widget-profile-message-text">
+            You are registered for the <span data-ng-bind="transitionTerm.termName"></span> term, but updated profile information is not yet available. Please check
             <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>
             for the most current information.
           </div>
-          <div data-ng-if="!transitionRegStatus.registered" class="cc-widget-profile-message-text">
-            You are not officially registered for the <span data-ng-bind="transitionRegStatus.termName"></span> term.
+          <div data-ng-if="!transitionTerm.registered" class="cc-widget-profile-message-text">
+            You are not officially registered for the <span data-ng-bind="transitionTerm.termName"></span> term.
           </div>
         </div>
-        <div data-ng-if="!transitionRegStatus">
+        <div data-ng-if="!transitionTerm">
           <div data-ng-if="api.user.profile.roles.registered" class="cc-widget-profile-message-text">
             You are registered as a student but not currently considered active by all campus services. Please try again later, or check
             <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>
@@ -47,10 +47,10 @@
         </div>
         <div class="cc-academics-nocontent-container" data-ng-if="!isAcademicInfoAvailable">
           <div class="cc-widget-profile-message-text">
-            <span data-ng-if="api.user.profile.roles.registered || transitionRegStatus.registered">
+            <span data-ng-if="api.user.profile.roles.registered || (transitionTerm && transitionTerm.registered)">
               More information will display here when available.
             </span>
-            <span data-ng-if="!api.user.profile.roles.registered && !transitionRegStatus.registered">
+            <span data-ng-if="!api.user.profile.roles.registered && !(transitionTerm && transitionTerm.registered)">
               More information will display here when your academic status changes.
             </span>
             Check back for:
@@ -67,7 +67,7 @@
   </div>
 
   <div class="cc-widget-padding">
-    <h3 data-ng-if="transitionRegStatus && collegeAndLevel.termName">Academic status as of <span data-ng-bind="collegeAndLevel.termName"></span></h3>
+    <h3 data-ng-if="!isProfileCurrent && collegeAndLevel.termName">Academic status as of <span data-ng-bind="collegeAndLevel.termName"></span></h3>
     <div data-ng-if="showProfileMessage" class="cc-table-top-border"></div>
 
     <div class="cc-left cc-widget-profile-picture">

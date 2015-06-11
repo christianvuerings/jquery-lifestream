@@ -1,6 +1,5 @@
 module MyBadges
   class StudentInfo
-
     include MyBadges::BadgesModule, DatedFeed
     include Cache::UserCacheExpiry
 
@@ -10,24 +9,35 @@ module MyBadges
 
     def get
       campus_attributes = CampusOracle::UserAttributes.new(user_id: @uid).get_feed
-
       result = {
         californiaResidency: campus_attributes[:california_residency],
         isLawStudent: law_student,
-        regBlock: get_reg_blocks,
-        regStatus: campus_attributes[:reg_status]
+        regBlock: get_reg_blocks
       }
-      
-      if result[:regStatus] && result[:regStatus][:code].nil?
-        transition_status = MyAcademics::TransitionRegStatus.new(@uid).reg_status_from_feed
-        if (transition_status && transition_status[:registered])
-          result[:regStatus] = Notifications::RegStatusTranslator.new.translate_for_feed 'R'
-        end
+      if campus_attributes[:reg_status] && campus_attributes[:reg_status][:transitionTerm]
+        result[:regStatus] = get_transition_reg_status
+      else
+        result[:regStatus] = campus_attributes[:reg_status]
       end
-
       result
     end
 
+    def get_transition_reg_status
+      regstatus_feed = MyAcademics::TransitionTerm.new(@uid).regstatus_feed
+      return {errored: true} unless regstatus_feed
+
+      if regstatus_feed[:registered]
+        Notifications::RegStatusTranslator.new.translate_for_feed 'R'
+      else
+        # If not registered during a term transition, communicate this without alarm.
+        {
+          code: ' ',
+          summary: "Not registered for #{regstatus_feed[:termName]}",
+          explanation: nil,
+          needsAction: false
+        }
+      end
+    end
 
     # Set isLawStudent to true iff user's only college is School of Law
     def law_student
@@ -51,7 +61,5 @@ module MyBadges
       response
     end
   end
-
-
 
 end

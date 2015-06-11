@@ -1,18 +1,4 @@
 {
-  "additionalCredits": [
-    {
-      "title": "AP ENGL C/L, 05-10",
-      "units": "5.3"
-    },
-    {
-      "title": "AP BIO, 05-11",
-      "units": "5.3"
-    },
-    {
-      "title": "AP MATH AB, 05-10",
-      "units": "2.7"
-    }
-  ],
   "collegeAndLevel": {
     "colleges": [
       {
@@ -481,14 +467,10 @@
       "termCode": "B",
       "termYear": "2014",
       "timeBucket": "future",
-      "hasEnrollmentData": true,
       "classes": [
         {
-          "courseCatalog": "1A",
           "course_code": "BIOLOGY 1A",
-          "course_id": "biology-1a-2014-B",
           "dept": "BIOLOGY",
-          "dept_desc": "Biology",
           "slug": "biology-1a",
           "title": "General Biology Lecture",
           "sections": [
@@ -536,14 +518,10 @@
       "termCode": "D",
       "termYear": "2013",
       "timeBucket": "current",
-      "hasEnrollmentData": true,
       "classes": [
         {
-          "courseCatalog": "1A",
           "course_code": "BIOLOGY 1A",
-          "course_id": "biology-1a-2013-D",
           "dept": "BIOLOGY",
-          "dept_desc": "Biology",
           "slug": "biology-1a",
           "title": "General Biology Lecture",
           "sections": [
@@ -598,11 +576,8 @@
           "url": "/academics/semester/fall-2013/class/biology-1a"
         },
         {
-          "courseCatalog": "C147",
           "course_code": "COG SCI C147",
-          "course_id": "cog_sci-c147-2013-D",
           "dept": "COG SCI",
-          "dept_desc": "Cognitive Science",
           "slug": "cog_sci-c147",
           "title": "Language Disorders",
           "sections": [
@@ -637,12 +612,8 @@
           "url": "/academics/semester/fall-2013/class/cog_sci-c147"
         },
         {
-          "courseCatalog": "1",
           "course_code": "PHYS ED 1",
-          "course_id": "phys_ed-1-2013-d",
           "dept": "PHYS ED",
-          "dept_desc": "Physical Education",
-          "multiplePrimaries": true,
           "slug": "phys_ed-1",
           "title": "Physical Education Activities",
           "sections": [
@@ -655,14 +626,11 @@
               "section_number": "002",
               "schedules": [
                 {
+
                   "buildingName": "HEARST GYM",
                   "roomNumber": "234",
                   "schedule": "MTuWTh 8:30A-10:00A"
                 }
-              ],
-              "slug": "lab-002",
-              "siteIds": [
-                "11108107"
               ],
               "instructors": [
                 {
@@ -670,8 +638,7 @@
                   "uid": "938382"
                 }
               ],
-              "units": ".5",
-              "url": "/academics/semester/fall-2013/class/phys_ed-1/lab-002"
+              "units": ".5"
             },
             {
               "ccn": "72945",
@@ -687,89 +654,16 @@
                   "schedule": "TuWTh 5:00P-7:00P"
                 }
               ],
-              "slug": "lab-104",
               "instructors": [
                 {
                   "name": "Richard Emanuel IVES",
                   "uid": "38383737"
                 }
               ],
-              "units": "1.5",
-              "url": "/academics/semester/fall-2013/class/phys_ed-1/lab-104"
-            },
-            {
-              "ccn": "72946",
-              "instruction_format": "IND",
-              "is_primary_section": false,
-              "section_label": "IND 201",
-              "section_number": "201",
-              "associatedWithPrimary": "lab-002",
-              "schedules": [],
-              "instructors": [
-                {
-                  "name": "Louis Pasteur",
-                  "uid": "938382"
-                }
-              ]
-            }
-          ],
-          "class_sites": [
-            {
-              "id": "11108107",
-              "shortDescription": "Lift With Louis",
-              "name": "PHYS ED 1 LAB 002",
-              "emitter": "bCourses",
-              "site_url": "https://ucberkeley.beta.instructure.com/courses/11108107"
+              "units": "1.5"
             }
           ],
           "url": "/academics/semester/fall-2013/class/phys_ed-1"
-        }
-      ]
-    },
-    {
-      "name": "Spring 2013",
-      "notation": "Education Abroad",
-      "slug": "spring-2013",
-      "termCode": "B",
-      "termYear": "2013",
-      "timeBucket": "past",
-      "hasEnrollmentData": false,
-      "classes": [
-        {
-          "courseCatalog": "105",
-          "course_code": "EGYPT 105",
-          "dept": "EGYPT",
-          "title": "MIDDLE KINGDOM HIST & CULT",
-          "transcript": [
-            {
-              "units": "5.0",
-              "grade": "A-"
-            }
-          ]
-        },
-        {
-          "courseCatalog": "50B",
-          "course_code": "ARABIC 50B",
-          "dept": "ARABIC",
-          "title": "INT MOD ARABIC",
-          "transcript": [
-            {
-              "units": "4.5",
-              "grade": "A"
-            }
-          ]
-        },
-        {
-          "courseCatalog": "399",
-          "course_code": "ARCH 399",
-          "dept": "ARCH",
-          "title": "FIELD EXCAVATION",
-          "transcript": [
-            {
-              "units": "3.9",
-              "grade": "P"
-            }
-          ]
         }
       ]
     },
@@ -779,14 +673,10 @@
       "termCode": "B",
       "termYear": "2012",
       "timeBucket": "past",
-      "hasEnrollmentData": true,
       "classes": [
         {
-          "courseCatalog": "1A",
           "course_code": "BIOLOGY 1A",
-          "course_id": "biology-1a-2012-B",
           "dept": "BIOLOGY",
-          "dept_desc": "Biology",
           "slug": "biology-1a",
           "title": "General Biology Lecture",
           "class_sites": [
@@ -831,11 +721,8 @@
           "url": "/academics/semester/spring-2012/class/biology-1a"
         },
         {
-          "courseCatalog": "C147",
           "course_code": "COG SCI C147",
-          "course_id": "cog_sci-c147-2012-B",
           "dept": "COG SCI",
-          "dept_desc": "Cognitive Science",
           "slug": "cog_sci-c147",
           "title": "Language Disorders",
           "sections": [
@@ -865,12 +752,8 @@
           "url": "/academics/semester/spring-2012/class/cog_sci-c147"
         },
         {
-          "courseCatalog": "297",
           "course_code": "PB HLTH 297",
-          "course_id": "pb_hlth-297-2012-B",
           "dept": "PB HLTH",
-          "dept_desc": "Public Health",
-          "multiplePrimaries": true,
           "slug": "pb_hlth-297",
           "title": "Field Study in Public Health",
           "sections": [
@@ -882,15 +765,13 @@
               "section_label": "FLD 004",
               "section_number": "004",
               "schedules": [],
-              "slug": "fld-004",
               "instructors": [
                 {
                   "name": "Louis Pasteur",
                   "uid": "938382"
                 }
               ],
-              "units": "3.0",
-              "url": "/academics/semester/spring-2012/class/pb_hlth-297/fld-004"
+              "units": "3.0"
             },
             {
               "ccn": "78172",
@@ -900,15 +781,13 @@
               "section_label": "FLD 015",
               "section_number": "015",
               "schedules": [],
-              "slug": "fld-015",
               "instructors": [
                 {
                   "name": "Jean-Joseph Henri Toussaint",
                   "uid": "938383"
                 }
               ],
-              "units": "2.0",
-              "url": "/academics/semester/spring-2012/class/pb_hlth-297/fld-015"
+              "units": "2.0"
             }
           ],
           "transcript": [
@@ -1184,73 +1063,6 @@
       ]
     }
   ],
-  "otherSiteMemberships": [
-    {
-      "name": "Summer 2013",
-      "slug": "summer-2013",
-      "termCode": "C",
-      "termYear": "2013",
-      "sites": [
-        {
-          "id": "1093166",
-          "shortDescription": "Psych GSI hangout",
-          "name": "Monitor Psych 1A",
-          "emitter": "bCourses",
-          "site_url": "https://ucberkeley.beta.instructure.com/courses/1093166"
-        }
-      ]
-    }
-  ],
-  "exam_schedule": [
-    {
-      "date": {
-        "epoch": 1387324800,
-        "dateTime": "2013-12-18T00:00:00+00:00",
-        "dateString": "Wed December 18"
-      },
-      "time": "8:00A",
-      "location": {
-        "rawLocation": "390 HEARST MIN",
-        "display": "Hearst Memorial Mining Building",
-        "lat": "37.874459999999999",
-        "lon": "-122.25727000000001",
-        "roomNumber": "390"
-      },
-      "course_code": "Psychology C120"
-    },
-    {
-      "date": {
-        "epoch": 1387324800,
-        "dateTime": "2013-12-18T00:00:00+00:00",
-        "dateString": "Wed December 18"
-      },
-      "time": "3:00P",
-      "location": {
-        "rawLocation": "100 GPB",
-        "display": "Genetics & Plant Biology Building",
-        "lat": "37.873429999999999",
-        "lon": "-122.26473",
-        "roomNumber": "100"
-      },
-      "course_code": "Psychology 133"
-    },
-    {
-      "date": {
-        "epoch": 1387324800,
-        "dateTime": "2013-12-18T00:00:00+00:00",
-        "dateString": "Wed December 18"
-      },
-      "time": "3:00P",
-      "location": {
-        "rawLocation": "2060 VALLEY LSB",
-        "display": "Valley Life Sciences Building",
-        "lat": "37.871479999999998",
-        "lon": "-122.26211000000001",
-        "roomNumber": "2060"
-      },
-      "course_code": "Education 140"
-    }
-  ],
   "telebears": [
     {
       "term": "Spring",
@@ -1291,7 +1103,11 @@
       "url": "http://registrar.berkeley.edu/tbfaqs.html"
     }
   ],
-  "transitionTerm": null,
+  "transitionTerm": {
+    "isProfileCurrent": false,
+    "registered": true,
+    "termName": "Spring 2014"
+  },
   "lastModified": {
     "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
     "timestamp": {

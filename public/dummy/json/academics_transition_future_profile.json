@@ -12,7 +12,7 @@
     "nonApLevel": "Junior",
     "noStudentId": false,
     "standing": "Undergraduate",
-    "termName": "Fall 2013"
+    "termName": "Fall 2014"
   },
   "gpaUnits": {
     "cumulativeGpa": 2.4,
@@ -1063,73 +1063,6 @@
       ]
     }
   ],
-  "otherSiteMemberships": [
-    {
-      "name": "Summer 2013",
-      "slug": "summer-2013",
-      "termCode": "C",
-      "termYear": "2013",
-      "sites": [
-        {
-          "id": "1093166",
-          "shortDescription": "Psych GSI hangout",
-          "name": "Monitor Psych 1A",
-          "emitter": "bCourses",
-          "site_url": "https://ucberkeley.beta.instructure.com/courses/1093166"
-        }
-      ]
-    }
-  ],
-  "exam_schedule": [
-    {
-      "date": {
-        "epoch": 1387324800,
-        "dateTime": "2013-12-18T00:00:00+00:00",
-        "dateString": "Wed December 18"
-      },
-      "time": "8:00A",
-      "location": {
-        "rawLocation": "390 HEARST MIN",
-        "display": "Hearst Memorial Mining Building",
-        "lat": "37.874459999999999",
-        "lon": "-122.25727000000001",
-        "roomNumber": "390"
-      },
-      "course_code": "Psychology C120"
-    },
-    {
-      "date": {
-        "epoch": 1387324800,
-        "dateTime": "2013-12-18T00:00:00+00:00",
-        "dateString": "Wed December 18"
-      },
-      "time": "3:00P",
-      "location": {
-        "rawLocation": "100 GPB",
-        "display": "Genetics & Plant Biology Building",
-        "lat": "37.873429999999999",
-        "lon": "-122.26473",
-        "roomNumber": "100"
-      },
-      "course_code": "Psychology 133"
-    },
-    {
-      "date": {
-        "epoch": 1387324800,
-        "dateTime": "2013-12-18T00:00:00+00:00",
-        "dateString": "Wed December 18"
-      },
-      "time": "3:00P",
-      "location": {
-        "rawLocation": "2060 VALLEY LSB",
-        "display": "Valley Life Sciences Building",
-        "lat": "37.871479999999998",
-        "lon": "-122.26211000000001",
-        "roomNumber": "2060"
-      },
-      "course_code": "Education 140"
-    }
-  ],
   "telebears": [
     {
       "term": "Spring",
@@ -1170,9 +1103,10 @@
       "url": "http://registrar.berkeley.edu/tbfaqs.html"
     }
   ],
-  "transitionRegStatus": {
-    "termName": "Spring 2014",
-    "registered": false
+  "transitionTerm": {
+    "isProfileCurrent": true,
+    "registered": true,
+    "termName": "Summer 2014"
   },
   "lastModified": {
     "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'MyBadges::StudentInfo' do
 
   let(:random_uid) { Time.now.to_f.to_s.gsub('.', '') }
@@ -40,9 +38,10 @@ describe 'MyBadges::StudentInfo' do
   end
 
   context 'term transitions' do
+    let(:term_name) { 'Summer 2015' }
     before do
-      allow(CampusOracle::UserAttributes).to receive(:new).and_return(double(get_feed: {reg_status: {code: nil, summary: nil, explanation: nil, needsAction: false}}))
-      allow_any_instance_of(MyAcademics::TransitionRegStatus).to receive(:reg_status_from_feed).and_return({registered: is_registered})
+      allow(CampusOracle::UserAttributes).to receive(:new).and_return(double(get_feed: {reg_status: {transitionTerm: true}}))
+      allow_any_instance_of(MyAcademics::TransitionTerm).to receive(:regstatus_feed).and_return({registered: is_registered, termName: term_name})
     end
     let(:result) { MyBadges::StudentInfo.new(random_uid).get }
     context 'registered during transition' do
@@ -56,9 +55,9 @@ describe 'MyBadges::StudentInfo' do
     end
     context 'not registered during transition' do
       let(:is_registered) { false }
-      it 'omits registration data' do
-        expect(result[:regStatus][:code]).to be_nil
-        expect(result[:regStatus][:summary]).to be_nil
+      it 'reports not registered with no action required' do
+        expect(result[:regStatus][:code]).to eq ' '
+        expect(result[:regStatus][:summary]).to eq "Not registered for #{term_name}"
         expect(result[:regStatus][:explanation]).to be_nil
         expect(result[:regStatus][:needsAction]).to eq false
       end
