@@ -9,6 +9,7 @@
     if ($routeParams.canvasCourseId) {
       apiService.util.setTitle('Roster Photos');
     }
+    $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
     $scope.studentInSectionFilter = function(student) {
       if (!$scope.searchSection) {
