@@ -346,6 +346,9 @@
       // expand collapsed course if unstaging a section staged for addition
       if (section.stagedState === 'add') {
         expandParentClass(section);
+        $scope.accessibilityAnnounce('Removed section from the list of sections to be added');
+      } else {
+        $scope.accessibilityAnnounce('Included in the list of sections to be deleted');
       }
       section.stagedState = null;
     };
@@ -357,6 +360,7 @@
       if (section.isCourseSection) {
         // expand collapsed course if staging a section for deletion
         expandParentClass(section);
+        $scope.accessibilityAnnounce('Included in the list of sections to be deleted');
         section.stagedState = 'delete';
       } else {
         $scope.displayError = 'invalidAction';
@@ -370,6 +374,7 @@
     $scope.stageAdd = function(section) {
       if (!section.isCourseSection) {
         section.stagedState = 'add';
+        $scope.accessibilityAnnounce('Included in the list of sections to be added');
       } else {
         $scope.displayError = 'invalidAction';
         $scope.invalidActionError = 'Unable to add ' + sectionString(section) + ', as it already exists within the course site.';
