@@ -8,6 +8,11 @@
   angular.module('calcentral.controllers').controller('CanvasCourseManageOfficialSectionsController', function(apiService, canvasCourseAddUserFactory, canvasCourseProvisionFactory, $routeParams, $scope, $timeout) {
     apiService.util.setTitle('Manage Official Sections');
 
+    $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
+    $scope.appFocus = true;
+    $scope.previewFocus = false;
+    $scope.stagingFocus = false;
+
     /*
      * Return array of CCNs for sections present in the course site
      */
@@ -192,6 +197,8 @@
       canvasCourseProvisionFactory.getCourseSections($scope.canvasCourseId).then(function(sectionsFeed) {
         if (sectionsFeed.status !== 200) {
           $scope.isLoading = false;
+          $scope.accessibilityAnnounce('Read only section list loaded');
+          $scope.previewFocus = true;
           $scope.displayError = 'failure';
         } else {
           delete $scope.percentCompleteRounded;
@@ -223,7 +230,13 @@
      */
     $scope.changeWorkflowStep = function(step) {
       if (step === 'staging') {
+        $scope.accessibilityAnnounce('Edit section form loaded');
+        $scope.stagingFocus = true;
         initJobState();
+      }
+      if (step === 'preview') {
+        $scope.accessibilityAnnounce('Read only section list loaded');
+        $scope.previewFocus = true;
       }
       $scope.currentWorkflowStep = step;
     };
@@ -232,6 +245,7 @@
      * Marks all sections in course as added
      */
     $scope.addAllSections = function(course) {
+      $scope.accessibilityAnnounce('All sections selected for course: '+ course.title);
       angular.forEach(course.sections, function(section) {
         // if already in course simply unstage
         if (section.isCourseSection) {

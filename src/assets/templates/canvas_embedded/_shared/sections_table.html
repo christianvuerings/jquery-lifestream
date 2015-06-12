@@ -42,16 +42,16 @@
         <td class="bc-template-sections-table-cell-section-action-option" data-ng-if="listMode !== 'createCourseForm' && listMode !== 'preview'">
           <!-- Current Staging Actions -->
           <div data-ng-if="listMode === 'currentStaging' && section.isCourseSection">
-            <button class="bc-canvas-button bc-template-sections-table-button bc-canvas-no-decoration" data-ng-click="stageDeleteAction({section: section})" aria-label="Remove '{{section.courseCode}} {{section.section_label}}' from list of sections to remain in course site">Delete</button>
+            <button class="bc-canvas-button bc-template-sections-table-button bc-canvas-no-decoration" data-ng-click="stageDeleteAction({section: section})" aria-label="Include '{{section.courseCode}} {{section.section_label}}' in the list of sections to be deleted from course site">Delete</button>
           </div>
 
           <div data-ng-if="listMode === 'currentStaging' && !section.isCourseSection">
-            <button class="bc-canvas-button bc-template-sections-table-button bc-template-sections-table-button-undo-add bc-canvas-no-decoration" data-ng-click="unstageAction({section: section})" aria-label="Remove '{{section.courseCode}} {{section.section_label}}' from list of sections to remain in course site">Undo Add</button>
+            <button class="bc-canvas-button bc-template-sections-table-button bc-template-sections-table-button-undo-add bc-canvas-no-decoration" data-ng-click="unstageAction({section: section})" aria-label="Remove '{{section.courseCode}} {{section.section_label}}' from list of sections to be added to course site">Undo Add</button>
           </div>
 
           <!-- Available Staging Actions -->
           <div data-ng-if="listMode === 'availableStaging' && section.isCourseSection && section.stagedState === 'delete'">
-            <button class="bc-canvas-button bc-template-sections-table-button bc-template-sections-table-button-undo-delete bc-canvas-no-decoration" data-ng-click="unstageAction({section: section})" aria-label="Add '{{section.courseCode}} {{section.section_label}}' to list of sections to remain in course site">Undo Delete</button>
+            <button class="bc-canvas-button bc-template-sections-table-button bc-template-sections-table-button-undo-delete bc-canvas-no-decoration" data-ng-click="unstageAction({section: section})" aria-label="Remove '{{section.courseCode}} {{section.section_label}}' from list of sections to be deleted from course site">Undo Delete</button>
           </div>
 
           <div data-ng-if="listMode === 'availableStaging' && !section.isCourseSection && section.stagedState === 'add'">
@@ -59,7 +59,7 @@
           </div>
 
           <div data-ng-if="listMode === 'availableStaging' && !section.isCourseSection && section.stagedState === null">
-            <button class="bc-canvas-button bc-canvas-button-primary bc-template-sections-table-button bc-canvas-no-decoration" data-ng-class="{'bc-template-sections-table-button-undo-add':(section.stagedState === 'add')}" data-ng-click="stageAddAction({section: section})" aria-label="Add '{{section.courseCode}} {{section.section_label}}' to list of sections to remain in course site">
+            <button class="bc-canvas-button bc-canvas-button-primary bc-template-sections-table-button bc-canvas-no-decoration" data-ng-class="{'bc-template-sections-table-button-undo-add':(section.stagedState === 'add')}" data-ng-click="stageAddAction({section: section})" aria-label="Include '{{section.courseCode}} {{section.section_label}}' in the list of sections to be added to course site">
               Add
             </button>
           </div>
