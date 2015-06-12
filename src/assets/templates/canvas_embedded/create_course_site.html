@@ -58,112 +58,111 @@
 
     <h1 class="bc-page-create-course-site-header bc-page-create-course-site-header1">Create a Course Site</h1>
 
-    <div id="bc-page-create-course-site-steps-container" class="bc-page-create-course-site-steps-container bc-accessibility-no-outline" data-cc-focus-reset-directive="stepfocus">
+    <div id="bc-page-create-course-site-steps-container" class="bc-page-create-course-site-steps-container">
 
       <div id="bc-page-create-course-site-selecting-step" data-ng-show="currentWorkflowStep === 'selecting'" data-ng-aria-expanded="{{currentWorkflowStep === 'selecting'}}">
-        <div data-cc-spinner-directive>
-          <div data-ng-if="teachingSemesters && teachingSemesters.length < 1">
-            <p>You are currently not listed as the instructor of record for any courses, so you cannot create a course site in bCourses.</p>
-          </div>
+        <div data-cc-spinner-directive></div>
+        <div data-ng-if="teachingSemesters && teachingSemesters.length < 1" role="alert">
+          <p>You are currently not listed as the instructor of record for any courses, so you cannot create a course site in bCourses.</p>
+        </div>
 
-          <div data-ng-if="teachingSemesters && teachingSemesters.length > 0">
+        <div data-ng-if="teachingSemesters && teachingSemesters.length > 0">
 
-            <div class="row collapse">
-              <div class="medium-5 columns">
-                <div class="bc-buttonset">
-                  <h2 class="bc-page-create-course-site-header bc-page-create-course-site-header2">Select Term</h2>
-                  <span data-ng-repeat="semester in teachingSemesters">
-                    <input type="radio" id="semester{{$index}}" name="semester" class="cc-visuallyhidden"
-                      aria-selected="{{currentSemester==semester.slug}}"
-                      data-ng-click="switchSemester(semester)"
-                      role="tab">
-                    <label for="semester{{$index}}" class="bc-buttonset-button" role="button" aria-disabled="false"
-                      data-ng-class="{'bc-buttonset-button-active':(currentSemester==semester.slug),'bc-buttonset-corner-left':($first),'bc-buttonset-corner-right':($last)}" data-ng-bind="semester.name">
-                    </label>
-                  </span>
-                </div>
+          <div class="row collapse">
+            <div class="medium-5 columns">
+              <div class="bc-buttonset">
+                <h2 class="bc-page-create-course-site-header bc-page-create-course-site-header2 bc-accessibility-no-outline" data-cc-focus-reset-directive="selectFocus">Select Term</h2>
+                <span data-ng-repeat="semester in teachingSemesters">
+                  <input type="radio" id="semester{{$index}}" name="semester" class="cc-visuallyhidden"
+                    aria-selected="{{currentSemester==semester.slug}}"
+                    data-ng-click="switchSemester(semester)"
+                    role="tab">
+                  <label for="semester{{$index}}" class="bc-buttonset-button" aria-disabled="false"
+                    data-ng-class="{'bc-buttonset-button-active':(currentSemester==semester.slug),'bc-buttonset-corner-left':($first),'bc-buttonset-corner-right':($last)}" data-ng-bind="semester.name">
+                  </label>
+                </span>
               </div>
             </div>
+          </div>
 
-            <div class="row collapse">
-              <div class="medium-12 columns">
+          <div class="row collapse">
+            <div class="medium-12 columns">
 
-                <h2 class="bc-page-create-course-site-header bc-page-create-course-site-header2">Select Official Sections</h2>
-                <p>All official sections you select below will be put in ONE, single course site.</p>
+              <h2 class="bc-page-create-course-site-header bc-page-create-course-site-header2">Select Official Sections</h2>
+              <p>All official sections you select below will be put in ONE, single course site.</p>
 
-                <div class="bc-page-help-notice bc-page-create-course-site-help-notice">
-                  <i class="fa fa-question-circle cc-left bc-page-help-notice-icon"></i>
-                  <div class="bc-page-help-notice-left-margin">
-                    <button class="bc-button-link" data-ng-click="toggle.displayHelp = !toggle.displayHelp"
-                      aria-haspopup="true"
-                      aria-controls="section-selection-help"
-                      data-ng-attr-aria-expanded="{{toggle.displayHelp}}">
-                      <span data-ng-if="!toggle.displayHelp" class="cc-visuallyhidden">Show Section Selection Help</span>
-                      <span data-ng-if="toggle.displayHelp" class="cc-visuallyhidden">Hide Section Selection Help</span>
-                      <span data-ng-attr-aria-hidden="{{true}}">Need help deciding which official sections to select?</span>
-                    </button>
-                    <div aria-live="polite">
-                      <div id="section-selection-help" class="bc-page-help-notice-content" data-ng-if="toggle.displayHelp">
-                        <p>If you have a course with multiple sections, you will need to decide whether you want to:</p>
-                        <ol class="bc-page-create-course-site-help-notice-ordered-list">
-                          <li>Create one, single course site which includes official sections for both your primary and secondary sections, or</li>
-                          <li>Create multiple course sites, perhaps with one for each section.</li>
-                        </ol>
-                        <p class="bc-page-create-course-site-help-notice-paragraph">Read about the pros and cons of each choice in this Help document:
-                          <a href="http://ets.berkeley.edu/bcourses/official-sections-to-include">Which official sections should I include in my course site?</a>
-                        </p>
-                      </div>
+              <div class="bc-page-help-notice bc-page-create-course-site-help-notice">
+                <i class="fa fa-question-circle cc-left bc-page-help-notice-icon"></i>
+                <div class="bc-page-help-notice-left-margin">
+                  <button class="bc-button-link" data-ng-click="toggle.displayHelp = !toggle.displayHelp"
+                    aria-haspopup="true"
+                    aria-controls="section-selection-help"
+                    data-ng-attr-aria-expanded="{{toggle.displayHelp}}">
+                    <span data-ng-if="!toggle.displayHelp" class="cc-visuallyhidden">Show Section Selection Help</span>
+                    <span data-ng-if="toggle.displayHelp" class="cc-visuallyhidden">Hide Section Selection Help</span>
+                    <span data-ng-attr-aria-hidden="{{true}}">Need help deciding which official sections to select?</span>
+                  </button>
+                  <div aria-live="polite">
+                    <div id="section-selection-help" class="bc-page-help-notice-content" data-ng-if="toggle.displayHelp">
+                      <p>If you have a course with multiple sections, you will need to decide whether you want to:</p>
+                      <ol class="bc-page-create-course-site-help-notice-ordered-list">
+                        <li>Create one, single course site which includes official sections for both your primary and secondary sections, or</li>
+                        <li>Create multiple course sites, perhaps with one for each section.</li>
+                      </ol>
+                      <p class="bc-page-create-course-site-help-notice-paragraph">Read about the pros and cons of each choice in this Help document:
+                        <a href="http://ets.berkeley.edu/bcourses/official-sections-to-include">Which official sections should I include in my course site?</a>
+                      </p>
                     </div>
                   </div>
-
                 </div>
 
               </div>
+
             </div>
+          </div>
 
-            <div class="row collapse">
-              <div class="medium-12 columns">
+          <div class="row collapse">
+            <div class="medium-12 columns">
 
-                <form data-ng-submit="showConfirmation()" class="bc-canvas-page-form">
+              <form data-ng-submit="showConfirmation()" class="bc-canvas-page-form">
 
-                  <ul class="bc-page-create-course-site-section-margin">
-                    <li data-ng-repeat="course in coursesList" class="bc-sections-course-container bc-sections-course-container-bottom-margin">
+                <ul class="bc-page-create-course-site-section-margin">
+                  <li data-ng-repeat="course in coursesList" class="bc-sections-course-container bc-sections-course-container-bottom-margin">
 
-                      <button type="button" class="bc-button-link bc-page-create-course-site-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}" aria-label="Toggle course sections list for {{course.course_code}} {{course.title}}">
-                        <i class="fa cc-left bc-sections-triangle-icon"
-                          data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
-                        <h3 class="bc-sections-course-title">
-                          <span data-ng-bind="course.course_code"></span>
-                          <span data-ng-if="course.title" data-ng-bind-template=" : {{course.title}}"></span>
-                        </h3>
-                        <span data-ng-if="course.sections">
-                          (<span data-ng-pluralize count="course.sections.length" when="{'one': '1 section', 'other': '{{course.sections.length}} sections'}"></span>)
-                        </span>
-                      </button>
+                    <button type="button" class="bc-button-link bc-page-create-course-site-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}" aria-label="Toggle course sections list for {{course.course_code}} {{course.title}}">
+                      <i class="fa cc-left bc-sections-triangle-icon"
+                        data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
+                      <h3 class="bc-sections-course-title">
+                        <span data-ng-bind="course.course_code"></span>
+                        <span data-ng-if="course.title" data-ng-bind-template=" : {{course.title}}"></span>
+                      </h3>
+                      <span data-ng-if="course.sections">
+                        (<span data-ng-pluralize count="course.sections.length" when="{'one': '1 section', 'other': '{{course.sections.length}} sections'}"></span>)
+                      </span>
+                    </button>
 
-                      <div data-ng-attr-id="{{course.course_id}}" class="bc-page-create-course-site-form-collapsible-container" data-ng-if="!course.collapsed" data-ng-attr-aria-expanded="{{!course.collapsed}}" role="region">
-                        <div class="bc-page-create-course-site-form-select-all-option" data-ng-show="course.sections.length > 1">
-                          Select: <button class="bc-button-link bc-page-create-course-site-form-select-all-option-button" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCourseSectionsWithUpdate(course)" aria-label="Select {{course.selectToggleText}} of the course sections"></button>
-                        </div>
-
-                        <div data-bc-sections-table data-list-mode="'createCourseForm'" data-sections-list="course.sections" data-row-display-logic="rowDisplayLogic()" data-update-selected="updateSelected()"></div>
+                    <div data-ng-attr-id="{{course.course_id}}" class="bc-page-create-course-site-form-collapsible-container" data-ng-if="!course.collapsed" data-ng-attr-aria-expanded="{{!course.collapsed}}" role="region">
+                      <div class="bc-page-create-course-site-form-select-all-option" data-ng-show="course.sections.length > 1">
+                        Select: <button class="bc-button-link bc-page-create-course-site-form-select-all-option-button" type="button" data-ng-bind="course.selectToggleText" data-ng-click="toggleCourseSectionsWithUpdate(course)" aria-label="Select {{course.selectToggleText}} of the course sections"></button>
                       </div>
 
-                    </li>
-                  </ul>
+                      <div data-bc-sections-table data-list-mode="'createCourseForm'" data-sections-list="course.sections" data-row-display-logic="rowDisplayLogic()" data-update-selected="updateSelected()"></div>
+                    </div>
 
-                  <div class="bc-form-actions">
-                    <a data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button" type="reset" aria-label="Cancel and return to Site Creation Overview">Cancel</a>
-                    <button class="bc-canvas-button bc-canvas-button-primary"
-                      type="submit" data-ng-disabled="selectedSectionsList.length == 0" aria-controls="bc-page-create-course-site-steps-container"
-                      aria-label="Continue to next step" role="button">Next</button>
-                  </div>
-                </form>
+                  </li>
+                </ul>
 
-              </div>
+                <div class="bc-form-actions">
+                  <a data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button" type="reset" aria-label="Cancel and return to Site Creation Overview">Cancel</a>
+                  <button class="bc-canvas-button bc-canvas-button-primary"
+                    type="submit" data-ng-disabled="selectedSectionsList.length == 0" aria-controls="bc-page-create-course-site-steps-container"
+                    aria-label="Continue to next step" role="button">Next</button>
+                </div>
+              </form>
+
             </div>
-
           </div>
+
         </div>
       </div>
 
@@ -171,8 +170,8 @@
 
         <div class="row collapse">
           <div class="medium-12 columns">
-            <div class="bc-alert bc-alert-info">
-              <h2 class="cc-visuallyhidden">Confirm Course Site Details</h2>
+            <div class="bc-alert bc-alert-info" role="alert">
+              <h2 class="cc-visuallyhidden" data-cc-focus-reset-directive="confirmFocus">Confirm Course Site Details</h2>
               <strong>
                 You are about to create a {{currentSemesterName}} course site with <span data-ng-bind="selectedSections(coursesList).length"></span>
                 <span data-ng-pluralize count="selectedSections(coursesList).length" when="{'1': 'section', 'other': 'sections'}">sections</span>:
@@ -236,6 +235,8 @@
 
       <div id="bc-page-create-course-site-monitor-step" data-ng-show="currentWorkflowStep === 'monitoring_job'" data-ng-aria-expanded="{{currentWorkflowStep === 'monitoring_job'}}">
 
+        <h2 class="cc-visuallyhidden" data-cc-focus-reset-directive="confirmFocus">Course Site Creation</h2>
+
         <div aria-live="polite">
           <div data-ng-hide="jobStatus" class="bc-page-create-course-site-pending-request">
             <i class="fa fa-spinner fa-spin"></i>
@@ -265,10 +266,12 @@
         </div>
 
         <div data-ng-if="jobStatus === 'courseCreationCompleted'" data-ng-aria-expanded="{{jobStatus === 'courseCreationCompleted'}}" role="region">
-          <div class="bc-alert bc-alert-success">
+          <div class="bc-alert bc-alert-success" role="alert">
             Success : <span data-ng-bind="course_site.short_name"></span> site created
             <i class="cc-left fa fa-check-circle cc-icon-green bc-canvas-notice-icon"></i>
           </div>
+
+          <h2 class="cc-visuallyhidden" data-cc-focus-reset-directive="completedFocus">New Site Options</h2>
 
           <div class="bc-page-create-course-site-success-intro">
             <strong>You may now:</strong>
@@ -284,7 +287,6 @@
           </div>
         </div>
       </div>
-
 
     </div>
   </div>

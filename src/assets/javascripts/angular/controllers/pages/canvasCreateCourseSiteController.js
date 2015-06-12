@@ -17,10 +17,11 @@
     $scope.accessDeniedError = 'This feature is currently only available to instructors with course sections scheduled in the current or upcoming terms.';
     $scope.linkToSiteOverview = canvasSiteCreationService.linkToSiteOverview($route.current.isEmbedded);
 
-    // used to focus on step during step transitions
-    $scope.stepfocus = false;
-    // used to focus on entire app after switch from site creation index
-    $scope.appfocus = true;
+    // used to trigger focus to step headers
+    $scope.appFocus = true;
+    $scope.selectFocus = false;
+    $scope.confirmFocus = false;
+    $scope.completedFocus = false;
 
     /*
      * Updates status of background job in $scope.
@@ -58,7 +59,7 @@
       angular.extend($scope, data);
       $scope.currentWorkflowStep = 'monitoring_job';
       $scope.accessibilityAnnounce('Course site created successfully');
-      $scope.stepfocus = true;
+      $scope.completedFocus = true;
       jobStatusLoader();
     };
 
@@ -113,7 +114,7 @@
       $scope.updateSelected();
       $scope.currentWorkflowStep = 'confirmation';
       $scope.accessibilityAnnounce('Course site details form loaded.');
-      $scope.stepfocus = true;
+      $scope.confirmFocus = true;
       $scope.siteName = $scope.selectedSectionsList[0].courseTitle;
       $scope.siteAbbreviation = $scope.selectedSectionsList[0].courseCode + ' - ' + $scope.selectedSectionsList[0].section_label;
       apiService.util.iframeScrollToTop();
@@ -125,7 +126,7 @@
       }
       $scope.currentWorkflowStep = 'monitoring_job';
       $scope.accessibilityAnnounce('Creating course site. Please wait.');
-      $scope.stepfocus = true;
+      $scope.monitorFocus = true;
       $scope.showMaintenanceNotice = false;
       setErrorText();
       var ccns = selectedCcns();
@@ -175,7 +176,7 @@
       };
       canvasCourseProvisionFactory.getSections(feedRequestOptions).then(function(sectionsFeed) {
         $scope.feedFetched = true;
-        $scope.stepfocus = true;
+        $scope.selectFocus = true;
         if (sectionsFeed.status !== 200) {
           $scope.accessibilityAnnounce('Course section loading failed');
           $scope.isLoading = false;
@@ -224,6 +225,7 @@
         selectedSectionsList: [],
         currentSemesterName: semester.name
       });
+      $scope.accessibilityAnnounce('Course sections for '+ semester.name + ' loaded');
       $scope.updateSelected();
     };
 

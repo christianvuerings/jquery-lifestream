@@ -184,6 +184,7 @@
       announcer.setAttribute('class', 'cc-visuallyhidden');
       announcerHeader.innerHTML = 'Last Page Update';
       announcerAlert.setAttribute('role', 'alert');
+      announcerAlert.setAttribute('aria-live', 'assertive');
       announcerAlert.innerHTML = message;
       announcer.appendChild(announcerHeader);
       announcer.appendChild(announcerAlert);
