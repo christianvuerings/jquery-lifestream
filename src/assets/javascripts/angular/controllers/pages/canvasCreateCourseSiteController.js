@@ -225,7 +225,7 @@
         selectedSectionsList: [],
         currentSemesterName: semester.name
       });
-      $scope.accessibilityAnnounce('Course sections for '+ semester.name + ' loaded');
+      $scope.accessibilityAnnounce('Course sections for ' + semester.name + ' loaded');
       $scope.updateSelected();
     };
 

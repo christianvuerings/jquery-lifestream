@@ -245,7 +245,7 @@
      * Marks all sections in course as added
      */
     $scope.addAllSections = function(course) {
-      $scope.accessibilityAnnounce('All sections selected for course: '+ course.title);
+      $scope.accessibilityAnnounce('All sections selected for course: ' + course.title);
       angular.forEach(course.sections, function(section) {
         // if already in course simply unstage
         if (section.isCourseSection) {
