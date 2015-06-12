@@ -8,6 +8,7 @@
     // Is this for an official campus class or for a Canvas course site?
     var courseMode = 'campus';
     var outerTabs = ['Webcast Sign-up', 'Webcasts'];
+    $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
     /**
      * Select the first options in the video / audio feed
@@ -68,7 +69,16 @@
     };
 
     $scope.switchSelectedOption = function(selectedOption) {
+      $scope.accessibilityAnnounce('Loaded ' + selectedOption + ' Webcasts');
       $scope.currentSelection = selectedOption;
+    };
+
+    $scope.announceVideoSelect = function() {
+      $scope.accessibilityAnnounce('Selected video \'' + $scope.selectedVideo.lecture + '\' loaded');
+    };
+
+    $scope.announceAudioSelect = function() {
+      $scope.accessibilityAnnounce('Selected audio recording \'' + $scope.selectedAudio.title + '\' loaded');
     };
 
     var setSelectOptions = function() {
