@@ -11,9 +11,7 @@ module Webcast
     end
 
     def request_internal
-      is_webcast_sign_up_active = Webcast::SystemStatus.new(@options).get[:isSignUpActive]
-      logger.info "Webcast sign-up period #{is_webcast_sign_up_active ? 'is' : 'is not'} active."
-      return {} unless Settings.features.videos && is_webcast_sign_up_active
+      return {} unless Settings.features.videos
       ccn_set_by_term = {}
       data = get_json_data
       data['semesters'].each do |term|

@@ -1,8 +1,8 @@
 describe Canvas::WebcastEligibleCourses do
 
   context 'fake data' do
-
-    subject { Canvas::WebcastEligibleCourses.new(%w(TERM:2014-D TERM:2015-B), {:user_id => @user_id, fake: true}).fetch }
+    let(:user_id) { rand(99999).to_s }
+    subject { Canvas::WebcastEligibleCourses.new(%w(TERM:2014-D TERM:2015-B), {:user_id => user_id, fake: true}).fetch }
 
     context 'csv files exist' do
       before do
@@ -34,7 +34,7 @@ describe Canvas::WebcastEligibleCourses do
       it 'should not flag sign-up eligible sections when is_sign_up_active = false' do
         allow_any_instance_of(Webcast::SystemStatus).to receive(:get).and_return({ 'is_sign_up_active' => false })
         # Although is_sign_up_active = false, we still serve list of sections webcast
-        expect(subject).to have(1).items
+        expect(subject).to have(2).items
         course = subject['1336653']
         expect(course).to_not be_nil
         expect(course).to have(1).items
