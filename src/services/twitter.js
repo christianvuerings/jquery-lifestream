@@ -19,11 +19,11 @@
 
       var link = function( t ) {
         return t.replace(
-          /([a-z]+:\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig,
-          function( m ) {
-            return '<a href="' + m + '">' +
-              ( ( m.length > 25 ) ? m.substr( 0, 24 ) + '...' : m ) +
-              '</a>';
+          /([a-z]+:\/\/)([-A-Z0-9+&@#\/%?=~_|(\)!:,.;]*[-A-Z0-9+&@#\/%=~_|(\)])/ig,
+          function( m, m1, m2 ) {
+            return $("<a></a>").attr("href", m).text(
+                ( ( m2.length > 35 ) ? m2.substr( 0, 34 ) + '...' : m2 )
+            )[0].outerHTML;
           }
         );
       },
@@ -31,17 +31,31 @@
         return t.replace(
           /(^|[^\w]+)\@([a-zA-Z0-9_]{1,15})/g,
           function( m, m1, m2 ) {
-            return m1 + '<a href="http://twitter.com/' + m2 + '">@' +
-              m2 + '</a>';
+            var elem = ($("<a></a>")
+                     .attr("href", "https://twitter.com/" + m2)
+                     .text("@" + m2))[0].outerHTML;
+            return m1 + elem;
           }
         );
       },
       hash = function( t ) {
         return t.replace(
-          /(^|[^\w'"]+)\#([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)/g,
-          function( m, m1, m2 ) {
-            return m1 + '<a href="https://twitter.com/hashtag/' +
-            m2 + '?src=hash">#' + m2 + '</a>';
+          /<a.*?<\/a>|(^|\r?\n|\r|\n|)(#|\$)([a-zA-Z0-9ÅåÄäÖöØøÆæÉéÈèÜüÊêÛûÎî_]+)(\r?\n|\r|\n||$)/g,
+          function( m, m1, m2, m3, m4 ) {
+            if (typeof m3 == "undefined") return m;
+            var elem = "";
+            if (m2 == "#") {
+                elem = ($("<a></a>")
+                        .attr("href",
+                            "https://twitter.com/hashtag/" + m3 + "?src=hash")
+                        .text("#" + m3))[0].outerHTML;
+            } else if (m2 == "$") {
+                elem = ($("<a></a>")
+                        .attr("href",
+                            "https://twitter.com/search?q=%24" + m3 + "&src=hash")
+                        .text("$" + m3))[0].outerHTML;
+            }
+            return (m1 + elem + m4);
           }
         );
       };
@@ -70,10 +84,10 @@
           "config": config,
           "html": $.tmpl( template.posted, {
             "tweet": linkify($('<div/>').html(status.text).text()),
-            "complete_url": 'http://twitter.com/' + config.user +
+            "complete_url": 'https://twitter.com/' + config.user +
               "/status/" + status.id
           } ),
-          "url": 'http://twitter.com/' + config.user
+          "url": 'https://twitter.com/' + config.user
         });
       }
       callback(output);
