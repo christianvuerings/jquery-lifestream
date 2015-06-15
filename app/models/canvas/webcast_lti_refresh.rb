@@ -43,7 +43,7 @@ module Canvas
           elsif hide_tab && is_tab_showing
             modified_tab = hide_course_site_tab(canvas_course_id, tab, external_tools)
           else
-            logger.warn "Do nothing with course site #{canvas_course_id} (show_tab=#{show_tab}, hide_tab=#{hide_tab}, is_tab_showing=#{is_tab_showing})"
+            logger.warn "Do nothing with course site #{canvas_course_id} (has_recordings=#{has_recordings}, is_webcast_eligible=#{is_webcast_eligible}, is_sign_up_active=#{is_sign_up_active} show_tab=#{show_tab}, hide_tab=#{hide_tab}, is_tab_showing=#{is_tab_showing})"
           end
         end
       end
