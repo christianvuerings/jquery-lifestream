@@ -706,8 +706,12 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
   parseFBPage = function( input ) {
     var output = [], list, i = 0, j;
 
-    if(input.query && input.query.count && input.query.count >0) {
-      list = input.query.results.rss.channel.item;
+    if (input.rss &&
+      input.rss.channel &&
+      input.rss.channel[0] &&
+      input.rss.channel[0].item) {
+
+      list = input.rss.channel[0].item;
       j = list.length;
       for( ; i<j; i++) {
         var item = list[i];
@@ -724,10 +728,7 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
   };
 
   $.ajax({
-    url: $.fn.lifestream.createYqlUrl('select * from xml where url="' +
-      'www.facebook.com/feeds/page.php?id=' +
-      config.user + '&format=rss20"'),
-    dataType: 'jsonp',
+    url: 'http://facebooky.herokuapp.com/' + config.user,
     success: function( data ) {
       callback(parseFBPage(data));
     }
@@ -740,7 +741,8 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
   };
 
 };
-})(jQuery);(function($) {
+})(jQuery);
+(function($) {
   'use strict';
 
   $.fn.lifestream.feeds.fancy = function( config, callback ) {
