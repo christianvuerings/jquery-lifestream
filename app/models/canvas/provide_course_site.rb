@@ -21,6 +21,7 @@ module Canvas
 
     def create_course_site(site_name, site_course_code, term_slug, ccns, is_admin_by_ccns = false)
       @total_steps = 12.0
+      @background_job_type = 'course_creation'
       @jobStatus = 'Processing'
       background_job_save
       logger.info("Course provisioning job started. Job state updated in cache key #{background_job_id}")
@@ -65,6 +66,7 @@ module Canvas
       @total_steps = 2.0  # Section CSV import, clearing course site cache
       @total_steps += 2.0 if ccns_to_add.present?
       @total_steps += 1.0 if ccns_to_remove.present?
+      @background_job_type = 'edit_sections'
       @jobStatus = 'Processing'
       background_job_save
       logger.info("Edit course site sections job started. Job state updated in cache key #{background_job_id}")

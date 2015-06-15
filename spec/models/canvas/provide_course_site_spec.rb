@@ -139,6 +139,13 @@ describe Canvas::ProvideCourseSite do
       expect(subject.instance_eval { @import_data['ccns'] }).to eq ['21136', '21204']
     end
 
+    it 'sets job type to course_creation' do
+      subject.create_course_site(site_name, site_course_code, 'fall-2013', ['21136', '21204'])
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      puts "cached_object.background_job_report: #{cached_object.background_job_report.inspect}"
+      expect(cached_object.background_job_report[:jobType]).to eq 'course_creation'
+    end
+
     it 'sets status as completed and saves' do
       subject.create_course_site(site_name, site_course_code, 'fall-2013', ['21136', '21204'])
       cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
@@ -171,6 +178,11 @@ describe Canvas::ProvideCourseSite do
         task_steps.each do |step|
           expect(subject).to receive(step).ordered
         end
+      end
+      it 'sets job type to course_creation' do
+        subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+        cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+        expect(cached_object.background_job_report[:jobType]).to eq 'edit_sections'
       end
       it 'executes all steps in order' do
         subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
