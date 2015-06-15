@@ -33,8 +33,8 @@ describe 'My Academics profile and university requirements cards', :testui => tr
           user_type = nil
           term_transition = false
           api_standing = nil
-          api_colleges = nil
-          api_majors = nil
+          api_colleges = []
+          api_majors = []
           api_level = nil
           api_units = nil
 
@@ -273,7 +273,7 @@ describe 'My Academics profile and university requirements cards', :testui => tr
               else
                 user_type = 'existing student'
                 testable_users.push(uid)
-                if academics_api_page.transition_term?
+                if academics_api_page.transition_term? && !academics_api_page.trans_term_profile_current?
                   term_transition = true
                   api_term_transition = "Academic status as of #{academics_api_page.term_name}"
                   my_academics_term_transition = profile_card.term_transition_heading
@@ -301,7 +301,7 @@ describe 'My Academics profile and university requirements cards', :testui => tr
             logger.error e.message + "\n" + e.backtrace.join("\n")
           ensure
             CSV.open(test_output, 'a+') do |user_info_csv|
-              user_info_csv << [uid, user_type, term_transition, api_standing, api_colleges * "\n", api_majors * "\n", api_level, api_units]
+              user_info_csv << [uid, user_type, term_transition, api_standing, api_colleges * '; ', api_majors * '; ', api_level, api_units]
             end
           end
         end
