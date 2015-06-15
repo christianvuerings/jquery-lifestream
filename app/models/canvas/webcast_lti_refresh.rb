@@ -23,28 +23,26 @@ module Canvas
 
     def update_course_site_tab(canvas_course_id, sections, is_sign_up_active)
       modified_tab = nil
-      has_recordings = false
-      is_webcast_eligible = false
-      sections.each do |section|
-        has_recordings ||= section[:has_webcast_recordings]
-        is_webcast_eligible ||= section[:is_webcast_eligible]
-      end
-      show_tab = has_recordings || is_webcast_eligible && is_sign_up_active
-      hide_tab = !has_recordings && !is_sign_up_active
-      if show_tab || hide_tab
-        external_tools = Canvas::ExternalTools.new @options.merge(canvas_course_id: canvas_course_id)
-        tab = external_tools.find_canvas_course_tab @canvas_webcast_tool_id
-        if tab.nil?
-          logger.warn "No Webcast tab, hidden or otherwise, found on course site #{canvas_course_id}"
+      external_tools = Canvas::ExternalTools.new @options.merge(canvas_course_id: canvas_course_id)
+      tab = external_tools.find_canvas_course_tab @canvas_webcast_tool_id
+      if tab.nil?
+        logger.warn "No Webcast tab, hidden or otherwise, found on course site #{canvas_course_id}"
+      else
+        has_recordings = false
+        is_webcast_eligible = false
+        sections.each do |section|
+          has_recordings ||= section[:has_webcast_recordings]
+          is_webcast_eligible ||= section[:is_webcast_eligible]
+        end
+        is_tab_showing = !tab.has_key?('hidden') || tab['hidden'].to_s.casecmp('false') == 0
+        show_tab = !is_tab_showing && (has_recordings || is_webcast_eligible && is_sign_up_active)
+        hide_tab = is_tab_showing && !has_recordings && !is_sign_up_active
+        if show_tab
+          modified_tab = show_course_site_tab(canvas_course_id, tab, external_tools)
+        elsif hide_tab
+          modified_tab = hide_course_site_tab(canvas_course_id, tab, external_tools)
         else
-          is_tab_showing = !tab.has_key?('hidden') || tab['hidden'].to_s.casecmp('false') == 0
-          if show_tab && !is_tab_showing
-            modified_tab = show_course_site_tab(canvas_course_id, tab, external_tools)
-          elsif hide_tab && is_tab_showing
-            modified_tab = hide_course_site_tab(canvas_course_id, tab, external_tools)
-          else
-            logger.warn "Do nothing with course site #{canvas_course_id} (has_recordings=#{has_recordings}, is_webcast_eligible=#{is_webcast_eligible}, is_sign_up_active=#{is_sign_up_active} show_tab=#{show_tab}, hide_tab=#{hide_tab}, is_tab_showing=#{is_tab_showing})"
-          end
+          logger.warn "Do nothing to course #{canvas_course_id}: has_recordings=#{has_recordings}, is_webcast_eligible=#{is_webcast_eligible}, is_sign_up_active=#{is_sign_up_active} show_tab=#{show_tab}, hide_tab=#{hide_tab}, is_tab_showing=#{is_tab_showing}"
         end
       end
       modified_tab

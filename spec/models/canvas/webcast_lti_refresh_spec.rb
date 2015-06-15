@@ -90,7 +90,7 @@ describe Canvas::WebcastLtiRefresh do
           hidden_tab = { 'id' => tab_id, 'hidden' => true }
           allow_any_instance_of(Canvas::ExternalTools).to receive(:hide_course_site_tab).with(tab_id).and_return hidden_tab
           allow_any_instance_of(Webcast::CourseSiteLog).to receive(:create).with anything
-          expect(subject.refresh_canvas).to have(2).items
+          expect(subject.refresh_canvas).to have(4).items
         end
         it 'should not hide the already hidden tab' do
           tab = { 'id' => tab_id, 'hidden' => true }
