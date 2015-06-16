@@ -113,7 +113,7 @@ module Canvas
       if @background_job_status != 'Error'
         completed_steps = @background_job_completed_steps.count
         @background_job_status = 'Processing' if (completed_steps > 0) || (completed_steps < @background_job_total_steps)
-        @background_job_status = 'Completed' if (completed_steps == @background_job_total_steps)
+        @background_job_status = 'Completed' if (completed_steps >= @background_job_total_steps)
       end
       background_job_save
     end
