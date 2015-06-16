@@ -6,6 +6,11 @@ module Canvas
   #   def MyClass
   #     include Canvas::BackgroundJob
   #
+  #     def initialize
+  #       background_job_set_type('something_awesome')
+  #       background_job_set_total_steps(2)
+  #     end
+  #
   #     def perform_work
   #       # do step one
   #       if (error)
@@ -81,6 +86,11 @@ module Canvas
       report[:errors] = @background_job_errors if @background_job_errors.count > 0
       report.reverse_merge!(background_job_report_custom)
       report
+    end
+
+    def background_job_set_type(type)
+      @background_job_type = type
+      background_job_save
     end
 
     def background_job_save
