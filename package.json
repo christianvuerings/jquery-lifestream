@@ -26,7 +26,6 @@
   "license": "ECL 2.0",
   "devDependencies": {
     "angular": "^1.4.1",
-    "angular-aria": "^1.4.1",
     "angular-route": "^1.4.1",
     "angular-sanitize": "^1.4.1",
     "del": "^1.2.0",
