@@ -141,7 +141,7 @@ describe 'My Academics enrollments', :testui => true do
                       semester_page = CalCentralPages::MyAcademicsPage::MyAcademicsClassesCard.new(driver)
                       wait_list_courses = academics_api_page.wait_list_courses(semester_courses)
                       enrolled_courses = (semester_courses - wait_list_courses)
-                      semester_page_enrolled_courses = academics_api_page.semester_page_courses(enrolled_courses)
+                      semester_page_enrolled_courses = academics_api_page.courses_by_primary_section(enrolled_courses)
 
                       # ENROLLED COURSES
 
