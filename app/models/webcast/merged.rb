@@ -38,7 +38,8 @@ module Webcast
     def get_eligible_for_sign_up(media)
       eligible_for_sign_up = []
       can_sign_up_one_or_more = false
-      if @term_yr && @term_cd && @course_policy.can_view_webcast_sign_up?
+      is_sign_up_active = Webcast::SystemStatus.new(@options).get[:isSignUpActive]
+      if is_sign_up_active && @term_yr && @term_cd && @course_policy.can_view_webcast_sign_up?
         slug = Berkeley::TermCodes.to_slug(@term_yr, @term_cd)
         all_eligible = Webcast::SignUpEligible.new(@options).get[slug]
         unless all_eligible.nil?
