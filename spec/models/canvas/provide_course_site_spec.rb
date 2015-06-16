@@ -69,18 +69,7 @@ describe Canvas::ProvideCourseSite do
     it "raises exception if uid is not a String" do
       expect { Canvas::ProvideCourseSite.new(1234) }.to raise_error(ArgumentError, 'uid must be a String')
     end
-
     its(:uid)       { should eq uid }
-    its(:jobStatus)    { should eq 'New' }
-
-    it 'initializes the completed steps array' do
-      expect(subject.instance_eval { @completed_steps }).to eq []
-    end
-
-    it 'initializes the error array' do
-      expect(subject.errors).to eq []
-    end
-
     it 'initializes the import data hash' do
       expect(subject.instance_eval { @import_data }).to be_an_instance_of Hash
       expect(subject.instance_eval { @import_data }).to eq({})
@@ -88,68 +77,59 @@ describe Canvas::ProvideCourseSite do
   end
 
   describe '#create_course_site' do
+    let(:task_steps){ [
+      :prepare_users_courses_list,
+      :identify_department_subaccount,
+      :prepare_course_site_definition,
+      :prepare_section_definitions,
+      :import_course_site,
+      :retrieve_course_site_details,
+      :import_sections,
+      :enroll_instructor,
+      :expire_instructor_sites_cache,
+      :import_enrollments_in_background,
+    ] }
     before do
-      allow(subject).to receive(:prepare_users_courses_list).and_return(true)
-      allow(subject).to receive(:identify_department_subaccount).and_return(true)
-      allow(subject).to receive(:prepare_course_site_definition).and_return(true)
-      allow(subject).to receive(:prepare_section_definitions).and_return(true)
-      allow(subject).to receive(:import_course_site).and_return(true)
-      allow(subject).to receive(:retrieve_course_site_details).and_return(true)
-      allow(subject).to receive(:import_sections).and_return(true)
-      allow(subject).to receive(:enroll_instructor).and_return(true)
-      allow(subject).to receive(:expire_instructor_sites_cache).and_return(true)
-      allow(subject).to receive(:import_enrollments_in_background).and_return(true)
+      allow(subject).to receive(:current_terms).and_return(current_terms)
+      task_steps.each do |step|
+        allow(subject).to receive(step)
+      end
     end
 
     it 'raises error if term slug does not match current term' do
       expect { subject.create_course_site(site_name, site_course_code, 'fall-5429', ['1136', '1204']) }.to raise_error(RuntimeError, 'term_slug does not match a current term')
-      expect(subject.jobStatus).to eq 'courseCreationError'
-      errors = subject.errors
-      expect(errors[0]).to eq 'term_slug does not match a current term'
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      expect(cached_object.background_job_report[:jobStatus]).to eq 'Error'
+      expect(cached_object.background_job_report[:errors]).to eq ['term_slug does not match a current term']
     end
 
     it 'intercepts raised exceptions and updates status' do
       allow(subject).to receive(:import_course_site).and_raise(RuntimeError, 'Course site could not be created!')
-      expect { subject.create_course_site(site_name, site_course_code, 'fall-2013', ['1136', '1204']) }.to raise_error(RuntimeError, 'Course site could not be created!')
-      expect(subject.jobStatus).to eq 'courseCreationError'
-      errors = subject.errors
-      expect(errors).to be_an_instance_of Array
-      expect(errors[0]).to eq 'Course site could not be created!'
+      expect { subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204']) }.to raise_error(RuntimeError, 'Course site could not be created!')
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      expect(cached_object.background_job_report[:jobStatus]).to eq 'Error'
+      expect(cached_object.background_job_report[:errors]).to eq ['Course site could not be created!']
     end
 
     it 'makes calls to each step of import in proper order' do
-      expect(subject).to receive(:prepare_users_courses_list).ordered.and_return(true)
-      expect(subject).to receive(:identify_department_subaccount).ordered.and_return(true)
-      expect(subject).to receive(:prepare_course_site_definition).ordered.and_return(true)
-      expect(subject).to receive(:prepare_section_definitions).ordered.and_return(true)
-      expect(subject).to receive(:import_course_site).ordered.and_return(true)
-      expect(subject).to receive(:retrieve_course_site_details).ordered.and_return(true)
-      expect(subject).to receive(:import_sections).ordered.and_return(true)
-      expect(subject).to receive(:enroll_instructor).ordered.and_return(true)
-      expect(subject).to receive(:expire_instructor_sites_cache).ordered.and_return(true)
-      expect(subject).to receive(:import_enrollments_in_background).ordered.and_return(true)
-      subject.create_course_site(site_name, site_course_code, 'fall-2013', ['1136', '1204'])
+      task_steps.each do |step|
+        expect(subject).to receive(step).ordered
+      end
+      subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'])
     end
 
     it 'sets term and ccns for import' do
-      subject.create_course_site(site_name, site_course_code, 'fall-2013', ['21136', '21204'])
-      expect(subject.instance_eval { @import_data['term_slug'] }).to eq 'fall-2013'
-      expect(subject.instance_eval { @import_data['term'][:yr] }).to eq '2013'
+      subject.create_course_site(site_name, site_course_code, 'fall-2014', ['21136', '21204'])
+      expect(subject.instance_eval { @import_data['term_slug'] }).to eq 'fall-2014'
+      expect(subject.instance_eval { @import_data['term'][:yr] }).to eq '2014'
       expect(subject.instance_eval { @import_data['term'][:cd] }).to eq 'D'
       expect(subject.instance_eval { @import_data['ccns'] }).to eq ['21136', '21204']
     end
 
     it 'sets job type to course_creation' do
-      subject.create_course_site(site_name, site_course_code, 'fall-2013', ['21136', '21204'])
+      subject.create_course_site(site_name, site_course_code, 'fall-2014', ['21136', '21204'])
       cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
-      puts "cached_object.background_job_report: #{cached_object.background_job_report.inspect}"
       expect(cached_object.background_job_report[:jobType]).to eq 'course_creation'
-    end
-
-    it 'sets status as completed and saves' do
-      subject.create_course_site(site_name, site_course_code, 'fall-2013', ['21136', '21204'])
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
-      expect(cached_object.jobStatus).to eq 'courseCreationCompleted'
     end
   end
 
@@ -164,7 +144,14 @@ describe Canvas::ProvideCourseSite do
     end
     let(:ccns_to_remove) { [random_ccn] }
     let(:ccns_to_add) { [random_ccn] }
-    let(:task_steps){ [:prepare_users_courses_list, :prepare_section_definitions, :prepare_section_deletions, :import_sections, :refresh_sections_cache, :import_enrollments_in_background] }
+    let(:task_steps){ [
+      :prepare_users_courses_list,
+      :prepare_section_definitions,
+      :prepare_section_deletions,
+      :import_sections,
+      :refresh_sections_cache,
+      :import_enrollments_in_background
+    ] }
     before do
       allow(subject).to receive(:current_terms).and_return(current_terms)
       task_steps.each do |step|
@@ -176,18 +163,17 @@ describe Canvas::ProvideCourseSite do
         # The class isn't particularly test-friendly.
         allow(subject).to receive(:section_definitions).and_return(ccns_to_add)
         task_steps.each do |step|
-          expect(subject).to receive(step).ordered
+          allow(subject).to receive(step).ordered
         end
       end
-      it 'sets job type to course_creation' do
+      it 'sets job type to edit_sections' do
         subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
         cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
         expect(cached_object.background_job_report[:jobType]).to eq 'edit_sections'
       end
       it 'executes all steps in order' do
+        task_steps.each {|step| expect(subject).to receive(step).ordered}
         subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
-        cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
-        expect(cached_object.jobStatus).to eq 'sectionEditsCompleted'
       end
     end
     context 'on unexpected error' do
@@ -197,8 +183,9 @@ describe Canvas::ProvideCourseSite do
       it 'returns a proper message' do
         expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, 'Unable to remove memberships')
         cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
-        expect(cached_object.jobStatus).to eq 'sectionEditsError'
-        expect(cached_object.errors).to eq ['Unable to remove memberships']
+        expect(cached_object.background_job_report[:jobType]).to eq 'edit_sections'
+        expect(cached_object.background_job_report[:jobStatus]).to eq 'Error'
+        expect(cached_object.background_job_report[:errors]).to eq ['Unable to remove memberships']
       end
     end
     context 'when no changes would be made' do
@@ -208,7 +195,7 @@ describe Canvas::ProvideCourseSite do
       it 'reports an error' do
         expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, 'No changes to sections requested')
         cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
-        expect(cached_object.jobStatus).to eq 'sectionEditsError'
+        expect(cached_object.background_job_report[:jobStatus]).to eq 'Error'
       end
     end
     context 'if the course site is not in a current term' do
@@ -216,7 +203,7 @@ describe Canvas::ProvideCourseSite do
       it 'reports an error' do
         expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, "Course site #{canvas_course_id} does not match a current term")
         cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
-        expect(cached_object.jobStatus).to eq 'sectionEditsError'
+        expect(cached_object.background_job_report[:jobStatus]).to eq 'Error'
       end
     end
   end
@@ -281,7 +268,8 @@ describe Canvas::ProvideCourseSite do
       allow(subject).to receive(:candidate_courses_list).and_return(true)
       expect(subject).to receive(:filter_courses_by_ccns).and_return('user_courses_list')
       subject.prepare_users_courses_list
-      expect(subject.instance_eval { @completed_steps }).to eq ['Prepared courses list']
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      expect(cached_object.background_job_report[:completedSteps]).to eq ['Prepared courses list']
     end
   end
 
@@ -303,7 +291,8 @@ describe Canvas::ProvideCourseSite do
 
     it 'updates completed steps list' do
       subject.identify_department_subaccount
-      expect(subject.instance_eval { @completed_steps }).to eq ['Identified department sub-account']
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      expect(cached_object.background_job_report[:completedSteps]).to eq ['Identified department sub-account']
     end
   end
 
@@ -377,7 +366,8 @@ describe Canvas::ProvideCourseSite do
 
     it 'updates completed steps list' do
       subject.prepare_course_site_definition
-      expect(subject.instance_eval { @completed_steps }).to eq ['Prepared course site definition']
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      expect(cached_object.background_job_report[:completedSteps]).to eq ['Prepared course site definition']
     end
   end
 
@@ -430,7 +420,8 @@ describe Canvas::ProvideCourseSite do
 
     it 'updates completed steps list' do
       subject.prepare_section_definitions
-      expect(subject.instance_eval { @completed_steps }).to eq ['Prepared section definitions']
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      expect(cached_object.background_job_report[:completedSteps]).to eq ['Prepared section definitions']
     end
   end
 
@@ -458,7 +449,8 @@ describe Canvas::ProvideCourseSite do
     it 'updates completed steps list' do
       allow(Canvas::SisImport).to receive(:new).and_return(canvas_sis_import_proxy)
       subject.import_course_site(@course_row)
-      expect(subject.instance_eval { @completed_steps }).to eq ['Imported course']
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      expect(cached_object.background_job_report[:completedSteps]).to eq ['Imported course']
     end
   end
 
@@ -489,7 +481,8 @@ describe Canvas::ProvideCourseSite do
     it 'updates completed steps list' do
       allow(Canvas::SisImport).to receive(:new).and_return(canvas_sis_import_proxy)
       subject.import_sections(@section_rows)
-      expect(subject.instance_eval { @completed_steps }).to eq ['Imported sections']
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      expect(cached_object.background_job_report[:completedSteps]).to eq ['Imported sections']
     end
   end
 
@@ -519,8 +512,8 @@ describe Canvas::ProvideCourseSite do
 
     it 'updates completed steps list' do
       subject.enroll_instructor
-      completed_steps = subject.instance_eval { @completed_steps }
-      expect(completed_steps).to eq ['Added instructor to course site']
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      expect(cached_object.background_job_report[:completedSteps]).to eq ['Added instructor to course site']
     end
   end
 
@@ -542,7 +535,8 @@ describe Canvas::ProvideCourseSite do
 
     it 'updates completed steps list' do
       subject.retrieve_course_site_details
-      expect(subject.instance_eval { @completed_steps }).to eq ['Retrieved new course site details']
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      expect(cached_object.background_job_report[:completedSteps]).to eq ['Retrieved new course site details']
     end
   end
 
@@ -554,7 +548,8 @@ describe Canvas::ProvideCourseSite do
 
     it 'updates completed steps list' do
       subject.expire_instructor_sites_cache
-      expect(subject.instance_eval { @completed_steps }).to eq ['Clearing bCourses course site cache']
+      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      expect(cached_object.background_job_report[:completedSteps]).to eq ['Clearing bCourses course site cache']
     end
   end
 
@@ -1002,64 +997,28 @@ describe Canvas::ProvideCourseSite do
     end
   end
 
-  describe '#complete_step' do
-    it 'adds step to completed steps log' do
-      subject.complete_step('Did something awesome')
-      subject.instance_eval { @completed_steps }.should == ['Did something awesome']
-    end
-
-    it 'saves state of background job' do
-      expect(subject).to receive(:background_job_save).and_return(true)
-      subject.complete_step('Did something awesome')
-    end
-  end
-
-  describe '#to_json' do
+  describe "#background_job_report" do
     before do
-      subject.instance_eval { @jobStatus = 'courseCreationError'}
+      subject.instance_eval { @background_job_type = 'course_creation'}
+      subject.instance_eval { @background_job_status = 'error'}
       subject.instance_eval { @background_job_id = 'Canvas::BackgroundJob.1383330151057-67f4b934525501cb'}
-      subject.instance_eval { @completed_steps = ['step1 description', 'step2 description']}
-    end
-
-    it 'returns hash containing course import job state' do
-      subject.instance_eval { @total_steps = 12.0 }
-      result = subject.to_json
-      result.should be_an_instance_of String
-      json_result = JSON.parse(result)
-      expect(json_result['jobStatus']).to eq 'courseCreationError'
-      expect(json_result['job_id']).to eq 'Canvas::BackgroundJob.1383330151057-67f4b934525501cb'
-      expect(json_result['completed_steps'][0]).to eq 'step1 description'
-      expect(json_result['completed_steps'][1]).to eq 'step2 description'
-      expect(json_result['percent_complete']).to eq 0.17
-      expect(json_result['course_site']).to_not be
-      expect(json_result['error']).to_not be
+      subject.instance_eval { @background_job_completed_steps = ['step1 description', 'step2 description']}
     end
 
     context 'when job status is completed' do
       it 'includes course site details' do
         subject.instance_eval do
-          @jobStatus = 'courseCreationCompleted'
+          @background_job_status = 'Completed'
+          @background_job_type = 'course_creation'
           @import_data['course_site_url'] = 'https://example.com/courses/999'
           @import_data['course_site_short_name'] = 'COMPSCI-10'
+          background_job_save
         end
-        json_result = JSON.parse(subject.to_json)
-        expect(json_result['course_site']).to be_an_instance_of Hash
-        expect(json_result['course_site']['short_name']).to eq 'COMPSCI-10'
-        expect(json_result['course_site']['url']).to eq 'https://example.com/courses/999'
-        expect(json_result['error']).to_not be
-      end
-    end
-
-    context 'when job status is error' do
-      it 'includes error messages string' do
-        subject.instance_eval do
-          @jobStatus = 'courseCreationError'
-          @errors << 'Error Message 1'
-          @errors << 'Error Message 2'
-        end
-        json_result = JSON.parse(subject.to_json)
-        expect(json_result['error']).to eq 'Error Message 1; Error Message 2'
-        expect(json_result['course_site']).to_not be
+        cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+        expect(cached_object.background_job_report['course_site']).to be_an_instance_of Hash
+        expect(cached_object.background_job_report['course_site'][:short_name]).to eq 'COMPSCI-10'
+        expect(cached_object.background_job_report['course_site'][:url]).to eq 'https://example.com/courses/999'
+        expect(cached_object.background_job_report['error']).to_not be
       end
     end
   end
