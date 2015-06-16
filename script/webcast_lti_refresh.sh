@@ -22,6 +22,6 @@ echo "------------------------------------------" | $LOGIT
 echo "`date`: Webcast LTI app visibility check started on app node: `hostname -s`..." | $LOGIT
 
 cd deploy
-bundle exec rake webcast:canvas_integration | $LOGIT
+bundle exec rake canvas:webcast_lti_refresh | $LOGIT
 
 echo "`date`: Webcast LTI app visibility check  is done" | $LOGIT

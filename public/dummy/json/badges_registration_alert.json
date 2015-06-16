@@ -538,14 +538,14 @@
     },
     "regStatus": {
       "code": " ",
-      "summary": "Not registered for Summer 2015",
-      "explanation": null,
-      "needsAction": false
+      "summary": "Not Registered",
+      "explanation": "In order to be officially registered, you must pay at least 20% of your registration fees, have no outstanding blocks, and be enrolled in at least one class.",
+      "needsAction": true
     },
     "regBlock": {
-      "errored": null,
-      "needsAction": false,
-      "activeBlocks": 0
+      "errored": false,
+      "needsAction": true,
+      "activeBlocks": 2
     }
   },
   "lastModified": {

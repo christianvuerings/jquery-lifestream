@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe CampusOracle::UserAttributes do
 
   context 'obtaining user attributes feed' do
@@ -20,11 +18,30 @@ describe CampusOracle::UserAttributes do
     context 'working against test data', if: CampusOracle::Queries.test_data? do
       context 'student with blank REG_STATUS_CD' do
         let(:uid) {300847}
-        it 'includes expected feed values' do
-          expect(subject[:reg_status][:summary]).to eq 'Not Registered'
-          expect(subject[:reg_status][:needsAction]).to be_truthy
-          expect(subject[:education_level]).to eq 'Masters'
-          expect(subject[:california_residency][:summary]).to eq 'Non-Resident'
+        before { Berkeley::Terms.stub_chain(:fetch, :current).and_return(double(sis_term_status: current_sis_term_status)) }
+        shared_examples 'expected feed values' do
+          it 'includes expected feed values' do
+            expect(subject[:education_level]).to eq 'Masters'
+            expect(subject[:california_residency][:summary]).to eq 'Non-Resident'
+          end
+        end
+        context 'normal term' do
+          let(:current_sis_term_status) { 'CT' }
+          include_examples 'expected feed values'
+          it 'reports not registered' do
+            expect(subject[:reg_status][:code]).to eq ' '
+            expect(subject[:reg_status][:summary]).to eq 'Not Registered'
+            expect(subject[:reg_status][:explanation]).to eq 'In order to be officially registered, you must pay at least 20% of your registration fees, have no outstanding blocks, and be enrolled in at least one class.'
+            expect(subject[:reg_status][:needsAction]).to eq true
+            expect(subject[:reg_status]).not_to include(:transitionTerm)
+          end
+        end
+        context 'term transition' do
+          let(:current_sis_term_status) { 'CS' }
+          include_examples 'expected feed values'
+          it 'reports term transition' do
+            expect(subject[:reg_status]).to eq({transitionTerm: true})
+          end
         end
       end
       context 'student with Education Abroad REG_SPECIAL_PGM_CD' do

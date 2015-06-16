@@ -17,6 +17,12 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 20px;
 }
 
+// Used ONLY to remove outline from elements that
+// should not receive focus via tabIndex.
+.bc-accessibility-no-outline:focus {
+  outline: none;
+}
+
 // Applies Canvas styling to Canvas only applications
 .bc-canvas-application {
   background: $cc-color-white;
@@ -45,16 +51,20 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 14px;
     font-weight: 500;
   }
+
+  p {
+    font-weight: 300;
+  }
 }
 
-.bc-button-link {
+button.bc-button-link {
   color: $bc-color-link;
   &, &:hover, &:focus, &:visited {
     background-color: transparent;
     border: 0;
     font-family: $bc-base-font-family;
     font-size: 14px;
-    font-weight: normal;
+    font-weight: 300;
     padding: 0;
   }
   &:hover, &:focus {
@@ -109,8 +119,13 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-align: right;
 }
 
+.bc-main .bc-canvas-embedded .bc-canvas-embedded-buttonset,
 .bc-buttonset {
   margin: 10px 0;
+
+  button {
+    border-radius: initial;
+  }
 
   .bc-buttonset-button {
     background: $bc-color-feature-icon-box-background;
@@ -120,6 +135,7 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
+    font-weight: 400;
     line-height: 20px;
     margin-bottom: 0;
     margin-left: 0;
@@ -135,9 +151,11 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
 
   .bc-buttonset-button-active {
-    background: $bc-color-buttonset-active-background;
-    border-color: $bc-color-buttonset-active-border;
-    color: $bc-color-white;
+    &, &:active, &:focus, &:hover, &:visited {
+      background: $bc-color-buttonset-active-background;
+      border-color: $bc-color-buttonset-active-border;
+      color: $bc-color-white;
+    }
   }
 
   .bc-buttonset-corner-right {
@@ -347,13 +365,6 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 }
 
-.bc-notice-warning-button {
-  &, &:hover,&:focus {
-    color: $bc-color-alert-foreground;
-    text-decoration: none;
-  }
-}
-
 .bc-alert-info {
   background-color: $bc-color-alert-info-background;
   border-color: $bc-color-alert-info-border;
@@ -421,18 +432,26 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 // Maintenance Notice
-.bc-template-canvas-maintenance-notice-text {
+button.bc-template-canvas-maintenance-notice-button {
+  &, &:hover, &:focus {
+    color: $bc-color-alert-foreground;
+    text-decoration: none;
+  }
+}
+
+.bc-template-canvas-maintenance-notice-details {
   font-size: 14px;
   font-weight: normal;
+  margin: 10px 26px 0;
+
+  p {
+    margin-bottom: 5px;
+  }
 }
 
 .bc-template-canvas-maintenance-notice-collapse-icon {
   font-size: 18px;
   margin: 0 11px 0 5px;
-}
-
-.bc-template-canvas-maintenance-notice-details {
-  margin: 10px 26px 0;
 }
 
 // Styling for Sections Form used by Course Provisioning and Official Sections LTI tools
@@ -619,4 +638,3 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     padding: 15px;
   }
 }
-

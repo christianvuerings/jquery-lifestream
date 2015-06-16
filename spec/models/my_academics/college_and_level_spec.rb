@@ -1,26 +1,19 @@
-require "spec_helper"
+describe 'MyAcademics::CollegeAndLevel' do
 
-describe "MyAcademics::CollegeAndLevel" do
-
-  it "should get properly formatted data from fake Bearfacts" do
-    oski_profile_proxy = Bearfacts::Profile.new({:user_id => "61889", :fake => true})
-    Bearfacts::Profile.stub(:new).and_return(oski_profile_proxy)
+  it 'should get properly formatted data from fake Bearfacts' do
+    oski_profile_proxy = Bearfacts::Profile.new({:user_id => '61889', :fake => true})
+    allow(Bearfacts::Profile).to receive(:new).and_return oski_profile_proxy
 
     feed = {}
-    MyAcademics::CollegeAndLevel.new("61889").merge(feed)
-    feed.empty?.should be_falsey
+    MyAcademics::CollegeAndLevel.new('61889').merge(feed)
+    expect(feed).not_to be_empty
 
     oski_college = feed[:collegeAndLevel]
-    oski_college.should_not be_nil
-    oski_college[:colleges].size.should == 3
-    oski_college[:colleges][0][:college].should == "College of Engineering"
-    oski_college[:colleges][1][:college].should == ""
-    oski_college[:colleges][2][:college].should == ""
-    oski_college[:colleges][0][:major].should == "Economics"
-    oski_college[:colleges][1][:major].should == "Rhetoric"
-    oski_college[:colleges][2][:major].should == "Business Administration"
-    oski_college[:standing].should == "Undergraduate"
-    expect(oski_college[:termName]).to eq 'Summer 2013'
+    expect(oski_college[:colleges].size).to eq 1
+    expect(oski_college[:colleges][0][:college]).to eq 'College of Letters & Science'
+    expect(oski_college[:colleges][0][:major]).to eq 'Statistics'
+    expect(oski_college[:standing]).to eq 'Undergraduate'
+    expect(oski_college[:termName]).to eq 'Fall 2015'
   end
 
   it "should get test-300940's multiple college enrollments" do

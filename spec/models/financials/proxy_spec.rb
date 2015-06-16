@@ -4,6 +4,9 @@ describe Financials::Proxy do
 
   context 'when Oski gets his feed' do
     subject { Financials::Proxy.new({user_id: '61889', student_id: 11667051}).get }
+
+    it_behaves_like 'a polite HTTP client'
+
     it 'has some minimal oski data' do
       expect(subject.body).to be
       expect(subject.code).to eq 200

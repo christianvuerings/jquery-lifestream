@@ -1,34 +1,53 @@
-<div data-ng-controller="RosterController" data-ng-class="{'cc-page-roster': !isLoading}" data-cc-spinner-directive>
+<div data-ng-controller="RosterController" data-ng-class="{'cc-page-roster': !isLoading}">
 
-  <h1 class="cc-visuallyhidden">Roster Photos for <span data-ng-bind="canvas_course.name"></span></h1>
+  <div data-cc-spinner-directive>
 
-  <h2 class="cc-roster-header">
+    <h1 class="cc-visuallyhidden">Roster Photos for <span data-ng-bind="canvas_course.name"></span></h1>
+
+    <h2 class="cc-visuallyhidden">Filter Options</h2>
+
+    <form class="cc-roster-search" data-ng-hide="errorStatus">
+      <label for="roster-search" class="cc-visuallyhidden">Filter by Text</label>
+      <input id="roster-search" class="cc-roster-input cc-left bc-canvas-embedded-roster-input" placeholder="Search People"
+        data-ng-model="search.$" data-ng-change="accessibilityAnnounce('Rosters filtered by text')" />
+
+      <div class="cc-select cc-left">
+        <label for="section-select" class="cc-visuallyhidden">Filter by Section</label>
+        <select id="section-select" class="cc-roster-select bc-canvas-embedded-roster-select"
+          data-ng-options="section as section.name for section in sections track by section.ccn"
+          data-ng-model="searchSection"
+          data-ng-change="accessibilityAnnounce('Rosters filtered by section')">
+          <option value="">All Sections</option>
+        </select>
+      </div>
+      <div class="cc-right">
+        <a data-ng-href="/api/academics/rosters/{{context}}/csv/{{courseId}}.csv" target="_self"
+        class="cc-button cc-button-spaced">
+          <i class="fa fa-download"></i> Export
+        </a>
+        <a class="cc-button cc-button-blue cc-button-spaced" data-ng-click="api.util.printPage()">
+          <i class="fa fa-print"></i> Print
+        </a>
+      </div>
+    </form>
+
+    <div role="alert">
+      <p data-ng-show="errorStatus">
+        <i class="fa fa-exclamation-triangle cc-icon-red"></i> You must be a teacher in this bCourses course to view official student rosters.
+      </p>
+
+      <p data-ng-hide="students">
+        <i class="fa fa-exclamation-circle cc-icon-gold"></i> Students have not yet signed up for this class
+      </p>
+    </div>
+  </div>
+
+  <h2 class="cc-visuallyhidden">
     <span data-ng-bind="course.name"></span> -
     <span data-ng-if="searchSection.name" data-ng-bind="searchSection.name"></span>
     <span data-ng-if="!searchSection.name">All Sections</span>
     <span data-ng-if="search.$" data-ng-bind-template=" - Matching '{{search.$}}'"></span>
   </h2>
-
-  <form class="cc-roster-search" data-ng-hide="errorStatus">
-    <label for="roster-search" class="cc-visuallyhidden">Filter by Text</label>
-    <input id="roster-search" class="cc-roster-input cc-left bc-canvas-embedded-roster-input" placeholder="Search People" data-ng-model="search.$" />
-
-    <div class="cc-select cc-left">
-      <label for="section-select" class="cc-visuallyhidden">Filter by Section</label>
-      <select id="section-select" class="cc-roster-select bc-canvas-embedded-roster-select" data-ng-options="section as section.name for section in sections track by section.ccn" data-ng-model="searchSection">
-        <option value="">All Sections</option>
-      </select>
-    </div>
-    <div class="cc-right">
-      <a data-ng-href="/api/academics/rosters/{{context}}/csv/{{courseId}}.csv" target="_self"
-      class="cc-button cc-button-spaced">
-        <i class="fa fa-download"></i> Export
-      </a>
-      <a class="cc-button cc-button-blue cc-button-spaced" data-ng-click="api.util.printPage()">
-        <i class="fa fa-print"></i> Print
-      </a>
-    </div>
-  </form>
 
   <ul class="cc-page-roster-list">
     <li data-ng-repeat="student in students | filter:search | filter:studentInSectionFilter | orderBy:'last_name'">
@@ -50,13 +69,5 @@
       </div>
     </li>
   </ul>
-
-  <p data-ng-show="errorStatus">
-    <i class="fa fa-exclamation-triangle cc-icon-red"></i> You must be a teacher in this bCourses course to view official student rosters.
-  </p>
-
-  <p data-ng-hide="students">
-    <i class="fa fa-exclamation-circle cc-icon-gold"></i> Students have not yet signed up for this class
-  </p>
 
 </div>

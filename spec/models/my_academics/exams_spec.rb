@@ -34,7 +34,7 @@ describe 'MyAcademics::Exams' do
   end
 
   it 'should not return any exam schedules for exam information not matching current_year and term' do
-    Berkeley::Terms.stub_chain(:fetch, :current).and_return(double(code: 'B', year: 1984))
+    Berkeley::Terms.stub_chain(:fetch, :current).and_return(double(code: 'B', year: 1984, sis_term_status: 'PT'))
     proxy = Bearfacts::Exams.new({:user_id => '865826', :fake => true})
     Bearfacts::Exams.stub(:new).and_return(proxy)
 

@@ -23,7 +23,6 @@ campusdb:
   timeout: 5000
 
 features:
-  act_as: true
   bearfacts: true
   financials: true
   telebears: true

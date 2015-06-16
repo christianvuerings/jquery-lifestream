@@ -19,16 +19,17 @@ module CampusOracle
     def get_feed_internal
       result = CampusOracle::Queries.get_person_attributes(@uid)
       if result
-        result[:reg_status] = {
-          :code => result["reg_status_cd"],
-          :summary => reg_status_translator.status(result["reg_status_cd"]),
-          :explanation => reg_status_translator.status_explanation(result["reg_status_cd"]),
-          :needsAction => !reg_status_translator.is_registered(result["reg_status_cd"])
-        }
-        result[:education_level] = educ_level_translator.translate(result["educ_level"])
-        result[:california_residency] = cal_residency_translator.translate(result["cal_residency_flag"])
-        result[:roles] = roles_from_campus_row(result)
-        result.merge!(Berkeley::SpecialRegistrationProgram.attributes_from_code(result['reg_special_pgm_cd']))
+        result[:education_level] = educ_level_translator.translate result['educ_level']
+        result[:california_residency] = cal_residency_translator.translate result['cal_residency_flag']
+        result[:roles] = roles_from_campus_row result
+        result.merge! Berkeley::SpecialRegistrationProgram.attributes_from_code(result['reg_special_pgm_cd'])
+
+        if result['reg_status_cd'] && Berkeley::Terms.fetch.current.sis_term_status != 'CT'
+          result[:reg_status] = {transitionTerm: true}
+        else
+          result[:reg_status] = reg_status_translator.translate_for_feed result['reg_status_cd']
+        end
+
         result
       else
         {}

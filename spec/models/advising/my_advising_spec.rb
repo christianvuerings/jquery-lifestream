@@ -93,6 +93,8 @@ describe Advising::MyAdvising do
     context 'fetching fake data feed' do
       subject { fake_oski_model.get_parsed_response }
 
+      it_behaves_like 'a polite HTTP client'
+
       it 'has correctly parsed JSON' do
         expect(subject[:sid]).to eq '11667051'
         expect(subject[:pastAppointments]).to_not be_empty

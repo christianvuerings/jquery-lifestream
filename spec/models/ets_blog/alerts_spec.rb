@@ -10,6 +10,11 @@ describe EtsBlog::Alerts do
   let(:xml_with_no_teaser){ Rails.root.join('fixtures', 'xml', 'app_alerts_feed_no_teaser.xml') }
   let(:xml_multibyte_characters) { Rails.root.join('fixtures', 'xml', 'app_alerts_feed_diacriticals.xml') }
 
+  subject { EtsBlog::Alerts.new(fake: false).get_latest }
+
+  it_behaves_like 'a proxy logging errors'
+  it_behaves_like 'a polite HTTP client'
+
   it 'should format and return the latest well-formed feed message' do
     alert = fake_proxy.get_latest
     alert[:title].should == 'CalCentral Scheduled Upgrade (Test Announce Only)'
@@ -75,10 +80,6 @@ describe EtsBlog::Alerts do
         expect { fake_proxy.get_latest }.not_to raise_exception
       end
     end
-  end
-
-  it_should_behave_like 'a proxy logging errors' do
-    subject { EtsBlog::Alerts.new(fake: false).get_latest }
   end
 
 end

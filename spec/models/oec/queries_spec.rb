@@ -3,6 +3,10 @@ describe Oec::Queries do
   let(:test_ccn) do
     Oec::Queries.test_data? ? '7309' : '7203'
   end
+  before do
+    term = OpenStruct.new({ :year => 2015, :code => 'B' })
+    expect(Settings.oec).to receive(:current_terms_codes).at_most(10).times.and_return([ term ])
+  end
 
   context 'limiting query to OEC departments' do
     subject { CampusOracle::Connection.depts_clause('c', Settings.oec.departments) }
@@ -17,9 +21,9 @@ describe Oec::Queries do
   end
 
   context 'looking up students' do
-    subject { Oec::Queries.get_all_students [test_ccn] }
-    it { should_not be_nil }
-    it { subject[0]['ldap_uid'].should_not be_nil }
+    let(:all_students) { Oec::Queries.get_all_students [test_ccn] }
+    it { expect(all_students).to_not be_nil }
+    it { expect(all_students[0]['ldap_uid']).to_not be_nil }
   end
 
   context 'looking up secondary cross listings of empty list' do

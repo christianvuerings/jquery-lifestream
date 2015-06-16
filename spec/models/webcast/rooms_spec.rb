@@ -1,6 +1,6 @@
 describe Webcast::Rooms do
 
-  let (:rooms_json_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/rooms.json" }
+  let (:rooms_json_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/warehouse/rooms.json" }
 
   context 'a fake proxy' do
     subject { Webcast::Rooms.new({:fake => true}) }
@@ -66,7 +66,7 @@ describe Webcast::Rooms do
       after(:each) { WebMock.reset! }
       it 'should return the fetch error message' do
         buildings = subject.get
-        expect(buildings[:proxy_error_message]).to include 'There was a problem'
+        expect(buildings[:proxyErrorMessage]).to include 'There was a problem'
       end
     end
 
@@ -77,7 +77,7 @@ describe Webcast::Rooms do
       after(:each) { WebMock.reset! }
       it 'should return the fetch error message' do
         buildings = subject.get
-        expect(buildings[:proxy_error_message]).to include 'There was a problem'
+        expect(buildings[:proxyErrorMessage]).to include 'There was a problem'
       end
     end
 

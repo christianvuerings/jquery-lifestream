@@ -166,6 +166,7 @@ module CalCentralPages
     login = basic_auth_login_button_element
     basic_auth_login_button
     login.when_not_present(timeout=WebDriverUtils.page_load_timeout)
+    basic_auth_login_button_element.when_present(timeout=WebDriverUtils.page_load_timeout)
   end
 
 end

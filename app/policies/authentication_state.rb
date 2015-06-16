@@ -58,7 +58,7 @@ class AuthenticationState
   end
 
   def viewing_as?
-    original_user_id && user_id && (original_user_id != user_id)
+    original_user_id.present? && user_id.present? && (original_user_id != user_id)
   end
 
 end

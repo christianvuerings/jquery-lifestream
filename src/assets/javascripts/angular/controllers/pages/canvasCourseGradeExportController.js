@@ -7,11 +7,13 @@
    */
   angular.module('calcentral.controllers').controller('CanvasCourseGradeExportController', function(apiService, canvasCourseGradeExportFactory, canvasSharedFactory, $http, $routeParams, $scope, $timeout, $window) {
     apiService.util.setTitle('E-Grade Export');
+    $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
     $scope.appState = 'initializing';
     $scope.canvasCourseId = $routeParams.canvasCourseId || 'embedded';
     $scope.enableDefaultGradingScheme = false;
     $scope.resolvingCourseState = false;
+    $scope.focusOnSelectionHeader = false;
 
     /**
      * Sends message to parent window to switch to gradebook
@@ -49,6 +51,7 @@
       } else {
         delete $scope.percentCompleteRounded;
         $timeout.cancel(timeoutPromise);
+        $scope.accessibilityAnnounceAnnounce('Downloading export. Export form options presented for an additional download.');
         $scope.switchToSelection();
         downloadGrades();
       }
@@ -77,6 +80,7 @@
     $scope.preloadGrades = function(type) {
       $scope.selectedType = type;
       $scope.appState = 'loading';
+      $scope.appfocus = true;
       $scope.jobStatus = 'New';
       apiService.util.iframeScrollToTop();
       canvasCourseGradeExportFactory.prepareGradesCacheJob($scope.canvasCourseId).success(function(data) {
@@ -135,14 +139,15 @@
     $scope.switchToSelection = function() {
       apiService.util.iframeScrollToTop();
       $scope.appState = 'selection';
+      $scope.focusOnSelectionHeader = true;
     };
 
     $scope.resolveIssues = function() {
-      $scope.resolvingCourseState = true;
+      $scope.accessibilityAnnounce('Updating course settings');
       canvasCourseGradeExportFactory.resolveIssues($scope.canvasCourseId, $scope.enableDefaultGradingScheme, $scope.unmuteAllAssignments)
         .success(function(data) {
           if (data.status && data.status === 'Resolved') {
-            $scope.resolvingCourseState = false;
+            $scope.accessibilityAnnounce('Course settings updated. Export form options loaded.');
             $scope.switchToSelection();
           } else {
             $scope.appState = 'error';

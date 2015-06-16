@@ -9,6 +9,8 @@ describe Finaid::Proxy do
   let(:live_non_student){ Finaid::Proxy.new({user_id: '212377', term_year: this_year}).get }
 
   shared_examples "oski tests" do
+    it_behaves_like 'a polite HTTP client'
+
     it 'should return a successful response' do
       expect(subject.unwrap.code).to eq 200
       expect(subject.unwrap.body).to be_present

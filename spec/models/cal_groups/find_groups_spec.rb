@@ -64,6 +64,7 @@ describe CalGroups::FindGroups do
   # This testext group is disabled until CLC-5251 is resolved.
   context 'using real data feed', testext: true, ignore: true do
     let(:fake) { false }
+    subject { name_available_response }
 
     context 'a known test group' do
       include_examples 'group found'
@@ -74,9 +75,8 @@ describe CalGroups::FindGroups do
       include_examples 'group not found'
     end
 
-    it_should_behave_like 'a proxy logging errors' do
-      subject { name_available_response }
-    end
+    it_behaves_like 'a proxy logging errors'
+    it_behaves_like 'a polite HTTP client'
   end
 
 end

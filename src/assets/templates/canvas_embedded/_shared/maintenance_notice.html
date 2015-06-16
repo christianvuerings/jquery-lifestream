@@ -1,6 +1,6 @@
 <div class="bc-alert">
 
-  <button class="bc-button-link bc-notice-warning-button" data-ng-click="maintenanceCollapsed = !maintenanceCollapsed" aria-haspopup="true" aria-controls="maintenance-details" data-ng-attr-aria-expanded="{{!maintenanceCollapsed}}">
+  <button class="bc-button-link bc-template-canvas-maintenance-notice-button" data-ng-click="maintenanceCollapsed = !maintenanceCollapsed" aria-haspopup="true" aria-controls="maintenance-details" data-ng-attr-aria-expanded="{{!maintenanceCollapsed}}">
     <i class="fa cc-left bc-template-canvas-maintenance-notice-collapse-icon"
       data-ng-class="{'fa-caret-right': maintenanceCollapsed, 'fa-caret-down': !maintenanceCollapsed}"></i>
 
@@ -15,7 +15,7 @@
   </button>
 
   <div id="maintenance-details" aria-live="polite">
-    <div data-ng-if="!maintenanceCollapsed" class="bc-template-canvas-maintenance-notice-details bc-template-canvas-maintenance-notice-text">
+    <div data-ng-if="!maintenanceCollapsed" class="bc-template-canvas-maintenance-notice-details">
       <p class="cc-visuallyhidden">
         From 8 - 9 AM, you may experience delays of up to 10 minutes before your <span data-ng-bind="courseActionVerb"></span>.
       </p>

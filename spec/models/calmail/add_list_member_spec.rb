@@ -21,6 +21,9 @@ describe Calmail::AddListMember do
         expect(result).to eq({email_address: email_address, added: false})
       end
     end
+    it_behaves_like 'a polite HTTP client' do
+      subject { described_class.new(fake: true).add_member(list_name, email_address, full_name) }
+    end
   end
 
 end

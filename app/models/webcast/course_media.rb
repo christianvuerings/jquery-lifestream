@@ -24,7 +24,7 @@ module Webcast
     def get_feed
       return {} unless Settings.features.videos
       media_hash = get_media_hash
-      error_message = media_hash[:proxy_error_message]
+      error_message = media_hash[:proxyErrorMessage]
       unless error_message.blank? && media_hash[:body].blank?
         return {
           :proxyErrorMessage => error_message || media_hash[:body]
@@ -62,7 +62,7 @@ module Webcast
 
     def get_itunes_as_json(playlist)
       {
-        :itunes => {
+        :iTunes => {
           :audio => get_itunes_url(playlist[:itunes_audio]),
           :video => get_itunes_url(playlist[:itunes_video])
         }

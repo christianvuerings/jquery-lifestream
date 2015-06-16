@@ -15,7 +15,7 @@
 * [PostgreSQL](http://www.postgresql.org/)
 * [Rails 3.2.x](http://rubyonrails.org/download)
 * [Rubygems](http://rubyforge.org/frs/?group_id=126)
-* [Rvm](https://rvm.io/rvm/install/) - Ruby version managers
+* [RVM](https://rvm.io/rvm/install/) - Ruby version managers
 * [xvfb](http://xquartz.macosforge.org/landing/) - xvfb headless browser, included for Macs with XQuartz
 
 ## Installation
@@ -23,15 +23,15 @@
 1. Install Java 7 JDK:
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
-1. Install postgres:
+1. Install Postgres:
 
-    **Note**: To install postgres, you must first install homebrew.
+    **Note**: To install Postgres, you must first install [Homebrew](http://brew.sh/).
 
-    Install homebrew with the following command:
+    Install Homebrew with the following command:
     ```bash
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     ```
-    Run the following command in terminal after installation:
+    Run the following command in Terminal after installation:
     ```bash
     brew --version
     ```
@@ -54,7 +54,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
     1. __For Mountain Lion & Mavericks users ONLY:__ [Install XQuartz](http://xquartz.macosforge.org/landing/) and make sure that /opt/X11/bin is on your `PATH`.
 
-1. Start postgres, add users and create the necessary databases. (If your PostgreSQL server is managed externally, you'll probably need to create a schema that matches the database username. See [CLC-893](https://jira.media.berkeley.edu/jira/browse/CLC-893) for details.):
+1. Start Postgres, add users and create the necessary databases. (If your PostgreSQL server is managed externally, you'll probably need to create a schema that matches the database username. See [CLC-893](https://jira.media.berkeley.edu/jira/browse/CLC-893) for details.):
 
     ```bash
     pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
@@ -73,7 +73,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     alter database calcentral_test owner to calcentral_test;
     ```
 
-    **Note**: At this point, exit out of postgres. To do this, type "\q" and then press ENTER.
+    **Note**: At this point, exit out of Postgres. To do this, type "\q" and then press ENTER.
 
 1. Fork this repository, then:
 
@@ -146,14 +146,14 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     # e.g. rake superuser:create UID=61889
     ```
 
-1. Install the frond-end tools
+1. Install the frond-end tools:
 
     ```bash
     npm install
     npm install -g gulp
     ```
 
-1. Start the front-end build & watch for changes
+1. Start the front-end build & watch for changes:
 
     ```bash
     gulp build
@@ -296,7 +296,7 @@ In production we use [TorqueBox](http://torquebox.org/) as this provides us with
 ### Test connection
 
 Make sure you are on the Berkeley network or connected through [preconfigured VPN](https://kb.berkeley.edu/page.php?id=23065) for the Oracle connection.
-If you use VPN, use group `1-Campus_VPN`.
+If you use a VPN, use group `1-Campus_VPN`.
 
 ### Enable basic authentication
 
@@ -312,7 +312,7 @@ This is necessary when your application can't be CAS authenticated or when you'r
       password: topsecret!
     ```
 
-1. (re)start the server for the changes to take effect.
+1. (Re)start the server for the changes to take effect.
 
 1. Click on the footer (Berkeley logo) when you load the page.
 
@@ -324,7 +324,6 @@ To help another user debug an issue, you can "become" them on CalCentral. To ass
 
 - Currently be logged in as a designated superuser
 - Be accessing a machine/server which the other user has previously logged into (e.g. from localhost, you can't act as a random student, since that student has probably never logged in at your terminal)
-- Have enabled `act_as` in `settings.yml` (`features:`)
 
 Access the URL:
 

@@ -22,8 +22,6 @@ module Calmail
         domain: @settings.domain
       )
       request_options = {
-        # For the moment, these requests set an explicit user-agent as a workaround for CLC-5346.
-        headers: {'User-Agent' => 'Ruby'},
         method: :post,
         body: body_options,
         parser: LegacyJsonParser

@@ -4,22 +4,21 @@
       "year": 2015,
       "semester": "Spring",
       "ccnSet": [
-        5916,
-        51991
+        5915,
+        51992
       ]
     },
     {
       "year": 2015,
       "semester": "Fall",
-      "ccnSet": [
-        5917,
-        51992
-      ]
+      "ccnSet": []
     },
     {
-      "year": 2016,
+      "year": 2014,
       "semester": "Spring",
-      "ccnSet": []
+      "ccnSet": [
+        7620
+      ]
     }
   ]
 }

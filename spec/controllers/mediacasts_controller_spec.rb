@@ -20,7 +20,7 @@ describe MediacastsController do
 
     context 'fetching fake data' do
       before do
-        expect(Settings.webcast_proxy).to receive(:fake).at_most(3).and_return(true)
+        expect(Settings.webcast_proxy).to receive(:fake).at_most(4).and_return(true)
       end
 
       context 'when no Webcast recordings found' do
@@ -33,12 +33,12 @@ describe MediacastsController do
           post :get_media, year: term_yr, term_code: term_cd, dept: dept_name, catalog_id: catalog_id
           expect(response.status).to eq 200
           json = JSON.parse response.body
-          expect(json['media']['2014']['D']).to be_empty
+          expect(json['media']).to be_nil
         end
 
         it 'should pay attention to term code' do
           json = post_course chem_101
-          expect(json['media']['2014']['B']).to be_empty
+          expect(json['media']).to be_nil
         end
       end
 
@@ -60,10 +60,11 @@ describe MediacastsController do
         it 'should escape special characters in dept name' do
           json = post_course malay_100A
           # This course happens to have zero YouTube videos
-          course = json['media']['2014']['D']['85006']
+          course = json['media'][0]
+          expect(course['ccn']).to eq '85006'
           expect(course['videos']).to be_empty
-          expect(course['itunes']['audio']).to be_nil
-          expect(course['itunes']['video']).to include '819827828'
+          expect(course['iTunes']['audio']).to be_nil
+          expect(course['iTunes']['video']).to include '819827828'
         end
       end
     end

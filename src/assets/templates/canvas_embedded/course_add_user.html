@@ -7,9 +7,8 @@
   <div data-ng-hide="showError">
 
     <div class="row collapse" data-ng-show="showAlerts" role="alert">
-      <div data-ng-show="isLoading" class="cc-visuallyhidden">Performing request. Please wait.</div>
-      <div data-cc-spinner-directive>
-
+      <div data-cc-spinner-directive></div>
+      <div data-ng-if="!isLoading">
         <div data-ng-show="noSearchTextAlert" class="bc-alert bc-alert-error bc-page-course-add-user-alert">
           You did not enter any search terms. Please try again.
           <div class="bc-alert-close-button-container">
@@ -39,7 +38,7 @@
           </div>
         </div>
 
-        <div data-ng-show="userSearchResultsCount > userSearchResults.length" class="bc-alert bc-page-course-add-user-alert">
+        <div data-ng-show="userSearchResultsCount > userSearchResults.length" class="bc-alert bc-alert-info bc-page-course-add-user-alert">
           Your search returned <span data-ng-bind="userSearchResultsCount"></span> results, but only the first
           <span data-ng-bind="userSearchResults.length"></span> are shown.
           Please refine your search to limit the number of results.
@@ -103,7 +102,7 @@
 
     </div>
 
-    <div class="bc-page-help-notice">
+    <div class="bc-page-help-notice" data-ng-show="showSearchForm">
       <i class="fa fa-question-circle cc-left bc-page-help-notice-icon"></i>
       <div class="bc-page-help-notice-left-margin">
         <button class="bc-button-link" data-ng-click="toggle.displayHelp = !toggle.displayHelp"
@@ -163,8 +162,8 @@
                   <tr data-ng-repeat="user in userSearchResults">
                     <td>
                       <label for="user-{{$index}}" class="cc-visuallyhidden">
-                        Select <span data-ng-bind="user.firstName + ' ' + user.lastName"></span>
-                        UID <span data-ng-bind="user.ldapUid"></span>
+                        <span data-ng-bind="user.firstName + ' ' + user.lastName"></span>
+                        Cal Net U I D <span data-ng-bind="user.ldapUid"></span>
                       </label>
                       <input id="user-{{$index}}" type="radio" name="selectedUser" data-ng-model="$parent.selectedUser" data-ng-value="user" data-ng-required="true">
                     </td>

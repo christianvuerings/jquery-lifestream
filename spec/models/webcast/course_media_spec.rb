@@ -27,7 +27,7 @@ describe Webcast::CourseMedia do
 
     context 'when proxy error message is not blank' do
       before do
-        proxy_error_hash = {:proxy_error_message => 'Proxy Error'}
+        proxy_error_hash = {:proxyErrorMessage => 'Proxy Error'}
         expect(subject).to receive(:get_media_hash).and_return proxy_error_hash
       end
       it 'should return the proxy error message' do
@@ -56,7 +56,7 @@ describe Webcast::CourseMedia do
         expect(response[:videos]).to have(12).items
         expect(response[:videos][0]['youTubeId']).to eq 'bBithUtaaas'
         expect(response[:audio]).to_not be_nil
-        itunes = response[:itunes]
+        itunes = response[:iTunes]
         expect(itunes[:audio]).to include('354822467')
         expect(itunes[:video]).to include('354822464')
       end
@@ -82,7 +82,7 @@ describe Webcast::CourseMedia do
       it 'should return an empty array' do
         response = subject.get_feed[123]
         expect(response[:videos]).to be_empty
-        itunes = response[:itunes]
+        itunes = response[:iTunes]
         expect(itunes[:audio]).to be_nil
         expect(itunes[:video]).to include('789')
       end
@@ -99,7 +99,7 @@ describe Webcast::CourseMedia do
 
   context 'with non-fake proxy', :testext => true do
     context 'when serving multiple sets of Webcast recordings' do
-      let (:playlist_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/webcast.json" }
+      let (:playlist_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/warehouse/webcast.json" }
       subject { Webcast::CourseMedia.new(2014, 'B', [7502, 11147, 1]) }
 
       context 'normal return of real data' do
