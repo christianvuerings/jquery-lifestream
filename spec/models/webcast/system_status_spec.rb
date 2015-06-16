@@ -1,6 +1,6 @@
 describe Webcast::SystemStatus do
 
-  let (:system_status_json_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/webcast-system-status.json" }
+  let (:system_status_json_uri) { URI.parse "#{Settings.webcast_proxy.base_url}/warehouse/webcast-system-status.json" }
 
   context 'a fake proxy' do
     subject { Webcast::SystemStatus.new({:fake => true}) }

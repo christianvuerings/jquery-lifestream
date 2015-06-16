@@ -4,11 +4,9 @@
   /**
    * Styles controller
    */
-  angular.module('calcentral.controllers').controller('StylesController', function(toolsFactory, $anchorScroll, $location, $scope) {
-    // Handle in-page links, via http://stackoverflow.com/a/14717011/8438
+  angular.module('calcentral.controllers').controller('StylesController', function(toolsFactory, $location, $scope) {
     $scope.scrollTo = function(id) {
       $location.hash(id);
-      $anchorScroll();
     };
 
     var hexToRgb = function(hex) {

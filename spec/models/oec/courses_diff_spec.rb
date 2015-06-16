@@ -6,8 +6,10 @@ describe Oec::CoursesDiff do
   let!(:src_dir) { 'fixtures/oec' }
 
   context 'comparing diff to expected CSV file' do
-
     before do
+      term = OpenStruct.new({ :year => 2015, :code => 'B' })
+      expect(Settings.oec).to receive(:current_terms_codes).at_least(:once).and_return [ term ]
+
       departments.each do |dept_name|
         campus_data_per_dept[dept_name] = []
         mock_data = "#{src_dir}/db_#{dept_name.gsub(/\s/, '_')}_courses.csv"

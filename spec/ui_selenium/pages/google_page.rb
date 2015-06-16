@@ -10,6 +10,7 @@ class GooglePage
   # LOGIN / LOGOUT
   link(:remove_account_link, :id => 'remove-link')
   text_field(:username_input, :id => 'Email')
+  button(:next_button, :id => 'next')
   text_field(:password_input, :id => 'Passwd')
   button(:sign_in_button, :id => 'signIn')
   checkbox(:stay_signed_in, :id => 'PersistentCookie')
@@ -93,6 +94,9 @@ class GooglePage
     end
     username_input_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     self.username_input = gmail_user
+    next_button_element.when_visible(timeout)
+    next_button
+    password_input_element.when_visible(timeout)
     self.password_input = gmail_pass
     if stay_signed_in_element.exists?
       uncheck_stay_signed_in
@@ -109,6 +113,7 @@ class GooglePage
 
   def send_email(recipient, subject, body)
     logger.info("Sending an email with the subject #{subject}")
+    sleep(WebDriverUtils.page_load_timeout)
     compose_email_button_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     compose_email_button
     new_message_heading_element.when_present(timeout=WebDriverUtils.page_event_timeout)

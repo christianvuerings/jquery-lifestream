@@ -37,6 +37,8 @@ module Berkeley
     # during Spring terms, when most instructors and most enrolled students will have more
     # interest in the Fall schedule than in Summer classes.
     attr_reader :future
+    # The previous term (before the current one).
+    attr_reader :previous
     # The previous term immediately after its official end, while final
     # grades are being posted.
     attr_reader :grading_in_progress
@@ -66,8 +68,9 @@ module Berkeley
           future_terms.push term
         elsif term.end >= current_date
           @running = term
-        elsif @grading_in_progress.blank? && term.grades_entered >= current_date
-          @grading_in_progress = term
+        else
+          @previous ||= term
+          @grading_in_progress ||= term if term.grades_entered >= current_date
         end
         break if term.slug == @oldest
       end

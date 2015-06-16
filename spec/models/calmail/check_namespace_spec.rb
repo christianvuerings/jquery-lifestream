@@ -60,4 +60,7 @@ describe Calmail::CheckNamespace do
     end
   end
 
+  it_behaves_like 'a polite HTTP client' do
+    subject { described_class.new(fake: true).name_available?(list_name) }
+  end
 end

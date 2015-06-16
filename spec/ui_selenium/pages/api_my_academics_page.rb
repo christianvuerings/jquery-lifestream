@@ -98,8 +98,24 @@ class ApiMyAcademicsPage
     college_and_level['termName']
   end
 
-  def term_transition?
-    (@parsed['transitionRegStatus'].present?) ? true : false
+  def transition_term
+    @parsed['transitionTerm']
+  end
+
+  def transition_term?
+    (transition_term.present?) ? true : false
+  end
+
+  def trans_term_name
+    transition_term['termName']
+  end
+
+  def trans_term_registered?
+    transition_term['registered']
+  end
+
+  def trans_term_profile_current?
+    transition_term['isProfileCurrent']
   end
 
   # UNDERGRAD REQUIREMENTS

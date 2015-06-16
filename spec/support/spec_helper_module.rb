@@ -46,4 +46,10 @@ module SpecHelperModule
     end
   end
 
+  RSpec::Matchers.define :be_url do
+    match do |actual|
+      URI.parse(actual) rescue false
+    end
+  end
+
 end

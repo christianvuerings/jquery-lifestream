@@ -157,7 +157,7 @@ textbooks_proxy:
 
 webcast_proxy:
   fake: false
-  base_url: 'https://webcast-cc-dev.ets.berkeley.edu/warehouse'
+  base_url: 'https://webcast-cc-dev.ets.berkeley.edu'
   username: 'secret'
   password: 'secret'
 
@@ -300,9 +300,9 @@ youtube_splash_id: 'EQ-a7xrfVag'
 oec:
   current_terms_codes: [{
     year: 2015,
-    code: "B"
+    code: "C"
   }]
-  departments: [ 'BIOLOGY', 'CATALAN', 'CHEM', 'DATASCI', 'ECON', 'EPS', 'ILA', 'INFO', 'INTEGBI', 'MCELLBI', 'POL SCI', 'PORTUG', 'PSYCH', 'SPANISH', 'STAT' ]
+  departments: [ 'BIOLOGY', 'CATALAN', 'CHEM', 'DATASCI', 'ECON', 'EPS', 'GWS', 'INFO', 'INTEGBI', 'LGBT', 'LINGUIS', 'MATH', 'MCELLBI', 'PHYSICS', 'POL SCI', 'PORTUG', 'PSYCH', 'SPANISH', 'STAT' ]
 
 class_calendar:
   slice_size: 10000

@@ -18,16 +18,16 @@
           <tr data-ng-if="api.user.profile.features.regstatus">
             <th class="cc-table-subheader" scope="row">Registration</td>
             <td>
-              <i class="cc-icon fa"
+              <i data-ng-if="studentInfo.regStatus.summary=='Registered' || studentInfo.regStatus.needsAction" class="cc-icon fa"
                  data-ng-class="{true:'fa-check-circle cc-icon-green',false:'fa-exclamation-circle cc-icon-red'}[studentInfo.regStatus.summary=='Registered']">
               </i>
               <span data-ng-bind="studentInfo.regStatus.summary"></span>
             </td>
           </tr>
-          <tr>
+          <tr data-ng-if="api.user.profile.features.regstatus">
             <td colspan="2" data-ng-bind-html="studentInfo.regStatus.explanation"></td>
           </tr>
-          <tr>
+          <tr data-ng-if="studentInfo.californiaResidency">
             <th class="cc-table-subheader" scope="row">California Residency</td>
             <td>
               <i class="cc-icon fa"

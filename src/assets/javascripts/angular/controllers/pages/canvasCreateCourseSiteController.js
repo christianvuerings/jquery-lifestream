@@ -7,6 +7,7 @@
    */
   angular.module('calcentral.controllers').controller('CanvasCreateCourseSiteController', function(apiService, canvasCourseProvisionFactory, canvasSiteCreationService, $route, $scope, $timeout) {
     apiService.util.setTitle('Create a Course Site');
+    $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
     // initialize maintenance notice settings
     $scope.courseActionVerb = 'site is created';
@@ -15,6 +16,12 @@
 
     $scope.accessDeniedError = 'This feature is currently only available to instructors with course sections scheduled in the current or upcoming terms.';
     $scope.linkToSiteOverview = canvasSiteCreationService.linkToSiteOverview($route.current.isEmbedded);
+
+    // used to trigger focus to step headers
+    $scope.appFocus = true;
+    $scope.selectFocus = false;
+    $scope.confirmFocus = false;
+    $scope.completedFocus = false;
 
     /*
      * Updates status of background job in $scope.
@@ -51,6 +58,8 @@
     var courseSiteJobCreated = function(data) {
       angular.extend($scope, data);
       $scope.currentWorkflowStep = 'monitoring_job';
+      $scope.accessibilityAnnounce('Course site created successfully');
+      $scope.completedFocus = true;
       jobStatusLoader();
     };
 
@@ -104,6 +113,8 @@
     $scope.showConfirmation = function() {
       $scope.updateSelected();
       $scope.currentWorkflowStep = 'confirmation';
+      $scope.accessibilityAnnounce('Course site details form loaded.');
+      $scope.confirmFocus = true;
       $scope.siteName = $scope.selectedSectionsList[0].courseTitle;
       $scope.siteAbbreviation = $scope.selectedSectionsList[0].courseCode + ' - ' + $scope.selectedSectionsList[0].section_label;
       apiService.util.iframeScrollToTop();
@@ -114,6 +125,8 @@
         return;
       }
       $scope.currentWorkflowStep = 'monitoring_job';
+      $scope.accessibilityAnnounce('Creating course site. Please wait.');
+      $scope.monitorFocus = true;
       $scope.showMaintenanceNotice = false;
       setErrorText();
       var ccns = selectedCcns();
@@ -153,6 +166,7 @@
         currentWorkflowStep: 'selecting',
         selectedSectionsList: []
       });
+      $scope.accessibilityAnnounce('Loading courses and sections');
       var feedRequestOptions = {
         isAdmin: $scope.is_admin,
         adminMode: $scope.adminMode,
@@ -162,10 +176,13 @@
       };
       canvasCourseProvisionFactory.getSections(feedRequestOptions).then(function(sectionsFeed) {
         $scope.feedFetched = true;
+        $scope.selectFocus = true;
         if (sectionsFeed.status !== 200) {
+          $scope.accessibilityAnnounce('Course section loading failed');
           $scope.isLoading = false;
           $scope.displayError = 'failure';
         } else {
+          $scope.accessibilityAnnounce('Course section loaded successfully');
           if (sectionsFeed.data) {
             angular.extend($scope, sectionsFeed.data);
             if ($scope.teachingSemesters && $scope.teachingSemesters.length > 0) {
@@ -205,8 +222,10 @@
       angular.extend($scope, {
         currentSemester: semester.slug,
         coursesList: semester.classes,
-        selectedSectionsList: []
+        selectedSectionsList: [],
+        currentSemesterName: semester.name
       });
+      $scope.accessibilityAnnounce('Course sections for ' + semester.name + ' loaded');
       $scope.updateSelected();
     };
 

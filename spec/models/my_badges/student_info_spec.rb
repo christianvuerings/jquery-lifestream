@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'MyBadges::StudentInfo' do
 
   let(:random_uid) { Time.now.to_f.to_s.gsub('.', '') }
@@ -37,6 +35,33 @@ describe 'MyBadges::StudentInfo' do
     result = MyBadges::StudentInfo.new('61889').get_reg_blocks
     result.has_key?(:needsAction).should be_truthy
     result.has_key?(:activeBlocks).should be_truthy
+  end
+
+  context 'term transitions' do
+    let(:term_name) { 'Summer 2015' }
+    before do
+      allow(CampusOracle::UserAttributes).to receive(:new).and_return(double(get_feed: {reg_status: {transitionTerm: true}}))
+      allow_any_instance_of(MyAcademics::TransitionTerm).to receive(:regstatus_feed).and_return({registered: is_registered, termName: term_name})
+    end
+    let(:result) { MyBadges::StudentInfo.new(random_uid).get }
+    context 'registered during transition' do
+      let(:is_registered) { true }
+      it 'reports registration' do
+        expect(result[:regStatus][:code]).to eq 'R'
+        expect(result[:regStatus][:summary]).to eq 'Registered'
+        expect(result[:regStatus][:explanation]).to eq 'You are officially registered for this term and are entitled to access campus services.'
+        expect(result[:regStatus][:needsAction]).to eq false
+      end
+    end
+    context 'not registered during transition' do
+      let(:is_registered) { false }
+      it 'reports not registered with no action required' do
+        expect(result[:regStatus][:code]).to eq ' '
+        expect(result[:regStatus][:summary]).to eq "Not registered for #{term_name}"
+        expect(result[:regStatus][:explanation]).to be_nil
+        expect(result[:regStatus][:needsAction]).to eq false
+      end
+    end
   end
 
   context 'for Law student users' do

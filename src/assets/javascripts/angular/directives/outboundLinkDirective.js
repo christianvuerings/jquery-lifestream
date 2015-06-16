@@ -72,7 +72,8 @@
          */
         var observe = function(value) {
           // Check whether the element actually has an href
-          if (value) {
+          // and whether we disabled the outbound directive
+          if (value && !attr.ccOutboundDisable) {
             updateAnchorTag(value);
           }
         };

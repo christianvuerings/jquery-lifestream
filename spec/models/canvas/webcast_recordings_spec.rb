@@ -8,7 +8,10 @@ describe Canvas::WebcastRecordings do
       )
     end
 
-    subject { Canvas::WebcastRecordings.new({user_id: rand(99999).to_s, course_id: canvas_course_id, fake: true}) }
+    subject {
+      policy = AuthenticationStatePolicy.new(AuthenticationState.new('user_id' => rand(99999).to_s), nil)
+      Canvas::WebcastRecordings.new(policy, canvas_course_id, {fake: true})
+    }
 
     context 'when the Canvas course site maps to campus class sections' do
       let(:canvas_course_sections_list) do
@@ -44,15 +47,15 @@ describe Canvas::WebcastRecordings do
         expect(law_27171[:ccn]).to eq '49982'
         expect(law_27171[:audio]).to have(13).items
         expect(law_27171[:audio][12][:title]).to match('Lecture 1')
-        expect(law_27171[:itunes][:audio]).to end_with('354822513')
-        expect(law_27171[:itunes][:video]).to end_with('354822509')
+        expect(law_27171[:iTunes][:audio]).to end_with('354822513')
+        expect(law_27171[:iTunes][:video]).to end_with('354822509')
 
         sociol_150A = media_by_ccn[1]
         expect(sociol_150A[:ccn]).to eq '81853'
         expect(sociol_150A[:audio]).to have_at_least(10).items
         expect(sociol_150A[:audio][12][:title]).to_not be_nil
-        expect(sociol_150A[:itunes][:audio]).to_not be_nil
-        expect(sociol_150A[:itunes][:video]).to_not be_nil
+        expect(sociol_150A[:iTunes][:audio]).to_not be_nil
+        expect(sociol_150A[:iTunes][:video]).to_not be_nil
       end
     end
 

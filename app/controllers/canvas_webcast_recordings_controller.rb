@@ -10,8 +10,9 @@ class CanvasWebcastRecordingsController < ApplicationController
   # A Canvas course ID of "embedded" means to retrieve from session properties.
   def get_media
     raise Errors::BadRequestError, "Bad course site ID #{canvas_course_id}" if canvas_course_id.blank?
-    authorize Canvas::Course.new(canvas_course_id: canvas_course_id), :can_view_course?
-    render :json => Canvas::WebcastRecordings.new(user_id: session['user_id'], course_id: canvas_course_id).get_feed
+    course = Canvas::Course.new(canvas_course_id: canvas_course_id)
+    authorize course, :can_view_course?
+    render :json => Canvas::WebcastRecordings.new(policy(course), canvas_course_id).get_feed
   end
 
 end

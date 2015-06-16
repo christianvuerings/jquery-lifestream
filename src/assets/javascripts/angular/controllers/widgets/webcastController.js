@@ -7,6 +7,8 @@
   angular.module('calcentral.controllers').controller('WebcastController', function(apiService, webcastFactory, $route, $routeParams, $scope) {
     // Is this for an official campus class or for a Canvas course site?
     var courseMode = 'campus';
+    var outerTabs = ['Webcast Sign-up', 'Webcasts'];
+    $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
     /**
      * Select the first options in the video / audio feed
@@ -30,11 +32,14 @@
     };
 
     var setSelectedOption = function() {
-      if (!$scope.videos.length && $scope.audio.length) {
+      var audioOnly = $scope.audio && ($scope.audio.length > 0) && (!$scope.videos || $scope.videos.length === 0);
+      if (audioOnly) {
         $scope.switchSelectedOption($scope.selectOptions[1]);
       } else {
         $scope.switchSelectedOption($scope.selectOptions[0]);
       }
+      var showSignUpTab = $scope.eligibleForSignUp && $scope.eligibleForSignUp.length > 0;
+      $scope.currentTabSelection = showSignUpTab ? outerTabs[0] : outerTabs[1];
     };
 
     var getWebcasts = function(title) {
@@ -59,11 +64,25 @@
       getWebcasts(title);
     };
 
+    $scope.switchTabOption = function(tabOption) {
+      $scope.currentTabSelection = tabOption;
+    };
+
     $scope.switchSelectedOption = function(selectedOption) {
+      $scope.accessibilityAnnounce('Loaded ' + selectedOption + ' Webcasts');
       $scope.currentSelection = selectedOption;
     };
 
+    $scope.announceVideoSelect = function() {
+      $scope.accessibilityAnnounce('Selected video \'' + $scope.selectedVideo.lecture + '\' loaded');
+    };
+
+    $scope.announceAudioSelect = function() {
+      $scope.accessibilityAnnounce('Selected audio recording \'' + $scope.selectedAudio.title + '\' loaded');
+    };
+
     var setSelectOptions = function() {
+      $scope.outerTabOptions = outerTabs;
       var options = ['Video', 'Audio'];
       $scope.selectOptions = options;
     };

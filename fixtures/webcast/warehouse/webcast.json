@@ -1430,7 +1430,7 @@
       "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iBacs-uhTVhDhip4sGWoq2C",
-      "iTunesVideo": 805328862,
+      "iTunesAudio": 805328862,
       "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/public_health_241_001_screen.rss",
       "recordings": [
         {
@@ -1585,6 +1585,7 @@
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iDmBzAfitlZXganWpqMiXkG",
       "iTunesVideo": 819827827,
+      "iTunesAudio": 819827828,
       "screenRSS": "http://wbe-itunes.berkeley.edu/media/common/courses/spring_2014/rss/statistics_131a_001_screen.rss",
       "recordings": [
         {

@@ -2,13 +2,13 @@
 
   <div data-ng-if="!feedFetched" data-cc-spinner-directive></div>
 
-  <div data-ng-if="feedFetched && !displayError" aria-live="polite">
+  <div data-ng-if="feedFetched && !displayError">
 
     <div data-ng-if="currentWorkflowStep === 'staging'">
       <div data-ng-include src="'canvas_embedded/_shared/maintenance_notice.html'"></div>
     </div>
 
-    <h1 class="bc-page-course-official-sections-header1">Official Sections</h1>
+    <h1 class="bc-page-course-official-sections-header1 bc-accessibility-no-outline" data-cc-focus-reset-directive="appFocus">Official Sections</h1>
 
     <!-- ############################################################################################# -->
 
@@ -23,13 +23,15 @@
         </div>
       </div>
 
+      <h2 class="cc-visuallyhidden" data-cc-focus-reset-directive="previewFocus">Viewing Sections</h2>
+
       <!-- Current Sections Preview Area -->
       <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-white-border">
         <div class="row bc-page-course-official-sections-current-sections-header">
           <div class="medium-4 columns">
-            <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
+            <h3 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
               Sections in this Course Site
-            </h2>
+            </h3>
           </div>
           <div class="medium-2 columns cc-text-right">
             <button data-ng-click="changeWorkflowStep('staging')" class="bc-canvas-button bc-canvas-button-primary bc-canvas-no-decoration" data-ng-if="isTeacher">
@@ -59,11 +61,13 @@
       <!-- Current Sections Area -->
       <div class="bc-page-course-official-sections-sections-area bc-page-course-official-sections-current-sections-grey-border">
 
+        <h2 class="cc-visuallyhidden" data-cc-focus-reset-directive="stagingFocus">Managing Sections</h2>
+
         <div class="row bc-page-course-official-sections-current-sections-header">
           <div class="medium-4 columns">
-            <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
+            <h3 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
               Sections in this Course Site
-            </h2>
+            </h3>
           </div>
           <div class="medium-8 columns cc-text-right">
             <button class="bc-canvas-button bc-canvas-no-decoration" data-ng-click="cancel()" type="submit" aria-label="Cancel section modifications for this course site">
@@ -104,9 +108,9 @@
       <div class="bc-page-course-official-sections-sections-area">
         <div class="row">
           <div class="medium-12 columns">
-            <h2 class="bc-header bc-page-course-official-sections-available-sections-header-label">
+            <h3 class="bc-header bc-page-course-official-sections-available-sections-header-label">
               All sections available to add to this Course Site
-            </h2>
+            </h3>
           </div>
         </div>
 
@@ -149,7 +153,7 @@
 
     <!-- ############################################################################################# -->
 
-    <div data-ng-if="currentWorkflowStep === 'processing'">
+    <div data-ng-if="currentWorkflowStep === 'processing'" role="alert">
       <h2 class="bc-header bc-page-course-official-sections-existing-sections-header-label">
         Updating Official Sections in Course Site
       </h2>

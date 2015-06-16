@@ -73,6 +73,7 @@ describe CalGroups::MembersGet do
   # This testext group is disabled until CLC-5251 is resolved.
   context 'using real data feed', testext: true, ignore: true do
     let(:fake) { false }
+    subject { result }
 
     context 'a known test group' do
       let(:group_name) { 'testgroup' }
@@ -83,6 +84,9 @@ describe CalGroups::MembersGet do
       let(:group_name) { 'pleasedonotcreateagroupwiththisname' }
       include_examples 'group not found'
     end
+
+    it_behaves_like 'a proxy logging errors'
+    it_behaves_like 'a polite HTTP client'
   end
 
 end

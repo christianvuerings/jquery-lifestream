@@ -1,6 +1,7 @@
 class BaseProxy
   extend Cache::Cacheable
-  include ClassLogger, HttpRequester
+  include ClassLogger
+  include Proxies::HttpClient
 
   attr_accessor :fake, :settings
 

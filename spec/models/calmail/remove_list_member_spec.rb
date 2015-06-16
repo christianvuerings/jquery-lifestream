@@ -20,6 +20,9 @@ describe Calmail::RemoveListMember do
         expect(result).to eq({email_address: email_address, removed: false})
       end
     end
+    it_behaves_like 'a polite HTTP client' do
+      subject { described_class.new(fake: true).remove_member(list_name, email_address) }
+    end
   end
 
 end

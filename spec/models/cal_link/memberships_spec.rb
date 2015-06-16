@@ -3,6 +3,8 @@ require 'spec_helper'
 describe CalLink::Memberships do
   let! (:uid) { '300846' }
 
+  subject { CalLink::Memberships.new(user_id: uid, fake: false).get_memberships }
+
   it 'should get the fake membership feed from CalLink' do
     client = CalLink::Memberships.new(user_id: uid, fake: true)
     data = client.get_memberships
@@ -17,8 +19,7 @@ describe CalLink::Memberships do
     expect(data[:body]).to be_present
   end
 
-  it_should_behave_like 'a proxy logging errors' do
-    subject { CalLink::Memberships.new(user_id: uid, fake: false).get_memberships }
-  end
+  it_behaves_like 'a proxy logging errors'
+  it_behaves_like 'a polite HTTP client'
 
 end

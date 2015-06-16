@@ -130,7 +130,8 @@
                                           ($scope.requirements && $scope.requirements.length) ||
                                           ($scope.studentInfo && $scope.studentInfo.regStatus && $scope.studentInfo.regStatus.code !== null));
 
-      $scope.showProfileMessage = (!$scope.collegeAndLevel || !$scope.collegeAndLevel.standing || $scope.transitionRegStatus);
+      $scope.isProfileCurrent = !$scope.transitionTerm || $scope.transitionTerm.isProfileCurrent;
+      $scope.showProfileMessage = (!$scope.isProfileCurrent || !$scope.collegeAndLevel || !$scope.collegeAndLevel.standing);
 
       $scope.hasTeachingClasses = academicsService.hasTeachingClasses(data.teachingSemesters);
       if (data.teachingSemesters) {

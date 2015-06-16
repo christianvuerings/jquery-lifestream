@@ -2,7 +2,11 @@
   .cc-widget-webcast-audio {
     margin-top: 15px;
   }
-  .cc-widget-webcast-button-group {
+  .cc-widget-webcast-outer-button-group {
+    padding-bottom: 10px;
+    width: 300px;
+  }
+  .cc-widget-webcast-inner-button-group {
     padding-bottom: 10px;
     width: 200px;
   }

@@ -2,7 +2,7 @@ module Webcast
   class Rooms < Proxy
 
     def get_json_path
-      'rooms.json'
+      'warehouse/rooms.json'
     end
 
     def request_internal

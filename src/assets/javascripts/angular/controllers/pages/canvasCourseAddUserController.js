@@ -6,6 +6,7 @@
    */
   angular.module('calcentral.controllers').controller('CanvasCourseAddUserController', function(apiService, canvasCourseAddUserFactory, canvasSharedFactory, $routeParams, $scope) {
     apiService.util.setTitle('Find a Person to Add');
+    $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
     // initialize maintenance notice settings
     $scope.courseActionVerb = 'user is added';
@@ -80,7 +81,7 @@
       if (invalidSearchForm()) {
         return false;
       }
-
+      $scope.accessibilityAnnounce('Loading user search results');
       $scope.showUsersArea = true;
       $scope.isLoading = true;
 
@@ -88,9 +89,7 @@
         $scope.userSearchResults = data.users;
         if (data.users.length > 0) {
           $scope.userSearchResultsCount = Math.floor(data.users[0].resultCount);
-          if (data.users.length === 1) {
-            $scope.selectedUser = data.users[0];
-          }
+          $scope.selectedUser = data.users[0];
         } else {
           setSearchTypeNotice();
           $scope.userSearchResultsCount = 0;
@@ -117,6 +116,7 @@
       apiService.util.iframeScrollToTop();
       $scope.showUsersArea = false;
       $scope.showSearchForm = false;
+      $scope.accessibilityAnnounce('Adding user');
       $scope.isLoading = true;
       $scope.showAlerts = true;
       var submittedUser = $scope.selectedUser;
@@ -129,6 +129,7 @@
         $scope.userAdded.roleName = submittedRole.name;
         $scope.userAdded.sectionName = submittedSection.name;
         $scope.additionSuccessMessage = true;
+        $scope.showSearchForm = true;
         $scope.isLoading = false;
         resetSearchState();
       }).error(function(data) {

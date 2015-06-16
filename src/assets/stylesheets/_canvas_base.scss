@@ -17,6 +17,12 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 20px;
 }
 
+// Used ONLY to remove outline from elements that
+// should not receive focus via tabIndex.
+.bc-accessibility-no-outline:focus {
+  outline: none;
+}
+
 // Applies Canvas styling to Canvas only applications
 .bc-canvas-application {
   background: $cc-color-white;
@@ -113,8 +119,13 @@ button.bc-button-link {
   text-align: right;
 }
 
+.bc-main .bc-canvas-embedded .bc-canvas-embedded-buttonset,
 .bc-buttonset {
   margin: 10px 0;
+
+  button {
+    border-radius: initial;
+  }
 
   .bc-buttonset-button {
     background: $bc-color-feature-icon-box-background;
@@ -124,6 +135,7 @@ button.bc-button-link {
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
+    font-weight: 400;
     line-height: 20px;
     margin-bottom: 0;
     margin-left: 0;
@@ -139,9 +151,11 @@ button.bc-button-link {
   }
 
   .bc-buttonset-button-active {
-    background: $bc-color-buttonset-active-background;
-    border-color: $bc-color-buttonset-active-border;
-    color: $bc-color-white;
+    &, &:active, &:focus, &:hover, &:visited {
+      background: $bc-color-buttonset-active-background;
+      border-color: $bc-color-buttonset-active-border;
+      color: $bc-color-white;
+    }
   }
 
   .bc-buttonset-corner-right {
@@ -351,13 +365,6 @@ button.bc-button-link {
   text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
 }
 
-.bc-notice-warning-button {
-  &, &:hover,&:focus {
-    color: $bc-color-alert-foreground;
-    text-decoration: none;
-  }
-}
-
 .bc-alert-info {
   background-color: $bc-color-alert-info-background;
   border-color: $bc-color-alert-info-border;
@@ -425,18 +432,26 @@ button.bc-button-link {
 }
 
 // Maintenance Notice
-.bc-template-canvas-maintenance-notice-text {
+button.bc-template-canvas-maintenance-notice-button {
+  &, &:hover, &:focus {
+    color: $bc-color-alert-foreground;
+    text-decoration: none;
+  }
+}
+
+.bc-template-canvas-maintenance-notice-details {
   font-size: 14px;
   font-weight: normal;
+  margin: 10px 26px 0;
+
+  p {
+    margin-bottom: 5px;
+  }
 }
 
 .bc-template-canvas-maintenance-notice-collapse-icon {
   font-size: 18px;
   margin: 0 11px 0 5px;
-}
-
-.bc-template-canvas-maintenance-notice-details {
-  margin: 10px 26px 0;
 }
 
 // Styling for Sections Form used by Course Provisioning and Official Sections LTI tools
@@ -623,4 +638,3 @@ button.bc-button-link {
     padding: 15px;
   }
 }
-

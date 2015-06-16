@@ -62,7 +62,7 @@ module Webcast
 
     def get_itunes_as_json(playlist)
       {
-        :itunes => {
+        :iTunes => {
           :audio => get_itunes_url(playlist[:itunes_audio]),
           :video => get_itunes_url(playlist[:itunes_video])
         }

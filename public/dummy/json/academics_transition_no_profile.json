@@ -539,9 +539,10 @@
       "url": "http://registrar.berkeley.edu/tbfaqs.html"
     }
   ],
-  "transitionRegStatus": {
-    "termName": "Spring 2014",
-    "registered": true
+  "transitionTerm": {
+    "isProfileCurrent": false,
+    "registered": true,
+    "termName": "Spring 2014"
   },
   "lastModified": {
     "hash": "af8f7132a5d2efdf8bd3d88c2d1fa5d37086c389",
