@@ -63,7 +63,7 @@ module Webcast
                 course[:classes].each do |next_class|
                   next_class[:sections].each do |section|
                     instructors = HashConverter.camelize extract_authorized(section[:instructors])
-                    logger.info "Eligibility check on user #{uid.to_s} where instructors=#{instructors.to_s} and section=#{section.to_s}"
+                    logger.info "Eligibility check on user #{@uid.to_s} where instructors=#{instructors.to_s} and section=#{section.to_s}"
                     user_can_sign_up = instructors.map { |instructor| instructor[:uid].to_i }.include? @uid
                     ccn = section[:ccn]
                     eligible_for_sign_up << {
