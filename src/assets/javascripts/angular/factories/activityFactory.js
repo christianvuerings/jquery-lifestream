@@ -25,6 +25,7 @@
         discussion: ' Discussions',
         gradePosting: ' Grades Posted',
         message: ' Status Changes',
+        webcast: ' Webcasts',
         webconference: ' Webconferences'
       };
 
@@ -37,6 +38,7 @@
         gradePosting: 'trophy',
         info: 'info-circle',
         message: 'check-circle',
+        webcast: 'video-camera',
         webconference: 'video-camera'
       };
 

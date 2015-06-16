@@ -11,14 +11,22 @@
     $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
     /**
-     * Select the first options in the video / audio feed
+     * Select media items from video/audio dropdowns, defaulting to first
      */
-    var selectFirstOptions = function() {
-      if ($scope.videos) {
-        $scope.selectedVideo = $scope.videos[0];
-      }
+    var selectMediaOptions = function() {
       if ($scope.audio) {
         $scope.selectedAudio = $scope.audio[0];
+      }
+      if ($scope.videos) {
+        if ($routeParams.video) {
+          for (var i = 0; i < $scope.videos.length; i++) {
+            if ($scope.videos[i].youTubeId === $routeParams.video) {
+              $scope.selectedVideo = $scope.videos[i];
+              break;
+            }
+          }
+        }
+        $scope.selectedVideo = $scope.selectedVideo || $scope.videos[0];
       }
     };
 
@@ -47,7 +55,7 @@
         url: webcastUrl(title)
       }).success(function(data) {
         angular.extend($scope, data);
-        selectFirstOptions();
+        selectMediaOptions();
         setSelectedOption();
       });
     };
