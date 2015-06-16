@@ -57,9 +57,9 @@ class CanvasCourseProvisionController < ApplicationController
 
   # GET /api/academics/canvas/course_provision/status.json
   def job_status
-    course_provision_job = Canvas::BackgroundJob.find(params['job_id'])
-    render json: course_provision_job.to_json and return if course_provision_job.class == Canvas::ProvideCourseSite
-    render json: { job_id: params['job_id'], jobStatus: "jobNotFoundError", error: "Unable to find course management job" }.to_json
+    background_job = Canvas::BackgroundJob.find(params['jobId'])
+    render json: background_job.background_job_report.to_json and return if background_job.class == Canvas::ProvideCourseSite
+    render json: { jobId: params['jobId'], jobStatus: "jobNotFoundError", error: "Unable to find course management job" }.to_json
   end
 
   def create_options_from_params
