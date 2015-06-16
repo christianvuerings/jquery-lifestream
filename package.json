@@ -23,7 +23,7 @@
     "build": "gulp build",
     "build-production": "gulp build --env production"
   },
-  "license": "ECL 2.0",
+  "license": "ECL-2.0",
   "devDependencies": {
     "angular": "^1.4.1",
     "angular-aria": "^1.4.1",
