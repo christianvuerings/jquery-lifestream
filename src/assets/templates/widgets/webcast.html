@@ -55,13 +55,14 @@
       </div>
       <div data-ng-if="media">
         <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Webcasts</h1>
-        <div data-ng-repeat="section in media">
-          <div data-ng-if="!section.videos.length && !section.audio.length">
+        <span data-ng-repeat="section in media">
+          <span data-ng-if="!section.videos.length && !section.audio.length">
             <span ng-if="$first">Webcasts for </span>
-            <strong data-ng-bind-template="{{section.deptName}} {{section.catalogId}} {{section.instructionFormat}} {{section.sectionNumber}}"></strong>
+            <span ng-if="$last && (media.length > 1)"> and </span>
+            <strong data-ng-bind-template="{{section.deptName}} {{section.catalogId}} {{section.instructionFormat}} {{section.sectionNumber}}"></strong><span ng-if="!$last && ($index < media.length - 2)">, </span>
             <span ng-if="$last">will appear here after classes start.</span>
-          </div>
-        </div>
+          </span>
+        </span>
       </div>
       <div data-ng-if="videos || audio">
         <div data-ng-if="videos.length && audio.length" class="cc-widget-webcast-inner-button-group cc-clearfix-container">

@@ -12,6 +12,7 @@ module Webcast
     end
 
     def get_feed_internal
+      logger.warn "Webcast merged feed where year=#{@term_yr}, term=#{@term_cd}, ccn_list=#{@ccn_list.to_s}, course_policy=#{@course_policy.to_s}"
       @academics = MyAcademics::Teaching.new(@uid)
       feed = { :system_status => Webcast::SystemStatus.new(@options).get }
       feed.merge get_media_feed
@@ -39,7 +40,9 @@ module Webcast
       eligible_for_sign_up = []
       can_sign_up_one_or_more = false
       is_sign_up_active = Webcast::SystemStatus.new(@options).get[:isSignUpActive]
-      if is_sign_up_active && @term_yr && @term_cd && @course_policy.can_view_webcast_sign_up?
+      can_view_webcast_sign_up = @course_policy.can_view_webcast_sign_up?
+      logger.warn "Course policy for user #{@uid} says can_view_webcast_sign_up = #{can_view_webcast_sign_up}"
+      if is_sign_up_active && @term_yr && @term_cd && can_view_webcast_sign_up
         slug = Berkeley::TermCodes.to_slug(@term_yr, @term_cd)
         all_eligible = Webcast::SignUpEligible.new(@options).get[slug]
         unless all_eligible.nil?
@@ -60,6 +63,7 @@ module Webcast
                 course[:classes].each do |next_class|
                   next_class[:sections].each do |section|
                     instructors = HashConverter.camelize extract_authorized(section[:instructors])
+                    logger.info "Eligibility check on user #{uid.to_s} where instructors=#{instructors.to_s} and section=#{section.to_s}"
                     user_can_sign_up = instructors.map { |instructor| instructor[:uid].to_i }.include? @uid
                     ccn = section[:ccn]
                     eligible_for_sign_up << {
