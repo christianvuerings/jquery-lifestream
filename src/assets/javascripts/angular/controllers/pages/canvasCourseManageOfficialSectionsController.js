@@ -105,14 +105,14 @@
      */
     var statusProcessor = function(data) {
       angular.extend($scope, data);
-      $scope.percentCompleteRounded = Math.round($scope.percent_complete * 100);
+      $scope.percentCompleteRounded = Math.round($scope.percentComplete * 100);
       if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
         jobStatusLoader();
       } else {
         $timeout.cancel(timeoutPromise);
         $scope.lastJobStatus = angular.copy($scope.jobStatus);
         $scope.jobStatusMessage = 'An error has occurred with your request. Please try again or contact bCourses support.';
-        if ($scope.lastJobStatus === 'sectionEditsCompleted') {
+        if ($scope.lastJobStatus === 'Completed') {
           $scope.jobStatusMessage = 'The sections in this course site have been updated successfully.';
         }
         fetchFeed();

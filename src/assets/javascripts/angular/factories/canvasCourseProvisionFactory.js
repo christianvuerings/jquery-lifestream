@@ -19,7 +19,7 @@
     var courseProvisionJobStatus = function(jobId) {
       return $http.get('/api/academics/canvas/course_provision/status.json', {
         params: {
-          job_id: jobId
+          jobId: jobId
         }
       });
     };

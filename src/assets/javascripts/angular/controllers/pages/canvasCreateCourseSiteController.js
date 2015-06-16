@@ -29,7 +29,7 @@
      */
     var statusProcessor = function(data) {
       angular.extend($scope, data);
-      $scope.percentCompleteRounded = Math.round($scope.percent_complete * 100);
+      $scope.percentCompleteRounded = Math.round($scope.percentComplete * 100);
       if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
         jobStatusLoader();
       } else {
@@ -75,10 +75,10 @@
     };
 
     var clearCourseSiteJob = function() {
-      delete $scope.job_id;
+      delete $scope.jobId;
       delete $scope.jobStatus;
-      delete $scope.completed_steps;
-      delete $scope.percent_complete;
+      delete $scope.completedSteps;
+      delete $scope.percentComplete;
       $scope.showMaintenanceNotice = true;
     };
 
@@ -152,7 +152,7 @@
             angular.extend($scope, {
               percentCompleteRounded: 0,
               currentWorkflowStep: 'monitoring_job',
-              jobStatus: 'courseCreationError',
+              jobStatus: 'Error',
               error: 'Failed to create course provisioning job.'
             });
           });
@@ -163,6 +163,7 @@
       clearCourseSiteJob();
       angular.extend($scope, {
         isLoading: true,
+        feedFetched: false,
         currentWorkflowStep: 'selecting',
         selectedSectionsList: []
       });
