@@ -47,7 +47,7 @@
       <span data-ng-if="task.bucket == 'Due Today'">TODAY</span>
       <span data-ng-if="task.dueDate && task.bucket != 'Due Today' && tasksMode != 'completed'" data-ng-bind="task.dueDate.epoch * 1000 | dateInYearFilter:'MM/dd'">
       </span>
-      <div data-ng-if="task.emitter=='bCourses' && !!task.dueDate.hasTime"
+      <div data-ng-if="task.emitter=='bCourses' && task.dueDate.hasTime"
         class="cc-widget-tasks-timestamp" data-ng-bind="task.dueDate.epoch * 1000 | date:'h a'">
       </div>
       <span data-ng-if="tasksMode=='completed'" data-ng-bind="task.completedDate.epoch * 1000 | dateInYearFilter:'MM/dd'"></span>
