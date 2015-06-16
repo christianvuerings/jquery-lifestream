@@ -35,7 +35,7 @@ $.fn.lifestream.feeds.facebook_page = function( config, callback ) {
   };
 
   $.ajax({
-    url: 'http://facebooky.herokuapp.com/' + config.user,
+    url: 'https://facebooky.herokuapp.com/' + config.user,
     success: function( data ) {
       callback(parseFBPage(data));
     }
