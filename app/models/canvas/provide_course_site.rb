@@ -17,7 +17,7 @@ module Canvas
 
     def create_course_site(site_name, site_course_code, term_slug, ccns, is_admin_by_ccns = false)
       background_job_set_type('course_creation')
-      background_job_set_total_steps(12)
+      background_job_set_total_steps(10)
       logger.info("Course provisioning job started. Job state updated in cache key #{background_job_id}")
       @import_data['site_name'] = site_name
       @import_data['site_course_code'] = site_course_code
@@ -39,9 +39,7 @@ module Canvas
       enroll_instructor unless is_admin_by_ccns
 
       expire_instructor_sites_cache
-
       # TODO Expire user's Canvas-related caches to maintain UX consistency.
-      background_job_save
 
       # Start a background job to add current students and instructors to the new site.
       import_enrollments_in_background(@import_data['sis_course_id'], section_definitions)
@@ -54,7 +52,7 @@ module Canvas
     def edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
       canvas_course_id = canvas_course_info[:canvasCourseId]
       @import_data['sis_course_id'] = canvas_course_info[:sisCourseId]
-      background_job_set_total_steps(2) # Section CSV import, clearing course site cache
+      background_job_set_total_steps(3) # Section CSV import, clearing course site cache
       @background_job_total_steps += 2.0 if ccns_to_add.present?
       @background_job_total_steps += 1.0 if ccns_to_remove.present?
       background_job_set_type('edit_sections')
@@ -74,7 +72,6 @@ module Canvas
       import_sections(section_definitions)
       # Add section enrollments.
       refresh_sections_cache(canvas_course_id)
-      background_job_save
 
       # Start a background job to add students and instructors to the new sections in the site.
       import_enrollments_in_background(@import_data['sis_course_id'], section_definitions, canvas_course_id)
@@ -213,6 +210,7 @@ module Canvas
         added_sections.collect {|row| row['section_id']}, "#{csv_filename_prefix}-enrollments.csv",
         into_canvas_course_id
       )
+      background_job_complete_step('Started enrollments import in background')
     end
 
     def csv_filename_prefix
