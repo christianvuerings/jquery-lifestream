@@ -3,9 +3,9 @@ module Canvas
     include ClassLogger
 
     def initialize(sis_term_ids, webcast_tool_id, options = {})
-      @options = options
       @sis_term_ids = sis_term_ids
       @canvas_webcast_tool_id = webcast_tool_id
+      @options = options
     end
 
     def refresh_canvas
