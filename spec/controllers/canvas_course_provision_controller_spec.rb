@@ -169,7 +169,7 @@ describe CanvasCourseProvisionController do
       assert_response :success
       json_response = JSON.parse(response.body)
       json_response['jobId'].should == 'canvas.courseprovision.12345.1383330151057'
-      json_response['jobStatus'].should == 'jobNotFoundError'
+      json_response['jobStatus'].should == 'Error'
       json_response['error'].should == 'Unable to find course management job'
     end
 
