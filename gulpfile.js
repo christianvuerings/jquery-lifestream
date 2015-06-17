@@ -200,7 +200,17 @@
     // Template cache will put all the .html files in the angular templateCache
     var templateCache = require('gulp-angular-templatecache');
 
+    // Minify our html templates
+    var minifyHTML = require('gulp-minify-html');
+
+    // Minify options
+    var minifyOptions = {
+      // Do not remove conditional internet explorer comments
+      conditionals: true
+    };
+
     return gulp.src(paths.src.templates)
+      .pipe(minifyHTML(minifyOptions))
       .pipe(templateCache({
         // Creates a standalone module called 'templates'
         // This makes it easier to load in CalCentral
