@@ -111,13 +111,6 @@ describe Canvas::ProvideCourseSite do
       expect(cached_object.background_job_report[:errors]).to eq ['Course site could not be created!']
     end
 
-    it 'makes calls to each step of import in proper order' do
-      task_steps.each do |step|
-        expect(subject).to receive(step).ordered
-      end
-      subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'])
-    end
-
     it 'sets term and ccns for import' do
       subject.create_course_site(site_name, site_course_code, 'fall-2014', ['21136', '21204'])
       expect(subject.instance_eval { @import_data['term_slug'] }).to eq 'fall-2014'
@@ -130,6 +123,34 @@ describe Canvas::ProvideCourseSite do
       subject.create_course_site(site_name, site_course_code, 'fall-2014', ['21136', '21204'])
       cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:jobType]).to eq 'course_creation'
+    end
+
+    context 'when provisioning as instructor' do
+      it 'makes calls to each step of import in proper order' do
+        task_steps.each {|step| expect(subject).to receive(step).ordered}
+        subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'])
+      end
+      it 'calculates 10 total steps to completion' do
+        subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'])
+        expect(subject.instance_eval { @background_job_total_steps }).to eq 10
+      end
+    end
+
+    context 'when provisioning by ccn' do
+      before do
+        task_steps.delete(:enroll_instructor)
+        task_steps.delete(:expire_instructor_sites_cache)
+      end
+      it 'makes calls to each step of import except enrolling instructor and breaking cache' do
+        task_steps.each {|step| expect(subject).to receive(step).ordered}
+        expect(subject).to_not receive(:enroll_instructor)
+        expect(subject).to_not receive(:expire_instructor_sites_cache)
+        subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'], true)
+      end
+      it 'calculates 8 total steps to completion' do
+        subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'], true)
+        expect(subject.instance_eval { @background_job_total_steps }).to eq 8
+      end
     end
   end
 
@@ -171,9 +192,48 @@ describe Canvas::ProvideCourseSite do
         cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
         expect(cached_object.background_job_report[:jobType]).to eq 'edit_sections'
       end
-      it 'executes all steps in order' do
-        task_steps.each {|step| expect(subject).to receive(step).ordered}
-        subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+      context 'when adding sections to course site' do
+        let(:ccns_to_remove) { [] }
+        before do
+          task_steps.delete(:prepare_section_deletions)
+        end
+        it 'executes all steps in order' do
+          task_steps.each {|step| expect(subject).to receive(step).ordered}
+          expect(subject).to_not receive(:prepare_section_deletions)
+          subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+        end
+        it 'calculates 5 total steps to completion' do
+          subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+          expect(subject.instance_eval { @background_job_total_steps }).to eq 5
+        end
+      end
+      context 'when removing sections from course site' do
+        let(:ccns_to_add) { [] }
+        before do
+          allow(subject).to receive(:section_definitions).and_return(ccns_to_remove)
+          task_steps.delete(:prepare_users_courses_list)
+          task_steps.delete(:prepare_section_definitions)
+        end
+        it 'executes all steps in order' do
+          task_steps.each {|step| expect(subject).to receive(step).ordered}
+          expect(subject).to_not receive(:prepare_users_courses_list)
+          expect(subject).to_not receive(:prepare_section_definitions)
+          subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+        end
+        it 'calculates 4 total steps to completion' do
+          subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+          expect(subject.instance_eval { @background_job_total_steps }).to eq 4
+        end
+      end
+      context 'when adding and removing sections from course site' do
+        it 'executes all steps in order' do
+          task_steps.each {|step| expect(subject).to receive(step).ordered}
+          subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+        end
+        it 'calculates 6 total steps to completion' do
+          subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
+          expect(subject.instance_eval { @background_job_total_steps }).to eq 6
+        end
       end
     end
     context 'on unexpected error' do

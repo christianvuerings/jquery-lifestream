@@ -36,10 +36,14 @@ module Canvas
       import_course_site(@import_data['course_site_definition'])
       retrieve_course_site_details
       import_sections(section_definitions)
-      enroll_instructor unless is_admin_by_ccns
 
-      expire_instructor_sites_cache
       # TODO Expire user's Canvas-related caches to maintain UX consistency.
+      if is_admin_by_ccns
+        @background_job_total_steps -= 2;
+      else
+        enroll_instructor
+        expire_instructor_sites_cache
+      end
 
       # Start a background job to add current students and instructors to the new site.
       import_enrollments_in_background(@import_data['sis_course_id'], section_definitions)
