@@ -55,7 +55,7 @@
     var initInjector = angular.injector(['ng']);
     var $http = initInjector.get('$http');
 
-    return $http.get('/api/config').then();
+    return $http.get('/api/config');
   };
 
   loadConfig().then(injectConfigConstant).then(bootstrap);
