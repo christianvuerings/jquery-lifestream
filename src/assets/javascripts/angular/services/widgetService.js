@@ -8,9 +8,7 @@
     var toggleShow = function(event, items, item, widget) {
       var tagName = (event && event.toElement && event.toElement.tagName);
       // Ignore toggling on Anchor events
-      if (tagName === 'A' ||
-          tagName === 'INPUT' ||
-          tagName === 'TEXTAREA') {
+      if (['A', 'INPUT', 'TEXTAREA'].indexOf(tagName) !== -1) {
         return;
       }
       // Toggle the current item
