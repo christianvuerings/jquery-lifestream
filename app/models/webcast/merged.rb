@@ -126,7 +126,11 @@ module Webcast
     end
 
     def instance_key
-      @term_yr && @term_cd ? Webcast::CourseMedia.id_per_ccn(@term_yr, @term_cd, @ccn_list.to_s) : @options[:user_id]
+      if @term_yr && @term_cd
+        "#{Webcast::CourseMedia.id_per_ccn(@term_yr, @term_cd, @ccn_list.to_s)}/#{@uid}"
+      else
+        @uid
+      end
     end
 
     def merge(media_per_ccn, media_type)
