@@ -267,23 +267,7 @@
 
         <div data-ng-if="jobStatus === 'Completed'" data-ng-aria-expanded="{{jobStatus === 'Completed'}}" role="region">
           <div class="bc-alert bc-alert-success" role="alert">
-            Success : <span data-ng-bind="course_site.short_name"></span> site created
-            <i class="cc-left fa fa-check-circle cc-icon-green bc-canvas-notice-icon"></i>
-          </div>
-
-          <h2 class="cc-visuallyhidden" data-cc-focus-reset-directive="completedFocus">New Site Options</h2>
-
-          <div class="bc-page-create-course-site-success-intro">
-            <strong>You may now:</strong>
-          </div>
-
-          <ul class="bc-page-create-course-site-choices">
-            <li>Go to <a data-ng-href="{{course_site.url}}" data-ng-bind="course_site.short_name"></a> to finish setting up your site.</li>
-            <li>Access your sites anytime at: <a href="http://bcourses.berkeley.edu">http://bcourses.berkeley.edu</a></li>
-          </ul>
-
-          <div>
-            <button class="bc-canvas-button bc-canvas-button-primary" type="button" data-ng-click="fetchFeed()" type="button" aria-control="bc-page-create-course-site-selecting-step" aria-label="Start over to create another course site">Create another Course Site</button>
+            Redirecting to new course site.
           </div>
         </div>
       </div>

@@ -35,6 +35,17 @@
       } else {
         delete $scope.percentCompleteRounded;
         $timeout.cancel(timeoutPromise);
+        if ($scope.jobStatus === 'Completed') {
+          if ($scope.courseSite && $scope.courseSite.url) {
+            if ($route.current.isEmbedded) {
+              apiService.util.iframeParentLocation($scope.courseSite.url);
+            } else {
+              $window.location = $scope.courseSite.url;
+            }
+          } else {
+            $scope.displayError = 'failure';
+          }
+        }
       }
     };
 
