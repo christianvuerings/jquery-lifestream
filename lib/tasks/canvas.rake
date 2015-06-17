@@ -88,14 +88,14 @@ namespace :canvas do
     if webcast_tool.empty?
       Rails.logger.error 'Webcast tool not found within Canvas globalTools set'
     elsif webcast_tool.length > 1
-      Rails.logger.error "Why did we find multiple Webcast tools (#{webcast_tool.to_s}) within Canvas globalTools set?! Abort!"
+      Rails.logger.error "Why did we find multiple Webcast tools (#{webcast_tool}) within Canvas globalTools set?! Abort!"
     else
       tool_id = webcast_tool.values.first
       sis_term_ids = Canvas::Proxy.current_sis_term_ids
       filtered_ids = sis_term_ids.reject do |id|
         id.end_with?('A') || id.end_with?('C')
       end
-      Rails.logger.warn "#{sis_term_ids.to_s} are current SIS terms per Canvas. Webcast LTI refresh will use only #{filtered_ids}"
+      Rails.logger.warn "#{sis_term_ids} are current SIS terms per Canvas. Webcast LTI refresh will use only #{filtered_ids}"
       refresh = Canvas::WebcastLtiRefresh.new(filtered_ids, tool_id).refresh_canvas
       Rails.logger.warn "Webcast tool (id = #{tool_id}) refreshed on #{refresh.length} Canvas course sites"
     end
