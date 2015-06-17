@@ -308,6 +308,8 @@
     var path = require('path');
     var RevAll = require('gulp-rev-all');
     var revAllAssets = new RevAll({
+      // Since we only run this in production mode, add some extra logging
+      debug: true,
       dontGlobal: [
         /favicon\.ico/g,
         'manifest.json'
@@ -329,10 +331,11 @@
         paths.src.assetsPublic,
         paths.src.mainTemplates.bcoursesEmbeddedPublic,
         paths.src.mainTemplates.indexPublic
-      ], {
-        base: 'assets'
-      })
+      ])
       .pipe(revAllAssets.revision())
+      .pipe(gulp.dest('public/'))
+      // Will add a manifest file at public/rev-manifest.json for debugging purposes
+      .pipe(revAllAssets.manifestFile())
       .pipe(gulp.dest('public/')
     );
 
