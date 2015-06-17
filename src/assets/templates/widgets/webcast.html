@@ -2,6 +2,7 @@
   <div data-cc-spinner-directive></div>
   <div data-ng-bind="proxyErrorMessage"></div>
   <div data-ng-if="!proxyErrorMessage">
+    <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Webcasts</h1>
     <div data-ng-if="eligibleForSignUp && eligibleForSignUp.length > 0">
       <div data-ng-if="videos || audio" class="cc-widget-webcast-outer-button-group cc-clearfix-container">
         <ul class="cc-button-group cc-even-2 bc-canvas-embedded-buttonset" role="tablist">
@@ -56,12 +57,11 @@
         There are no webcasts scheduled.
       </div>
       <div data-ng-if="media">
-        <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Webcasts</h1>
         <span data-ng-repeat="section in media">
           <span data-ng-if="!section.videos.length && !section.audio.length">
             <span ng-if="$first">Webcasts for </span>
             <span ng-if="$last && (media.length > 1)"> and </span>
-            <strong data-ng-bind-template="{{section.deptName}} {{section.catalogId}} {{section.instructionFormat}} {{section.sectionNumber}}"></strong><span ng-if="!$last && ($index < media.length - 2)">, </span>
+            <strong data-ng-bind-template="{{section.deptName}} {{section.catalogId}} {{media.length > 1 ? section.instructionFormat : ''}} {{media.length > 1 ? section.sectionNumber : ' lecture'}}"></strong><span ng-if="!$last && ($index < media.length - 2)">, </span>
             <span ng-if="$last">will appear here after classes start.</span>
           </span>
         </span>
