@@ -117,6 +117,11 @@ shared_examples 'a background job worker' do
     expect(bg_job_object.background_job_report[:jobStatus]).to eq 'New'
   end
 
+  it 'saves job type string' do
+    subject.background_job_set_type('edit_sections')
+    expect(subject.background_job_report[:jobType]).to eq 'edit_sections'
+  end
+
   context 'when background job state first saved to cache' do
     it 'returns initial background job report' do
       report = subject.background_job_report

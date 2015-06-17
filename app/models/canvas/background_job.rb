@@ -6,6 +6,11 @@ module Canvas
   #   def MyClass
   #     include Canvas::BackgroundJob
   #
+  #     def initialize
+  #       background_job_set_type('something_awesome')
+  #       background_job_set_total_steps(2)
+  #     end
+  #
   #     def perform_work
   #       # do step one
   #       if (error)
@@ -83,6 +88,11 @@ module Canvas
       report
     end
 
+    def background_job_set_type(type)
+      @background_job_type = type
+      background_job_save
+    end
+
     def background_job_save
       Rails.cache.write(@background_job_id, self, expires_in: Settings.cache.expiration.CanvasBackgroundJobs)
     end
@@ -103,7 +113,7 @@ module Canvas
       if @background_job_status != 'Error'
         completed_steps = @background_job_completed_steps.count
         @background_job_status = 'Processing' if (completed_steps > 0) || (completed_steps < @background_job_total_steps)
-        @background_job_status = 'Completed' if (completed_steps == @background_job_total_steps)
+        @background_job_status = 'Completed' if (completed_steps >= @background_job_total_steps)
       end
       background_job_save
     end

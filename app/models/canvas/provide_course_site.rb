@@ -3,26 +3,21 @@ module Canvas
     include Canvas::BackgroundJob
     include ClassLogger
 
-    attr_reader :uid, :jobStatus, :cache_key, :errors, :section_definitions
+    attr_reader :uid, :cache_key, :section_definitions
 
     # Currently this depends on an instructor's point of view.
     def initialize(uid, options = {})
       super()
       raise ArgumentError, "uid must be a String" if uid.class != String
       @uid = uid
-      @jobStatus = 'New' # Changes to 'Processing', 'Completed', or 'Error'
-      @errors = []
-      @completed_steps = []
-      @total_steps = 0.0
       @import_data = {}
       @section_definitions = []
       background_job_initialize
     end
 
     def create_course_site(site_name, site_course_code, term_slug, ccns, is_admin_by_ccns = false)
-      @total_steps = 12.0
-      @jobStatus = 'Processing'
-      background_job_save
+      background_job_set_type('course_creation')
+      background_job_set_total_steps(10)
       logger.info("Course provisioning job started. Job state updated in cache key #{background_job_id}")
       @import_data['site_name'] = site_name
       @import_data['site_course_code'] = site_course_code
@@ -44,29 +39,23 @@ module Canvas
       enroll_instructor unless is_admin_by_ccns
 
       expire_instructor_sites_cache
-
       # TODO Expire user's Canvas-related caches to maintain UX consistency.
-      @jobStatus = 'courseCreationCompleted'
-      background_job_save
 
       # Start a background job to add current students and instructors to the new site.
       import_enrollments_in_background(@import_data['sis_course_id'], section_definitions)
     rescue StandardError => error
-      logger.error("ERROR: #{error.message}; Completed steps: #{@completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
-      @jobStatus = 'courseCreationError'
-      @errors << error.message
-      background_job_save
+      logger.error("ERROR: #{error.message}; Completed steps: #{@background_job_completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
+      background_job_add_error(error.message)
       raise error
     end
 
     def edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
       canvas_course_id = canvas_course_info[:canvasCourseId]
       @import_data['sis_course_id'] = canvas_course_info[:sisCourseId]
-      @total_steps = 2.0  # Section CSV import, clearing course site cache
-      @total_steps += 2.0 if ccns_to_add.present?
-      @total_steps += 1.0 if ccns_to_remove.present?
-      @jobStatus = 'Processing'
-      background_job_save
+      background_job_set_total_steps(3) # Section CSV import, clearing course site cache
+      @background_job_total_steps += 2.0 if ccns_to_add.present?
+      @background_job_total_steps += 1.0 if ccns_to_remove.present?
+      background_job_set_type('edit_sections')
       logger.info("Edit course site sections job started. Job state updated in cache key #{background_job_id}")
       @import_data['term'] = find_term(yr: canvas_course_info[:term][:term_yr], cd: canvas_course_info[:term][:term_cd])
       raise RuntimeError, "Course site #{canvas_course_id} does not match a current term" if @import_data['term'].nil?
@@ -83,16 +72,12 @@ module Canvas
       import_sections(section_definitions)
       # Add section enrollments.
       refresh_sections_cache(canvas_course_id)
-      @jobStatus = 'sectionEditsCompleted'
-      background_job_save
 
       # Start a background job to add students and instructors to the new sections in the site.
       import_enrollments_in_background(@import_data['sis_course_id'], section_definitions, canvas_course_id)
     rescue StandardError => error
-      logger.error("ERROR: #{error.message}; Completed steps: #{@completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
-      @jobStatus = 'sectionEditsError'
-      @errors << error.message
-      background_job_save
+      logger.error("ERROR: #{error.message}; Completed steps: #{@background_job_completed_steps.inspect}; Import Data: #{@import_data.inspect}; UID: #{@uid}")
+      background_job_add_error(error.message)
       raise error
     end
 
@@ -107,7 +92,7 @@ module Canvas
         sis_section_ids_to_remove = sections_to_remove.collect {|s| s['sis_section_id']}
         Canvas::SiteMembershipsMaintainer.remove_memberships(sis_course_id, sis_section_ids_to_remove,
           "#{csv_filename_prefix}-delete-enrollments.csv")
-        complete_step('Deleted section enrollments')
+        background_job_complete_step('Deleted section enrollments')
         sections_to_remove.each do |s|
           @section_definitions << {
             'section_id' => s['sis_section_id'],
@@ -135,7 +120,7 @@ module Canvas
         courses_list = filter_courses_by_ccns(candidate_courses_list, @import_data['term_slug'], @import_data['ccns'])
       end
       @import_data['courses'] = courses_list
-      complete_step('Prepared courses list')
+      background_job_complete_step('Prepared courses list')
     end
 
     def identify_department_subaccount
@@ -147,7 +132,7 @@ module Canvas
       # Check that we have a departmental location for this course.
       @import_data['subaccount'] = subaccount_for_department(department)
 
-      complete_step('Identified department sub-account')
+      background_job_complete_step('Identified department sub-account')
     end
 
     def prepare_course_site_definition
@@ -159,7 +144,7 @@ module Canvas
       @import_data['course_site_definition'] = generate_course_site_definition(@import_data['site_name'], @import_data['site_course_code'], @import_data['term'][:yr], @import_data['term'][:cd], @import_data['subaccount'], @import_data['courses'][0][:slug])
       @import_data['sis_course_id'] = @import_data['course_site_definition']['course_id']
       @import_data['course_site_short_name'] = @import_data['course_site_definition']['short_name']
-      complete_step('Prepared course site definition')
+      background_job_complete_step('Prepared course site definition')
     end
 
     def prepare_section_definitions
@@ -170,7 +155,7 @@ module Canvas
       # Add Canvas course sections to match the source sections.
       # We could use the "Create course section" API, but to reduce API usage we instead use CSV import.
       @section_definitions = generate_section_definitions(@import_data['term'][:yr], @import_data['term'][:cd], @import_data['sis_course_id'], @import_data['courses'])
-      complete_step("Prepared section definitions")
+      background_job_complete_step("Prepared section definitions")
     end
 
     def import_course_site(canvas_course_row)
@@ -178,7 +163,7 @@ module Canvas
       response = Canvas::SisImport.new.import_courses(@import_data['courses_csv_file'])
       raise RuntimeError, 'Course site could not be created.' if response.blank?
       logger.warn("Successfully imported course from: #{@import_data['courses_csv_file']}")
-      complete_step('Imported course')
+      background_job_complete_step('Imported course')
     end
 
     def import_sections(canvas_section_rows)
@@ -189,7 +174,7 @@ module Canvas
         raise RuntimeError, 'Course site was created without any sections or members! Section import failed.'
       else
         logger.warn("Successfully imported sections from: #{@import_data['sections_csv_file']}")
-        complete_step('Imported sections')
+        background_job_complete_step('Imported sections')
       end
     end
 
@@ -202,13 +187,13 @@ module Canvas
       end
 
       logger.warn('Successfully added instructor to default section as a teacher')
-      complete_step('Added instructor to course site')
+      background_job_complete_step('Added instructor to course site')
     end
 
     def retrieve_course_site_details
       raise RuntimeError, "Unable to retrieve course site details. SIS Course ID not present." if @import_data['sis_course_id'].blank?
       @import_data['course_site_url'] = course_site_url
-      complete_step('Retrieved new course site details')
+      background_job_complete_step('Retrieved new course site details')
     end
 
     def expire_instructor_sites_cache
@@ -216,7 +201,7 @@ module Canvas
       Canvas::MergedUserSites.expire(@uid)
       MyClasses::Merged.expire(@uid)
       MyAcademics::Merged.expire(@uid)
-      complete_step('Clearing bCourses course site cache')
+      background_job_complete_step('Clearing bCourses course site cache')
     end
 
     def import_enrollments_in_background(sis_course_id, canvas_section_rows, into_canvas_course_id = nil)
@@ -225,6 +210,7 @@ module Canvas
         added_sections.collect {|row| row['section_id']}, "#{csv_filename_prefix}-enrollments.csv",
         into_canvas_course_id
       )
+      background_job_complete_step('Started enrollments import in background')
     end
 
     def csv_filename_prefix
@@ -397,22 +383,16 @@ module Canvas
       end
     end
 
-    def complete_step(step_text)
-      @completed_steps << step_text
-      logger.info("Job ID #{background_job_id} has completed steps #{@completed_steps}")
-      background_job_save
-    end
-
-    def to_json
-      json_hash = {
-        job_id: background_job_id,
-        jobStatus: @jobStatus,
-        completed_steps: @completed_steps,
-        percent_complete: (@completed_steps.count.to_f / @total_steps).round(2),
-      }
-      json_hash['error'] = @errors.join('; ') if @errors.count > 0
-      json_hash['course_site'] = {short_name: @import_data['course_site_short_name'], url: @import_data['course_site_url']} if @jobStatus == 'courseCreationCompleted'
-      json_hash.to_json
+    def background_job_report_custom
+      if @background_job_type == 'course_creation' && @background_job_status == 'Completed'
+        return {
+          'course_site' => {
+            short_name: @import_data['course_site_short_name'],
+            url: @import_data['course_site_url']
+          }
+        }
+      end
+      return {}
     end
 
     def refresh_sections_cache(canvas_course_id)
