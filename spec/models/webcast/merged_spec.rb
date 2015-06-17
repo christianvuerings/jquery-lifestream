@@ -1,14 +1,15 @@
 describe Webcast::Merged do
 
   context 'authorized user and a fake proxy' do
+    let(:user_id) { rand(99999).to_s }
     let(:options) { {:fake => true} }
     let(:policy) do
-      AuthenticationStatePolicy.new(AuthenticationState.new('user_id' => rand(99999).to_s), nil)
+      AuthenticationStatePolicy.new(AuthenticationState.new('user_id' => user_id), nil)
     end
 
     context 'no matching course' do
       let(:feed) do
-        Webcast::Merged.new(policy, 2014, 'B', [1], options).get_feed
+        Webcast::Merged.new(user_id, policy, 2014, 'B', [1], options).get_feed
       end
       before do
         expect_any_instance_of(MyAcademics::Teaching).not_to receive :new
@@ -28,7 +29,7 @@ describe Webcast::Merged do
 
     context 'one matching course' do
       let(:feed) do
-        Webcast::Merged.new(policy, 2014, 'B', [1, 87432], options).get_feed
+        Webcast::Merged.new(user_id, policy, 2014, 'B', [1, 87432], options).get_feed
       end
       before do
         courses_list = [
@@ -71,7 +72,7 @@ describe Webcast::Merged do
 
     context 'ccn formatting per convention' do
       let(:feed) do
-        Webcast::Merged.new(policy, 2008, 'D', [9688], options).get_feed
+        Webcast::Merged.new(user_id, policy, 2008, 'D', [9688], options).get_feed
       end
       before do
         courses_list = [{
@@ -89,12 +90,12 @@ describe Webcast::Merged do
     end
 
     context 'two matching course' do
-      let(:ldap_uid) { '248421' }
+      let(:ldap_uid) { '18938' }
       let(:policy) do
         AuthenticationStatePolicy.new(AuthenticationState.new('user_id' => ldap_uid), nil)
       end
       let(:feed) do
-        Webcast::Merged.new(policy, 2014, 'B', [87432, 76207, 7620], options).get_feed
+        Webcast::Merged.new(ldap_uid, policy, 2014, 'B', [87432, 76207, 7620], options).get_feed
       end
       before do
         sections_with_recordings = [
@@ -178,6 +179,7 @@ describe Webcast::Merged do
         # Instructors that can sign up for Webcast
         eligible_for_sign_up = feed[:eligibleForSignUp]
         expect(eligible_for_sign_up).to have(1).items
+        expect(eligible_for_sign_up[0][:userCanSignUp]).to be true
         bio_lab = eligible_for_sign_up[0]
         expect(bio_lab[:ccn]).to eq '07620'
         expect(bio_lab[:deptName]).to eq 'BIO'
@@ -197,7 +199,7 @@ describe Webcast::Merged do
 
     context 'cross-listed CCNs in merged feed' do
       let(:feed) do
-        Webcast::Merged.new(policy, 2015, 'B', [51990, 5915, 51992], options).get_feed
+        Webcast::Merged.new(user_id, policy, 2015, 'B', [51990, 5915, 51992], options).get_feed
       end
       before do
         sections_with_recordings = [
@@ -232,7 +234,8 @@ describe Webcast::Merged do
     context 'course with zero recordings is different than course not scheduled for recordings' do
       let(:feed) do
         view_as_mode = AuthenticationState.new('user_id' => rand(99999).to_s, 'original_user_id' => rand(99999).to_s)
-        Webcast::Merged.new(AuthenticationStatePolicy.new(view_as_mode, nil), 2015, 'B', [1, 58301, 56745]).get_feed
+        policy = AuthenticationStatePolicy.new(view_as_mode, nil)
+        Webcast::Merged.new(user_id, policy, 2015, 'B', [1, 58301, 56745]).get_feed
       end
       it 'identifies course that is scheduled for recordings' do
         media = feed[:media]

@@ -3,7 +3,8 @@ module Canvas
     extend Cache::Cacheable
     include ClassLogger
 
-    def initialize(course_policy, canvas_course_id, options = {})
+    def initialize(uid, course_policy, canvas_course_id, options = {})
+      @uid = uid.to_i unless uid.nil?
       @course_policy = course_policy
       @canvas_course_id = canvas_course_id
       @options = options
@@ -11,7 +12,7 @@ module Canvas
 
     # Authorization checks are performed by the controller.
     def get_feed
-      self.class.fetch_from_cache @canvas_course_id do
+      self.class.fetch_from_cache "#{@canvas_course_id}/#{@uid}" do
         get_feed_internal
       end
     end
@@ -32,7 +33,7 @@ module Canvas
           end
         end
       end
-      Webcast::Merged.new(@course_policy, @term_yr, @term_cd, ccn_list, @options).get_feed
+      Webcast::Merged.new(@uid, @course_policy, @term_yr, @term_cd, ccn_list, @options).get_feed
     end
 
   end
