@@ -62,8 +62,6 @@
         external: [
           // Date parsing
           'node_modules/moment/moment.js',
-          // Libraries (google analytics)
-          'src/assets/javascripts/lib/**/*.js',
           // Human Sorting in JavaScript
           'node_modules/js-natural-sort/dist/naturalSort.js',
           // Remote JavaScript error logging
@@ -86,7 +84,8 @@
         // Our own files, we put this in a separate array to make sure we run
         // ng-annotate on it
         internal: [
-          'src/assets/javascripts/**/*.js'
+          'src/assets/javascripts/**/*.js',
+          '!src/assets/javascripts/{angularlib}/**/*.js'
         ],
         // The JS templates files ($templateCache)
         templates: [

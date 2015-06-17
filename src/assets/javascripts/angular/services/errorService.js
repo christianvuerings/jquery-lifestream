@@ -1,7 +1,7 @@
-(function(angular, calcentralConfig, Raven) {
+(function(angular, Raven) {
   'use strict';
 
-  angular.module('calcentral.services').service('errorService', [function() {
+  angular.module('calcentral.services').service('errorService', function(calcentralConfig) {
     Raven.config(calcentralConfig.sentryUrl).install();
 
     var findElement = function(id) {
@@ -35,5 +35,5 @@
     return {
       send: send
     };
-  }]);
-}(window.angular, window.calcentralConfig, window.Raven));
+  });
+}(window.angular, window.Raven));
