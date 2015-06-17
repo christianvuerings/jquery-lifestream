@@ -390,7 +390,7 @@ module Canvas
     def background_job_report_custom
       if @background_job_type == 'course_creation' && @background_job_status == 'Completed'
         return {
-          'course_site' => {
+          'courseSite' => {
             short_name: @import_data['course_site_short_name'],
             url: @import_data['course_site_url']
           }
