@@ -91,9 +91,12 @@ namespace :canvas do
       Rails.logger.error "Why did we find multiple Webcast tools (#{webcast_tool.to_s}) within Canvas globalTools set?! Abort!"
     else
       tool_id = webcast_tool.values.first
-      Rails.logger.warn "Updating Webcast tool (id = #{tool_id}) configs on all Canvas course sites"
       sis_term_ids = Canvas::Proxy.current_sis_term_ids
-      refresh = Canvas::WebcastLtiRefresh.new(sis_term_ids, tool_id).refresh_canvas
+      filtered_ids = sis_term_ids.reject do |id|
+        id.end_with?('A') || id.end_with?('C')
+      end
+      Rails.logger.warn "#{sis_term_ids.to_s} are current SIS terms per Canvas. Webcast LTI refresh will use only #{filtered_ids}"
+      refresh = Canvas::WebcastLtiRefresh.new(filtered_ids, tool_id).refresh_canvas
       Rails.logger.warn "Webcast tool (id = #{tool_id}) refreshed on #{refresh.length} Canvas course sites"
     end
   end
