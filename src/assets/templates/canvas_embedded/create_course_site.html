@@ -265,8 +265,9 @@
           </div>
         </div>
 
-        <div data-ng-if="jobStatus === 'Completed'" data-ng-aria-expanded="{{jobStatus === 'Completed'}}" role="region">
-          <div class="bc-alert bc-alert-success" role="alert">
+        <div data-ng-if="jobStatus === 'Completed'" data-ng-aria-expanded="{{jobStatus === 'Completed'}}">
+          <div data-cc-spinner-directive></div>
+          <div class="cc-visuallyhidden" role="alert">
             Redirecting to new course site.
           </div>
         </div>

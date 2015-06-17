@@ -5,7 +5,7 @@
   /**
    * Canvas course provisioning LTI app controller
    */
-  angular.module('calcentral.controllers').controller('CanvasCreateCourseSiteController', function(apiService, canvasCourseProvisionFactory, canvasSiteCreationService, $route, $scope, $timeout) {
+  angular.module('calcentral.controllers').controller('CanvasCreateCourseSiteController', function(apiService, canvasCourseProvisionFactory, canvasSiteCreationService, $route, $scope, $timeout, $window) {
     apiService.util.setTitle('Create a Course Site');
     $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
@@ -33,6 +33,7 @@
       if ($scope.jobStatus === 'Processing' || $scope.jobStatus === 'New') {
         jobStatusLoader();
       } else {
+        $scope.isLoading = true;
         delete $scope.percentCompleteRounded;
         $timeout.cancel(timeoutPromise);
         if ($scope.jobStatus === 'Completed') {
