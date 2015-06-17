@@ -233,7 +233,8 @@ describe Webcast::Merged do
   context 'a real, non-fake proxy with user in view-as mode', :testext => true do
     context 'course with zero recordings is different than course not scheduled for recordings' do
       let(:feed) do
-        view_as_mode = AuthenticationState.new('user_id' => rand(99999).to_s, 'original_user_id' => rand(99999).to_s)
+        user_id = rand(99999).to_s
+        view_as_mode = AuthenticationState.new('user_id' => user_id, 'original_user_id' => rand(99999).to_s)
         policy = AuthenticationStatePolicy.new(view_as_mode, nil)
         Webcast::Merged.new(user_id, policy, 2015, 'B', [1, 58301, 56745]).get_feed
       end
