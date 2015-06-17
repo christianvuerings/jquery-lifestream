@@ -131,6 +131,7 @@ module Canvas
           :body => { 'hidden' => set_to_hidden },
         }
         url = "#{@api_root}/tabs/#{tab_id}"
+        logger.warn "Update course site_tab with url=#{url} and options: #{options}"
         response = request_uncached(url, '_update_course_site_tab_hidden', options)
         tab = response && safe_json(response.body)
         is_tab_now_showing = tab && !tab['hidden']

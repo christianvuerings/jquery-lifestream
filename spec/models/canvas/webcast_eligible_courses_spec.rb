@@ -16,11 +16,11 @@ describe Canvas::WebcastEligibleCourses do
 
       it 'should flag section when CCN is eligible for webcast sign up' do
         # Webcast sign-up is active
-        expect(subject).to have(4).items
+        expect(subject).to have(2).items
         expect(subject['1336653']).to_not be_nil
         sign_up_eligible = subject['1336761']
         expect(sign_up_eligible).to_not be_nil
-        expect(sign_up_eligible).to have(7).items
+        expect(sign_up_eligible).to have(1).items
         section = sign_up_eligible.first
         expect(section[:term_yr].to_i).to eq 2015
         expect(section[:term_cd]).to eq 'B'
@@ -32,7 +32,7 @@ describe Canvas::WebcastEligibleCourses do
       it 'should not flag sign-up eligible sections when is_sign_up_active = false' do
         allow_any_instance_of(Webcast::SystemStatus).to receive(:get).and_return({ 'is_sign_up_active' => false })
         # Although is_sign_up_active = false, we still serve list of sections webcast
-        expect(subject).to have(4).items
+        expect(subject).to have(2).items
         course = subject['1336653']
         expect(course).to_not be_nil
         expect(course).to have(1).items
