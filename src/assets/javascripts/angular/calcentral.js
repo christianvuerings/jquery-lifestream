@@ -27,6 +27,39 @@
     'templates'
   ]);
 
+  /**
+   * Inject the CalCentral config as a constant that can be use accross modules
+   */
+  var injectConfigConstant = function(response) {
+    angular.module('calcentral.config').constant('calcentralConfig', response.data);
+  };
+
+  /**
+   * Bootstrap the CalCentral Angular App
+   */
+  var bootstrap = function() {
+    angular.element(document).ready(function() {
+      angular.bootstrap(document, ['calcentral']);
+    });
+  };
+
+  /**
+   * Load the CalCentral config which includes:
+   *   csrf tokens
+   *   uid
+   *   google analytics id
+   *   app version
+   *   hostname
+   */
+  var loadConfig = function() {
+    var initInjector = angular.injector(['ng']);
+    var $http = initInjector.get('$http');
+
+    return $http.get('/api/config');
+  };
+
+  loadConfig().then(injectConfigConstant).then(bootstrap);
+
   // Bind calcentral to the window object so it's globally accessible
   win.calcentral = calcentral;
 })(window, window.angular);

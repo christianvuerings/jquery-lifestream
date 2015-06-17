@@ -19,6 +19,7 @@
       apiService.user.handleRouteChange();
       apiService.util.changeControllerName(current.controller);
       apiService.util.checkIsBcourses();
+      apiService.analytics.load();
       apiService.util.hideOffCanvasMenu();
       apiService.auth.isLoggedInRedirect();
       apiService.updatedFeeds.initiate(current.$$route, $rootScope);
