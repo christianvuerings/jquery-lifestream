@@ -12,7 +12,7 @@ class CanvasWebcastRecordingsController < ApplicationController
     raise Errors::BadRequestError, "Bad course site ID #{canvas_course_id}" if canvas_course_id.blank?
     course = Canvas::Course.new(canvas_course_id: canvas_course_id)
     authorize course, :can_view_course?
-    render :json => Canvas::WebcastRecordings.new(policy(course), canvas_course_id).get_feed
+    render :json => Canvas::WebcastRecordings.new(session['user_id'], policy(course), canvas_course_id).get_feed
   end
 
 end

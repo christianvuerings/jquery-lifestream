@@ -2,8 +2,8 @@ module Webcast
   class Merged < UserSpecificModel
     include Cache::CachedFeed
 
-    def initialize(course_policy, term_yr, term_cd, ccn_list, options = {})
-      super(course_policy.user.user_id.to_i, options)
+    def initialize(uid, course_policy, term_yr, term_cd, ccn_list, options = {})
+      super(uid.nil? ? nil : uid.to_i, options)
       @term_yr = term_yr.to_i unless term_yr.nil?
       @term_cd = term_cd
       @ccn_list = ccn_list
