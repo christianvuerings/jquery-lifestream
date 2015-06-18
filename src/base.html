@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="calcentral" data-ng-controller="CalcentralController">
+<html lang="en" data-ng-controller="CalcentralController">
 <head>
   <meta charset="utf-8" />
 
@@ -34,39 +34,6 @@
   <noscript><meta http-equiv="Refresh" content="0; URL=/enable-javascript.html"></noscript>
 
   <base href="/" />
-
-  <script>
-    /**
-     * Expose the CalCentral config to the JS code
-     * Includes
-     *   csrf tokens
-     *   uid
-     *   google analytics id
-     *   app version
-     *   hostname
-     */
-    (function() {
-      'use strict';
-
-      // Create a new Ajax request
-      var request = new XMLHttpRequest();
-
-      // Callback when the Ajax request is loaded
-      var loaded = function() {
-        // Only set the calcentralConfig variable when the request was succesful
-        if (request.readyState === 4 && request.status === 200) {
-          window.calcentralConfig = JSON.parse(this.responseText);
-        }
-      };
-
-      // Add the onload listner
-      request.onload = loaded;
-      // The false option will make sure the request happens synchronously.
-      request.open('GET', '/api/config', false);
-      // Send the XHR request
-      request.send();
-    })();
-  </script>
 
   <link href="/assets/stylesheets/application.css" rel="stylesheet" />
   <script src="/assets/javascripts/application.js"></script>

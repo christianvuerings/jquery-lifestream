@@ -1,4 +1,4 @@
-<div data-ng-class="{'cc-widget-list-hover':(!editorEnabled), 'cc-widget-list-hover-opened':(task.show)}"
+<div data-ng-class="{'cc-widget-list-hover':(!editorEnabled), 'cc-widget-list-hover-opened cc-widget-list-hover-notriangle':(task.show)}"
   data-cc-accessible-focus-directive
   data-ng-click="api.widget.toggleShow($event, tasks, task, 'Tasks')"
   data-ng-controller="TaskEditorController">
@@ -55,7 +55,7 @@
       <span data-ng-if="task.bucket == 'Due Today'">TODAY</span>
       <span data-ng-if="task.dueDate && task.bucket != 'Due Today' && tasksMode != 'completed'" data-ng-bind="task.dueDate.epoch * 1000 | dateInYearFilter:'MM/dd'">
       </span>
-      <div data-ng-if="task.emitter=='bCourses' && !!task.dueDate.hasTime"
+      <div data-ng-if="task.emitter=='bCourses' && task.dueDate.hasTime"
         class="cc-widget-tasks-timestamp" data-ng-bind="task.dueDate.epoch * 1000 | date:'h a'">
       </div>
       <span data-ng-if="tasksMode=='completed'" data-ng-bind="task.completedDate.epoch * 1000 | dateInYearFilter:'MM/dd'"></span>

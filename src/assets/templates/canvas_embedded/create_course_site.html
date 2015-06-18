@@ -251,7 +251,7 @@
           <div data-ng-if="jobStatus">
             <div data-ng-include src="'canvas_embedded/_shared/progress_bar.html'"></div>
 
-            <div data-ng-if="jobStatus === 'courseCreationError' || jobStatus === 'jobNotFoundError'">
+            <div data-ng-if="jobStatus === 'Error'">
               <div data-ng-include src="'canvas_embedded/_shared/background_job_error.html'"></div>
               <div class="row bc-page-create-course-site-step-options">
                 <div class="medium-12 columns">
@@ -265,7 +265,7 @@
           </div>
         </div>
 
-        <div data-ng-if="jobStatus === 'courseCreationCompleted'" data-ng-aria-expanded="{{jobStatus === 'courseCreationCompleted'}}" role="region">
+        <div data-ng-if="jobStatus === 'Completed'" data-ng-aria-expanded="{{jobStatus === 'Completed'}}" role="region">
           <div class="bc-alert bc-alert-success" role="alert">
             Success : <span data-ng-bind="course_site.short_name"></span> site created
             <i class="cc-left fa fa-check-circle cc-icon-green bc-canvas-notice-icon"></i>

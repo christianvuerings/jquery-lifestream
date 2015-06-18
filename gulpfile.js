@@ -64,8 +64,6 @@
           'node_modules/lodash/index.js',
           // Date parsing
           'node_modules/moment/moment.js',
-          // Libraries (google analytics)
-          'src/assets/javascripts/lib/**/*.js',
           // Human Sorting in JavaScript
           'node_modules/js-natural-sort/dist/naturalSort.js',
           // Remote JavaScript error logging
@@ -88,7 +86,8 @@
         // Our own files, we put this in a separate array to make sure we run
         // ng-annotate on it
         internal: [
-          'src/assets/javascripts/**/*.js'
+          'src/assets/javascripts/**/*.js',
+          '!src/assets/javascripts/{angularlib}/**/*.js'
         ],
         // The JS templates files ($templateCache)
         templates: [
@@ -203,7 +202,17 @@
     // Template cache will put all the .html files in the angular templateCache
     var templateCache = require('gulp-angular-templatecache');
 
+    // Minify our html templates
+    var minifyHTML = require('gulp-minify-html');
+
+    // Minify options
+    var minifyOptions = {
+      // Do not remove conditional internet explorer comments
+      conditionals: true
+    };
+
     return gulp.src(paths.src.templates)
+      .pipe(minifyHTML(minifyOptions))
       .pipe(templateCache({
         // Creates a standalone module called 'templates'
         // This makes it easier to load in CalCentral
@@ -311,6 +320,8 @@
     var path = require('path');
     var RevAll = require('gulp-rev-all');
     var revAllAssets = new RevAll({
+      // Since we only run this in production mode, add some extra logging
+      debug: true,
       dontGlobal: [
         /favicon\.ico/g,
         'manifest.json'
@@ -332,10 +343,11 @@
         paths.src.assetsPublic,
         paths.src.mainTemplates.bcoursesEmbeddedPublic,
         paths.src.mainTemplates.indexPublic
-      ], {
-        base: 'assets'
-      })
+      ])
       .pipe(revAllAssets.revision())
+      .pipe(gulp.dest('public/'))
+      // Will add a manifest file at public/rev-manifest.json for debugging purposes
+      .pipe(revAllAssets.manifestFile())
       .pipe(gulp.dest('public/')
     );
 
