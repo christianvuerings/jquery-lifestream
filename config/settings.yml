@@ -294,6 +294,7 @@ features:
   background_jobs_check: true
   course_manage_official_sections: false
   manage_site_mailing_lists: false
+  webcast_sign_up_on_calcentral: false
 
 youtube_splash_id: 'EQ-a7xrfVag'
 

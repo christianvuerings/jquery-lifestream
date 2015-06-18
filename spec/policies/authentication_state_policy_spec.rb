@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe AuthenticationStatePolicy do
   let(:session_state) do
     {'user_id' => user_id, 'original_user_id' => original_user_id, 'lti_authenticated_only' => lti_authenticated_only}
@@ -185,6 +183,38 @@ describe AuthenticationStatePolicy do
     context 'when user is a calcentral administrator' do
       let(:user_id) {superuser_uid}
       it { should be_truthy }
+    end
+  end
+
+  describe '#can_view_webcast_sign_up?' do
+    subject { AuthenticationState.new(session_state).policy.can_view_webcast_sign_up? }
+    context 'when feature flag is true' do
+      before { Settings.features.webcast_sign_up_on_calcentral = true }
+      context 'when superuser is authorized' do
+        let(:user_id) {superuser_uid}
+        it { should be true }
+      end
+      context 'when user is currently teaching course' do
+        let(:user_id) {average_joe_uid}
+        before do
+          allow_any_instance_of(Canvas::CurrentTeacher).to receive(:user_currently_teaching?).and_return true
+        end
+        it { should be true }
+      end
+      context 'when user can view-as' do
+        let(:user_id) {viewer_uid}
+        it { should be true }
+      end
+      context 'when user is inactive superuser' do
+        let(:user_id) {inactive_superuser_uid}
+        it { should be false }
+      end
+    end
+    context 'when feature flag is false' do
+      let(:user_id) {author_uid}
+      before { Settings.features.webcast_sign_up_on_calcentral = false }
+      after { Settings.features.webcast_sign_up_on_calcentral = true }
+      it { should be false }
     end
   end
 
