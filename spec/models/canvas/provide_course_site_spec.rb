@@ -1075,9 +1075,9 @@ describe Canvas::ProvideCourseSite do
           background_job_save
         end
         cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
-        expect(cached_object.background_job_report['course_site']).to be_an_instance_of Hash
-        expect(cached_object.background_job_report['course_site'][:short_name]).to eq 'COMPSCI-10'
-        expect(cached_object.background_job_report['course_site'][:url]).to eq 'https://example.com/courses/999'
+        expect(cached_object.background_job_report['courseSite']).to be_an_instance_of Hash
+        expect(cached_object.background_job_report['courseSite'][:short_name]).to eq 'COMPSCI-10'
+        expect(cached_object.background_job_report['courseSite'][:url]).to eq 'https://example.com/courses/999'
         expect(cached_object.background_job_report['error']).to_not be
       end
     end

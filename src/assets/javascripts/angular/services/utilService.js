@@ -1,7 +1,7 @@
 (function(angular, naturalSort) {
   'use strict';
 
-  angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $route, $timeout, $window) {
+  angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $route, $window) {
     /**
      * Check whether the current browser can play mp3 files
      * Based on Modernizr: http://git.io/DPOxlQ
