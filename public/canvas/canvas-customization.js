@@ -99,7 +99,7 @@
             $('#create-users-step-1 p:first').replaceWith('<p>Type or paste a list of email addresses or CalNet UIDs below:</p>');
 
             // add the calnet directory link
-            $('<div class="pull-right" id="calnet-directory-link"><a href="' + findAPersonToAddToolHref + '"><i class="icon-search-address-book"></i>Find a Person to Add</a></div>').prependTo('#create-users-step-1 p:first');
+            $('<div class="pull-right" id="calnet-directory-link"><i class="icon-search-address-book"></i><a href="' + findAPersonToAddToolHref + '">Find a Person to Add</a></div>').prependTo('#create-users-step-1 p:first');
 
             // make sure the calnet-guest-info div is removed so you never have more than one
             $('#add-people-help').remove();
