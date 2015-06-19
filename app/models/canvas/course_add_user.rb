@@ -38,8 +38,12 @@ module Canvas
     def self.add_user_to_course_section(ldap_user_id, role, canvas_course_section_id)
       raise ArgumentError, "ldap_user_id must be a String" if ldap_user_id.class != String
       raise ArgumentError, "role must be a String" if role.class != String
-      Canvas::UserProvision.new.import_users([ldap_user_id])
       canvas_user_profile = Canvas::SisUserProfile.new(user_id: ldap_user_id).get
+      if canvas_user_profile.nil?
+        Canvas::UserProvision.new.import_users([ldap_user_id])
+        Canvas::SisUserProfile.expire(ldap_user_id)
+        canvas_user_profile = Canvas::SisUserProfile.new(user_id: ldap_user_id).get
+      end
       canvas_section_enrollments_proxy = Canvas::SectionEnrollments.new(:section_id => canvas_course_section_id)
       canvas_section_enrollments_proxy.enroll_user(canvas_user_profile['id'], role, 'active', false)
       true

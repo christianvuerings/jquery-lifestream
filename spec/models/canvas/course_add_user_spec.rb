@@ -177,16 +177,26 @@ describe Canvas::CourseAddUser do
       expect { Canvas::CourseAddUser.add_user_to_course_section("260506", 1, "864215") }.to raise_error(ArgumentError, "role must be a String")
     end
 
-    it "adds user to canvas" do
-      expect_any_instance_of(Canvas::UserProvision).to receive(:import_users).with(["260506"]).and_return(true)
-      result = Canvas::CourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
-      expect(result).to be_truthy
-    end
-
     it "adds user to canvas course section using canvas user id" do
       expect_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(canvas_user_id, "StudentEnrollment", 'active', false).and_return(true)
       result = Canvas::CourseAddUser.add_user_to_course_section("260506", "StudentEnrollment", "864215")
       expect(result).to be_truthy
+    end
+
+    context 'when user profile not found in canvas' do
+      before do
+        sis_user_profile_stub1 = double()
+        sis_user_profile_stub2 = double()
+        allow(sis_user_profile_stub1).to receive(:get).and_return(nil)
+        allow(sis_user_profile_stub2).to receive(:get).and_return(canvas_user_profile)
+        allow(Canvas::SisUserProfile).to receive(:new).and_return(sis_user_profile_stub1, sis_user_profile_stub2)
+      end
+      it "import user via sis import and refreshes cached profile" do
+        expect(Canvas::SisUserProfile).to receive(:expire).with('260506')
+        expect_any_instance_of(Canvas::UserProvision).to receive(:import_users).with(['260506']).and_return(true)
+        result = Canvas::CourseAddUser.add_user_to_course_section('260506', 'StudentEnrollment', '864215')
+        expect(result).to eq true
+      end
     end
   end
 
