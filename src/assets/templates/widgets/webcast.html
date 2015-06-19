@@ -3,25 +3,18 @@
   <div data-ng-bind="proxyErrorMessage"></div>
   <div data-ng-if="!proxyErrorMessage">
     <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Webcasts</h1>
-    <div data-ng-if="eligibleForSignUp && eligibleForSignUp.length > 0">
-      <div data-ng-if="videos || audio" class="cc-widget-webcast-outer-button-group cc-clearfix-container">
-        <ul class="cc-button-group cc-even-2 bc-canvas-embedded-buttonset" role="tablist">
-          <li data-ng-repeat="tabOption in outerTabOptions">
-            <button class="cc-button"
-                    data-ng-click="switchTabOption(tabOption)"
-                    data-ng-class="{
-                        'cc-button-selected':(currentTabSelection === tabOption),
-                        'bc-buttonset-button-active':(currentTabSelection === tabOption),
-                        'bc-buttonset-corner-left':($first),
-                        'bc-buttonset-corner-right':($last)
-                      }"
-                    aria-selected="$first"
-                    role="tab"
-                    data-ng-bind="tabOption">
-            </button>
-          </li>
-        </ul>
-      </div>
+    <div data-ng-if="eligibleForSignUp && eligibleForSignUp.length > 0" class="bc-tab-navigation">
+      <ul data-ng-if="videos || audio" class="bc-tab-group cc-clearfix-container" role="tablist">
+        <li class="bc-tab"
+            data-ng-class="{'bc-tab-active':(currentTabSelection === tabOption)}"
+            data-ng-repeat="tabOption in outerTabOptions">
+          <a data-ng-click="switchTabOption(tabOption)"
+            ng-attr-aria-selected="{{currentTabSelection === tabOption}}"
+            role="tab"
+            data-ng-bind="tabOption">
+          </a>
+        </li>
+      </ul>
       <div data-ng-if="currentTabSelection === 'Webcast Sign-up'">
         <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Webcast Sign-up</h1>
         <div data-ng-if="userCanSignUpOneOrMore">
@@ -66,25 +59,18 @@
           </span>
         </span>
       </div>
-      <div data-ng-if="videos || audio">
-        <div data-ng-if="videos.length && audio.length" class="cc-widget-webcast-inner-button-group cc-clearfix-container">
-          <ul class="cc-button-group cc-even-2 bc-canvas-embedded-buttonset" role="tablist">
-            <li data-ng-repeat="selectOption in selectOptions">
-              <button class="cc-button"
-                      data-ng-click="switchSelectedOption(selectOption)"
-                      data-ng-class="{
-                        'cc-button-selected':(currentSelection === selectOption),
-                        'bc-buttonset-button-active':(currentSelection === selectOption),
-                        'bc-buttonset-corner-left':($first),
-                        'bc-buttonset-corner-right':($last)
-                      }"
-                      aria-selected="{{currentSelection === selectOption}}"
-                      role="tab"
-                      data-ng-bind="selectOption">
-              </button>
-            </li>
-          </ul>
-        </div>
+      <div data-ng-if="videos || audio" class="bc-tab-navigation">
+        <ul class="bc-tab-group cc-clearfix-container" data-ng-if="videos.length && audio.length" role="tablist">
+          <li class="bc-tab"
+              data-ng-class="{'bc-tab-active':(currentSelection === selectOption)}"
+              data-ng-repeat="selectOption in selectOptions">
+            <a data-ng-click="switchSelectedOption(selectOption)"
+              ng-attr-aria-selected="{{currentSelection === selectOption}}"
+              role="tab"
+              data-ng-bind="selectOption">
+            </a>
+          </li>
+        </ul>
         <div data-ng-if="currentSelection === 'Video'">
           <div data-ng-if="videos.length">
             <div class="cc-select cc-widget-webcast-select">
