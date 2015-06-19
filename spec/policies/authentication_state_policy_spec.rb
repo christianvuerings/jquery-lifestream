@@ -189,7 +189,7 @@ describe AuthenticationStatePolicy do
   describe '#can_view_webcast_sign_up?' do
     subject { AuthenticationState.new(session_state).policy.can_view_webcast_sign_up? }
     context 'when feature flag is true' do
-      before { Settings.features.webcast_sign_up_on_calcentral = true }
+      before { allow(Settings.features).to receive(:webcast_sign_up_on_calentral).and_return false }
       context 'when superuser is authorized' do
         let(:user_id) {superuser_uid}
         it { should be true }
