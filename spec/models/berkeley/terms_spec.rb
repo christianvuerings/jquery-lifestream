@@ -50,10 +50,10 @@ describe Berkeley::Terms do
       its('grading_in_progress.slug') {should eq 'fall-2013'}
     end
     context 'in last of available terms' do
-      let(:fake_now) {DateTime.parse('2014-11-11')}
+      let(:fake_now) {DateTime.parse('2016-06-27')}
       it_behaves_like 'a list of campus terms'
-      its('current.slug') {should eq 'fall-2014'}
-      its('running.slug') {should eq 'fall-2014'}
+      its('current.slug') {should eq 'summer-2016'}
+      its('running.slug') {should eq 'summer-2016'}
       its(:next) {should be_nil}
       its(:future) {should be_nil}
       its('grading_in_progress') {should be_nil}

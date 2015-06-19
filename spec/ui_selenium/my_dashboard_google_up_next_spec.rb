@@ -75,7 +75,7 @@ describe 'My Dashboard Up Next card', :testui => true do
 
       # On the Dashboard, wait a moment for the new event.  If not there, wait for a live update to occur.
       @up_next_card.load_page(@driver)
-      @up_next_card.events_list_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
+      @up_next_card.events_list_element.when_present(timeout=WebDriverUtils.google_task_timeout)
       sleep(WebDriverUtils.page_event_timeout)
       unless @up_next_card.all_event_summaries.include?(@event_title)
         @up_next_card.click_live_update_button(WebDriverUtils.mail_live_update_timeout)

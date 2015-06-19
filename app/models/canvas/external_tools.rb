@@ -68,16 +68,19 @@ module Canvas
     def find_canvas_course_tab(tool_id)
       response = request_uncached("#{@api_root}/tabs", '_find_canvas_course_tab', { method: :get })
       all_tabs = response && safe_json(response.body)
-      matching_tab = all_tabs && all_tabs.select { |tab| tab['id'].ends_with? "_#{tool_id}" }
-      matching_tab ? matching_tab.first : nil
+      if all_tabs
+        all_tabs.find { |tab| tab['id'].end_with? "_#{tool_id}" }
+      else
+        nil
+      end
     end
 
-    def hide_course_site_tab(tab_id)
-      update_course_site_tab_hidden(tab_id, true)
+    def hide_course_site_tab(tab)
+      update_course_site_tab_hidden(tab, true)
     end
 
-    def show_course_site_tab(tab_id)
-      update_course_site_tab_hidden(tab_id, false)
+    def show_course_site_tab(tab)
+      update_course_site_tab_hidden(tab, false)
     end
 
     def create_external_tool_by_xml(tool_name, xml_string)
@@ -124,11 +127,18 @@ module Canvas
 
     private
 
-    def update_course_site_tab_hidden(tab_id, set_to_hidden)
+    def update_course_site_tab_hidden(tab, set_to_hidden)
       begin
+        tab_id = tab['id']
+        tab_position = tab['position']
         options = {
           :method => :put,
-          :body => { 'hidden' => set_to_hidden },
+          :body => {
+            'id' => tab_id,
+            'hidden' => set_to_hidden,
+            'position' => tab_position,
+            'visibility' => 'public'
+          }
         }
         url = "#{@api_root}/tabs/#{tab_id}"
         logger.warn "Update course site_tab with url=#{url} and options: #{options}"
