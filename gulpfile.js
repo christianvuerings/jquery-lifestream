@@ -208,7 +208,9 @@
     // Minify options
     var minifyOptions = {
       // Do not remove conditional internet explorer comments
-      conditionals: true
+      conditionals: true,
+      // Do not remove empty attributes used by Angular
+      empty: true
     };
 
     return gulp.src(paths.src.templates)

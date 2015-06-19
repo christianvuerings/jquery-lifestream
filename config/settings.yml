@@ -296,6 +296,7 @@ features:
   manage_site_mailing_lists: false
   spamChristian: false
   cs_fin_aid: false
+  webcast_sign_up_on_calcentral: false
 
 youtube_splash_id: 'EQ-a7xrfVag'
 

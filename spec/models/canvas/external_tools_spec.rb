@@ -57,6 +57,7 @@ describe Canvas::ExternalTools do
 
     context 'when modifying tab settings per canvas_course_id' do
       let(:tab_id) { 'my_tab_external_tool_4' }
+      let(:tab) { { 'id' => tab_id, 'position' => 16 } }
       let(:canvas_course_id) { 98765 }
       let(:options) { {canvas_course_id: "#{canvas_course_id}"} }
       let(:api_path) { "courses/#{canvas_course_id}/tabs/#{tab_id}" }
@@ -68,7 +69,7 @@ describe Canvas::ExternalTools do
           'label' => 'My Tab',
           'type' => 'external',
           'visibility' => 'public',
-          'position' => 2
+          'position' => tab['position']
         }
       }
       let(:tab_hidden) { tab_showing.merge({ 'hidden' => true }) }
@@ -77,12 +78,12 @@ describe Canvas::ExternalTools do
 
       it 'should return tab with hidden=true' do
         expect(subject).to receive(:request_uncached).with(api_path, vcr_id, anything).and_return tab_hidden_response
-        expect(subject.hide_course_site_tab tab_id).to eq tab_hidden
+        expect(subject.hide_course_site_tab tab).to eq tab_hidden
       end
 
       it 'should return tab with no hidden attribute' do
         expect(subject).to receive(:request_uncached).with(api_path, vcr_id, anything).and_return tab_showing_response
-        expect(subject.show_course_site_tab tab_id).to eq tab_showing
+        expect(subject.show_course_site_tab tab).to eq tab_showing
       end
     end
   end

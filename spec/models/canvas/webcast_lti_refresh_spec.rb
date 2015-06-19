@@ -29,7 +29,7 @@ describe Canvas::WebcastLtiRefresh do
         end
 
         it 'should show the Webcast tool because it has videos' do
-          allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return({ 'id' => 1, 'hidden' => true })
+          allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return({ 'id' => 1, 'position' => 16, 'hidden' => true })
           expect(Webcast::CourseSiteLog).to receive(:find_by).exactly(2).times.with(anything).and_return nil
           allow_any_instance_of(Canvas::ExternalTools).to receive(:show_course_site_tab).and_return :return
           modified_tab_hash = subject.refresh_canvas
@@ -41,7 +41,7 @@ describe Canvas::WebcastLtiRefresh do
             expect(Webcast::CourseSiteLog).to receive(:find_by).once.with({ :canvas_course_site_id => id }).and_return log_entry
           end
           # Canvas docs say 'hidden' property not present when value is false
-          allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return({ 'id' => 1, 'hidden' => true })
+          allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return({ 'id' => 1, 'position' => 16, 'hidden' => true })
           expect(subject.refresh_canvas).to be_empty
         end
       end
@@ -85,15 +85,15 @@ describe Canvas::WebcastLtiRefresh do
         end
 
         it 'should hide webcast tab' do
-          tab = { 'id' => tab_id }
+          tab = { 'id' => tab_id, 'position' => 16 }
           allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).with(webcast_tool_id).and_return tab
-          hidden_tab = { 'id' => tab_id, 'hidden' => true }
-          allow_any_instance_of(Canvas::ExternalTools).to receive(:hide_course_site_tab).with(tab_id).and_return hidden_tab
+          hidden_tab = { 'id' => tab_id, 'position' => 16, 'hidden' => true }
+          allow_any_instance_of(Canvas::ExternalTools).to receive(:hide_course_site_tab).with(tab).and_return hidden_tab
           allow_any_instance_of(Webcast::CourseSiteLog).to receive(:create).with anything
           expect(subject.refresh_canvas).to have(2).items
         end
         it 'should not hide the already hidden tab' do
-          tab = { 'id' => tab_id, 'hidden' => true }
+          tab = { 'id' => tab_id, 'position' => 16, 'hidden' => true }
           allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).with(webcast_tool_id).and_return tab
           allow_any_instance_of(Canvas::ExternalTools).to receive(:show_course_site_tab).and_raise StandardError
           expect(subject.refresh_canvas).to be_empty
