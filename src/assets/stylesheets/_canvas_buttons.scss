@@ -24,6 +24,7 @@ $bc-canvas-button-selected-color: #fff;
   font-weight: normal;
   line-height: 20px;
   overflow: hidden;
+  margin: 0 2px;
   padding: 8px 14px;
   transition: background-color .2s ease-in-out;
   &:hover, &:active, &:focus {
@@ -41,7 +42,8 @@ $bc-canvas-button-selected-color: #fff;
 }
 
 a.bc-canvas-button {
-  padding: 10px 14px;
+  margin-bottom: 0;
+  padding: 8px 14px;
 }
 
 .bc-canvas-button-primary,
@@ -89,4 +91,9 @@ a.bc-canvas-button {
       color: $bc-color-grey;
     }
   }
+}
+
+// Make 'Cancel' action button display before primary action button in form
+.bc-canvas-cancel-button {
+  // float:left;
 }

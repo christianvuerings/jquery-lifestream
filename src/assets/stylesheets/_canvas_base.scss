@@ -114,6 +114,8 @@ button.bc-button-link {
 .bc-form-actions {
   background: $bc-color-container-grey-background;
   border: 1px solid $bc-color-container-grey-border;
+  display: flex;
+  flex-direction: row-reverse;
   margin: 5px 0;
   padding: 10px 5px;
   text-align: right;

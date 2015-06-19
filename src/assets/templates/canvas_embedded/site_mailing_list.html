@@ -99,26 +99,27 @@
         </div>
 
         <div class="bc-form-actions">
-          <button data-ng-if="!listPending" class="bc-canvas-button" data-ng-click="resetForm()">Cancel</button>
           <button data-ng-if="!listRegistered" data-ng-click="registerMailingList()" class="bc-canvas-button bc-canvas-button-primary" aria-controls="cc-page-reader-alert">
             <span data-ng-if="!isProcessing">Reserve mailing list name</span>
             <span data-ng-if="isProcessing"><i class="fa fa-spinner fa-spin"></i> Reserving ...</span>
           </button>
           <div data-ng-if="listPending">
-            <button data-ng-if="listPending" class="bc-canvas-button" data-ng-click="unregisterMailingList()">
-              <span data-ng-if="!isProcessing">Cancel registration</span>
-              <span data-ng-if="isProcessing"><i class="fa fa-spinner fa-spin"></i> Cancelling ...</span>
-            </button>
-            <a data-ng-href="{{mailingList.creationUrl}}" class="bc-canvas-button bc-canvas-button-primary bc-page-site-mailing-list-button-primary" aria-controls="cc-page-reader-alert">Create mailing list</a>
+            <a data-ng-href="{{mailingList.creationUrl}}" class="bc-canvas-button bc-canvas-button-primary bc-page-site-mailing-list-button-primary"
+            aria-controls="cc-page-reader-alert">Create mailing list</a>
             <button data-ng-click="confirmCreation()" class="bc-canvas-button" aria-controls="cc-page-reader-alert">
               <i data-ng-if="isConfirmingCreation" class="fa fa-spinner fa-spin"></i>
               I've created the list, go to memberships
+            </button>
+            <button data-ng-if="listPending" class="bc-canvas-button" data-ng-click="unregisterMailingList()">
+              <span data-ng-if="!isProcessing">Cancel registration</span>
+              <span data-ng-if="isProcessing"><i class="fa fa-spinner fa-spin"></i> Cancelling ...</span>
             </button>
           </div>
           <button data-ng-if="listCreated" data-ng-click="populateMailingList()" class="bc-canvas-button bc-canvas-button-primary" aria-controls="cc-page-reader-alert">
             <span data-ng-if="!isProcessing">Update membership from course site</span>
             <span data-ng-if="isProcessing"><i class="fa fa-spinner fa-spin"></i> Updating ...</span>
           </button>
+          <button data-ng-if="!listPending" class="bc-canvas-button" data-ng-click="resetForm()">Cancel</button>
         </div>
       </form>
 
