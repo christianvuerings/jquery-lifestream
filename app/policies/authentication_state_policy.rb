@@ -61,7 +61,8 @@ class AuthenticationStatePolicy
   end
 
   def can_view_webcast_sign_up?
-    # By default, only superusers can debug in non-prod. Sub-classes can override with, for example, Canvas-specific rules.
-    !Rails.env.production? && (can_administrate? || @user.viewing_as?)
+    # Remove feature-flag when Webcast sign-up is supported on CalCentral
+    feature_flag = Settings.features.webcast_sign_up_on_calcentral
+    feature_flag.present? && feature_flag && (can_administrate? || can_view_as? || can_add_current_official_sections?)
   end
 end

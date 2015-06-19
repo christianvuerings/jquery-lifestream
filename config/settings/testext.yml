@@ -33,6 +33,7 @@ features:
   cal1card: true
   audio: true
   advising: true
+  webcast_sign_up_on_calcentral: true
 
 cache:
   store: "memory"
