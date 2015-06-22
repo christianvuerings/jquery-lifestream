@@ -208,7 +208,9 @@
       // Do not remove conditional internet explorer comments
       conditionals: true,
       // Do not remove empty attributes used by Angular
-      empty: true
+      empty: true,
+      // Preserve one whitespace
+      loose: true
     };
 
     return gulp.src(paths.src.templates)
