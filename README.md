@@ -136,7 +136,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 1. Initialize PostgreSQL database tables:
 
     ```bash
-    rake db:schema:load db:seed
+    rake environment db:schema:load db:seed
     ```
 
 1. Make yourself powerful:
@@ -146,7 +146,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     # e.g. rake superuser:create UID=61889
     ```
 
-1. Install the frond-end tools:
+1. Install the front-end tools:
 
     ```bash
     npm install
