@@ -20,13 +20,14 @@ module CampusOracle
       result = CampusOracle::Queries.get_person_attributes(@uid)
       if result
         result[:education_level] = educ_level_translator.translate result['educ_level']
-        result[:california_residency] = cal_residency_translator.translate result['cal_residency_flag']
         result[:roles] = roles_from_campus_row result
         result.merge! Berkeley::SpecialRegistrationProgram.attributes_from_code(result['reg_special_pgm_cd'])
 
-        if result['reg_status_cd'] && Berkeley::Terms.fetch.current.sis_term_status != 'CT'
-          result[:reg_status] = {transitionTerm: true}
+        if term_transition?
+          result[:california_residency] = nil
+          result[:reg_status] = result['reg_status_cd'] ? {transitionTerm: true} : reg_status_translator.translate_for_feed(nil)
         else
+          result[:california_residency] = cal_residency_translator.translate result['cal_residency_flag']
           result[:reg_status] = reg_status_translator.translate_for_feed result['reg_status_cd']
         end
 
@@ -52,6 +53,10 @@ module CampusOracle
         return true if get_feed[:roles] && (get_feed[:roles][:faculty] || get_feed[:roles][:staff])
       end
       false
+    end
+
+    def term_transition?
+      Berkeley::Terms.fetch.current.sis_term_status != 'CT'
     end
 
   end
