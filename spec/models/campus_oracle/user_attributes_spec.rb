@@ -22,7 +22,6 @@ describe CampusOracle::UserAttributes do
         shared_examples 'expected feed values' do
           it 'includes expected feed values' do
             expect(subject[:education_level]).to eq 'Masters'
-            expect(subject[:california_residency][:summary]).to eq 'Non-Resident'
           end
         end
         context 'normal term' do
@@ -35,12 +34,18 @@ describe CampusOracle::UserAttributes do
             expect(subject[:reg_status][:needsAction]).to eq true
             expect(subject[:reg_status]).not_to include(:transitionTerm)
           end
+          it 'includes residency status' do
+            expect(subject[:california_residency][:summary]).to eq 'Non-Resident'
+          end
         end
         context 'term transition' do
           let(:current_sis_term_status) { 'CS' }
           include_examples 'expected feed values'
           it 'reports term transition' do
             expect(subject[:reg_status]).to eq({transitionTerm: true})
+          end
+          it 'omits residency status' do
+            expect(subject[:california_residency]).to eq nil
           end
         end
       end
