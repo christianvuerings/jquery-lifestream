@@ -172,7 +172,7 @@
     var accessibilityAnnounce = function(message) {
       // remove existing announcer
       var existingAnnouncer = $window.document.getElementById('cc-sr-announcer');
-      if (document.contains(existingAnnouncer)) {
+      if (document.body.contains(existingAnnouncer)) {
         existingAnnouncer.parentNode.removeChild(existingAnnouncer);
       }
 
