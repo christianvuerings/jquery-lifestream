@@ -26,7 +26,7 @@
           <span data-ng-if="!creatingSite">Create a Project Site</span>
           <span data-ng-if="creatingSite"><i class="fa fa-spinner fa-spin"></i> Creating ...</span>
         </button>
-        <button data-cc-disabled="creatingSite" class="bc-canvas-button">Cancel</button>
+        <button data-cc-disabled="creatingSite" data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button">Cancel</button>
       </div>
     </form>
   </div>
