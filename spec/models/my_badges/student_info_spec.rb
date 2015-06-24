@@ -40,11 +40,12 @@ describe 'MyBadges::StudentInfo' do
   context 'term transitions' do
     let(:term_name) { 'Summer 2015' }
     before do
-      allow(CampusOracle::UserAttributes).to receive(:new).and_return(double(get_feed: {reg_status: {transitionTerm: true}}))
+      allow(CampusOracle::UserAttributes).to receive(:new).and_return(double(get_feed: {reg_status: {code: code, transitionTerm: true}}))
       allow_any_instance_of(MyAcademics::TransitionTerm).to receive(:regstatus_feed).and_return({registered: is_registered, termName: term_name})
     end
     let(:result) { MyBadges::StudentInfo.new(random_uid).get }
     context 'registered during transition' do
+      let(:code) { ' ' }
       let(:is_registered) { true }
       it 'reports registration' do
         expect(result[:regStatus][:code]).to eq 'R'
@@ -54,10 +55,21 @@ describe 'MyBadges::StudentInfo' do
       end
     end
     context 'not registered during transition' do
+      let(:code) { ' ' }
       let(:is_registered) { false }
       it 'reports not registered with no action required' do
         expect(result[:regStatus][:code]).to eq ' '
         expect(result[:regStatus][:summary]).to eq "Not registered for #{term_name}"
+        expect(result[:regStatus][:explanation]).to be_nil
+        expect(result[:regStatus][:needsAction]).to eq false
+      end
+    end
+    context 'nil registration status during transition' do
+      let(:code) { nil }
+      let(:is_registered) { false }
+      it 'reports nil registration status' do
+        expect(result[:regStatus][:code]).to be_nil
+        expect(result[:regStatus][:summary]).to be_nil
         expect(result[:regStatus][:explanation]).to be_nil
         expect(result[:regStatus][:needsAction]).to eq false
       end
