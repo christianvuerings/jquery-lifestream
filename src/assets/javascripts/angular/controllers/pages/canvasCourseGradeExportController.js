@@ -51,7 +51,7 @@
       } else {
         delete $scope.percentCompleteRounded;
         $timeout.cancel(timeoutPromise);
-        $scope.accessibilityAnnounceAnnounce('Downloading export. Export form options presented for an additional download.');
+        $scope.accessibilityAnnounce('Downloading export. Export form options presented for an additional download.');
         $scope.switchToSelection();
         downloadGrades();
       }
