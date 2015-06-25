@@ -40,7 +40,7 @@ describe 'My Academics webcasts card', :testui => true do
             splash_page.basic_auth(driver, uid)
             my_academics = CalCentralPages::MyAcademicsClassPage.new(driver)
             my_academics.load_class_page(driver, class_page)
-            my_academics.wait_for_webcasts
+            my_academics.webcast_heading_element.when_visible(WebDriverUtils.academics_timeout)
             testable_users.push(uid)
 
             if video_you_tube_id.nil? && !audio_url.nil?
@@ -54,7 +54,8 @@ describe 'My Academics webcasts card', :testui => true do
                 expect(has_video_tab).to be false
               end
             elsif video_you_tube_id.nil? && audio_url.nil?
-              has_no_webcast_message = my_academics.no_webcast_msg?
+              my_academics.no_webcast_msg_element.when_present(timeout=WebDriverUtils.page_load_timeout)
+              has_no_webcast_message = my_academics.no_webcast_msg_element.visible?
               it "shows a 'no webcasts' message for UID #{uid}" do
                 expect(has_no_webcast_message).to be true
               end
