@@ -165,14 +165,19 @@
               <tbody>
                 <tr data-ng-repeat="user in userSearchResults">
                   <td>
-                    <label for="user-{{$index}}" class="cc-visuallyhidden">
-                      <span data-ng-bind="user.firstName + ' ' + user.lastName"></span>
-                      Cal Net U I D <span data-ng-bind="user.ldapUid"></span>
-                    </label>
-                    <input id="user-{{$index}}" type="radio" name="selectedUser" data-ng-model="$parent.selectedUser" data-ng-value="user" data-ng-required="true">
+                    <input id="bc-user-search-result-{{$index}}" type="radio" name="selectedUser" data-ng-model="$parent.selectedUser"
+                      data-ng-value="user" data-ng-required="true" aria-labelled-by="bc-user-search-result-{{$index}} bc-user-search-result-ldap-uid-{{$index}}">
                   </td>
-                  <td data-ng-bind="user.firstName + ' ' + user.lastName"></td>
-                  <td data-ng-bind="user.ldapUid"></td>
+                  <td>
+                    <label for="bc-user-search-result-{{$index}}" class="bc-form-input-label-no-align">
+                      <span data-ng-bind="user.firstName + ' ' + user.lastName"></span>
+                    </label>
+                  </td>
+                  <td>
+                    <span id="bc-user-search-result-ldap-uid-{{$index}}">
+                      <span data-ng-bind="user.ldapUid"></span>
+                    </span>
+                  </td>
                   <td data-ng-bind="user.emailAddress"></td>
                 </tr>
               </tbody>
