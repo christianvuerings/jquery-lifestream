@@ -44,6 +44,10 @@
           Please refine your search to limit the number of results.
         </div>
 
+        <div data-ng-show="userSearchResultsCount == userSearchResults.length" class="cc-visuallyhidden">
+          <span data-ng-bind="userSearchResultsCount"></span> user search results loaded.
+        </div>
+
         <div data-ng-show="additionSuccessMessage" class="bc-alert bc-alert-success bc-page-course-add-user-alert">
           <span data-ng-bind="userAdded.fullName"></span> was added to the
           &ldquo;<span data-ng-bind="userAdded.sectionName"></span>&rdquo; section of this course as a <span data-ng-bind="userAdded.roleName"></span>.
