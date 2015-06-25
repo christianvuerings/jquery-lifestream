@@ -357,15 +357,15 @@ cs_checklist_proxy:
 
 cs_awards_proxy:
   fake: true
-  base_url: 'http://sis-demo-02.is.berkeley.edu'
-  username: secret
-  password: secret
+  base_url: 'https://apis.berkeley.edu/sis/finaid/awards/v1/students'
+  app_id: 'secret'
+  app_key: 'secret'
 
 cs_budget_proxy:
   fake: true
-  base_url: 'http://sis-demo-02.is.berkeley.edu'
-  username: secret
-  password: secret
+  base_url: 'https://apis.berkeley.edu/sis/finaid/budget/v1/students'
+  app_id: 'secret'
+  app_key: 'secret'
 
 campus_solutions_proxy:
   fake: true
