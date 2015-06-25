@@ -71,7 +71,6 @@
     </div>
 
     <div class="row collapse" data-ng-show="showSearchForm">
-
       <div class="medium-6 columns">
         <form data-ng-submit="searchUsers()" class="bc-canvas-page-form">
 
@@ -147,6 +146,8 @@
 
     <div class="row collapse" data-ng-show="showUsersArea">
       <div data-cc-spinner-directive></div>
+
+      <h2 class="cc-visuallyhidden" data-cc-focus-reset-directive="searchResultsFocus">User Search Results</h2>
 
       <div data-ng-show="userSearchResults.length > 0">
         <form data-ng-submit="addUser()" class="bc-canvas-page-form">

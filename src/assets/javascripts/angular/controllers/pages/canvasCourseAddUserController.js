@@ -98,6 +98,7 @@
         }
         $scope.isLoading = false;
         $scope.showAlerts = true;
+        $scope.searchResultsFocus = true;
       }).error(function(data) {
         $scope.showError = true;
         if (data.error) {
