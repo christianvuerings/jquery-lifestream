@@ -138,7 +138,9 @@ describe Berkeley::CoursePolicy do
         expect(subject.can_view_roster_photos?).to be false
       end
     end
+  end
 
+  describe '#can_view_webcast_sign_up?' do
     context 'when webcast content is served to a non-superuser' do
       before do
         allow_any_instance_of(User::Auth).to receive(:active?).and_return true

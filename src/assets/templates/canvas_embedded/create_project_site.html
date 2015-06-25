@@ -22,11 +22,11 @@
       </div>
 
       <div class="bc-form-actions">
-        <a data-cc-disabled="creatingSite" data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button">Cancel</a>
         <button data-ng-disabled="disableSubmit()" data-ng-click="createProjectSite()" class="bc-canvas-button bc-canvas-button-primary" aria-controls="cc-page-reader-alert" type="submit">
           <span data-ng-if="!creatingSite">Create a Project Site</span>
           <span data-ng-if="creatingSite"><i class="fa fa-spinner fa-spin"></i> Creating ...</span>
         </button>
+        <button data-cc-disabled="creatingSite" data-ng-href="{{linkToSiteOverview}}" class="bc-canvas-button">Cancel</button>
       </div>
     </form>
   </div>

@@ -111,9 +111,13 @@ button.bc-button-link {
   padding: 0;
 }
 
+// Note: Canvas style guide calls for 'Cancel' buttons before action buttons.
+// Web accessibility asks for action buttons before cancel. See CLC-5440. 
 .bc-form-actions {
   background: $bc-color-container-grey-background;
   border: 1px solid $bc-color-container-grey-border;
+  display: flex;
+  flex-direction: row-reverse;
   margin: 5px 0;
   padding: 10px 5px;
   text-align: right;

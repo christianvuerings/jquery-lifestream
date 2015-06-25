@@ -80,15 +80,19 @@ describe 'My Academics webcasts card', :testui => true do
               my_academics.video_thumbnail_element.when_present(timeout=WebDriverUtils.page_event_timeout)
               all_visible_video_lectures = my_academics.video_select_element.options.length
               thumbnail_present = my_academics.video_thumbnail_element.attribute('src').include? video_you_tube_id
-              auto_play = my_academics.you_tube_video_auto_plays?(driver)
               it "shows all the available lecture videos for UID #{uid}" do
                 expect(all_visible_video_lectures).to eql(lecture_count)
               end
               it "shows the right video thumbnail for UID #{uid}" do
                 expect(thumbnail_present).to be true
               end
-              it "plays the video automatically when clicked for UID #{uid}" do
-                expect(auto_play).to be true
+              if my_academics.has_html5_player? driver
+                auto_play = my_academics.you_tube_video_auto_plays? driver
+                it "plays the video automatically when clicked for UID #{uid}" do
+                  expect(auto_play).to be true
+                end
+              else
+                logger.info 'No HTML5 player present'
               end
               unless video_itunes.nil?
                 itunes_video_link_present = WebDriverUtils.verify_external_link(driver, my_academics.itunes_video_link_element, "#{course} - Download free content from UC Berkeley on iTunes")
@@ -123,6 +127,13 @@ describe 'My Academics webcasts card', :testui => true do
                 it "shows an iTunes audio URL for UID #{uid}" do
                   expect(itunes_audio_link_present).to be true
                 end
+              end
+            end
+
+            unless video_you_tube_id.nil? && audio_url.nil?
+              has_report_problem_link = WebDriverUtils.verify_external_link(driver, my_academics.report_problem_link_element, 'Get Webcast/Podcast Support or Give Feedback | Educational Technology Services')
+              it "offers a 'Report a Problem' link for UID #{uid}" do
+                expect(has_report_problem_link).to be true
               end
             end
 
