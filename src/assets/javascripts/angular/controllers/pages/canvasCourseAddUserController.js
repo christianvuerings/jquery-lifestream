@@ -16,6 +16,7 @@
       $scope.selectedUser = null;
       $scope.showUsersArea = false;
       $scope.userSearchResultsCount = 0;
+      $scope.userSearchResults = [];
       $scope.noSearchTextAlert = false;
       $scope.noSearchResultsNotice = false;
       $scope.noUserSelectedAlert = false;
