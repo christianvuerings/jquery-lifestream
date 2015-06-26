@@ -348,25 +348,60 @@
    * Resizing the iFrame based on its content is handled by Instructure's `public/javascripts/tool_inline.js`
    * file, and it determines the message format we use.
    *
-   * We include the following custom event types:
-   *
-   *  - Scroll the parent container to a specified position:
-   *    `{subject: 'changeParent', scrollTo: <scrollPosition>}`
-   *
-   *  - Scroll the parent container to the top of the screen:
-   *    `{subject: 'changeParent', scrollToTop: true}`
+   * The following custom event is provided for modifying the URL of the parent container:
    *
    *  - Change the location of the parent container:
-   *    `{subject: 'changeParent', parentLocation: <newLocation>}`
+   *    ```
+   *     {
+   *       subject: 'changeParent',
+   *       parentLocation: <newLocation>
+   *     }
+   *    ```
    *
-   *  - Get the scroll position of the parent container:
-   *    `{subject: 'getScrollPosition'}`
-   *    This will respond with a window event back to the LTI iFrame with the following message:
-   *    `{scrollPosition: <currentScrollPosition>}`
+   * The following custom events are provided to support scrolling-related interaction between
+   * the LTI iFrame and the parent container:
    *
-   *  - If the iFrame is so enormous as to hit the 5000px limit in Instructure's code,
-   *    resize it ourselves.
-   *    `{subject: 'resizeLargeFrame', height: <height>}`
+   *  - Change the height of the LTI iFrame:
+   *    ```
+   *     {
+   *       subject: 'changeParent',
+   *       height: <height>
+   *     }
+   *    ```
+   *
+   *  - Scroll the parent container to a specified position:
+   *    ```
+   *     {
+   *       subject: 'changeParent',
+   *       scrollTo: <scrollPosition>
+   *     }
+   *    ```
+   *
+   *  - Scroll the parent container to the top of the screen:
+   *    ```
+   *     {
+   *       subject: 'changeParent',
+   *       scrollToTop: true
+   *     }
+   *    ```
+   *
+   *  - Get the scroll information of the parent container:
+   *    ```
+   *     {
+   *       subject: 'getScrollInformation'
+   *     }
+   *    ```
+   *
+   *    Each of these events will respond with a window event back to the LTI iFrame containing the scroll information
+   *    for the parent container:
+   *    ```
+   *     {
+   *       iFrameHeight: <currentIframeHeight>,
+   *       parentHeight: <currentParentHeight>,
+   *       scrollPosition: <currentScrollPosition>,
+   *       scrollToBottom: <currentHeightBelowFold>
+   *     }
+   *    ```
    *
    * @param  {Object}    ev         Event that is sent over from the iframe
    * @param  {String}    ev.data    The message sent with the event. Note that this is expected to be a stringified JSON object
@@ -382,30 +417,39 @@
         return;
       }
 
-      // Events that will cause changes to the parent container
-      if (message.subject === 'changeParent') {
+      // Event that will modify the URL of the parent container
+      if (message.subject === 'changeParent' && message.parentLocation) {
+        window.location = message.parentLocation;
+
+      // Events related to scrolling interaction between the LTI iFrame and the parent container
+      } else if (message.subject === 'changeParent' || message.subject === 'getScrollInformation') {
         // Scroll to the specified position
         if (message.scrollTo !== undefined) {
           window.scrollTo(0, message.scrollTo);
         // Scroll to the top of the current window
         } else if (message.scrollToTop) {
           window.scrollTo(0, 0);
-        // Change the current location
-        } else if (message.parentLocation) {
-          window.location = message.parentLocation;
+        } else if (message.height !== undefined) {
+          if (!message.height || message.height < 450) {
+            message.height = 450;
+          }
+          $('.tool_content_wrapper').height(message.height).data('height_overridden', true);
         }
-      // Retrieve the current scroll position of the parent container
-      } else if (message.subject === 'getScrollPosition') {
-        // Only respond when the source iFrame is present
+
+        // Respond with a window event back to the LTI iFrame containing the scroll information for the parent container
         if (ev.source) {
-          var scrollPosition = (window.pageYOffset || document.documentElement.scrollTop) - (document.documentElement.clientTop || 0);
-          var response = {scrollPosition: scrollPosition};
+          var iFrameHeight = $('.tool_content_wrapper').height();
+          var parentHeight = $(document).height();
+          var scrollPosition = $(document).scrollTop();
+          var scrollToBottom = parentHeight - $(window).height() - scrollPosition;
+          var response = {
+            iFrameHeight: iFrameHeight,
+            parentHeight: parentHeight,
+            scrollPosition: scrollPosition,
+            scrollToBottom: scrollToBottom
+          };
           ev.source.postMessage(JSON.stringify(response), '*');
         }
-      // Resize frame if too large for Instructure's `public/javascripts/tool_inline.js`
-      } else if (message.subject === 'resizeLargeFrame' && message.height) {
-        $('#tool_content').height(message.height);
-        $('.tool_content_wrapper').height('auto');
       }
     }
   };

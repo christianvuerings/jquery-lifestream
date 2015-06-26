@@ -127,7 +127,7 @@
             heightElement = alternativeElement[0];
           }
           var frameHeight = heightElement.scrollHeight;
-          var messageSubject = frameHeight > 5000 ? 'resizeLargeFrame' : 'lti.frameResize';
+          var messageSubject = frameHeight > 5000 ? 'changeParent' : 'lti.frameResize';
           var message = {subject: messageSubject, height: frameHeight};
           iframePostMessage(JSON.stringify(message));
         }, 250);
