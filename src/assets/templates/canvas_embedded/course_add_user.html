@@ -44,7 +44,7 @@
           Please refine your search to limit the number of results.
         </div>
 
-        <div data-ng-show="userSearchResultsCount == userSearchResults.length" class="cc-visuallyhidden">
+        <div data-ng-show="userSearchResultsCount === userSearchResults.length" class="cc-visuallyhidden">
           <span data-ng-bind="userSearchResultsCount"></span> user search results loaded.
         </div>
 
@@ -165,7 +165,7 @@
                 <tr data-ng-repeat="user in userSearchResults">
                   <td>
                     <input id="bc-user-search-result-{{$index}}" type="radio" name="selectedUser" data-ng-model="$parent.selectedUser"
-                      data-ng-value="user" data-ng-required="true" aria-labelled-by="bc-user-search-result-{{$index}} bc-user-search-result-ldap-uid-{{$index}}">
+                      data-ng-value="user" data-ng-required="true" data-ng-attr-aria-labelled-by="bc-user-search-result-{{$index}} bc-user-search-result-ldap-uid-{{$index}}">
                   </td>
                   <td>
                     <label for="bc-user-search-result-{{$index}}" class="bc-form-input-label-no-align">
@@ -173,7 +173,7 @@
                     </label>
                   </td>
                   <td>
-                    <span id="bc-user-search-result-ldap-uid-{{$index}}">
+                    <span data-ng-attr-id="bc-user-search-result-ldap-uid-{{$index}}">
                       <span data-ng-bind="user.ldapUid"></span>
                     </span>
                   </td>
