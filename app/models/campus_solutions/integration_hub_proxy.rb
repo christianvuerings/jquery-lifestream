@@ -5,6 +5,8 @@ module CampusSolutions
     def request_options
       {
         query: {
+          'app_id' => @settings.app_id,
+          'app_key' => @settings.app_key,
           'year' => 2015
         }
       }
