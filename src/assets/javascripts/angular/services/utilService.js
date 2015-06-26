@@ -1,4 +1,4 @@
-(function(angular, naturalSort) {
+(function(angular) {
   'use strict';
 
   angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $route, $window) {
@@ -203,7 +203,7 @@
       iframeParentLocation: iframeParentLocation,
       isInIframe: isInIframe,
       hideOffCanvasMenu: hideOffCanvasMenu,
-      naturalSort: naturalSort,
+      naturalSort: require('js-natural-sort'),
       preventBubble: preventBubble,
       printPage: printPage,
       redirect: redirect,
@@ -213,4 +213,4 @@
       uidPattern: uidPattern
     };
   });
-}(window.angular, window.naturalSort));
+}(window.angular));
