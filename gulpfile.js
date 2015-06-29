@@ -247,9 +247,9 @@
         util.log('Update complete. Finished watchify after', util.colors.magenta(Date.now() - updateStart + ' ms'));
       });
       // Create initial bundle when starting the task
-      bundleShare(watcher);
+      return bundleShare(watcher);
     } else {
-      bundleShare(bundler);
+      return bundleShare(bundler);
     }
   });
 
