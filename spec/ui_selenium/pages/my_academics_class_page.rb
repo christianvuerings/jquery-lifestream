@@ -33,12 +33,12 @@ module CalCentralPages
 
     # WEBCAST
     h2(:webcast_heading, :xpath => '//h2[text()="Webcasts"]')
-    div(:webcast_spinner_gone, :xpath => '//div[@data-ng-controller="WebcastController"]/div[@data-cc-spinner-directive=""]')
     link(:video_tab, :text => 'Video')
     div(:no_video_msg, :xpath => '//div[contains(.,"No video content available.")]')
     select(:video_select, :xpath => '//select[@data-ng-model="selectedVideo"]')
     button(:video_thumbnail, :xpath => '//button[@id="cc-youtube-image-placeholder"]/img')
-    element(:video_iframe, 'iframe')
+    div(:html5_player, :xpath => '//div[@class="html5-player-chrome"]')
+    div(:video_pause_button, :xpath => '//div[@class="ytp-button ytp-button-pause"]')
     link(:itunes_video_link, :xpath => '//li[@class="cc-widget-webcast-itunes-link"]/a')
     link(:audio_tab, :text => 'Audio')
     div(:no_audio_msg, :xpath => '//div[contains(.,"No audio content available.")]')
@@ -47,7 +47,7 @@ module CalCentralPages
     audio(:audio_source, :xpath => '//audio/source')
     link(:audio_download_link, :xpath => '//li[@data-ng-if="selectedAudio.downloadUrl"]/a')
     link(:itunes_audio_link, :xpath => '//li[@data-ng-if="iTunes.audio"]/a')
-    div(:no_webcast_msg, :xpath => '//div[contains(.,"There are no webcasts scheduled.")]')
+    div(:no_webcast_msg, :xpath => '//div[contains(text(),"There are no webcasts scheduled.")]')
     link(:report_problem_link, :xpath => '//a[contains(text(),"Report a problem with this recording")]')
 
     def all_student_section_labels
@@ -115,17 +115,12 @@ module CalCentralPages
       listings
     end
 
-    def wait_for_webcasts
-      webcast_heading_element.when_present(WebDriverUtils.page_load_timeout)
-      webcast_spinner_gone_element.when_present(WebDriverUtils.page_load_timeout)
-    end
-
     def has_html5_player?(driver)
-      video_thumbnail_element.click
+      video_thumbnail
+      wait_until(timeout=WebDriverUtils.page_event_timeout) { driver.find_element(:xpath, '//iframe') }
+      driver.switch_to.frame driver.find_element(:xpath, '//iframe')
       begin
-        wait_until(timeout=WebDriverUtils.page_event_timeout) { driver.find_element(:xpath, '//iframe') }
-        driver.switch_to.frame driver.find_element(:xpath, '//iframe')
-        true if driver.find_element(:xpath, '//div[@class="html5-player-chrome"]')
+        html5_player_element.present? ? true : false
       ensure
         driver.switch_to.default_content
       end
@@ -133,9 +128,8 @@ module CalCentralPages
 
     def you_tube_video_auto_plays?(driver)
       begin
-        wait_until(timeout=WebDriverUtils.page_event_timeout) { driver.find_element(:xpath, '//iframe') }
         driver.switch_to.frame driver.find_element(:xpath, '//iframe')
-        auto_play = driver.find_element(:xpath, '//div[@class="ytp-button ytp-button-pause"]').displayed?
+        auto_play = video_pause_button_element.present?
       ensure
         driver.switch_to.default_content
       end

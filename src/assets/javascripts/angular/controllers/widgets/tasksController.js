@@ -1,5 +1,7 @@
-(function(angular, _) {
+(function(angular) {
   'use strict';
+
+  var _ = require('lodash');
 
   /**
    * Tasks controller
@@ -253,4 +255,4 @@
       return (task.status === 'completed');
     };
   });
-})(window.angular, window._);
+})(window.angular);

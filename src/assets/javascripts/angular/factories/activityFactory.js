@@ -66,6 +66,12 @@
         }
       };
 
+      var pushUnique = function(array, element) {
+        if (array.indexOf(element) === -1) {
+          array.push(element);
+        }
+      };
+
       /**
        * Create the list of sources
        * @param {Array} original The original array
@@ -77,8 +83,12 @@
           if (!apiService.user.profile.features.regstatus && item.isRegstatusActivity) {
             return false;
           }
-          if (sources.indexOf(item.source) === -1) {
-            sources.push(item.source);
+          if (item.source && typeof(item.source) !== 'string') {
+            item.source.map(function(source) {
+              pushUnique(sources, source);
+            });
+          } else {
+            pushUnique(sources, item.source);
           }
         });
         return sources.sort();
@@ -90,7 +100,14 @@
        * @return {Array} activities array, with similar items collapsed under pseduo-activity postings.
        */
       var threadOnSource = function(original) {
-        var source = angular.copy(original);
+        var source = original.map(function(item) {
+          var sourceItem = angular.copy(item);
+          if (sourceItem.source && typeof(sourceItem.source) !== 'string') {
+            sourceItem.source = sourceItem.source.join(', ');
+          }
+          return sourceItem;
+        });
+
         var multiElementArray = [];
 
         /**

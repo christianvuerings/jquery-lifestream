@@ -11,6 +11,9 @@
     $scope.linkToCreateCourseSite = $route.current.isEmbedded ? '/canvas/embedded/create_course_site' : '/canvas/create_course_site';
     $scope.linkToCreateProjectSite = $route.current.isEmbedded ? '/canvas/embedded/create_project_site' : '/canvas/create_project_site';
 
+    $scope.createCourseSiteButtonFocus = '0';
+    $scope.createProjectSiteButtonFocus = '0';
+
     var loadAuthorizations = function() {
       canvasSiteCreationFactory.getAuthorizations()
         .success(function(data) {
@@ -18,6 +21,12 @@
             $scope.displayError = 'failure';
           } else {
             angular.extend($scope, data);
+            if ($scope.authorizations.canCreateCourseSite === false) {
+              $scope.createCourseSiteButtonFocus = '-1';
+            }
+            if ($scope.authorizations.canCreateProjectSite === false) {
+              $scope.createProjectSiteButtonFocus = '-1';
+            }
             if ($scope.authorizations.canCreateCourseSite === false && $scope.authorizations.canCreateProjectSite === false) {
               $scope.displayError = 'unauthorized';
             }

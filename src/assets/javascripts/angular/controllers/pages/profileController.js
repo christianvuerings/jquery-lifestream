@@ -1,5 +1,7 @@
-(function(angular, _) {
+(function(angular) {
   'use strict';
+
+  var _ = require('lodash');
 
   /**
    * Profile controller
@@ -65,4 +67,4 @@
 
     init();
   });
-})(window.angular, window._);
+})(window.angular);
