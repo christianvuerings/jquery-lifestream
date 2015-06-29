@@ -98,9 +98,7 @@
                     aria-haspopup="true"
                     aria-controls="section-selection-help"
                     data-ng-attr-aria-expanded="{{toggle.displayHelp}}">
-                    <span data-ng-if="!toggle.displayHelp" class="cc-visuallyhidden">Show Section Selection Help</span>
-                    <span data-ng-if="toggle.displayHelp" class="cc-visuallyhidden">Hide Section Selection Help</span>
-                    <span data-ng-attr-aria-hidden="{{true}}">Need help deciding which official sections to select?</span>
+                    Need help deciding which official sections to select?
                   </button>
                   <div aria-live="polite">
                     <div id="section-selection-help" class="bc-page-help-notice-content" data-ng-if="toggle.displayHelp">
@@ -129,7 +127,9 @@
                 <ul class="bc-page-create-course-site-section-margin">
                   <li data-ng-repeat="course in coursesList" class="bc-sections-course-container bc-sections-course-container-bottom-margin">
 
-                    <button type="button" class="bc-button-link bc-page-create-course-site-form-course-button" data-ng-click="course.collapsed = !course.collapsed" data-ng-attr-aria-controls="{{course.course_id}}" aria-label="Toggle course sections list for {{course.course_code}} {{course.title}}">
+                    <button type="button" class="bc-button-link bc-page-create-course-site-form-course-button" data-ng-click="course.collapsed = !course.collapsed"
+                      data-ng-attr-aria-controls="{{course.course_id}}" aria-label="Toggle course sections list for {{course.course_code}} {{course.title}}"
+                      data-ng-attr-aria-expanded="{{!course.collapsed}}">
                       <i class="fa cc-left bc-sections-triangle-icon"
                         data-ng-class="{'fa-caret-right': course.collapsed, 'fa-caret-down': !course.collapsed}"></i>
                       <h3 class="bc-sections-course-title">
@@ -137,7 +137,7 @@
                         <span data-ng-if="course.title" data-ng-bind-template=" : {{course.title}}"></span>
                       </h3>
                       <span data-ng-if="course.sections">
-                        (<span data-ng-pluralize count="course.sections.length" when="{'one': '1 section', 'other': '{{course.sections.length}} sections'}"></span>)
+                        &nbsp;(<span data-ng-pluralize count="course.sections.length" when="{'one': '1 section', 'other': '{{course.sections.length}} sections'}"></span>)
                       </span>
                     </button>
 

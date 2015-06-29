@@ -1,4 +1,4 @@
-(function(angular, Pikaday) {
+(function(angular) {
   'use strict';
 
   angular.module('calcentral.directives').directive('ccDatepickerDirective', function($document) {
@@ -22,6 +22,7 @@
           /**
            * Setup the picker
            */
+          var Pikaday = require('pikaday');
           var picker = new Pikaday({
             bound: false, // We're not bounding directly to a field since otherwise it opens when you tab through (not accessible)
             field: inputElement, // The element that should open when we hit the datepicker button.
@@ -103,4 +104,4 @@
       }
     };
   });
-})(window.angular, window.Pikaday);
+})(window.angular);

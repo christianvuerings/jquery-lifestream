@@ -24,7 +24,8 @@
             <a href="http://ets.berkeley.edu/bcourses/support">bCourses Helpdesk</a>.
           </p>
           <div class="bc-page-site-creation-feature-button-wrapper">
-            <a data-cc-disabled="!authorizations.canCreateCourseSite" data-ng-href="{{linkToCreateCourseSite}}" class="bc-canvas-button bc-canvas-button-primary">Create a Course Site</a>
+            <a data-cc-disabled="!authorizations.canCreateCourseSite" data-ng-href="{{linkToCreateCourseSite}}"
+              class="bc-canvas-button bc-canvas-button-primary" data-ng-attr-tabindex="{{createCourseSiteButtonFocus}}">Create a Course Site</a>
           </div>
         </div>
       </div>
@@ -59,7 +60,8 @@
             </a>
           </p>
           <div class="bc-page-site-creation-feature-button-wrapper">
-            <a data-cc-disabled="!authorizations.canCreateProjectSite" data-ng-href="{{linkToCreateProjectSite}}" class="bc-canvas-button bc-canvas-button-primary">Create a Project Site</a>
+            <a data-cc-disabled="!authorizations.canCreateProjectSite" data-ng-attr-tabindex="{{createProjectSiteButtonFocus}}"
+              data-ng-href="{{linkToCreateProjectSite}}" class="bc-canvas-button bc-canvas-button-primary">Create a Project Site</a>
           </div>
         </div>
       </div>

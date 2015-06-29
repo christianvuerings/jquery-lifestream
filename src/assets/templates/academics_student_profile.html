@@ -27,7 +27,7 @@
       <div data-ng-if="api.user.profile.roles.student">
         <div data-ng-if="!isProfileCurrent">
           <div data-ng-if="transitionTerm.registered" class="cc-widget-profile-message-text">
-            You are registered for the <span data-ng-bind="transitionTerm.termName"></span> term, but updated profile information is not yet available. Please check
+            You are registered for the <span data-ng-bind="transitionTerm.termName"></span> term, but complete profile information is not available. Please check
             <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>
             for the most current information.
           </div>
@@ -37,7 +37,7 @@
         </div>
         <div data-ng-if="!transitionTerm">
           <div data-ng-if="api.user.profile.roles.registered" class="cc-widget-profile-message-text">
-            You are registered as a student but not currently considered active by all campus services. Please try again later, or check
+            You are registered as a student, but complete profile information is not available. Please check
             <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>
             for the most current information.
           </div>

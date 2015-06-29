@@ -14,6 +14,18 @@
   // Rename files
   var rename = require('gulp-rename');
 
+  // Browserify dependencies
+  var browserify = require('browserify');
+  var watchify = require('watchify');
+  var bulkify = require('bulkify');
+  var source = require('vinyl-source-stream');
+  var addStream = require('add-stream');
+  var streamify = require('gulp-streamify');
+  var ngAnnotate = require('gulp-ng-annotate');
+  var concat = require('gulp-concat');
+  var uglify = require('gulp-uglify');
+  var util = require('gulp-util');
+
   // Base options for the command line
   var baseOptions = {
     string: 'env',
@@ -59,40 +71,10 @@
       img: 'src/assets/images/**/*.*',
       // JavaScript
       js: {
-        external: [
-          // Lodash
-          'node_modules/lodash/index.js',
-          // Date parsing
-          'node_modules/moment/moment.js',
-          // Human Sorting in JavaScript
-          'node_modules/js-natural-sort/dist/naturalSort.js',
-          // Remote JavaScript error logging
-          'node_modules/raven-js/dist/raven.js',
-          // Datepicker
-          'node_modules/pikaday/pikaday.js',
-          // Angular
-          'node_modules/angular/angular.js',
-          // Angular Aria
-          'node_modules/angular-aria/angular-aria.js',
-          // Angular Routing
-          'node_modules/angular-route/angular-route.js',
-          // Angular Sanitize (avoid XSS exploits)
-          'node_modules/angular-sanitize/angular-sanitize.js',
-          // Angular Swipe Directive
-          // TODO - remove as soon as
-          // https://github.com/angular/angular.js/issues/4030 is fixed
-          'src/assets/javascripts/angularlib/swipeDirective.js'
-        ],
-        // Our own files, we put this in a separate array to make sure we run
-        // ng-annotate on it
-        internal: [
-          'src/assets/javascripts/**/*.js',
-          '!src/assets/javascripts/{angularlib}/**/*.js'
-        ],
-        // The JS templates files ($templateCache)
-        templates: [
-          'public/assets/templates/templates.js'
-        ]
+        // Public JavaScript
+        external: 'public/assets/javascripts/index.js',
+        // Browserify creates bundled JS with internal JS files
+        internal: 'src/assets/javascripts/index.js'
       },
       // Main templates (not used for inclusing in AngularJS templates)
       mainTemplates: {
@@ -122,8 +104,7 @@
       css: 'public/assets/stylesheets',
       fonts: 'public/assets/fonts',
       img: 'public/assets/images',
-      js: 'public/assets/javascripts',
-      templates: 'public/assets/templates'
+      js: 'public/assets/javascripts'
     }
   };
 
@@ -194,14 +175,13 @@
   });
 
   /**
-   * Templates task
+   * Templates function
    *   Concatenate the contents of all .html-files in the templates directory
    *   and save to public/templates.js
    */
-  gulp.task('templates', function() {
+  var prepareTemplates = function() {
     // Template cache will put all the .html files in the angular templateCache
     var templateCache = require('gulp-angular-templatecache');
-
     // Minify our html templates
     var minifyHTML = require('gulp-minify-html');
 
@@ -214,50 +194,69 @@
       // Preserve one whitespace
       loose: true
     };
-
     return gulp.src(paths.src.templates)
-      .pipe(minifyHTML(minifyOptions))
-      .pipe(templateCache({
-        // Creates a standalone module called 'templates'
-        // This makes it easier to load in CalCentral
-        standalone: true
-      }))
-      .pipe(gulp.dest(paths.dist.templates));
-  });
+    .pipe(minifyHTML(minifyOptions))
+    .pipe(templateCache({
+      // Creates a standalone module called 'templates'
+      // This makes it easier to load in CalCentral
+      standalone: true
+    }));
+  };
+
+  // Bundling process for initial bundle and update for Browserify task
+  var bundleShare = function(bundle) {
+    return bundle.transform(bulkify)
+      .bundle()
+      .pipe(source('index.js'))
+      // Annotate the internal AngularJS files in production
+      .pipe(streamify(gulpif(isProduction, ngAnnotate())))
+      .pipe(addStream.obj(prepareTemplates()))
+      .pipe(streamify(concat('application.js')))
+      .pipe(streamify(gulpif(isProduction, uglify())))
+      .pipe(gulp.dest('public/assets/javascripts/'));
+  };
 
   /**
-   * JavaScript task
+   * Browserify Task
+   *   Bundles all JS files using browserify
    *   Add annotations (production)
-   *   Minify (production)
-   *   Concatenate
-   * We need to make sure the templates.js file is included into the
-   * concatenated files.
+   *   Uglify (production)
+   *   Concatenates minified templates
+   *
+   *   Watchify tracks any NEW changes made to any internal JS files
    */
-  gulp.task('js', ['templates'], function() {
-    var concat = require('gulp-concat');
-    var ngAnnotate = require('gulp-ng-annotate');
-    var uglify = require('gulp-uglify');
-
-    // Combine the templates JS and reqular JS
-    var streamqueue = require('streamqueue');
-    return streamqueue({
-        objectMode: true
-      },
-      gulp.src(paths.src.js.external),
-      gulp.src(paths.src.js.internal)
-        // Annotate the internal AngularJS files in production
-        .pipe(gulpif(isProduction, ngAnnotate())
-      ),
-      gulp.src(paths.src.js.templates))
-      .pipe(gulpif(isProduction, uglify()))
-      .pipe(concat('application.js'))
-      .pipe(gulp.dest(paths.dist.js));
+  gulp.task('browserify', function() {
+    var bundler = browserify({
+      entries: ['src/assets/javascripts/index.js'],
+      // Enables cache to be used for Watchify
+      cache: {},
+      packageCache: {},
+      fullPaths: true,
+      // Use source map if development mode
+      // Source map shows the exact file and line when there is an error
+      debug: !isProduction
+    });
+    if (!isProduction) {
+      var watcher  = watchify(bundler);
+      // When any files update
+      watcher.on('update', function() {
+        util.log('Changed detected! Starting watchify ...');
+        var updateStart = Date.now();
+        // Create new bundle that uses the cache for high performance
+        bundleShare(watcher);
+        util.log('Update complete. Finished watchify after', util.colors.magenta(Date.now() - updateStart + ' ms'));
+      });
+      // Create initial bundle when starting the task
+      bundleShare(watcher);
+    } else {
+      bundleShare(bundler);
+    }
   });
 
   /**
    * Index & bCourses task
    */
-  gulp.task('index', ['images', 'templates', 'js', 'css', 'fonts'], function() {
+  gulp.task('index', ['images', 'css', 'fonts', 'browserify'], function() {
     // Plug-in to inject html into other html
     var inject = require('gulp-inject');
 
@@ -388,8 +387,7 @@
     gulp.watch(paths.src.mainTemplates.source, ['index']);
     gulp.watch(paths.src.cssWatch, ['css']);
     gulp.watch(paths.src.fonts, ['fonts']);
-    gulp.watch(paths.src.js.internal, ['js']);
-    gulp.watch(paths.src.templates, ['js']);
+    gulp.watch(paths.src.templates, ['browserify']);
     gulp.watch(paths.src.img, ['images']);
   });
 
@@ -405,8 +403,7 @@
       'build-clean',
       [
         'images',
-        'templates',
-        'js',
+        'browserify',
         'css',
         'fonts',
         'index'

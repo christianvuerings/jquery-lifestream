@@ -1,4 +1,4 @@
-(function(angular, naturalSort) {
+(function(angular) {
   'use strict';
 
   angular.module('calcentral.services').service('utilService', function($cacheFactory, $http, $location, $rootScope, $route, $window) {
@@ -127,7 +127,7 @@
             heightElement = alternativeElement[0];
           }
           var frameHeight = heightElement.scrollHeight;
-          var messageSubject = frameHeight > 5000 ? 'resizeLargeFrame' : 'lti.frameResize';
+          var messageSubject = frameHeight > 5000 ? 'changeParent' : 'lti.frameResize';
           var message = {subject: messageSubject, height: frameHeight};
           iframePostMessage(JSON.stringify(message));
         }, 250);
@@ -203,7 +203,7 @@
       iframeParentLocation: iframeParentLocation,
       isInIframe: isInIframe,
       hideOffCanvasMenu: hideOffCanvasMenu,
-      naturalSort: naturalSort,
+      naturalSort: require('js-natural-sort'),
       preventBubble: preventBubble,
       printPage: printPage,
       redirect: redirect,
@@ -213,4 +213,4 @@
       uidPattern: uidPattern
     };
   });
-}(window.angular, window.naturalSort));
+}(window.angular));
