@@ -206,7 +206,12 @@
     }));
   };
 
-  // Bundling process for initial bundle and update for Browserify task
+  /**
+   * bundleShare function
+   *   Bundling process for initial bundle and update for Browserify task
+   *   @param {object} bundle - bundler produced by browserify (during prod) or watchify (during dev)
+   *   @return                - returns application.js file in public JS directory
+   */
   var bundleShare = function(bundle) {
     return bundle.transform(bulkify)
       .bundle()
@@ -216,7 +221,7 @@
       .pipe(addStream.obj(prepareTemplates()))
       .pipe(streamify(concat('application.js')))
       .pipe(streamify(gulpif(isProduction, uglify())))
-      .pipe(gulp.dest('public/assets/javascripts/'));
+      .pipe(gulp.dest(paths.dist.js));
   };
 
   /**
@@ -230,7 +235,7 @@
    */
   gulp.task('browserify', function() {
     var bundler = browserify({
-      entries: ['src/assets/javascripts/index.js'],
+      entries: [paths.src.js.internal],
       // Enables cache to be used for Watchify
       cache: {},
       packageCache: {},
