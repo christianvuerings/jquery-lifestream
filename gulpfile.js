@@ -43,6 +43,9 @@
   // Are we in production mode?
   var isProduction = options.env === 'production';
 
+  // Check if Watchify has been turned on so it is only executed once
+  var watchifyOn = false;
+
   // List all the used paths
   var paths = {
     // Source files
@@ -245,15 +248,18 @@
       debug: !isProduction
     });
     if (!isProduction) {
-      var watcher  = watchify(bundler);
-      // When any files update
-      watcher.on('update', function() {
-        util.log('Changed detected! Starting watchify ...');
-        var updateStart = Date.now();
-        // Create new bundle that uses the cache for high performance
-        bundleShare(watcher);
-        util.log('Update complete. Finished watchify after', util.colors.magenta(Date.now() - updateStart + ' ms'));
-      });
+      var watcher = watchify(bundler);
+      if (!watchifyOn) {
+        watchifyOn = true;
+        // When any files update
+        watcher.on('update', function() {
+          util.log('Changed detected! Starting watchify ...');
+          var updateStart = Date.now();
+          // Create new bundle that uses the cache for high performance
+          bundleShare(watcher);
+          util.log('Update complete. Finished watchify after', util.colors.magenta(Date.now() - updateStart + ' ms'));
+        });
+      }
       // Create initial bundle when starting the task
       return bundleShare(watcher);
     } else {
