@@ -358,7 +358,7 @@
 
     $scope.dateFilter = function(item) {
       if (startDate && endDate) {
-        return item.transDate >= startDate  && item.transDate <= endDate;
+        return item.transDate >= startDate && item.transDate <= endDate;
       }
       if (startDate) {
         return item.transDate >= startDate;
