@@ -351,7 +351,7 @@
       transformFilename: function(file, hash) {
         var extension = path.extname(file.path);
         // filename-6546259a4f83fd81debc.extension
-        return path.basename(file.path, extension) + '-'  + hash.substr(0, 20) + extension;
+        return path.basename(file.path, extension) + '-' + hash.substr(0, 20) + extension;
       }
     });
 

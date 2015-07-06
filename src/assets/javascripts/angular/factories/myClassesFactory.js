@@ -54,7 +54,7 @@
       angular.forEach(allClassesHash.campusClasses, function(value) {
         // Unlikely to hit the 'Other' case but doesn't hurt to make it robust
         var role = value.role.toLowerCase() || '';
-        if (role  === 'instructor' || role === 'student') {
+        if (role === 'instructor' || role === 'student') {
           categorizedClasses[role].push(value);
         } else {
           categorizedClasses.other.push(value);
