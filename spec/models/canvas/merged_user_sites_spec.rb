@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Canvas::MergedUserSites do
   let(:uid) { rand(999999).to_s }
   let(:canvas_course_id) { rand(999999) }
@@ -81,7 +79,9 @@ describe Canvas::MergedUserSites do
     context 'when a Canvas group site is associated with a course site' do
       let(:canvas_group) {canvas_group_base.merge({ 'context_type' => 'Course', 'course_id' => canvas_course_id })}
       it_behaves_like 'a group site item'
-      its([:course_id]) { should eq(canvas_course_id) }
+      it 'reports association by course id' do
+        expect(subject[:course_id]).to eq canvas_course_id.to_s
+      end
     end
     context 'when a Canvas group site is associated with an account' do
       let(:canvas_group) {canvas_group_base.merge({ 'context_type' => 'Account', 'account_id' => rand(999999) })}
