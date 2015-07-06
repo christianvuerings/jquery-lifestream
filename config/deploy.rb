@@ -23,24 +23,28 @@ namespace :calcentral_dev do
     # Take everything offline first.
     script_folder = project_root + ("/script")
     run "cd #{script_folder}; ./init.d/calcentral stop"
-    # Run db migrate on the first app server
     servers = find_servers_for_task(current_task)
-    run "cd #{script_folder}; ./update-build.sh"
+
     transaction do
       servers.each_with_index do |server, index|
+        # update source
+        run "cd #{script_folder}; ./update-build.sh", :hosts => server
+
+        # Run db migrate on the first app server ONLY
         if index == 0
           logger.debug "---- Server: #{server.host} running migrate in transaction on offline app servers"
           run "cd #{script_folder}; ./migrate.sh", :hosts => server
         end
-      end
-    end
-    servers.each_with_index do |server, index|
-      run "cd #{script_folder}; ./init.d/calcentral start", :hosts => server
-      if index < (servers.length - 1)
-        # Allow time for Torquebox to quiesce before adding a node to the cluster. This appears to
-        # be needed to ensure that message processing is properly spread across the cluster, although
-        # that constraint is undocumented. See CLC-4318.
-        sleep 120
+
+        # start it up
+        run "cd #{script_folder}; ./init.d/calcentral start", :hosts => server
+
+        if index < (servers.length - 1)
+          # Allow time for Torquebox to quiesce before adding a node to the cluster. This appears to
+          # be needed to ensure that message processing is properly spread across the cluster, although
+          # that constraint is undocumented. See CLC-4318.
+          sleep 120
+        end
       end
     end
   end

@@ -14,6 +14,9 @@
   // Rename files
   var rename = require('gulp-rename');
 
+  // Plug-in to inject html into other html
+  var inject = require('gulp-inject');
+
   // Browserify dependencies
   var browserify = require('browserify');
   var watchify = require('watchify');
@@ -39,6 +42,9 @@
 
   // Are we in production mode?
   var isProduction = options.env === 'production';
+
+  // Check if Watchify has been turned on so it is only executed once
+  var watchifyOn = false;
 
   // List all the used paths
   var paths = {
@@ -203,7 +209,12 @@
     }));
   };
 
-  // Bundling process for initial bundle and update for Browserify task
+  /**
+   * bundleShare function
+   *   Bundling process for initial bundle and update for Browserify task
+   *   @param {object} bundle - bundler produced by browserify (during prod) or watchify (during dev)
+   *   @return                - returns application.js file in public JS directory
+   */
   var bundleShare = function(bundle) {
     return bundle.transform(bulkify)
       .bundle()
@@ -213,7 +224,7 @@
       .pipe(addStream.obj(prepareTemplates()))
       .pipe(streamify(concat('application.js')))
       .pipe(streamify(gulpif(isProduction, uglify())))
-      .pipe(gulp.dest('public/assets/javascripts/'));
+      .pipe(gulp.dest(paths.dist.js));
   };
 
   /**
@@ -227,7 +238,7 @@
    */
   gulp.task('browserify', function() {
     var bundler = browserify({
-      entries: ['src/assets/javascripts/index.js'],
+      entries: [paths.src.js.internal],
       // Enables cache to be used for Watchify
       cache: {},
       packageCache: {},
@@ -237,68 +248,70 @@
       debug: !isProduction
     });
     if (!isProduction) {
-      var watcher  = watchify(bundler);
-      // When any files update
-      watcher.on('update', function() {
-        util.log('Changed detected! Starting watchify ...');
-        var updateStart = Date.now();
-        // Create new bundle that uses the cache for high performance
-        bundleShare(watcher);
-        util.log('Update complete. Finished watchify after', util.colors.magenta(Date.now() - updateStart + ' ms'));
-      });
+      var watcher = watchify(bundler);
+      if (!watchifyOn) {
+        watchifyOn = true;
+        // When any files update
+        watcher.on('update', function() {
+          util.log('Changed detected! Starting watchify ...');
+          var updateStart = Date.now();
+          // Create new bundle that uses the cache for high performance
+          bundleShare(watcher);
+          util.log('Update complete. Finished watchify after', util.colors.magenta(Date.now() - updateStart + ' ms'));
+        });
+      }
       // Create initial bundle when starting the task
-      bundleShare(watcher);
+      return bundleShare(watcher);
     } else {
-      bundleShare(bundler);
+      return bundleShare(bundler);
     }
+  });
+
+  // Options for the injection
+  var injectOptions = {
+    // Which tag to look for the in base html
+    starttag: '<!-- inject:body:{{ext}} -->',
+    transform: function(filePath, file) {
+      // Return file contents as string
+      return file.contents.toString('utf8');
+    },
+    // Remove the tags after injection
+    removeTags: true
+  };
+
+  /**
+   * Inject file paths into an html page
+   */
+  var injectPage = function(source, baseName) {
+    return gulp.src(paths.src.mainTemplates.base)
+      .pipe(inject(
+        gulp.src(source),
+        injectOptions
+      ))
+      .pipe(rename({
+        basename: baseName
+      }))
+      .pipe(gulp.dest('public'));
+  };
+
+  /**
+   * Inject the CSS / JS in the main index page
+   */
+  gulp.task('index-main', function() {
+    return injectPage(paths.src.mainTemplates.index, 'index-main');
+  });
+
+  /**
+   * Inject the CSS / JS in the bCourses embedded page
+   */
+  gulp.task('index-bcourses', function() {
+    return injectPage(paths.src.mainTemplates.bcoursesEmbedded, 'bcourses_embedded');
   });
 
   /**
    * Index & bCourses task
    */
-  gulp.task('index', ['images', 'css', 'fonts', 'browserify'], function() {
-    // Plug-in to inject html into other html
-    var inject = require('gulp-inject');
-
-    // Combine the index and bCourses streams
-    var streamqueue = require('streamqueue');
-
-    // Options for the injection
-    var injectOptions = {
-      // Which tag to look for the in base html
-      starttag: '<!-- inject:body:{{ext}} -->',
-      transform: function(filePath, file) {
-        // Return file contents as string
-        return file.contents.toString('utf8');
-      },
-      // Remove the tags after injection
-      removeTags: true
-    };
-
-    // Run the 2 index & bCourses stream in parallell
-    return streamqueue({
-        objectMode: true
-      },
-      gulp.src(paths.src.mainTemplates.base)
-        .pipe(inject(
-          gulp.src(paths.src.mainTemplates.index),
-          injectOptions
-        ))
-        .pipe(rename({
-          basename: 'index-main'
-        }))
-        .pipe(gulp.dest('public')),
-      gulp.src(paths.src.mainTemplates.base)
-        .pipe(inject(
-          gulp.src(paths.src.mainTemplates.bcoursesEmbedded),
-          injectOptions
-        ))
-        .pipe(rename({
-          basename: 'bcourses_embedded'
-        }))
-        .pipe(gulp.dest('public'))
-      );
-  });
+  gulp.task('index', ['index-main', 'index-bcourses']);
 
   /**
    * Mode the index & bCourses file back to the main public directory. (production)
@@ -338,7 +351,7 @@
       transformFilename: function(file, hash) {
         var extension = path.extname(file.path);
         // filename-6546259a4f83fd81debc.extension
-        return path.basename(file.path, extension) + '-'  + hash.substr(0, 20) + extension;
+        return path.basename(file.path, extension) + '-' + hash.substr(0, 20) + extension;
       }
     });
 
@@ -405,9 +418,9 @@
         'images',
         'browserify',
         'css',
-        'fonts',
-        'index'
+        'fonts'
       ],
+      'index',
       'revall',
       'revmove',
       'watch',

@@ -57,7 +57,7 @@
           // We need to check whether the timestamps are different or not
           if (data[service] &&
             feedsLoadedData[service] &&
-            data[service].timestamp  &&
+            data[service].timestamp &&
             feedsLoadedData[service].timestamp &&
             data[service].timestamp.epoch > feedsLoadedData[service].timestamp.epoch) {
             events.servicesWithUpdates[service] = data[service];

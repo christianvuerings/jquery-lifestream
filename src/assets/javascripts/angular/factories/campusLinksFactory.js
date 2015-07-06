@@ -39,7 +39,7 @@
       for (var i in link.roles) {
         if (link.roles.hasOwnProperty(i) &&
             link.roles[i] === true &&
-            link.roles[i] ===  apiService.user.profile.roles[i]) {
+            link.roles[i] === apiService.user.profile.roles[i]) {
           return true;
         }
       }

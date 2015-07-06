@@ -1,7 +1,7 @@
 (function(angular) {
   'use strict';
 
-  angular.module('calcentral.directives').directive('ccTruncateDirective',  function($filter, $sanitize) {
+  angular.module('calcentral.directives').directive('ccTruncateDirective', function($filter, $sanitize) {
     // Set the default options
     var defaultOptions = {
       cssButtonClass: 'cc-button-link',

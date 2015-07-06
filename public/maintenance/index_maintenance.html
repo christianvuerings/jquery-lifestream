@@ -2,12 +2,22 @@
 <html xmlns="http1/www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
     <title>CalCentral: Down for Maintenance</title>
     <style>
+
+      html {
+        box-sizing: border-box;
+      }
+
+      *, *:before, *:after {
+        box-sizing: inherit;
+      }
 
       body {
         background-color: #5B6770;
         font-family: arial, sans-serif;
+        margin: 0;
       }
 
       ul {
@@ -21,30 +31,27 @@
 
       .container {
         margin: 72px auto;
-        padding-left: 31px;
       }
 
       .calcentral-logo, .card-header, .card-body, .footer {
         margin: 0 auto;
         padding-left: 31px;
-        width: 660px;
+        max-width: 690px;
       }
 
       .calcentral-logo {
-        height: 36px;
         background-color: #022149;
+        padding-bottom: 16px;
         padding-top: 16px;
         line-height: 36px;
       }
 
       .card-header {
-        height: 48px;
-        padding-top: 12px;
-        padding-bottom: 12px;
+        padding-top: 22px;
+        padding-bottom: 22px;
         background-color: #E4E4E4;
         font-size: 24px;
         color: #33333;
-        line-height: 48px;
       }
 
       .card-body {
@@ -57,19 +64,17 @@
 
       .card-content {
         float: left;
-        width: 440px;
+        max-width: 430px;
         padding-right: 10px;
         font-size: 18px;
         color: #33333;
       }
 
       .footer {
-        height: 46px;
         background-color: #F4F4F4;
         vertical-align: middle;
         padding-top: 15px;
-        padding-bottom: 12px;
-        line-height: 46px;
+        padding-bottom: 20px;
       }
 
       .emphasis {
@@ -107,6 +112,20 @@
         background-position: 0px -100px;
       }
 
+      @media screen and (max-width : 667px) {
+        .container {
+          margin: 0 auto;
+        }
+        .calcentral-logo, .card-header, .card-body, .footer {
+          padding-left: 20px;
+        }
+        .card-content {
+          padding-right: 20px;
+        }
+        .page-icon {
+          display: none;
+        }
+      }
     </style>
   </head>
 
