@@ -4,7 +4,7 @@ class PingController < ApplicationController
     # IST's nagios and our check-alive.sh script use this endpoint to tell whether the server's up.
     # Don't modify its content unless you have general agreement that it's necessary to do so.
     begin
-    ping_state = ping
+      ping_state = ping
     rescue StandardError => e
       Rails.logger.fatal e
     end

@@ -47,26 +47,26 @@ describe PingController do
       end
 
       context 'do not do background jobs check' do
+        let (:expected) { { 'server_alive' => true }.to_json }
         before do
           Settings.features.stub(:background_jobs_check).and_return(false)
-          @expected = { :server_alive => true }.to_json
         end
         it 'renders a json file with server status' do
           get :do
-          response.body.should == @expected
+          expect(response.body).to eq expected
         end
       end
 
       context 'do background jobs check' do
+        let (:example_background_jobs_check) { { 'ets-calcentral-prod-01' => 'OK', 'ets-calcentral-prod-02' => 'OK', 'ets-calcentral-prod-03' => 'OK', 'status' => 'OK', 'last_ping' => '2015-07-06T16:31:50.161-07:00'}.to_json }
+        let (:expected) { { 'server_alive' => true, 'background_jobs_check' => example_background_jobs_check }.to_json }
         before do
           Settings.features.stub(:background_jobs_check).and_return(true)
-          @example_backgroundjobscheck = { :"ets-calcentral-prod-01" => "OK", :"ets-calcentral-prod-02" => "OK",:"ets-calcentral-prod-03" => "OK",:"status" => "OK","last_ping" => "2015-07-06T16:31:50.161-07:00"}.to_json
-          BackgroundJobsCheck.any_instance.stub(:get_feed => @example_backgroundjobscheck)
-          @expected = { :server_alive => true, :background_jobs_check => @example_backgroundjobscheck }.to_json
+          BackgroundJobsCheck.any_instance.stub(:get_feed => example_background_jobs_check)
         end
         it 'renders a json file with server status and background jobs' do
           get :do
-          response.body.should == @expected
+          expect(response.body).to eq expected
         end
       end
     end
