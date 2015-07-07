@@ -3,10 +3,15 @@ module MyClasses
     include ClassesModule
 
     def fetch
-      # Only include classes for current terms.
+      terms = {current: classes_for_term(current_term)}
+      terms.merge!({gradingInProgress: classes_for_term(grading_in_progress_term)}) if grading_in_progress_term
+      terms
+    end
+
+    def classes_for_term(term)
       classes = []
       all_courses = CampusOracle::UserCourses::All.new(user_id: @uid).get_all_campus_courses
-      semester_key = "#{current_term.year}-#{current_term.code}"
+      semester_key = "#{term.year}-#{term.code}"
       if all_courses[semester_key]
         # Ask My Academics for the URL to this class info page in My Academics, and to merge
         # any crosslisted courses for non-students.

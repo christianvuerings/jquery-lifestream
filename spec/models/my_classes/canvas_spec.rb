@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe MyClasses::Canvas do
   let(:uid) {rand(99999).to_s}
   let(:sites) {[]}
@@ -18,13 +16,14 @@ describe MyClasses::Canvas do
     }
   end
   let(:campus_courses) do
-    [campus_course_base]
+    {current: [campus_course_base]}
   end
+  let(:fall_2013_term) { Berkeley::Terms.fetch.campus['fall-2013'] }
 
   context 'when no Canvas account' do
-    before {Canvas::Proxy.stub(:access_granted?).with(uid).and_return(false)}
+    before { allow(Canvas::Proxy).to receive(:access_granted?).with(uid).and_return false }
     subject do
-      MyClasses::Canvas.new(uid).merge_sites(campus_courses, sites)
+      MyClasses::Canvas.new(uid).merge_sites(campus_courses[:current], fall_2013_term, sites)
       sites
     end
     it {should eq []}
@@ -52,14 +51,14 @@ describe MyClasses::Canvas do
         emitter: Canvas::Proxy::APP_NAME
       }
     end
-    before {Canvas::Proxy.stub(:access_granted?).with(uid).and_return(true)}
-    before {Canvas::MergedUserSites.stub(:new).with(uid).and_return(double(get_feed: canvas_sites))}
+    before { allow(Canvas::Proxy).to receive(:access_granted?).with(uid).and_return true}
+    before { allow(Canvas::MergedUserSites).to receive(:new).with(uid).and_return double(get_feed: canvas_sites)}
     subject do
-      MyClasses::Canvas.new(uid).merge_sites(campus_courses, sites)
+      MyClasses::Canvas.new(uid).merge_sites(campus_courses[:current], fall_2013_term, sites)
       sites
     end
 
-    context 'when Canvas course is within a current term' do
+    context 'when Canvas course matches provided term' do
       let(:term_yr) {'2013'}
       let(:term_cd) {'D'}
       context 'when Canvas course site matches a campus section' do
@@ -128,7 +127,7 @@ describe MyClasses::Canvas do
         end
       end
     end
-    context 'when Canvas course site is for a non-current term' do
+    context 'when Canvas course site does not match provided term' do
       let(:term_yr) {'2012'}
       let(:term_cd) {'D'}
       let(:canvas_site) {canvas_site_base.merge({sections: [{ccn: ccn.to_s}]})}

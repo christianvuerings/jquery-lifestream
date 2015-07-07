@@ -1,12 +1,10 @@
-require "spec_helper"
-
 describe MyClasses::SakaiClasses do
   let(:uid) {rand(99999).to_s}
   let(:sites) {[]}
   let(:ccn) {rand(9999)}
   let(:course_id) {"econ-#{rand(999)}B"}
   let(:campus_courses) do
-    [{
+    {current: [{
       listings: [{
         id: course_id
       }],
@@ -15,7 +13,7 @@ describe MyClasses::SakaiClasses do
       sections: [{
         ccn: ccn
       }]
-    }]
+    }]}
   end
   let(:sakai_site_id) {"#{rand(99999)}-#{rand(99999)}"}
   let(:sakai_site_base) do
@@ -31,7 +29,7 @@ describe MyClasses::SakaiClasses do
   end
   before {Sakai::SakaiMergedUserSites.stub(:new).with(user_id: uid).and_return(double(get_feed: sakai_sites))}
   subject do
-    MyClasses::SakaiClasses.new(uid).merge_sites(campus_courses, sites)
+    MyClasses::SakaiClasses.new(uid).merge_sites(campus_courses[:current], Berkeley::Terms.fetch.current, sites)
     sites
   end
   context 'when Sakai course is within a current term' do

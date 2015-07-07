@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Rosters::Campus' do
   let(:term_yr) {'2014'}
   let(:term_cd) {'B'}
@@ -128,7 +126,7 @@ describe 'Rosters::Campus' do
   context 'cross-listed courses', if: CampusOracle::Connection.test_data? do
     include_context 'instructor for crosslisted courses'
     let!(:crosslisted_course_id) do
-      classes_for_instructor = MyClasses::Campus.new(instructor_id).fetch
+      classes_for_instructor = MyClasses::Campus.new(instructor_id).fetch[:current]
       classes_for_instructor.first[:listings].first[:id]
     end
 
