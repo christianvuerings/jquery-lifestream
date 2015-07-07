@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe MyActivities::CanvasActivities do
   let!(:documented_types) { %w(alert announcement assignment discussion gradePosting message webconference) }
 
@@ -80,7 +78,15 @@ describe MyActivities::CanvasActivities do
           name: 'Group name 3',
           siteType: 'group',
           emitter: Canvas::Proxy::APP_NAME
-        }
+        },
+        {
+          id: '4',
+          source: 'Site 4 source',
+          name: 'Site 4 name',
+          siteType: 'group',
+          emitter: Canvas::Proxy::APP_NAME,
+          courses: course_ids
+        },
       ].concat(campus_classes)
     end
     let(:canvas_feed) do
@@ -114,8 +120,17 @@ describe MyActivities::CanvasActivities do
         },
         {
           id: 4999,
+          context_type: 'Group',
+          type: 'Message',
+          group_id: 4,
+          title: 'Post-assignment party',
+          updated_at: @fake_time,
+          created_at: @fake_time
+        },
+        {
+          id: 5999,
           type: 'Conversation',
-          conversation_id: 4,
+          conversation_id: 5,
           title: nil,
           updated_at: @fake_time,
           created_at: @fake_time
@@ -129,7 +144,7 @@ describe MyActivities::CanvasActivities do
     before { allow(Canvas::UserActivityStream).to receive(:new).and_return stub_proxy(:user_activity, canvas_feed) }
 
     it 'should transform raw Canvas feed entries to activities' do
-      activities.length.should == 4
+      expect(activities).to have(5).items
       activities.each do |activity|
         expect(activity).to include({
           user_id: @user_id,
@@ -140,15 +155,7 @@ describe MyActivities::CanvasActivities do
     end
 
     describe 'source property' do
-      context 'an activity from a course site' do
-        let(:activity) { activities.select{|item| item[:id] == 'canvas_1999'}[0] }
-
-        context 'with no associated campus course' do
-          it 'should fall back on Canvas site name' do
-            expect(activity[:source]).to eq 'Site 1 name'
-          end
-        end
-
+      shared_examples 'activity source derived from course codes' do
         context 'with an associated campus course' do
           let(:course_ids) { [{id: 'anthro-3ac-2013-D'}] }
           let(:campus_classes) do
@@ -161,7 +168,6 @@ describe MyActivities::CanvasActivities do
             expect(activity[:source]).to eq 'ANTHRO 3AC'
           end
         end
-
         context 'with multiple associated campus courses' do
           let(:course_ids) do
             [
@@ -185,14 +191,31 @@ describe MyActivities::CanvasActivities do
         end
       end
 
-      context 'a group site with a source property' do
+      context 'an activity from a course site' do
+        let(:activity) { activities.select{|item| item[:id] == 'canvas_1999'}[0] }
+
+        include_examples 'activity source derived from course codes'
+
+        context 'with no associated campus course' do
+          it 'should fall back on Canvas site name' do
+            expect(activity[:source]).to eq 'Site 1 name'
+          end
+        end
+      end
+
+      context 'a group site with associated courses and a source property' do
+        let(:activity) { activities.select{|item| item[:id] == 'canvas_4999'}[0] }
+        include_examples 'activity source derived from course codes'
+      end
+
+      context 'a group site with a source property and no associated courses' do
         let(:activity) { activities.select{|item| item[:id] == 'canvas_2999'}[0] }
         it 'should preferentially select the source property' do
           expect(activity[:source]).to eq 'Site 2 source'
         end
       end
 
-      context 'a group site without a source property' do
+      context 'a group site with no source property or associated courses' do
         let(:activity) { activities.select{|item| item[:id] == 'canvas_3999'}[0] }
         it 'should fall back on the name property' do
           expect(activity[:source]).to eq 'Group name 3'
@@ -200,7 +223,7 @@ describe MyActivities::CanvasActivities do
       end
 
       context 'an activity with no site' do
-        let(:activity) { activities.select{|item| item[:id] == 'canvas_4999'}[0] }
+        let(:activity) { activities.select{|item| item[:id] == 'canvas_5999'}[0] }
         it 'should fall back on emitter name' do
           expect(activity).to include({
             source: 'bCourses',

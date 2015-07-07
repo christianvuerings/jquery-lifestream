@@ -78,7 +78,7 @@ module Canvas
         site_url: "#{@url_root}/groups/#{group['id']}"
       }
       if group['context_type'] == 'Course'
-        group_data[:course_id] = group['course_id']
+        group_data[:course_id] = group['course_id'].to_s
       end
       group_data
     end

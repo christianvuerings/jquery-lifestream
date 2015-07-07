@@ -132,8 +132,7 @@ module MyActivities
 
     def self.process_source(entry, classes)
       if (site = get_site_for_entry(entry, classes))
-        source = (site[:siteType] == 'course') ? course_codes_for_site(site, classes) : site[:source]
-        source ||= site[:name]
+        source = course_codes_for_site(site, classes) || site[:source] || site[:name]
       end
       source || Canvas::Proxy::APP_NAME
     end
