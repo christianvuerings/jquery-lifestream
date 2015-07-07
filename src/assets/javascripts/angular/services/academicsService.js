@@ -236,13 +236,17 @@
           }
         }
       }
-      var courseInfo = {
-        'sectionNumbers[]': primarySectionNumbers,
-        'department': course.dept,
-        'courseCatalog': course.courseCatalog,
-        'slug': semester.slug
-      };
-      return courseInfo;
+      if (primarySectionNumbers.length) {
+        var courseInfo = {
+          'sectionNumbers[]': primarySectionNumbers,
+          'department': course.dept,
+          'courseCatalog': course.courseCatalog,
+          'slug': semester.slug
+        };
+        return courseInfo;
+      } else {
+        return null;
+      }
     };
 
     // Expose methods
