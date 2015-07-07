@@ -35,10 +35,10 @@
   // Base options for the command line
   var baseOptions = {
     'string': 'env',
-    'boolean': 'bs',
+    'boolean': 'browsersync',
     'default': {
       'env': process.env.RAILS_ENV || 'development',
-      'bs': true
+      'browsersync': true
     }
   };
 
@@ -50,7 +50,7 @@
 
   // If production mode, BrowserSync is turned off
   // Otherwise, in development mode, BrowserSync set by options
-  var useBrowserSync = isProduction ? false : options.bs;
+  var useBrowserSync = isProduction ? false : options.browsersync;
 
   // Check if Watchify has been turned on so it is only executed once
   var watchifyOn = false;
@@ -128,11 +128,13 @@
    *   Initialized BrowserSync
    */
   gulp.task('browser-sync', ['css', 'browserify'], function() {
-    if (useBrowserSync){
-      browserSync.init({
-          proxy: 'localhost:3000'
-      });
+    if (!useBrowserSync) {
+      return;
     }
+
+    return browserSync.init({
+      proxy: 'localhost:3000'
+    });
   });
 
   /**
@@ -247,8 +249,8 @@
       .pipe(streamify(concat('application.js')))
       .pipe(streamify(gulpif(isProduction, uglify())))
       .pipe(gulp.dest(paths.dist.js))
-      .on('end', function(){
-        if (useBrowserSync){
+      .on('end', function() {
+        if (useBrowserSync) {
           browserSync.reload();
         }
       });

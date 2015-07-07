@@ -231,7 +231,7 @@ This will check for any potential JavaScript issues and whether you formatted th
 Browsersync is turned on by default during development mode. To turn it off, set the option to `false`:
 
 ```bash
-gulp --bs false
+gulp --browsersync false
 ```
 
 During production mode, Browsersync is turned off.
