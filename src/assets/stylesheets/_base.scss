@@ -96,6 +96,13 @@ a {
   }
 }
 
+// Horizontal rule
+hr {
+  border: 0;
+  border-bottom: 1px solid $cc-color-widget-background;
+  margin: 15px 0;
+}
+
 // Form
 form {
   background: $cc-color-widget-more-background;

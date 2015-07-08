@@ -53,7 +53,7 @@
       templateUrl: 'cars_details.html',
       controller: 'MyFinancesController'
     }).
-    when('/finances/finaid', {
+    when('/finances/finaid/:finaidYearId?', {
       templateUrl: 'finaid.html',
       controller: 'MyFinancesController'
     }).
