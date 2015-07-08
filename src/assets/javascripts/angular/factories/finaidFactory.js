@@ -11,6 +11,8 @@
     // var urlBudget = '/dummy/json/finaid_budget.json';
     var urlBudget = urlAward;
 
+    var urlSummary = '/dummy/json/finaid_summary.json';
+
     var getBudget = function(options) {
       return apiService.http.request(options, urlBudget);
     };
@@ -19,9 +21,14 @@
       return apiService.http.request(options, urlAward);
     };
 
+    var getSummary = function(options) {
+      return apiService.http.request(options, urlSummary);
+    };
+
     return {
+      getAwards: getAwards,
       getBudget: getBudget,
-      getAwards: getAwards
+      getSummary: getSummary
     };
   });
 }(window.angular));

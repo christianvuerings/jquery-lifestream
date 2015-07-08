@@ -1,0 +1,49 @@
+<div class="cc-widget cc-widget-finaid-summary" data-ng-controller="FinaidSummaryController">
+  <div class="cc-widget-title">
+    <h2 class="cc-left">Financial Aid and Scholarships</h2>
+    <a class="cc-right cc-widget-title-link" data-ng-href="finances/finaid/{{finaidYear.id}}">
+      <strong>Details</strong>
+    </a>
+  </div>
+
+  <div class="cc-widget-text" data-cc-spinner>
+    <div data-ng-if="finaidSummary.finaidYears.length">
+      <div data-ng-if="finaidSummary.finaidYears.length === 1">
+        <span data-ng-bind="finaidYear.name"></span>
+      </div>
+      <div data-ng-if="finaidSummary.finaidYears.length > 1">
+        <div class="cc-select">
+          <select data-ng-model="finaidYear" data-ng-options="f as f.name for f in finaidSummary.finaidYears"></select>
+        </div>
+        <hr>
+        <div
+          data-ng-if="!finaidYear.termsAndConditions.approved"
+          data-cc-finaid-summary-message-directive
+          data-item="finaidYear.termsAndConditions"
+          data-button-text="'Complete Terms and Conditions'"
+          data-finaid-year-id="finaidYear.id"
+        ></div>
+        <div
+          data-ng-if="finaidYear.termsAndConditions.approved && finaidSummary.title4.approved === null"
+          data-cc-finaid-summary-message-directive
+          data-item="finaidSummary.title4"
+          data-button-text="'Complete Title IV'"
+          data-finaid-year-id="finaidYear.id"
+        ></div>
+        <div data-ng-if="finaidYear.termsAndConditions.approved && finaidSummary.title4.approved !== null">
+          T&C approved - Title IV has been answered
+        </div>
+        <hr>
+      </div>
+    </div>
+
+    <div class="cc-clearfix-container cc-text-small">
+      <div class="cc-left">
+        <a href="/finances/finaid/loans">View Previous Loans</a>
+      </div>
+      <div class="cc-right">
+        <a href="http://financialaid.berkeley.edu/">Learn more about Financial Aid</a>
+      </div>
+    </div>
+  </div>
+</div>
