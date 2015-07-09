@@ -111,8 +111,7 @@ describe Webcast::CourseMedia do
           expect(recording).to be_an_instance_of Hash
           expect(recording['youTubeId']).to eq 'mYZS-y6RuGI'
           expect(recording['lecture']).to eq '2014-05-02: Review for Final Exam'
-          # TODO: Bring this back once Webcast's QA env have recordingStartUTC up and running again
-          # expect(recording['recordingStartUTC']).to eq '2014-05-02T12:07:00-07:00'
+          expect(recording['recordingStartUTC']).to eq '2014-05-02T12:07:00-07:00'
         end
       end
 
