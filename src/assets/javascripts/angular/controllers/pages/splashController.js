@@ -11,7 +11,7 @@
       if (data.alert && data.alert.title) {
         $scope.splashNote = data.alert;
       } else {
-        $scope.splashNote = data.release_note;
+        $scope.splashNote = data.releaseNote;
       }
     });
   });
