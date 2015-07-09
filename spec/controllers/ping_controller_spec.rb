@@ -8,8 +8,8 @@ describe PingController do
       CampusOracle::Queries.stub(:database_alive?).and_return(true)
     end
     it 'raises error' do
+      expect(Rails.logger).to receive(:fatal)
       get :do
-      expect {raise 'CalCentral database is currently unavailable'}.to raise_error('CalCentral database is currently unavailable')
       expect(response.status).to eq 503
     end
   end
@@ -20,8 +20,8 @@ describe PingController do
       CampusOracle::Queries.stub(:database_alive?).and_return(false)
     end
     it 'raises error' do
+      expect(Rails.logger).to receive(:fatal)
       get :do
-      expect {raise 'Campus database is currently unavailable'}.to raise_error('Campus database is currently unavailable')
       expect(response.status).to eq 503
     end
   end
@@ -32,8 +32,8 @@ describe PingController do
       CampusOracle::Queries.stub(:database_alive?).and_return(false)
     end
     it 'raises error' do
+      expect(Rails.logger).to receive(:fatal)
       get :do
-      expect {raise 'CalCentral database is currently unavailable'}.to raise_error('CalCentral database is currently unavailable')
       expect(response.status).to eq 503
     end
   end
