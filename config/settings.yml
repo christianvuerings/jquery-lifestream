@@ -282,7 +282,6 @@ background_jobs_check:
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
   my_fin_aid: false
-  research: false
   textbooks: false
   videos: false
   cal1card: false

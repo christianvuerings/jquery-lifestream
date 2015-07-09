@@ -3,7 +3,6 @@
   "isLoggedIn": false,
   "features": {
     "my_fin_aid": true,
-    "research": false,
     "textbooks": true,
     "videos": true
   }
