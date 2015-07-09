@@ -221,6 +221,25 @@ jscs .
 
 This will check for any potential JavaScript issues and whether you formatted the code correctly.
 
+## Browsersync
+
+[Browsersync](http://www.browsersync.io/) makes developing faster by synchronizing file changes and interactions across multiple devices. Browsersync will automatically:
+
+- Update the browser when SCSS files are changed
+- Reload the browser when a template or JS file is changed
+
+Browsersync is turned on by default during development mode. To turn it off, set the option to `false`:
+
+```bash
+gulp --browsersync false
+```
+
+During production mode, Browsersync is turned off.
+
+Your `rails server` must finish starting up before executing Browsersync. Once Browsersync is executed, access your development server at [localhost:3001](http://localhost:3001/). No real time file changes will be reflected at [localhost:3000](http://localhost:3000/).
+
+While the server is running, you can access Browsersync settings at [localhost:3002](http://localhost:3002/), where you can change sync options, view history, and more.
+
 ## Role-Aware Testing
 
 Some features of CalCentral are only accessible to users with particular roles, such as `student`.
