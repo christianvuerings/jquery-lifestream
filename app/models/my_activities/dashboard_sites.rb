@@ -1,9 +1,9 @@
 module MyActivities
   class DashboardSites
     def self.fetch(uid, options={})
-      dashboard_sites = MyClasses::Merged.new(uid, options).get_feed[:classes]
-      dashboard_sites.concat(MyGroups::Merged.new(uid, options).get_feed[:groups])
-      dashboard_sites
+      classes_feed = MyClasses::Merged.new(uid, options).get_feed
+      groups_feed = MyGroups::Merged.new(uid, options).get_feed
+      classes_feed[:classes] + classes_feed[:gradingInProgressClasses].to_a + groups_feed[:groups]
     end
   end
 end

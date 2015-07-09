@@ -66,13 +66,7 @@ module Canvas
     end
 
     def find_canvas_course_tab(tool_id)
-      response = request_uncached("#{@api_root}/tabs", '_find_canvas_course_tab', { method: :get })
-      all_tabs = response && safe_json(response.body)
-      if all_tabs
-        all_tabs.find { |tab| tab['id'].end_with? "_#{tool_id}" }
-      else
-        nil
-      end
+      course_site_tab_list.find { |tab| tab['id'].end_with? "_#{tool_id}" }
     end
 
     def hide_course_site_tab(tab)
@@ -129,30 +123,64 @@ module Canvas
 
     def update_course_site_tab_hidden(tab, set_to_hidden)
       begin
+        # Take a snapshot of tab configs before performing update
+        tabs_before_update = course_site_tabs_by_id
         tab_id = tab['id']
-        tab_position = tab['position']
-        options = {
-          :method => :put,
-          :body => {
-            'id' => tab_id,
-            'hidden' => set_to_hidden,
-            'position' => tab_position,
-            'visibility' => 'public'
-          }
-        }
-        url = "#{@api_root}/tabs/#{tab_id}"
-        logger.warn "Update course site_tab with url=#{url} and options: #{options}"
-        response = request_uncached(url, '_update_course_site_tab_hidden', options)
-        tab = response && safe_json(response.body)
-        is_tab_now_showing = tab && !tab['hidden']
-        if is_tab_now_showing == set_to_hidden
-          raise Errors::ProxyError.new("Failed to set hidden=#{set_to_hidden} on tab #{tab_id} of Canvas:#{@api_root}", response: response, url: url, uid: @uid)
+        updated_tab = update_course_site_tab(tab_id, options_for_tab_update(tab, set_to_hidden))
+        unless updated_tab && set_to_hidden == property_as_boolean(updated_tab, 'hidden')
+          raise Errors::ProxyError.new("Failed to set hidden=#{set_to_hidden} on tab #{tab_id} of Canvas:#{@api_root}", uid: @uid, tab: tab)
         end
-        tab
+        # Canvas Tab API has a bug whereby 'hidden' value is updated on un-targeted tabs. We must fix collateral damage, if any.
+        course_site_tabs_by_id.each do |id, tab_after_update|
+          tab_before_update = tabs_before_update[id]
+          # Only inspect the extraneous tabs
+          if id != tab_id && tab_before_update && tab_before_update['hidden'] != tab_after_update['hidden']
+            original_hidden_value = property_as_boolean(tab_before_update, 'hidden')
+            logger.warn "Restore #{tab_after_update['label']} to hidden=#{original_hidden_value} on #{@api_root}"
+            update_course_site_tab(id, options_for_tab_update(tab_after_update, original_hidden_value))
+          end
+        end
+        updated_tab
       rescue => exception
         logger.error "#{self.class.name} Problem updating hidden=#{set_to_hidden} on tab #{tab_id} of Canvas:#{@api_root}. Abort!"
         raise exception
       end
+    end
+
+    def property_as_boolean(tab, property_name)
+      # Canvas Tab API docs have 'hidden' property as type String
+      'true'.casecmp(tab[property_name].to_s) == 0
+    end
+
+    def course_site_tab_list
+      response = request_uncached("#{@api_root}/tabs", '_course_site_tab_list', { method: :get })
+      response && response.status == 200 ? safe_json(response.body) : {}
+    end
+
+    def course_site_tabs_by_id
+      Hash[course_site_tab_list.map { |t| [t['id'], t] }]
+    end
+
+    def update_course_site_tab(tab_id, options)
+      url = "#{@api_root}/tabs/#{tab_id}"
+      response = request_uncached(url, '_update_course_site_tab', options)
+      logger.info "Updated course site_tab with url=#{url} and options: #{options}"
+      unless response && response.status == 200
+        raise Errors::ProxyError.new("Failed to update tab #{tab_id} of Canvas:#{@api_root}", response: response, url: url, uid: @uid)
+      end
+      safe_json response.body
+    end
+
+    def options_for_tab_update(tab, set_to_hidden)
+      {
+        :method => :put,
+        :body => {
+          'id' => tab['id'],
+          'hidden' => set_to_hidden,
+          'position' => tab['position'],
+          'visibility' => 'public'
+        }
+      }
     end
 
   end

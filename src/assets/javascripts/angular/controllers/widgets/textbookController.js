@@ -14,6 +14,12 @@
     $scope.bookListsBySection = [];
     $scope.textbooksCount = 0;
 
+    var setErrorBody = function(errorBody) {
+      $scope.textbookError = {
+        'body': errorBody
+      };
+    };
+
     var getTextbook = function(courseInfo, sectionLabel) {
       return textbookFactory.getTextbooks({
         params: courseInfo
@@ -42,14 +48,16 @@
         // get textbooks for each primary section
         var course = separatedPrimaries[c];
         var courseInfo = academicsService.textbookRequestInfo(course, semester);
-        requests.push(getTextbook(courseInfo, course.sections[0].section_label));
+        if (courseInfo) {
+          requests.push(getTextbook(courseInfo, course.sections[0].section_label));
+        }
       }
 
       $q.all(requests).then(function() {
-        if (!$scope.textbooksCount && $scope.bookListsBySection.length && $scope.bookListsBySection[0].books) {
-          $scope.textbookError = {
-            'body': $scope.bookListsBySection[0].books.bookUnavailableError
-          };
+        if (!requests.length) {
+          setErrorBody('No textbooks list is available for your course sections.');
+        } else if (!$scope.textbooksCount && $scope.bookListsBySection.length && $scope.bookListsBySection[0].books) {
+          setErrorBody($scope.bookListsBySection[0].books.bookUnavailableError);
         }
         $scope.isLoading = false;
       });

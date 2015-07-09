@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe MyClasses::Campus do
   let(:user_id) {rand(99999).to_s}
   let(:catid) {"#{rand(999)}B"}
@@ -41,7 +39,7 @@ describe MyClasses::Campus do
         expect(course[:listings].length).to eq 1
         expect(course[:listings].first[:catid]).to eq catid
         expect(course[:listings].first[:course_code]).to eq course_code
-        expect(course[:site_url].blank?).to be_falsey
+        expect(course[:site_url]).to be_present
         expect(course[:sections]).to_not be_empty
       end
     end
@@ -49,13 +47,19 @@ describe MyClasses::Campus do
 
   describe '#fetch' do
     before {CampusOracle::UserCourses::All.stub(:new).with(user_id: user_id).and_return(double(get_all_campus_courses: fake_campus))}
-    subject { MyClasses::Campus.new(user_id).fetch }
+    let(:campus_classes) { MyClasses::Campus.new(user_id).fetch }
     context 'when enrolled in a current class' do
+      subject { campus_classes[:current] }
       it_behaves_like 'a Classes list'
+      it 'omits grading in progress classes' do
+        expect(campus_classes).not_to include :gradingInProgress
+      end
     end
     context 'when enrolled in a non-current term' do
       let(:term_yr) {2012}
-      its(:size) {should eq 0}
+      it 'lists no current classes' do
+        expect(campus_classes[:current]).to be_empty
+      end
     end
     context 'when student in two primary sections with the same department and catalog ID' do
       let(:fake_sections) {[
@@ -91,6 +95,7 @@ describe MyClasses::Campus do
           waitlistPosition: 0
         }
       ]}
+      subject { campus_classes[:current] }
       it_behaves_like 'a Classes list'
       its(:size) {should eq 2}
       it 'treats them as two different classes' do
@@ -110,11 +115,19 @@ describe MyClasses::Campus do
         expect(subject[1][:sections].size).to eq 1
       end
     end
+    context 'when term has just ended' do
+      before { allow(Settings.terms).to receive(:fake_now).and_return(DateTime.parse('2013-12-30')) }
+      it 'includes empty current term' do
+        expect(campus_classes[:current]).to be_empty
+      end
+      subject { campus_classes[:gradingInProgress] }
+      it_behaves_like 'a Classes list'
+    end
   end
 
   context 'cross-listed courses', if: CampusOracle::Connection.test_data? do
     include_context 'instructor for crosslisted courses'
-    subject { MyClasses::Campus.new("212388").fetch }
+    subject { MyClasses::Campus.new('212388').fetch[:current] }
     it_should_behave_like 'a feed including crosslisted courses'
   end
 
