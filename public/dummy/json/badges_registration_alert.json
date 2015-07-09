@@ -1,12 +1,12 @@
 {
   "alert": {
     "title": "CalCentral Scheduled Maintenance 3/17",
-    "teaser": "CalCentral v32 release at 6 - 7am",
-    "url": "http://ets-dev.berkeley.edu/calcentral-scheduled-maintenance-317",
+    "snippet": "CalCentral v32 release at 6 - 7am",
+    "link": "http://ets-dev.berkeley.edu/calcentral-scheduled-maintenance-317",
     "timestamp": {
       "epoch": 1393495946,
       "dateTime": "2014-02-27T02:12:26-08:00",
-      "dateString": "2/27"
+      "dateString": "Feb 27"
     }
   },
   "badges": {
