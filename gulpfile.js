@@ -48,9 +48,9 @@
   // Are we in production mode?
   var isProduction = options.env === 'production';
 
-  // If production mode, BrowserSync is turned off
+  // If not development mode, BrowserSync is turned off
   // Otherwise, in development mode, BrowserSync set by options
-  var useBrowserSync = isProduction ? false : options.browsersync;
+  var useBrowserSync = options.env !== 'development' ? false : options.browsersync;
 
   // Check if Watchify has been turned on so it is only executed once
   var watchifyOn = false;
