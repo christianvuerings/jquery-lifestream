@@ -49,7 +49,6 @@ features:
   textbooks: true
   videos: true
   research: true
-  app_alerts: true
   cal1card: true
   audio: true
   advising: true

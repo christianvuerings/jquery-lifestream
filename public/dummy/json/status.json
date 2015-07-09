@@ -6,8 +6,7 @@
     "my_fin_aid": true,
     "research": false,
     "textbooks": true,
-    "videos": true,
-    "app_alerts": true
+    "videos": true
   },
   "actingAsUid": "1051203",
   "isSuperuser": false,

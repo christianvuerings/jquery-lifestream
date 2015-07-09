@@ -285,7 +285,6 @@ features:
   research: false
   textbooks: false
   videos: false
-  app_alerts: false
   cal1card: false
   reauthentication: true
   audio: false
