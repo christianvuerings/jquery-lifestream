@@ -1,0 +1,84 @@
+{
+  "enrollment_terms": [
+    {
+      "end_at": "2013-05-31T07:00:00Z",
+      "id": 3791,
+      "name": "Fall 2012",
+      "start_at": "2012-08-23T07:00:00Z",
+      "workflow_state": "active",
+      "sis_term_id": "2012-D"
+    },
+    {
+      "end_at": "2013-05-31T07:00:00Z",
+      "id": 4223,
+      "name": "Spring 2013",
+      "start_at": "2013-01-01T08:00:00Z",
+      "workflow_state": "active",
+      "sis_term_id": "TERM:2013-B"
+    },
+    {
+      "end_at": "2013-08-30T07:00:00Z",
+      "id": 4694,
+      "name": "Summer 2013",
+      "start_at": "2013-04-01T07:00:00Z",
+      "workflow_state": "active",
+      "sis_term_id": "TERM:2013-C"
+    },
+    {
+      "end_at": null,
+      "id": 4821,
+      "name": "Fall 2013",
+      "start_at": "2013-08-22T07:00:00Z",
+      "workflow_state": "active",
+      "sis_term_id": "TERM:2013-D"
+    },
+    {
+      "end_at": null,
+      "id": 1818,
+      "name": "Default Term",
+      "start_at": null,
+      "workflow_state": "active",
+      "sis_term_id": null
+    },
+    {
+      "end_at": null,
+      "id": 5168,
+      "name": "Spring 2014",
+      "start_at": null,
+      "workflow_state": "active",
+      "sis_term_id": "TERM:2014-B"
+    },
+    {
+      "end_at": null,
+      "id": 5266,
+      "name": "Summer 2014",
+      "start_at": null,
+      "workflow_state": "active",
+      "sis_term_id": "TERM:2014-C"
+    },
+    {
+      "end_at": null,
+      "id": 5267,
+      "name": "Fall 2014",
+      "start_at": null,
+      "workflow_state": "active",
+      "sis_term_id": "TERM:2014-D"
+    },
+    {
+      "end_at": null,
+      "id": 5343,
+      "name": "Spring 2015",
+      "start_at": null,
+      "workflow_state": "active",
+      "sis_term_id": "TERM:2015-B"
+    },
+    {
+      "end_at": null,
+      "id": 5476,
+      "name": "Summer 2015",
+      "start_at": null,
+      "workflow_state": "active",
+      "sis_term_id": "TERM:2015-C"
+    }
+  ]
+}

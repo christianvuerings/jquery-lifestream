@@ -23,10 +23,7 @@ module Canvas
       params = "per_page=100"
       account_id ||= settings.account_id
       while params do
-        response = request_uncached(
-          "accounts/#{account_id}/admins?#{params}",
-          "_admins"
-        )
+        response = request_uncached("#{request_path}?#{params}")
         break unless (response && response.status == 200 && admins_list = safe_json(response.body))
         all_admins.concat(admins_list)
         params = next_page_params(response)
@@ -34,5 +31,12 @@ module Canvas
       all_admins
     end
 
+    def request_path
+      "accounts/#{@account_id}/admins"
+    end
+
+    def mock_json
+      read_file('fixtures', 'json', 'canvas_admins.json')
+    end
   end
 end

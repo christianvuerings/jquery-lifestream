@@ -59,7 +59,7 @@ describe Canvas::CourseSettings do
 
       it 'sets specified grading scheme for course site' do
         request_options[:body]['course']['grading_standard_id'] = 123456
-        expect(subject).to receive(:request_uncached).with("courses/#{canvas_course_id}", '_course_settings_set_grading_scheme', request_options).and_return(fake_response)
+        expect(subject).to receive(:request_uncached).with("courses/#{canvas_course_id}", request_options).and_return(fake_response)
         course = subject.set_grading_scheme(123456)
         expect(course).to be_an_instance_of Hash
         expect(course['name']).to eq 'Just another course site'

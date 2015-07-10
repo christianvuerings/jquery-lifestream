@@ -26,8 +26,16 @@ module Canvas
     private
 
     def request_course
-      response = request_uncached("courses/sis_course_id:#{@sis_course_id}?include[]=term", "_sis_course")
+      response = request_uncached request_path
       return response ? safe_json(response.body) : nil
+    end
+
+    def request_path
+      "courses/sis_course_id:#{@sis_course_id}?include[]=term"
+    end
+
+    def mock_json
+      read_file('fixtures', 'json', 'canvas_sis_course.json')
     end
 
   end

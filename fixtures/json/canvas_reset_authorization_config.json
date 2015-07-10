@@ -1,0 +1,9 @@
+{
+  "id": 18,
+  "position": 1,
+  "auth_type": "cas",
+  "auth_base": "https://auth-test.example.com/cas",
+  "log_in_url": "",
+  "login_handle_name": "LDAP UID",
+  "unknown_user_url": ""
+}

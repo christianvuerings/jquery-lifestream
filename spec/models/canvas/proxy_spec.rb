@@ -24,20 +24,23 @@ describe Canvas::Proxy do
 
   it "should see an account list as admin" do
     admin_client = Canvas::Proxy.new
-    response = admin_client.request('accounts', '_admin')
+    admin_client.set_response(body: admin_client.read_file('fixtures', 'json', 'canvas_accounts.json'))
+    response = admin_client.request('accounts')
     accounts = JSON.parse(response.body)
     accounts.size.should > 0
   end
 
   it "should see the same account list as admin, initiating Canvas::Proxy with a passed in token" do
     admin_client = Canvas::Proxy.new(:access_token => Settings.canvas_proxy.admin_access_token)
-    response = admin_client.request('accounts', '_admin')
+    admin_client.set_response(body: admin_client.read_file('fixtures', 'json', 'canvas_accounts.json'))
+    response = admin_client.request('accounts')
     accounts = JSON.parse(response.body)
     accounts.size.should > 0
   end
 
   it "should get own profile as authorized user", :testext => true do
-    response = @client.request('users/self/profile', '_admin')
+    @client.set_response(body: @client.read_file('fixtures', 'json', 'canvas_accounts.json'))
+    response = @client.request('users/self/profile')
     profile = JSON.parse(response.body)
     profile['login_id'].should == @user_id.to_s
   end
@@ -80,12 +83,12 @@ describe Canvas::Proxy do
         category_specific_id_exists.blank?.should_not be_truthy
       end
     ensure
-      VCR.eject_cassette
+      WebMock.reset!
     end
   end
 
   it "should fetch all course students even if the Canvas feed is paged" do
-    # The VCR recording has been edited to have four pages of results, only one student per page.
+    # The mock JSON has been edited to have four pages of results, only one student per page.
     proxy = Canvas::CourseStudents.new(course_id: 767330, fake: true)
     students = proxy.full_students_list
     students.length.should == 4

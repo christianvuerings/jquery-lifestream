@@ -13,6 +13,10 @@ module Canvas
       get_account_csv('sis_export', object_type, term_id)
     end
 
+    def get_csv(term_id = nil)
+      get_provisioning_csv(object_type, term_id)
+    end
+
     def get_provisioning_csv(object_type, term_id = nil)
       get_account_csv('provisioning', object_type, term_id)
     end
@@ -22,7 +26,6 @@ module Canvas
       response = ActiveSupport::Notifications.instrument('proxy', { class: self.class, method: __method__ }) do
         request_uncached(
           "accounts/#{@account_id}/reports/#{report_type}_csv?parameters[#{object_type}]=1#{term_param}",
-          "_start_#{report_type}_report_#{object_type}",
           {method: :post}
         )
       end
@@ -41,33 +44,25 @@ module Canvas
       # We cannot use the file_url directly. Instead, we need to extract the
       # ID and send it to the Files API.
       file_id = /.+\/files\/(\d+)\/download/.match(report_url)[1]
-      response = request_uncached(
-        "files/#{file_id}",
-        "_#{report_type}_report_file_#{object_type}"
-      )
+      response = request_uncached "files/#{file_id}"
       unless (response && response.status == 200 && file_info = safe_json(response.body))
         logger.error("Unable to find download URL for report #{report_id}")
         return nil
       end
       # Canvas's Files API builds an authorization token into the URL, which allows for redirection
-      # to the file storage host but which conflicts with the authorization header we use for other API calls
-      # and jams our VCR.
+      # to the file storage host but which conflicts with the authorization header we use for other API calls.
       if @fake
-        csv = CSV.read("fixtures/pretty_vcr_recordings/Canvas_#{report_type}_report_#{object_type}_csv.csv", {headers: true})
+        csv = CSV.read("fixtures/csv/Canvas_#{report_type}_report_#{object_type}_csv.csv", {headers: true})
       else
         conn = Faraday.new(file_info['url'], @options) do |c|
           c.use FaradayMiddleware::FollowRedirects
           c.use Faraday::Adapter::NetHttp
         end
         csv_response = ActiveSupport::Notifications.instrument('proxy', { class: self.class, method: __method__ }) do
-          request_uncached(
-            "",
-            "_#{report_type}_report_#{object_type}_csv",
-            {
-              uri: file_info["url"],
-              non_oauth_connection: conn
-            }
-          )
+          request_uncached('', {
+            uri: file_info["url"],
+            non_oauth_connection: conn
+          })
         end
         unless response && response.status == 200
           logger.error("Unable to download report #{report_id} : #{response}")
@@ -86,9 +81,7 @@ module Canvas
       begin
         Retriable.retriable(on: Canvas::Report::ReportNotReadyException, tries: tries, interval: 20) do
           response = ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class, method: __method__ }) do
-            request_uncached(url, "_check_#{report_type}_report_#{object_type}", {
-              method: :get
-            })
+            request_uncached(url, method: :get)
           end
           unless (response && response.status == 200 && json = safe_json(response.body))
             logger.error "Report ID #{report_id} status missing or errored; will retry later"
@@ -114,6 +107,19 @@ module Canvas
     end
 
     class ReportNotReadyException < Exception
+    end
+
+    private
+
+    def mock_interactions
+      on_request(uri_matching: "#{api_root}/accounts/#{@account_id}/reports/provisioning_csv", method: :get)
+        .respond_with_file('fixtures', 'json', "canvas_check_provisioning_report_#{object_type}.json")
+
+      on_request(uri_matching: "#{api_root}/accounts/#{@account_id}/reports/provisioning_csv", method: :post)
+        .respond_with_file('fixtures', 'json', "canvas_start_provisioning_report_#{object_type}.json")
+
+      on_request(uri_matching: "#{api_root}/files/", method: :get)
+        .respond_with_file('fixtures', 'json', "canvas_provisioning_report_file_#{object_type}.json")
     end
 
   end

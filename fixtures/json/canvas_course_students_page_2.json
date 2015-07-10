@@ -1,0 +1,35 @@
+[
+  {
+    "id": 3300939,
+    "name": "Oski le Bear",
+    "sortable_name": "Bear, Oski le",
+    "short_name": "Oski le Bear",
+    "sis_user_id": "300939",
+    "sis_login_id": "300939",
+    "login_id": "300939",
+    "enrollments": [
+      {
+        "associated_user_id": null,
+        "course_id": 767330,
+        "course_section_id": 3767330,
+        "id": 344535,
+        "limit_privileges_to_course_section": false,
+        "root_account_id": 11,
+        "type": "StudentEnrollment",
+        "updated_at": "2013-06-17T14:03:08-07:00",
+        "user_id": 3300939,
+        "enrollment_state": "active",
+        "role": "StudentEnrollment",
+        "grades": {
+          "html_url": "https://ucberkeley.test.instructure.com/courses/767330/grades/3300939",
+          "current_score": null,
+          "final_score": null,
+          "current_grade": null,
+          "final_grade": null
+        },
+        "html_url": "https://ucberkeley.test.instructure.com/courses/767330/users/3300939"
+      }
+    ],
+    "analytics_url": "/courses/767330/analytics/users/3300939"
+  }
+]

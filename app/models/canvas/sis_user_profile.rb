@@ -3,7 +3,7 @@ module Canvas
     include SafeJsonParser
 
     def sis_user_profile
-      request("users/sis_login_id:#{@uid}/profile", "_sis_user_profile")
+      request request_path
     end
 
     def get
@@ -15,5 +15,14 @@ module Canvas
       true
     end
 
+    private
+
+    def mock_json
+      read_file('fixtures', 'json', 'canvas_sis_user_profile.json')
+    end
+
+    def request_path
+      "users/sis_login_id:#{@uid}/profile"
+    end
   end
 end
