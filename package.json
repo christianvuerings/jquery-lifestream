@@ -29,6 +29,7 @@
     "angular": "^1.4.1",
     "angular-route": "^1.4.1",
     "angular-sanitize": "^1.4.1",
+    "browser-sync": "^2.7.13",
     "browserify": "^10.2.4",
     "bulkify": "^1.1.1",
     "del": "^1.2.0",

@@ -8,55 +8,55 @@ describe EtsBlog::ReleaseNotes do
 
   context 'fetching fake data feed' do
     include_context 'it writes to the cache'
-    subject { fake_proxy.get_latest_release_notes }
-    
+    subject { fake_proxy.get_latest }
+
     it_behaves_like 'a polite HTTP client'
 
     it 'should have the expected fake data' do
-      expect(subject[:entries][0][:title]).to eq 'CalCentral v.42 (Sprint 44) Release Notes, 8/27/14'
-      expect(subject[:entries][0][:link]).to eq 'https://ets.berkeley.edu/article/calcentral-v42-sprint-44-release-notes-82714'
-      expect(subject[:entries][0][:date]).to eq 'Aug 27'
-      expect(subject[:entries][0][:snippet]).to be
+      expect(subject[:title]).to eq 'CalCentral v.42 (Sprint 44) Release Notes, 8/27/14'
+      expect(subject[:link]).to eq 'https://ets.berkeley.edu/article/calcentral-v42-sprint-44-release-notes-82714'
+      expect(subject[:timestamp][:dateString]).to eq 'Aug 27'
+      expect(subject[:snippet]).to be
     end
   end
 
   context 'getting real data feed', testext: true do
     include_context 'it writes to the cache'
-    subject { real_proxy.get_latest_release_notes }
-    it { should_not be_empty }
-    its([:entries]) { should be }
+    subject { real_proxy.get_latest }
+    it { should_not be_blank }
+    its([:link]) { should be }
   end
 
   context 'server 404s' do
     include_context 'it writes to the cache'
     after(:each) { WebMock.reset! }
-    subject { real_proxy.get_latest_release_notes }
+    subject { real_proxy.get_latest }
 
     context '404 error on remote server' do
       before do
         stub_request(:any, /.*#{feed_uri.hostname}.*/).to_return(status: 404)
       end
-      its([:entries]) { should be_empty }
+      it { should be_blank }
     end
   end
 
   context 'server errors' do
     include_context 'it writes to the cache'
     after(:each) { WebMock.reset! }
-    subject { real_proxy.get_latest_release_notes }
+    subject { real_proxy.get_latest }
 
     context 'unreachable remote server (connection errors)' do
       before do
         stub_request(:any, /.*#{feed_uri.hostname}.*/).to_raise(Errno::ECONNREFUSED)
       end
-      its([:entries]) { should be_empty }
+      it { should be_blank }
     end
 
     context 'error on remote server (5xx errors)' do
       before do
         stub_request(:any, /.*#{feed_uri.hostname}.*/).to_return(status: 506)
       end
-      its([:entries]) { should be_empty }
+      it { should be_blank }
     end
   end
 

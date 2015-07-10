@@ -79,7 +79,6 @@ features:
   my_fin_aid: true
   textbooks: true
   videos: true
-  app_alerts: true
   cal1card: true
   reauthentication: false
   audio: true

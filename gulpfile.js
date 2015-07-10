@@ -29,11 +29,16 @@
   var uglify = require('gulp-uglify');
   var util = require('gulp-util');
 
+  // Initialize BrowserSync
+  var browserSync = require('browser-sync').create();
+
   // Base options for the command line
   var baseOptions = {
-    string: 'env',
-    default: {
-      env: process.env.RAILS_ENV || 'development'
+    'string': 'env',
+    'boolean': 'browsersync',
+    'default': {
+      'env': process.env.RAILS_ENV || 'development',
+      'browsersync': true
     }
   };
 
@@ -42,6 +47,10 @@
 
   // Are we in production mode?
   var isProduction = options.env === 'production';
+
+  // If not development mode, BrowserSync is turned off
+  // Otherwise, in development mode, BrowserSync set by options
+  var useBrowserSync = options.env !== 'development' ? false : options.browsersync;
 
   // Check if Watchify has been turned on so it is only executed once
   var watchifyOn = false;
@@ -115,6 +124,20 @@
   };
 
   /**
+   * BrowserSync task
+   *   Initialized BrowserSync
+   */
+  gulp.task('browser-sync', ['css', 'browserify'], function() {
+    if (!useBrowserSync) {
+      return;
+    }
+
+    return browserSync.init({
+      proxy: 'localhost:3000'
+    });
+  });
+
+  /**
    * Images task
    *   Copy files
    */
@@ -167,7 +190,8 @@
       // Combine the files
       .pipe(concat('application.css'))
       // Output to the correct directory
-      .pipe(gulp.dest(paths.dist.css));
+      .pipe(gulp.dest(paths.dist.css))
+      .pipe(gulpif(useBrowserSync, browserSync.reload({stream: true})));
   });
 
   /**
@@ -224,7 +248,12 @@
       .pipe(addStream.obj(prepareTemplates()))
       .pipe(streamify(concat('application.js')))
       .pipe(streamify(gulpif(isProduction, uglify())))
-      .pipe(gulp.dest(paths.dist.js));
+      .pipe(gulp.dest(paths.dist.js))
+      .on('end', function() {
+        if (useBrowserSync) {
+          browserSync.reload();
+        }
+      });
   };
 
   /**
@@ -415,6 +444,7 @@
     runSequence(
       'build-clean',
       [
+        'browser-sync',
         'images',
         'browserify',
         'css',

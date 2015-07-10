@@ -9,14 +9,9 @@
 
     blogFactory.getBlog().success(function(data) {
       if (data.alert && data.alert.title) {
-        $scope.splashNote = {
-          date: $filter('date')(data.alert.timestamp.epoch * 1000, 'MMM dd'),
-          link: data.alert.url,
-          snippet: data.alert.teaser,
-          title: data.alert.title
-        };
+        $scope.splashNote = data.alert;
       } else {
-        $scope.splashNote = data.entries[0];
+        $scope.splashNote = data.releaseNote;
       }
     });
   });

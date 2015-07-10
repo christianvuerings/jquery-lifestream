@@ -1,6 +1,6 @@
 module EtsBlog
   class Alerts < BaseProxy
-
+    include ClassLogger
     include DatedFeed
     include Proxies::HttpClient
     include Proxies::MockableXml
@@ -31,11 +31,11 @@ module EtsBlog
       feed['xml']['node'].as_collection.map do |node|
         alert = {
           title: node['Title'].to_text,
-          url: node['Link'].to_text,
-          timestamp: format_date(Time.zone.at(node['PostDate'].to_text.to_i).to_datetime)
+          link: node['Link'].to_text,
+          timestamp: format_date(Time.zone.at(node['PostDate'].to_text.to_i).to_datetime, '%b %d')
         }
-        alert[:teaser] = node['Teaser'] if node['Teaser'].present?
-        if alert[:title].blank? || alert[:url].blank? || alert[:timestamp].blank? || alert[:timestamp][:epoch].zero?
+        alert[:snippet] = node['Teaser'] if node['Teaser'].present?
+        if alert[:title].blank? || alert[:link].blank? || alert[:timestamp].blank? || alert[:timestamp][:epoch].zero?
           logger.error("Unexpected node in alert feed: #{node.unwrap}")
         else
           alerts << alert
@@ -45,7 +45,7 @@ module EtsBlog
     end
 
     def get_feed
-      logger.info "#{self.class.name} Fetching alerts from blog (fake=#{@fake}, cache expiration #{self.class.expires_in}"
+      logger.info "Fetching alerts from #{@settings.base_url} (fake=#{@fake}), cache expiration #{self.class.expires_in}"
       #HTTParty won't parse automatically because the application/xml header is missing
       MultiXml.parse(get_response(@settings.base_url).body)
     end
