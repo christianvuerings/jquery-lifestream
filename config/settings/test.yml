@@ -42,18 +42,21 @@ app_alerts_proxy:
   fake: true
   base_url: "http://ets-dev.berkeley.edu/calcentral-alerts/feed"
 
+service_alerts_proxy:
+  fake: true
+  base_url: 'https://test-ets.pantheon.berkeley.edu/news-archive/calcentral-service-alert/feed'
+
 features:
   bearfacts: true
   financials: true
   telebears: true
   textbooks: true
   videos: true
-  research: true
-  app_alerts: true
   cal1card: true
   audio: true
   advising: true
   webcast_sign_up_on_calcentral: true
+  service_alerts_rss: true
 
 cache:
   store: "memory"

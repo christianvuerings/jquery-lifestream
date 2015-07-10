@@ -18,8 +18,8 @@ describe EtsBlog::Alerts do
   it 'should format and return the latest well-formed feed message' do
     alert = fake_proxy.get_latest
     alert[:title].should == 'CalCentral Scheduled Upgrade (Test Announce Only)'
-    alert[:teaser].should == 'CalCentral Scheduled Upgrade (Test Announce Only)'
-    alert[:url].should == 'http://ets-dev.berkeley.edu/news/calcentral-scheduled-upgrade-test-announce-only'
+    alert[:snippet].should == 'CalCentral Scheduled Upgrade (Test Announce Only)'
+    alert[:link].should == 'http://ets-dev.berkeley.edu/news/calcentral-scheduled-upgrade-test-announce-only'
     alert[:timestamp][:epoch].should == 1393257625
   end
 
@@ -29,8 +29,8 @@ describe EtsBlog::Alerts do
       fake_proxy.stub(:get_feed).and_return(MultiXml.parse File.read(xml_multibyte_characters))
       alert = fake_proxy.get_latest
       alert[:title].should == '¡El Señor González se zampó un extraño sándwich de vodka y ajo! (¢, ®, ™, ©, •, ÷, –, ¿)'
-      alert[:url].should == 'hדג סקרן שט בים מאוכזב ולפתע מצא לו חברה'
-      alert[:teaser].should == 'جامع الحروف عند البلغاء يطلق على الكلام المركب من جميع حروف التهجي بدون تكرار أحدها في لفظ واحد، أما في لفظين فهو جائز'
+      alert[:link].should == 'hדג סקרן שט בים מאוכזב ולפתע מצא לו חברה'
+      alert[:snippet].should == 'جامع الحروف عند البلغاء يطلق على الكلام المركب من جميع حروف التهجي بدون تكرار أحدها في لفظ واحد، أما في لفظين فهو جائز'
     end
   end
 
@@ -39,7 +39,7 @@ describe EtsBlog::Alerts do
     it 'should return non-teaser attributes' do
       alert = fake_proxy.get_latest
       expect(alert[:title]).to be_present
-      expect(alert[:url]).to be_present
+      expect(alert[:link]).to be_present
       expect(alert[:timestamp][:epoch]).to be_present
     end
   end

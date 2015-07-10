@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xml:base="https://test-ets.pantheon.berkeley.edu/news-archive/calcentral-service-alert/feed" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>News</title>
+    <link>https://test-ets.pantheon.berkeley.edu/news-archive/calcentral-service-alert/feed</link>
+    <description></description>
+    <language>en</language>
+    <item>
+      <title>¡El Señor González se zampó un extraño sándwich de vodka y ajo! (¢, ®, ™, ©, •, ÷, –, ¿)</title>
+      <link>hדג סקרן שט בים מאוכזב ולפתע מצא לו חברה</link>
+      <description>جامع الحروف عند البلغاء يطلق على الكلام المركب من جميع حروف التهجي بدون تكرار أحدها في لفظ واحد، أما في لفظين فهو جائز</description>
+      <pubDate>Thu, 09 Jul 2015 00:00:00 -0700</pubDate>
+      <dc:creator />
+      <guid isPermaLink="false">d766469f-945f-4369-956e-ab8afa690361</guid>
+    </item>
+    <item>
+      <title>Test alert for CalCentral with title only</title>
+      <link>https://test-ets.pantheon.berkeley.edu/news/test-alert-calcentral-title-only</link>
+      <description></description>
+      <pubDate>Wed, 08 Jul 2015 00:00:00 -0700</pubDate>
+      <dc:creator />
+      <guid isPermaLink="false">e97462e1-b33d-465b-8cea-ccc98efa7b54</guid>
+    </item>
+    <item>
+      <title>Second CalCentral test alert</title>
+      <link>https://test-ets.pantheon.berkeley.edu/news/second-calcentral-test-alert</link>
+      <description>This is a short summary.</description>
+      <pubDate>Wed, 08 Jul 2015 00:00:00 -0700</pubDate>
+      <dc:creator />
+      <guid isPermaLink="false">7b7ae7f5-d9f4-42e9-ba90-e9295e8206e4</guid>
+    </item>
+    <item>
+      <title>Service Alert test</title>
+      <link>https://test-ets.pantheon.berkeley.edu/news/service-alert-test</link>
+      <description>CalCentral test alert. Reviewing layout and apperance. Does this work?</description>
+      <pubDate>Mon, 15 Jun 2015 00:00:00 -0700</pubDate>
+      <dc:creator />
+      <guid isPermaLink="false">0c79d3a2-1559-41a1-91db-975d795d4325</guid>
+    </item>
+  </channel>
+</rss>
