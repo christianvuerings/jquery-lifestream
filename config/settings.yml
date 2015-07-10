@@ -12,7 +12,7 @@ application:
   protocol: "http://"
   fake_cas: false
   fake_cas_id: "1" # Change this to the UID you want to fake cas auth with.
-  # Neither VCR nor WebMock are thread-safe, and so fake proxy support should
+  # WebMock is not thread-safe, and so fake proxy support should
   # be disabled when no fakes are needed (e.g., in production).
   fake_proxies_enabled: true
   # timeout (in seconds) for outgoing http request establishment
@@ -51,7 +51,6 @@ test_sqlite:
   pool: 3
 
 # Proxy support
-freshen_vcr: <%= ENV['freshen_vcr'] %>
 # MUST BE SET FOR DEVELOPMENT & PRODUCTION
 # Example generated with SecureRandom.base64(32)
 oauth2:

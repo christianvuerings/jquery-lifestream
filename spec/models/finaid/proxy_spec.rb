@@ -30,7 +30,7 @@ describe Finaid::Proxy do
     end
 
     context "Test-Emeritus live feed with no data" do
-      #Never hits VCR so it should be fine for non-testext, but to make sure
+      #Never hits a mock proxy so it should be fine for non-testext, but to make sure
       before(:each) { Finaid::Proxy.any_instance.stub(:lookup_student_id).and_return(nil) }
 
       it 'should return empty feed on no student ID' do
