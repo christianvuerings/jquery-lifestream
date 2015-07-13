@@ -165,7 +165,7 @@ describe Canvas::CourseAddUser do
 
   context "when adding user to a course section" do
     before do
-      allow_any_instance_of(Canvas::UserProvision).to receive(:import_users).with(["260506"]).and_return(true)
+      allow_any_instance_of(CanvasCsv::UserProvision).to receive(:import_users).with(['260506']).and_return true
       allow_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(canvas_user_id, "StudentEnrollment", 'active', false).and_return(true)
     end
 
@@ -193,7 +193,7 @@ describe Canvas::CourseAddUser do
       end
       it "import user via sis import and refreshes cached profile" do
         expect(Canvas::SisUserProfile).to receive(:expire).with('260506')
-        expect_any_instance_of(Canvas::UserProvision).to receive(:import_users).with(['260506']).and_return(true)
+        expect_any_instance_of(CanvasCsv::UserProvision).to receive(:import_users).with(['260506']).and_return true
         result = Canvas::CourseAddUser.add_user_to_course_section('260506', 'StudentEnrollment', '864215')
         expect(result).to eq true
       end

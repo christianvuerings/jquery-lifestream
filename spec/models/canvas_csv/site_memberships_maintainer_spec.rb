@@ -1,6 +1,4 @@
-require "spec_helper"
-
-describe Canvas::SiteMembershipsMaintainer do
+describe CanvasCsv::SiteMembershipsMaintainer do
   let(:users_maintainer) {double}
   let(:sis_course_id) { random_ccn }
   let(:enrollments_csv)  { [] }
@@ -8,11 +6,11 @@ describe Canvas::SiteMembershipsMaintainer do
   let(:known_users) { [] }
   let(:uid) { random_id }
   let(:sis_section_id) {"SEC:2014-B-#{sis_course_id}"}
-  let(:sis_section_ids) { [sis_section_id, "2014-D-04124", 'bababooey'] }
+  let(:sis_section_ids) { [sis_section_id, '2014-D-04124', 'bababooey'] }
   let(:sis_user_id_changes) { Hash.new }
   let(:into_canvas_course_id) { nil }
   subject {
-    worker = Canvas::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids, enrollments_csv, users_csv, known_users,
+    worker = CanvasCsv::SiteMembershipsMaintainer.new(sis_course_id, sis_section_ids, enrollments_csv, users_csv, known_users,
       :batch_mode => batch_mode,
       :cached_enrollments_provider => cached_enrollments_provider,
       :sis_user_id_changes => sis_user_id_changes,
@@ -151,20 +149,20 @@ describe Canvas::SiteMembershipsMaintainer do
             [
               {
                 sis_section_id: sis_section_ids[0],
-                term_yr: "2014",
-                term_cd: "B",
+                term_yr: '2014',
+                term_cd: 'B',
                 ccn: padded_ccns[0]
               },
               {
                 sis_section_id: sis_section_ids[1],
-                term_yr: "2014",
-                term_cd: "B",
+                term_yr: '2014',
+                term_cd: 'B',
                 ccn: padded_ccns[1]
               },
               {
                 sis_section_id: "SEC:2014-B-#{existing_ccn}",
-                term_yr: "2014",
-                term_cd: "B",
+                term_yr: '2014',
+                term_cd: 'B',
                 ccn: existing_ccn
               }
             ]
@@ -279,31 +277,31 @@ describe Canvas::SiteMembershipsMaintainer do
     end
 
     context 'when cached enrollments provider present' do
-      let(:cached_enrollments_provider) { Canvas::TermEnrollmentsCsv.new }
+      let(:cached_enrollments_provider) { CanvasCsv::TermEnrollments.new }
       let(:cached_enrollments_hash) do
         [
-          {"course_section_id"=>"1413864","sis_section_id"=>"SEC:2014-C-24111", "user_id"=>"4906376", "role"=>"StudentEnrollment", "enrollment_state" => "active", "sis_import_id"=>"101", "user"=>{"sis_user_id" => "UID:7977", "sis_login_id"=>"7977", "login_id"=>"7977"}},
-          {"course_section_id"=>"1413864","sis_section_id"=>"SEC:2014-C-24111", "user_id"=>"4906377", "role"=>"StudentEnrollment", "enrollment_state" => "active", "sis_import_id"=>"101", "user"=>{"sis_user_id" => "UID:7978", "sis_login_id"=>"7978", "login_id"=>"7978"}},
+          {'course_section_id'=>'1413864','sis_section_id'=>'SEC:2014-C-24111', 'user_id'=>'4906376', 'role'=>'StudentEnrollment', 'enrollment_state' => 'active', 'sis_import_id'=>'101', 'user'=>{'sis_user_id' => 'UID:7977', 'sis_login_id'=>'7977', 'login_id'=>'7977'}},
+          {'course_section_id'=>'1413864','sis_section_id'=>'SEC:2014-C-24111', 'user_id'=>'4906377', 'role'=>'StudentEnrollment', 'enrollment_state' => 'active', 'sis_import_id'=>'101', 'user'=>{'sis_user_id' => 'UID:7978', 'sis_login_id'=>'7978', 'login_id'=>'7978'}},
         ]
       end
       before do
         expect_any_instance_of(Canvas::SectionEnrollments).to receive(:list_enrollments).never
-        expect_any_instance_of(Canvas::TermEnrollmentsCsv).to receive(:cached_canvas_section_enrollments).with(sis_section_id).and_return(cached_enrollments_hash)
+        expect_any_instance_of(CanvasCsv::TermEnrollments).to receive(:cached_canvas_section_enrollments).with(sis_section_id).and_return(cached_enrollments_hash)
       end
       it 'calls for enrollments from cached enrollment set' do
         expect(subject.count).to eq 3
         expect(subject[0]['user_id']).to eq "UID:#{uid}"
-        expect(subject[1]['user_id']).to eq "UID:7977"
-        expect(subject[2]['user_id']).to eq "UID:7978"
+        expect(subject[1]['user_id']).to eq 'UID:7977'
+        expect(subject[2]['user_id']).to eq 'UID:7978'
       end
 
-      context "when new sis user id present for dropped enrollment" do
-        let(:sis_user_id_changes) { { "sis_login_id:7978" => "2018903" } }
+      context 'when new sis user id present for dropped enrollment' do
+        let(:sis_user_id_changes) { { 'sis_login_id:7978' => '2018903' } }
         it 'uses new sis user id' do
           expect(subject.count).to eq 3
           expect(subject[0]['user_id']).to eq "UID:#{uid}"
-          expect(subject[1]['user_id']).to eq "UID:7977"
-          expect(subject[2]['user_id']).to eq "2018903"
+          expect(subject[1]['user_id']).to eq 'UID:7977'
+          expect(subject[2]['user_id']).to eq '2018903'
         end
       end
     end

@@ -56,7 +56,7 @@ module Canvas
     end
 
     def create_course_site(site_name, site_course_code, term_slug, ccns)
-      cpcs = Canvas::ProvideCourseSite.new(working_uid)
+      cpcs = CanvasCsv::ProvideCourseSite.new(working_uid)
       cpcs.background_job_save
       cpcs.background.create_course_site(site_name, site_course_code, term_slug, ccns, @admin_by_ccns.present?)
       self.class.expire instance_key unless @admin_by_ccns
@@ -65,7 +65,7 @@ module Canvas
 
     def edit_sections(ccns_to_remove, ccns_to_add)
       raise RuntimeError, "canvas_course_id option not present" if @canvas_course_id.blank?
-      cpcs = Canvas::ProvideCourseSite.new(working_uid)
+      cpcs = CanvasCsv::ProvideCourseSite.new(working_uid)
       cpcs.background_job_save
       cpcs.background.edit_sections(get_course_info, ccns_to_remove, ccns_to_add)
       self.class.expire instance_key unless @admin_by_ccns
@@ -137,7 +137,7 @@ module Canvas
     end
 
     def get_feed_internal
-      worker = Canvas::ProvideCourseSite.new(working_uid)
+      worker = CanvasCsv::ProvideCourseSite.new(working_uid)
       feed = {
         is_admin: user_admin?,
         admin_acting_as: @admin_acting_as,
@@ -148,7 +148,7 @@ module Canvas
     end
 
     def get_feed_by_ccns_internal
-      worker = Canvas::ProvideCourseSite.new(@uid)
+      worker = CanvasCsv::ProvideCourseSite.new(@uid)
       term = worker.find_term(slug: @admin_term_slug)
       courses = MyAcademics::Teaching.new(@uid).courses_list_from_ccns(term[:yr], term[:cd], @admin_by_ccns)
       feed = {

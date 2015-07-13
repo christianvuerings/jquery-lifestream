@@ -1,4 +1,4 @@
-module Canvas
+module CanvasCsv
   # Provides object used to store synchronization states between campus systems and Canvas
   class Synchronization < ActiveRecord::Base
     include ActiveRecordHelper
@@ -9,7 +9,7 @@ module Canvas
 
     # Returns single record used to store synchronization timestamp(s)
     def self.get
-      raise RuntimeError, "Canvas synchronization data is missing" if self.count == 0
+      raise RuntimeError, 'Canvas synchronization data is missing' if self.count == 0
       self.first
     end
   end

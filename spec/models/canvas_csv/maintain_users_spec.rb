@@ -1,12 +1,10 @@
-require "spec_helper"
-
-describe Canvas::MaintainUsers do
+describe CanvasCsv::MaintainUsers do
 
   let(:known_uids) { [] }
   let(:account_changes) { [] }
-  subject { Canvas::MaintainUsers.new(known_uids, account_changes) }
+  subject { CanvasCsv::MaintainUsers.new(known_uids, account_changes) }
 
-  describe "#categorize_user_accounts" do
+  describe '#categorize_user_accounts' do
     before { subject.categorize_user_account(existing_account, campus_rows) }
 
     context 'when email changes' do
@@ -66,10 +64,10 @@ describe Canvas::MaintainUsers do
         }
       ] }
       it 'finds SIS ID change' do
-        expect(account_changes.length).to eq(0)
-        expect(subject.sis_user_id_changes.length).to eq(1)
-        expect(known_uids.length).to eq(1)
-        expect(subject.sis_user_id_changes["sis_login_id:#{changed_sis_id_uid}"]).to eq(changed_sis_id_student_id)
+        expect(account_changes.length).to eq 0
+        expect(subject.sis_user_id_changes.length).to eq 1
+        expect(known_uids.length).to eq 1
+        expect(subject.sis_user_id_changes["sis_login_id:#{changed_sis_id_uid}"]).to eq changed_sis_id_student_id
       end
     end
 
@@ -134,7 +132,7 @@ describe Canvas::MaintainUsers do
     end
   end
 
-  describe "#derive_sis_user_id" do
+  describe '#derive_sis_user_id' do
     let(:uid) { rand(999999).to_s }
     let(:student_id) { rand(999999).to_s }
     context 'when an ex-student' do
@@ -187,32 +185,32 @@ describe Canvas::MaintainUsers do
     end
   end
 
-  describe ".handle_changed_sis_user_ids" do
-    let(:sis_user_id_changes) do
-      {
-        "sis_login_id:1084726" => '289021',
-        "sis_login_id:1084727" => 'UID:289022',
-        "sis_login_id:1084728" => 'UID:289023',
+  describe '#handle_changed_sis_user_ids' do
+    before do
+      subject.sis_user_id_changes = {
+        'sis_login_id:1084726' => '289021',
+        'sis_login_id:1084727' => 'UID:289022',
+        'sis_login_id:1084728' => 'UID:289023',
       }
     end
     it 'sends call to change each sis user id update' do
-      expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084726', '289021').ordered
-      expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084727', 'UID:289022').ordered
-      expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084728', 'UID:289023').ordered
-      Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_user_id_changes)
+      expect(CanvasCsv::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084726', '289021').ordered
+      expect(CanvasCsv::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084727', 'UID:289022').ordered
+      expect(CanvasCsv::MaintainUsers).to receive(:change_sis_user_id).with('sis_login_id:1084728', 'UID:289023').ordered
+      subject.handle_changed_sis_user_ids
     end
     context 'in dry-run mode' do
       before do
         allow(Settings.canvas_proxy).to receive(:dry_run_import).and_return('anything')
       end
       it 'does not tell Canvas to change the sis_user_ids' do
-        expect(Canvas::MaintainUsers).to receive(:change_sis_user_id).never
-        Canvas::MaintainUsers.handle_changed_sis_user_ids(sis_user_id_changes)
+        expect(CanvasCsv::MaintainUsers).to receive(:change_sis_user_id).never
+        subject.handle_changed_sis_user_ids
       end
     end
   end
 
-  describe ".change_sis_user_id" do
+  describe '#change_sis_user_id' do
     let(:canvas_user_id) { rand(999999) }
     let(:matching_login_id) { rand(999999) }
     let(:new_sis_id) { "UID:#{rand(99999)}" }
@@ -243,14 +241,14 @@ describe Canvas::MaintainUsers do
       fake_logins_proxy.should_receive(:change_sis_user_id).with(matching_login_id, new_sis_id).and_return(
           double().stub(:status).and_return(200)
       )
-      Canvas::Logins.stub(:new).and_return(fake_logins_proxy)
-      Canvas::MaintainUsers.change_sis_user_id(canvas_user_id, new_sis_id)
+      allow(Canvas::Logins).to receive(:new).and_return fake_logins_proxy
+      CanvasCsv::MaintainUsers.change_sis_user_id(canvas_user_id, new_sis_id)
     end
   end
 
-  describe '.provisioned_account_eq_sis_account?' do
+  describe '#provisioned_account_eq_sis_account?' do
     let(:provisioned_account) { {'login_id' => '123', 'first_name' => 'John', 'last_name' => 'Smith', 'email' => 'johnsmith@example.com'} }
-    subject {Canvas::MaintainUsers.provisioned_account_eq_sis_account?(provisioned_account, sis_account)}
+    subject {CanvasCsv::MaintainUsers.provisioned_account_eq_sis_account?(provisioned_account, sis_account)}
 
     context 'when accounts are identical' do
       let(:sis_account) { provisioned_account }

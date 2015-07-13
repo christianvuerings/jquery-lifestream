@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Canvas::ProvideCourseSite do
+describe CanvasCsv::ProvideCourseSite do
 
   let(:uid)   { rand(99999).to_s }
   let(:site_name) { 'Introduction to Computer Programming for Scientists and Engineers' }
@@ -36,7 +34,7 @@ describe Canvas::ProvideCourseSite do
       },
       'term'=>{
         'id'=>7,
-        'name'=>"Spring 2015",
+        'name'=>'Spring 2015',
         'start_at'=>nil,
         'end_at'=>nil,
         'sis_term_id'=>'TERM:2015-B',
@@ -46,19 +44,19 @@ describe Canvas::ProvideCourseSite do
   }
   let(:section_details_hash) {
     {
-      "id"=>119433,
-      "sis_section_id"=>nil,
-      "name"=>"Data Structures",
-      "course_id"=>5,
-      "sis_course_id"=>'CRS:COMPSCI-61B-2014-D',
-      "nonxlist_course_id"=>nil,
-      "start_at"=>nil,
-      "end_at"=>nil,
-      "integration_id"=>nil,
-      "sis_import_id"=>nil
+      'id'=>119433,
+      'sis_section_id'=>nil,
+      'name'=>'Data Structures',
+      'course_id'=>5,
+      'sis_course_id'=>'CRS:COMPSCI-61B-2014-D',
+      'nonxlist_course_id'=>nil,
+      'start_at'=>nil,
+      'end_at'=>nil,
+      'integration_id'=>nil,
+      'sis_import_id'=>nil
     }
   }
-  subject     { Canvas::ProvideCourseSite.new(uid) }
+  subject { CanvasCsv::ProvideCourseSite.new uid }
 
   it_should_behave_like 'a background job worker'
 
@@ -66,12 +64,11 @@ describe Canvas::ProvideCourseSite do
   # Instance Methods
 
   describe '#initialize' do
-    it "raises exception if uid is not a String" do
-      expect { Canvas::ProvideCourseSite.new(1234) }.to raise_error(ArgumentError, 'uid must be a String')
+    it 'raises exception if uid is not a String' do
+      expect { CanvasCsv::ProvideCourseSite.new(1234) }.to raise_error(ArgumentError, 'uid must be a String')
     end
     its(:uid)       { should eq uid }
     it 'initializes the import data hash' do
-      expect(subject.instance_eval { @import_data }).to be_an_instance_of Hash
       expect(subject.instance_eval { @import_data }).to eq({})
     end
   end
@@ -421,7 +418,7 @@ describe Canvas::ProvideCourseSite do
     it 'sets the course site short name' do
       subject.prepare_course_site_definition
       course_site_short_name = subject.instance_eval { @import_data['course_site_short_name'] }
-      expect(course_site_short_name).to eq "MEC ENG 98 GRP 015"
+      expect(course_site_short_name).to eq 'MEC ENG 98 GRP 015'
     end
 
     it 'updates completed steps list' do
@@ -601,7 +598,7 @@ describe Canvas::ProvideCourseSite do
   end
 
   describe '#expire_instructor_sites_cache' do
-    it "clears canvas course site cache for user/instructor" do
+    it 'clears canvas course site cache for user/instructor' do
       expect(Canvas::MergedUserSites).to receive(:expire).with(subject.uid).and_return(nil)
       subject.expire_instructor_sites_cache
     end
@@ -628,7 +625,7 @@ describe Canvas::ProvideCourseSite do
     }]}
     let(:maintainer) {double}
     it 'should forward to a background job handler' do
-      expect(Canvas::SiteMembershipsMaintainer).to receive(:background).and_return(maintainer)
+      expect(CanvasCsv::SiteMembershipsMaintainer).to receive(:background).and_return(maintainer)
       expect(maintainer).to receive(:import_memberships).with(course_id, section_ids, anything, anything)
       subject.import_enrollments_in_background(course_id, section_definitions)
     end
@@ -706,9 +703,9 @@ describe Canvas::ProvideCourseSite do
     it 'should map academic semester data to ordered canvas terms' do
       fake_feed = {
         :teachingSemesters => [
-          {name: "Summer 2015", slug: "summer-2015", termCode: "C", termYear: "2015", timeBucket: "future", classes: []},
-          {name: "Spring 2015", slug: "spring-2015", termCode: "B", termYear: "2015", timeBucket: "future", classes: []},
-          {name: "Fall 2014", slug: "fall-2014", termCode: "D", termYear: "2014", timeBucket: "current", classes: []},
+          {name: 'Summer 2015', slug: 'summer-2015', termCode: 'C', termYear: '2015', timeBucket: 'future', classes: []},
+          {name: 'Spring 2015', slug: 'spring-2015', termCode: 'B', termYear: '2015', timeBucket: 'future', classes: []},
+          {name: 'Fall 2014', slug: 'fall-2014', termCode: 'D', termYear: '2014', timeBucket: 'current', classes: []},
         ]
       }
       allow(subject).to receive(:current_terms).and_return(current_terms)
@@ -726,7 +723,7 @@ describe Canvas::ProvideCourseSite do
 
     it 'should get properly formatted candidate course list from fake Oracle MV', :if => CampusOracle::Connection.test_data? do
       allow_any_instance_of(Bearfacts::Proxy).to receive(:lookup_student_id).and_return(nil)
-      terms_feed = Canvas::ProvideCourseSite.new('238382').candidate_courses_list
+      terms_feed = CanvasCsv::ProvideCourseSite.new('238382').candidate_courses_list
       expect(terms_feed.length).to eq 1
       expect(terms_feed[0][:name]).to eq 'Fall 2013'
       feed = terms_feed[0][:classes]
@@ -750,11 +747,7 @@ describe Canvas::ProvideCourseSite do
 
   describe '#filter_courses_by_ccns' do
     before do
-      @selected_cnns = [
-        random_ccn,
-        random_ccn,
-        random_ccn
-      ]
+      @selected_ccns = 3.times.map { random_ccn }
       @candidate_courses_list = [
         {
           :course_code => 'ENGIN 7',
@@ -764,7 +757,7 @@ describe Canvas::ProvideCourseSite do
           :role => 'Instructor',
           :sections => [
             { :ccn => random_ccn, :instruction_format => 'LEC', :is_primary_section => true, :section_label => 'LEC 002', :section_number => '002' },
-            { :ccn => "#{@selected_cnns[2]}", :instruction_format => 'DIS', :is_primary_section => false, :section_label => 'DIS 102', :section_number => '102' }
+            { :ccn => @selected_ccns[2], :instruction_format => 'DIS', :is_primary_section => false, :section_label => 'DIS 102', :section_number => '102' }
           ]
         },
         {
@@ -784,7 +777,7 @@ describe Canvas::ProvideCourseSite do
           :title => 'Honors Undergraduate Research',
           :role => 'Instructor',
           :sections => [
-            { :ccn => "#{@selected_cnns[1]}", :instruction_format => 'IND', :is_primary_section => true, :section_label => 'IND 015', :section_number => '015' }
+            { :ccn => @selected_ccns[1], :instruction_format => 'IND', :is_primary_section => true, :section_label => 'IND 015', :section_number => '015' }
           ]
         },
         {
@@ -811,21 +804,21 @@ describe Canvas::ProvideCourseSite do
     end
 
     describe '#filter_courses_by_ccns' do
-      it "should raise exception when term slug not found in courses list" do
-        expect { subject.filter_courses_by_ccns(@candidate_terms_list, 'summer-2011', @selected_cnns) }.to raise_error(ArgumentError, "No courses found!")
+      it 'should raise exception when term slug not found in courses list' do
+        expect { subject.filter_courses_by_ccns(@candidate_terms_list, 'summer-2011', @selected_ccns) }.to raise_error(ArgumentError, 'No courses found!')
       end
-      it "should filter courses data by POSTed CCN selection" do
-        expect(@selected_cnns.length).to eq 3
-        filtered = subject.filter_courses_by_ccns(@candidate_terms_list, @term_slug, @selected_cnns)
+      it 'should filter courses data by POSTed CCN selection' do
+        expect(@selected_ccns.length).to eq 3
+        filtered = subject.filter_courses_by_ccns(@candidate_terms_list, @term_slug, @selected_ccns)
         expect(filtered.length).to eq 2
         expect(filtered[0][:course_code]).to eq 'ENGIN 7'
         expect(filtered[0][:dept]).to eq 'COMPSCI'
         expect(filtered[0][:sections].length).to eq 1
-        expect(filtered[0][:sections][0][:section_label]).to eq "DIS 102"
+        expect(filtered[0][:sections][0][:section_label]).to eq 'DIS 102'
         expect(filtered[1][:course_code]).to eq 'MEC ENG H194'
         expect(filtered[1][:dept]).to eq 'MEC ENG'
         expect(filtered[1][:sections].length).to eq 1
-        expect(filtered[1][:sections][0][:section_label]).to eq "IND 015"
+        expect(filtered[1][:sections][0][:section_label]).to eq 'IND 015'
       end
     end
 
@@ -897,7 +890,7 @@ describe Canvas::ProvideCourseSite do
       allow(stub_existence_proxy).to receive(:course_defined?).and_return(course_defined_responses)
       expect do
         subject.generate_unique_sis_course_id(stub_existence_proxy, 'eth_std-c73abc', '2015', 'F')
-      end.to raise_error(Canvas::ProvideCourseSite::IdNotUniqueException)
+      end.to raise_error(CanvasCsv::ProvideCourseSite::IdNotUniqueException)
     end
   end
 
@@ -1057,7 +1050,7 @@ describe Canvas::ProvideCourseSite do
     end
   end
 
-  describe "#background_job_report" do
+  describe '#background_job_report' do
     before do
       subject.instance_eval { @background_job_type = 'course_creation'}
       subject.instance_eval { @background_job_status = 'error'}

@@ -1,9 +1,7 @@
-require 'spec_helper'
-
-describe Canvas::TurnitinReporter do
+describe CanvasCsv::TurnitinReporter do
   let!(:fake_courses_report_proxy) { Canvas::CoursesReport.new(fake: true, account_id: Settings.canvas_proxy.turnitin_account_id) }
   let(:term_id) {'TERM:2015-B'}
-  subject {Canvas::TurnitinReporter.new(term_id)}
+  subject {CanvasCsv::TurnitinReporter.new(term_id)}
 
   context 'with recorded test data' do
     before do

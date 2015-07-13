@@ -69,7 +69,7 @@ describe Canvas::CourseProvision do
   before do
     User::Auth.new_or_update_superuser!(superuser_id)
     allow_any_instance_of(Canvas::Admins).to receive(:admin_user?) {|uid| uid == canvas_admin_id }
-    allow(Canvas::ProvideCourseSite).to receive(:new) do |uid|
+    allow(CanvasCsv::ProvideCourseSite).to receive(:new) do |uid|
       double(
         candidate_courses_list: (uid == instructor_id) ? teaching_semesters : [],
         current_terms: current_terms,
@@ -202,13 +202,13 @@ describe Canvas::CourseProvision do
 
   describe '#create_course_site' do
     subject     { Canvas::CourseProvision.new(instructor_id) }
-    let(:cpcs)  { instance_double(Canvas::ProvideCourseSite) }
+    let(:cpcs)  { instance_double CanvasCsv::ProvideCourseSite }
     before do
       allow(cpcs).to receive(:background).and_return(cpcs)
       allow(cpcs).to receive(:background_job_save).and_return(true)
       allow(cpcs).to receive(:create_course_site).and_return(true)
       allow(cpcs).to receive(:background_job_id).and_return('canvas.courseprovision.1234.1383330151057')
-      allow(Canvas::ProvideCourseSite).to receive(:new).and_return(cpcs)
+      allow(CanvasCsv::ProvideCourseSite).to receive(:new).and_return(cpcs)
     end
 
     it 'returns canvas course provision job id' do
@@ -229,12 +229,12 @@ describe Canvas::CourseProvision do
     let(:ccns_to_add) { [random_ccn] }
     subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
     context 'when user is authorized' do
-      let(:cpcs) { instance_double(Canvas::ProvideCourseSite) }
+      let(:cpcs) { instance_double CanvasCsv::ProvideCourseSite }
       let(:course_info) { {canvasCourseId: canvas_course_id} }
       let(:background_job_id) { "canvas.courseprovision.#{ccns_to_add.first}" }
       before do
         expect(subject).to receive(:get_course_info).and_return(course_info)
-        expect(Canvas::ProvideCourseSite).to receive(:new).and_return(cpcs)
+        expect(CanvasCsv::ProvideCourseSite).to receive(:new).and_return(cpcs)
         expect(cpcs).to receive(:background_job_save).ordered
         expect(cpcs).to receive(:background).ordered.and_return(cpcs)
         expect(cpcs).to receive(:edit_sections).ordered

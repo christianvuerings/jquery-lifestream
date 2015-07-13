@@ -40,7 +40,7 @@ module Canvas
       raise ArgumentError, "role must be a String" if role.class != String
       canvas_user_profile = Canvas::SisUserProfile.new(user_id: ldap_user_id).get
       if canvas_user_profile.nil?
-        Canvas::UserProvision.new.import_users([ldap_user_id])
+        CanvasCsv::UserProvision.new.import_users [ldap_user_id]
         Canvas::SisUserProfile.expire(ldap_user_id)
         canvas_user_profile = Canvas::SisUserProfile.new(user_id: ldap_user_id).get
       end

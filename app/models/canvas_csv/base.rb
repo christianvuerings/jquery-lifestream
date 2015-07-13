@@ -1,24 +1,20 @@
-module Canvas
+module CanvasCsv
   require 'csv'
 
-  class Csv < CsvExport
+  class Base < CsvExport
     include ClassLogger
 
     def initialize
       super(Settings.canvas_proxy.export_directory)
     end
 
-    def accumulate_user_data(user_ids, users_csv)
-      user_array = user_ids.to_a.dup
-      while !user_array.empty?
-        slice_length = [user_array.length, 1000].min
-        working_slice = user_array.slice!(0, slice_length)
-        results = CampusOracle::Queries.get_basic_people_attributes(working_slice)
-        results.each do |row|
-          users_csv << canvas_user_from_campus_row(row)
-        end
+    def accumulate_user_data(user_ids)
+      users = []
+      user_ids.each_slice(1000) do |uid_slice|
+        campus_results = CampusOracle::Queries.get_basic_people_attributes uid_slice
+        users.concat campus_results.map { |row| canvas_user_from_campus_row row }
       end
-      users_csv
+      users
     end
 
     def canvas_user_from_campus_row(campus_user)

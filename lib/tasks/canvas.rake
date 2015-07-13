@@ -2,31 +2,31 @@ namespace :canvas do
 
   desc 'Get all Canvas users and sections for current terms, refresh user accounts, and update all section memberships'
   task :batch_refresh => :environment do
-    canvas_worker = Canvas::RefreshAllCampusData.new 'batch'
+    canvas_worker = CanvasCsv::RefreshAllCampusData.new 'batch'
     canvas_worker.run
   end
 
   desc 'Add new guest user accounts, and update existing ones, within Canvas'
   task :guest_user_sync => :environment do
-    canvas_worker = Canvas::Ldap.new
+    canvas_worker = CanvasCsv::Ldap.new
     canvas_worker.update_guests
   end
 
   desc 'Performs incremental sync of new active CalNet users in Canvas'
   task :new_user_sync => :environment do |t, args|
-    canvas_worker = Canvas::AddNewUsers.new
+    canvas_worker = CanvasCsv::AddNewUsers.new
     canvas_worker.sync_new_active_users
   end
 
   desc 'Exports Canvas enrollments to CSV files for each term'
   task :export_enrollments_to_csv_set => :environment  do
-    canvas_worker = Canvas::TermEnrollmentsCsv.new
+    canvas_worker = CanvasCsv::TermEnrollments.new
     canvas_worker.export_enrollments_to_csv_set
   end
 
   desc 'Get all Canvas users and sections for current terms, refresh user accounts, and add new section memberships'
   task :incremental_refresh => :environment do
-    canvas_worker = Canvas::RefreshAllCampusData.new 'incremental'
+    canvas_worker = CanvasCsv::RefreshAllCampusData.new 'incremental'
     canvas_worker.run
   end
 
@@ -75,7 +75,7 @@ namespace :canvas do
     if (term_id.blank?)
       Rails.logger.error("Must specify TERM_ID=YourSisTermId")
     else
-      canvas_worker = Canvas::RepairSections.new
+      canvas_worker = CanvasCsv::RepairSections.new
       canvas_worker.repair_sis_ids_for_term(term_id)
     end
   end

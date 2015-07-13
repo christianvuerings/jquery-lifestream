@@ -31,7 +31,7 @@ describe CanvasUserProvisionController do
       before do
         session['user_id'] = "2050"
         User::Auth.stub(:where).and_return([User::Auth.new(uid: "2050", is_superuser: true, active: true)])
-        Canvas::UserProvision.any_instance.stub(:import_users).and_return(true)
+        allow_any_instance_of(CanvasCsv::UserProvision).to receive(:import_users).and_return true
       end
 
       it "returns success response" do
@@ -44,7 +44,7 @@ describe CanvasUserProvisionController do
 
       context "if StandardError exception raised" do
         it "returns error response" do
-          Canvas::UserProvision.any_instance.stub(:import_users).and_raise(RuntimeError, "User import failed")
+          allow_any_instance_of(CanvasCsv::UserProvision).to receive(:import_users).and_raise(RuntimeError, 'User import failed')
           post :user_import, userIds: user_id_string
           expect(response.status).to eq(500)
           json_response = JSON.parse(response.body)

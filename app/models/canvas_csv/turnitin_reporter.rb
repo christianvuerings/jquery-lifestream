@@ -1,6 +1,5 @@
-module Canvas
-  class TurnitinReporter < Csv
-    include ClassLogger
+module CanvasCsv
+  class TurnitinReporter < Base
 
     def self.print_term_report(term_id = nil)
       term_id ||= default_term_id

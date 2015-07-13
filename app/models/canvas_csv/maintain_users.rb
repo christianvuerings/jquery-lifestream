@@ -1,9 +1,9 @@
-module Canvas
+module CanvasCsv
   # Updates users currently present within Canvas.
-  # Used by Canvas::RefreshAllCampusData to maintain officially enrolled students/faculty
-  # See Canvas::AddNewUsers for maintenance of new active CalNet users within Canvas
-  class MaintainUsers < Csv
-    include ClassLogger
+  # Used by CanvasCsv::RefreshAllCampusData to maintain officially enrolled students/faculty
+  # See CanvasCsv::AddNewUsers for maintenance of new active CalNet users within Canvas
+  class MaintainUsers < Base
+    attr_accessor :sis_user_id_changes
 
     # Returns true if user hashes are identical
     def self.provisioned_account_eq_sis_account?(provisioned_account, sis_account)
@@ -14,19 +14,6 @@ module Canvas
           provisioned_account['last_name'] == sis_account['last_name']
       end
       matched
-    end
-
-    # Any changes to SIS user IDs must take effect before the enrollments CSV is generated.
-    # Otherwise, the generated CSV may include a new ID that does not match the existing ID for a user account.
-    def self.handle_changed_sis_user_ids(sis_user_id_changes)
-      if Settings.canvas_proxy.dry_run_import.present?
-        logger.warn("DRY RUN MODE: Would change #{sis_user_id_changes.length} SIS user IDs #{sis_user_id_changes.inspect}")
-      else
-        logger.warn("About to change #{sis_user_id_changes.length} SIS user IDs")
-        sis_user_id_changes.each do |canvas_user_id, new_sis_id|
-          self.change_sis_user_id(canvas_user_id, new_sis_id)
-        end
-      end
     end
 
     # Updates SIS User ID for Canvas User
@@ -48,20 +35,18 @@ module Canvas
           end
         end
         if user_logins.length > 1
-          logger.error("Multiple numeric logins found for Canvas user #{canvas_user_id}; will skip")
+          logger.error "Multiple numeric logins found for Canvas user #{canvas_user_id}; will skip"
         elsif user_logins.empty?
-          logger.warn("No LDAP UID login found for Canvas user #{canvas_user_id}; will skip")
+          logger.warn "No LDAP UID login found for Canvas user #{canvas_user_id}; will skip"
         else
           login_id = user_logins[0]['id']
-          logger.warn("Changing SIS ID for user #{canvas_user_id} to #{new_sis_user_id}")
+          logger.warn "Changing SIS ID for user #{canvas_user_id} to #{new_sis_user_id}"
           response = logins_proxy.change_sis_user_id(login_id, new_sis_user_id)
           return true if response && response.status == 200
         end
       end
       false
     end
-
-    attr_accessor :sis_user_id_changes
 
     def initialize(known_uids, sis_user_import_csv)
       super()
@@ -75,7 +60,7 @@ module Canvas
     # Makes any necessary changes to SIS user IDs.
     def refresh_existing_user_accounts
       check_all_user_accounts
-      self.class.handle_changed_sis_user_ids(@sis_user_id_changes)
+      handle_changed_sis_user_ids
     end
 
     def check_all_user_accounts
@@ -95,10 +80,16 @@ module Canvas
       end
     end
 
-    def compare_to_campus(accounts_batch)
-      campus_user_rows = CampusOracle::Queries.get_basic_people_attributes(accounts_batch.collect { |r| r['login_id'] })
-      accounts_batch.each do |existing_account|
-        categorize_user_account(existing_account, campus_user_rows)
+    # Any changes to SIS user IDs must take effect before the enrollments CSV is generated.
+    # Otherwise, the generated CSV may include a new ID that does not match the existing ID for a user account.
+    def handle_changed_sis_user_ids
+      if Settings.canvas_proxy.dry_run_import.present?
+        logger.warn "DRY RUN MODE: Would change #{@sis_user_id_changes.length} SIS user IDs #{@sis_user_id_changes.inspect}"
+      else
+        logger.warn "About to change #{@sis_user_id_changes.length} SIS user IDs"
+        @sis_user_id_changes.each do |canvas_user_id, new_sis_id|
+          self.class.change_sis_user_id(canvas_user_id, new_sis_id)
+        end
       end
     end
 
@@ -118,6 +109,13 @@ module Canvas
             @user_import_csv << new_account_data
           end
         end
+      end
+    end
+
+    def compare_to_campus(accounts_batch)
+      campus_user_rows = CampusOracle::Queries.get_basic_people_attributes(accounts_batch.collect { |r| r['login_id'] })
+      accounts_batch.each do |existing_account|
+        categorize_user_account(existing_account, campus_user_rows)
       end
     end
 

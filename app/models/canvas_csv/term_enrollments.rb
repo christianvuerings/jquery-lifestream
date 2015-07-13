@@ -1,9 +1,8 @@
-module Canvas
-  require 'csv'
+module CanvasCsv
 
   # Generates and provides interface to CSV files that are generated daily
   # containing data for Canvas enrollments for each term
-  class TermEnrollmentsCsv < Csv
+  class TermEnrollments < Base
 
     def initialize
       super()
@@ -26,7 +25,7 @@ module Canvas
     end
 
     def latest_term_enrollment_set_date
-      @latest_set_date ||= Canvas::Synchronization.get.latest_term_enrollment_csv_set.to_date
+      @latest_set_date ||= Synchronization.get.latest_term_enrollment_csv_set.to_date
     end
 
     # Exports enrollments from Canvas to CSV set for current day
@@ -36,11 +35,11 @@ module Canvas
         populate_term_csv_file(term, summarized_term_enrollments_csv)
         summarized_term_enrollments_csv.close
         term_enrollments_count = csv_count(filepath)
-        logger.warn("Finished compiling #{filepath}")
-        logger.warn("Loaded #{term_enrollments_count} Canvas enrollment records for #{term}")
+        logger.warn "Finished compiling #{filepath}"
+        logger.warn "Loaded #{term_enrollments_count} Canvas enrollment records for #{term}"
       end
-      sync_settings = Canvas::Synchronization.get
-      sync_settings.update(:latest_term_enrollment_csv_set => DateTime.now)
+      sync_settings = Synchronization.get
+      sync_settings.update(latest_term_enrollment_csv_set: DateTime.now)
     end
 
     # Populates the enrollments CSV for the specified term
@@ -62,7 +61,7 @@ module Canvas
 
     # Loads current term CSVs into memory
     def load_current_term_enrollments
-      logger.warn("Loading cached enrollments for #{latest_term_enrollment_set_date.strftime('%F')}")
+      logger.warn "Loading cached enrollments for #{latest_term_enrollment_set_date.strftime('%F')}"
       @canvas_section_id_enrollments = {}
       term_set = term_enrollments_csv_filepaths(latest_term_enrollment_set_date)
       term_set.each do |term,filepath|
@@ -70,14 +69,14 @@ module Canvas
         # section ids are not going to overlap acros terms, so merging is safe
         @canvas_section_id_enrollments.merge!(term_csv.group_by {|row| row['sis_section_id']})
       end
-      logger.warn("Enrollments loaded for terms #{term_set.keys.to_sentence}")
-      logger.warn("#{@canvas_section_id_enrollments.keys.count} sections loaded")
+      logger.warn "Enrollments loaded for terms #{term_set.keys.to_sentence}"
+      logger.warn "#{@canvas_section_id_enrollments.keys.count} sections loaded"
       @canvas_section_id_enrollments
     end
 
     # Provides enrollments for Canvas SIS Section ID specified from latest Cached CSV Set
     def cached_canvas_section_enrollments(canvas_sis_section_id)
-      logger.warn("Cached enrollments for #{canvas_sis_section_id} served")
+      logger.warn "Cached enrollments for #{canvas_sis_section_id} served"
       load_current_term_enrollments if @canvas_section_id_enrollments.empty?
       enrollments = @canvas_section_id_enrollments[canvas_sis_section_id]
       return [] if enrollments.nil?
