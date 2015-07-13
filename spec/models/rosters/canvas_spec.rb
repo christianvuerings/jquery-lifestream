@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Canvas::CanvasRosters do
+describe Rosters::Canvas do
 
   let(:teacher_login_id) { rand(99999).to_s }
   let(:course_id) { rand(99999) }
@@ -20,8 +18,8 @@ describe Canvas::CanvasRosters do
       'id' => lecture_section_id,
       'name' => 'An Official Lecture Section',
       'sis_section_id' => lecture_section_sis_id,
-      :term_yr => "2013",
-      :term_cd => "C",
+      :term_yr => '2013',
+      :term_cd => 'C',
       :ccn => lecture_section_ccn
     },
     {
@@ -29,24 +27,24 @@ describe Canvas::CanvasRosters do
       'id' => discussion_section_id,
       'name' => 'An Official Discussion Section',
       'sis_section_id' => discussion_section_sis_id,
-      :term_yr => "2013",
-      :term_cd => "C",
+      :term_yr => '2013',
+      :term_cd => 'C',
       :ccn => discussion_section_ccn
     }
   ]}
 
-  subject { Canvas::CanvasRosters.new(teacher_login_id, course_id: course_id) }
+  subject { Rosters::Canvas.new(teacher_login_id, course_id: course_id) }
 
   before do
     allow_any_instance_of(Canvas::Course).to receive(:course).and_return({
-      "account_id"=>rand(9999),
-      "course_code"=>"INFO #{catid} - LEC 001",
-      "id"=>course_id,
-      "name"=>"An Official Course",
-      "term"=>{
-        "id"=>rand(9999), "name"=>"Summer 2013", "sis_term_id"=>"TERM:2013-C"
+      'account_id'=>rand(9999),
+      'course_code'=>"INFO #{catid} - LEC 001",
+      'id'=>course_id,
+      'name'=>'An Official Course',
+      'term'=>{
+        'id'=>rand(9999), 'name'=>'Summer 2013', 'sis_term_id'=>'TERM:2013-C'
       },
-      "sis_course_id"=>"CRS:INFO-#{catid}-2013-C",
+      'sis_course_id'=>"CRS:INFO-#{catid}-2013-C",
     })
   end
 
@@ -66,7 +64,7 @@ describe Canvas::CanvasRosters do
             'ldap_uid' => student_in_discussion_section_login_id,
             'enroll_status' => 'E',
             'student_id' => student_in_discussion_section_student_id,
-            'first_name' => "Thurston",
+            'first_name' => 'Thurston',
             'last_name' => "Howell #{student_in_discussion_section_login_id}",
             'student_email_address' => "#{student_in_discussion_section_login_id}@example.com"
           },
@@ -86,7 +84,7 @@ describe Canvas::CanvasRosters do
             'ldap_uid' => student_in_discussion_section_login_id,
             'enroll_status' => 'E',
             'student_id' => student_in_discussion_section_student_id,
-            'first_name' => "Thurston",
+            'first_name' => 'Thurston',
             'last_name' => "Howell #{student_in_discussion_section_login_id}",
             'student_email_address' => "#{student_in_discussion_section_login_id}@example.com"
           }
@@ -97,7 +95,7 @@ describe Canvas::CanvasRosters do
     it 'should return enrollments for each section' do
       feed = subject.get_feed
       expect(feed[:canvas_course][:id]).to eq course_id
-      expect(feed[:canvas_course][:name]).to eq "An Official Course"
+      expect(feed[:canvas_course][:name]).to eq 'An Official Course'
       expect(feed[:sections].length).to eq 2
       expect(feed[:sections][0][:name]).to eq section_identifiers[0]['name']
       expect(feed[:sections][0][:ccn]).to eq section_identifiers[0][:ccn]
@@ -116,10 +114,10 @@ describe Canvas::CanvasRosters do
       expect(student_in_discussion_section[:email]).to_not be_blank
       expect(student_in_discussion_section[:sections].length).to eq 2
       expect(student_in_discussion_section[:sections][0][:ccn]).to eq lecture_section_ccn
-      expect(student_in_discussion_section[:sections][0][:name]).to eq "An Official Lecture Section"
+      expect(student_in_discussion_section[:sections][0][:name]).to eq 'An Official Lecture Section'
       expect(student_in_discussion_section[:sections][0][:sis_id]).to eq lecture_section_sis_id
       expect(student_in_discussion_section[:sections][1][:ccn]).to eq discussion_section_ccn
-      expect(student_in_discussion_section[:sections][1][:name]).to eq "An Official Discussion Section"
+      expect(student_in_discussion_section[:sections][1][:name]).to eq 'An Official Discussion Section'
       expect(student_in_discussion_section[:sections][1][:sis_id]).to eq discussion_section_sis_id
       expect(student_in_discussion_section[:section_ccns].length).to eq 2
       expect(student_in_discussion_section[:section_ccns].first).to be_a String
@@ -133,7 +131,7 @@ describe Canvas::CanvasRosters do
       expect(student_not_in_discussion_section[:email]).to_not be_blank
       expect(student_not_in_discussion_section[:sections].length).to eq 1
       expect(student_not_in_discussion_section[:sections][0][:ccn]).to eq lecture_section_ccn
-      expect(student_not_in_discussion_section[:sections][0][:name]).to eq "An Official Lecture Section"
+      expect(student_not_in_discussion_section[:sections][0][:name]).to eq 'An Official Lecture Section'
       expect(student_not_in_discussion_section[:sections][0][:sis_id]).to eq lecture_section_sis_id
       expect(student_not_in_discussion_section[:section_ccns].length).to eq 1
       expect(student_not_in_discussion_section[:section_ccns].first).to be_a String
@@ -156,8 +154,8 @@ describe Canvas::CanvasRosters do
             id: lecture_section_id,
             name: 'An Official Lecture Section',
             sis_section_id: lecture_section_sis_id,
-            term_yr: "2013",
-            term_cd: "C",
+            term_yr: '2013',
+            term_cd: 'C',
             ccn: lecture_section_ccn
           },
           {
@@ -165,8 +163,8 @@ describe Canvas::CanvasRosters do
             id: discussion_section_id,
             name: 'An Official Discussion Section',
             sis_section_id: discussion_section_sis_id,
-            term_yr: "2013",
-            term_cd: "C",
+            term_yr: '2013',
+            term_cd: 'C',
             ccn: discussion_section_ccn
           }
         ]

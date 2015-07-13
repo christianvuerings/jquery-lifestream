@@ -155,12 +155,12 @@ describe CanvasCourseProvisionController do
   end
 
   describe '#job_status' do
-    it_should_behave_like "an api endpoint" do
-      before { allow(Canvas::BackgroundJob).to receive(:find).and_raise(RuntimeError, "Something went wrong") }
+    it_should_behave_like 'an api endpoint' do
+      before { allow(BackgroundJob).to receive(:find).and_raise(RuntimeError, "Something went wrong") }
       let(:make_request) { get :job_status, jobId: 'canvas.courseprovision.12345.1383330151057' }
     end
 
-    it_should_behave_like "a user authenticated api endpoint" do
+    it_should_behave_like 'a user authenticated api endpoint' do
       let(:make_request) { get :job_status, jobId: 'canvas.courseprovision.12345.1383330151057' }
     end
 

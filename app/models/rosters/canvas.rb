@@ -1,6 +1,5 @@
-module Canvas
-  class CanvasRosters < Rosters::Common
-    include SafeJsonParser
+module Rosters
+  class Canvas < Common
 
     def get_feed_internal
       feed = {
@@ -12,15 +11,14 @@ module Canvas
       }
       campus_enrollment_map = {}
 
-      course_info = Canvas::Course.new(canvas_course_id: @canvas_course_id).course
+      course_info = ::Canvas::Course.new(canvas_course_id: @canvas_course_id).course
       return feed unless course_info
       feed[:canvas_course][:name] = course_info['name']
 
       # Look up Canvas course sections associated with official campus sections.
-      official_sections = Canvas::CourseSections.new(course_id: @canvas_course_id).official_section_identifiers
+      official_sections = ::Canvas::CourseSections.new(course_id: @canvas_course_id).official_section_identifiers
       return feed unless official_sections
       official_sections.each do |official_section|
-        canvas_section_id = official_section['id']
         section_ccn = official_section[:ccn]
         sis_id = official_section['sis_section_id']
         feed[:sections] << {
@@ -78,7 +76,7 @@ module Canvas
     end
 
     def profile_url_for_ldap_id(ldap_id)
-      if (user_profile = Canvas::SisUserProfile.new(user_id: ldap_id).get) && user_profile['id']
+      if (user_profile = ::Canvas::SisUserProfile.new(user_id: ldap_id).get) && user_profile['id']
         "#{Settings.canvas_proxy.url_root}/courses/#{@canvas_course_id}/users/#{user_profile['id']}"
       end
     end

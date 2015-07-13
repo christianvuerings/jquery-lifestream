@@ -95,7 +95,7 @@ describe CanvasCsv::ProvideCourseSite do
 
     it 'raises error if term slug does not match current term' do
       expect { subject.create_course_site(site_name, site_course_code, 'fall-5429', ['1136', '1204']) }.to raise_error(RuntimeError, 'term_slug does not match a current term')
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:jobStatus]).to eq 'Error'
       expect(cached_object.background_job_report[:errors]).to eq ['term_slug does not match a current term']
     end
@@ -103,7 +103,7 @@ describe CanvasCsv::ProvideCourseSite do
     it 'intercepts raised exceptions and updates status' do
       allow(subject).to receive(:import_course_site).and_raise(RuntimeError, 'Course site could not be created!')
       expect { subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204']) }.to raise_error(RuntimeError, 'Course site could not be created!')
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:jobStatus]).to eq 'Error'
       expect(cached_object.background_job_report[:errors]).to eq ['Course site could not be created!']
     end
@@ -118,7 +118,7 @@ describe CanvasCsv::ProvideCourseSite do
 
     it 'sets job type to course_creation' do
       subject.create_course_site(site_name, site_course_code, 'fall-2014', ['21136', '21204'])
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:jobType]).to eq 'course_creation'
     end
 
@@ -186,7 +186,7 @@ describe CanvasCsv::ProvideCourseSite do
       end
       it 'sets job type to edit_sections' do
         subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add)
-        cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+        cached_object = BackgroundJob.find(subject.background_job_id)
         expect(cached_object.background_job_report[:jobType]).to eq 'edit_sections'
       end
       context 'when adding sections to course site' do
@@ -239,7 +239,7 @@ describe CanvasCsv::ProvideCourseSite do
       end
       it 'returns a proper message' do
         expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, 'Unable to remove memberships')
-        cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+        cached_object = BackgroundJob.find(subject.background_job_id)
         expect(cached_object.background_job_report[:jobType]).to eq 'edit_sections'
         expect(cached_object.background_job_report[:jobStatus]).to eq 'Error'
         expect(cached_object.background_job_report[:errors]).to eq ['Unable to remove memberships']
@@ -251,7 +251,7 @@ describe CanvasCsv::ProvideCourseSite do
       end
       it 'reports an error' do
         expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, 'No changes to sections requested')
-        cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+        cached_object = BackgroundJob.find(subject.background_job_id)
         expect(cached_object.background_job_report[:jobStatus]).to eq 'Error'
       end
     end
@@ -259,7 +259,7 @@ describe CanvasCsv::ProvideCourseSite do
       let(:course_site_term) { {term_yr: '2014', term_cd: 'B'} }
       it 'reports an error' do
         expect {subject.edit_sections(canvas_course_info, ccns_to_remove, ccns_to_add) }.to raise_error(RuntimeError, "Course site #{canvas_course_id} does not match a current term")
-        cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+        cached_object = BackgroundJob.find(subject.background_job_id)
         expect(cached_object.background_job_report[:jobStatus]).to eq 'Error'
       end
     end
@@ -325,7 +325,7 @@ describe CanvasCsv::ProvideCourseSite do
       allow(subject).to receive(:candidate_courses_list).and_return(true)
       expect(subject).to receive(:filter_courses_by_ccns).and_return('user_courses_list')
       subject.prepare_users_courses_list
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:completedSteps]).to eq ['Prepared courses list']
     end
   end
@@ -348,7 +348,7 @@ describe CanvasCsv::ProvideCourseSite do
 
     it 'updates completed steps list' do
       subject.identify_department_subaccount
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:completedSteps]).to eq ['Identified department sub-account']
     end
   end
@@ -423,7 +423,7 @@ describe CanvasCsv::ProvideCourseSite do
 
     it 'updates completed steps list' do
       subject.prepare_course_site_definition
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:completedSteps]).to eq ['Prepared course site definition']
     end
   end
@@ -477,7 +477,7 @@ describe CanvasCsv::ProvideCourseSite do
 
     it 'updates completed steps list' do
       subject.prepare_section_definitions
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:completedSteps]).to eq ['Prepared section definitions']
     end
   end
@@ -506,7 +506,7 @@ describe CanvasCsv::ProvideCourseSite do
     it 'updates completed steps list' do
       allow(Canvas::SisImport).to receive(:new).and_return(canvas_sis_import_proxy)
       subject.import_course_site(@course_row)
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:completedSteps]).to eq ['Imported course']
     end
   end
@@ -538,7 +538,7 @@ describe CanvasCsv::ProvideCourseSite do
     it 'updates completed steps list' do
       allow(Canvas::SisImport).to receive(:new).and_return(canvas_sis_import_proxy)
       subject.import_sections(@section_rows)
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:completedSteps]).to eq ['Imported sections']
     end
   end
@@ -569,7 +569,7 @@ describe CanvasCsv::ProvideCourseSite do
 
     it 'updates completed steps list' do
       subject.enroll_instructor
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:completedSteps]).to eq ['Added instructor to course site']
     end
   end
@@ -592,7 +592,7 @@ describe CanvasCsv::ProvideCourseSite do
 
     it 'updates completed steps list' do
       subject.retrieve_course_site_details
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:completedSteps]).to eq ['Retrieved new course site details']
     end
   end
@@ -605,7 +605,7 @@ describe CanvasCsv::ProvideCourseSite do
 
     it 'updates completed steps list' do
       subject.expire_instructor_sites_cache
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       expect(cached_object.background_job_report[:completedSteps]).to eq ['Clearing bCourses course site cache']
     end
   end
@@ -1067,7 +1067,7 @@ describe CanvasCsv::ProvideCourseSite do
           @import_data['course_site_short_name'] = 'COMPSCI-10'
           background_job_save
         end
-        cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+        cached_object = BackgroundJob.find(subject.background_job_id)
         expect(cached_object.background_job_report['courseSite']).to be_an_instance_of Hash
         expect(cached_object.background_job_report['courseSite'][:short_name]).to eq 'COMPSCI-10'
         expect(cached_object.background_job_report['courseSite'][:url]).to eq 'https://example.com/courses/999'

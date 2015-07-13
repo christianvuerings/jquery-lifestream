@@ -1,6 +1,6 @@
 module CanvasCsv
   class ProvideCourseSite < Base
-    include Canvas::BackgroundJob
+    include BackgroundJob
 
     attr_reader :uid, :cache_key, :section_definitions
 

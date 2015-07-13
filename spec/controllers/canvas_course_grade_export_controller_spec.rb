@@ -100,7 +100,7 @@ describe CanvasCourseGradeExportController do
     it_should_behave_like 'an endpoint' do
       let(:error_text) { 'Something went wrong' }
       let(:make_request) { get :job_status, canvas_course_id: canvas_course_id, jobId: background_job_id }
-      before { allow(Canvas::BackgroundJob).to receive(:find).and_raise(RuntimeError, 'Something went wrong') }
+      before { allow(BackgroundJob).to receive(:find).and_raise(RuntimeError, 'Something went wrong') }
     end
 
     it_should_behave_like 'an authenticated endpoint' do
