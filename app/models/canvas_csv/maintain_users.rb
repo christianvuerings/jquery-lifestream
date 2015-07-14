@@ -66,7 +66,7 @@ module CanvasCsv
     def check_all_user_accounts
       # As the size of the CSV grows, it will become more efficient to use CSV.foreach.
       # For now, however, we ingest the entire download.
-      users_csv = Canvas::UsersReport.new.get_csv
+      users_csv = Canvas::Report::Users.new.get_csv
       if users_csv.present?
         accounts_batch = []
         users_csv.each do |account_row|

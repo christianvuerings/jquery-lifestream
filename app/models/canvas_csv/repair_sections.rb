@@ -2,7 +2,7 @@ module CanvasCsv
   class RepairSections < Base
 
     def repair_sis_ids_for_term(term_id)
-      if (csv = Canvas::SectionsReport.new.get_csv term_id)
+      if (csv = Canvas::Report::Sections.new.get_csv term_id)
         update_proxy = Canvas::SisImport.new
         csv.each do |row|
           if row['section_id'] && row['course_id'].blank?

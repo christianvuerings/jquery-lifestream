@@ -17,7 +17,7 @@ module CanvasLti
     def fetch_term_to_course_sections_hash
       courses_by_term = {}
       @sis_term_ids.each do |term_id|
-        canvas_sections = Canvas::SectionsReport.new(@options).get_csv term_id
+        canvas_sections = Canvas::Report::Sections.new(@options).get_csv term_id
         if canvas_sections
           course_id_to_csv = canvas_sections.group_by { |row| row['canvas_course_id'] }
           course_id_to_csv.each do |canvas_course_id, csv_rows|

@@ -40,7 +40,7 @@ describe CanvasCsv::RefreshAllCampusData do
     let(:canvas_term_sections_csv_table) { CSV.parse(canvas_term_sections_csv_string, {headers: true}) }
     before do
       allow_any_instance_of(CanvasCsv::MaintainUsers).to receive(:refresh_existing_user_accounts)
-      allow_any_instance_of(Canvas::SectionsReport).to receive(:get_csv).and_return(canvas_term_sections_csv_table)
+      allow_any_instance_of(Canvas::Report::Sections).to receive(:get_csv).and_return(canvas_term_sections_csv_table)
     end
     it 'passes well constructed parameters to the memberships maintainer' do
       expect(CanvasCsv::SiteMembershipsMaintainer).to receive(:new) do |course_id, section_ids, enrollments_csv, users_csv, known_users, options|
@@ -75,7 +75,7 @@ describe CanvasCsv::RefreshAllCampusData do
     let(:cached_enrollments_provider) { CanvasCsv::TermEnrollments.new }
 
     context 'when canvas sections csv is present' do
-      before { allow_any_instance_of(Canvas::SectionsReport).to receive(:get_csv).and_return(sections_report_csv) }
+      before { allow_any_instance_of(Canvas::Report::Sections).to receive(:get_csv).and_return(sections_report_csv) }
       it 'passes only sections with course_id and section_id to site membership maintainer process for each course' do
         users_csv = subject.instance_eval { make_users_csv(@users_csv_filename) }
         known_uids = []
@@ -90,7 +90,7 @@ describe CanvasCsv::RefreshAllCampusData do
     end
 
     context 'when canvas sections csv is empty' do
-      before { allow_any_instance_of(Canvas::SectionsReport).to receive(:get_csv).and_return(empty_sections_report_csv) }
+      before { allow_any_instance_of(Canvas::Report::Sections).to receive(:get_csv).and_return(empty_sections_report_csv) }
       it 'does not perform any processing' do
         expect(CanvasCsv::SiteMembershipsMaintainer).to_not receive(:process)
       end

@@ -65,8 +65,8 @@ describe CanvasCsv::TermEnrollments do
     allow(Time).to receive(:now).and_return(frozen_moment_in_time)
     allow(DateTime).to receive(:now).and_return(frozen_moment_in_time.to_datetime)
 
-    # stub behavior for Canvas::SectionsReport
-    allow_any_instance_of(Canvas::SectionsReport).to receive(:get_csv).and_return(sections_report_csv)
+    # stub behavior for Canvas::Report::Sections
+    allow_any_instance_of(Canvas::Report::Sections).to receive(:get_csv).and_return(sections_report_csv)
 
     # stub behavior for Canvas::SectionEnrollments
     section_enrollments_worker_1 = double(:list_enrollments => [section_enrollment1])
@@ -187,7 +187,7 @@ describe CanvasCsv::TermEnrollments do
 
   describe '#populate_term_csv_file' do
     context 'when sections report is empty' do
-      before { allow_any_instance_of(Canvas::SectionsReport).to receive(:get_csv).and_return(empty_sections_report_csv) }
+      before { allow_any_instance_of(Canvas::Report::Sections).to receive(:get_csv).and_return(empty_sections_report_csv) }
       it 'should escape execution' do
         enrollments_csv = subject.make_enrollment_export_csv("#{export_dir}/canvas-2014-01-01-TERM_2014-D-term-enrollments-export.csv")
         expect_any_instance_of(Canvas::SectionEnrollments).to_not receive(:new)

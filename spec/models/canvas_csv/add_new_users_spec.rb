@@ -33,7 +33,7 @@ describe CanvasCsv::AddNewUsers do
 
   before do
     allow(DateTime).to receive(:now).and_return(fake_now_datetime)
-    allow_any_instance_of(Canvas::UsersReport).to receive(:get_csv).and_return(user_report_csv)
+    allow_any_instance_of(Canvas::Report::Users).to receive(:get_csv).and_return(user_report_csv)
     allow(CampusOracle::Queries).to receive(:get_all_active_people_uids).and_return(sis_active_uids)
     allow(CampusOracle::Queries).to receive(:get_basic_people_attributes).and_return(sis_active_people)
 
@@ -102,7 +102,7 @@ describe CanvasCsv::AddNewUsers do
     end
 
     it 'returns existing file path if user report already obtained' do
-      expect_any_instance_of(Canvas::UsersReport).to receive(:get_csv).once.and_return(user_report_csv)
+      expect_any_instance_of(Canvas::Report::Users).to receive(:get_csv).once.and_return(user_report_csv)
       result_1 = subject.get_canvas_user_report_file
       expect(result_1).to be_an_instance_of String
       expect(result_1).to eq 'tmp/canvas/canvas-2014-07-23_09-00-06-users-report.csv'

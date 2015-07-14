@@ -25,7 +25,7 @@ module CanvasCsv
     def get_canvas_user_report_file
       get_report = Proc.new do
         filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F_%H-%M-%S')}-users-report.csv"
-        csv_table = Canvas::UsersReport.new.get_csv
+        csv_table = Canvas::Report::Users.new.get_csv
         headers = csv_table.headers.join(',')
         file = CSV.open(filename, 'wb', headers: headers, write_headers: true)
         logger.warn "Canvas user report obtained containing data on #{csv_table.count} user accounts"

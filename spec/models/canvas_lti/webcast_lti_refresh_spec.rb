@@ -15,7 +15,7 @@ describe Canvas::WebcastLtiRefresh do
     subject { Canvas::WebcastLtiRefresh.new(%w(TERM:2015-B), webcast_tool_id, {fake: true}) }
     before do
       report_spring_2015 = CSV.read('fixtures/webcast/canvas-sections-report_2015-B.csv', {headers: true})
-      allow_any_instance_of(Canvas::Report).to receive(:get_account_csv).with('provisioning', 'sections', 'TERM:2015-B').and_return report_spring_2015
+      allow_any_instance_of(Canvas::Report::Sections).to receive(:get_account_csv).with('provisioning', 'sections', 'TERM:2015-B').and_return report_spring_2015
       recordings = { :courses => {'2015-B-51990' => {} } }
       allow_any_instance_of(Webcast::Recordings).to receive(:request_internal).and_return recordings
       eligible = {'spring-2015' => [ccn_with_webcast, eligible_ccn_without_webcast]}

@@ -7,7 +7,7 @@ describe CanvasLti::WebcastEligibleCourses do
     context 'csv files exist' do
       before do
         report_spring_2015 = CSV.read('fixtures/webcast/canvas-sections-report_2015-B.csv', {headers: true})
-        allow_any_instance_of(Canvas::Report).to receive(:get_account_csv).with('provisioning', 'sections', 'TERM:2015-B').and_return report_spring_2015
+        allow_any_instance_of(Canvas::Report::Sections).to receive(:get_account_csv).with('provisioning', 'sections', 'TERM:2015-B').and_return report_spring_2015
       end
 
       it 'should return official courses per configured account_id' do
@@ -47,7 +47,7 @@ describe CanvasLti::WebcastEligibleCourses do
 
     context 'no csv files' do
       before do
-        allow_any_instance_of(Canvas::Report).to receive(:get_account_csv).and_return []
+        allow_any_instance_of(Canvas::Report::Sections).to receive(:get_account_csv).and_return []
       end
       it 'should return nothing when csv is empty' do
         expect(subject).to be_empty
