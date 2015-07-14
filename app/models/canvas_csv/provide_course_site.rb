@@ -177,13 +177,13 @@ module CanvasCsv
         raise RuntimeError, 'Course site was created without any sections or members! Section import failed.'
       else
         logger.warn "Successfully imported sections from: #{@import_data['sections_csv_file']}"
-        background_job_complete_step('Imported sections')
+        background_job_complete_step 'Imported sections'
       end
     end
 
     def enroll_instructor
       default_section = Canvas::CourseSections.new(:course_id => course_details['id']).create(@import_data['site_name'], "DEFSEC:#{course_details['id']}")
-      response = Canvas::CourseAddUser.add_user_to_course_section(@uid, 'TeacherEnrollment', default_section['id'])
+      response = CanvasLti::CourseAddUser.add_user_to_course_section(@uid, 'TeacherEnrollment', default_section['id'])
       if response.blank?
         logger.error "Imported course from #{@import_data['courses_csv_file']} but could not add #{@uid} as teacher to section #{default_section['id']}"
         raise RuntimeError, 'Course site was created but the teacher could not be added!'

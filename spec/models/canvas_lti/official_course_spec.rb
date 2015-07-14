@@ -1,8 +1,6 @@
-require 'spec_helper'
-
-describe Canvas::OfficialCourse do
+describe CanvasLti::OfficialCourse do
   let(:canvas_course_id) { rand(99999).to_s }
-  subject { Canvas::OfficialCourse.new(:canvas_course_id => canvas_course_id) }
+  subject { CanvasLti::OfficialCourse.new(:canvas_course_id => canvas_course_id) }
 
   context 'when providing official section identifiers existing within course' do
     let(:success_response) { [{:term_yr => '2014', :term_cd => 'C', :ccn => '7309'}, {:term_yr => '2014', :term_cd => 'C', :ccn => '6211'}] }
@@ -56,13 +54,13 @@ describe Canvas::OfficialCourse do
     before { allow(subject).to receive(:official_section_identifiers).and_return(section_identifiers) }
 
     it "uses cache by default" do
-      expect(Canvas::OfficialCourse).to receive(:fetch_from_cache).with("is-official-#{canvas_course_id}").and_return(false)
+      expect(CanvasLti::OfficialCourse).to receive(:fetch_from_cache).with("is-official-#{canvas_course_id}").and_return(false)
       result = subject.is_official_course?
       expect(result).to eq false
     end
 
-    it "bypasses cache when cache option is false" do
-      expect(Canvas::OfficialCourse).to_not receive(:fetch_from_cache).with("is-official-#{canvas_course_id}")
+    it 'bypasses cache when cache option is false' do
+      expect(CanvasLti::OfficialCourse).to_not receive(:fetch_from_cache).with("is-official-#{canvas_course_id}")
       result = subject.is_official_course?(:cache => false)
       expect(result).to eq true
     end

@@ -1,4 +1,4 @@
-describe Canvas::ReconfigureExternalApps do
+describe CanvasLti::ReconfigureExternalApps do
   let(:fake_canvas_host) {'https://ucberkeley.beta.instructure.com'}
   let(:fake_calcentral_host) {'cc-dev.example.com'}
   let(:reachable_xml_host) {'http://example.com'}
@@ -11,10 +11,10 @@ describe Canvas::ReconfigureExternalApps do
       it 'resets all hosted apps' do
         fake_external_tools_list = fake_external_tools_proxy.external_tools_list
         external_tools_proxy = double()
-        external_tools_proxy.should_receive(:external_tools_list).exactly(2).times.and_return(fake_external_tools_list)
-        external_tools_proxy.should_receive(:reset_external_tool_config_by_url).exactly(6).times.and_return(fake_reset_response)
-        Canvas::ExternalTools.stub(:new).with({url_root: fake_canvas_host, canvas_account_id: '90242'}).and_return(external_tools_proxy)
-        Canvas::ExternalTools.stub(:new).with({url_root: fake_canvas_host, canvas_account_id: '129410'}).and_return(external_tools_proxy)
+        expect(external_tools_proxy).to receive(:external_tools_list).exactly(2).times.and_return fake_external_tools_list
+        expect(external_tools_proxy).to receive(:reset_external_tool_config_by_url).exactly(6).times.and_return fake_reset_response
+        allow(Canvas::ExternalTools).to receive(:new).with(url_root: fake_canvas_host, canvas_account_id: '90242').and_return external_tools_proxy
+        allow(Canvas::ExternalTools).to receive(:new).with(url_root: fake_canvas_host, canvas_account_id: '129410').and_return external_tools_proxy
         subject.reset_external_app_hosts_by_url(reachable_xml_host, [
             {host: fake_canvas_host, calcentral: new_calcentral_host}
           ])
@@ -25,10 +25,10 @@ describe Canvas::ReconfigureExternalApps do
       it 'leaves hosted apps alone' do
         fake_external_tools_list = fake_external_tools_proxy.external_tools_list
         external_tools_proxy = double()
-        external_tools_proxy.should_receive(:external_tools_list).twice.and_return(fake_external_tools_list)
-        external_tools_proxy.should_not_receive(:reset_external_tool_config_by_url)
-        Canvas::ExternalTools.stub(:new).with({url_root: fake_canvas_host, canvas_account_id: '90242'}).and_return(external_tools_proxy)
-        Canvas::ExternalTools.stub(:new).with({url_root: fake_canvas_host, canvas_account_id: '129410'}).and_return(external_tools_proxy)
+        expect(external_tools_proxy).to receive(:external_tools_list).twice.and_return fake_external_tools_list
+        expect(external_tools_proxy).not_to receive(:reset_external_tool_config_by_url)
+        allow(Canvas::ExternalTools).to receive(:new).with(url_root: fake_canvas_host, canvas_account_id: '90242').and_return external_tools_proxy
+        allow(Canvas::ExternalTools).to receive(:new).with(url_root: fake_canvas_host, canvas_account_id: '129410').and_return external_tools_proxy
         subject.reset_external_app_hosts_by_url(reachable_xml_host, [
             {host: fake_canvas_host, calcentral: fake_calcentral_host}
           ])
@@ -68,7 +68,7 @@ describe Canvas::ReconfigureExternalApps do
       allow(fake_proxy).to receive(:external_tools_list).and_return(external_tool_configs)
     end
 
-    subject { Canvas::ReconfigureExternalApps.new.configure_external_app_by_xml(app_host, app_code) }
+    subject { CanvasLti::ReconfigureExternalApps.new.configure_external_app_by_xml(app_host, app_code) }
 
     context 'the app is already in the Canvas account' do
       let(:expected_action) {'overwritten'}
@@ -127,7 +127,7 @@ describe Canvas::ReconfigureExternalApps do
     let(:egrades_id) {random_id}
     let(:accounts_mocks) do
       external_accounts_hash = {}
-      Canvas::ExternalAppConfigurations.refresh_accounts.each do |account_id|
+      CanvasLti::ExternalAppConfigurations.refresh_accounts.each do |account_id|
         external_accounts_hash[account_id] = {
           fake_proxy: instance_double(Canvas::ExternalTools),
           received_creates: [],
@@ -159,7 +159,7 @@ describe Canvas::ReconfigureExternalApps do
       external_accounts_hash
     end
     before do
-      Canvas::ExternalAppConfigurations.refresh_accounts.each do |account_id|
+      CanvasLti::ExternalAppConfigurations.refresh_accounts.each do |account_id|
         account_mock = accounts_mocks[account_id]
         allow(Canvas::ExternalTools).to receive(:new).with({canvas_account_id: account_id}).and_return(account_mock[:fake_proxy])
         allow(account_mock[:fake_proxy]).to receive(:external_tools_list).and_return(account_mock[:tools_feed])
@@ -174,7 +174,7 @@ describe Canvas::ReconfigureExternalApps do
       end
     end
     it 'overwrites existing known apps and adds others' do
-      Canvas::ReconfigureExternalApps.new.configure_all_apps_from_current_host
+      CanvasLti::ReconfigureExternalApps.new.configure_all_apps_from_current_host
       main_account = accounts_mocks[Settings.canvas_proxy.account_id]
       expect(main_account[:received_resets]).to eq [webcast_tool_id]
       expect(main_account[:received_creates]).to include 'Find a Person to Add'
@@ -187,7 +187,7 @@ describe Canvas::ReconfigureExternalApps do
         allow(Settings.features).to receive(:course_manage_official_sections).and_return(feature_flag)
       end
       subject do
-        Canvas::ReconfigureExternalApps.new.configure_all_apps_from_current_host
+        CanvasLti::ReconfigureExternalApps.new.configure_all_apps_from_current_host
         accounts_mocks[Settings.canvas_proxy.official_courses_account_id][:received_creates]
       end
       context 'enabled' do

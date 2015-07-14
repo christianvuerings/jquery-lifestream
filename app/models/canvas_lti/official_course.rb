@@ -1,9 +1,9 @@
-module Canvas
+module CanvasLti
   class OfficialCourse
     extend Cache::Cacheable
 
     def initialize(options = {})
-      raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
+      raise RuntimeError, 'canvas_course_id required' unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
     end
 

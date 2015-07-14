@@ -1,4 +1,4 @@
-module Canvas
+module CanvasLti
   # Prepares CSV export of official enrollments for use with E-Grades (UCB Online Grading System)
   #
   # All grades/scores for students enrolled in the Canvas course are prepared by #canvas_course_student_grades
@@ -9,21 +9,21 @@ module Canvas
     include BackgroundJob
     include ClassLogger
 
-    GRADE_TYPES = ['final','current']
+    GRADE_TYPES = %w(final current)
 
     def initialize(options = {})
-      raise RuntimeError, "canvas_course_id required" unless options.include?(:canvas_course_id)
+      raise RuntimeError, 'canvas_course_id required' unless options.include?(:canvas_course_id)
       @canvas_course_id = options[:canvas_course_id]
-      @canvas_official_course = Canvas::OfficialCourse.new(:canvas_course_id => @canvas_course_id)
+      @canvas_official_course = CanvasLti::OfficialCourse.new(canvas_course_id: @canvas_course_id)
     end
 
     def official_student_grades_csv(term_cd, term_yr, ccn, type)
       raise ArgumentError, 'type argument must be \'final\' or \'current\'' unless GRADE_TYPES.include?(type)
       official_students = official_student_grades(term_cd, term_yr, ccn)
       CSV.generate do |csv|
-        csv << ['student_id','grade','comment']
+        csv << %w(student_id grade comment)
         official_students.each do |student|
-          comment = (student[:pnp_flag] == "Y") ? "Opted for P/NP Grade" : ""
+          comment = (student[:pnp_flag] == 'Y') ? 'Opted for P/NP Grade' : ''
           student_id = student[:student_id]
           grade = student["#{type}_grade".to_sym].to_s
           csv << [student_id, grade, comment]
@@ -123,10 +123,10 @@ module Canvas
     def unmute_course_assignments(canvas_course_id)
       worker = Canvas::CourseAssignments.new(:course_id => @canvas_course_id)
       muted_assignments = worker.muted_assignments
-      logger.warn("Unmuting #{muted_assignments.count} assignments for Canvas Course ID #{@canvas_course_id}")
+      logger.warn "Unmuting #{muted_assignments.count} assignments for Canvas course ID #{@canvas_course_id}"
       muted_assignments.each do |assignment|
         worker.unmute_assignment(assignment['id'])
-        logger.warn("Unmuted Assignment ID #{assignment['id']} for Canvas Course ID #{@canvas_course_id}")
+        logger.warn "Unmuted assignment ID #{assignment['id']} for Canvas course ID #{@canvas_course_id}"
       end
     end
 

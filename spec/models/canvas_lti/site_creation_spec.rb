@@ -1,11 +1,9 @@
-require "spec_helper"
-
-describe Canvas::SiteCreation do
+describe CanvasLti::SiteCreation do
   let(:uid) { rand(999999).to_s }
 
   describe '#authorizations' do
 
-    subject { Canvas::SiteCreation.new(:uid => uid).authorizations }
+    subject { CanvasLti::SiteCreation.new(uid: uid).authorizations }
 
     before do
       # not an admin user

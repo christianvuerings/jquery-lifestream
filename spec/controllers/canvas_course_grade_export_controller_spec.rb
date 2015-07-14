@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe CanvasCourseGradeExportController do
 
   let(:course_grades) do
@@ -14,8 +12,8 @@ describe CanvasCourseGradeExportController do
   let(:canvas_course_id) { '1164764' }
 
   before do
-    session['user_id'] = "4868640"
-    session['canvas_user_id'] = "43232321"
+    session['user_id'] = '4868640'
+    session['canvas_user_id'] = '43232321'
     session['canvas_course_id'] = canvas_course_id
     allow_any_instance_of(Canvas::CoursePolicy).to receive(:can_export_grades?).and_return(true)
     allow_any_instance_of(Canvas::CourseUsers).to receive(:course_grades).and_return(course_grades)
@@ -26,15 +24,15 @@ describe CanvasCourseGradeExportController do
     let(:background_job_id) { 'canvas.egrades.12345.1383330151058' }
     before do
       allow(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).with(true).and_return(nil)
-      allow_any_instance_of(Canvas::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
-      allow_any_instance_of(Canvas::Egrades).to receive(:save).and_return(nil)
-      allow_any_instance_of(Canvas::Egrades).to receive(:background_job_id).and_return(background_job_id)
+      allow_any_instance_of(CanvasLti::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
+      allow_any_instance_of(CanvasLti::Egrades).to receive(:save).and_return(nil)
+      allow_any_instance_of(CanvasLti::Egrades).to receive(:background_job_id).and_return(background_job_id)
     end
 
     it_should_behave_like 'an endpoint' do
       let(:make_request) { post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :format => :csv }
       let(:error_text) { 'Something went wrong' }
-      before { allow_any_instance_of(Canvas::Egrades).to receive(:background_job_initialize).and_raise(RuntimeError, error_text) }
+      before { allow_any_instance_of(CanvasLti::Egrades).to receive(:background_job_initialize).and_raise(RuntimeError, error_text) }
     end
 
     it_should_behave_like 'an authenticated endpoint' do
@@ -43,7 +41,7 @@ describe CanvasCourseGradeExportController do
 
     it 'makes call to load canvas course student grades with forced cacheing' do
       expect(torquebox_fake_background_proxy).to receive(:canvas_course_student_grades).with(true).and_return(nil)
-      allow_any_instance_of(Canvas::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
+      allow_any_instance_of(CanvasLti::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
       post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :format => :csv
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
@@ -52,7 +50,7 @@ describe CanvasCourseGradeExportController do
     end
 
     it 'returns background job id' do
-      allow_any_instance_of(Canvas::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
+      allow_any_instance_of(CanvasLti::Egrades).to receive(:background).and_return(torquebox_fake_background_proxy)
       post :prepare_grades_cache, :canvas_course_id => canvas_course_id, :format => :csv
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
@@ -63,12 +61,12 @@ describe CanvasCourseGradeExportController do
   end
 
   describe 'when resolving issues with course site state related to grade export' do
-    before { allow_any_instance_of(Canvas::Egrades).to receive(:resolve_issues).and_return(nil) }
+    before { allow_any_instance_of(CanvasLti::Egrades).to receive(:resolve_issues).and_return(nil) }
 
     it_should_behave_like 'an endpoint' do
       let(:make_request) { post :resolve_issues, canvas_course_id: 'embedded', :enableGradingScheme => 1, :format => :csv }
       let(:error_text) { 'Something went wrong' }
-      before { allow_any_instance_of(Canvas::Egrades).to receive(:resolve_issues).and_raise(RuntimeError, error_text) }
+      before { allow_any_instance_of(CanvasLti::Egrades).to receive(:resolve_issues).and_raise(RuntimeError, error_text) }
     end
 
     it_should_behave_like 'an authenticated endpoint' do
@@ -76,7 +74,7 @@ describe CanvasCourseGradeExportController do
     end
 
     it 'supports enableGradingScheme option' do
-      expect_any_instance_of(Canvas::Egrades).to receive(:resolve_issues).with(true, false)
+      expect_any_instance_of(CanvasLti::Egrades).to receive(:resolve_issues).with(true, false)
       post :resolve_issues, :canvas_course_id => canvas_course_id, :enableGradingScheme => 1, :format => :csv
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
@@ -85,7 +83,7 @@ describe CanvasCourseGradeExportController do
     end
 
     it 'supports unmuteAssignments option' do
-      expect_any_instance_of(Canvas::Egrades).to receive(:resolve_issues).with(false, true)
+      expect_any_instance_of(CanvasLti::Egrades).to receive(:resolve_issues).with(false, true)
       post :resolve_issues, :canvas_course_id => canvas_course_id, :unmuteAssignments => 1, :format => :csv
       expect(response.status).to eq(200)
       json_response = JSON.parse(response.body)
@@ -95,7 +93,7 @@ describe CanvasCourseGradeExportController do
   end
 
   describe '#job_status' do
-    let(:background_job_id) { 'Canvas::Egrades.1383330151057-67f4b934525501cb' }
+    let(:background_job_id) { 'CanvasLti::Egrades.1383330151057-67f4b934525501cb' }
 
     it_should_behave_like 'an endpoint' do
       let(:error_text) { 'Something went wrong' }
@@ -117,7 +115,7 @@ describe CanvasCourseGradeExportController do
     end
 
     it 'returns status of canvas egrades background job' do
-      egrades = Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
+      egrades = CanvasLti::Egrades.new(:canvas_course_id => canvas_course_id)
       egrades.background_job_initialize
       egrades.background_job_set_total_steps(2)
       egrades.background_job_complete_step('step 1')
@@ -163,13 +161,13 @@ describe CanvasCourseGradeExportController do
       }
     end
     before do
-      allow_any_instance_of(Canvas::Egrades).to receive(:export_options).and_return(export_options)
+      allow_any_instance_of(CanvasLti::Egrades).to receive(:export_options).and_return(export_options)
     end
 
     it_should_behave_like 'an endpoint' do
       let(:make_request) { get :export_options, canvas_course_id: 'embedded', :format => :csv }
       let(:error_text) { 'Something went wrong' }
-      before { allow_any_instance_of(Canvas::Egrades).to receive(:export_options).and_raise(RuntimeError, error_text) }
+      before { allow_any_instance_of(CanvasLti::Egrades).to receive(:export_options).and_raise(RuntimeError, error_text) }
     end
 
     it_should_behave_like 'an authenticated endpoint' do
@@ -217,7 +215,7 @@ describe CanvasCourseGradeExportController do
     it_should_behave_like 'an endpoint' do
       let(:make_request) { get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_cd => 'D', :term_yr => '2014', :ccn => '1234', :type => 'final' }
       let(:error_text) { 'Something went wrong' }
-      before { allow_any_instance_of(Canvas::Egrades).to receive(:official_student_grades_csv).and_raise(RuntimeError, error_text) }
+      before { allow_any_instance_of(CanvasLti::Egrades).to receive(:official_student_grades_csv).and_raise(RuntimeError, error_text) }
     end
 
     it_should_behave_like 'an authenticated endpoint' do
@@ -244,7 +242,7 @@ describe CanvasCourseGradeExportController do
 
     context 'when user is authorized to download egrades csv' do
       let(:csv_string) { "uid,grade,comment\n872584,F,\"\"\n4000123,B,\"\"\n872527,A+,\"\"\n872529,D-,\"\"\n" }
-      before { allow_any_instance_of(Canvas::Egrades).to receive(:official_student_grades_csv).and_return(csv_string) }
+      before { allow_any_instance_of(CanvasLti::Egrades).to receive(:official_student_grades_csv).and_return(csv_string) }
       it 'raises exception if term code not provided' do
         get :download_egrades_csv, canvas_course_id: 'embedded', :format => :csv, :term_yr => '2014', :ccn => '1234', :type => 'final'
         expect(response.status).to eq(400)
@@ -322,12 +320,12 @@ describe CanvasCourseGradeExportController do
   describe 'when indicating if a course site has official sections' do
     before do
       session['user_id'] = nil
-      allow_any_instance_of(Canvas::OfficialCourse).to receive(:is_official_course?).and_return(true)
+      allow_any_instance_of(CanvasLti::OfficialCourse).to receive(:is_official_course?).and_return(true)
     end
     it_should_behave_like 'an endpoint' do
       let(:make_request) { get :is_official_course, :format => :csv, :canvas_course_id => '1234' }
       let(:error_text) { 'Something went wrong' }
-      before { allow(Canvas::OfficialCourse).to receive(:new).and_raise(RuntimeError, error_text) }
+      before { allow(CanvasLti::OfficialCourse).to receive(:new).and_raise(RuntimeError, error_text) }
     end
 
     context 'when the canvas course id is not present in the params' do

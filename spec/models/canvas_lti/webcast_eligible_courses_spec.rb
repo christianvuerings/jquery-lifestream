@@ -1,8 +1,8 @@
-describe Canvas::WebcastEligibleCourses do
+describe CanvasLti::WebcastEligibleCourses do
 
   context 'fake proxy' do
     let(:user_id) { rand(99999).to_s }
-    subject { Canvas::WebcastEligibleCourses.new(%w(TERM:2015-B), {:user_id => user_id, fake: true}).fetch }
+    subject { CanvasLti::WebcastEligibleCourses.new(%w(TERM:2015-B), {user_id: user_id, fake: true}).fetch }
 
     context 'csv files exist' do
       before do

@@ -61,7 +61,7 @@ module CanvasCsv
       csv_filepath = @sis_user_import.path
       user_count = CSV.read(csv_filepath, headers: true).length
       if user_count > 0
-        logger.warn("Importing SIS User Import CSV with #{user_count} updates")
+        logger.warn "Importing SIS User Import CSV with #{user_count} updates"
         Canvas::SisImport.new.import_users csv_filepath
       end
     end

@@ -1,4 +1,4 @@
-module Canvas
+module CanvasLti
   class WebcastRecordings
     extend Cache::Cacheable
     include ClassLogger

@@ -1,4 +1,4 @@
-module Canvas
+module CanvasLti
   class CourseProvision
     include ActiveAttr::Model, Berkeley::CourseCodes, ClassLogger
     extend Cache::Cacheable
@@ -64,7 +64,7 @@ module Canvas
     end
 
     def edit_sections(ccns_to_remove, ccns_to_add)
-      raise RuntimeError, "canvas_course_id option not present" if @canvas_course_id.blank?
+      raise RuntimeError, 'canvas_course_id option not present' if @canvas_course_id.blank?
       cpcs = CanvasCsv::ProvideCourseSite.new(working_uid)
       cpcs.background_job_save
       cpcs.background.edit_sections(get_course_info, ccns_to_remove, ccns_to_add)
@@ -73,7 +73,7 @@ module Canvas
     end
 
     def get_course_info
-      raise RuntimeError, "canvas_course_id option not present" if @canvas_course_id.blank?
+      raise RuntimeError, 'canvas_course_id option not present' if @canvas_course_id.blank?
       course_info = {}
       course_record = Canvas::Course.new(canvas_course_id: @canvas_course_id.to_i)
       course = course_record.course
@@ -83,20 +83,20 @@ module Canvas
       course_info[:courseCode] = course['course_code']
       course_info[:term] = Canvas::Proxy.sis_term_id_to_term(course['term']['sis_term_id'])
       course_info[:term][:name] = course['term']['name']
-      course_info[:officialSections] = Canvas::CourseSections.new(:course_id => @canvas_course_id).official_section_identifiers
+      course_info[:officialSections] = Canvas::CourseSections.new(course_id: @canvas_course_id).official_section_identifiers
       policy = Canvas::CoursePolicy.new(AuthenticationState.new('user_id' => @uid), course_record)
       course_info[:canEdit] = policy.can_edit_official_sections?
       course_info
     end
 
-    def find_nonteaching_site_sections(teachingSemesters, course_info)
+    def find_nonteaching_site_sections(teaching_semesters, course_info)
       term_year = course_info[:term][:term_yr]
       term_code = course_info[:term][:term_cd]
-      teaching_semester_idx = teachingSemesters.index do |semester|
+      teaching_semester_idx = teaching_semesters.index do |semester|
         semester[:termYear] == term_year &&
           semester[:termCode] == term_code
       end
-      teaching_classes = teaching_semester_idx ? teachingSemesters[teaching_semester_idx][:classes] : []
+      teaching_classes = teaching_semester_idx ? teaching_semesters[teaching_semester_idx][:classes] : []
       missing_sections = course_info[:officialSections].select do |site_section|
         if site_section[:term_yr] == term_year && site_section[:term_cd] == term_code
           found_it = teaching_classes.index do |course|
@@ -179,8 +179,8 @@ module Canvas
         course_ccns << official_section[:ccn]
       end
 
-      associatedCourses = []
-      unassociatedCourses = []
+      associated_courses = []
+      unassociated_courses = []
 
       feed[:teachingSemesters].each do |semester|
         course_semester_match = (semester[:termCode] == course_term_code) && (semester[:termYear] == course_term_year)
@@ -198,12 +198,12 @@ module Canvas
               end
             end
             if course[:containsCourseSections]
-              associatedCourses << course
+              associated_courses << course
             else
-              unassociatedCourses << course
+              unassociated_courses << course
             end
           end
-          semester[:classes] = associatedCourses + unassociatedCourses
+          semester[:classes] = associated_courses + unassociated_courses
         else
           semester[:classes].each do |course|
             course[:containsCourseSections] = false

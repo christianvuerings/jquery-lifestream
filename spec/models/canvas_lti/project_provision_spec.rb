@@ -1,18 +1,16 @@
-require 'spec_helper'
-
-describe Canvas::ProjectProvision do
+describe CanvasLti::ProjectProvision do
   let(:user_id) { rand(99999).to_s }
   let(:valid_course) do
     {
-      "id"=>23,
-      "account_id"=>1,
-      "name"=>"Example Project Site",
-      "course_code"=>"Example Course Code",
-      "sis_course_id"=>"PROJ:67f4b934525501cb",
-      "workflow_state"=>"unpublished"
+      'id'=>23,
+      'account_id'=>1,
+      'name'=>'Example Project Site',
+      'course_code'=>'Example Course Code',
+      'sis_course_id'=>'PROJ:67f4b934525501cb',
+      'workflow_state'=>'unpublished'
     }
   end
-  subject { Canvas::ProjectProvision.new(user_id) }
+  subject { CanvasLti::ProjectProvision.new(user_id) }
 
   describe '#unique_sis_project_id' do
     it 'returns unique sis_course_id for new project sites' do
@@ -42,12 +40,12 @@ describe Canvas::ProjectProvision do
     let(:unique_sis_project_id) { '67f4b934525501cb' }
     let(:new_course) do
       {
-        "id"=>canvas_course_id,
-        "account_id"=> account_id,
-        "name"=> project_name,
-        "course_code"=> project_name,
-        "sis_course_id"=>"PROJ:#{unique_sis_project_id}",
-        "workflow_state"=>"unpublished"
+        'id'=>canvas_course_id,
+        'account_id'=> account_id,
+        'name'=> project_name,
+        'course_code'=> project_name,
+        'sis_course_id'=>"PROJ:#{unique_sis_project_id}",
+        'workflow_state'=>'unpublished'
       }
     end
     let(:add_user_to_course_response) {
@@ -70,7 +68,7 @@ describe Canvas::ProjectProvision do
     before do
       allow(subject).to receive(:unique_sis_project_id).and_return(unique_sis_project_id)
       allow_any_instance_of(Canvas::Course).to receive(:create).and_return(success_response)
-      allow(Canvas::CourseAddUser).to receive(:add_user_to_course).and_return(add_user_to_course_response)
+      allow(CanvasLti::CourseAddUser).to receive(:add_user_to_course).and_return(add_user_to_course_response)
     end
 
     it 'raises exception if error encountered with API request' do
@@ -81,15 +79,13 @@ describe Canvas::ProjectProvision do
     it 'returns project site url' do
       expect_any_instance_of(Canvas::Course).to receive(:create).with(account_id, project_name, project_name, term_id, unique_sis_project_id).and_return(success_response)
       result = subject.create_project(project_name)
-      expect(result).to be_an_instance_of Hash
       expect(result[:projectSiteId]).to eq 23
       expect(result[:projectSiteUrl]).to eq url_root + '/courses/' + result[:projectSiteId].to_s
     end
 
     it 'enrolls user in course site' do
-      expect(Canvas::CourseAddUser).to receive(:add_user_to_course).with(user_id, 'TeacherEnrollment', new_course['id'], {:role_id => custom_role_id}).and_return(add_user_to_course_response)
+      expect(CanvasLti::CourseAddUser).to receive(:add_user_to_course).with(user_id, 'TeacherEnrollment', new_course['id'], {:role_id => custom_role_id}).and_return(add_user_to_course_response)
       result = subject.create_project(project_name)
-      expect(result).to be_an_instance_of Hash
       expect(result[:enrollment_id]).to eq 20959
     end
   end

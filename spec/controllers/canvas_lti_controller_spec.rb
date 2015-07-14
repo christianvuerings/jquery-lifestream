@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe CanvasLtiController do
 
   let(:lti_values) {{

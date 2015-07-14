@@ -219,11 +219,11 @@ cache:
     User::Api: NEXT_08_00
     User::Photo: <%= 24.hours %>
     UserApiController: <%= 4.hours %>
-    Canvas::Lti: <%= 5.minutes %>
     Canvas::CourseStudents: <%= 15.minutes %>
     Canvas::CourseTeachers: <%= 5.minutes %>
     CanvasBackgroundJobs: <%= 24.hours %>
-    Canvas::Egrades: <%= 1.minute %>
+    CanvasLti::Egrades: <%= 1.minute %>
+    CanvasLti::Lti: <%= 5.minutes %>
     Advising::MyAdvising: <%= 2.hours %>
 
     Berkeley::Terms: NEXT_08_00

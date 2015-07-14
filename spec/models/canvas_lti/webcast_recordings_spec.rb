@@ -1,4 +1,4 @@
-describe Canvas::WebcastRecordings do
+describe CanvasLti::WebcastRecordings do
 
   describe '#get_feed' do
     let(:canvas_course_id) { rand(99999) }
@@ -11,7 +11,7 @@ describe Canvas::WebcastRecordings do
     subject {
       uid = rand(99999).to_s
       policy = AuthenticationStatePolicy.new(AuthenticationState.new('user_id' => uid), nil)
-      Canvas::WebcastRecordings.new(uid, policy, canvas_course_id, {fake: true})
+      CanvasLti::WebcastRecordings.new(uid, policy, canvas_course_id, {fake: true})
     }
 
     context 'when the Canvas course site maps to campus class sections' do

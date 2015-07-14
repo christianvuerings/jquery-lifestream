@@ -1,4 +1,4 @@
-module Canvas
+module CanvasLti
   class PublicAuthorizer
     extend Cache::Cacheable
 

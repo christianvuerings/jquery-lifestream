@@ -11,7 +11,7 @@ module Canvas
     def refresh_canvas
       is_sign_up_active = Webcast::SystemStatus.new(@options).get[:isSignUpActive]
       modifications_per_course_site = {}
-      eligible_courses_hash = Canvas::WebcastEligibleCourses.new(@sis_term_ids, @options).fetch
+      eligible_courses_hash = CanvasLti::WebcastEligibleCourses.new(@sis_term_ids, @options).fetch
       eligible_courses_hash.each do |canvas_course_id, sections|
         modified_tab = update_course_site_tab(canvas_course_id, sections, is_sign_up_active) if sections.any?
         modifications_per_course_site[canvas_course_id] = modified_tab unless modified_tab.nil?

@@ -1,13 +1,13 @@
-module Canvas
+module CanvasLti
   class CourseAddUser
+    include SafeJsonParser
 
-    SEARCH_TYPES = ['name', 'email', 'ldap_user_id']
-
+    SEARCH_TYPES = %w(name email ldap_user_id)
     SEARCH_LIMIT = 20
 
     def self.search_users(search_text, search_type)
-      raise ArgumentError, "Search text must of type String" if search_text.class != String
-      raise ArgumentError, "Search type must of type String" if search_type.class != String
+      raise ArgumentError, 'Search text must be of type String' if search_text.class != String
+      raise ArgumentError, 'Search type must be of type String' if search_type.class != String
       sentence_options = {:last_word_connector => ', or ', :two_words_connector => ' or '}
       raise ArgumentError, "Search type argument '#{search_type}' invalid. Must be #{SEARCH_TYPES.to_sentence(sentence_options)}" unless SEARCH_TYPES.include?(search_type)
       case search_type
@@ -28,16 +28,16 @@ module Canvas
     end
 
     def self.course_sections_list(course_id)
-      raise ArgumentError, "Course ID must be a Fixnum" if course_id.class != Fixnum
+      raise ArgumentError, 'Course ID must be a Fixnum' if course_id.class != Fixnum
       canvas_course_sections_proxy = Canvas::CourseSections.new(course_id: course_id)
       sections_response = canvas_course_sections_proxy.sections_list
-      sections = JSON.parse(sections_response.body)
+      sections = safe_json sections_response.body
       sections.collect { |section| {'id' => section['id'].to_s, 'name' => section['name']} }
     end
 
     def self.add_user_to_course_section(ldap_user_id, role, canvas_course_section_id)
-      raise ArgumentError, "ldap_user_id must be a String" if ldap_user_id.class != String
-      raise ArgumentError, "role must be a String" if role.class != String
+      raise ArgumentError, 'ldap_user_id must be a String' if ldap_user_id.class != String
+      raise ArgumentError, 'role must be a String' if role.class != String
       canvas_user_profile = Canvas::SisUserProfile.new(user_id: ldap_user_id).get
       if canvas_user_profile.nil?
         CanvasCsv::UserProvision.new.import_users [ldap_user_id]

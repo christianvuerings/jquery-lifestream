@@ -549,7 +549,7 @@ describe CanvasCsv::ProvideCourseSite do
       subject.instance_eval { @import_data['site_name'] = course_site_name }
       allow(subject).to receive(:course_details).and_return(course_details_hash)
       allow_any_instance_of(Canvas::CourseSections).to receive(:create).with(site_name, "DEFSEC:#{course_details_hash['id']}").and_return(section_details_hash)
-      allow(Canvas::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(true)
+      allow(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(true)
     end
 
     it 'establishes a default section with SIS Section ID' do
@@ -558,12 +558,12 @@ describe CanvasCsv::ProvideCourseSite do
     end
 
     it 'enrolls user as teacher in default section' do
-      expect(Canvas::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(true)
+      expect(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(true)
       subject.enroll_instructor
     end
 
     it 'raises exception if user enrollment fails' do
-      allow(Canvas::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(false)
+      allow(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(false)
       expect { subject.enroll_instructor }.to raise_error(RuntimeError, 'Course site was created but the teacher could not be added!')
     end
 

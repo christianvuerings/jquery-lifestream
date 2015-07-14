@@ -1,4 +1,4 @@
-module Canvas
+module CanvasLti
   module ExternalAppConfigurations
     extend self
     include ClassLogger

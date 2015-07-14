@@ -27,7 +27,7 @@ describe BackgroundJob do
 
     it 'returns nil if job state not found' do
       result = BackgroundJob.find('Canvas::Egrades.1383330151057-67f4b934525501cb')
-      result.should be_nil
+      expect(result).to be_nil
     end
   end
 end

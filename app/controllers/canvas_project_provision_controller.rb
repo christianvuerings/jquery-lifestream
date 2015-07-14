@@ -14,7 +14,7 @@ class CanvasProjectProvisionController < ApplicationController
   # POST /api/academics/canvas/project_provision/create.json
   def create_project_site
     raise Errors::BadRequestError, 'Project site name must be no more than 255 characters in length' if params['name'].length > 255
-    worker = Canvas::ProjectProvision.new(session['user_id'])
+    worker = CanvasLti::ProjectProvision.new(session['user_id'])
     course_details = worker.create_project(params['name'])
     render json: course_details.to_json
   end

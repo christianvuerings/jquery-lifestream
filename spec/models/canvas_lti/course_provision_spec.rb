@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-describe Canvas::CourseProvision do
+describe CanvasLti::CourseProvision do
   let(:instructor_id) { rand(99999).to_s }
   let(:user_id) { rand(99999).to_s }
   let(:canvas_admin_id) { rand(99999).to_s }
@@ -88,7 +86,7 @@ describe Canvas::CourseProvision do
       allow(subject).to receive(:group_by_used!) {|feed| feed}
     end
     let(:uid) { instructor_id }
-    subject { Canvas::CourseProvision.new(uid, canvas_course_id: canvas_course_id) }
+    subject { CanvasLti::CourseProvision.new(uid, canvas_course_id: canvas_course_id) }
     it 'should provide sections feed with canvas course info included' do
       feed = subject.get_feed
       expect(feed[:is_admin]).to eq false
@@ -127,7 +125,7 @@ describe Canvas::CourseProvision do
   end
 
   context 'when admin acting as a user' do
-    subject { Canvas::CourseProvision.new(uid, admin_acting_as: instructor_id) }
+    subject { CanvasLti::CourseProvision.new(uid, admin_acting_as: instructor_id) }
     context 'when a mischiefmaker' do
       let(:uid) { user_id }
       it 'should not succeed' do
@@ -148,7 +146,7 @@ describe Canvas::CourseProvision do
   end
 
   context 'when not admin acting as a user' do
-    subject { Canvas::CourseProvision.new(uid) }
+    subject { CanvasLti::CourseProvision.new(uid) }
     context 'when a normal user' do
       let(:uid) {user_id}
       it 'should have empty feed' do
@@ -179,7 +177,7 @@ describe Canvas::CourseProvision do
   end
 
   context 'when admin directly specifying CCNs' do
-    subject { Canvas::CourseProvision.new(uid, admin_by_ccns: by_ccns, admin_term_slug: by_ccns_semester) }
+    subject { CanvasLti::CourseProvision.new(uid, admin_by_ccns: by_ccns, admin_term_slug: by_ccns_semester) }
     context 'when a mischiefmaker' do
       let(:uid) { user_id }
       it 'should find nothing useful' do
@@ -201,7 +199,7 @@ describe Canvas::CourseProvision do
   end
 
   describe '#create_course_site' do
-    subject     { Canvas::CourseProvision.new(instructor_id) }
+    subject     { CanvasLti::CourseProvision.new(instructor_id) }
     let(:cpcs)  { instance_double CanvasCsv::ProvideCourseSite }
     before do
       allow(cpcs).to receive(:background).and_return(cpcs)
@@ -227,7 +225,7 @@ describe Canvas::CourseProvision do
   describe '#edit_sections' do
     let(:ccns_to_remove) { [random_ccn] }
     let(:ccns_to_add) { [random_ccn] }
-    subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
+    subject { CanvasLti::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
     context 'when user is authorized' do
       let(:cpcs) { instance_double CanvasCsv::ProvideCourseSite }
       let(:course_info) { {canvasCourseId: canvas_course_id} }
@@ -248,14 +246,14 @@ describe Canvas::CourseProvision do
 
   describe '#get_course_info' do
     context 'when canvas_course_id not present' do
-      subject { Canvas::CourseProvision.new(instructor_id) }
+      subject { CanvasLti::CourseProvision.new(instructor_id) }
       it 'should raise an error' do
         expect { subject.get_course_info }.to raise_error(RuntimeError, 'canvas_course_id option not present')
       end
     end
 
     context 'when managing sections for existing course site' do
-      subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
+      subject { CanvasLti::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
       before do
         allow_any_instance_of(Canvas::Course).to receive(:course).and_return(course_hash)
         allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
@@ -287,7 +285,7 @@ describe Canvas::CourseProvision do
   end
 
   describe '#find_nonteaching_site_sections' do
-    subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
+    subject { CanvasLti::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
     it 'should return Canvas section IDs that are not in the list of authorized campus sections' do
       missing_sections = [{term_yr: '2013', term_cd: 'C', ccn: random_ccn}]
       fake_formatter = instance_double(MyAcademics::Teaching)
@@ -301,7 +299,7 @@ describe Canvas::CourseProvision do
   end
 
   describe '#merge_non_teaching_site_sections' do
-    subject { Canvas::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
+    subject { CanvasLti::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
     before { subject.merge_non_teaching_site_sections(teaching_semesters, non_teaching_sections) }
 
     context 'non-teaching section in existing course' do
@@ -418,16 +416,16 @@ describe Canvas::CourseProvision do
       {
         :teachingSemesters => teachingSemesters,
         :canvas_course => {
-          :term => {:term_yr => '2015', :term_cd => 'B', :name => "Spring 2015"},
+          :term => {:term_yr => '2015', :term_cd => 'B', :name => 'Spring 2015'},
           :officialSections => [
-            {:term_yr=>"2015", :term_cd=>"B", :ccn=>"14932"},
-            {:term_yr=>"2015", :term_cd=>"B", :ccn=>"23722"},
-            {:term_yr=>"2015", :term_cd=>"B", :ccn=>"23723"},
+            {:term_yr=>'2015', :term_cd=>'B', :ccn=>'14932'},
+            {:term_yr=>'2015', :term_cd=>'B', :ccn=>'23722'},
+            {:term_yr=>'2015', :term_cd=>'B', :ccn=>'23723'},
           ]
         }
       }
     end
-    subject { Canvas::CourseProvision.new(user_id, canvas_course_id: canvas_course_id) }
+    subject { CanvasLti::CourseProvision.new(user_id, canvas_course_id: canvas_course_id) }
 
     it 'sorts courses with those associated with course site provided first' do
       result = subject.group_by_used!(feed)
@@ -475,7 +473,7 @@ describe Canvas::CourseProvision do
 
     it 'should raise exception if official course section in feed does not match course term' do
       feed[:canvas_course][:officialSections][1][:term_cd] = 'C'
-      expect { result = subject.group_by_used!(feed) }.to raise_error(RuntimeError, "Invalid term specified for official section with CCN '23722'")
+      expect { subject.group_by_used!(feed) }.to raise_error(RuntimeError, 'Invalid term specified for official section with CCN \'23722\'')
     end
   end
 

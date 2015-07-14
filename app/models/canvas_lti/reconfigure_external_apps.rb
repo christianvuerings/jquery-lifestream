@@ -1,7 +1,7 @@
-module Canvas
+module CanvasLti
   class ReconfigureExternalApps
     include ClassLogger
-    include Canvas::ExternalAppConfigurations
+    include CanvasLti::ExternalAppConfigurations
 
     # This resets the existing tool configurations of a hard-coded list of Canvas servers to point
     # to non-production LTI providers, but using the configurations of the production Junction server as a starting
@@ -22,15 +22,15 @@ module Canvas
               current_app_host = parsed_url[:app_host]
               app_code = parsed_url[:app_code]
               if current_app_host == calcentral_host
-                logger.debug("App #{app_code} on #{canvas_host} already points to #{calcentral_host}")
+                logger.debug "App #{app_code} on #{canvas_host} already points to #{calcentral_host}"
               else
                 if (xml_name = app_code_to_xml_name(app_code))
-                  logger.warn("Resetting app #{app_code} on #{canvas_host} to #{calcentral_host}")
+                  logger.warn "Resetting app #{app_code} on #{canvas_host} to #{calcentral_host}"
                   tool_id = tool_config['id']
                   app_config_url = "#{reachable_xml_host}/canvas/#{xml_name}.xml?app_host=#{calcentral_host}"
                   proxy.reset_external_tool_config_by_url(tool_id, app_config_url)
                 else
-                  logger.warn("No known XML for app #{app_code} on #{canvas_host}, skipping")
+                  logger.warn "No known XML for app #{app_code} on #{canvas_host}, skipping"
                 end
               end
             end
@@ -53,7 +53,7 @@ module Canvas
         existing_host = parse_host_and_code_from_launch_url(existing_config['url'])[:app_host]
         log_message.concat(", provider from #{existing_host} to #{app_host}") if existing_host != app_host
         log_message.concat(", name from #{existing_config['name']} to #{app_definition[:app_name]}") if existing_config['name'] != app_definition[:app_name]
-        logger.warn(log_message)
+        logger.warn log_message
         if (response = external_tools_proxy.reset_external_tool_by_xml(tool_id, xml_string))
           {
             app_id: tool_id,
@@ -66,7 +66,7 @@ module Canvas
           }
         end
       else
-        logger.warn("Adding configuration for #{app_code} to account #{app_account}")
+        logger.warn "Adding configuration for #{app_code} to account #{app_account}"
         if (response = external_tools_proxy.create_external_tool_by_xml(app_definition[:app_name], xml_string))
           {
             app_id: response['id'],
@@ -107,7 +107,7 @@ module Canvas
       lti_app_definitions.each_key do |app_code|
         results[app_code] = configure_external_app_by_xml(app_provider_host, app_code)
       end
-      logger.warn("Reset all defined LTI apps: #{results}")
+      logger.warn "Reset all defined LTI apps: #{results}"
       results
     end
 

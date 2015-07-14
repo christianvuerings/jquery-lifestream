@@ -1,4 +1,4 @@
-module Canvas
+module CanvasLti
   require 'ims/lti'
   require 'ims/lti/extensions'
   require 'oauth/request_proxy/rack_request'
@@ -21,7 +21,7 @@ module Canvas
     # Check timestamp and nonce, and then try to parse the request.
     def validate_tool_provider(request)
       params = request.request_parameters
-      logger.debug("LTI params = #{params.inspect}")
+      logger.debug "LTI params = #{params.inspect}"
       current_time = Time.new
       timestamp = params['oauth_timestamp']
       if !timestamp.blank?
@@ -40,17 +40,17 @@ module Canvas
                   lti.valid_request?(request)
                   return lti
                 rescue => e
-                  logger.warn("LTI request was invalid: #{e.message}")
+                  logger.warn "LTI request was invalid: #{e.message}"
                 end
               else
-                logger.warn("LTI unrecognized consumer key")
+                logger.warn 'LTI unrecognized consumer key'
               end
             else
-              logger.warn("LTI repeated nonce = #{params['oauth_nonce']}")
+              logger.warn "LTI repeated nonce = #{params['oauth_nonce']}"
             end
           end
         else
-          logger.warn("LTI timestamp outdated: raw = #{params['oauth_timestamp']}, parsed = #{timestamp}")
+          logger.warn "LTI timestamp outdated: raw = #{params['oauth_timestamp']}, parsed = #{timestamp}"
         end
       end
       nil
