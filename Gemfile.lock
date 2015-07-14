@@ -419,7 +419,6 @@ GEM
     torquebox-web (3.1.2-java)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    vcr (2.9.3)
     watir-webdriver (0.6.11)
       selenium-webdriver (>= 2.18.0)
     webmock (1.20.4)
@@ -495,5 +494,4 @@ DEPENDENCIES
   torquebox (~> 3.1.2)
   torquebox-messaging (~> 3.1.2)
   torquebox-server (~> 3.1.2)
-  vcr (~> 2.9.3)
   webmock (~> 1.20.4)
