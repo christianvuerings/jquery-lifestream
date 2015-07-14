@@ -134,7 +134,7 @@ describe 'MyTasks' do
     response.should == {}
   end
 
-  # Will fail in this case since the task_list_id won't match what's recorded in vcr, nor is a valid "remote" task id.
+  # Will fail in this case since the task_list_id won't match any fixtures, nor is a valid "remote" task id.
   it 'should fail google update_tasks with a remote proxy error' do
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::UpdateTask.stub(:new).and_return(@fake_google_update_task_proxy)

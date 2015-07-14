@@ -9,10 +9,7 @@ describe Canvas::Proxy do
     @client = Canvas::Proxy.new(:user_id => @user_id)
   end
 
-  after do
-    # Making sure we return cassettes back to the store after we're done.
-    VCR.eject_cassette
-  end
+  after { WebMock.reset! }
 
   it "should get real user activity feed using the Tammi account", :testext => true do
     proxy = Canvas::UserActivityStream.new(

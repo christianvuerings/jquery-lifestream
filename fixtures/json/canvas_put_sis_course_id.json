@@ -1,0 +1,16 @@
+{
+  "account_id": 90242,
+  "course_code": "RAYTC Bio Disc 2",
+  "default_view": "feed",
+  "id": 1093165,
+  "name": "Ray-Test No SIS_ID",
+  "start_at": null,
+  "end_at": null,
+  "public_syllabus": false,
+  "hide_final_grades": false,
+  "calendar": {
+    "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_D6pGKi37wFx34xg0Fr8iPjmegNJ8J5OB97CltJ5x.ics"
+  },
+  "sis_course_id": "C:1093165",
+  "workflow_state": "unpublished"
+}

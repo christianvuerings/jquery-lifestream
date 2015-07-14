@@ -1,0 +1,33 @@
+{
+  "consumer_key": "xxx",
+  "created_at": "2013-08-05T22:22:15Z",
+  "description": "Browse and search official roster photos",
+  "domain": null,
+  "id": 24961,
+  "name": "Roster Photos",
+  "updated_at": "2013-11-27T21:44:17Z",
+  "url": "https://cc-dev.example.com/canvas/embedded/rosters",
+  "privacy_level": "public",
+  "custom_fields": {
+
+  },
+  "workflow_state": "public",
+  "vendor_help_link": null,
+  "user_navigation": null,
+  "course_navigation": {
+    "url": "https://cc-dev.example.com/canvas/embedded/rosters",
+    "text": "Roster Photos",
+    "visibility": "admins",
+    "default": "enabled",
+    "enabled": "true",
+    "label": "Roster Photos",
+    "selection_width": 800,
+    "selection_height": 400,
+    "icon_url": ""
+  },
+  "account_navigation": null,
+  "resource_selection": null,
+  "editor_button": null,
+  "homework_submission": null,
+  "icon_url": ""
+}

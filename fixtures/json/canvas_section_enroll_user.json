@@ -1,0 +1,15 @@
+{
+  "associated_user_id": null,
+  "course_id": 1161161,
+  "course_section_id": 1311313,
+  "id": 20618200,
+  "limit_privileges_to_course_section": false,
+  "root_account_id": 90242,
+  "type": "TaEnrollment",
+  "updated_at": "2013-12-06T18:07:13Z",
+  "user_id": 1234567,
+  "enrollment_state": "active",
+  "role": "TaEnrollment",
+  "last_activity_at": null,
+  "html_url": "https://ucberkeley.beta.instructure.com/courses/1161161/users/1234567"
+}

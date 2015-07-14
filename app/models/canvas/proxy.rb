@@ -4,10 +4,18 @@ module Canvas
   class Proxy < BaseProxy
     include ClassLogger, SafeJsonParser
     include Cache::UserCacheExpiry
+    include Proxies::Mockable
 
     attr_accessor :client
     APP_ID = "Canvas"
     APP_NAME = "bCourses"
+
+    def self.new(*args, &blk)
+      # Initialize mocks only after subclass initialization has set instance variables needed for URL matching.
+      proxy = super
+      proxy.initialize_mocks if proxy.fake
+      proxy
+    end
 
     def initialize(options = {})
       super(Settings.canvas_proxy, options)
@@ -24,18 +32,18 @@ module Canvas
       @client = Signet::OAuth2::Client.new(:access_token => access_token)
     end
 
-    def request(api_path, vcr_id = "", fetch_options = {})
+    def request(api_path, fetch_options = {})
       self.class.smart_fetch_from_cache(
         {id: @uid,
          user_message_on_exception: "Remote server unreachable",
          return_nil_on_generic_error: true}) do
-        request_internal(api_path, vcr_id, fetch_options)
+        request_internal(api_path, fetch_options)
       end
     end
 
-    def request_uncached(api_path, vcr_id = "", fetch_options = {})
+    def request_uncached(api_path, fetch_options = {})
       begin
-        request_internal(api_path, vcr_id, fetch_options)
+        request_internal(api_path, fetch_options)
       rescue => e
         self.class.handle_exception(e, self.class.cache_key(@uid), {
           id: @uid,
@@ -45,29 +53,27 @@ module Canvas
       end
     end
 
-    def request_internal(api_path, vcr_id = "", fetch_options = {})
+    def request_internal(api_path, fetch_options = {})
       fetch_options.reverse_merge!(
         :method => :get,
-        :uri => "#{@settings.url_root}/api/v1/#{api_path}"
+        :uri => "#{api_root}/#{api_path}"
       )
       logger.info "Making request with @fake = #{@fake}, options = #{fetch_options}, cache expiration #{self.class.expires_in}"
       ActiveSupport::Notifications.instrument('proxy', {url: fetch_options[:uri], class: self.class}) do
-        FakeableProxy.wrap_request("#{APP_ID}#{vcr_id}", @fake) do
-          if (nonstandard_connection = fetch_options[:non_oauth_connection])
-            response = nonstandard_connection.get(fetch_options[:uri])
-          else
-            response = @client.fetch_protected_resource(fetch_options)
+        if (nonstandard_connection = fetch_options[:non_oauth_connection])
+          response = nonstandard_connection.get(fetch_options[:uri])
+        else
+          response = @client.fetch_protected_resource(fetch_options)
+        end
+        # Canvas proxy returns nil for error response.
+        if response.status >= 400
+          if existence_check && response.status == 404
+            logger.debug("404 status returned for URL '#{fetch_options[:uri]}', UID #{@uid}")
+            return nil
           end
-          # Canvas proxy returns nil for error response.
-          if response.status >= 400
-            if existence_check && response.status == 404
-              logger.debug("404 status returned for URL '#{fetch_options[:uri]}', UID #{@uid}")
-              return nil
-            end
-            raise Errors::ProxyError.new('Connection failed', response: response, url: fetch_options[:uri], uid: @uid)
-          else
-            response
-          end
+          raise Errors::ProxyError.new('Connection failed', response: response, url: fetch_options[:uri], uid: @uid)
+        else
+          response
         end
       end
     end
@@ -76,8 +82,8 @@ module Canvas
       user_id && has_account?(user_id)
     end
 
-    def url_root
-      @settings.url_root
+    def api_root
+      "#{@settings.url_root}/api/v1"
     end
 
     def self.has_account?(user_id)
@@ -151,5 +157,14 @@ module Canvas
       false
     end
 
+    private
+
+    def mock_request
+      super.merge(uri_matching: "#{api_root}/#{request_path}")
+    end
+
+    def request_path
+      ''
+    end
   end
 end

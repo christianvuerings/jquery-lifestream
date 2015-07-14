@@ -6,10 +6,7 @@ describe 'GoogleEventsList' do
     @random_id = rand(999999).to_s
   end
 
-  after do
-    # Making sure we return cassettes back to the store after we're done.
-    VCR.eject_cassette
-  end
+  after { WebMock.reset! }
 
   it "should get real events list using the Tammi account", :testext => true do
     proxy = GoogleApps::EventsList.new(

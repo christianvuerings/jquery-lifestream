@@ -128,9 +128,9 @@ Spork.prefork do
       Rails.cache.clear
     end
 
-    #Eject casettes after each group of tests.
+    #Reset WebMock after each group of tests.
     config.after :each do
-      VCR.eject_cassette
+      WebMock.reset!
     end
 
     # Include some helper functions for the specs.

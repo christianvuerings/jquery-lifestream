@@ -1,0 +1,16 @@
+[
+  {
+    "account_id": 90242,
+    "id": 2963066,
+    "sis_user_id": "211159",
+    "unique_id": "211159",
+    "user_id": 3057506
+  },
+  {
+    "account_id": 90242,
+    "id": 4647947,
+    "sis_user_id": null,
+    "unique_id": "raydavis-test",
+    "user_id": 3057506
+  }
+]

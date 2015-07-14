@@ -33,14 +33,19 @@ module Canvas
         :method => :post,
         :body => request_params,
       }
-      response = request_uncached("accounts/#{account_id}/courses", "_course_creation", request_options)
+      response = request_uncached "accounts/#{account_id}/courses", request_options
     end
 
     private
 
     def request_course
-      response = request_uncached("courses/#{@canvas_course_id}?include[]=term", "_course")
+      response = request_uncached "courses/#{@canvas_course_id}?include[]=term"
       return response ? safe_json(response.body) : nil
+    end
+
+    def mock_interactions
+      on_request(uri_matching: "courses/#{@canvas_course_id}?include[]=term")
+        .respond_with_file('fixtures', 'json', 'canvas_course.json')
     end
 
   end

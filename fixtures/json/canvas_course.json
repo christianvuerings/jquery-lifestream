@@ -1,0 +1,29 @@
+{
+  "account_id": 128847,
+  "course_code": "STAT 5432 Fa2013",
+  "default_view": "feed",
+  "id": 1121,
+  "name": "Whither Statistics",
+  "start_at": null,
+  "end_at": null,
+  "public_syllabus": false,
+  "storage_quota_mb": 1024,
+  "hide_final_grades": false,
+  "term": {
+    "end_at": null,
+    "id": 1818,
+    "name": "Default Term",
+    "start_at": null,
+    "workflow_state": "active",
+    "sis_term_id": "TERM:2013-D"
+  },
+  "apply_assignment_group_weights": false,
+  "calendar": {
+    "ics": "https://ucberkeley.test.instructure.com/feeds/calendars/course_xyz.ics"
+  },
+  "sis_course_id": "CRS:STAT-5432-2013-D-757999",
+  "enrollments": [
+
+  ],
+  "workflow_state": "available"
+}

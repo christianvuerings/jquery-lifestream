@@ -44,7 +44,7 @@ module Canvas
         :method => :post,
         :body => request_params,
       }
-      response = request_uncached("sections/#{@section_id}/enrollments", "_section_enroll_user", request_options)
+      response = request_uncached request_path, request_options
       JSON.parse(response.body)
     end
 
@@ -56,15 +56,24 @@ module Canvas
       all_enrollments = []
       params = "per_page=100"
       while params do
-        response = request_uncached(
-          "sections/#{@section_id}/enrollments?#{params}",
-          "_section_enrollments"
-        )
+        response = request_uncached [request_path, params].join('?')
         break unless (response && response.status == 200 && enrollments_list = safe_json(response.body))
         all_enrollments.concat(enrollments_list)
         params = next_page_params(response)
       end
       all_enrollments
+    end
+
+    def mock_interactions
+      on_request(uri_matching: "#{api_root}/#{request_path}", method: :get).
+        respond_with_file('fixtures', 'json', 'canvas_section_enrollments.json')
+
+      on_request(uri_matching: "#{api_root}/#{request_path}", method: :post).
+        respond_with_file('fixtures', 'json', 'canvas_section_enroll_user.json')
+    end
+
+    def request_path
+      "sections/#{@section_id}/enrollments"
     end
 
   end

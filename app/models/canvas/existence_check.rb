@@ -2,7 +2,7 @@ module Canvas
   class ExistenceCheck < Proxy
 
     def account_defined?(sis_account_id)
-      response = request_uncached("accounts/sis_account_id:#{sis_account_id}", '_account')
+      response = request_uncached("accounts/sis_account_id:#{sis_account_id}")
       response.present?
     end
 
@@ -20,5 +20,17 @@ module Canvas
       true
     end
 
+    private
+
+    def mock_interactions
+      on_request(uri_matching: "#{api_root}/accounts/sis_account_id")
+        .respond_with_file('fixtures', 'json', 'canvas_admin.json')
+
+      on_request(uri_matching: "#{api_root}/accounts/sis_course_id")
+        .respond_with_file('fixtures', 'json', 'canvas_course.json')
+
+      on_request(uri_matching: "#{api_root}/accounts/sis_section_id")
+        .respond_with_file('fixtures', 'json', 'canvas_section.json')
+    end
   end
 end
