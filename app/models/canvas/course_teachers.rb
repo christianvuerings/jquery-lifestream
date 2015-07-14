@@ -13,16 +13,23 @@ module Canvas
         all_teachers = []
         params = "enrollment_type=teacher&include[]=enrollments&per_page=30"
         while params do
-          response = request_uncached(
-            "courses/#{@course_id}/users?#{params}",
-            "_course_teachers"
-          )
+          response = request_uncached "#{request_path}?#{params}"
           break unless (response && response.status == 200 && teachers_list = safe_json(response.body))
           all_teachers.concat(teachers_list)
           params = next_page_params(response)
         end
         all_teachers
       end
+    end
+
+    private
+
+    def mock_json
+      read_file('fixtures', 'json', 'canvas_course_teachers.json')
+    end
+
+    def request_path
+      "courses/#{@course_id}/users"
     end
 
   end

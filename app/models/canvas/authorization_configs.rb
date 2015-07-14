@@ -15,10 +15,7 @@ module Canvas
     def authorization_configs
       all_configs = []
       # This API request does not return the 'Link' header enabling pagination
-      response = request_uncached(
-        "accounts/#{settings.account_id}/account_authorization_configs",
-        "_account_authorization_configs"
-      )
+      response = request_uncached request_path
       if response && response.status == 200 && list = safe_json(response.body)
         all_configs.concat(list)
       end
@@ -28,12 +25,24 @@ module Canvas
     # Update
     def reset_authorization_config(config_id, config_hash)
       params = config_hash.to_query
-      canvas_url = "accounts/#{settings.account_id}/account_authorization_configs/#{config_id}?#{params}"
-      response = request_uncached(canvas_url, '_reset_authorization_config', {
-        method: :put
-      })
+      canvas_url = "#{request_path}/#{config_id}?#{params}"
+      response = request_uncached(canvas_url, method: :put)
       return safe_json(response.body) if response && response.status == 200
       false
+    end
+
+    private
+
+    def mock_interactions
+      on_request(uri_matching: "#{api_root}/#{request_path}", method: :get)
+        .respond_with_file('fixtures', 'json', 'canvas_account_authorization_configs.json')
+
+      on_request(uri_matching: "#{api_root}/#{request_path}", method: :put)
+        .respond_with_file('fixtures', 'json', 'canvas_reset_authorization_config.json')
+    end
+
+    def request_path
+      "accounts/#{settings.account_id}/account_authorization_configs"
     end
 
   end

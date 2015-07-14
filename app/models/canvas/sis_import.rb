@@ -18,40 +18,40 @@ module Canvas
     end
 
     def import_all_term_enrollments(term_id, csv_file_path)
-      import_with_check(csv_file_path, '_sis_import_enrollments')
+      import_with_check(csv_file_path)
     end
 
     def import_courses(csv_file_path)
-      import_with_check(csv_file_path, '_sis_import_courses')
+      import_with_check(csv_file_path)
     end
 
     def import_enrollments(csv_file_path, extra_params = '')
-      import_with_check(csv_file_path, '_sis_import_enrollments', extra_params)
+      import_with_check(csv_file_path, extra_params)
     end
 
     def import_sections(csv_file_path)
-      import_with_check(csv_file_path, '_sis_import_sections')
+      import_with_check(csv_file_path)
     end
 
     def import_users(csv_file_path, extra_params = '')
-      import_with_check(csv_file_path, '_sis_import_users', extra_params)
+      import_with_check(csv_file_path, extra_params)
     end
 
     def import_batch_term_enrollments(term_id, csv_file_path)
-      import_with_check(csv_file_path, '_sis_import_enrollments', "&batch_mode=1&batch_mode_term_id=sis_term_id:#{term_id}")
+      import_with_check(csv_file_path, "&batch_mode=1&batch_mode_term_id=sis_term_id:#{term_id}")
     end
 
-    def import_with_check(csv_file_path, vcr_id, extra_params = '')
+    def import_with_check(csv_file_path, extra_params = '')
       if @dry_run_import.present?
         logger.warn("DRY RUN MODE: Would import CSV file #{csv_file_path}")
         true
       else
-        response = post_sis_import(csv_file_path, vcr_id, extra_params)
+        response = post_sis_import(csv_file_path, extra_params)
         import_successful?(response)
       end
     end
 
-    def post_sis_import(csv_file_path, vcr_id, extra_params)
+    def post_sis_import(csv_file_path, extra_params)
       upload_body = {attachment: Faraday::UploadIO.new(csv_file_path, 'text/csv')}
       url = "accounts/#{settings.account_id}/sis_imports.json?import_type=instructure_csv&extension=csv#{extra_params}"
       callstack = caller(0).inject([]){
@@ -59,7 +59,7 @@ module Canvas
         list << $1
       }
       ActiveSupport::Notifications.instrument('proxy', { url: url, class: self.class, callstack: callstack[0..4] }) do
-        request_uncached(url, vcr_id, {
+        request_uncached(url, {
           method: :post,
           connection: @multipart_conn,
           body: upload_body
@@ -76,7 +76,7 @@ module Canvas
     def generate_course_sis_id(canvas_course_id)
       sis_course_id = "C:#{canvas_course_id}"
       url = "courses/#{canvas_course_id}?course[sis_course_id]=#{sis_course_id}"
-      request_uncached(url, '_put_sis_course_id', {
+      request_uncached(url, {
         method: :put
       })
     end
@@ -89,7 +89,7 @@ module Canvas
       sleep 2
       begin
         Retriable.retriable(:on => Canvas::SisImport::ReportNotReadyException, :tries => 150, :interval => 20) do
-          response = request_uncached(url, '_sis_import_status', {
+          response = request_uncached(url, {
             method: :get
           })
           return false unless (response && response.status == 200 && json = safe_json(response.body))
@@ -137,6 +137,16 @@ module Canvas
 
     class ReportNotReadyException < Exception
 
+    end
+
+    private
+
+    def mock_interactions
+      on_request(uri_matching: "#{api_root}/courses/", method: :put)
+        .respond_with_file('fixtures', 'json', 'canvas_put_sis_course_id.json')
+
+      on_request(uri_matching: "#{api_root}/accounts/#{settings.account_id}/sis_imports/")
+        .respond_with_file('fixtures', 'json', 'canvas_sis_import_status.json')
     end
 
   end

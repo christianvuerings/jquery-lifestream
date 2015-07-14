@@ -1,0 +1,52 @@
+[
+  {
+    "id": 3,
+    "name": "Ray Davis",
+    "sortable_name": "Davis, Ray",
+    "short_name": "Ray Davis",
+    "sis_user_id": "211159",
+    "sis_login_id": "211159",
+    "login_id": "211159",
+    "enrollments": [
+      {
+        "associated_user_id": null,
+        "course_id": 767330,
+        "course_section_id": 20,
+        "id": 1974,
+        "limit_privileges_to_course_section": false,
+        "root_account_id": 1,
+        "type": "TeacherEnrollment",
+        "updated_at": "2013-07-17T13:46:19-06:00",
+        "user_id": 3,
+        "enrollment_state": "active",
+        "role": "TeacherEnrollment",
+        "html_url": "http://localhost:3100/courses/767330/users/3"
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "name": "Bernadette Geuy",
+    "sortable_name": "Geuy, Bernadette",
+    "short_name": "Bernadette Geuy",
+    "sis_user_id": "238382",
+    "sis_login_id": "238382",
+    "login_id": "238382",
+    "enrollments": [
+      {
+        "associated_user_id": null,
+        "course_id": 767330,
+        "course_section_id": 59,
+        "id": 38,
+        "limit_privileges_to_course_section": false,
+        "root_account_id": 1,
+        "type": "TeacherEnrollment",
+        "updated_at": "2013-07-17T13:39:21-06:00",
+        "user_id": 71,
+        "enrollment_state": "active",
+        "role": "TeacherEnrollment",
+        "html_url": "http://localhost:3100/courses/767330/users/71"
+      }
+    ]
+  }
+]

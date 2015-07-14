@@ -53,7 +53,6 @@ describe Canvas::Course do
 
   context 'when creating course site' do
     let(:api_path) { "accounts/#{canvas_account_id}/courses" }
-    let(:vcr_id) { "_course_creation" }
     let(:course_name) { 'Project X' }
     let(:course_code) { 'Project X' }
     let(:canvas_account_id) { rand(999999).to_s }
@@ -87,12 +86,12 @@ describe Canvas::Course do
     let(:response_object) { double(status: 200, body: response_body.to_json)}
 
     it 'formats proper request' do
-      expect(subject).to receive(:request_uncached).with(api_path, vcr_id, request_options).and_return(response_object)
+      expect(subject).to receive(:request_uncached).with(api_path, request_options).and_return(response_object)
       result = subject.create(canvas_account_id, 'Project X', 'Project X', term_id, sis_course_id)
     end
 
     it 'returns response object' do
-      allow(subject).to receive(:request_uncached).with(api_path, vcr_id, request_options).and_return(response_object)
+      allow(subject).to receive(:request_uncached).with(api_path, request_options).and_return(response_object)
       result = subject.create(canvas_account_id, 'Project X', 'Project X', term_id, sis_course_id)
       expect(result.status).to eq 200
       course_details = JSON.parse(result.body)

@@ -1,0 +1,11 @@
+{
+  "id": 1845,
+  "name": "L & S",
+  "parent_account_id": 90242,
+  "root_account_id": 90242,
+  "default_storage_quota_mb": 1024,
+  "default_user_storage_quota_mb": 50,
+  "default_group_storage_quota_mb": 50,
+  "default_time_zone": "America/Denver",
+  "sis_account_id": "ACCT:L & S"
+}

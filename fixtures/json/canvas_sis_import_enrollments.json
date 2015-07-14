@@ -1,0 +1,11 @@
+{
+  "created_at": "2013-06-10T16:18:16-07:00",
+  "ended_at": null,
+  "updated_at": "2013-06-10T16:18:16-07:00",
+  "progress": 0,
+  "id": 5842632,
+  "workflow_state": "created",
+  "data": {
+    "import_type": "instructure_csv"
+  }
+}

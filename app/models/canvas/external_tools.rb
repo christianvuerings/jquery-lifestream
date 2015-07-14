@@ -47,10 +47,7 @@ module Canvas
       all_tools = []
       params = 'per_page=100'
       while params do
-        response = request_uncached(
-          "#{@api_root}/external_tools?#{params}",
-          "_external_tools"
-        )
+        response = request_uncached "#{@api_root}/external_tools?#{params}"
         break unless (response && response.status == 200 && list = safe_json(response.body))
         all_tools.concat(list)
         params = next_page_params(response)
@@ -60,9 +57,7 @@ module Canvas
 
     def reset_external_tool_config_by_url(tool_id, config_url)
       canvas_url = "#{@api_root}/external_tools/#{tool_id}?config_type=by_url&config_url=#{config_url}"
-      request_uncached(canvas_url, '_reset_external_tool', {
-        method: :put
-      })
+      request_uncached(canvas_url, method: :put)
     end
 
     def find_canvas_course_tab(tool_id)
@@ -86,7 +81,7 @@ module Canvas
           'shared_secret' => Settings.canvas_proxy.lti_secret
         }
       canvas_url = "#{@api_root}/external_tools"
-      response = request_uncached(canvas_url, '_create_external_tool', {
+      response = request_uncached(canvas_url, {
           method: :post,
           body: parameters
         })
@@ -101,7 +96,7 @@ module Canvas
           'shared_secret' => Settings.canvas_proxy.lti_secret
         }
       canvas_url = "#{@api_root}/external_tools/#{tool_id}"
-      response = request_uncached(canvas_url, '_reset_external_tool_by_xml', {
+      response = request_uncached(canvas_url, {
           method: :put,
           body: parameters
         })
@@ -112,7 +107,7 @@ module Canvas
     # LTI app configurations.
     def modify_external_tool(tool_id, parameters)
       canvas_url = "#{@api_root}/external_tools/#{tool_id}"
-      response = request_uncached(canvas_url, '_modify_external_tool', {
+      response = request_uncached(canvas_url, {
           method: :put,
           body: parameters
         })
@@ -153,7 +148,7 @@ module Canvas
     end
 
     def course_site_tab_list
-      response = request_uncached("#{@api_root}/tabs", '_course_site_tab_list', { method: :get })
+      response = request_uncached("#{@api_root}/tabs", { method: :get })
       response && response.status == 200 ? safe_json(response.body) : {}
     end
 
@@ -163,7 +158,7 @@ module Canvas
 
     def update_course_site_tab(tab_id, options)
       url = "#{@api_root}/tabs/#{tab_id}"
-      response = request_uncached(url, '_update_course_site_tab', options)
+      response = request_uncached(url, options)
       logger.info "Updated course site_tab with url=#{url} and options: #{options}"
       unless response && response.status == 200
         raise Errors::ProxyError.new("Failed to update tab #{tab_id} of Canvas:#{@api_root}", response: response, url: url, uid: @uid)
@@ -181,6 +176,20 @@ module Canvas
           'visibility' => 'public'
         }
       }
+    end
+
+    def mock_interactions
+      on_request(uri_matching: "#{@api_root}/external_tools", method: :get).
+        respond_with_file('fixtures', 'json', 'canvas_external_tools.json')
+
+      on_request(uri_matching: "#{@api_root}/external_tools", method: :post).
+        respond_with_file('fixtures', 'json', 'canvas_create_external_tool.json')
+
+      on_request(uri_matching: "#{@api_root}/external_tools", method: :put, query_including: {'config_type' => 'by_url'}).
+        respond_with_file('fixtures', 'json', 'canvas_reset_external_tool.json')
+
+      on_request(uri_matching: "#{@api_root}/external_tools", method: :put, query_including: {'config_type' => 'by_xml'}).
+        respond_with_file('fixtures', 'json', 'canvas_reset_external_tool_by_xml.json')
     end
 
   end

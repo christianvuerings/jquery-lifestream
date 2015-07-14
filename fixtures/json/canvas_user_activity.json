@@ -1,0 +1,494 @@
+[
+  {
+    "html_url": "https://ucberkeley.instructure.com/groups/78395/discussion_topics/1714988",
+    "message": "<p>let's talk!</p>",
+    "id": 43223063,
+    "context_type": "Group",
+    "updated_at": ":::SEVEN_MONTHS_AGO:::",
+    "created_at": ":::SEVEN_MONTHS_AGO:::",
+    "user_has_posted": null,
+    "discussion_topic_id": 1714988,
+    "require_initial_post": false,
+    "total_root_discussion_entries": 1,
+    "type": "DiscussionTopic",
+    "root_discussion_entries": [
+      {
+        "message": "<p>Can we discuss a document and do annotation?</p>",
+        "user": {
+          "user_name": "Jon Hays",
+          "user_id": 3075912
+        }
+      }
+    ],
+    "group_id": 78395,
+    "title": "Talk amongst yourselves"
+  },
+  {
+    "html_url": "http://ucberkeley.instructure.com/courses/833382/assignments/2765389",
+    "message": "\n  due: Jan 17 at 11:59pm\n",
+    "id": 43657016,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::SEVEN_MONTHS_AGO:::",
+    "notification_category": "Due Date",
+    "url": "http://ucberkeley.instructure.com/courses/833382/assignments/2765389",
+    "message_id": null,
+    "type": "Message",
+    "course_id": 833382,
+    "title": "Assignment Created - Assignment 12, Structure and Interpretation of Systems and Signals"
+  },
+  {
+    "html_url": "http://ucberkeley.instructure.com/courses/833382/assignments/2765310",
+    "message": "\n  due: Jan 18 at  4pm\n",
+    "id": 43655617,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "notification_category": "Due Date",
+    "url": "http://ucberkeley.instructure.com/courses/833382/assignments/2765310",
+    "message_id": null,
+    "type": "Message",
+    "course_id": 833382,
+    "title": "Assignment Created - Assignment 8, Structure and Interpretation of Systems and Signals"
+  },
+  {
+    "html_url": "http://ucberkeley.instructure.com/courses/833382/assignments/2765260",
+    "message": "\n  due: Jan 16 at  4pm\n",
+    "id": 43655336,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "notification_category": "Due Date",
+    "url": "http://ucberkeley.instructure.com/courses/833382/assignments/2765260",
+    "message_id": null,
+    "type": "Message",
+    "course_id": 833382,
+    "title": "Assignment Created - Week 11 Homework, Structure and Interpretation of Systems and Signals"
+  },
+  {
+    "html_url": "http://ucberkeley.instructure.com/courses/833382/assignments/2241829",
+    "message": "\n  due: Jan 16 at  4pm\n",
+    "id": 43654703,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "notification_category": "Due Date",
+    "url": "http://ucberkeley.instructure.com/courses/833382/assignments/2241829",
+    "message_id": null,
+    "type": "Message",
+    "course_id": 833382,
+    "title": "Assignment Due Date Changed: Week 10 Homework, Structure and Interpretation of Systems and Signals"
+  },
+  {
+    "html_url": "http://ucberkeley.instructure.com/courses/833382/assignments/2241829",
+    "message": "\n  due: Jan 18 at  4pm\n",
+    "id": 43652561,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "notification_category": "Due Date",
+    "url": "http://ucberkeley.instructure.com/courses/833382/assignments/2241829",
+    "message_id": null,
+    "type": "Message",
+    "course_id": 833382,
+    "title": "Assignment Due Date Changed: Week 10 Homework, Structure and Interpretation of Systems and Signals"
+  },
+  {
+    "html_url": "http://ucberkeley.instructure.com/courses/833384/assignments/2764739",
+    "message": "\n  due: Jan 17 at  3:59pm\n",
+    "id": 43641818,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "notification_category": "Due Date",
+    "url": "http://ucberkeley.instructure.com/courses/833384/assignments/2764739",
+    "message_id": null,
+    "type": "Message",
+    "course_id": 833384,
+    "title": "Assignment Created - annotated Bibliography, A Comparative Survey of Race and Ethnicity in the United States"
+  },
+  {
+    "html_url": "http://ucberkeley.instructure.com/courses/833384/assignments/2555914",
+    "message": "\n  due: Jan 22 at 11:59pm\n",
+    "id": 43641442,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "notification_category": "Due Date",
+    "url": "http://ucberkeley.instructure.com/courses/833384/assignments/2555914",
+    "message_id": null,
+    "type": "Message",
+    "course_id": 833384,
+    "title": "Assignment Due Date Changed: Read Chapter 5, A Comparative Survey of Race and Ethnicity in the United States"
+  },
+  {
+    "html_url": "http://ucberkeley.instructure.com/courses/833382/assignments/2241828",
+    "message": "\n  due: Jan 15 at  4pm\n",
+    "id": 43641327,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "notification_category": "Due Date",
+    "url": "http://ucberkeley.instructure.com/courses/833382/assignments/2241828",
+    "message_id": null,
+    "type": "Message",
+    "course_id": 833382,
+    "title": "Assignment Due Date Changed: Week 9 Homework, Structure and Interpretation of Systems and Signals"
+  },
+  {
+    "html_url": "http://ucberkeley.instructure.com/courses/833382/assignments",
+    "message": "\nThe grading policy for the course, Structure and Interpretation of Systems and Signals has changed.\n\nGrading is based on the weighted total for each assignment group:\n- Assignments: 10%\n",
+    "id": 43399490,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "notification_category": "Grading Policies",
+    "url": "http://ucberkeley.instructure.com/courses/833382/assignments",
+    "message_id": null,
+    "type": "Message",
+    "course_id": 833382,
+    "title": "Grade Weight Changed: Structure and Interpretation of Systems and Signals"
+  },
+  {
+    "html_url": "http://ucberkeley.instructure.com/courses/833382/assignments/2238723",
+    "message": "  ",
+    "id": 43397985,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "notification_category": "Course Content",
+    "url": "http://ucberkeley.instructure.com/courses/833382/assignments/2238723",
+    "message_id": null,
+    "type": "Message",
+    "course_id": 833382,
+    "title": "Assignment Changed: Week 1 Homework, Structure and Interpretation of Systems and Signals"
+  },
+  {
+    "html_url": "https://ucberkeley.instructure.com/courses/833382/assignments/2238723/submissions/3357913",
+    "assignment_id": 2238723,
+    "message": "First, some instructor-added text. You can view the submission here: http://example.com?p=123 Oski Bear has just turned in a late submission for Tibullus paper in the course Biology for Poets You can view the submission here: https://ucberkeley.instructure.com/courses/832071/assignments/2473657/submissions/3075923",
+    "id": 43395837,
+    "grade": "10",
+    "workflow_state": "graded",
+    "assignment": {
+      "due_at": "2012-08-23T16:00:00-07:00",
+      "position": 1,
+      "html_url": "https://ucberkeley.instructure.com/courses/833382/assignments/2238723",
+      "group_category_id": null,
+      "id": 2238723,
+      "submission_types": [
+        "online_upload"
+      ],
+      "description": "<p><span>Exercises 3, 8, and 12 in Appendix A of </span><a href=\"http://leevaraiya.org/\">Lee &amp; Varaiya</a></p>",
+      "muted": false,
+      "grading_type": "points",
+      "name": "Week 1 Homework",
+      "title": "Week 1 Homework",
+      "assignment_group_id": 533512,
+      "course_id": 833382
+    },
+    "context_type": "Course",
+    "submitted_at": null,
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "submission_type": null,
+    "url": null,
+    "user_id": 3357913,
+    "preview_url": "https://ucberkeley.instructure.com/courses/833382/assignments/2238723/submissions/3357913?preview=1",
+    "user": {
+      "short_name": "Tammi Chang",
+      "id": 3357913,
+      "sortable_name": "Chang, Tammi",
+      "avatar_url": "https://secure.gravatar.com/avatar/b63c1553cb24e97d43612618975ebef6?s=50&d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png",
+      "name": "Tammi Chang"
+    },
+    "grade_matches_current_submission": true,
+    "grader_id": 3075912,
+    "course": {
+      "html_url": "https://ucberkeley.instructure.com/courses/833382",
+      "id": 833382,
+      "end_at": "2013-05-31T23:55:00-07:00",
+      "hide_final_grades": false,
+      "account_id": 90242,
+      "calendar": {
+        "ics": "https://ucberkeley.instructure.com/feeds/calendars/course_SMIaFMD5gDiViGXUX73oA8pfABQwRI94uFIoOvbT.ics"
+      },
+      "start_at": "2012-10-04T00:00:00-07:00",
+      "name": "Structure and Interpretation of Systems and Signals",
+      "default_view": "feed",
+      "course_code": "EE 20N"
+    },
+    "type": "Submission",
+    "attempt": null,
+    "body": null,
+    "score": 10,
+    "submission_comments": [
+
+    ],
+    "course_id": 833382,
+    "title": "Week 1 Homework"
+  },
+  {
+    "html_url": "http://ucberkeley.instructure.com/courses/833382/assignments/2241829",
+    "message": "\n  due: Dec 26, 2012 at  4pm\n",
+    "id": 43397757,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "notification_category": "Due Date",
+    "url": "http://ucberkeley.instructure.com/courses/833382/assignments/2241829",
+    "message_id": null,
+    "type": "Message",
+    "course_id": 833382,
+    "title": "Assignment Due Date Changed: Week 10 Homework, Structure and Interpretation of Systems and Signals"
+  },
+  {
+    "html_url": "https://ucberkeley.instructure.com/courses/833382/announcements/1719550",
+    "announcement_id": 1719550,
+    "message": "<p>get at it</p>",
+    "id": 43395596,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "user_has_posted": null,
+    "require_initial_post": false,
+    "total_root_discussion_entries": 0,
+    "type": "Announcement",
+    "root_discussion_entries": [
+
+    ],
+    "course_id": 833382,
+    "title": "Time to do some work!"
+  },
+  {
+    "html_url": "https://ucberkeley.instructure.com/conversations/1053557",
+    "participant_count": 2,
+    "message": null,
+    "id": 40968160,
+    "conversation_id": 1053557,
+    "private": true,
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "type": "Conversation",
+    "title": null
+  },
+  {
+    "html_url": "https://ucberkeley.instructure.com/groups/78395/conferences/18843",
+    "message": "First, some instructor-written text. Click here to view the assignment: https://ucberkeley.instructure.com/courses/832071/assignments/3043635 A new assignment has been created for your course, Biology for Poets Report to STC due: Apr 1 at 11:59pm Click here to view the assignment: https://ucberkeley.instructure.com/courses/832071/assignments/3043635",
+    "id": 43225861,
+    "context_type": "Group",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "web_conference_id": 18843,
+    "type": "WebConference",
+    "group_id": 78395,
+    "title": "Group Activity Test Conference"
+  },
+  {
+    "html_url": "https://ucberkeley.instructure.com/groups/78395/announcements/1715011",
+    "announcement_id": 1715011,
+    "message": "<p>we need an announcement for groups too.</p>",
+    "id": 43224231,
+    "context_type": "Group",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "user_has_posted": null,
+    "require_initial_post": null,
+    "total_root_discussion_entries": 0,
+    "type": "Announcement",
+    "root_discussion_entries": [
+
+    ],
+    "group_id": 78395,
+    "title": "Announce this!"
+  },
+  {
+    "html_url": "http://ucberkeley.instructure.com/courses/833384/assignments/2690437",
+    "message": "\n  due: Jan 9 at 11:59pm\n",
+    "id": 42508322,
+    "context_type": "Course",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "notification_category": "Due Date",
+    "url": "http://ucberkeley.instructure.com/courses/833384/assignments/2690437",
+    "message_id": null,
+    "type": "Message",
+    "course_id": 833384,
+    "title": "Assignment Created - Annotated Bibliography, A Comparative Survey of Race and Ethnicity in the United States"
+  },
+  {
+    "html_url": "https://ucberkeley.instructure.com/courses/833384/assignments/2546733/submissions/3357913",
+    "assignment_id": 2546733,
+    "message": null,
+    "id": 40544495,
+    "grade": "87",
+    "workflow_state": "graded",
+    "assignment": {
+      "due_at": "2012-11-29T23:59:00-08:00",
+      "position": 14,
+      "html_url": "https://ucberkeley.instructure.com/courses/833384/assignments/2546733",
+      "group_category_id": null,
+      "id": 2546733,
+      "submission_types": [
+        "online_upload"
+      ],
+      "description": "",
+      "muted": false,
+      "points_possible": 100,
+      "grading_type": "points",
+      "name": "Midterm",
+      "title": "Midterm",
+      "assignment_group_id": 536016,
+      "course_id": 833384
+    },
+    "context_type": "Course",
+    "submitted_at": "2012-12-03T10:34:33-08:00",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "submission_type": "online_upload",
+    "url": null,
+    "user_id": 3357913,
+    "preview_url": "https://ucberkeley.instructure.com/courses/833384/assignments/2546733/submissions/3357913?preview=1",
+    "user": {
+      "short_name": "Tammi Chang",
+      "id": 3357913,
+      "sortable_name": "Chang, Tammi",
+      "avatar_url": "https://secure.gravatar.com/avatar/b63c1553cb24e97d43612618975ebef6?s=50&d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png",
+      "name": "Tammi Chang"
+    },
+    "grade_matches_current_submission": true,
+    "grader_id": 3075912,
+    "attachments": [
+      {
+        "content-type": "application/pdf",
+        "id": 26220326,
+        "size": 151397,
+        "unlock_at": null,
+        "locked": false,
+        "hidden_for_user": false,
+        "created_at": "2012-12-03T10:34:25-08:00",
+        "updated_at": "2012-12-03T15:52:14-08:00",
+        "hidden": false,
+        "display_name": "MidtermGraded.pdf",
+        "url": "https://ucberkeley.instructure.com/files/26220326/download?download_frd=1&verifier=1MvLR6XvJOYRUH5JyTwjWi2oTg1Jw461hW2AewVd",
+        "lock_at": null,
+        "filename": "MidtermGraded.pdf",
+        "locked_for_user": false
+      }
+    ],
+    "course": {
+      "html_url": "https://ucberkeley.instructure.com/courses/833384",
+      "id": 833384,
+      "end_at": null,
+      "hide_final_grades": false,
+      "account_id": 90242,
+      "calendar": {
+        "ics": "https://ucberkeley.instructure.com/feeds/calendars/course_pHuUhYE8aWl1qmffaMWGKT9xPXrLw5vWI62VrI2k.ics"
+      },
+      "start_at": "2012-08-23T00:00:00-07:00",
+      "name": "A Comparative Survey of Race and Ethnicity in the United States",
+      "default_view": "feed",
+      "course_code": "ETH STD 21AC"
+    },
+    "type": "Submission",
+    "attempt": 1,
+    "body": null,
+    "message": "Please write more neatly next time.",
+    "score": 87,
+    "submission_comments": [
+      {
+        "author_name": "Jon Hays",
+        "created_at": "2012-12-28T12:46:43-08:00",
+        "author_id": 3075912,
+        "comment": "her",
+        "body": "Good work!"
+      }
+    ],
+    "course_id": 833384,
+    "title": "Midterm"
+  },
+  {
+    "html_url": "https://ucberkeley.instructure.com/courses/833384/assignments/2611402/submissions/3357913",
+    "assignment_id": 2611402,
+    "message": null,
+    "id": 42207616,
+    "grade": "45",
+    "workflow_state": "graded",
+    "assignment": {
+      "due_at": "2012-12-18T23:59:00-08:00",
+      "position": 21,
+      "html_url": "https://ucberkeley.instructure.com/courses/833384/assignments/2611402",
+      "group_category_id": null,
+      "id": 2611402,
+      "submission_types": [
+        "online_upload"
+      ],
+      "description": "This is an opportunity to conduct significant independent research on topics related to the themes of the class as introduced in the first two weeks of lectures. You will be required to list and summarize at least 10 sources, 5 of which must come from Ethnic Studies-affiliated journals. Each entry should include a description (5-6 sentences) which summarizes the most significant aspects of the article. This assignment will be graded based on the quality of the sources cited and the accuracy and insight demonstrated by the annotations. This project will be used to build the Wikipedia based group project. 25%",
+      "muted": false,
+      "points_possible": 100,
+      "grading_type": "points",
+      "name": "Annotated Bibliography",
+      "title": "Annotated Bibliography",
+      "assignment_group_id": 533513,
+      "course_id": 833384
+    },
+    "context_type": "Course",
+    "submitted_at": "2012-12-18T15:06:42-08:00",
+    "updated_at": ":::TODAY_AT_TEA_TIME:::",
+    "created_at": ":::TODAY_AT_TEA_TIME:::",
+    "submission_type": "online_upload",
+    "url": null,
+    "user_id": 3357913,
+    "preview_url": "https://ucberkeley.instructure.com/courses/833384/assignments/2611402/submissions/3357913?preview=1",
+    "user": {
+      "short_name": "Tammi Chang",
+      "id": 3357913,
+      "sortable_name": "Chang, Tammi",
+      "avatar_url": "https://secure.gravatar.com/avatar/b63c1553cb24e97d43612618975ebef6?s=50&d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png",
+      "name": "Tammi Chang"
+    },
+    "grade_matches_current_submission": true,
+    "grader_id": 3075912,
+    "attachments": [
+      {
+        "content-type": "text/html",
+        "id": 26949302,
+        "size": 6825,
+        "unlock_at": null,
+        "locked": false,
+        "hidden_for_user": false,
+        "created_at": "2012-12-18T15:06:42-08:00",
+        "updated_at": "2012-12-18T15:06:42-08:00",
+        "hidden": false,
+        "display_name": "Tammi Chang - Annotated Bibliography",
+        "url": "https://ucberkeley.instructure.com/files/26949302/download?download_frd=1&verifier=YYfEk9cto2mdLuahYrQxkiwNJFskUgF8RZEtRUJb",
+        "lock_at": null,
+        "filename": "google_doc_201212182306423357913.doc",
+        "locked_for_user": false
+      }
+    ],
+    "course": {
+      "html_url": "https://ucberkeley.instructure.com/courses/833384",
+      "id": 833384,
+      "end_at": null,
+      "hide_final_grades": false,
+      "account_id": 90242,
+      "calendar": {
+        "ics": "https://ucberkeley.instructure.com/feeds/calendars/course_pHuUhYE8aWl1qmffaMWGKT9xPXrLw5vWI62VrI2k.ics"
+      },
+      "start_at": "2012-08-23T00:00:00-07:00",
+      "name": "A Comparative Survey of Race and Ethnicity in the United States",
+      "default_view": "feed",
+      "course_code": "ETH STD 21AC"
+    },
+    "type": "Submission",
+    "attempt": 1,
+    "body": null,
+    "score": 45,
+    "submission_comments": [
+
+    ],
+    "course_id": 833384,
+    "title": "Annotated Bibliography"
+  }
+]

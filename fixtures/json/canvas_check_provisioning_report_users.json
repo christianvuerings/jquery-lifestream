@@ -1,0 +1,11 @@
+{
+  "id": 9,
+  "parameters": {
+    "users": "1",
+    "extra_text": "Term: All Terms; Reports: users "
+  },
+  "progress": 100,
+  "status": "complete",
+  "report": "provisioning_csv",
+  "file_url": "https://localhost:3100/accounts/90242/files/14/download"
+}

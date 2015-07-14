@@ -1,0 +1,35 @@
+[
+  {
+    "id": 9696969,
+    "name": "VLADIMIR TARKOVSKY",
+    "sortable_name": "TARKOVSKY, VLADIMIR",
+    "short_name": "VLADIMIR TARKOVSKY",
+    "sis_user_id": "494949",
+    "sis_login_id": "494949",
+    "login_id": "494949",
+    "enrollments": [
+      {
+        "associated_user_id": null,
+        "course_id": 767330,
+        "course_section_id": 3473577,
+        "id": 8585858,
+        "limit_privileges_to_course_section": false,
+        "root_account_id": 11,
+        "type": "StudentEnrollment",
+        "updated_at": "2013-06-17T14:03:08-07:00",
+        "user_id": 9696969,
+        "enrollment_state": "active",
+        "role": "StudentEnrollment",
+        "grades": {
+          "html_url": "https://ucberkeley.test.instructure.com/courses/767330/grades/9696969",
+          "current_score": null,
+          "final_score": null,
+          "current_grade": null,
+          "final_grade": null
+        },
+        "html_url": "https://ucberkeley.test.instructure.com/courses/767330/users/9696969"
+      }
+    ],
+    "analytics_url": "/courses/767330/analytics/users/9696969"
+  }
+]

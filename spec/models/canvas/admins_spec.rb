@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Canvas::Admins do
   let(:sub_account_id)      { '87483' }
   let(:admin_uid)           { '321654' }
@@ -32,7 +30,7 @@ describe Canvas::Admins do
 
     context "when account id specified" do
       subject { Canvas::Admins.new(:account_id => sub_account_id) }
-      before  { subject.should_receive(:request_uncached).with("accounts/#{sub_account_id}/admins?per_page=100", "_admins").and_return(admins_response) }
+      before  { subject.should_receive(:request_uncached).with("accounts/#{sub_account_id}/admins?per_page=100").and_return(admins_response) }
 
       it "returns true if user is admin for account specified" do
         result = subject.admin_user?(admin_uid)

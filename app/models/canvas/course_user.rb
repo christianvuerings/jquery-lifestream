@@ -80,15 +80,19 @@ module Canvas
 
     private
 
-    # Interface to request a single users in a course
+    # Interface to request a single user in a course
     # See https://canvas.instructure.com/doc/api/courses.html#method.courses.user
     def request_course_user
-      response = request_uncached(
-        "courses/#{@course_id}/users/#{@user_id}?include[]=enrollments",
-        "_course_user"
-      )
-      return response ? safe_json(response.body) : nil
+      response = request_uncached request_path
+      response ? safe_json(response.body) : nil
     end
 
+    def request_path
+      "courses/#{@course_id}/users/#{@user_id}?include[]=enrollments"
+    end
+
+    def mock_json
+      read_file('fixtures', 'json', 'canvas_course_user.json')
+    end
   end
 end

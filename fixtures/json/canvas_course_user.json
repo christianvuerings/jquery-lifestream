@@ -1,0 +1,33 @@
+{
+  "id": 4321321,
+  "name": "Michael Steven OWEN",
+  "sortable_name": "OWEN, Michael S.",
+  "short_name": "Michael S. OWEN",
+  "sis_user_id": "UID:105431",
+  "sis_login_id": "105431",
+  "login_id": "105431",
+  "enrollments": [
+    {
+      "associated_user_id": null,
+      "course_id": 767330,
+      "course_section_id": 1312468,
+      "id": 20241907,
+      "limit_privileges_to_course_section": false,
+      "root_account_id": 90242,
+      "type": "StudentEnrollment",
+      "updated_at": "2013-10-22T00:38:23Z",
+      "user_id": 4321321,
+      "enrollment_state": "active",
+      "role": "StudentEnrollment",
+      "last_activity_at": "2013-11-20T16:33:24Z",
+      "grades": {
+        "html_url": "https://ucberkeley.beta.instructure.com/courses/767330/grades/4321321",
+        "current_score": null,
+        "final_score": null,
+        "current_grade": null,
+        "final_grade": null
+      },
+      "html_url": "https://ucberkeley.beta.instructure.com/courses/767330/users/4321321"
+    }
+  ]
+}
