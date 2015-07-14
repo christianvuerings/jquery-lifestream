@@ -30,7 +30,15 @@ module Canvas
     private
 
     def request_user_profile
-      request_uncached("users/#{@canvas_user_id}/profile", "_user_profile")
+      request_uncached request_path
+    end
+
+    def request_path
+      "users/#{@canvas_user_id}/profile"
+    end
+
+    def mock_json
+      read_file('fixtures', 'json', 'canvas_user_profile.json')
     end
 
   end

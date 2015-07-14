@@ -7,7 +7,7 @@ module Canvas
 
     def sections_list(force_write = false)
       self.class.fetch_from_cache @course_id, force_write do
-        request_uncached("courses/#{@course_id}/sections", "_course_sections")
+        request_uncached request_path
       end
     end
 
@@ -37,10 +37,23 @@ module Canvas
         :method => :post,
         :body => request_params,
       }
-      response = request_uncached("courses/#{@course_id}/sections", "_course_create_section", request_options)
+      response = request_uncached(request_path, request_options)
       JSON.parse(response.body)
     end
 
+    private
+
+    def mock_interactions
+      on_request(uri_matching: "#{api_root}/#{request_path}", method: :get)
+        .respond_with_file('fixtures', 'json', 'canvas_course_sections.json')
+
+      on_request(uri_matching: "#{api_root}/#{request_path}", method: :post)
+        .respond_with_file('fixtures', 'json', 'canvas_course_create_section.json')
+    end
+
+    def request_path
+      "courses/#{@course_id}/sections"
+    end
   end
 end
 

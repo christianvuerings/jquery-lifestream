@@ -2,10 +2,7 @@ require "spec_helper"
 
 describe "GoogleDriveList" do
 
-  after do
-    # Making sure we return cassettes back to the store after we're done.
-    VCR.eject_cassette
-  end
+  after { WebMock.reset! }
 
   it "should get real drive docs list using the Tammi account", :testext => true do
     proxy_opts = {

@@ -1,0 +1,11 @@
+{
+  "id": 11938,
+  "parameters": {
+    "enrollment_term": "sis_term_id:TERM:2013-D",
+    "sections": "1"
+  },
+  "progress": 0,
+  "status": "running",
+  "report": "provisioning_csv",
+  "file_url": null
+}

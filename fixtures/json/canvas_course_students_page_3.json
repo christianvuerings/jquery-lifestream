@@ -1,0 +1,35 @@
+[
+  {
+    "id": 4888888,
+    "name": "FRANCIS XAVIER BUSHMANKOWITZKY",
+    "sortable_name": "BUSHMANKOWITZKY, FRANCIS XAVIER",
+    "short_name": "FRANCIS XAVIER BUSHMANKOWITZKY",
+    "sis_user_id": "74747",
+    "sis_login_id": "74747",
+    "login_id": "74747",
+    "enrollments": [
+      {
+        "associated_user_id": null,
+        "course_id": 767330,
+        "course_section_id": 3473577,
+        "id": 596969,
+        "limit_privileges_to_course_section": false,
+        "root_account_id": 11,
+        "type": "StudentEnrollment",
+        "updated_at": "2013-06-17T14:03:08-07:00",
+        "user_id": 4888888,
+        "enrollment_state": "active",
+        "role": "StudentEnrollment",
+        "grades": {
+          "html_url": "https://ucberkeley.test.instructure.com/courses/767330/grades/4888888",
+          "current_score": null,
+          "final_score": null,
+          "current_grade": null,
+          "final_grade": null
+        },
+        "html_url": "https://ucberkeley.test.instructure.com/courses/767330/users/4888888"
+      }
+    ],
+    "analytics_url": "/courses/767330/analytics/users/4888888"
+  }
+]

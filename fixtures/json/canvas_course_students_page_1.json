@@ -1,0 +1,35 @@
+[
+  {
+    "id": 76543,
+    "name": "JANET GAYNOR SMITH-ROBINSON",
+    "sortable_name": "SMITH-ROBINSON, JANET GAYNOR",
+    "short_name": "JANET GAYNOR SMITH-ROBINSON",
+    "sis_user_id": "34322433",
+    "sis_login_id": "34322433",
+    "login_id": "34322433",
+    "enrollments": [
+      {
+        "associated_user_id": null,
+        "course_id": 767330,
+        "course_section_id": 3473577,
+        "id": 18331451,
+        "limit_privileges_to_course_section": false,
+        "root_account_id": 11,
+        "type": "StudentEnrollment",
+        "updated_at": "2013-06-17T14:03:08-07:00",
+        "user_id": 76543,
+        "enrollment_state": "active",
+        "role": "StudentEnrollment",
+        "grades": {
+          "html_url": "https://ucberkeley.test.instructure.com/courses/767330/grades/76543",
+          "current_score": null,
+          "final_score": null,
+          "current_grade": null,
+          "final_grade": null
+        },
+        "html_url": "https://ucberkeley.test.instructure.com/courses/767330/users/76543"
+      }
+    ],
+    "analytics_url": "/courses/767330/analytics/users/76543"
+  }
+]

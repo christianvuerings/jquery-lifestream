@@ -1,6 +1,6 @@
 module Canvas
   class CourseUsers < Proxy
-
+    include PagedProxy
     include SafeJsonParser
 
     def initialize(options = {})
@@ -28,10 +28,7 @@ module Canvas
       all_users = []
       params = "include[]=enrollments&per_page=100"
       while params do
-        response = request_uncached(
-          "courses/#{@course_id}/users?#{params}",
-          "_course_users"
-        )
+        response = request_uncached "#{request_path}?#{params}"
         break unless (response && response.status == 200 && users_list = safe_json(response.body))
         all_users.concat(users_list)
 
@@ -48,6 +45,16 @@ module Canvas
         params = next_page_params(response)
       end
       all_users
+    end
+
+    private
+
+    def mock_interactions
+      mock_paged_interaction 'canvas_course_users'
+    end
+
+    def request_path
+      "courses/#{@course_id}/users"
     end
 
   end

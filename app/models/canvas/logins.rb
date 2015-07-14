@@ -10,7 +10,7 @@ module Canvas
     #    {"account_id":90242,"id":4592428,"sis_user_id":null,"unique_id":"raydavis-testlogin","user_id":3057506}]
 
     def user_logins(canvas_user_id)
-      request_uncached("users/#{canvas_user_id}/logins", '_user_logins')
+      request_uncached "users/#{canvas_user_id}/logins"
     end
 
     # Change the sis_user_id of that Login record to match the LDAP-or-student-ID scheme.
@@ -22,9 +22,17 @@ module Canvas
 
     def change_sis_user_id(login_id, new_sis_user_id)
       url = "accounts/#{settings.account_id}/logins/#{login_id}?login[sis_user_id]=#{new_sis_user_id}"
-      request_uncached(url, '_put_login_sis_user_id', {
-        method: :put
-      })
+      request_uncached(url, method: :put)
+    end
+
+    private
+
+    def mock_interactions
+      on_request(uri_matching: "#{api_root}/users/", method: :get)
+        .respond_with_file('fixtures', 'json', 'canvas_user_logins.json')
+
+      on_request(uri_matching: "#{api_root}/accounts/#{settings.account_id}/logins/", method: :put)
+        .respond_with_file('fixtures', 'json', 'canvas_put_login_sis_user_id.json')
     end
 
   end

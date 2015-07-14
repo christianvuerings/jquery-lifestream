@@ -1,0 +1,26 @@
+[
+  {
+    "course_code": "EE 20N",
+    "enrollments": [
+      {
+        "type": "student"
+      }
+    ],
+    "name": "Structure and Interpretation of Systems and Signals",
+    "start_at": "2012-09-04T00:00:00-07:00",
+    "end_at": null,
+    "account_id": 90242,
+    "hide_final_grades": false,
+    "term": {
+      "end_at": "2013-12-23T08:00:00Z",
+      "id": 4821,
+      "name": "Fall 2013",
+      "start_at": "2013-08-22T07:00:00Z"
+    },
+    "calendar": {
+      "ics": "https://ucberkeley.instructure.com/feeds/calendars/course_SMIaFMD5gDiViGXUX73oA8pfABQwRI94uFIoOvbT.ics"
+    },
+    "default_view": "feed",
+    "id": 833382
+  }
+]

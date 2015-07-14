@@ -386,27 +386,17 @@ Logging behavior and destination can be controlled from the command line or shel
 
 See [docs/styleguide.md](docs/styleguide.md).
 
-## Recording fake data feeds and timeshifting them
+## Creating timeshifted fake data feeds
 
-Make sure your testext.local.yml file has real connections to real external services that are fakeable (Canvas, Google, etc). Now do:
+Proxies running in fake mode use WebMock to substitute fixture data for connections to external services (Canvas, Google, etc). This fake data lives in `fixtures/json` and `fixtures/xml`.
 
-```bash
-rake vcr:record
-rake vcr:prettify
-```
-
-* `vcr:record` can also take a `SPEC=".../my_favorite_spec.rb"` to help limit the recordings.
-* `vcr:prettify` can also take a `REGEX_FILTER="my_raw_recording.json"` to target a specific raw file.
-
-You can now find the prettified files in `fixtures/pretty_vcr_recordings`. You can edit these files to put in tokens that will be substituted on server startup. See `config/initializers/timeshift.rb` for the dictionary of substitutions. Edit the `debug_json` property of each response, and `timeshift.rb` will automatically convert `debug_json` to the format actually used by VCR.
+Fixture files can represent time information by tokens that are substituted with appropriately shifted values when fixture data is loaded. See `config/initializers/timeshift.rb` for the dictionary of substitutions.
 
 ## Rake tasks:
 
 To view other rake task for the project: `rake -T`
 
 * `rake spec:xml` - Runs rake spec, but pipes the output to xml using the `rspec_junit_formatter` gem, for JUnit compatible test result reports
-* `rake vcr:record` - Refresh vcr recordings and reformats the fixtures with formatted JSON output. Will also parse the reponse body's string into json output for legibility.
-* `rake vcr:list` - List the available recordings captured in the fixtures.
 
 ## Memcached tasks:
 
