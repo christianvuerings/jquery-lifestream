@@ -2,18 +2,15 @@ module Canvas
   class ExistenceCheck < Proxy
 
     def account_defined?(sis_account_id)
-      response = request_uncached("accounts/sis_account_id:#{sis_account_id}")
-      response.present?
+      resource_at_path? "accounts/sis_account_id:#{sis_account_id}"
     end
 
     def course_defined?(sis_course_id)
-      response = request_uncached("courses/sis_course_id:#{sis_course_id}?include[]=all_courses", '_course')
-      response.present?
+      resource_at_path? "courses/sis_course_id:#{sis_course_id}?include[]=all_courses"
     end
 
     def section_defined?(sis_section_id)
-      response = request_uncached("sections/sis_section_id:#{sis_section_id}", '_section')
-      response.present?
+      resource_at_path? "sections/sis_section_id:#{sis_section_id}"
     end
 
     def existence_check
@@ -21,6 +18,10 @@ module Canvas
     end
 
     private
+
+    def resource_at_path?(path)
+      (response = raw_request path) && response.status < 400
+    end
 
     def mock_interactions
       on_request(uri_matching: "#{api_root}/accounts/sis_account_id")

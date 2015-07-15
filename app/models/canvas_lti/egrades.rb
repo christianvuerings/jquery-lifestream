@@ -55,16 +55,17 @@ module CanvasLti
 
     def canvas_course_student_grades(force = false)
       self.class.fetch_from_cache("course-students-#{@canvas_course_id}", force) do
-        proxy = Canvas::CourseUsers.new(:course_id => @canvas_course_id, :paging_callback => self)
-        course_users = proxy.course_users(:cache => false)
         course_students = []
-        course_users.each do |course_user|
-          user_grade = student_grade(course_user['enrollments'])
-          course_students << {
-            :sis_login_id => course_user['sis_login_id'],
-            :final_grade => user_grade[:final_grade],
-            :current_grade => user_grade[:current_grade],
-          }
+        users_response = Canvas::CourseUsers.new(course_id: @canvas_course_id, paging_callback: self).course_users(cache: false)
+        if (course_users = users_response[:body])
+          course_users.each do |course_user|
+            user_grade = student_grade(course_user['enrollments'])
+            course_students << {
+              :sis_login_id => course_user['sis_login_id'],
+              :final_grade => user_grade[:final_grade],
+              :current_grade => user_grade[:current_grade],
+            }
+          end
         end
         course_students
       end
@@ -102,14 +103,15 @@ module CanvasLti
     end
 
     def export_options
-      course_settings_worker = Canvas::CourseSettings.new(:course_id => @canvas_course_id.to_i)
-      course_settings = course_settings_worker.settings(:cache => false)
-      {
-        :officialSections => official_sections,
-        :gradingStandardEnabled => course_settings['grading_standard_enabled'],
-        :sectionTerms => @canvas_official_course.section_terms,
-        :mutedAssignments => muted_assignments
-      }
+      course_settings_worker = Canvas::CourseSettings.new(course_id: @canvas_course_id.to_i)
+      if (course_settings = course_settings_worker.settings(cache: false)[:body])
+        {
+          :officialSections => official_sections,
+          :gradingStandardEnabled => course_settings['grading_standard_enabled'],
+          :sectionTerms => @canvas_official_course.section_terms,
+          :mutedAssignments => muted_assignments
+        }
+      end
     end
 
     def muted_assignments

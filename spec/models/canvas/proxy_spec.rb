@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Canvas::Proxy do
 
   before do
@@ -7,118 +5,97 @@ describe Canvas::Proxy do
     @client = Canvas::Proxy.new(:user_id => @user_id)
   end
 
-  context "when converting sis section ids to term and ccn" do
-    it "should return term and ccn" do
-      result = subject.class.sis_section_id_to_ccn_and_term("SEC:2014-B-25573")
-      result.should be_an_instance_of Hash
-      expect(result[:term_yr]).to eq '2014'
-      expect(result[:term_cd]).to eq 'B'
-      expect(result[:ccn]).to eq '25573'
-    end
-    it 'is not confused by leading zeroes' do
-      result_plain = subject.class.sis_section_id_to_ccn_and_term('SEC:2014-B-1234')
-      result_fancy = subject.class.sis_section_id_to_ccn_and_term('SEC:2014-B-01234')
-      expect(result_fancy).to eq result_plain
-    end
-  end
-
-  it "should see an account list as admin" do
+  it 'should see an account list as admin' do
     admin_client = Canvas::Proxy.new
     admin_client.set_response(body: admin_client.read_file('fixtures', 'json', 'canvas_accounts.json'))
-    response = admin_client.request('accounts')
-    accounts = JSON.parse(response.body)
-    accounts.size.should > 0
+    accounts = admin_client.wrapped_get('accounts')[:body]
+    expect(accounts).to_not be_empty
   end
 
-  it "should see the same account list as admin, initiating Canvas::Proxy with a passed in token" do
+  it 'should see the same account list as admin, initiating Canvas::Proxy with a passed in token' do
     admin_client = Canvas::Proxy.new(:access_token => Settings.canvas_proxy.admin_access_token)
     admin_client.set_response(body: admin_client.read_file('fixtures', 'json', 'canvas_accounts.json'))
-    response = admin_client.request('accounts')
-    accounts = JSON.parse(response.body)
-    accounts.size.should > 0
+    accounts = admin_client.wrapped_get('accounts')[:body]
+    expect(accounts).to_not be_empty
   end
 
-  it "should get own profile as authorized user", :testext => true do
+  it 'should get own profile as authorized user', :testext => true do
     @client.set_response(body: @client.read_file('fixtures', 'json', 'canvas_accounts.json'))
-    response = @client.request('users/self/profile')
-    profile = JSON.parse(response.body)
-    profile['login_id'].should == @user_id.to_s
+    profile = @client.wrapped_get('users/self/profile')[:body]
+    expect(profile['login_id']).to eq @user_id.to_s
   end
 
-  it "should get the upcoming_events feed for a known user", :testext => true do
+  it 'should get the upcoming_events feed for a known user', :testext => true do
     client = Canvas::UpcomingEvents.new(:user_id => @user_id)
     response = client.upcoming_events
-    events = JSON.parse(response.body)
-    events.should_not be_nil
+    events = response[:body]
+    expect(events).to_not be_nil
     if events.length > 0
-      events[0]["title"].should_not be_nil
-      events[0]["html_url"].should_not be_nil
+      expect(events[0]['title']).to be_present
+      expect(events[0]['html_url']).to be_present
     end
   end
 
-  it "should get the todo feed for a known user", :testext => true do
+  it 'should get the todo feed for a known user', :testext => true do
     client = Canvas::Todo.new(:user_id => @user_id)
     response = client.todo
-    tasks = JSON.parse(response.body)
-    tasks[0]["assignment"]["name"].should_not be_nil
-    tasks[0]["assignment"]["course_id"].should_not be_nil
+    tasks = response[:body]
+    expect(tasks[0]['assignment']['name']).to be_present
+    expect(tasks[0]['assignment']['course_id']).to be_present
   end
 
-  it "should get user activity feed using the Tammi account" do
+  it 'should get user activity feed using the Tammi account' do
     begin
       proxy = Canvas::UserActivityStream.new(:fake => true)
       response = proxy.user_activity
-      user_activity = JSON.parse(response.body)
-      user_activity.kind_of?(Array).should be_truthy
-      user_activity.size.should == 20
+      user_activity = response[:body]
+      expect(user_activity).to have(20).items
       required_fields = %w(created_at updated_at id type html_url)
       user_activity.each do |entry|
         (entry.keys & required_fields).size.should == required_fields.size
         expect {
-          DateTime.parse(entry["created_at"]) unless entry["created_at"].blank?
-          DateTime.parse(entry["updated_at"]) unless entry["update_at"].blank?
+          DateTime.parse(entry['created_at']) unless entry['created_at'].blank?
+          DateTime.parse(entry['updated_at']) unless entry['update_at'].blank?
         }.to_not raise_error
-        entry["id"].is_a?(Integer).should == true
-        category_specific_id_exists = entry["course_id"] || entry["group_id"] || entry["conversation_id"]
-        category_specific_id_exists.blank?.should_not be_truthy
+        expect(entry['id']).to be_a Integer
+        category_specific_id_exists = entry['course_id'] || entry['group_id'] || entry['conversation_id']
+        expect(category_specific_id_exists).to be_present
       end
     ensure
       WebMock.reset!
     end
   end
 
-  it "should fetch all course students even if the Canvas feed is paged" do
+  it 'should fetch all course students even if the Canvas feed is paged' do
     # The mock JSON has been edited to have four pages of results, only one student per page.
-    proxy = Canvas::CourseStudents.new(course_id: 767330, fake: true)
-    students = proxy.full_students_list
-    students.length.should == 4
+    students = Canvas::CourseStudents.new(course_id: 767330, fake: true).full_students_list[:body]
+    expect(students).to have(4).items
   end
 
-  it "should find a registered user's profile" do
-    client = Canvas::SisUserProfile.new(:user_id => @user_id)
-    response = client.sis_user_profile
-    response.should_not be_nil
+  it 'should find a registered user profile' do
+    profile = Canvas::SisUserProfile.new(user_id: @user_id).sis_user_profile
+    expect(profile[:statusCode]).to eq 200
+    expect(profile[:body]).to be_present
   end
 
-  describe ".sis_term_id_to_term" do
-    it "converts sis term id to term hash" do
-      result = Canvas::Proxy.sis_term_id_to_term('TERM:2014-D')
-      expect(result).to be_an_instance_of Hash
-      expect(result[:term_yr => '2014', :term_cd => 'D'])
+  describe '.sis_term_id_to_term' do
+    it 'converts sis term id to term hash' do
+      result = Canvas::Terms.sis_term_id_to_term('TERM:2014-D')
+      expect(result).to include(term_yr: '2014', term_cd: 'D')
     end
 
-    it "returns nil if sis term id not formatted properly" do
-      expect(Canvas::Proxy.sis_term_id_to_term('TERMS:2014-D')).to be_nil
-      expect(Canvas::Proxy.sis_term_id_to_term('TERM:20147.D')).to be_nil
-      expect(Canvas::Proxy.sis_term_id_to_term('TERM:2014-DB')).to be_nil
-      expect(Canvas::Proxy.sis_term_id_to_term('TERM:2014-d')).to be_nil
+    it 'returns nil if sis term id not formatted properly' do
+      expect(Canvas::Terms.sis_term_id_to_term('TERMS:2014-D')).to be_nil
+      expect(Canvas::Terms.sis_term_id_to_term('TERM:20147.D')).to be_nil
+      expect(Canvas::Terms.sis_term_id_to_term('TERM:2014-DB')).to be_nil
+      expect(Canvas::Terms.sis_term_id_to_term('TERM:2014-d')).to be_nil
     end
   end
 
   context 'on server errors' do
     before { stub_request(:any, /.*#{Settings.canvas_proxy.url_root}.*/).to_return(status: 404, body: 'Resource not found.') }
     let(:course_students) { Canvas::CourseStudents.new(course_id: 767330, fake: false) }
-    subject { course_students.full_students_list }
+    subject { course_students.full_students_list[:body] }
 
     it_behaves_like 'a proxy logging errors'
     it_behaves_like 'a polite HTTP client'
@@ -128,65 +105,6 @@ describe Canvas::Proxy do
       expect(Rails.logger).not_to receive(:error)
       expect(Rails.logger).to receive(:debug).at_least(2).times
       course_students.full_students_list
-    end
-  end
-
-  describe '#canvas_current_terms' do
-    before { allow(Settings.terms).to receive(:fake_now).and_return(fake_now) }
-    subject {Canvas::Proxy.canvas_current_terms}
-    context 'during the Fall term' do
-      let(:fake_now) {DateTime.parse('2013-10-10')}
-      its(:length) {should eq 2}
-      it 'includes next term and this term' do
-        expect(subject[0].slug).to eq 'fall-2013'
-        expect(subject[1].slug).to eq 'spring-2014'
-      end
-    end
-    context 'between terms' do
-      let(:fake_now) {DateTime.parse('2013-09-20')}
-      its(:length) {should eq 2}
-      it 'includes the next two terms' do
-        expect(subject[0].slug).to eq 'fall-2013'
-        expect(subject[1].slug).to eq 'spring-2014'
-      end
-    end
-    context 'during the Spring term' do
-      let(:fake_now) {DateTime.parse('2014-02-10')}
-      its(:length) {should eq 3}
-      it 'includes next Fall term if available' do
-        expect(subject[0].slug).to eq 'spring-2014'
-        expect(subject[1].slug).to eq 'summer-2014'
-        expect(subject[2].slug).to eq 'fall-2014'
-      end
-    end
-    context 'when a campus term is not defined in Canvas' do
-      before do
-        stub_terms = [
-          {'end_at'=>nil,
-           'id'=>1818,
-           'name'=>'Default Term',
-           'start_at'=>nil,
-           'workflow_state'=>'active',
-           'sis_term_id'=>nil},
-          {'end_at'=>nil,
-           'id'=>5168,
-           'name'=>'Spring 2014',
-           'start_at'=>nil,
-           'workflow_state'=>'active',
-           'sis_term_id'=>'TERM:2014-B'},
-          {'end_at'=>nil,
-           'id'=>5266,
-           'name'=>'Summer 2014',
-           'start_at'=>nil,
-           'workflow_state'=>'active',
-           'sis_term_id'=>'TERM:2014-C'}
-        ]
-        allow(Canvas::Terms).to receive(:fetch).and_return(stub_terms)
-      end
-      let(:fake_now) {DateTime.parse('2014-02-10')}
-      it 'does not include the campus term undefined in Canvas' do
-        expect(subject.select{|term| term.slug == 'fall-2014'}).to be_empty
-      end
     end
   end
 

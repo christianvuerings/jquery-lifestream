@@ -1,29 +1,35 @@
 describe CanvasLti::ReconfigureAuthorizationConfigs do
   let(:beta_auth_configs) {
-    [
-      {
-        'id' => 15,
-        'position' => 1,
-        'auth_type' => 'cas',
-        'auth_base' => 'https://auth-test.example.com/cas',
-        'log_in_url' => nil,
-        'login_handle_name' => 'LDAP UID',
-        'unknown_user_url' => ''
-      }
-    ]
+    {
+      statusCode: 200,
+      body: [
+        {
+          'id' => 15,
+          'position' => 1,
+          'auth_type' => 'cas',
+          'auth_base' => 'https://auth-test.example.com/cas',
+          'log_in_url' => nil,
+          'login_handle_name' => 'LDAP UID',
+          'unknown_user_url' => ''
+        }
+      ]
+    }
   }
   let(:test_auth_configs) {
-    [
-      {
-        'id' => 16,
-        'position' => 1,
-        'auth_type' => 'cas',
-        'auth_base' => 'https://auth-test.example.com/cas',
-        'log_in_url' => nil,
-        'login_handle_name' => 'LDAP UID',
-        'unknown_user_url' => ''
-      }
-    ]
+    {
+      statusCode: 200,
+      body: [
+        {
+          'id' => 16,
+          'position' => 1,
+          'auth_type' => 'cas',
+          'auth_base' => 'https://auth-test.example.com/cas',
+          'log_in_url' => nil,
+          'login_handle_name' => 'LDAP UID',
+          'unknown_user_url' => ''
+        }
+      ]
+    }
   }
   let(:beta_worker) { double(:authorization_configs => beta_auth_configs) }
   let(:test_worker) { double(:authorization_configs => test_auth_configs) }
@@ -42,8 +48,8 @@ describe CanvasLti::ReconfigureAuthorizationConfigs do
 
   context 'when CAS authorization base urls do not match' do
     it 'should update the CAS Authorization URL' do
-      beta_auth_configs[0]['auth_base'] = 'https://auth.example.com/cas'
-      test_auth_configs[0]['auth_base'] = 'https://auth.example.com/cas'
+      beta_auth_configs[:body][0]['auth_base'] = 'https://auth.example.com/cas'
+      test_auth_configs[:body][0]['auth_base'] = 'https://auth.example.com/cas'
       expect(beta_worker).to receive(:reset_authorization_config).once.and_return(true)
       expect(test_worker).to receive(:reset_authorization_config).once.and_return(true)
       allow(Canvas::AuthorizationConfigs).to receive(:new).with(:url_root => canvas_hosts[0]).and_return(beta_worker)

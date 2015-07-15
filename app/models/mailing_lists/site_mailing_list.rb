@@ -41,7 +41,7 @@ module MailingLists
         return
       end
 
-      course_users = Canvas::CourseUsers.new(course_id: self.canvas_site_id).course_users
+      course_users = Canvas::CourseUsers.new(course_id: self.canvas_site_id).course_users[:body]
       list_members = get_member_addresses
 
       if !course_users
@@ -129,7 +129,7 @@ module MailingLists
       # 'Global Health: Disaster Preparedness and Response' => 'global_health_disaster_preparedness_and_respo-sp15'
       if @canvas_site
         normalized_name = I18n.transliterate(@canvas_site['name']).downcase.split(/[^a-z0-9]+/).reject(&:blank?).join('_').slice(0, 45)
-        if (term = Canvas::Proxy.sis_term_id_to_term @canvas_site['term']['sis_term_id'])
+        if (term = Canvas::Terms.sis_term_id_to_term @canvas_site['term']['sis_term_id'])
           normalized_name << "-#{Berkeley::TermCodes.to_abbreviation(term[:term_yr], term[:term_cd])}"
         end
         normalized_name
@@ -138,7 +138,7 @@ module MailingLists
 
     def get_canvas_site
       return if self.canvas_site_id.blank? || @canvas_site
-      unless (@canvas_site = Canvas::Course.new(canvas_course_id: self.canvas_site_id).course)
+      unless (@canvas_site = Canvas::Course.new(canvas_course_id: self.canvas_site_id).course[:body])
         self.request_failure = "No bCourses site with ID \"#{self.canvas_site_id}\" was found."
       end
     end
@@ -170,7 +170,7 @@ module MailingLists
     end
 
     def parse_term(term)
-      if (parsed_term = Canvas::Proxy.sis_term_id_to_term(term['sis_term_id']))
+      if (parsed_term = Canvas::Terms.sis_term_id_to_term(term['sis_term_id']))
         parsed_term.merge(name: Berkeley::TermCodes.to_english(parsed_term[:term_yr], parsed_term[:term_cd]))
       end
     end

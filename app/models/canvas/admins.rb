@@ -1,42 +1,30 @@
 module Canvas
   class Admins < Proxy
 
-    include SafeJsonParser
-
     def initialize(options = {})
       super(options)
-      default_options = {:account_id => settings.account_id}
-      options.reverse_merge!(default_options)
-      raise ArgumentError, "Account ID option must be a String or Fixnum" unless [String,Fixnum].include?(options[:account_id].class)
-      @account_id = options[:account_id].to_s
+      account_id = options[:account_id] || settings.account_id
+      raise ArgumentError, 'Account ID option must be a String or Fixnum' unless [String,Fixnum].include? account_id.class
+      @account_id = account_id
     end
 
     def admin_user?(uid)
-      admins = self.class.fetch_from_cache(@account_id) { request_admins_list(@account_id) }
-      admins.index {|acct| acct['user']['sis_login_id'] == uid.to_s} ? true : false
+      admins = self.class.fetch_from_cache(@account_id) { paged_get request_path }
+      admins[:body].present? && admins[:body].index {|acct| acct['user']['sis_login_id'] == uid.to_s}.present?
     end
 
     private
-
-    def request_admins_list(account_id)
-      all_admins = []
-      params = "per_page=100"
-      account_id ||= settings.account_id
-      while params do
-        response = request_uncached("#{request_path}?#{params}")
-        break unless (response && response.status == 200 && admins_list = safe_json(response.body))
-        all_admins.concat(admins_list)
-        params = next_page_params(response)
-      end
-      all_admins
-    end
 
     def request_path
       "accounts/#{@account_id}/admins"
     end
 
     def mock_json
-      read_file('fixtures', 'json', 'canvas_admins.json')
+      if @account_id == settings.account_id
+        read_file('fixtures', 'json', 'canvas_admins.json')
+      else
+        read_file('fixtures', 'json', "canvas_admins_#{@account_id}.json")
+      end
     end
   end
 end

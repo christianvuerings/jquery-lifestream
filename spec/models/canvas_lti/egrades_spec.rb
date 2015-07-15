@@ -143,7 +143,9 @@ describe CanvasLti::Egrades do
   end
 
   context 'when resolving course state issues' do
-    let(:course_settings) { { 'id' => canvas_course_id } }
+    let(:course_settings) do
+      {statusCode: 200, body: {'id' => canvas_course_id} }
+    end
     let(:muted_assignments) { [] }
     before do
       allow_any_instance_of(Canvas::CourseSettings).to receive(:set_grading_scheme).and_return(course_settings)
@@ -407,8 +409,11 @@ describe CanvasLti::Egrades do
     end
     let(:course_settings) do
       {
-        'grading_standard_enabled' => true,
-        'grading_standard_id' => 0
+        statusCode: 200,
+        body: {
+          'grading_standard_enabled' => true,
+          'grading_standard_id' => 0
+        }
       }
     end
     let(:muted_assignments) do

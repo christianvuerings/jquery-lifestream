@@ -1,12 +1,10 @@
-require "spec_helper"
-
 describe Canvas::CurrentTeacher do
 
   let(:uid)             { rand(99999).to_s }
 
   subject { Canvas::CurrentTeacher.new(uid) }
 
-  describe "#user_currently_teaching?" do
+  describe '#user_currently_teaching?' do
 
     let(:current_term_db_row) {{
       'term_yr' => '2014',
@@ -47,29 +45,29 @@ describe Canvas::CurrentTeacher do
     let(:summer_2014_instructor_uid) { '904715' }
 
     before do
-      allow(Canvas::Proxy).to receive(:canvas_current_terms).and_return(current_terms)
+      allow(Canvas::Terms).to receive(:current_terms).and_return(current_terms)
     end
 
-    context "when uid is unavailable" do
+    context 'when uid is unavailable' do
       subject { Canvas::CurrentTeacher.new(nil) }
       its(:user_currently_teaching?) { should be_falsey }
     end
 
-    context "when user is instructing in current canvas terms", if: CampusOracle::Queries.test_data? do
+    context 'when user is instructing in current canvas terms', if: CampusOracle::Queries.test_data? do
       subject { Canvas::CurrentTeacher.new(summer_2014_instructor_uid) }
       its(:user_currently_teaching?) { should be_truthy }
     end
 
-    context "when user is not instructing in current canvas terms", if: CampusOracle::Queries.test_data? do
+    context 'when user is not instructing in current canvas terms', if: CampusOracle::Queries.test_data? do
       subject { Canvas::CurrentTeacher.new(spring_2012_instructor_uid) }
       its(:user_currently_teaching?) { should be_falsey }
     end
 
-    context "when response is cached", if: CampusOracle::Queries.test_data? do
+    context 'when response is cached', if: CampusOracle::Queries.test_data? do
       subject { Canvas::CurrentTeacher.new(summer_2014_instructor_uid) }
-      it "does not make calls to dependent objects" do
+      it 'does not make calls to dependent objects' do
         expect(subject.user_currently_teaching?).to be_truthy
-        expect(Canvas::Proxy).to_not receive(:canvas_current_terms)
+        expect(Canvas::Terms).to_not receive(:current_terms)
         expect(CampusOracle::Queries).to_not receive(:has_instructor_history?)
         expect(subject.user_currently_teaching?).to be_truthy
       end

@@ -28,7 +28,7 @@ module MyTasks
     private
 
     def collect_results(response)
-      if response && (response.status == 200) && (results = safe_json response.body)
+      if (results = response[:body]) && results.respond_to?(:collect)
         logger.info "Sorting Canvas feed into buckets with starting_date #{@starting_date}; #{results}"
         results.collect do |result|
           if (formatted_entry = yield result)

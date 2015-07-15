@@ -91,7 +91,7 @@ namespace :canvas do
       Rails.logger.error "Why did we find multiple Webcast tools (#{webcast_tool}) within Canvas globalTools set?! Abort!"
     else
       tool_id = webcast_tool.values.first
-      sis_term_ids = Canvas::Proxy.current_sis_term_ids
+      sis_term_ids = Canvas::Terms.current_sis_term_ids
       filtered_ids = sis_term_ids.reject do |id|
         id.end_with?('A') || id.end_with?('C')
       end

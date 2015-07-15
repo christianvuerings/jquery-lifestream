@@ -7,6 +7,19 @@
 #
 ###############################################################################################
 
+shared_examples 'a Canvas proxy handling request failure' do
+  let (:status) { 500 }
+  let (:body) { 'Internal Error' }
+  before { subject.on_request(failing_request).set_response(status: status, body: body) }
+  include_context 'expecting logs from server errors'
+  it 'returns errors as objects' do
+    expect(response[:statusCode]).to eq 503
+    expect(response[:error]).to be_present
+    expect(response).not_to include :body
+  end
+end
+
+
 ########################################################
 # Canvas Controller Authorizations
 
@@ -51,9 +64,9 @@ shared_examples 'a canvas course admin authorized api endpoint' do
   end
 
   before do
-    Canvas::UserProfile.any_instance.stub(:get).and_return(canvas_user_profile)
-    Canvas::CourseUser.any_instance.stub(:request_course_user).and_return(canvas_course_student_hash)
-    Canvas::Admins.any_instance.stub(:admin_user?).and_return(false)
+    allow_any_instance_of(Canvas::UserProfile).to receive(:get).and_return canvas_user_profile
+    allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return canvas_course_student_hash
+    allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return false
   end
 
   context 'when user is a student' do
@@ -65,7 +78,7 @@ shared_examples 'a canvas course admin authorized api endpoint' do
   end
 
   context 'when user is a course teacher' do
-    before { Canvas::CourseUser.any_instance.stub(:request_course_user).and_return(canvas_course_teacher_hash) }
+    before { allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return canvas_course_teacher_hash }
     it 'returns 200 success' do
       make_request
       expect(response.status).to eq(200)
@@ -73,7 +86,7 @@ shared_examples 'a canvas course admin authorized api endpoint' do
   end
 
   context 'when user is a canvas account admin' do
-    before { Canvas::Admins.any_instance.stub(:admin_user?).and_return(true) }
+    before { allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return true }
     it 'returns 200 success' do
       make_request
       expect(response.status).to eq(200)

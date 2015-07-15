@@ -9,18 +9,11 @@ module Canvas
     end
 
     def course(options = {})
-      default_options = {:cache => true}
-      options.reverse_merge!(default_options)
-
-      if options[:cache].present?
-        self.class.fetch_from_cache("#{@canvas_course_id}") { request_course }
-      else
-        request_course
-      end
+      optional_cache(options, key: @canvas_course_id.to_s, default: true) { wrapped_get request_path }
     end
 
     def create(account_id, course_name, course_code, term_id, sis_course_id)
-      request_params = {
+      wrapped_post "accounts/#{account_id}/courses", {
         'account_id' => account_id,
         'course' => {
           'name' => course_name,
@@ -29,23 +22,16 @@ module Canvas
           'sis_course_id' => sis_course_id
         }
       }
-      request_options = {
-        :method => :post,
-        :body => request_params,
-      }
-      response = request_uncached "accounts/#{account_id}/courses", request_options
     end
 
     private
 
-    def request_course
-      response = request_uncached "courses/#{@canvas_course_id}?include[]=term"
-      return response ? safe_json(response.body) : nil
+    def request_path
+      "courses/#{@canvas_course_id}?include[]=term"
     end
 
-    def mock_interactions
-      on_request(uri_matching: "courses/#{@canvas_course_id}?include[]=term")
-        .respond_with_file('fixtures', 'json', 'canvas_course.json')
+    def mock_json
+      read_file('fixtures', 'json', 'canvas_course.json')
     end
 
   end

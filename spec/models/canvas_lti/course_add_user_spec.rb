@@ -74,9 +74,10 @@ describe CanvasLti::CourseAddUser do
   end
 
   let(:canvas_course_sections_list_response) do
-    sections_list_response = double()
-    sections_list_response.stub(:body).and_return(canvas_course_sections_list.to_json)
-    sections_list_response
+    {
+      statusCode: 200,
+      body: canvas_course_sections_list
+    }
   end
 
   before do
@@ -164,7 +165,7 @@ describe CanvasLti::CourseAddUser do
   context 'when adding user to a course section' do
     before do
       allow_any_instance_of(CanvasCsv::UserProvision).to receive(:import_users).with(['260506']).and_return true
-      allow_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(canvas_user_id, 'StudentEnrollment', 'active', false).and_return(true)
+      allow_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(canvas_user_id, 'StudentEnrollment', 'active', false).and_return(statusCode: 200)
     end
 
     it 'raises exception when ldap_user_id is not a string' do
@@ -176,7 +177,7 @@ describe CanvasLti::CourseAddUser do
     end
 
     it 'adds user to Canvas course section using canvas user id' do
-      expect_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(canvas_user_id, 'StudentEnrollment', 'active', false).and_return(true)
+      expect_any_instance_of(Canvas::SectionEnrollments).to receive(:enroll_user).with(canvas_user_id, 'StudentEnrollment', 'active', false).and_return(statusCode: 200)
       result = CanvasLti::CourseAddUser.add_user_to_course_section('260506', 'StudentEnrollment', '864215')
       expect(result).to be_truthy
     end
@@ -204,28 +205,36 @@ describe CanvasLti::CourseAddUser do
     let(:enrollment_state) { 'active' }
     let(:owner_role_id) { Settings.canvas_proxy.projects_owner_role_id }
     let(:teacher_role_id) { 5 }
-    let(:enroll_user_response) {
+    let(:enroll_user_response) do
       {
-        'id' => 20959,
-        'root_account_id' => 90242,
-        'user_id' => 1234567,
-        'course_id' => canvas_course_id,
-        'course_section_id' => 1311,
-        'enrollment_state' => 'active',
-        'role' => 'TeacherEnrollment',
-        'role_id' => teacher_role_id,
-        'sis_import_id' => nil,
-        'sis_course_id' => 'PROJ:18575b1ac394619a'
+        statusCode: 200,
+        body: {
+          'id' => 20959,
+          'root_account_id' => 90242,
+          'user_id' => 1234567,
+          'course_id' => canvas_course_id,
+          'course_section_id' => 1311,
+          'enrollment_state' => 'active',
+          'role' => 'TeacherEnrollment',
+          'role_id' => teacher_role_id,
+          'sis_import_id' => nil,
+          'sis_course_id' => 'PROJ:18575b1ac394619a'
+        }
       }
-    }
-    let(:enroll_user_with_role_id_response) { enroll_user_response.merge({'role' => 'Owner', 'role_id' => owner_role_id})}
+    end
+    let(:enroll_user_with_role_id_response) do
+      {
+        statusCode: 200,
+        body: enroll_user_response[:body].merge({'role' => 'Owner', 'role_id' => owner_role_id})
+      }
+    end
     before do
       allow_any_instance_of(Canvas::SisUserProfile).to receive(:new).with(:user_id => current_student_uid).and_return(double(get: canvas_user_profile))
-      allow_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return(enroll_user_response)
+      allow_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return enroll_user_response
     end
 
     it 'enrolls user in Canvas course' do
-      expect_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return(enroll_user_response)
+      expect_any_instance_of(Canvas::CourseEnrollments).to receive(:enroll_user).with(canvas_user_id, enrollment_type, enrollment_state, false, {}).and_return enroll_user_response
       result = CanvasLti::CourseAddUser.add_user_to_course(current_student_uid, enrollment_type, canvas_course_id)
       expect(result).to be_an_instance_of Hash
       expect(result['id']).to eq 20959

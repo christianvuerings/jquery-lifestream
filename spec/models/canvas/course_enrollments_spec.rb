@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Canvas::CourseEnrollments do
 
   let(:uid)               { rand(99999).to_s }
@@ -34,16 +32,12 @@ describe Canvas::CourseEnrollments do
 
   context 'when initializing' do
     it 'raises exception if canvas course id option not present' do
-      expect { Canvas::CourseEnrollments.new(:user_id => uid) }.to raise_error(ArgumentError, "Canvas Course ID option required")
+      expect { Canvas::CourseEnrollments.new(:user_id => uid) }.to raise_error(ArgumentError, 'Canvas Course ID option required')
     end
   end
 
   context 'when enrolling user into canvas course' do
-    before do
-      add_response = double
-      add_response.stub(:body).and_return(add_enrollment_response_body)
-      subject.stub(:request_uncached).and_return(add_response)
-    end
+    before { subject.on_request(method: :post).set_response(status: 200, body: add_enrollment_response_body) }
 
     it 'raises exception if canvas_user_id is not an integer' do
       expect { subject.enroll_user('not_an_integer', 'TaEnrollment', 'active', false) }.to raise_error(NoMethodError, 'undefined method `to_int\' for "not_an_integer":String')
@@ -53,11 +47,11 @@ describe Canvas::CourseEnrollments do
       expect { subject.enroll_user(canvas_user_id, 1234, 'active', false) }.to raise_error(NoMethodError, 'undefined method `to_str\' for 1234:Fixnum')
     end
 
-    it "raises exception if enrollment state is not a string" do
+    it 'raises exception if enrollment state is not a string' do
       expect { subject.enroll_user(canvas_user_id, 'TaEnrollment', 1234, false) }.to raise_error(NoMethodError, 'undefined method `to_str\' for 1234:Fixnum')
     end
 
-    it "raises exception if enrollment type string is not valid" do
+    it 'raises exception if enrollment type string is not valid' do
       expect { subject.enroll_user(canvas_user_id, 'AssistantEnrollment', 'active', false) }.to raise_error(ArgumentError, 'Enrollment type argument \'AssistantEnrollment\', must be StudentEnrollment, TeacherEnrollment, TaEnrollment, ObserverEnrollment, or DesignerEnrollment')
     end
 
@@ -80,8 +74,7 @@ describe Canvas::CourseEnrollments do
     end
 
     it 'returns confirmation of enrollment' do
-      response = subject.enroll_user(canvas_user_id, 'TaEnrollment', 'active', false, :role_id => 12)
-      expect(response).to be_an_instance_of Hash
+      response = subject.enroll_user(canvas_user_id, 'TaEnrollment', 'active', false, :role_id => 12)[:body]
       expect(response['id']).to eq 20959
       expect(response['root_account_id']).to eq 90242
       expect(response['user_id']).to eq 1234567

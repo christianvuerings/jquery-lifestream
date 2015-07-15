@@ -17,15 +17,15 @@ describe CanvasLti::ProjectProvision do
       allow(SecureRandom).to receive(:hex).and_return('67f4b934525501cb', '15fb56bedaa3b437')
       course_1 = double()
       course_2 = double()
-      expect(course_1).to receive(:course).and_return(valid_course)
-      expect(course_2).to receive(:course).and_return(nil)
+      expect(course_1).to receive(:course).and_return(statusCode: 200, body: valid_course)
+      expect(course_2).to receive(:course).and_return(statusCode: 503, error: 'Internal server error')
       expect(Canvas::SisCourse).to receive(:new).and_return(course_1, course_2)
       sis_course_id = subject.unique_sis_project_id
       expect(sis_course_id).to eq 'PROJ:15fb56bedaa3b437'
     end
 
     it 'raises exception if unique sis_course_id not found after 15 attempts' do
-      allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(valid_course)
+      allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(statusCode: 200, body: valid_course)
       expect { subject.unique_sis_project_id }.to raise_error(RuntimeError, 'Unable to find unique SIS Course ID for Project Site')
     end
   end
@@ -62,8 +62,8 @@ describe CanvasLti::ProjectProvision do
         'sis_course_id' => 'PROJ:18575b1ac394619a'
       }
     }
-    let(:success_response) { double(status: 200, body: new_course.to_json) }
-    let(:failure_response) { double(status: 500, body: nil) }
+    let(:success_response) { {statusCode: 200, body: new_course} }
+    let(:failure_response) { {statusCode: 503, error: 'Remote server unreachable.'} }
 
     before do
       allow(subject).to receive(:unique_sis_project_id).and_return(unique_sis_project_id)

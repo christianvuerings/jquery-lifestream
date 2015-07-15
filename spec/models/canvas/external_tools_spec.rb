@@ -66,12 +66,12 @@ describe Canvas::ExternalTools do
 
       it 'should return tab with hidden equals true' do
         all_tabs_response = double(status: 200, body: all_tabs.to_json)
-        expect(subject).to receive(:request_uncached).with(all_tabs_url, anything).twice.and_return all_tabs_response
+        expect(subject).to receive(:request_internal).with(all_tabs_url, anything).twice.and_return all_tabs_response
         tab_id = tab_showing['id']
         url = "courses/#{canvas_course_id}/tabs/#{tab_id}"
         hidden_after_update = create_tab(canvas_course_id, tab_id, {'hidden' => 'true'})
         update_response = double(status: 200, body: hidden_after_update.to_json)
-        expect(subject).to receive(:request_uncached).with(url, expected_options(tab_id, true)).and_return update_response
+        expect(subject).to receive(:request_internal).with(url, expected_options(tab_id, true)).and_return update_response
         result = subject.hide_course_site_tab tab_showing
         expect(result.to_json).to eq update_response.body
       end
@@ -79,22 +79,22 @@ describe Canvas::ExternalTools do
       it 'should fix collateral damage when untargeted tabs are updated' do
         all_tabs_response = double(status: 200, body: all_tabs.to_json)
         # Expect snapshot of tabs before update
-        expect(subject).to receive(:request_uncached).with(all_tabs_url, anything).once.and_return all_tabs_response
+        expect(subject).to receive(:request_internal).with(all_tabs_url, anything).once.and_return all_tabs_response
         # Expect standard update
         target_tab_id = tab_hidden['id']
         update_tab_response = double(status: 200, body: create_tab(canvas_course_id, target_tab_id).to_json)
         update_tab_url = "courses/#{canvas_course_id}/tabs/#{target_tab_id}"
-        expect(subject).to receive(:request_uncached).with(update_tab_url, expected_options(target_tab_id, false)).once.and_return update_tab_response
+        expect(subject).to receive(:request_internal).with(update_tab_url, expected_options(target_tab_id, false)).once.and_return update_tab_response
         # Expect update to untargeted tab
         untargeted_id = untargeted_tab['id']
         collateral_damage =  create_tab(canvas_course_id, untargeted_id)
         all_tabs_after_update = double(status: 200, body: [tab_showing, tab_hidden, collateral_damage].to_json)
-        expect(subject).to receive(:request_uncached).with(all_tabs_url, anything).once.and_return all_tabs_after_update
+        expect(subject).to receive(:request_internal).with(all_tabs_url, anything).once.and_return all_tabs_after_update
         # Expect restoration of untargeted tab
         fixed_tab = untargeted_tab.merge({'hidden' => true})
         untargeted_tab_updated = double(status: 200, body: fixed_tab.to_json)
         url = "courses/#{canvas_course_id}/tabs/#{untargeted_id}"
-        expect(subject).to receive(:request_uncached).with(url, expected_options(untargeted_id, true)).once.and_return untargeted_tab_updated
+        expect(subject).to receive(:request_internal).with(url, expected_options(untargeted_id, true)).once.and_return untargeted_tab_updated
         # Now test
         result = subject.show_course_site_tab tab_hidden
         tab_now_showing = create_tab(canvas_course_id, target_tab_id)

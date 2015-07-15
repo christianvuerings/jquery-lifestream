@@ -36,15 +36,18 @@ describe Rosters::Canvas do
   subject { Rosters::Canvas.new(teacher_login_id, course_id: course_id) }
 
   before do
-    allow_any_instance_of(Canvas::Course).to receive(:course).and_return({
-      'account_id'=>rand(9999),
-      'course_code'=>"INFO #{catid} - LEC 001",
-      'id'=>course_id,
-      'name'=>'An Official Course',
-      'term'=>{
-        'id'=>rand(9999), 'name'=>'Summer 2013', 'sis_term_id'=>'TERM:2013-C'
-      },
-      'sis_course_id'=>"CRS:INFO-#{catid}-2013-C",
+    allow_any_instance_of(Canvas::Course).to receive(:course).and_return(
+      {statusCode: 200,
+       body: {
+        'account_id'=>rand(9999),
+        'course_code'=>"INFO #{catid} - LEC 001",
+        'id'=>course_id,
+        'name'=>'An Official Course',
+        'term'=>{
+          'id'=>rand(9999), 'name'=>'Summer 2013', 'sis_term_id'=>'TERM:2013-C'
+        },
+        'sis_course_id'=>"CRS:INFO-#{catid}-2013-C",
+      }
     })
   end
 
@@ -296,12 +299,15 @@ describe Rosters::Canvas do
   def stub_teacher_status(teacher_login_id, canvas_course_id)
     teaching_proxy = double()
     allow(teaching_proxy).to receive(:full_teachers_list).and_return(
-      [
-        {
-          'id' => rand(99999),
-          'login_id' => teacher_login_id
-        }
-      ]
+      {
+        statusCode: 200,
+        body: [
+          {
+            'id' => rand(99999),
+            'login_id' => teacher_login_id
+          }
+        ]
+      }
     )
     allow(Canvas::CourseTeachers).to receive(:new).with(course_id: canvas_course_id).and_return(teaching_proxy)
   end

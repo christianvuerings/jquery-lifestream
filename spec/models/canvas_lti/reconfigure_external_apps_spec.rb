@@ -3,7 +3,7 @@ describe CanvasLti::ReconfigureExternalApps do
   let(:fake_calcentral_host) {'cc-dev.example.com'}
   let(:reachable_xml_host) {'http://example.com'}
   let(:fake_external_tools_proxy) {Canvas::ExternalTools.new(fake: true)}
-  let(:fake_reset_response) {double(nil, status: 200, body: {}.to_json)}
+  let(:fake_reset_response) { {statusCode: 200, body: {}} }
 
   describe '#reset_external_app_hosts_by_url' do
     context 'when servers need resetting' do
@@ -79,7 +79,8 @@ describe CanvasLti::ReconfigureExternalApps do
           expect(config['title']).to eq 'Roster Photos'
           expect(config['launch_url']).to eq external_tool_configs[0]['url']
           {
-            'id' => app_id
+            statusCode: 200,
+            body: {'id' => app_id}
           }
         end
         is_expected.to eq configuration_result
@@ -95,7 +96,8 @@ describe CanvasLti::ReconfigureExternalApps do
           expect(config['title']).to eq 'Roster Photos'
           expect(config['launch_url']).to eq "#{app_host}/canvas/embedded/#{app_code}"
           {
-            'id' => app_id
+            statusCode: 200,
+            body: {'id' => app_id}
           }
         end
         is_expected.to eq configuration_result
@@ -104,7 +106,7 @@ describe CanvasLti::ReconfigureExternalApps do
     context 'Canvas throws an error' do
       let(:expected_action) {'error'}
       it 'confesses failure' do
-        expect(fake_proxy).to receive(:reset_external_tool_by_xml).and_return(nil)
+        expect(fake_proxy).to receive(:reset_external_tool_by_xml).and_return(statusCode: 503, error: 'Internal server error')
         is_expected.to eq configuration_result
       end
     end
@@ -165,11 +167,17 @@ describe CanvasLti::ReconfigureExternalApps do
         allow(account_mock[:fake_proxy]).to receive(:external_tools_list).and_return(account_mock[:tools_feed])
         allow(account_mock[:fake_proxy]).to receive(:create_external_tool_by_xml) do |tool_name, xml_string|
           account_mock[:received_creates] << tool_name
-          {'id' => random_id}
+          {
+            statusCode: 200,
+            body: {'id' => random_id}
+          }
         end
         allow(account_mock[:fake_proxy]).to receive(:reset_external_tool_by_xml) do |tool_id, xml_string|
           account_mock[:received_resets] << tool_id
-          {'id' => tool_id}
+          {
+            statusCode: 200,
+            body: {'id' => tool_id}
+          }
         end
       end
     end
