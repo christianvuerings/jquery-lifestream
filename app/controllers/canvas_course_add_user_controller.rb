@@ -30,21 +30,21 @@ class CanvasCourseAddUserController < ApplicationController
   # GET /api/academics/canvas/course_add_user/search_users.json
   def search_users
     raise Errors::BadRequestError, "Parameter 'searchText' is blank" if params['searchText'].blank?
-    raise Errors::BadRequestError, "Parameter 'searchType' is invalid" unless Canvas::CourseAddUser::SEARCH_TYPES.include?(params['searchType'])
-    users_found = Canvas::CourseAddUser.search_users(params['searchText'], params['searchType'])
+    raise Errors::BadRequestError, "Parameter 'searchType' is invalid" unless CanvasLti::CourseAddUser::SEARCH_TYPES.include?(params['searchType'])
+    users_found = CanvasLti::CourseAddUser.search_users(params['searchText'], params['searchType'])
     render json: { users: users_found }.to_json
   end
 
   # GET /api/academics/canvas/course_add_user/course_sections.json
   def course_sections
-    sections_list = Canvas::CourseAddUser.course_sections_list(canvas_course_id)
+    sections_list = CanvasLti::CourseAddUser.course_sections_list(canvas_course_id)
     render json: { courseSections: sections_list }.to_json
   end
 
   # POST /api/academics/canvas/course_add_user/add_user.json
   def add_user
     authorize_granted_role
-    Canvas::CourseAddUser.add_user_to_course_section(params['ldapUserId'], params['roleId'], params['sectionId'])
+    CanvasLti::CourseAddUser.add_user_to_course_section(params['ldapUserId'], params['roleId'], params['sectionId'])
     user_added = { :ldapUserId => params['ldapUserId'], :roleId => params['roleId'], :sectionId => params['sectionId'] }
     render json: { userAdded: user_added }.to_json
   end
@@ -63,7 +63,7 @@ class CanvasCourseAddUserController < ApplicationController
     course_user_roles = course_user_worker.roles
     course_user_role_types = course_user_worker.role_types
     global_admin = Canvas::Admins.new.admin_user?(session['user_id'])
-    granting_roles = Canvas::CourseAddUser.granting_roles(course_user_roles, global_admin)
+    granting_roles = CanvasLti::CourseAddUser.granting_roles(course_user_roles, global_admin)
     { roles: course_user_roles.merge({'globalAdmin' => global_admin}), roleTypes: course_user_role_types, grantingRoles: granting_roles }
   end
 

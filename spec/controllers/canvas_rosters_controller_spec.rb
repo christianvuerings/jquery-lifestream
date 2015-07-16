@@ -1,6 +1,3 @@
-require "spec_helper"
-require "support/canvas_shared_examples"
-
 describe CanvasRostersController do
   let(:user_id)           { Settings.canvas_proxy.test_user_id }
   let(:canvas_course_id)  { '767330' }
@@ -51,12 +48,12 @@ describe CanvasRostersController do
     session['user_id'] = user_id
     session['canvas_course_id'] = canvas_course_id
     allow_any_instance_of(Canvas::CoursePolicy).to receive(:is_canvas_course_teacher_or_assistant?).and_return(true)
-    allow_any_instance_of(Canvas::CanvasRosters).to receive(:get_feed).and_return(roster_feed)
+    allow_any_instance_of(Rosters::Canvas).to receive(:get_feed).and_return(roster_feed)
   end
 
   context 'when serving course rosters csv download' do
     it_should_behave_like 'an api endpoint' do
-      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:get_csv).and_raise(RuntimeError, "Something went wrong") }
+      before { allow_any_instance_of(Rosters::Canvas).to receive(:get_csv).and_raise(RuntimeError, 'Something went wrong') }
       let(:make_request) { get :get_csv, canvas_course_id: 'embedded', :format => :csv }
     end
 
@@ -88,18 +85,18 @@ describe CanvasRostersController do
       end
     end
 
-    context "when user is not authorized" do
+    context 'when user is not authorized' do
       before { allow_any_instance_of(Canvas::CoursePolicy).to receive(:is_canvas_course_teacher_or_assistant?).and_return(false) }
-      it "should respond with empty http 403" do
+      it 'should respond with empty http 403' do
         get :get_csv, canvas_course_id: 'embedded', :format => :csv
         expect(response.status).to eq 403
         expect(response.body).to eq ' '
       end
     end
 
-    context "when canvas course id not present" do
+    context 'when canvas course id not present' do
       before { session['canvas_course_id'] = nil }
-      it "should respond with empty http 403" do
+      it 'should respond with empty http 403' do
         get :get_csv, canvas_course_id: 'embedded', :format => :csv
         expect(response.status).to eq 403
         expect(response.body).to eq ' '
@@ -109,8 +106,8 @@ describe CanvasRostersController do
 
   context 'when serving course rosters feed' do
 
-    it_should_behave_like "an api endpoint" do
-      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:get_feed_filtered).and_raise(RuntimeError, "Something went wrong") }
+    it_should_behave_like 'an api endpoint' do
+      before { allow_any_instance_of(Rosters::Canvas).to receive(:get_feed_filtered).and_raise(RuntimeError, 'Something went wrong') }
       let(:make_request) { get :get_feed, canvas_course_id: 'embedded' }
     end
 
@@ -147,18 +144,18 @@ describe CanvasRostersController do
       end
     end
 
-    context "when user is not authorized" do
+    context 'when user is not authorized' do
       before { allow_any_instance_of(Canvas::CoursePolicy).to receive(:is_canvas_course_teacher_or_assistant?).and_return(false) }
-      it "should respond with empty http 403" do
+      it 'should respond with empty http 403' do
         get :get_feed, canvas_course_id: 'embedded'
         expect(response.status).to eq 403
         expect(response.body).to eq ' '
       end
     end
 
-    context "when canvas course id not present" do
+    context 'when canvas course id not present' do
       before { session['canvas_course_id'] = nil }
-      it "should respond with empty http 403" do
+      it 'should respond with empty http 403' do
         get :get_feed, canvas_course_id: 'embedded'
         expect(response.status).to eq 403
         expect(response.body).to eq ' '
@@ -166,25 +163,25 @@ describe CanvasRostersController do
     end
   end
 
-  context "when serving course enrollee photo" do
-    it_should_behave_like "an api endpoint" do
-      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:photo_data_or_file).and_raise(RuntimeError, "Something went wrong") }
+  context 'when serving course enrollee photo' do
+    it_should_behave_like 'an api endpoint' do
+      before { allow_any_instance_of(Rosters::Canvas).to receive(:photo_data_or_file).and_raise(RuntimeError, 'Something went wrong') }
       let(:make_request) { get :photo, canvas_course_id: canvas_course_id, person_id: student_id }
     end
 
-    it_should_behave_like "a user authenticated api endpoint" do
+    it_should_behave_like 'a user authenticated api endpoint' do
       let(:make_request) { get :photo, canvas_course_id: canvas_course_id, person_id: student_id }
     end
 
-    it "should return error if user is not authorized" do
+    it 'should return error if user is not authorized' do
       allow_any_instance_of(Canvas::CoursePolicy).to receive(:is_canvas_course_teacher_or_assistant?).and_return(false)
       get :photo, canvas_course_id: canvas_course_id, person_id: student_id
       assert_response(403)
     end
 
-    context "if photo path returned for enrollee" do
-      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:photo_data_or_file).and_return(photo_file) }
-      it "should return photo" do
+    context 'if photo path returned for enrollee' do
+      before { allow_any_instance_of(Rosters::Canvas).to receive(:photo_data_or_file).and_return(photo_file) }
+      it 'should return photo' do
         get :photo, canvas_course_id: canvas_course_id, person_id: student_id
         assert_response :success
       end
@@ -194,7 +191,7 @@ describe CanvasRostersController do
 
   context 'when serving profile URL' do
     it_should_behave_like 'an api endpoint' do
-      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:profile_url_for_ldap_id).and_raise(RuntimeError, "Something went wrong") }
+      before { allow_any_instance_of(Rosters::Canvas).to receive(:profile_url_for_ldap_id).and_raise(RuntimeError, 'Something went wrong') }
       let(:make_request) { get :profile, canvas_course_id: canvas_course_id, person_id: student_id }
     end
 
@@ -205,7 +202,7 @@ describe CanvasRostersController do
     context 'when user is authorized' do
       let(:canvas_student_id) { rand(999999) }
       let(:canvas_profile_url) { "http://ucberkeley.beta.instructure.com/courses/#{canvas_student_id}/users/#{canvas_student_id}" }
-      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:profile_url_for_ldap_id).and_return(canvas_profile_url) }
+      before { allow_any_instance_of(Rosters::Canvas).to receive(:profile_url_for_ldap_id).and_return(canvas_profile_url) }
       it 'should redirect to a Canvas profile URL' do
         get :profile, canvas_course_id: canvas_course_id, person_id: student_id
         expect(response).to redirect_to canvas_profile_url
@@ -213,7 +210,7 @@ describe CanvasRostersController do
     end
 
     context 'when profile URL not found' do
-      before { allow_any_instance_of(Canvas::CanvasRosters).to receive(:profile_url_for_ldap_id).and_return(nil) }
+      before { allow_any_instance_of(Rosters::Canvas).to receive(:profile_url_for_ldap_id).and_return(nil) }
       it 'should redirect to 404' do
         get :profile, canvas_course_id: canvas_course_id, person_id: student_id
         expect(response).to redirect_to('/404')

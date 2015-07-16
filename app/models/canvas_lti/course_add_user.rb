@@ -1,0 +1,78 @@
+module CanvasLti
+  class CourseAddUser
+    include SafeJsonParser
+
+    SEARCH_TYPES = %w(name email ldap_user_id)
+    SEARCH_LIMIT = 20
+
+    def self.search_users(search_text, search_type)
+      raise ArgumentError, 'Search text must be of type String' if search_text.class != String
+      raise ArgumentError, 'Search type must be of type String' if search_type.class != String
+      sentence_options = {:last_word_connector => ', or ', :two_words_connector => ' or '}
+      raise ArgumentError, "Search type argument '#{search_type}' invalid. Must be #{SEARCH_TYPES.to_sentence(sentence_options)}" unless SEARCH_TYPES.include?(search_type)
+      case search_type
+        when 'name'
+          people = CampusOracle::Queries.find_people_by_name(search_text, SEARCH_LIMIT)
+        when 'email'
+          people = CampusOracle::Queries.find_people_by_email(search_text, SEARCH_LIMIT)
+        when 'ldap_user_id'
+          people = CampusOracle::Queries.find_people_by_uid(search_text)
+      end
+      people.collect! do |person|
+        if person['affiliations'].present? && person['affiliations'].include?('-TYPE-')
+          person.delete('student_id')
+          HashConverter.camelize(person)
+        end
+      end
+      people.compact
+    end
+
+    def self.course_sections_list(course_id)
+      raise ArgumentError, 'Course ID must be a Fixnum' if course_id.class != Fixnum
+      canvas_course_sections_proxy = Canvas::CourseSections.new(course_id: course_id)
+      sections_response = canvas_course_sections_proxy.sections_list
+      sections = safe_json sections_response.body
+      sections.collect { |section| {'id' => section['id'].to_s, 'name' => section['name']} }
+    end
+
+    def self.add_user_to_course_section(ldap_user_id, role, canvas_course_section_id)
+      raise ArgumentError, 'ldap_user_id must be a String' if ldap_user_id.class != String
+      raise ArgumentError, 'role must be a String' if role.class != String
+      canvas_user_profile = Canvas::SisUserProfile.new(user_id: ldap_user_id).get
+      if canvas_user_profile.nil?
+        CanvasCsv::UserProvision.new.import_users [ldap_user_id]
+        Canvas::SisUserProfile.expire(ldap_user_id)
+        canvas_user_profile = Canvas::SisUserProfile.new(user_id: ldap_user_id).get
+      end
+      canvas_section_enrollments_proxy = Canvas::SectionEnrollments.new(:section_id => canvas_course_section_id)
+      canvas_section_enrollments_proxy.enroll_user(canvas_user_profile['id'], role, 'active', false)
+      true
+    end
+
+    # Include 'role_id' option to specify custom roles (i.e. Waitlist Student, Owner, Maintainer, Member)
+    def self.add_user_to_course(ldap_user_id, enrollment_type, canvas_course_id, options = {})
+      canvas_user_profile = Canvas::SisUserProfile.new(user_id: ldap_user_id.to_s).get
+      canvas_course_enrollments_proxy = Canvas::CourseEnrollments.new(:user_id => ldap_user_id.to_s, :canvas_course_id => canvas_course_id.to_i)
+      canvas_course_enrollments_proxy.enroll_user(canvas_user_profile['id'], enrollment_type.to_s, 'active', false, options)
+    end
+
+    # See output of Canvas::CourseUser#roles for course_user_roles argument
+    def self.granting_roles(course_user_roles, global_admin = false)
+      user_roles = course_user_roles.to_hash.select {|key,role| role }.keys
+      granted_roles = []
+      ta_roles = [
+        {'id' => 'StudentEnrollment', 'name' => 'Student'},
+        {'id' => 'ObserverEnrollment', 'name' => 'Observer'},
+      ]
+      privileged_roles = [
+        {'id' => 'DesignerEnrollment', 'name' => 'Designer'},
+        {'id' => 'TaEnrollment', 'name' => 'TA'},
+        {'id' => 'TeacherEnrollment', 'name' => 'Teacher'},
+      ]
+      granted_roles += ta_roles if user_roles.include?('ta') || user_roles.include?('teacher') || user_roles.include?('maintainer') || user_roles.include?('owner') || user_roles.include?('designer') || global_admin
+      granted_roles += privileged_roles if user_roles.include?('teacher') || user_roles.include?('owner') || user_roles.include?('designer') || global_admin
+      return granted_roles
+    end
+
+  end
+end
