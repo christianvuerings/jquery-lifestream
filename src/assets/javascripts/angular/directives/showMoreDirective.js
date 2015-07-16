@@ -1,70 +1,70 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('calcentral.directives').directive('ccShowMoreDirective', function($parse) {
-    return {
-      replace: true,
-      link: function(scope, elem, attrs) {
-        // Defaults
-        var incrementDefault = 10;
-        var limitDefault = 10;
+var angular = require('angular');
 
-        // Templates
-        var showMoreButtonTemplate = '<button class="cc-button cc-widget-show-more">Show {{nextItemsCount}} More</button>';
+angular.module('calcentral.directives').directive('ccShowMoreDirective', function($parse) {
+  return {
+    replace: true,
+    link: function(scope, elem, attrs) {
+      // Defaults
+      var incrementDefault = 10;
+      var limitDefault = 10;
 
-        // List of items in the ng-repeat
-        var moreList = $parse(attrs.ccShowMoreList);
+      // Templates
+      var showMoreButtonTemplate = '<button class="cc-button cc-widget-show-more">Show {{nextItemsCount}} More</button>';
 
-        var increment = scope[attrs.ccShowMoreIncrement] ? parseInt(scope[attrs.ccShowMoreIncrement], 10) : incrementDefault;
+      // List of items in the ng-repeat
+      var moreList = $parse(attrs.ccShowMoreList);
 
-        // Watch the limit variable
-        var watchMoreLimit = function(listLength) {
-          // The limit of the ngRepeat limitTo
-          scope.$watch(attrs.ccShowMoreLimit, function() {
-            // First time this will probably be undefined, we need to update it to a correct limit
-            scope[attrs.ccShowMoreLimit] = scope[attrs.ccShowMoreLimit] || limitDefault;
+      var increment = scope[attrs.ccShowMoreIncrement] ? parseInt(scope[attrs.ccShowMoreIncrement], 10) : incrementDefault;
 
-            // Remove the previous buttons
-            elem.empty();
+      // Watch the limit variable
+      var watchMoreLimit = function(listLength) {
+        // The limit of the ngRepeat limitTo
+        scope.$watch(attrs.ccShowMoreLimit, function() {
+          // First time this will probably be undefined, we need to update it to a correct limit
+          scope[attrs.ccShowMoreLimit] = scope[attrs.ccShowMoreLimit] || limitDefault;
 
-            if (scope[attrs.ccShowMoreLimit] < listLength) {
-              var nextItemsCount = Math.min(increment, listLength - scope[attrs.ccShowMoreLimit]);
+          // Remove the previous buttons
+          elem.empty();
 
-              var el = angular.element(showMoreButtonTemplate.replace('{{nextItemsCount}}', nextItemsCount));
-              elem.append(el);
+          if (scope[attrs.ccShowMoreLimit] < listLength) {
+            var nextItemsCount = Math.min(increment, listLength - scope[attrs.ccShowMoreLimit]);
 
-              el.on('click', function() {
-                scope[attrs.ccShowMoreLimit] += increment;
-                scope.$apply();
-              });
-            }
-          });
-        };
+            var el = angular.element(showMoreButtonTemplate.replace('{{nextItemsCount}}', nextItemsCount));
+            elem.append(el);
 
-        // Check when the list has changed
-        var moreListWatch = scope.$watch(moreList, function(list) {
-          if (list && Array.isArray(list)) {
-            watchMoreLimit(list.length);
-            // If there is an extra watch, we should use that instead and cancel the list watch
-            if (attrs.ccShowMoreWatch) {
-              moreListWatch();
-            }
+            el.on('click', function() {
+              scope[attrs.ccShowMoreLimit] += increment;
+              scope.$apply();
+            });
           }
         });
+      };
 
-        // Sometimes we also need to watch for extra items
-        scope.$watch($parse(attrs.ccShowMoreWatch), function(watchValue) {
-          // Don't do anything when the value we're watching for is undefined
-          if (watchValue === undefined) {
-            return;
+      // Check when the list has changed
+      var moreListWatch = scope.$watch(moreList, function(list) {
+        if (list && Array.isArray(list)) {
+          watchMoreLimit(list.length);
+          // If there is an extra watch, we should use that instead and cancel the list watch
+          if (attrs.ccShowMoreWatch) {
+            moreListWatch();
           }
-          moreListWatch();
-          var list = scope[attrs.ccShowMoreList];
-          if (list && Array.isArray(list)) {
-            watchMoreLimit(list.length);
-          }
-        });
-      }
-    };
-  });
-})(window.angular);
+        }
+      });
+
+      // Sometimes we also need to watch for extra items
+      scope.$watch($parse(attrs.ccShowMoreWatch), function(watchValue) {
+        // Don't do anything when the value we're watching for is undefined
+        if (watchValue === undefined) {
+          return;
+        }
+        moreListWatch();
+        var list = scope[attrs.ccShowMoreList];
+        if (list && Array.isArray(list)) {
+          watchMoreLimit(list.length);
+        }
+      });
+    }
+  };
+});

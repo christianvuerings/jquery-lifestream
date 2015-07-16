@@ -1,18 +1,18 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Tools Factory
-   */
-  angular.module('calcentral.factories').factory('toolsFactory', function(apiService) {
-    var stylesUrl = '/api/tools/styles';
+var angular = require('angular');
 
-    var getStyles = function(options) {
-      return apiService.http.request(options, stylesUrl);
-    };
+/**
+ * Tools Factory
+ */
+angular.module('calcentral.factories').factory('toolsFactory', function(apiService) {
+  var stylesUrl = '/api/tools/styles';
 
-    return {
-      getStyles: getStyles
-    };
-  });
-}(window.angular));
+  var getStyles = function(options) {
+    return apiService.http.request(options, stylesUrl);
+  };
+
+  return {
+    getStyles: getStyles
+  };
+});

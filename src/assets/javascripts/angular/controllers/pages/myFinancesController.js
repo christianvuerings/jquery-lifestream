@@ -1,10 +1,10 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * My Finances controller
-   */
-  angular.module('calcentral.controllers').controller('MyFinancesController', function(apiService) {
-    apiService.util.setTitle('My Finances');
-  });
-})(window.angular);
+var angular = require('angular');
+
+/**
+ * My Finances controller
+ */
+angular.module('calcentral.controllers').controller('MyFinancesController', function(apiService) {
+  apiService.util.setTitle('My Finances');
+});

@@ -1,23 +1,23 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Alerts controller
-   */
-  angular.module('calcentral.controllers').controller('AlertsController', function(badgesFactory, $scope) {
-    var fetch = function(options) {
-      badgesFactory.getBadges(options).success(function(data) {
-        $scope.alert = data.alert;
-      });
-    };
+var angular = require('angular');
 
-    $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
-      if (services && services['MyBadges::Merged']) {
-        fetch({
-          refreshCache: true
-        });
-      }
+/**
+ * Alerts controller
+ */
+angular.module('calcentral.controllers').controller('AlertsController', function(badgesFactory, $scope) {
+  var fetch = function(options) {
+    badgesFactory.getBadges(options).success(function(data) {
+      $scope.alert = data.alert;
     });
-    fetch();
+  };
+
+  $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
+    if (services && services['MyBadges::Merged']) {
+      fetch({
+        refreshCache: true
+      });
+    }
   });
-})(window.angular);
+  fetch();
+});

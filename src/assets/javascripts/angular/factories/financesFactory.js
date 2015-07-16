@@ -1,18 +1,18 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Finances Factory
-   */
-  angular.module('calcentral.factories').factory('financesFactory', function(apiService) {
-    var url = '/api/my/financials';
+var angular = require('angular');
 
-    var getFinances = function(options) {
-      return apiService.http.request(options, url);
-    };
+/**
+ * Finances Factory
+ */
+angular.module('calcentral.factories').factory('financesFactory', function(apiService) {
+  var url = '/api/my/financials';
 
-    return {
-      getFinances: getFinances
-    };
-  });
-}(window.angular));
+  var getFinances = function(options) {
+    return apiService.http.request(options, url);
+  };
+
+  return {
+    getFinances: getFinances
+  };
+});

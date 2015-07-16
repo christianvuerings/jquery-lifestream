@@ -1,10 +1,10 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Error controller
-   */
-  angular.module('calcentral.controllers').controller('ErrorController', function(apiService) {
-    apiService.util.setTitle('Error');
-  });
-})(window.angular);
+var angular = require('angular');
+
+/**
+ * Error controller
+ */
+angular.module('calcentral.controllers').controller('ErrorController', function(apiService) {
+  apiService.util.setTitle('Error');
+});
