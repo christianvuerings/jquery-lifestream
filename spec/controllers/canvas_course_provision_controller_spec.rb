@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CanvasCourseProvisionController do
 
   let(:uid) { rand(99999).to_s }
@@ -58,7 +56,7 @@ describe CanvasCourseProvisionController do
       end
       context 'when user authenticated' do
         before do
-          allow_any_instance_of(Canvas::CourseProvision).to receive(:get_feed).and_return(fake_provisioning_feed)
+          allow_any_instance_of(CanvasLti::CourseProvision).to receive(:get_feed).and_return(fake_provisioning_feed)
           allow_any_instance_of(AuthenticationStatePolicy).to receive(:can_create_canvas_course_site?).and_return(fake_authorized)
         end
         context 'allowed to create a course site' do
@@ -75,8 +73,8 @@ describe CanvasCourseProvisionController do
             json_response = JSON.parse(response.body)
             expect(json_response['error']).to be_present
           end
-          it_should_behave_like "an api endpoint" do
-            before { allow_any_instance_of(Canvas::CourseProvision).to receive(:get_feed).and_raise(RuntimeError, "Something went wrong") }
+          it_should_behave_like 'an api endpoint' do
+            before { allow_any_instance_of(CanvasLti::CourseProvision).to receive(:get_feed).and_raise(RuntimeError, 'Something went wrong') }
             let(:make_request) { get :get_feed }
           end
           it_should_behave_like 'a consistent admin-mode controller' do
@@ -104,18 +102,18 @@ describe CanvasCourseProvisionController do
         allow_any_instance_of(AuthenticationStatePolicy).to receive(:can_create_canvas_course_site?).and_return(true)
       end
 
-      it_should_behave_like "an api endpoint" do
-        before { allow_any_instance_of(Canvas::CourseProvision).to receive(:create_course_site).and_raise(RuntimeError, "Something went wrong") }
+      it_should_behave_like 'an api endpoint' do
+        before { allow_any_instance_of(CanvasLti::CourseProvision).to receive(:create_course_site).and_raise(RuntimeError, 'Something went wrong') }
         let(:make_request) { post :create_course_site, ccns: ccns }
       end
 
-      it_should_behave_like "a user authenticated api endpoint" do
+      it_should_behave_like 'a user authenticated api endpoint' do
         let(:make_request) { post :create_course_site, ccns: ccns }
       end
 
       context 'when authorized to create the course site' do
         before do
-          allow_any_instance_of(Canvas::CourseProvision).to receive(:create_course_site).and_return('canvas.courseprovision.12345.1383330151057')
+          allow_any_instance_of(CanvasLti::CourseProvision).to receive(:create_course_site).and_return('canvas.courseprovision.12345.1383330151057')
         end
 
         it 'responds with success when course provisioning job is created' do
@@ -135,8 +133,8 @@ describe CanvasCourseProvisionController do
 
     end
 
-    describe "#create_options_from_params" do
-      it "returns feed option parameters" do
+    describe '#create_options_from_params' do
+      it 'returns feed option parameters' do
         subject.params['controller'] = 'canvas_course_provision'
         subject.params['action'] = 'get_feed'
         subject.params['admin_acting_as'] = admin_acting_as
@@ -155,12 +153,12 @@ describe CanvasCourseProvisionController do
   end
 
   describe '#job_status' do
-    it_should_behave_like "an api endpoint" do
-      before { allow(Canvas::BackgroundJob).to receive(:find).and_raise(RuntimeError, "Something went wrong") }
+    it_should_behave_like 'an api endpoint' do
+      before { allow(BackgroundJob).to receive(:find).and_raise(RuntimeError, 'Something went wrong') }
       let(:make_request) { get :job_status, jobId: 'canvas.courseprovision.12345.1383330151057' }
     end
 
-    it_should_behave_like "a user authenticated api endpoint" do
+    it_should_behave_like 'a user authenticated api endpoint' do
       let(:make_request) { get :job_status, jobId: 'canvas.courseprovision.12345.1383330151057' }
     end
 
@@ -174,7 +172,7 @@ describe CanvasCourseProvisionController do
     end
 
     it 'returns status of canvas course provisioning job' do
-      cpcs = Canvas::ProvideCourseSite.new('1234')
+      cpcs = CanvasCsv::ProvideCourseSite.new '1234'
       cpcs.instance_eval { @background_job_status = 'processing'; @background_job_completed_steps = ['Prepared courses list', 'Identified department sub-account'] }
       cpcs.background_job_save
 
@@ -205,14 +203,14 @@ describe CanvasCourseProvisionController do
       let(:fake_sections_feed) do
         fake_provisioning_feed.merge('canvas_course' => {'canvasCourseId' => canvas_course_id.to_i, 'canEdit' => fake_can_edit})
       end
-      let(:fake_course_provision) { instance_double(Canvas::CourseProvision, get_feed: fake_sections_feed) }
+      let(:fake_course_provision) { instance_double(CanvasLti::CourseProvision, get_feed: fake_sections_feed) }
       it_should_behave_like 'a user authenticated api endpoint' do
         let(:make_request) { get :get_sections_feed, canvas_course_id: canvas_course_id }
       end
       context 'when user authenticated' do
         before do
           # Only one 'option' is allowed for the sections feed.
-          allow(Canvas::CourseProvision).to receive(:new).with(uid, {canvas_course_id: canvas_course_id.to_i}).and_return(fake_course_provision)
+          allow(CanvasLti::CourseProvision).to receive(:new).with(uid, {canvas_course_id: canvas_course_id.to_i}).and_return(fake_course_provision)
         end
         context 'allowed to view course site official sections' do
           let(:fake_can_view) { true }
@@ -273,9 +271,9 @@ describe CanvasCourseProvisionController do
         let(:make_request) { post :edit_sections, canvas_course_id: canvas_course_id, ccns_to_remove: ccns_to_remove, ccns_to_add:  ccns_to_add }
       end
       context 'when user authenticated' do
-        let(:fake_course_provision) { instance_double(Canvas::CourseProvision, edit_sections: 'canvas.courseprovision.12345.1383330151057') }
+        let(:fake_course_provision) { instance_double(CanvasLti::CourseProvision, edit_sections: 'canvas.courseprovision.12345.1383330151057') }
         before do
-          allow(Canvas::CourseProvision).to receive(:new).with(uid, {canvas_course_id: canvas_course_id.to_i}).and_return(fake_course_provision)
+          allow(CanvasLti::CourseProvision).to receive(:new).with(uid, {canvas_course_id: canvas_course_id.to_i}).and_return(fake_course_provision)
         end
         context 'allowed to edit official sections' do
           let(:fake_can_edit) { true }

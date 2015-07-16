@@ -1,6 +1,6 @@
 class CanvasLtiController < ApplicationController
   include ClassLogger
-  include Canvas::ExternalAppConfigurations
+  include CanvasLti::ExternalAppConfigurations
 
   # Since LTI provider views are in an iframe, we need to skip the iframe buster.
   # Since the LTI session is initiated by a POST, to receive the request we also need to skip the CSRF check.
@@ -34,7 +34,7 @@ class CanvasLtiController < ApplicationController
   end
 
   def embedded
-    lti = Canvas::Lti.new.validate_tool_provider(request)
+    lti = CanvasLti::Lti.new.validate_tool_provider(request)
     if lti
       authenticate_by_lti(lti)
       logger.warn("Session authenticated by LTI; user = #{session['user_id']}")

@@ -89,7 +89,7 @@ shared_examples 'a background job worker' do
   let(:background_job_id) { 'Canvas::Egrades.1383330151057-67f4b934525501cb' }
 
   before do
-    allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return(background_job_id)
+    allow(BackgroundJob).to receive(:unique_job_id).and_return(background_job_id)
     subject.background_job_initialize(:total_steps => 3)
   end
 
@@ -98,7 +98,7 @@ shared_examples 'a background job worker' do
   end
 
   it 'provides consistent background job id' do
-    allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return('generated.cache.key1','generated.cache.key2')
+    allow(BackgroundJob).to receive(:unique_job_id).and_return('generated.cache.key1','generated.cache.key2')
     subject.background_job_initialize(:total_steps => 3)
     expect(subject.background_job_id).to eq "#{subject.class.name}.generated.cache.key1"
     expect(subject.background_job_id).to eq "#{subject.class.name}.generated.cache.key1"
@@ -111,7 +111,7 @@ shared_examples 'a background job worker' do
 
   it 'saves current object state to cache' do
     job_id = subject.background_job_id
-    bg_job_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    bg_job_object = BackgroundJob.find(subject.background_job_id)
     expect(bg_job_object.background_job_id).to eq job_id
     expect(bg_job_object.background_job_report).to be_an_instance_of Hash
     expect(bg_job_object.background_job_report[:jobStatus]).to eq 'New'
@@ -135,7 +135,7 @@ shared_examples 'a background job worker' do
     end
 
     it 'returns background job report with custom report values' do
-      allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return(background_job_id)
+      allow(BackgroundJob).to receive(:unique_job_id).and_return(background_job_id)
       allow(subject).to receive(:background_job_report_custom).and_return({:customKey => 'customValue'})
       report = subject.background_job_report
       expect(report).to be_an_instance_of Hash
@@ -149,7 +149,7 @@ shared_examples 'a background job worker' do
       subject.background_job_complete_step('step 2')
     end
     it 'reports as processing based on total and completed steps' do
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       report = cached_object.background_job_report
       expect(report).to be_an_instance_of Hash
       expect(report[:jobId]).to be_an_instance_of String
@@ -167,7 +167,7 @@ shared_examples 'a background job worker' do
       subject.background_job_complete_step('step 3')
     end
     it 'reports as completed based on total and completed steps' do
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       report = cached_object.background_job_report
       expect(report).to be_an_instance_of Hash
       expect(report[:jobId]).to be_an_instance_of String
@@ -181,7 +181,7 @@ shared_examples 'a background job worker' do
   it 'reports errors when present' do
     subject.background_job_complete_step('step 1')
     subject.background_job_add_error('Something went wrong')
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     report = cached_object.background_job_report
     expect(report).to be_an_instance_of Hash
     expect(report[:jobId]).to be_an_instance_of String
@@ -193,7 +193,7 @@ shared_examples 'a background job worker' do
     subject.background_job_complete_step('step 2')
     subject.background_job_add_error('Something else went wrong')
     subject.background_job_complete_step('step 3')
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     report = cached_object.background_job_report
     expect(report).to be_an_instance_of Hash
     expect(report[:jobId]).to be_an_instance_of String
@@ -207,21 +207,21 @@ shared_examples 'a background job worker' do
     subject.background_job_set_total_steps('4')
     subject.background_job_complete_step('step one')
     subject.background_job_complete_step('step two')
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     expect(cached_object.background_job_report[:percentComplete]).to eq 0.50
   end
 
   it 'reports as processing or completed based on total and completed steps' do
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     expect(cached_object.background_job_report[:jobStatus]).to eq 'New'
     subject.background_job_complete_step('step 1')
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     expect(cached_object.background_job_report[:jobStatus]).to eq 'Processing'
     subject.background_job_complete_step('step 2')
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     expect(cached_object.background_job_report[:jobStatus]).to eq 'Processing'
     subject.background_job_complete_step('step 3')
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     expect(cached_object.background_job_report[:jobStatus]).to eq 'Completed'
   end
 
