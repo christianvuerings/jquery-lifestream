@@ -1,24 +1,24 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * My Groups controller
-   */
-  angular.module('calcentral.controllers').controller('MyGroupsController', function(apiService, myGroupsFactory, $routeParams, $scope) {
-    var getMyGroups = function(options) {
-      myGroupsFactory.getGroups(options).success(function(data) {
-        apiService.updatedFeeds.feedLoaded(data);
-        angular.extend($scope, data);
-      });
-    };
+var angular = require('angular');
 
-    $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
-      if (services && services['MyGroups::Merged']) {
-        getMyGroups({
-          refreshCache: true
-        });
-      }
+/**
+ * My Groups controller
+ */
+angular.module('calcentral.controllers').controller('MyGroupsController', function(apiService, myGroupsFactory, $routeParams, $scope) {
+  var getMyGroups = function(options) {
+    myGroupsFactory.getGroups(options).success(function(data) {
+      apiService.updatedFeeds.feedLoaded(data);
+      angular.extend($scope, data);
     });
-    getMyGroups();
+  };
+
+  $scope.$on('calcentral.api.updatedFeeds.updateServices', function(event, services) {
+    if (services && services['MyGroups::Merged']) {
+      getMyGroups({
+        refreshCache: true
+      });
+    }
   });
-})(window.angular);
+  getMyGroups();
+});

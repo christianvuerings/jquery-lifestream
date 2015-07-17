@@ -1,26 +1,26 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Admin Factory
-   */
-  angular.module('calcentral.factories').factory('basicAuthFactory', function(apiService, $http) {
-    var loginUrl = '/basic_auth_login';
+var angular = require('angular');
 
-    var login = function(options) {
-      return apiService.http.request(options, loginUrl);
-    };
+/**
+ * Admin Factory
+ */
+angular.module('calcentral.factories').factory('basicAuthFactory', function(apiService, $http) {
+  var loginUrl = '/basic_auth_login';
 
-    var updateHeaders = function(basicauth) {
-      if (!window.btoa) {
-        return;
-      }
-      $http.defaults.headers.common.Authorization = 'Basic ' + btoa(basicauth.login + ':' + basicauth.password);
-    };
+  var login = function(options) {
+    return apiService.http.request(options, loginUrl);
+  };
 
-    return {
-      login: login,
-      updateHeaders: updateHeaders
-    };
-  });
-}(window.angular));
+  var updateHeaders = function(basicauth) {
+    if (!window.btoa) {
+      return;
+    }
+    $http.defaults.headers.common.Authorization = 'Basic ' + btoa(basicauth.login + ':' + basicauth.password);
+  };
+
+  return {
+    login: login,
+    updateHeaders: updateHeaders
+  };
+});

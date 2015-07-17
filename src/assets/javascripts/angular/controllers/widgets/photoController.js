@@ -1,10 +1,10 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Photo controller
-   */
-  angular.module('calcentral.controllers').controller('PhotoController', function($scope) {
-    $scope.profilePictureLoading = true;
-  });
-})(window.angular);
+var angular = require('angular');
+
+/**
+ * Photo controller
+ */
+angular.module('calcentral.controllers').controller('PhotoController', function($scope) {
+  $scope.profilePictureLoading = true;
+});

@@ -1,18 +1,18 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Google Factory
-   */
-  angular.module('calcentral.factories').factory('googleFactory', function($http) {
-    var dismissReminderUrl = '/api/google/dismiss_reminder';
+var angular = require('angular');
 
-    var dismissReminder = function() {
-      return $http.post(dismissReminderUrl);
-    };
+/**
+ * Google Factory
+ */
+angular.module('calcentral.factories').factory('googleFactory', function($http) {
+  var dismissReminderUrl = '/api/google/dismiss_reminder';
 
-    return {
-      dismissReminder: dismissReminder
-    };
-  });
-}(window.angular));
+  var dismissReminder = function() {
+    return $http.post(dismissReminderUrl);
+  };
+
+  return {
+    dismissReminder: dismissReminder
+  };
+});

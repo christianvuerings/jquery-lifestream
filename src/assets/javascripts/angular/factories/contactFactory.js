@@ -1,30 +1,30 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Contact Factory
-   */
-  angular.module('calcentral.factories').factory('contactFactory', function(apiService) {
-    var urlAddress = '/api/campus_solutions/address';
-    var urlCountries = '/api/campus_solutions/country';
-    var urlStates = '/api/campus_solutions/state';
+var angular = require('angular');
 
-    var getAddress = function(options) {
-      return apiService.http.request(options, urlAddress);
-    };
+/**
+ * Contact Factory
+ */
+angular.module('calcentral.factories').factory('contactFactory', function(apiService) {
+  var urlAddress = '/api/campus_solutions/address';
+  var urlCountries = '/api/campus_solutions/country';
+  var urlStates = '/api/campus_solutions/state';
 
-    var getCountries = function(options) {
-      return apiService.http.request(options, urlCountries);
-    };
+  var getAddress = function(options) {
+    return apiService.http.request(options, urlAddress);
+  };
 
-    var getStates = function(options) {
-      return apiService.http.request(options, urlStates);
-    };
+  var getCountries = function(options) {
+    return apiService.http.request(options, urlCountries);
+  };
 
-    return {
-      getAddress: getAddress,
-      getCountries: getCountries,
-      getStates: getStates
-    };
-  });
-}(window.angular));
+  var getStates = function(options) {
+    return apiService.http.request(options, urlStates);
+  };
+
+  return {
+    getAddress: getAddress,
+    getCountries: getCountries,
+    getStates: getStates
+  };
+});

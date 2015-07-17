@@ -1,8 +1,9 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Tools controller
-   */
-  angular.module('calcentral.controllers').controller('ToolsController', angular.noop);
-})(window.angular);
+var angular = require('angular');
+
+/**
+ * Tools controller
+ */
+angular.module('calcentral.controllers').controller('ToolsController', angular.noop);
+

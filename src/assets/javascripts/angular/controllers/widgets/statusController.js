@@ -1,87 +1,87 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Status controller
-   */
-  angular.module('calcentral.controllers').controller('StatusController', function(activityFactory, apiService, badgesFactory, financesFactory, $scope, $q) {
-    // Keep track on whether the status has been loaded or not
-    var hasLoaded = false;
+var angular = require('angular');
 
-    var loadStudentInfo = function(data) {
-      if (!data.studentInfo) {
-        return;
-      }
+/**
+ * Status controller
+ */
+angular.module('calcentral.controllers').controller('StatusController', function(activityFactory, apiService, badgesFactory, financesFactory, $scope, $q) {
+  // Keep track on whether the status has been loaded or not
+  var hasLoaded = false;
 
-      $scope.studentInfo = data.studentInfo;
+  var loadStudentInfo = function(data) {
+    if (!data.studentInfo) {
+      return;
+    }
 
-      if (data.studentInfo.regStatus.needsAction && apiService.user.profile.features.regstatus) {
-        $scope.count++;
+    $scope.studentInfo = data.studentInfo;
+
+    if (data.studentInfo.regStatus.needsAction && apiService.user.profile.features.regstatus) {
+      $scope.count++;
+      $scope.hasAlerts = true;
+    }
+    if (data.studentInfo.regBlock.activeBlocks) {
+      $scope.count += data.studentInfo.regBlock.activeBlocks;
+      $scope.hasAlerts = true;
+    } else if (data.studentInfo.regBlock.errored) {
+      $scope.count++;
+      $scope.hasWarnings = true;
+    }
+  };
+
+  var loadFinances = function(data) {
+    if (!data.summary) {
+      return;
+    }
+
+    if (data.summary.totalPastDueAmount > 0) {
+      $scope.count++;
+      $scope.hasAlerts = true;
+    } else if (data.summary.minimumAmountDue > 0) {
+      $scope.count++;
+      $scope.hasWarnings = true;
+    }
+    $scope.totalPastDueAmount = data.summary.totalPastDueAmount;
+    $scope.minimumAmountDue = data.summary.minimumAmountDue;
+  };
+
+  var loadActivity = function(data) {
+    if (data.activities) {
+      $scope.countUndatedFinaid = data.activities.filter(function(element) {
+        return element.date === '' && element.emitter === 'Financial Aid' && element.type === 'alert';
+      }).length;
+      if ($scope.countUndatedFinaid) {
+        $scope.count += $scope.countUndatedFinaid;
         $scope.hasAlerts = true;
       }
-      if (data.studentInfo.regBlock.activeBlocks) {
-        $scope.count += data.studentInfo.regBlock.activeBlocks;
-        $scope.hasAlerts = true;
-      } else if (data.studentInfo.regBlock.errored) {
-        $scope.count++;
-        $scope.hasWarnings = true;
-      }
-    };
+    }
+  };
 
-    var loadFinances = function(data) {
-      if (!data.summary) {
-        return;
-      }
+  var finishLoading = function() {
+    // Hides the spinner
+    $scope.statusLoading = '';
+  };
 
-      if (data.summary.totalPastDueAmount > 0) {
-        $scope.count++;
-        $scope.hasAlerts = true;
-      } else if (data.summary.minimumAmountDue > 0) {
-        $scope.count++;
-        $scope.hasWarnings = true;
-      }
-      $scope.totalPastDueAmount = data.summary.totalPastDueAmount;
-      $scope.minimumAmountDue = data.summary.minimumAmountDue;
-    };
+  $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
+    if (isAuthenticated && !hasLoaded) {
+      // Make sure to only load this once
+      hasLoaded = true;
 
-    var loadActivity = function(data) {
-      if (data.activities) {
-        $scope.countUndatedFinaid = data.activities.filter(function(element) {
-          return element.date === '' && element.emitter === 'Financial Aid' && element.type === 'alert';
-        }).length;
-        if ($scope.countUndatedFinaid) {
-          $scope.count += $scope.countUndatedFinaid;
-          $scope.hasAlerts = true;
-        }
-      }
-    };
+      // Set the error count to 0
+      $scope.count = 0;
+      $scope.hasAlerts = false;
+      $scope.hasWarnings = false;
 
-    var finishLoading = function() {
-      // Hides the spinner
-      $scope.statusLoading = '';
-    };
+      // We use this to show the spinner
+      $scope.statusLoading = 'Process';
 
-    $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
-      if (isAuthenticated && !hasLoaded) {
-        // Make sure to only load this once
-        hasLoaded = true;
+      // Get all the necessary data from the different factories
+      var getBadges = badgesFactory.getBadges().success(loadStudentInfo);
+      var getFinances = financesFactory.getFinances().success(loadFinances);
+      var getFinaidActivity = activityFactory.getFinaidActivity().then(loadActivity);
 
-        // Set the error count to 0
-        $scope.count = 0;
-        $scope.hasAlerts = false;
-        $scope.hasWarnings = false;
-
-        // We use this to show the spinner
-        $scope.statusLoading = 'Process';
-
-        // Get all the necessary data from the different factories
-        var getBadges = badgesFactory.getBadges().success(loadStudentInfo);
-        var getFinances = financesFactory.getFinances().success(loadFinances);
-        var getFinaidActivity = activityFactory.getFinaidActivity().then(loadActivity);
-
-        // Make sure to hide the spinner when everything is loaded
-        $q.all(getBadges, getFinances, getFinaidActivity).then(finishLoading);
-      }
-    });
+      // Make sure to hide the spinner when everything is loaded
+      $q.all(getBadges, getFinances, getFinaidActivity).then(finishLoading);
+    }
   });
-})(window.angular);
+});

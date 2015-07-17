@@ -1,18 +1,18 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Up Next Factory
-   */
-  angular.module('calcentral.factories').factory('upNextFactory', function(apiService) {
-    var url = '/api/my/up_next';
+var angular = require('angular');
 
-    var getUpNext = function(options) {
-      return apiService.http.request(options, url);
-    };
+/**
+ * Up Next Factory
+ */
+angular.module('calcentral.factories').factory('upNextFactory', function(apiService) {
+  var url = '/api/my/up_next';
 
-    return {
-      getUpNext: getUpNext
-    };
-  });
-}(window.angular));
+  var getUpNext = function(options) {
+    return apiService.http.request(options, url);
+  };
+
+  return {
+    getUpNext: getUpNext
+  };
+});
