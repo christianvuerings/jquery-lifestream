@@ -1,18 +1,18 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * My Groups Factory
-   */
-  angular.module('calcentral.factories').factory('myGroupsFactory', function(apiService) {
-    var url = '/api/my/groups';
+var angular = require('angular');
 
-    var getGroups = function(options) {
-      return apiService.http.request(options, url);
-    };
+/**
+ * My Groups Factory
+ */
+angular.module('calcentral.factories').factory('myGroupsFactory', function(apiService) {
+  var url = '/api/my/groups';
 
-    return {
-      getGroups: getGroups
-    };
-  });
-}(window.angular));
+  var getGroups = function(options) {
+    return apiService.http.request(options, url);
+  };
+
+  return {
+    getGroups: getGroups
+  };
+});

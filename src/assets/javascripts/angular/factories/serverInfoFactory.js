@@ -1,18 +1,18 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Server Info Factory
-   */
-  angular.module('calcentral.factories').factory('serverInfoFactory', function(apiService) {
-    var url = '/api/server_info';
+var angular = require('angular');
 
-    var getServerInfo = function(options) {
-      return apiService.http.request(options, url);
-    };
+/**
+ * Server Info Factory
+ */
+angular.module('calcentral.factories').factory('serverInfoFactory', function(apiService) {
+  var url = '/api/server_info';
 
-    return {
-      getServerInfo: getServerInfo
-    };
-  });
-}(window.angular));
+  var getServerInfo = function(options) {
+    return apiService.http.request(options, url);
+  };
+
+  return {
+    getServerInfo: getServerInfo
+  };
+});

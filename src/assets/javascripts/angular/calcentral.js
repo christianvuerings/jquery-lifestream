@@ -1,65 +1,65 @@
-(function(win, angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Initialize all of the submodules
-   */
-  angular.module('calcentral.config', ['ngRoute']);
-  angular.module('calcentral.controllers', []);
-  angular.module('calcentral.directives', []);
-  angular.module('calcentral.factories', []);
-  angular.module('calcentral.filters', []);
-  angular.module('calcentral.services', ['ng']);
+var angular = require('angular');
 
-  /**
-   * CalCentral module
-   */
-  var calcentral = angular.module('calcentral', [
-    'calcentral.config',
-    'calcentral.controllers',
-    'calcentral.directives',
-    'calcentral.factories',
-    'calcentral.filters',
-    'calcentral.services',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch',
-    'templates'
-  ]);
+/**
+ * Initialize all of the submodules
+ */
+angular.module('calcentral.config', ['ngRoute']);
+angular.module('calcentral.controllers', []);
+angular.module('calcentral.directives', []);
+angular.module('calcentral.factories', []);
+angular.module('calcentral.filters', []);
+angular.module('calcentral.services', ['ng']);
 
-  /**
-   * Inject the CalCentral config as a constant that can be use accross modules
-   */
-  var injectConfigConstant = function(response) {
-    angular.module('calcentral.config').constant('calcentralConfig', response.data);
-  };
+/**
+ * CalCentral module
+ */
+var calcentral = angular.module('calcentral', [
+  'calcentral.config',
+  'calcentral.controllers',
+  'calcentral.directives',
+  'calcentral.factories',
+  'calcentral.filters',
+  'calcentral.services',
+  'ngRoute',
+  'ngSanitize',
+  'ngTouch',
+  'templates'
+]);
 
-  /**
-   * Bootstrap the CalCentral Angular App
-   */
-  var bootstrap = function() {
-    angular.element(document).ready(function() {
-      angular.bootstrap(document, ['calcentral']);
-    });
-  };
+/**
+ * Inject the CalCentral config as a constant that can be use accross modules
+ */
+var injectConfigConstant = function(response) {
+  angular.module('calcentral.config').constant('calcentralConfig', response.data);
+};
 
-  /**
-   * Load the CalCentral config which includes:
-   *   csrf tokens
-   *   uid
-   *   google analytics id
-   *   app version
-   *   hostname
-   */
-  var loadConfig = function() {
-    var initInjector = angular.injector(['ng']);
-    var $http = initInjector.get('$http');
+/**
+ * Bootstrap the CalCentral Angular App
+ */
+var bootstrap = function() {
+  angular.element(document).ready(function() {
+    angular.bootstrap(document, ['calcentral']);
+  });
+};
 
-    return $http.get('/api/config');
-  };
+/**
+ * Load the CalCentral config which includes:
+ *   csrf tokens
+ *   uid
+ *   google analytics id
+ *   app version
+ *   hostname
+ */
+var loadConfig = function() {
+  var initInjector = angular.injector(['ng']);
+  var $http = initInjector.get('$http');
 
-  loadConfig().then(injectConfigConstant).then(bootstrap);
+  return $http.get('/api/config');
+};
 
-  // Bind calcentral to the window object so it's globally accessible
-  win.calcentral = calcentral;
-})(window, window.angular);
+loadConfig().then(injectConfigConstant).then(bootstrap);
+
+// Bind calcentral to the window object so it's globally accessible
+window.calcentral = calcentral;

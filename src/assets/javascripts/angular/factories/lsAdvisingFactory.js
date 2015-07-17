@@ -1,17 +1,17 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * L & S Advising Factory
-   */
-  angular.module('calcentral.factories').factory('lsAdvisingFactory', function($http) {
-    var getAdvisingInfo = function() {
-      // return $http.get('/dummy/json/lsadvising2.json');
-      return $http.get('/api/my/advising');
-    };
+var angular = require('angular');
 
-    return {
-      getAdvisingInfo: getAdvisingInfo
-    };
-  });
-}(window.angular));
+/**
+ * L & S Advising Factory
+ */
+angular.module('calcentral.factories').factory('lsAdvisingFactory', function($http) {
+  var getAdvisingInfo = function() {
+    // return $http.get('/dummy/json/lsadvising2.json');
+    return $http.get('/api/my/advising');
+  };
+
+  return {
+    getAdvisingInfo: getAdvisingInfo
+  };
+});
