@@ -305,7 +305,7 @@ oec:
     year: 2015,
     code: "C"
   }]
-  departments: [ 'BIOLOGY', 'CATALAN', 'CHEM', 'DATASCI', 'ECON', 'EPS', 'GWS', 'INFO', 'INTEGBI', 'LGBT', 'LINGUIS', 'MATH', 'MCELLBI', 'PHYSICS', 'POL SCI', 'PORTUG', 'PSYCH', 'SPANISH', 'STAT' ]
+  departments: [ 'A,RESEC', 'BIOLOGY', 'CATALAN', 'CHEM', 'DATASCI', 'ECON', 'ENE,RES', 'ENVECON', 'EPS', 'ESPM', 'GWS', 'INFO', 'INTEGBI', 'LGBT', 'LINGUIS', 'MATH', 'MCELLBI', 'NUSCTX', 'PHYSICS', 'PLANTBI', 'POL SCI', 'PORTUG', 'PSYCH', 'SPANISH', 'STAT' ]
 
 class_calendar:
   slice_size: 10000
