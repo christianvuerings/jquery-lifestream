@@ -1,16 +1,16 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * L & S Advising controller
-   */
-  angular.module('calcentral.controllers').controller('LsAdvisingController', function(lsAdvisingFactory, $scope) {
-    lsAdvisingFactory.getAdvisingInfo().success(function(data) {
-      angular.extend($scope, data);
+var angular = require('angular');
 
-      if (data.statusCode && data.statusCode >= 400) {
-        $scope.lsAdvisingError = data;
-      }
-    });
+/**
+ * L & S Advising controller
+ */
+angular.module('calcentral.controllers').controller('LsAdvisingController', function(lsAdvisingFactory, $scope) {
+  lsAdvisingFactory.getAdvisingInfo().success(function(data) {
+    angular.extend($scope, data);
+
+    if (data.statusCode && data.statusCode >= 400) {
+      $scope.lsAdvisingError = data;
+    }
   });
-})(window.angular);
+});

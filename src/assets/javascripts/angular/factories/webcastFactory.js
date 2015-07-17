@@ -1,16 +1,16 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Webcast Factory
-   */
-  angular.module('calcentral.factories').factory('webcastFactory', function(apiService) {
-    var getWebcasts = function(options) {
-      return apiService.http.request(options);
-    };
+var angular = require('angular');
 
-    return {
-      getWebcasts: getWebcasts
-    };
-  });
-}(window.angular));
+/**
+ * Webcast Factory
+ */
+angular.module('calcentral.factories').factory('webcastFactory', function(apiService) {
+  var getWebcasts = function(options) {
+    return apiService.http.request(options);
+  };
+
+  return {
+    getWebcasts: getWebcasts
+  };
+});

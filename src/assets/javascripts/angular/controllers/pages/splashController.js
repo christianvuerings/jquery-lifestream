@@ -1,18 +1,18 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Splash controller
-   */
-  angular.module('calcentral.controllers').controller('SplashController', function(apiService, blogFactory, $filter, $scope) {
-    apiService.util.setTitle('Home');
+var angular = require('angular');
 
-    blogFactory.getBlog().success(function(data) {
-      if (data.alert && data.alert.title) {
-        $scope.splashNote = data.alert;
-      } else {
-        $scope.splashNote = data.releaseNote;
-      }
-    });
+/**
+ * Splash controller
+ */
+angular.module('calcentral.controllers').controller('SplashController', function(apiService, blogFactory, $filter, $scope) {
+  apiService.util.setTitle('Home');
+
+  blogFactory.getBlog().success(function(data) {
+    if (data.alert && data.alert.title) {
+      $scope.splashNote = data.alert;
+    } else {
+      $scope.splashNote = data.releaseNote;
+    }
   });
-})(window.angular);
+});

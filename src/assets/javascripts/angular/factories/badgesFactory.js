@@ -1,18 +1,18 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Badges Factory
-   */
-  angular.module('calcentral.factories').factory('badgesFactory', function(apiService) {
-    var url = '/api/my/badges';
+var angular = require('angular');
 
-    var getBadges = function(options) {
-      return apiService.http.request(options, url);
-    };
+/**
+ * Badges Factory
+ */
+angular.module('calcentral.factories').factory('badgesFactory', function(apiService) {
+  var url = '/api/my/badges';
 
-    return {
-      getBadges: getBadges
-    };
-  });
-}(window.angular));
+  var getBadges = function(options) {
+    return apiService.http.request(options, url);
+  };
+
+  return {
+    getBadges: getBadges
+  };
+});

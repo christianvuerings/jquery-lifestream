@@ -1,35 +1,35 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Canvas Course Add User Factory - Interface for 'Find a Person to Add' tool API endpoints
-   */
-  angular.module('calcentral.factories').factory('canvasCourseAddUserFactory', function($http) {
-    var searchUsers = function(canvasCourseId, searchText, searchType) {
-      return $http.get('/api/academics/canvas/course_add_user/' + canvasCourseId + '/search_users', {
-        params: {
-          searchText: searchText,
-          searchType: searchType
-        }
-      });
-    };
+var angular = require('angular');
 
-    var courseSections = function(canvasCourseId) {
-      return $http.get('/api/academics/canvas/course_add_user/' + canvasCourseId + '/course_sections');
-    };
+/**
+ * Canvas Course Add User Factory - Interface for 'Find a Person to Add' tool API endpoints
+ */
+angular.module('calcentral.factories').factory('canvasCourseAddUserFactory', function($http) {
+  var searchUsers = function(canvasCourseId, searchText, searchType) {
+    return $http.get('/api/academics/canvas/course_add_user/' + canvasCourseId + '/search_users', {
+      params: {
+        searchText: searchText,
+        searchType: searchType
+      }
+    });
+  };
 
-    var addUser = function(canvasCourseId, ldapUserId, sectionId, roleId) {
-      return $http.post('/api/academics/canvas/course_add_user/' + canvasCourseId + '/add_user', {
-        ldapUserId: ldapUserId,
-        sectionId: sectionId,
-        roleId: roleId
-      });
-    };
+  var courseSections = function(canvasCourseId) {
+    return $http.get('/api/academics/canvas/course_add_user/' + canvasCourseId + '/course_sections');
+  };
 
-    return {
-      searchUsers: searchUsers,
-      courseSections: courseSections,
-      addUser: addUser
-    };
-  });
-}(window.angular));
+  var addUser = function(canvasCourseId, ldapUserId, sectionId, roleId) {
+    return $http.post('/api/academics/canvas/course_add_user/' + canvasCourseId + '/add_user', {
+      ldapUserId: ldapUserId,
+      sectionId: sectionId,
+      roleId: roleId
+    });
+  };
+
+  return {
+    searchUsers: searchUsers,
+    courseSections: courseSections,
+    addUser: addUser
+  };
+});
