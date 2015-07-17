@@ -10,7 +10,7 @@ module MyActivities
 
     def self.get_feed(uid, classes)
       response = Canvas::UserActivityStream.new(user_id: uid).user_activity
-      if (response && response.status == 200 && raw_feed = safe_json(response.body))
+      if (raw_feed = response[:body])
         raw_feed.map { |entry| format_entry(uid, entry, classes) }.compact
       else
         []

@@ -73,9 +73,7 @@ describe Canvas::MergedUserSites do
       }],
       groups: []
     }}
-    subject {
-      Canvas::MergedUserSites.new(uid).get_group_data(canvas_group)
-    }
+    subject { Canvas::MergedUserSites.new(uid).get_group_data(canvas_group) }
     context 'when a Canvas group site is associated with a course site' do
       let(:canvas_group) {canvas_group_base.merge({ 'context_type' => 'Course', 'course_id' => canvas_course_id })}
       it_behaves_like 'a group site item'

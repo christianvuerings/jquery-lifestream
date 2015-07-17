@@ -6,9 +6,9 @@ describe MyActivities::CanvasActivities do
 
   before do
     @user_id = Settings.canvas_proxy.test_user_id
-    @fake_activity_stream_proxy = Canvas::UserActivityStream.new({fake: true})
-    @fake_activity_stream = JSON.parse(@fake_activity_stream_proxy.user_activity.body)
-    @fake_time = Time.zone.today.in_time_zone.to_datetime
+    @fake_activity_stream_proxy = Canvas::UserActivityStream.new(fake: true)
+    @fake_activity_stream = @fake_activity_stream_proxy.user_activity[:body]
+    @fake_time = Time.zone.today.in_time_zone.to_datetime.to_s
   end
 
   context 'when classes feed is empty' do
@@ -30,7 +30,7 @@ describe MyActivities::CanvasActivities do
     it 'should be able to ignore malformed entries from the canvas feed' do
       bad_date_entry = { 'id' => @user_id, 'user_id' => @user_id, 'created_at' => 'stone-age'}
       flawed_activity_stream = @fake_activity_stream + [bad_date_entry]
-      Canvas::UserActivityStream.stub(:new).and_return(stub_proxy(:user_activity, flawed_activity_stream))
+      allow_any_instance_of(Canvas::UserActivityStream).to receive(:user_activity).and_return(statusCode: 200, body: flawed_activity_stream)
       expect(activities.size).to eq @fake_activity_stream.size
     end
 
@@ -92,48 +92,48 @@ describe MyActivities::CanvasActivities do
     let(:canvas_feed) do
       [
         {
-          id: 1999,
-          context_type: 'Course',
-          type: 'Message',
-          course_id: 1,
-          title: 'Assignment created',
-          updated_at: @fake_time,
-          created_at: @fake_time
+          'id' => 1999,
+          'context_type' => 'Course',
+          'type' => 'Message',
+          'course_id' => 1,
+          'title' => 'Assignment created',
+          'updated_at' => @fake_time,
+          'created_at' => @fake_time
         },
         {
-          id: 2999,
-          context_type: 'Group',
-          type: 'Message',
-          group_id: 2,
-          title: 'Assignment deleted',
-          updated_at: @fake_time,
-          created_at: @fake_time
+          'id' => 2999,
+          'context_type' => 'Group',
+          'type' => 'Message',
+          'group_id' => 2,
+          'title' => 'Assignment deleted',
+          'updated_at' => @fake_time,
+          'created_at' => @fake_time
         },
         {
-          id: 3999,
-          context_type: 'Group',
-          type: 'Message',
-          group_id: 3,
-          title: 'Party date',
-          updated_at: @fake_time,
-          created_at: @fake_time
+          'id' => 3999,
+          'context_type' => 'Group',
+          'type' => 'Message',
+          'group_id' => 3,
+          'title' => 'Party date',
+          'updated_at' => @fake_time,
+          'created_at' => @fake_time
         },
         {
-          id: 4999,
-          context_type: 'Group',
-          type: 'Message',
-          group_id: 4,
-          title: 'Post-assignment party',
-          updated_at: @fake_time,
-          created_at: @fake_time
+          'id' => 4999,
+          'context_type' => 'Group',
+          'type' => 'Message',
+          'group_id' => 4,
+          'title' => 'Post-assignment party',
+          'updated_at' => @fake_time,
+          'created_at' => @fake_time
         },
         {
-          id: 5999,
-          type: 'Conversation',
-          conversation_id: 5,
-          title: nil,
-          updated_at: @fake_time,
-          created_at: @fake_time
+          'id' => 5999,
+          'type' => 'Conversation',
+          'conversation_id' => 5,
+          'title' => nil,
+          'updated_at' => @fake_time,
+          'created_at' => @fake_time
         }
       ]
     end
@@ -141,7 +141,7 @@ describe MyActivities::CanvasActivities do
     let(:course_ids) { nil }
     let(:campus_classes) { [] }
 
-    before { allow(Canvas::UserActivityStream).to receive(:new).and_return stub_proxy(:user_activity, canvas_feed) }
+    before { allow_any_instance_of(Canvas::UserActivityStream).to receive(:user_activity).and_return(statusCode: 200, body: canvas_feed) }
 
     it 'should transform raw Canvas feed entries to activities' do
       expect(activities).to have(5).items

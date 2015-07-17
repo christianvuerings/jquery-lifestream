@@ -23,8 +23,7 @@ module CanvasCsv
     def self.change_sis_user_id(canvas_user_id, new_sis_user_id)
       logins_proxy = Canvas::Logins.new
       response = logins_proxy.user_logins(canvas_user_id)
-      if response && response.status == 200
-        user_logins = JSON.parse(response.body)
+      if (user_logins = response[:body])
         # We look for the login with a numeric "unique_id", and assume it is an LDAP UID.
         user_logins.select! do |login|
           begin
@@ -42,7 +41,7 @@ module CanvasCsv
           login_id = user_logins[0]['id']
           logger.warn "Changing SIS ID for user #{canvas_user_id} to #{new_sis_user_id}"
           response = logins_proxy.change_sis_user_id(login_id, new_sis_user_id)
-          return true if response && response.status == 200
+          return true if response[:statusCode] == 200
         end
       end
       false

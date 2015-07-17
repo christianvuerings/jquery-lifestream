@@ -1,0 +1,15 @@
+[
+  {
+    "id": 12345,
+    "role": "AccountAdmin",
+    "user": {
+      "id": 3218765,
+      "name": "Purple Hays",
+      "sortable_name": "Hays, Purple",
+      "short_name": "Purple Hays",
+      "sis_user_id": "321654",
+      "sis_login_id": "321654",
+      "login_id": "321654"
+    }
+  }
+]

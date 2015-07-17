@@ -4,7 +4,7 @@ module Canvas
     include Cache::UserCacheExpiry
 
     def upcoming_events
-      request request_path
+      wrapped_get request_path
     end
 
     private

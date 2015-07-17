@@ -54,7 +54,8 @@ module CanvasLti
         log_message.concat(", provider from #{existing_host} to #{app_host}") if existing_host != app_host
         log_message.concat(", name from #{existing_config['name']} to #{app_definition[:app_name]}") if existing_config['name'] != app_definition[:app_name]
         logger.warn log_message
-        if (response = external_tools_proxy.reset_external_tool_by_xml(tool_id, xml_string))
+        response = external_tools_proxy.reset_external_tool_by_xml(tool_id, xml_string)
+        if response[:body]
           {
             app_id: tool_id,
             status: 'overwritten'
@@ -67,9 +68,10 @@ module CanvasLti
         end
       else
         logger.warn "Adding configuration for #{app_code} to account #{app_account}"
-        if (response = external_tools_proxy.create_external_tool_by_xml(app_definition[:app_name], xml_string))
+        response = external_tools_proxy.create_external_tool_by_xml(app_definition[:app_name], xml_string)
+        if response[:body]
           {
-            app_id: response['id'],
+            app_id: response[:body]['id'],
             status: 'added'
           }
         else

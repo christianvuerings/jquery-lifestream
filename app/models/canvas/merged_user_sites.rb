@@ -26,14 +26,13 @@ module Canvas
         # We collect sections and CCNs as an admin, not as the user. Most site members
         # do not have access to that information.
         response = Canvas::CourseSections.new(course_id: course_id).sections_list
-        return nil unless (response && response.status == 200)
-        merged_sites[:courses] << merge_course_with_sections(course, JSON.parse(response.body))
+        return nil unless response[:body]
+        merged_sites[:courses] << merge_course_with_sections(course, response[:body])
       end
       merged_sites[:courses].sort_by! { |site| site[:name] }
 
-      group_sites = Canvas::Groups.new(user_id: @uid).groups
-      group_sites.each do |group|
-        merged_sites[:groups] << get_group_data(group)
+      if (groups = Canvas::Groups.new(user_id: @uid).groups[:body])
+        merged_sites[:groups] = groups.map {|group| get_group_data(group) }
       end
 
       merged_sites
@@ -46,7 +45,7 @@ module Canvas
       sis_sections = []
       canvas_sections.each do |canvas_section|
         sis_id = canvas_section['sis_section_id']
-        if (campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(sis_id))
+        if (campus_section = Canvas::Terms.sis_section_id_to_ccn_and_term(sis_id))
           # Check our assumption that Canvas and campus semesters are aligned.
           if Berkeley::TermCodes.to_english(campus_section[:term_yr], campus_section[:term_cd]) == term_name
             sis_sections << {ccn: campus_section[:ccn]}

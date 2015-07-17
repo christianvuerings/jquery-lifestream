@@ -7,8 +7,8 @@ module CanvasCsv
         csv.each do |row|
           if row['section_id'] && row['course_id'].blank?
             logger.warn "Canvas section has SIS ID but course does not: #{row}"
-            if (response = update_proxy.generate_course_sis_id row['canvas_course_id'])
-              course_data = JSON.parse response.body
+            response = update_proxy.generate_course_sis_id row['canvas_course_id']
+            if (course_data = response[:body])
               logger.warn "Added SIS ID to Canvas course: #{course_data}"
             end
           end

@@ -17,7 +17,7 @@ module CanvasCsv
     # Returns hash containing generate CSV file paths intended for each term
     def term_enrollments_csv_filepaths(set_date = DateTime.now)
       terms = {}
-      term_ids = Canvas::Proxy.current_sis_term_ids
+      term_ids = Canvas::Terms.current_sis_term_ids
       term_ids.each do |term_id|
         terms[term_id] = enrollment_csv_filepath(set_date, term_id)
       end

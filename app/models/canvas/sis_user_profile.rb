@@ -2,13 +2,12 @@ module Canvas
   class SisUserProfile < Proxy
     include SafeJsonParser
 
-    def sis_user_profile
-      request request_path
+    def get
+      sis_user_profile[:body] if sis_user_profile[:statusCode] < 400
     end
 
-    def get
-      profile_response = sis_user_profile
-      return profile_response ? safe_json(profile_response.body) : nil
+    def sis_user_profile
+      self.class.fetch_from_cache(@uid) { wrapped_get request_path }
     end
 
     def existence_check

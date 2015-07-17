@@ -59,7 +59,7 @@ describe CanvasCsv::TermEnrollments do
   let(:expected_term2_filepath) { "#{export_dir}/canvas-2014-01-01-TERM_2014-B-term-enrollments-export.csv" }
 
   before do
-    allow(Canvas::Proxy).to receive(:current_sis_term_ids).and_return(['TERM:2013-D', 'TERM:2014-B'])
+    allow(Canvas::Terms).to receive(:current_sis_term_ids).and_return(['TERM:2013-D', 'TERM:2014-B'])
 
     # set static times for consistent testing output
     allow(Time).to receive(:now).and_return(frozen_moment_in_time)
