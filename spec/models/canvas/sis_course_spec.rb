@@ -50,7 +50,7 @@ describe Canvas::SisCourse do
     context 'on request failure' do
       let(:failing_request) { {method: :get} }
       let(:response) { subject.course }
-      it_should_behave_like 'a Canvas proxy handling request failure'
+      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
     end
   end
 

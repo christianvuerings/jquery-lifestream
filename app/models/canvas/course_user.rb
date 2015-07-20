@@ -14,7 +14,7 @@ module Canvas
     end
 
     def course_user(options = {})
-      response = optional_cache(options, key: "#{@course_id}/#{@user_id}", default: true) { wrapped_get request_path }
+      response = optional_cache(options, key: "#{@course_id}/#{@user_id}", default: true) { user_response }
       response[:body] if response[:statusCode] < 400
     end
 
@@ -63,6 +63,10 @@ module Canvas
       profile = course_user
       return [] if profile.nil? || profile['enrollments'].nil? || profile['enrollments'].empty?
       profile['enrollments'].collect {|enrollment| enrollment['type'] }
+    end
+
+    def user_response
+      wrapped_get request_path
     end
 
     # Do not need to log a stack trace when the user is not a course site member.

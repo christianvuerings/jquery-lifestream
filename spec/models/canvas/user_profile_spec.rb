@@ -4,7 +4,7 @@ describe Canvas::UserProfile do
   context 'on request failure' do
     let(:failing_request) { {method: :get} }
     let(:response) { subject.user_profile }
-    it_should_behave_like 'a Canvas proxy handling request failure'
+    it_should_behave_like 'an unpaged Canvas proxy handling request failure'
   end
 
   context 'when canvas user profile api request is unsuccessful' do

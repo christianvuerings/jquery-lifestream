@@ -49,7 +49,7 @@ describe Canvas::Course do
     context 'on request failure' do
       let(:failing_request) { {method: :get} }
       let(:response) { subject.course }
-      it_should_behave_like 'a Canvas proxy handling request failure'
+      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
     end
   end
 
@@ -107,7 +107,7 @@ describe Canvas::Course do
     context 'on request failure' do
       let(:failing_request) { {uri_matching: api_path, method: :post} }
       let(:response) { subject.create(canvas_account_id, 'Project X', 'Project X', term_id, sis_course_id) }
-      it_should_behave_like 'a Canvas proxy handling request failure'
+      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
     end
   end
 

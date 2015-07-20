@@ -1,6 +1,6 @@
 describe Canvas::CourseEnrollments do
 
-  let(:uid)               { rand(99999).to_s }
+  let(:uid)               { Settings.canvas_proxy.test_user_id }
   let(:canvas_user_id)    { rand(99999) }
   let(:canvas_course_id)  { rand(99999) }
   let(:add_enrollment_response_body)  { '{
@@ -83,6 +83,12 @@ describe Canvas::CourseEnrollments do
       expect(response['enrollment_state']).to eq 'active'
       expect(response['role']).to eq 'Owner'
       expect(response['role_id']).to eq 12
+    end
+
+    context 'on request failure' do
+      let(:failing_request) { {method: :post} }
+      let(:response) { subject.enroll_user(canvas_user_id, 'TaEnrollment', 'active', false, :role_id => 12) }
+      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
     end
   end
 end

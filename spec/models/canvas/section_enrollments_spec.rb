@@ -70,6 +70,12 @@ describe Canvas::SectionEnrollments do
         'role' => 'TaEnrollment'
       })
     end
+
+    context 'on request failure' do
+      let(:failing_request) { {method: :post} }
+      let(:response) { subject.enroll_user(user_id, 'TaEnrollment', 'active', false) }
+      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
+    end
   end
 
   context 'when obtaining list of enrollments in canvas course section' do
@@ -105,6 +111,12 @@ describe Canvas::SectionEnrollments do
       Canvas::SectionEnrollments.should_receive(:fetch_from_cache).and_return(statusCode: 200, body: {cached: 'hash'})
       enrollments = subject.list_enrollments(:cache => true)
       expect(enrollments).to eq(cached: 'hash')
+    end
+
+    context 'on request failure' do
+      let(:failing_request) { {method: :get} }
+      let(:response) { subject.enrollments_response }
+      it_should_behave_like 'a paged Canvas proxy handling request failure'
     end
   end
 

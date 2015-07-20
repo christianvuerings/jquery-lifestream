@@ -56,6 +56,12 @@ describe Canvas::CourseSettings do
         course = subject.set_grading_scheme(123456)[:body]
         expect(course['name']).to eq 'Just another course site'
       end
+
+      context 'on request failure' do
+        let(:failing_request) { {method: :put} }
+        let(:response) { subject.set_grading_scheme(123456) }
+        it_should_behave_like 'an unpaged Canvas proxy handling request failure'
+      end
     end
 
     context 'if course does not exist in canvas' do
@@ -71,7 +77,7 @@ describe Canvas::CourseSettings do
     context 'on request failure' do
       let(:failing_request) { {method: :get} }
       let(:response) { subject.settings }
-      it_should_behave_like 'a Canvas proxy handling request failure'
+      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
     end
   end
 
