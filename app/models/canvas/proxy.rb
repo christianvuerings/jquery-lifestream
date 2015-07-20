@@ -55,10 +55,10 @@ module Canvas
     end
 
     def paged_get(api_path, opts={})
-      safe_request do
-        results = []
-        map_pages = opts.delete :map_pages
-        params = opts.reverse_merge(per_page: 100).to_query
+      map_pages = opts.delete :map_pages
+      params = opts.reverse_merge(per_page: 100).to_query
+      results = []
+      response = safe_request do
         while params do
           response = request_internal "#{api_path}?#{params}"
           initial_status_code ||= response.status
@@ -71,11 +71,9 @@ module Canvas
           yield response if block_given?
           params = next_page_params(response)
         end
-        {
-          statusCode: initial_status_code,
-          body: results
-        }
+        {statusCode: initial_status_code}
       end
+      response.merge(body: results)
     end
 
     def wrapped_request(api_path, opts)

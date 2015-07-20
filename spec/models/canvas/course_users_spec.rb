@@ -45,4 +45,10 @@ describe Canvas::CourseUsers do
     worker = Canvas::CourseUsers.new(:user_id => user_id, :course_id => canvas_course_id, :paging_callback => paging_callback)
     worker.course_users(cache: false)
   end
+
+  context 'on request failure' do
+    let(:failing_request) { {method: :get} }
+    let(:response) { subject.course_users }
+    it_should_behave_like 'a paged Canvas proxy handling request failure'
+  end
 end

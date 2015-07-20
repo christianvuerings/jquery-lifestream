@@ -41,7 +41,7 @@ describe Canvas::CourseSections do
     context 'on request failure' do
       let(:failing_request) { {method: :get} }
       let(:response) { subject.sections_list }
-      it_should_behave_like 'a Canvas proxy handling request failure'
+      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
     end
   end
 
@@ -101,6 +101,12 @@ describe Canvas::CourseSections do
       expect(result['integration_id']).to eq nil
       expect(result['sis_import_id']).to eq nil
       expect(result['nonxlist_course_id']).to eq nil
+    end
+
+    context 'on request failure' do
+      let(:failing_request) { {method: :post} }
+      let(:response) { subject.create('Data Structures', '') }
+      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
     end
   end
 

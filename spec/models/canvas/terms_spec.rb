@@ -30,6 +30,13 @@ describe Canvas::Terms do
     end
   end
 
+  context 'on request failure' do
+    subject { Canvas::Terms.new }
+    let(:failing_request) { {method: :get} }
+    let(:response) { subject.terms }
+    it_should_behave_like 'a paged Canvas proxy handling request failure'
+  end
+
   describe '#current_terms' do
     before { allow(Settings.terms).to receive(:fake_now).and_return(fake_now) }
     subject {Canvas::Terms.current_terms}

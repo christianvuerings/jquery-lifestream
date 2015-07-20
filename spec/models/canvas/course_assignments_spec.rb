@@ -22,6 +22,12 @@ describe Canvas::CourseAssignments do
     expect(assignments[1]['points_possible']).to eq 50
   end
 
+  context 'on request failure' do
+    let(:failing_request) { {method: :get} }
+    let(:response) { subject.assignments_response }
+    it_should_behave_like 'a paged Canvas proxy handling request failure'
+  end
+
   context 'when providing muted assignments' do
     let(:fake_assignments) do
       [
@@ -45,9 +51,17 @@ describe Canvas::CourseAssignments do
     end
   end
 
-  it 'unmutes assignments' do
-    result = subject.unmute_assignment(11)
-    expect(result[:body]['id']).to eq 11
-    expect(result[:body]['muted']).to eq false
+  context 'unmuting assignments' do
+    it 'unmutes assignments' do
+      result = subject.unmute_assignment(11)
+      expect(result[:body]['id']).to eq 11
+      expect(result[:body]['muted']).to eq false
+    end
+
+    context 'on request failure' do
+      let(:failing_request) { {method: :put} }
+      let(:response) { subject.unmute_assignment(11) }
+      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
+    end
   end
 end

@@ -4,10 +4,10 @@ module Canvas
     include Cache::UserCacheExpiry
 
     def courses
-      request_courses[:body] || []
+      courses_response[:body]
     end
 
-    def request_courses
+    def courses_response
       self.class.fetch_from_cache(@uid) do
         paged_get request_path, as_user_id: "sis_login_id:#{@uid}", include: ['term']
       end

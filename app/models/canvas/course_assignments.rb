@@ -9,8 +9,7 @@ module Canvas
     # Interface to request all assignments in a course
     # See https://canvas.instructure.com/doc/api/assignments.html#method.assignments_api.index
     def course_assignments
-      response = paged_get request_path
-      response[:body] || []
+      assignments_response[:body]
     end
 
     def muted_assignments
@@ -25,6 +24,10 @@ module Canvas
           'muted' => false
         }
       }
+    end
+
+    def assignments_response
+      paged_get request_path
     end
 
     private

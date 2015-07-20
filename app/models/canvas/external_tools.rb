@@ -42,8 +42,7 @@ module Canvas
 
     # Do not cache, since this is used to change external tools configurations on multiple Canvas servers.
     def external_tools_list
-      response = paged_get "#{@api_root}/external_tools"
-      response[:body]
+      external_tools_response[:body]
     end
 
     def reset_external_tool_config_by_url(tool_id, config_url)
@@ -86,6 +85,10 @@ module Canvas
     # LTI app configurations.
     def modify_external_tool(tool_id, parameters)
       wrapped_put "#{@api_root}/external_tools/#{tool_id}", parameters
+    end
+
+    def external_tools_response
+      paged_get "#{@api_root}/external_tools"
     end
 
     private

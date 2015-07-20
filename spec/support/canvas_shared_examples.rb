@@ -15,10 +15,22 @@ shared_examples 'a Canvas proxy handling request failure' do
   it 'returns errors as objects' do
     expect(response[:statusCode]).to eq 503
     expect(response[:error]).to be_present
+  end
+end
+
+shared_examples 'an unpaged Canvas proxy handling request failure' do
+  include_examples 'a Canvas proxy handling request failure'
+  it 'does not include a body' do
     expect(response).not_to include :body
   end
 end
 
+shared_examples 'a paged Canvas proxy handling request failure' do
+  include_examples 'a Canvas proxy handling request failure'
+  it 'returns an empty array as body' do
+    expect(response[:body]).to eq []
+  end
+end
 
 ########################################################
 # Canvas Controller Authorizations

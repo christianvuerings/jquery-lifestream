@@ -14,7 +14,7 @@ describe Canvas::AuthorizationConfigs do
     context 'on request failure' do
       let(:failing_request) { {method: :get} }
       let(:response) { subject.authorization_configs }
-      it_should_behave_like 'a Canvas proxy handling request failure'
+      it_should_behave_like 'a paged Canvas proxy handling request failure'
     end
   end
 
@@ -45,7 +45,7 @@ describe Canvas::AuthorizationConfigs do
     context 'on request failure' do
       let(:failing_request) { {method: :put} }
       let(:response) { subject.reset_authorization_config(authorization_config_hash['id'], authorization_config_hash) }
-      it_should_behave_like 'a Canvas proxy handling request failure'
+      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
     end
   end
 

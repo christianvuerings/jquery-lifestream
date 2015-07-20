@@ -12,28 +12,11 @@ describe Canvas::UserCourses do
     expect(courses[0]['term']['name']).to be_present
   end
 
-  it 'should return empty array if server is not available' do
-    client = Canvas::UserCourses.new(user_id: @user_id, fake: false)
-    stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_raise(Faraday::Error::ConnectionFailed)
-    suppress_rails_logging {
-      response = client.courses
-      expect(response).to eq []
-    }
-    WebMock.reset!
+  context 'request failure' do
+    subject { Canvas::UserCourses.new }
+    let(:failing_request) { {method: :get} }
+    let(:response) { subject.courses_response }
+    it_should_behave_like 'a paged Canvas proxy handling request failure'
   end
-
-  it 'should return empty array if server returns error status' do
-    client = Canvas::UserCourses.new(user_id: @user_id, fake: false)
-    stub_request(:any, /#{Regexp.quote(Settings.canvas_proxy.url_root)}.*/).to_return(
-      status: 503,
-      body: "<?xml version='1.0' encoding='ISO-8859-1'?>"
-    )
-    suppress_rails_logging {
-      response = client.courses
-      expect(response).to eq []
-    }
-    WebMock.reset!
-  end
-
 
 end

@@ -64,6 +64,12 @@ describe Canvas::CourseUser do
         user = subject.course_user(:cache => false)
         expect(user['id']).to eq 4321321
       end
+
+      context 'on request failure' do
+        let(:failing_request) { {method: :get} }
+        let(:response) { subject.user_response }
+        it_should_behave_like 'an unpaged Canvas proxy handling request failure'
+      end
     end
 
     context 'if course user does not exist in canvas' do

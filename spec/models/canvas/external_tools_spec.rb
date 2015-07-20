@@ -157,6 +157,12 @@ describe Canvas::ExternalTools do
       json_feed = Canvas::ExternalTools.public_list_as_json
       expect(json_feed).to eq raw_feed.to_json
     end
+
+    context 'on request failure' do
+      let(:failing_request) { {method: :get} }
+      let(:response) { subject.external_tools_response }
+      it_should_behave_like 'a paged Canvas proxy handling request failure'
+    end
   end
 
 end

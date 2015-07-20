@@ -11,7 +11,7 @@ module Canvas
     end
 
     def list_enrollments(options = {})
-      response = optional_cache(options, key: @section_id, default: false) { paged_get request_path }
+      response = optional_cache(options, key: @section_id, default: false) { enrollments_response }
       response[:body]
     end
 
@@ -34,6 +34,10 @@ module Canvas
           'notify' => notify,
         }
       }
+    end
+
+    def enrollments_response
+      paged_get request_path
     end
 
     private
