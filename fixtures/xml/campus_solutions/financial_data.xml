@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<coa>
+  <fullyear></fullyear>
+  <message>Your budget is the estimated average and reasonable cost of completing an academic year at UC Berkeley
+  </message>
+  <semesterOptions>
+    <data>
+      <header>Fall</header>
+      <header>Spring</header>
+      <header>Summer</header>
+      <title>Standard Budget</title>
+      <items>
+        <item>
+          <amount></amount>
+          <amount></amount>
+          <amount>6402.01</amount>
+          <title>Fees</title>
+        </item>
+        <item>
+          <amount></amount>
+          <amount></amount>
+          <amount>1243</amount>
+          <title>Grad Transportation 14wk</title>
+        </item>
+        <item>
+          <amount>1290</amount>
+          <amount>1290</amount>
+          <amount>1290</amount>
+          <title>Health Insurance - UG</title>
+        </item>
+        <item>
+          <amount>11000</amount>
+          <amount>11000</amount>
+          <amount>3000</amount>
+          <title>Non-Res.Tuit Schol UG</title>
+        </item>
+        <item>
+          <amount>7194</amount>
+          <amount>7194</amount>
+          <amount>7194</amount>
+          <title>Room &amp; Board - Res. Hall</title>
+        </item>
+        <item>
+          <amount>267</amount>
+          <amount>267</amount>
+          <amount></amount>
+          <title>Transportation-Res. Hall</title>
+        </item>
+        <item>
+          <amount>6096</amount>
+          <amount>6096</amount>
+          <title>Tuition and Fees</title>
+        </item>
+      </items>
+      <total>25847</total>
+      <total>25847</total>
+      <total>19129.01</total>
+    </data>
+    <data>
+      <header>Fall</header>
+      <header>Spring</header>
+      <header>Summer</header>
+      <item>
+        <amount>25847</amount>
+        <amount>25847</amount>
+        <amount>19129.01</amount>
+      </item>
+      <title>Budget Grand Total</title>
+    </data>
+    <id>fall-spring-summmer</id>
+  </semesterOptions>
+  <title>Estimated Cost of Attendance</title>
+</coa>
