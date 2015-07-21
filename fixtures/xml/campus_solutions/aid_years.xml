@@ -15,6 +15,8 @@
       <shortMessage>MESSAGE UNANSWERED edit</shortMessage>
       <shortTitle>HEADER UNANSWERED edit</shortTitle>
     </termsAndConditions>
+  </finaidYear>
+  <finaidYear>
     <id>2016</id>
     <name>Federal Aid Year 2015 - 2016</name>
     <semesterOption>
@@ -23,7 +25,7 @@
       <semester>Spring</semester>
     </semesterOption>
     <termsAndConditions>
-      <approved>NULL</approved>
+      <approved></approved>
       <longMessage>You agree to utilize your financial to pay educational related expenses.</longMessage>
       <longTitle>Term and Conditions</longTitle>
       <shortMessage>You will not be able view your 2015-2016 financial aid until you Agreed to the Term and
@@ -35,7 +37,7 @@
     </termsAndConditions>
   </finaidYear>
   <title4>
-    <approved>NULL</approved>
+    <approved></approved>
     <longMessage>By agreeing to the Title IV Release, your financial aid can be utilized to pay for non Title IV charges
       that are charged to your UCB Student Account. Non Title IV charges may include late charges, library fines,
       parking tickets, etc. If you do not agree to the Title IV Release, please pay any non Title IV charges directly to

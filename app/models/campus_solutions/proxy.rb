@@ -40,8 +40,12 @@ module CampusSolutions
       end
       {
         statusCode: response.code,
-        feed: HashConverter.downcase_and_camelize(feed)
+        feed: convert_feed_keys(feed)
       }
+    end
+
+    def convert_feed_keys(feed)
+      HashConverter.downcase_and_camelize(feed)
     end
 
     def url

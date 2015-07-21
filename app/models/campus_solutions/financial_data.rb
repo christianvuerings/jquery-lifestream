@@ -15,7 +15,12 @@ module CampusSolutions
 
     def url
       # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
-      "#{@settings.base_url}/UC_FA_GET_T_C.v1/get/EMPLID=00000165&INSTITUTION=UCB01"
+      # TODO parameterize aid-year
+      "#{@settings.base_url}/UC_FA_COST_ATT.v1/EMPLID=00000137&INSTITUTION=UCB01&AID_YEAR=2016"
+    end
+
+    def convert_feed_keys(feed)
+      feed
     end
 
   end
