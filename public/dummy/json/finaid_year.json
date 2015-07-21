@@ -1,0 +1,101 @@
+{
+  "coa": {
+    "message": "Your budget is the estimated average and reasonable cost of completing an academic year at UC Berkeley",
+    "title": "Estimated Cost of Attendance.",
+    "fullYear": "",
+    "semesterOptions": [
+      {
+        "id": "fall-spring-summer",
+        "data": [
+          {
+            "title": "Standard Budget",
+            "headers": [
+              "Fall",
+              "Spring",
+              "Summer"
+            ],
+            "items": [
+              {
+                "title": "Tuition / Fees",
+                "amounts": [
+                  9000,
+                  9000,
+                  4500
+                ],
+                "subItems": [
+                  {
+                    "title": "Campus Fees",
+                    "amounts": [
+                      5000,
+                      5000,
+                      2500
+                    ]
+                  },
+                  {
+                    "title": "Tuition and Fees",
+                    "amounts": [
+                      2500,
+                      2500,
+                      1250
+                    ]
+                  },
+                  {
+                    "title": "Non-Resident Tuition",
+                    "amounts": [
+                      1000,
+                      1000,
+                      500
+                    ]
+                  },
+                  {
+                    "title": "Professional degrees",
+                    "amounts": [
+                      500,
+                      500,
+                      250
+                    ]
+                  }
+                ]
+              },
+              {
+                "title": "Housing / Meals",
+                "amounts": [
+                  3000,
+                  null,
+                  1500
+                ],
+                "subTitles": [
+                  "Residence Hall",
+                  "Residence Hall",
+                  "Apartment"
+                ]
+              }
+            ],
+            "totals": [
+              20000,
+              20000,
+              10000
+            ]
+          },
+          {
+            "title": "Budget Grand Total",
+            "headers": [
+              "Fall",
+              "Spring",
+              "Summer"
+            ],
+            "items": [
+              {
+                "amounts": [
+                  25000,
+                  25000,
+                  10000
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

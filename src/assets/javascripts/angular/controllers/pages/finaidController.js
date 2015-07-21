@@ -8,21 +8,33 @@ var angular = require('angular');
 angular.module('calcentral.controllers').controller('FinaidController', function(apiService, finaidFactory, finaidService, $routeParams, $scope) {
   apiService.util.setTitle('Financial Aid');
 
-  /**
-   * Set whether you can a user can see the finaid year data
-   */
-  var setCanSeeFinaidYear = function(data) {
-    $scope.canSeeFinaidData = finaidService.canSeeFinaidData(data, $routeParams.finaidYearId);
+  $scope.isMainFinaid = true;
+  $scope.finaid = {
+    isLoading: true
   };
 
   /**
-   * Select the correct finaid year, if it doesn't exist, we need to send them to the 404 page
+   * Set whether you can a user can see the finaid year data
    */
-  var selectFinaidYear = function(data) {
-    $scope.finaidYear = finaidService.getSelectedFinaidYear(data, $routeParams.finaidYearId);
+  var setCanSeeFinaidYear = function(data, finaidYear) {
+    $scope.canSeeFinaidData = finaidService.canSeeFinaidData(data, finaidYear);
+  };
+
+  /**
+   * Set the current finaid year
+   */
+  var setFinaidYear = function(data, finaidYearId) {
+    $scope.finaidYear = finaidService.findFinaidYear(data, finaidYearId);
+  };
+
+  /**
+   * See whether the finaid year, semester option combination exist, otherwise, send them to the 404 page
+   */
+  var combinationExists = function(data, finaidYearId, semesterOptionId) {
+    var finaidYear = finaidService.combinationExists(data, finaidYearId, semesterOptionId);
 
     // If no correct finaid year comes back, make sure to send them to the 404 page.
-    if (!$scope.finaidYear) {
+    if (!finaidYear) {
       apiService.util.redirect('404');
       return false;
     }
@@ -32,10 +44,11 @@ angular.module('calcentral.controllers').controller('FinaidController', function
    * Get the finaid summary information
    */
   var getFinaidSummary = function() {
-    finaidFactory.getSummary().success(function(data) {
-      angular.extend($scope, data);
-      selectFinaidYear(data);
-      setCanSeeFinaidYear(data);
+    return finaidFactory.getSummary().success(function(data) {
+      combinationExists(data, $routeParams.finaidYearId, $routeParams.semesterOptionId);
+      setFinaidYear(data, $routeParams.finaidYearId);
+      setCanSeeFinaidYear(data, $scope.finaidYear);
+      $scope.finaid.isLoading = false;
     });
   };
 

@@ -1,0 +1,28 @@
+<div class="cc-widget cc-widget-finaid-coa" data-ng-controller="FinaidCoaController">
+  <div class="cc-widget-title">
+    <h2>Estimated Cost of Attendance</h2>
+  </div>
+  <div class="cc-widget-text" data-cc-spinner-directive="coa.isLoading">
+    <p data-ng-bind="coa.message"></p>
+    <div class="cc-clearfix cc-widget-border"></div>
+    <div data-ng-if="!currentCoaData">No data available for this semester option</div>
+    <div data-ng-if="currentCoaData">
+      <div class="cc-table" data-ng-repeat="category in currentCoaData.data">
+        <table>
+          <thead>
+            <tr>
+              <th data-ng-bind="category.title" scope="col"></th>
+              <th data-ng-repeat="header in category.headers" data-ng-bind="header" scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="item in category.items">
+              <td data-ng-bind="item.title"></td>
+              <td data-ng-repeat="amount in item.amounts track by $index" data-ng-bind="amount"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,30 +2,50 @@
   "finaidSummary": {
     "finaidYears": [
       {
-        "name": "Fall 2014 - Spring 2015",
+        "name": "2014 - 2015",
         "id": "2015",
-        "termsAndConditions": {
-          "approved": false,
-          "shortTitle": "You have not yet accepted the financial aid terms and conditions.",
-          "shortMessage": "You may view your 2015 financial aid package by accepting the terms and conditions.",
-          "longTitle": "I accept the terms and conditions",
-          "longMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut velit gravida massa fermentum sodales. Duis eu nunc interdum, condimentum ante sit amet, faucibus nunc. Donec semper consequat enim tempor condimentum. Donec pulvinar, dolor eu consequat volutpat, orci odio iaculis turpis, at tempus tortor lectus lobortis dui. Aenean gravida sodales justo, et fringilla tortor ultrices vitae. Nam tristique tellus eget nisi sagittis, at gravida risus feugiat. Duis vehicula tristique ante, ut bibendum dui lobortis quis.\n\nNulla nec dapibus neque, et efficitur libero. Nam libero lorem, ullamcorper ac finibus vitae, porta at sapien. Vestibulum accumsan faucibus velit a mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum tincidunt urna in sem efficitur volutpat. Curabitur leo metus, consectetur ut orci at, pharetra accumsan sapien. Phasellus vehicula elit eu cursus lobortis. Phasellus molestie felis at malesuada porttitor. Curabitur posuere, tellus non sodales ornare, leo justo vulputate orci, eget imperdiet mi purus in diam. Quisque ac iaculis nibh.\n\nEtiam dapibus massa nec congue egestas. Vestibulum in gravida mauris. Quisque in odio ut sapien laoreet aliquet. Nulla bibendum diam a velit viverra, imperdiet ornare massa lobortis. Pellentesque vulputate faucibus felis, et iaculis nisi vestibulum non. In rhoncus sed justo non porta. Duis dictum rutrum diam, non pharetra ligula tempus vel. Quisque in risus id erat tincidunt scelerisque ac at lorem. Maecenas leo leo, vehicula in sem pulvinar, condimentum accumsan purus. Cras placerat nisl sed est tincidunt semper. Sed ac sem quis tortor finibus tincidunt et in risus. Suspendisse ut faucibus orci, sollicitudin tempus nibh. Nunc vel sodales turpis, pellentesque venenatis tellus. Nulla rhoncus lacus eros."
-        }
-      },
-      {
-        "name": "Fall 2013 - Spring 2014",
-        "id": "2014",
         "termsAndConditions": {
           "approved": true,
           "shortTitle": "You have not yet accepted the financial aid terms and conditions.",
           "shortMessage": "You may view your 2015 financial aid package by accepting the terms and conditions.",
           "longTitle": "I accept the terms and conditions",
+          "longMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut velit gravida massa fermentum sodales. Duis eu nunc interdum, condimentum ante sit amet, faucibus nunc. Donec semper consequat enim tempor condimentum. Donec pulvinar, dolor eu consequat volutpat, orci odio iaculis turpis, at tempus tortor lectus lobortis dui. Aenean gravida sodales justo, et fringilla tortor ultrices vitae. Nam tristique tellus eget nisi sagittis, at gravida risus feugiat. Duis vehicula tristique ante, ut bibendum dui lobortis quis.\n\nNulla nec dapibus neque, et efficitur libero. Nam libero lorem, ullamcorper ac finibus vitae, porta at sapien. Vestibulum accumsan faucibus velit a mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum tincidunt urna in sem efficitur volutpat. Curabitur leo metus, consectetur ut orci at, pharetra accumsan sapien. Phasellus vehicula elit eu cursus lobortis. Phasellus molestie felis at malesuada porttitor. Curabitur posuere, tellus non sodales ornare, leo justo vulputate orci, eget imperdiet mi purus in diam. Quisque ac iaculis nibh.\n\nEtiam dapibus massa nec congue egestas. Vestibulum in gravida mauris. Quisque in odio ut sapien laoreet aliquet. Nulla bibendum diam a velit viverra, imperdiet ornare massa lobortis. Pellentesque vulputate faucibus felis, et iaculis nisi vestibulum non. In rhoncus sed justo non porta. Duis dictum rutrum diam, non pharetra ligula tempus vel. Quisque in risus id erat tincidunt scelerisque ac at lorem. Maecenas leo leo, vehicula in sem pulvinar, condimentum accumsan purus. Cras placerat nisl sed est tincidunt semper. Sed ac sem quis tortor finibus tincidunt et in risus. Suspendisse ut faucibus orci, sollicitudin tempus nibh. Nunc vel sodales turpis, pellentesque venenatis tellus. Nulla rhoncus lacus eros."
+        },
+        "semesterOptions": [
+          {
+            "id": "fall-spring-summer",
+            "semesters": ["Fall", "Spring", "Summer"]
+          },
+          {
+            "id": "fall-spring",
+            "semesters": ["Fall", "Spring"]
+          },
+          {
+            "id": "summer",
+            "semesters": ["Summer 2015"]
+          }
+        ]
+      },
+      {
+        "name": "2013 - 2014",
+        "id": "2014",
+        "termsAndConditions": {
+          "approved": false,
+          "shortTitle": "You have not yet accepted the financial aid terms and conditions.",
+          "shortMessage": "You may view your 2015 financial aid package by accepting the terms and conditions.",
+          "longTitle": "I accept the terms and conditions",
           "longMessage": "ALorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut velit gravida massa fermentum sodales. Duis eu nunc interdum, condimentum ante sit amet, faucibus nunc. Donec semper consequat enim tempor condimentum. Donec pulvinar, dolor eu consequat volutpat, orci odio iaculis turpis, at tempus tortor lectus lobortis dui. Aenean gravida sodales justo, et fringilla tortor ultrices vitae. Nam tristique tellus eget nisi sagittis, at gravida risus feugiat. Duis vehicula tristique ante, ut bibendum dui lobortis quis.\n\nNulla nec dapibus neque, et efficitur libero. Nam libero lorem, ullamcorper ac finibus vitae, porta at sapien. Vestibulum accumsan faucibus velit a mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum tincidunt urna in sem efficitur volutpat. Curabitur leo metus, consectetur ut orci at, pharetra accumsan sapien. Phasellus vehicula elit eu cursus lobortis. Phasellus molestie felis at malesuada porttitor. Curabitur posuere, tellus non sodales ornare, leo justo vulputate orci, eget imperdiet mi purus in diam. Quisque ac iaculis nibh.\n\nEtiam dapibus massa nec congue egestas. Vestibulum in gravida mauris. Quisque in odio ut sapien laoreet aliquet. Nulla bibendum diam a velit viverra, imperdiet ornare massa lobortis. Pellentesque vulputate faucibus felis, et iaculis nisi vestibulum non. In rhoncus sed justo non porta. Duis dictum rutrum diam, non pharetra ligula tempus vel. Quisque in risus id erat tincidunt scelerisque ac at lorem. Maecenas leo leo, vehicula in sem pulvinar, condimentum accumsan purus. Cras placerat nisl sed est tincidunt semper. Sed ac sem quis tortor finibus tincidunt et in risus. Suspendisse ut faucibus orci, sollicitudin tempus nibh. Nunc vel sodales turpis, pellentesque venenatis tellus. Nulla rhoncus lacus eros."
-        }
+        },
+        "semesterOptions": [
+          {
+            "id": "fall-spring",
+            "semesters": ["Fall", "Spring"]
+          }
+        ]
       }
     ],
     "title4": {
-      "approved": null,
+      "approved": true,
       "shortTitle": "You have not yet decided on the Title IV authorization.",
       "shortMessage": "You may view your 2016 financial aid package by completing the Title IV authorization.",
       "longTitle": "I authorize use of Title IV aid for charges",
