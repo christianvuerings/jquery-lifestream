@@ -17,4 +17,9 @@ class CampusSolutionsController < ApplicationController
   def update_address
     render json: CampusSolutions::MyAddress.from_session(session).update(params)
   end
+
+  def aid_years
+    render json: CampusSolutions::MyAidYears.from_session(session).get_feed_as_json
+  end
+
 end
