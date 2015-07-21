@@ -73,7 +73,7 @@ module Canvas
     end
 
     def reset_external_tool_by_xml(tool_id, xml_string)
-      wrapped_post "#{@api_root}/external_tools/#{tool_id}", {
+      wrapped_put "#{@api_root}/external_tools/#{tool_id}", {
         'config_type' => 'by_xml',
         'config_xml' => xml_string,
         'consumer_key' => Settings.canvas_proxy.lti_key,
