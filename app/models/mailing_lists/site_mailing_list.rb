@@ -104,7 +104,7 @@ module MailingLists
         owner_address: Settings.calmail_proxy.owner_address,
         advertised: 0,
         subscribe_policy: 3,
-        moderate: 0,
+        moderate: 1,
         generic_nonmember_action: 1
       }
       Settings.calmail_proxy.base_url.sub(/api1\Z/, "list/domain_create_list2?#{params.to_query}")

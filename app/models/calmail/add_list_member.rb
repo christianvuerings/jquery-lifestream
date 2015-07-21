@@ -11,8 +11,6 @@ module Calmail
           body: {
             localpart: list_name,
             sub_address: email_address,
-            notify_owner: false,
-            send_welcome: false,
             fullname: full_name
           },
           on_error: {rescue_status: 500}
