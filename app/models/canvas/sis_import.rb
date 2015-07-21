@@ -46,8 +46,8 @@ module Canvas
         true
       else
         response = post_sis_import(csv_file_path, extra_params)
-        return false unless response[:body]
-        status = import_status response[:body]['id']
+        return false unless response
+        status = import_status response['id']
         import_successful? status
       end
     end
