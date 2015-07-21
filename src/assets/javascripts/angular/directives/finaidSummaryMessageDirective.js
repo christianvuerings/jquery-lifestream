@@ -11,7 +11,7 @@ angular.module('calcentral.directives').directive('ccFinaidSummaryMessageDirecti
     scope: {
       item: '=',
       buttonText: '=',
-      finaidYearId: '='
+      finaidUrl: '='
     }
   };
 });

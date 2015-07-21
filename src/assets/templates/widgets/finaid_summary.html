@@ -1,37 +1,44 @@
 <div class="cc-widget cc-widget-finaid-summary" data-ng-controller="FinaidSummaryController">
   <div class="cc-widget-title">
     <h2 class="cc-left">Financial Aid and Scholarships</h2>
-    <a class="cc-right cc-widget-title-link" data-ng-href="finances/finaid/{{finaidYear.id}}">
+    <a data-ng-if="!isMainFinaid" class="cc-right cc-widget-title-link" data-ng-href="{{finaidUrl}}">
       <strong>Details</strong>
     </a>
   </div>
-
   <div class="cc-widget-text" data-cc-spinner>
     <div data-ng-if="finaidSummary.finaidYears.length">
       <div data-ng-if="finaidSummary.finaidYears.length === 1">
-        <span data-ng-bind="finaidYear.name"></span>
+        <span data-ng-bind="selected.finaidYear.name"></span>
       </div>
       <div data-ng-if="finaidSummary.finaidYears.length > 1">
         <div class="cc-select">
-          <select data-ng-model="finaidYear" data-ng-options="f as f.name for f in finaidSummary.finaidYears"></select>
+          <select data-ng-model="selected.finaidYear" data-ng-options="f as f.name for f in finaidSummary.finaidYears" data-ng-change="updateFinaidYear()"></select>
         </div>
         <hr>
         <div
-          data-ng-if="!finaidYear.termsAndConditions.approved"
+          data-ng-if="!selected.finaidYear.termsAndConditions.approved"
           data-cc-finaid-summary-message-directive
-          data-item="finaidYear.termsAndConditions"
+          data-item="selected.finaidYear.termsAndConditions"
           data-button-text="'Complete Terms and Conditions'"
-          data-finaid-year-id="finaidYear.id"
+          data-finaid-url="finaidUrl"
         ></div>
         <div
-          data-ng-if="finaidYear.termsAndConditions.approved && finaidSummary.title4.approved === null"
+          data-ng-if="selected.finaidYear.termsAndConditions.approved && finaidSummary.title4.approved === null"
           data-cc-finaid-summary-message-directive
           data-item="finaidSummary.title4"
           data-button-text="'Complete Title IV'"
-          data-finaid-year-id="finaidYear.id"
+          data-finaid-url="finaidUrl"
         ></div>
-        <div data-ng-if="finaidYear.termsAndConditions.approved && finaidSummary.title4.approved !== null">
-          T&amp;C approved - Title IV has been answered
+        <div data-ng-if="selected.finaidYear.termsAndConditions.approved && finaidSummary.title4.approved !== null">
+          <div class="cc-widget-finaid-summary-semester-options">
+            <div data-ng-repeat="semesterOption in selected.finaidYear.semesterOptions">
+              <label>
+                <input type="radio" data-ng-change="updateSemesterOption()" data-ng-model="selected.semesterOption" data-ng-value="semesterOption" />
+                <span data-ng-bind="semesterOption.semesters | andFilter"></span>
+              </label>
+            </div>
+          </div>
+          <p>TODO</p>
         </div>
         <hr>
       </div>
