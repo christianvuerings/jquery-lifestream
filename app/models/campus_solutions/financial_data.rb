@@ -1,6 +1,15 @@
 module CampusSolutions
   class FinancialData < DirectProxy
 
+    def initialize(options = {})
+      super(options)
+      @aid_year = options[:aid_year] || '0'
+    end
+
+    def instance_key
+      "#{@uid}-#{@aid_year}"
+    end
+
     def xml_filename
       'financial_data.xml'
     end
@@ -15,8 +24,7 @@ module CampusSolutions
 
     def url
       # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
-      # TODO parameterize aid-year
-      "#{@settings.base_url}/UC_FA_COST_ATT.v1/EMPLID=00000137&INSTITUTION=UCB01&AID_YEAR=2016"
+      "#{@settings.base_url}/UC_FA_COST_ATT.v1/EMPLID=00000137&INSTITUTION=UCB01&AID_YEAR=#{@aid_year}"
     end
 
     def convert_feed_keys(feed)

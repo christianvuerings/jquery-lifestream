@@ -22,4 +22,10 @@ class CampusSolutionsController < ApplicationController
     render json: CampusSolutions::MyAidYears.from_session(session).get_feed_as_json
   end
 
+  def financial_data
+    model = CampusSolutions::MyFinancialData.from_session(session)
+    model.aid_year = params['aid_year']
+    render json: model.get_feed_as_json
+  end
+
 end
