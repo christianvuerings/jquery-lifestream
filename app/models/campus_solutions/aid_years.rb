@@ -6,15 +6,8 @@ module CampusSolutions
     end
 
     def build_feed(response)
-      feed = {
-        finaidYears: []
-      }
-      return feed if response.parsed_response.blank?
-
-      response.parsed_response['finaidSummary']['finaidYear'].each do |aidyear|
-        feed[:finaidYears] << aidyear
-      end
-      feed
+      return {} if response.parsed_response.blank?
+      response.parsed_response
     end
 
     def url
