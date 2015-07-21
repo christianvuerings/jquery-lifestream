@@ -70,7 +70,7 @@ module MyAcademics
         end
 
         period = phase['period']
-        next unless period.present?
+        next unless period.present? && startTime.present? && endTime.present?
         {
           period: "#{period}",
           startTime: startTime,

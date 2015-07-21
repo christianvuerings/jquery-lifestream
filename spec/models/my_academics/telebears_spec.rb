@@ -5,10 +5,12 @@ describe MyAcademics::Telebears do
   let(:non_student_uid) { '212377' }
   let(:student_without_appointments) { '22300939' }
   let(:student_with_odd_xml) { '238382' }
+  let(:student_with_no_phase_1) { '212379' }
 
   let!(:fake_oski_feed) { Bearfacts::Telebears.new({:user_id => oski_uid, :fake => true}) }
   let!(:without_appointments_feed) { Bearfacts::Telebears.new({:user_id => student_without_appointments, :fake => true}) }
   let!(:odd_xml_feed) { Bearfacts::Telebears.new({:user_id => student_with_odd_xml, :fake => true}) }
+  let!(:no_phase_1_feed) { Bearfacts::Telebears.new({:user_id => student_with_no_phase_1, :fake => true}) }
 
   shared_examples 'empty telebears response' do
     it 'leaves the existing feed alone' do
@@ -39,6 +41,23 @@ describe MyAcademics::Telebears do
     # Makes sure that the shared example isn't returning false oks due to an empty feed.
     it { Bearfacts::Telebears.new({user_id: student_without_appointments}).get.should_not be_blank }
     it_behaves_like 'empty telebears response'
+  end
+
+  context "no phase 1 appointments scheduled" do
+    before(:each) do
+      allow(Bearfacts::Telebears).to receive(:new).and_return(no_phase_1_feed)
+      allow_any_instance_of(Bearfacts::Telebears).to receive(:lookup_student_id).and_return(student_with_no_phase_1)
+    end
+    subject { MyAcademics::Telebears.new(student_with_no_phase_1).merge(@feed ||= {}); @feed }
+    it 'does not contain a phase 1 in the feed' do
+      expect(subject[:telebears].length).to eq 1
+      telebears = subject[:telebears][0]
+      expect(telebears[:term]).to eq 'Fall'
+      expect(telebears[:year]).to eq 2015
+      expect(telebears[:slug]).to eq 'fall-2015'
+      expect(telebears[:phases].length).to eq 1
+      expect(telebears[:phases][0][:period]).to eq 'II'
+    end
   end
 
   context "dead remote proxy (5xx errors)" do
