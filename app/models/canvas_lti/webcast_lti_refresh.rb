@@ -26,7 +26,7 @@ module Canvas
       external_tools = Canvas::ExternalTools.new @options.merge(canvas_course_id: canvas_course_id)
       tab = external_tools.find_canvas_course_tab @canvas_webcast_tool_id
       if tab.nil?
-        logger.warn "No Webcast tab, hidden or otherwise, found on course site #{canvas_course_id}"
+        logger.warn "No Course Captures tab, hidden or otherwise, found on course site #{canvas_course_id}"
       else
         has_recordings = false
         is_webcast_eligible = false
@@ -53,10 +53,10 @@ module Canvas
       record = Webcast::CourseSiteLog.find_by canvas_course_site_id: canvas_course_id
       if record
         unhidden_date = record.webcast_tool_unhidden_at.strftime('%m/%d/%Y')
-        logger.warn "Do nothing to course site #{canvas_course_id} because Webcast tool was un-hidden on #{unhidden_date}."
+        logger.warn "Do nothing to course site #{canvas_course_id} because Course Captures tool was un-hidden on #{unhidden_date}."
       else
         modified_tab = external_tools.show_course_site_tab tab
-        logger.warn "The Webcast tool #{modified_tab ? 'has been' : 'FAILED to be' } un-hidden on course site #{canvas_course_id}"
+        logger.warn "The Course Captures tool #{modified_tab ? 'has been' : 'FAILED to be' } un-hidden on course site #{canvas_course_id}"
         if modified_tab
           record = Webcast::CourseSiteLog.find_or_initialize_by(canvas_course_site_id: canvas_course_id)
           record.webcast_tool_unhidden_at = Time.zone.now
@@ -68,7 +68,7 @@ module Canvas
 
     def hide_course_site_tab(canvas_course_id, tab, external_tools)
       modified_tab = external_tools.hide_course_site_tab tab
-      logger.warn "The Webcast tool #{modified_tab ? 'has been' : 'FAILED to be' } hidden on course site #{canvas_course_id}"
+      logger.warn "The Course Captures tool #{modified_tab ? 'has been' : 'FAILED to be' } hidden on course site #{canvas_course_id}"
       modified_tab
     end
 
