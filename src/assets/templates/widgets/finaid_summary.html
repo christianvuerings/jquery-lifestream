@@ -29,7 +29,7 @@
           data-button-text="'Complete Title IV'"
           data-finaid-url="finaidUrl"
         ></div>
-        <div data-ng-if="selected.finaidYear.termsAndConditions.approved && finaidSummary.title4.approved !== null">
+        <div data-ng-if="canSeeFinaidData">
           <div class="cc-widget-finaid-summary-semester-options">
             <div data-ng-repeat="semesterOption in selected.finaidYear.semesterOptions">
               <label>
@@ -45,7 +45,7 @@
     </div>
 
     <div class="cc-clearfix-container cc-text-small">
-      <div class="cc-left">
+      <div class="cc-left" data-ng-if="canSeeFinaidData">
         <a href="/finances/finaid/loans">View Previous Loans</a>
       </div>
       <div class="cc-right">

@@ -10,6 +10,15 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
   $scope.selected = {};
 
   /**
+   * Update whether you can see the current finaid data or not
+   */
+  var updateCanSeeFinaid = function() {
+    $scope.canSeeFinaidData =
+      $scope.selected.finaidYear.termsAndConditions.approved &&
+      $scope.finaidSummary.title4.approved !== null;
+  };
+
+  /**
    * Set the default selections on the finaid year and semester options
    */
   var setDefaultSelections = function(data) {
@@ -18,6 +27,7 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
     selectFinaidYear();
     selectSemesterOption();
     updateFinaidUrl();
+    updateCanSeeFinaid();
   };
 
   var updateFinaidUrl = function() {
@@ -43,16 +53,23 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
   $scope.$on('calcentral.custom.api.finaid.finaidYear', selectFinaidYear);
   $scope.$on('calcentral.custom.api.finaid.semesterOption', selectSemesterOption);
 
+  /**
+   * Update a semester option selection
+   */
   $scope.updateSemesterOption = function() {
     finaidService.setSemesterOption($scope.selected.semesterOption);
     updateFinaidUrl();
   };
 
+  /**
+   * Update the finaid year selection
+   */
   $scope.updateFinaidYear = function() {
     finaidService.setFinaidYear($scope.selected.finaidYear);
     finaidService.setDefaultSemesterOption();
     selectSemesterOption();
     updateFinaidUrl();
+    updateCanSeeFinaid();
   };
 
   /**
