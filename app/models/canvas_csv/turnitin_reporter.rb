@@ -18,7 +18,7 @@ module CanvasCsv
         term.start <= current_date.advance(weeks: -2)
       end
       term = report_term_idx ? terms[report_term_idx] : terms.last
-      Canvas::Proxy.term_to_sis_id(term.year, term.code)
+      Canvas::Terms.term_to_sis_id(term.year, term.code)
     end
 
     def initialize(sis_term_id)

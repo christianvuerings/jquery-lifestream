@@ -216,31 +216,28 @@ describe CanvasCsv::MaintainUsers do
     let(:new_sis_id) { "UID:#{rand(99999)}" }
     let(:old_sis_id) { rand(99999).to_s }
     it 'finds and modifies a user login record' do
-      canvas_logins_response = double()
-      canvas_logins_response.stub(:status).and_return(200)
-      canvas_logins_response.stub(:body).and_return(
-        [
+      canvas_logins_response = {
+        statusCode: 200,
+        body: [
           {
-            account_id: 90242,
-            id: matching_login_id,
-            sis_user_id: old_sis_id,
-            unique_id: old_sis_id,
-            user_id: canvas_user_id
+            'account_id' => 90242,
+            'id' => matching_login_id,
+            'sis_user_id' => old_sis_id,
+            'unique_id' => old_sis_id,
+            'user_id' => canvas_user_id
           },
           {
-            account_id: 90242,
-            id: rand(99999),
-            sis_user_id: nil,
-            unique_id: "test-#{rand(99999)}",
-            user_id: canvas_user_id
+            'account_id' => 90242,
+            'id' => rand(99999),
+            'sis_user_id' => nil,
+            'unique_id' => "test-#{rand(99999)}",
+            'user_id' => canvas_user_id
           }
-        ].to_json
-      )
+        ]
+      }
       fake_logins_proxy = double()
-      fake_logins_proxy.should_receive(:user_logins).with(canvas_user_id).and_return(canvas_logins_response)
-      fake_logins_proxy.should_receive(:change_sis_user_id).with(matching_login_id, new_sis_id).and_return(
-          double().stub(:status).and_return(200)
-      )
+      expect(fake_logins_proxy).to receive(:user_logins).with(canvas_user_id).and_return canvas_logins_response
+      expect(fake_logins_proxy).to receive(:change_sis_user_id).with(matching_login_id, new_sis_id).and_return(statusCode: 200)
       allow(Canvas::Logins).to receive(:new).and_return fake_logins_proxy
       CanvasCsv::MaintainUsers.change_sis_user_id(canvas_user_id, new_sis_id)
     end

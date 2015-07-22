@@ -1,30 +1,29 @@
 module Canvas
   class CourseSections < Proxy
+
     def initialize(options = {})
       super(options)
       @course_id = options[:course_id]
     end
 
     def sections_list(force_write = false)
-      self.class.fetch_from_cache @course_id, force_write do
-        request_uncached request_path
-      end
+      self.class.fetch_from_cache(@course_id, force_write) { wrapped_get request_path }
     end
 
     def official_section_identifiers(force_write = false)
-      sections = sections_list(force_write).clone
-      return [] unless sections && sections.status == 200
-      course_sections = JSON.parse(sections.body)
-      course_sections.reject! {|s| !s.include?('sis_section_id') || s['sis_section_id'].blank? }
-      course_sections.collect! do |s|
-        section_hash = Canvas::Proxy.sis_section_id_to_ccn_and_term(s['sis_section_id'])
-        s.merge(section_hash) if section_hash
+      identifiers = []
+      if (course_sections = sections_list(force_write)[:body])
+        course_sections.each do |s|
+          next if s['sis_section_id'].blank?
+          section_hash = Canvas::Terms.sis_section_id_to_ccn_and_term s['sis_section_id']
+          identifiers << s.merge(section_hash) if section_hash
+        end
       end
-      course_sections.compact
+      identifiers
     end
 
     def create(name, sis_section_id)
-      request_params = {
+      wrapped_post request_path, {
         'course_section' => {
           'name' => name,
           'sis_section_id' => sis_section_id,
@@ -33,12 +32,6 @@ module Canvas
           'restrict_enrollments_to_section_dates' => nil,
         }
       }
-      request_options = {
-        :method => :post,
-        :body => request_params,
-      }
-      response = request_uncached(request_path, request_options)
-      JSON.parse(response.body)
     end
 
     private

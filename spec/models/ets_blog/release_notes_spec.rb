@@ -16,7 +16,9 @@ describe EtsBlog::ReleaseNotes do
       expect(subject[:title]).to eq 'CalCentral v.42 (Sprint 44) Release Notes, 8/27/14'
       expect(subject[:link]).to eq 'https://ets.berkeley.edu/article/calcentral-v42-sprint-44-release-notes-82714'
       expect(subject[:timestamp][:dateString]).to eq 'Aug 27'
-      expect(subject[:snippet]).to be
+      text = subject[:snippet]
+      expect(text).to include 'was deployed'
+      expect(text).not_to include ' read more'
     end
   end
 

@@ -11,8 +11,8 @@ module Rosters
       }
       campus_enrollment_map = {}
 
-      course_info = ::Canvas::Course.new(canvas_course_id: @canvas_course_id).course
-      return feed unless course_info
+      course = ::Canvas::Course.new(canvas_course_id: @canvas_course_id).course
+      return feed unless (course_info = course[:body])
       feed[:canvas_course][:name] = course_info['name']
 
       # Look up Canvas course sections associated with official campus sections.

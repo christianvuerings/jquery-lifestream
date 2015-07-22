@@ -4,7 +4,7 @@ module Canvas
     include Cache::UserCacheExpiry
 
     def todo
-      request request_path
+      wrapped_get request_path
     end
 
     private

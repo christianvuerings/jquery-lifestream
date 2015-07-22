@@ -22,7 +22,7 @@ module EtsBlog
       if entries.present?
         entry = entries.first
         snippet = sanitize_html(entry['description'])
-        snippet.squish!.gsub(/read more$/, '') if snippet.present?
+        snippet = snippet.squish.gsub(/ read more$/, '') if snippet.present?
         {
           title: entry['title'],
           link: entry['link'],

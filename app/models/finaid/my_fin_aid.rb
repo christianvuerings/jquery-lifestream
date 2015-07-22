@@ -93,10 +93,10 @@ module Finaid
         'info'
       elsif category == 'SUM'
         'financial'
-      elsif ['MBA', 'DSB', 'SAP'].include? category
+      elsif ['MBA', 'DSB', 'SAP', 'CAL'].include? category
         'alert'
       else
-        logger.warn("Unexpected diagnostic category: #{category}")
+        logger.warn("Unexpected diagnostic category: #{category} for UID #{@uid}")
         'alert'
       end
     end
@@ -128,7 +128,7 @@ module Finaid
         logger.info("Ignore documents with \"#{status}\" status")
         nil
       else
-        raise ArgumentError, "Cannot decode status: #{date} status: #{status}"
+        raise ArgumentError, "Cannot decode status: #{date} status: #{status} for UID #{@uid}"
       end
     end
 

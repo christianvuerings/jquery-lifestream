@@ -3,7 +3,7 @@ describe CanvasCsv::RepairSections do
   let! (:fake_import_proxy) { Canvas::SisImport.new(fake: true) }
 
   context 'when working from fake proxies' do
-    let (:fake_term) { Canvas::Proxy.current_sis_term_ids[0] }
+    let (:fake_term) { Canvas::Terms.current_sis_term_ids[0] }
     before do
       allow(Canvas::Report::Sections).to receive(:new).and_return fake_sections_report_proxy
       allow(Canvas::SisImport).to receive(:new).and_return fake_import_proxy
