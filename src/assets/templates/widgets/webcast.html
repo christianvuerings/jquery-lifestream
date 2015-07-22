@@ -2,7 +2,7 @@
   <div data-cc-spinner-directive></div>
   <div data-ng-bind="proxyErrorMessage"></div>
   <div data-ng-if="!proxyErrorMessage">
-    <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Webcasts</h1>
+    <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Course Captures</h1>
     <div data-ng-if="eligibleForSignUp && eligibleForSignUp.length > 0" class="bc-tab-navigation">
       <ul data-ng-if="videos || audio" class="bc-tab-group cc-clearfix-container" role="tablist">
         <li class="bc-tab"
@@ -15,24 +15,25 @@
           </a>
         </li>
       </ul>
-      <div data-ng-if="currentTabSelection === 'Webcast Sign-up'">
-        <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Webcast Sign-up</h1>
+      <div data-ng-if="currentTabSelection === 'Course Capture Sign-up'">
+        <h1 class="cc-visuallyhidden" data-ng-if="isEmbedded">Course Capture Sign-up</h1>
         <div data-ng-if="userCanSignUpOneOrMore">
           <p>
-            The following classes are eligible for Webcast.
-            <a href="http://ets.berkeley.edu/help/webcast-classroom-capture-services-explained">Find out more about Webcast</a>.
+            The following classes are eligible for Course Capture.
+            <a href="http://ets.berkeley.edu/help/webcast-classroom-capture-services-explained">Find out more about Course Capture</a>.
           </p>
           <p>
-            If you wish to webcast any class below, please use the adjacent link(s) to schedule recordings. Please sign
+            If you wish to record any class below, please use the adjacent link(s) to schedule recordings. Please sign
             up before the semester starts to avoid missing recordings. Deadline for sign-ups is 4th week of classes. If
-            you do not intend to webcast, you can hide this tool by going to <i>Settings &gt; Navigation</i> and
-            dragging the webcast tool out of the list.
+            you do not intend to record, you can hide this tool by going to <i>Settings &gt; Navigation</i> and
+            dragging the Course Captures tool out of the list.
           </p>
         </div>
         <div data-ng-if="!userCanSignUpOneOrMore">
-          Classes in this course site that you teach are eligible for Webcast but have not been signed up yet.
-          Find out more about Webcast. Only instructors of record can sign up. If you wish to webcast any
-          class below, please talk to the instructor of record for the classes you wish to webcast.
+          Classes in this course site that you teach are eligible for Course Capture but have not been signed up yet.
+          <a href="http://ets.berkeley.edu/help/webcast-classroom-capture-services-explained">Find out more about Course Capture</a>.
+          Only instructors of record can sign up. If you wish to record any class below, please talk to the instructor
+          of record for the classes you wish to record.
         </div>
         <div data-ng-repeat="eligible in eligibleForSignUp">
           <span data-ng-bind-template="{{eligible.deptName}} {{eligible.catalogId}} {{eligible.instructionFormat}} {{eligible.sectionNumber}}"></span>
@@ -40,19 +41,19 @@
               | <a data-ng-href="{{eligible.signUpURL}}">Sign up</a>
           </span><br/>
           <span data-ng-if="eligible.webcastAuthorizedInstructors && eligible.webcastAuthorizedInstructors.length > 1">
-            This class has co-instructors. All instructors of record must sign up before classes are webcast.
+            This class has co-instructors. All qualified instructors must sign up before classes are recorded.
           </span>
         </div>
       </div>
     </div>
-    <div data-ng-if="currentTabSelection === 'Webcasts'">
+    <div data-ng-if="currentTabSelection === 'Course Captures'">
       <div data-ng-if="(!eligibleForSignUp || eligibleForSignUp.length === 0) && !videos && !audio">
         There are no course captures available.
       </div>
       <div data-ng-if="media">
         <span data-ng-repeat="section in media">
           <span data-ng-if="!section.videos.length && !section.audio.length">
-            <span ng-if="$first">Webcasts for </span>
+            <span ng-if="$first">Recordings of </span>
             <span ng-if="$last && (media.length > 1)"> and </span>
             <strong data-ng-bind-template="{{section.deptName}} {{section.catalogId}} {{media.length > 1 ? section.instructionFormat : ''}} {{media.length > 1 ? section.sectionNumber : ' lecture'}}"></strong><span ng-if="!$last && ($index < media.length - 2)">, </span>
             <span ng-if="$last">will appear here after classes start.</span>
