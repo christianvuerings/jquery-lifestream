@@ -16,17 +16,6 @@ module CampusSolutions
       }
     end
 
-    def post(params = {})
-      updateable_params = filter_updateable_params params
-      logger.debug "Updateable params from POST: #{updateable_params.inspect}"
-      cs_post = construct_cs_post updateable_params
-      logger.debug "Converted CS Post Params: #{cs_post}"
-      {
-        updated: true,
-        updatedFields: updateable_params
-      }
-    end
-
     # lets us restrict updated params to what's on the whitelist of field mappings.
     def filter_updateable_params(params)
       updateable = {}
