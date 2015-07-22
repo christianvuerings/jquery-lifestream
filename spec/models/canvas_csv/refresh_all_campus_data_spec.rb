@@ -2,7 +2,7 @@ describe CanvasCsv::RefreshAllCampusData do
   subject { CanvasCsv::RefreshAllCampusData.new 'incremental' }
 
   before do
-    allow(Canvas::Proxy).to receive(:current_sis_term_ids).and_return current_sis_term_ids
+    allow(Canvas::Terms).to receive(:current_sis_term_ids).and_return current_sis_term_ids
     allow(DateTime).to receive(:now).and_return Time.at(1388563200).to_datetime
   end
 

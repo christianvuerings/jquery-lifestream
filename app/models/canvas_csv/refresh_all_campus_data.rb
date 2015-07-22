@@ -10,7 +10,7 @@ module CanvasCsv
       @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users-#{batch_or_incremental}.csv"
       @term_to_memberships_csv_filename = {}
       @batch_mode = (batch_or_incremental == 'batch')
-      term_ids = Canvas::Proxy.current_sis_term_ids
+      term_ids = Canvas::Terms.current_sis_term_ids
       term_ids.each do |term_id|
         csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{file_safe(term_id)}-enrollments-#{batch_or_incremental}.csv"
         @term_to_memberships_csv_filename[term_id] = csv_filename

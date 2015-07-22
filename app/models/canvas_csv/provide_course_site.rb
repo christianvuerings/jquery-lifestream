@@ -182,9 +182,11 @@ module CanvasCsv
     end
 
     def enroll_instructor
-      default_section = Canvas::CourseSections.new(:course_id => course_details['id']).create(@import_data['site_name'], "DEFSEC:#{course_details['id']}")
-      response = CanvasLti::CourseAddUser.add_user_to_course_section(@uid, 'TeacherEnrollment', default_section['id'])
-      if response.blank?
+      creation_response = Canvas::CourseSections.new(:course_id => course_details['id']).create(@import_data['site_name'], "DEFSEC:#{course_details['id']}")
+      enrollment_response = if (default_section = creation_response[:body])
+        CanvasLti::CourseAddUser.add_user_to_course_section(@uid, 'TeacherEnrollment', default_section['id'])
+      end
+      if enrollment_response.blank?
         logger.error "Imported course from #{@import_data['courses_csv_file']} but could not add #{@uid} as teacher to section #{default_section['id']}"
         raise RuntimeError, 'Course site was created but the teacher could not be added!'
       end
@@ -223,9 +225,9 @@ module CanvasCsv
     def course_details
       return @import_data['course_site'] if @import_data['course_site'].present?
       raise RuntimeError, 'Unable to load course details. SIS Course ID not present.' if @import_data['sis_course_id'].blank?
-      @import_data['course_site'] = Canvas::SisCourse.new(sis_course_id: @import_data['sis_course_id']).course
-      raise RuntimeError, "Unexpected error obtaining course site URL for #{@import_data['sis_course_id']}!" if @import_data['course_site'].blank?
-      @import_data['course_site']
+      course_response = Canvas::SisCourse.new(sis_course_id: @import_data['sis_course_id']).course
+      raise RuntimeError, "Unexpected error obtaining course site URL for #{@import_data['sis_course_id']}!" unless course_response[:body]
+      @import_data['course_site'] = course_response[:body]
     end
 
     def course_site_url
@@ -233,7 +235,7 @@ module CanvasCsv
     end
 
     def current_terms
-      @current_terms ||= Canvas::Proxy.canvas_current_terms.collect do |term|
+      @current_terms ||= Canvas::Terms.current_terms.collect do |term|
         {
           yr: term.year.to_s,
           cd: term.code,
@@ -310,7 +312,7 @@ module CanvasCsv
           'short_name' => site_course_code,
           'long_name' => site_name,
           'account_id' => subaccount,
-          'term_id' => Canvas::Proxy.term_to_sis_id(term_yr, term_cd),
+          'term_id' => Canvas::Terms.term_to_sis_id(term_yr, term_cd),
           'status' => 'active'
         }
       else

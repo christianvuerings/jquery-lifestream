@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Canvas::CourseSections do
 
   let(:canvas_course_id)    { 5 }
@@ -8,8 +6,7 @@ describe Canvas::CourseSections do
   context 'when providing sections list' do
     it 'returns sections list' do
       response = subject.sections_list
-      sections = JSON.parse(response.body)
-      expect(sections).to be_an_instance_of Array
+      sections = response[:body]
       expect(sections.count).to eq 27
       expect(sections[0]['id']).to eq 7
       expect(sections[0]['name']).to eq 'COMPSCI 61B DIS 111'
@@ -40,6 +37,12 @@ describe Canvas::CourseSections do
       response = subject.sections_list(true)
       expect(response).to eq uncached_response
     end
+
+    context 'on request failure' do
+      let(:failing_request) { {method: :get} }
+      let(:response) { subject.sections_list }
+      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
+    end
   end
 
   context 'when providing official section identifiers existing within course' do
@@ -49,21 +52,18 @@ describe Canvas::CourseSections do
         {'id' => 674, 'course_id' => 482, 'name' => 'COMPSCI 9G SLF 001', 'sis_section_id' => 'SEC:2014-C-6211'}
       ]
     end
-    let(:failed_response) { double('course sections response', :status => 500, :body => '') }
-    let(:success_response) { double('course sections response', :status => 200, :body => JSON.generate(course_sections))}
 
     context 'when course sections request fails' do
-      before { allow(subject).to receive(:sections_list).and_return(failed_response) }
+      before { subject.on_request(method: :get).set_response(status: 500, body: 'Internal server error.') }
       it 'returns empty array' do
         expect(subject.official_section_identifiers).to eq []
       end
     end
 
     context 'when course sections request returns sections' do
-      before { allow(subject).to receive(:sections_list).and_return(success_response) }
+      before { subject.on_request(method: :get).set_response(status: 200, body: JSON.generate(course_sections)) }
       it 'returns canvas course section with ccn and term included' do
         sis_section_ids = subject.official_section_identifiers
-        expect(sis_section_ids).to be_an_instance_of Array
         expect(sis_section_ids.count).to eq 2
         expect(sis_section_ids[0]).to eq course_sections[0].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'07309'})
         expect(sis_section_ids[1]).to eq course_sections[1].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'06211'})
@@ -79,7 +79,6 @@ describe Canvas::CourseSections do
         end
         it 'filters out invalid section ids' do
           sis_section_ids = subject.official_section_identifiers
-          expect(sis_section_ids).to be_an_instance_of Array
           expect(sis_section_ids.count).to eq 2
           expect(sis_section_ids[0]).to eq course_sections[0].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'07309'})
           expect(sis_section_ids[1]).to eq course_sections[2].merge({:term_yr=>'2014', :term_cd=>'C', :ccn=>'06211'})
@@ -91,18 +90,23 @@ describe Canvas::CourseSections do
 
   context 'when creating new section within course' do
     it 'returns section details with id' do
-      result = subject.create('Data Structures', '')
-      expect(result).to be_an_instance_of Hash
+      result = subject.create('Data Structures', '')[:body]
       expect(result['id']).to eq 160
       expect(result['course_id']).to eq 5
       expect(result['name']).to eq 'Data Structures'
-      expect(result['sis_course_id']).to eq "CRS:COMPSCI-61B-2014-D"
+      expect(result['sis_course_id']).to eq 'CRS:COMPSCI-61B-2014-D'
       expect(result['sis_section_id']).to eq nil
       expect(result['start_at']).to eq nil
       expect(result['end_at']).to eq nil
       expect(result['integration_id']).to eq nil
       expect(result['sis_import_id']).to eq nil
       expect(result['nonxlist_course_id']).to eq nil
+    end
+
+    context 'on request failure' do
+      let(:failing_request) { {method: :post} }
+      let(:response) { subject.create('Data Structures', '') }
+      it_should_behave_like 'an unpaged Canvas proxy handling request failure'
     end
   end
 

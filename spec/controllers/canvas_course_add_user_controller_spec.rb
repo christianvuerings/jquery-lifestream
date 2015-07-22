@@ -37,7 +37,7 @@ describe CanvasCourseAddUserController do
   before do
     session['user_id'] = '12345'
     session['canvas_user_id'] = '43232321'
-    allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(canvas_course_user_hash)
+    allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(canvas_course_user_hash)
     allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(true)
     allow(CanvasLti::CourseAddUser).to receive(:course_sections_list).and_return(course_sections_list)
     allow(Settings.canvas_proxy).to receive(:url_root).and_return(canvas_root_url)
@@ -62,7 +62,7 @@ describe CanvasCourseAddUserController do
           let(:canvas_course_student_hash) { canvas_course_user_hash.merge({'enrollments' => [student_enrollment_hash]}) }
           before do
             allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(false)
-            allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(canvas_course_student_hash)
+            allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(canvas_course_student_hash)
           end
 
           it 'returns canvas root url and course id' do
@@ -102,7 +102,7 @@ describe CanvasCourseAddUserController do
           let(:canvas_course_ta_hash) { canvas_course_user_hash.merge({'enrollments' => [ta_enrollment_hash]}) }
           before do
             allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(false)
-            allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(canvas_course_ta_hash)
+            allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(canvas_course_ta_hash)
           end
 
           it 'returns canvas root url and course id' do
@@ -147,7 +147,7 @@ describe CanvasCourseAddUserController do
           let(:canvas_course_teacher_hash) { canvas_course_user_hash.merge({'enrollments' => [teacher_enrollment_hash]}) }
           before do
             allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(false)
-            allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(canvas_course_teacher_hash)
+            allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(canvas_course_teacher_hash)
           end
 
           it 'returns canvas root url and course id' do
@@ -194,7 +194,7 @@ describe CanvasCourseAddUserController do
         context 'when user is canvas account admin' do
           before do
             allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return(true)
-            allow_any_instance_of(Canvas::CourseUser).to receive(:request_course_user).and_return(nil)
+            allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return(nil)
           end
 
           it 'returns canvas root url and course id' do

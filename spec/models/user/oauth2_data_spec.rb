@@ -10,11 +10,6 @@ describe User::Oauth2Data do
       :refresh_token => Settings.google_proxy.test_user_refresh_token,
       :expiration_time => 0
     )
-    @canvas_404 = OpenStruct.new(
-      {
-        status: 404,
-        body: 'while(1);{"status":"not_found","error_report_id":44351040,"message":"Thespecifiedresourcedoesnotexist."}'
-      })
     @fake_canvas_user_profile = Canvas::SisUserProfile.new(fake: true, user_id: 300846)
   end
 
@@ -76,7 +71,7 @@ describe User::Oauth2Data do
   end
 
   it "should fail updating canvas email on a non-existant Canvas account" do
-    allow_any_instance_of(Canvas::SisUserProfile).to receive(:sis_user_profile).and_return(@canvas_404)
+    allow_any_instance_of(Canvas::SisUserProfile).to receive(:sis_user_profile).and_return(statusCode: 404, error: [{message: 'Resource not found.'}])
     User::Oauth2Data.new_or_update(@random_id, Canvas::Proxy::APP_ID, "new-token",
                              "some-token", 1)
     User::Oauth2Data.get_canvas_email(@random_id).blank?.should be_truthy

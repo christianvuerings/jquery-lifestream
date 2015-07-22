@@ -1,13 +1,16 @@
-require "spec_helper"
-
 describe Canvas::Groups do
 
-  it "should get groups as known member" do
-    client = Canvas::Groups.new(:user_id => @user_id)
-    groups = client.groups
-    groups.size.should > 0
-    groups[0]['name'].should_not be_nil
+  subject { Canvas::Groups.new(user_id: @user_id) }
+  let(:response) { subject.groups }
+
+  it 'should get groups as known member' do
+    expect(response[:body]).to_not be_empty
+    expect(response[:body][0]['name']).to be_present
   end
 
+  context 'on request failure' do
+    let(:failing_request) { {method: :get} }
+    it_should_behave_like 'a paged Canvas proxy handling request failure'
+  end
 
 end

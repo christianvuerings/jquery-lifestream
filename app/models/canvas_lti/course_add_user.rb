@@ -31,8 +31,9 @@ module CanvasLti
       raise ArgumentError, 'Course ID must be a Fixnum' if course_id.class != Fixnum
       canvas_course_sections_proxy = Canvas::CourseSections.new(course_id: course_id)
       sections_response = canvas_course_sections_proxy.sections_list
-      sections = safe_json sections_response.body
-      sections.collect { |section| {'id' => section['id'].to_s, 'name' => section['name']} }
+      if (sections = sections_response[:body])
+        sections.collect { |section| {'id' => section['id'].to_s, 'name' => section['name']} }
+      end
     end
 
     def self.add_user_to_course_section(ldap_user_id, role, canvas_course_section_id)
@@ -53,7 +54,8 @@ module CanvasLti
     def self.add_user_to_course(ldap_user_id, enrollment_type, canvas_course_id, options = {})
       canvas_user_profile = Canvas::SisUserProfile.new(user_id: ldap_user_id.to_s).get
       canvas_course_enrollments_proxy = Canvas::CourseEnrollments.new(:user_id => ldap_user_id.to_s, :canvas_course_id => canvas_course_id.to_i)
-      canvas_course_enrollments_proxy.enroll_user(canvas_user_profile['id'], enrollment_type.to_s, 'active', false, options)
+      enrollment_response = canvas_course_enrollments_proxy.enroll_user(canvas_user_profile['id'], enrollment_type.to_s, 'active', false, options)
+      enrollment_response[:body]
     end
 
     # See output of Canvas::CourseUser#roles for course_user_roles argument

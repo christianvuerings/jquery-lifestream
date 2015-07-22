@@ -2,8 +2,8 @@
 
 describe MailingLists::SiteMailingList do
   let(:canvas_site_id) { '1121' }
-  let(:fake_course_data) { Canvas::Course.new(canvas_course_id: canvas_site_id, fake: true).course }
-  before { allow_any_instance_of(Canvas::Course).to receive(:course).and_return fake_course_data }
+  let(:fake_course_data) { Canvas::Course.new(canvas_course_id: canvas_site_id, fake: true).course[:body] }
+  before { allow_any_instance_of(Canvas::Course).to receive(:course).and_return(statusCode: 200, body: fake_course_data) }
   before { allow_any_instance_of(Calmail::CheckNamespace).to receive(:name_available?).and_return(response: true) }
 
   let(:response) { JSON.parse list.to_json}
@@ -59,7 +59,7 @@ describe MailingLists::SiteMailingList do
     end
 
     context 'nonexistent Canvas site' do
-      before { allow_any_instance_of(Canvas::Course).to receive(:course).and_return nil }
+      before { allow_any_instance_of(Canvas::Course).to receive(:course).and_return(statusCode: 404, error: [{message: 'The specified resource was not found.'}]) }
 
       it 'returns error data' do
         expect(response).not_to include :mailingList
@@ -181,7 +181,7 @@ describe MailingLists::SiteMailingList do
           allow(Calmail::AddListMember).to receive(:new).and_return fake_add_proxy
           allow(Calmail::RemoveListMember).to receive(:new).and_return fake_remove_proxy
 
-          expect(course_users).to receive(:course_users).exactly(1).times.and_return fake_site_users
+          expect(course_users).to receive(:course_users).exactly(1).times.and_return(statusCode: 200, body: fake_site_users)
           expect(CampusOracle::Queries).to receive(:get_basic_people_attributes).exactly(1).times.and_return fake_site_users
         end
 

@@ -25,7 +25,7 @@ module CanvasLti
               sis_section_ids = csv_rows.collect { |row| row['section_id'] }
               sis_section_ids.delete_if { |section| section.blank? }
               sis_section_ids.each do |sis_section_id|
-                section = Canvas::Proxy.sis_section_id_to_ccn_and_term sis_section_id
+                section = Canvas::Terms.sis_section_id_to_ccn_and_term sis_section_id
                 unless section.nil? || section[:ccn].nil?
                   key = { term_yr: section[:term_yr], term_cd: section[:term_cd] }
                   courses_by_term[key] ||= {}

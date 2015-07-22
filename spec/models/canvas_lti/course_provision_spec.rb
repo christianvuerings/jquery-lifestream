@@ -82,7 +82,7 @@ describe CanvasLti::CourseProvision do
   context 'when managing existing course sections' do
     before do
       allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
-      allow_any_instance_of(Canvas::Course).to receive(:course).and_return(course_hash)
+      allow_any_instance_of(Canvas::Course).to receive(:course).and_return(statusCode: 200, body: course_hash)
       allow(subject).to receive(:group_by_used!) {|feed| feed}
     end
     let(:uid) { instructor_id }
@@ -255,13 +255,12 @@ describe CanvasLti::CourseProvision do
     context 'when managing sections for existing course site' do
       subject { CanvasLti::CourseProvision.new(instructor_id, canvas_course_id: canvas_course_id) }
       before do
-        allow_any_instance_of(Canvas::Course).to receive(:course).and_return(course_hash)
+        allow_any_instance_of(Canvas::Course).to receive(:course).and_return(statusCode: 200, body: course_hash)
         allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return(official_sections)
       end
 
       it 'should return course information' do
         result = subject.get_course_info
-        expect(result).to be_an_instance_of Hash
         expect(result[:canvasCourseId]).to eq canvas_course_id
         expect(result[:name]).to eq course_hash['name']
         expect(result[:courseCode]).to eq course_hash['course_code']
@@ -269,7 +268,6 @@ describe CanvasLti::CourseProvision do
 
       it 'should return course term' do
         result = subject.get_course_info
-        expect(result).to be_an_instance_of Hash
         expect(result[:term]).to be_an_instance_of Hash
         expect(result[:term][:name]).to eq course_hash['term']['name']
         expect(result[:term][:term_yr]).to eq '2013'
@@ -278,7 +276,6 @@ describe CanvasLti::CourseProvision do
 
       it 'should return official sections' do
         result = subject.get_course_info
-        expect(result).to be_an_instance_of Hash
         expect(result[:officialSections]).to eq official_sections
       end
     end

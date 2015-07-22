@@ -1570,16 +1570,19 @@
         </Supplemental>
         <AcctRecID></AcctRecID>
       </Diagnostic>
-      <Diagnostic Aidid=" " Category="DSB" Code="DB27" Name="" Term="  ">
-        <Message>Units less than half-time for fall - Cal Grant</Message>
+      <Diagnostic Aidid=" " Category="CAL" Code="S035" Name="" Term="  ">
+        <Message>Cal Grant G-6 Certification Form Required</Message>
         <URL></URL>
         <Categories>
           <Category Name="CAT01">W</Category>
         </Categories>
         <Supplemental>
           <Usage Type="DS">
-            <Content Type="TXT">Your Cal Grant cannot pay until you are enrolled at least half-time for the fall
-              semester.
+            <Content Type="TXT">To confirm your eligibility and receive your Transfer Entitlement Cal Grant award, you
+              need to submit a completed Transfer Entitlement Cal Grant Certification Form (Form G-6) to the California
+              Student Aid Commission (CSAC). You can complete the G-6 Form by logging on to WebGrants4Students at
+              https://mygrantinfo.csac.ca.gov. In about 7 to 15 days after CSAC has processed your G-6 Form, this
+              message will disappear, your Cal Grant hold will be released, and your Cal Grant funds will be disbursed.
             </Content>
           </Usage>
         </Supplemental>

@@ -3,9 +3,7 @@ describe CanvasLti::WebcastRecordings do
   describe '#get_feed' do
     let(:canvas_course_id) { rand(99999) }
     before do
-      allow_any_instance_of(Canvas::CourseSections).to receive(:sections_list).and_return(
-        double(body: canvas_course_sections_list.to_json, status: 200)
-      )
+      allow_any_instance_of(Canvas::CourseSections).to receive(:sections_list).and_return(statusCode: 200, body: canvas_course_sections_list)
     end
 
     subject {

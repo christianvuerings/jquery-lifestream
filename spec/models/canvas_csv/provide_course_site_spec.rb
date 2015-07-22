@@ -548,12 +548,12 @@ describe CanvasCsv::ProvideCourseSite do
       course_site_name = site_name
       subject.instance_eval { @import_data['site_name'] = course_site_name }
       allow(subject).to receive(:course_details).and_return(course_details_hash)
-      allow_any_instance_of(Canvas::CourseSections).to receive(:create).with(site_name, "DEFSEC:#{course_details_hash['id']}").and_return(section_details_hash)
+      allow_any_instance_of(Canvas::CourseSections).to receive(:create).with(site_name, "DEFSEC:#{course_details_hash['id']}").and_return(body: section_details_hash)
       allow(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(true)
     end
 
     it 'establishes a default section with SIS Section ID' do
-      expect_any_instance_of(Canvas::CourseSections).to receive(:create).with(site_name, "DEFSEC:#{course_details_hash['id']}").and_return(section_details_hash)
+      expect_any_instance_of(Canvas::CourseSections).to receive(:create).with(site_name, "DEFSEC:#{course_details_hash['id']}").and_return(body: section_details_hash)
       subject.enroll_instructor
     end
 
@@ -638,14 +638,14 @@ describe CanvasCsv::ProvideCourseSite do
       expect { subject.course_details }.to raise_error(RuntimeError, 'Unable to load course details. SIS Course ID not present.')
     end
 
-    it 'should raise exception if no response from Canvas::SisCourse' do
-      allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(nil)
+    it 'should raise exception if error response from Canvas::SisCourse' do
+      allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(statusCode: 503, error: 'Internal server error')
       expect { subject.course_details }.to raise_error(RuntimeError, 'Unexpected error obtaining course site URL for CRS:COMPSCI-9A-2013-D!')
     end
 
     context 'when course details are not present' do
       it 'should assign course details to shared import data hash' do
-        allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(course_details_hash)
+        allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(statusCode: 200, body: course_details_hash)
         subject.course_details
         loaded_course = subject.instance_eval { @import_data['course_site'] }
         expect(loaded_course['id']).to eq 1253733
@@ -679,7 +679,7 @@ describe CanvasCsv::ProvideCourseSite do
       ]
     end
     it 'returns array of term hashes' do
-      expect(Canvas::Proxy).to receive(:canvas_current_terms).and_return(term_codes)
+      expect(Canvas::Terms).to receive(:current_terms).and_return(term_codes)
       result = subject.current_terms
       expect(result).to be_an_instance_of Array
       expect(result.count).to eq 2
@@ -947,7 +947,7 @@ describe CanvasCsv::ProvideCourseSite do
       canvas_sections_list.each do |row|
         expect(row['course_id']).to eq sis_course_id
         expect(row['status']).to eq 'active'
-        campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(row['section_id'])
+        campus_section = Canvas::Terms.sis_section_id_to_ccn_and_term(row['section_id'])
         expect(campus_section[:term_yr]).to eq term_yr
         expect(campus_section[:term_cd]).to eq term_cd
         expect(ccns.include?(campus_section[:ccn])).to be_truthy
@@ -993,7 +993,7 @@ describe CanvasCsv::ProvideCourseSite do
       second_canvas_section_id = second_canvas_section['section_id']
       expect(second_canvas_section_id.present?).to be_truthy
       expect(second_canvas_section_id).to_not eq first_canvas_section_id
-      campus_section = Canvas::Proxy.sis_section_id_to_ccn_and_term(second_canvas_section_id)
+      campus_section = Canvas::Terms.sis_section_id_to_ccn_and_term(second_canvas_section_id)
       expect(campus_section[:term_yr]).to eq term_yr
       expect(campus_section[:term_cd]).to eq term_cd
       expect(campus_section[:ccn]).to eq ccn
@@ -1078,13 +1078,13 @@ describe CanvasCsv::ProvideCourseSite do
 
   describe '#refresh_sections_cache' do
     it 'clears course sections cache' do
-      expect_any_instance_of(Canvas::CourseSections).to receive(:sections_list).with(true).and_return(nil)
+      expect_any_instance_of(Canvas::CourseSections).to receive(:sections_list).with(true).and_return(statusCode: 200, body: [])
       allow(subject).to receive(:expire_instructor_sites_cache).and_return(nil)
       subject.refresh_sections_cache(canvas_course_id)
     end
 
     it 'clears instructors merged academics cache' do
-      allow_any_instance_of(Canvas::CourseSections).to receive(:sections_list).and_return(nil)
+      allow_any_instance_of(Canvas::CourseSections).to receive(:sections_list).and_return(statusCode: 200, body: [])
       expect(subject).to receive(:expire_instructor_sites_cache).and_return(nil)
       subject.refresh_sections_cache(canvas_course_id)
     end

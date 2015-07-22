@@ -15,7 +15,7 @@ angular.module('calcentral.services', ['ng']);
 /**
  * CalCentral module
  */
-var calcentral = angular.module('calcentral', [
+angular.module('calcentral', [
   'calcentral.config',
   'calcentral.controllers',
   'calcentral.directives',
@@ -60,6 +60,3 @@ var loadConfig = function() {
 };
 
 loadConfig().then(injectConfigConstant).then(bootstrap);
-
-// Bind calcentral to the window object so it's globally accessible
-window.calcentral = calcentral;

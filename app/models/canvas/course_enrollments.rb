@@ -1,8 +1,8 @@
 module Canvas
   class CourseEnrollments < Proxy
 
-    ENROLLMENT_STATES = ['active', 'invited']
-    ENROLLMENT_TYPES = ['StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment', 'ObserverEnrollment', 'DesignerEnrollment']
+    ENROLLMENT_STATES = %w(active invited)
+    ENROLLMENT_TYPES = %w(StudentEnrollment TeacherEnrollment TaEnrollment ObserverEnrollment DesignerEnrollment)
 
     def initialize(options = {})
       super(options)
@@ -26,13 +26,8 @@ module Canvas
           'notify' => !!notify,
         }
       }
-      request_params['enrollment'].merge!({'role_id' => options[:role_id]}) if options[:role_id]
-      request_options = {
-        :method => :post,
-        :body => request_params,
-      }
-      response = request_uncached("courses/#{@canvas_course_id}/enrollments", '_course_enroll_user', request_options)
-      JSON.parse(response.body)
+      request_params['enrollment']['role_id'] = options[:role_id] if options[:role_id]
+      wrapped_post "courses/#{@canvas_course_id}/enrollments", request_params
     end
 
   end

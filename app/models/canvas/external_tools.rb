@@ -1,8 +1,6 @@
 module Canvas
   class ExternalTools < Proxy
 
-    include SafeJsonParser
-
     # The publicly accessible feed does have to be cached.
     def self.public_list_as_json
       fetch_from_cache do
@@ -44,20 +42,12 @@ module Canvas
 
     # Do not cache, since this is used to change external tools configurations on multiple Canvas servers.
     def external_tools_list
-      all_tools = []
-      params = 'per_page=100'
-      while params do
-        response = request_uncached "#{@api_root}/external_tools?#{params}"
-        break unless (response && response.status == 200 && list = safe_json(response.body))
-        all_tools.concat(list)
-        params = next_page_params(response)
-      end
-      all_tools
+      external_tools_response[:body]
     end
 
     def reset_external_tool_config_by_url(tool_id, config_url)
       canvas_url = "#{@api_root}/external_tools/#{tool_id}?config_type=by_url&config_url=#{config_url}"
-      request_uncached(canvas_url, method: :put)
+      wrapped_put canvas_url
     end
 
     def find_canvas_course_tab(tool_id)
@@ -73,45 +63,32 @@ module Canvas
     end
 
     def create_external_tool_by_xml(tool_name, xml_string)
-      parameters = {
-          'name' => tool_name,
-          'config_type' => 'by_xml',
-          'config_xml' => xml_string,
-          'consumer_key' => Settings.canvas_proxy.lti_key,
-          'shared_secret' => Settings.canvas_proxy.lti_secret
-        }
-      canvas_url = "#{@api_root}/external_tools"
-      response = request_uncached(canvas_url, {
-          method: :post,
-          body: parameters
-        })
-      response ? safe_json(response.body) : nil
+      wrapped_post "#{@api_root}/external_tools", {
+        'name' => tool_name,
+        'config_type' => 'by_xml',
+        'config_xml' => xml_string,
+        'consumer_key' => Settings.canvas_proxy.lti_key,
+        'shared_secret' => Settings.canvas_proxy.lti_secret
+      }
     end
 
     def reset_external_tool_by_xml(tool_id, xml_string)
-      parameters = {
-          'config_type' => 'by_xml',
-          'config_xml' => xml_string,
-          'consumer_key' => Settings.canvas_proxy.lti_key,
-          'shared_secret' => Settings.canvas_proxy.lti_secret
-        }
-      canvas_url = "#{@api_root}/external_tools/#{tool_id}"
-      response = request_uncached(canvas_url, {
-          method: :put,
-          body: parameters
-        })
-      response ? safe_json(response.body) : nil
+      wrapped_put "#{@api_root}/external_tools/#{tool_id}", {
+        'config_type' => 'by_xml',
+        'config_xml' => xml_string,
+        'consumer_key' => Settings.canvas_proxy.lti_key,
+        'shared_secret' => Settings.canvas_proxy.lti_secret
+      }
     end
 
     # A simple pass-through utility method for one-off tests and fixes of
     # LTI app configurations.
     def modify_external_tool(tool_id, parameters)
-      canvas_url = "#{@api_root}/external_tools/#{tool_id}"
-      response = request_uncached(canvas_url, {
-          method: :put,
-          body: parameters
-        })
-      response ? safe_json(response.body) : nil
+      wrapped_put "#{@api_root}/external_tools/#{tool_id}", parameters
+    end
+
+    def external_tools_response
+      paged_get "#{@api_root}/external_tools"
     end
 
     private
@@ -137,7 +114,7 @@ module Canvas
         end
         updated_tab
       rescue => exception
-        logger.error "#{self.class.name} Problem updating hidden=#{set_to_hidden} on tab #{tab_id} of Canvas:#{@api_root}. Abort!"
+        logger.error "Problem updating hidden=#{set_to_hidden} on tab #{tab_id} of Canvas:#{@api_root}. Abort!"
         raise exception
       end
     end
@@ -148,8 +125,8 @@ module Canvas
     end
 
     def course_site_tab_list
-      response = request_uncached("#{@api_root}/tabs", { method: :get })
-      response && response.status == 200 ? safe_json(response.body) : {}
+      response = wrapped_get "#{@api_root}/tabs"
+      response[:statusCode] == 200 ? response[:body] : {}
     end
 
     def course_site_tabs_by_id
@@ -158,12 +135,13 @@ module Canvas
 
     def update_course_site_tab(tab_id, options)
       url = "#{@api_root}/tabs/#{tab_id}"
-      response = request_uncached(url, options)
-      logger.info "Updated course site_tab with url=#{url} and options: #{options}"
-      unless response && response.status == 200
+      response = raw_request(url, options)
+      if response.status == 200
+        logger.info "Updated course site_tab with url=#{url} and options: #{options}"
+        safe_json response.body
+      else
         raise Errors::ProxyError.new("Failed to update tab #{tab_id} of Canvas:#{@api_root}", response: response, url: url, uid: @uid)
       end
-      safe_json response.body
     end
 
     def options_for_tab_update(tab, set_to_hidden)
