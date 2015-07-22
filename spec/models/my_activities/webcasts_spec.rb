@@ -21,13 +21,13 @@ describe MyActivities::Webcasts do
 
     it 'should include course and uid data' do
       expect(activities).to all include({
-        emitter: 'Webcasts',
+        emitter: 'Course Captures',
         id: '',
-        linkText: 'View webcast',
+        linkText: 'View recording',
         source: 'BIOLOGY 1A',
-        summary: 'A new webcast recording for your Fall 2013 course, General Biology Lecture, is now available.',
+        summary: 'A new recording for your Fall 2013 course, General Biology Lecture, is now available.',
         type: 'webcast',
-        title: 'Webcast Available',
+        title: 'Recording Available',
         user_id: uid
       })
     end

@@ -26,7 +26,7 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
       discussion: ' Discussions',
       gradePosting: ' Grades Posted',
       message: ' Status Changes',
-      webcast: ' Webcasts',
+      webcast: ' Course Captures',
       webconference: ' Webconferences'
     };
 

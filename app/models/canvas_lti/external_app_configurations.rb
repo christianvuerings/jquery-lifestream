@@ -32,7 +32,7 @@ module CanvasLti
         },
         'course_mediacasts' => {
           xml_name: 'lti_course_mediacasts',
-          app_name: 'Webcasts',
+          app_name: 'Course Captures',
           account: main_account_id
         },
         'course_manage_official_sections' => {

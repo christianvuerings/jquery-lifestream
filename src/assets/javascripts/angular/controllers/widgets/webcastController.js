@@ -8,7 +8,7 @@ var angular = require('angular');
 angular.module('calcentral.controllers').controller('WebcastController', function(apiService, webcastFactory, $route, $routeParams, $scope) {
   // Is this for an official campus class or for a Canvas course site?
   var courseMode = 'campus';
-  var outerTabs = ['Webcast Sign-up', 'Webcasts'];
+  var outerTabs = ['Course Capture Sign-up', 'Course Captures'];
   $scope.accessibilityAnnounce = apiService.util.accessibilityAnnounce;
 
   /**
@@ -78,7 +78,7 @@ angular.module('calcentral.controllers').controller('WebcastController', functio
   };
 
   $scope.switchSelectedOption = function(selectedOption) {
-    $scope.accessibilityAnnounce('Loaded ' + selectedOption + ' Webcasts');
+    $scope.accessibilityAnnounce('Loaded ' + selectedOption + ' recordings');
     $scope.currentSelection = selectedOption;
   };
 
@@ -105,7 +105,7 @@ angular.module('calcentral.controllers').controller('WebcastController', functio
     } else {
       canvasCourseId = $routeParams.canvasCourseId;
     }
-    apiService.util.setTitle('Course Webcasts');
+    apiService.util.setTitle('Course Captures');
     getWebcasts(canvasCourseId);
     setSelectOptions();
   } else {
