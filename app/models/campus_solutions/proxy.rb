@@ -8,6 +8,10 @@ module CampusSolutions
     APP_ID = 'campussolutions'
     APP_NAME = 'Campus Solutions'
 
+    def instance_key
+      @uid
+    end
+
     def xml_filename
       ''
     end
@@ -17,7 +21,7 @@ module CampusSolutions
     end
 
     def get
-      internal_response = self.class.smart_fetch_from_cache(id: @uid) do
+      internal_response = self.class.smart_fetch_from_cache(id: instance_key) do
         get_internal
       end
       if internal_response[:noStudentId] || internal_response[:statusCode] < 400
@@ -40,8 +44,12 @@ module CampusSolutions
       end
       {
         statusCode: response.code,
-        feed: HashConverter.downcase_and_camelize(feed)
+        feed: convert_feed_keys(feed)
       }
+    end
+
+    def convert_feed_keys(feed)
+      HashConverter.downcase_and_camelize(feed)
     end
 
     def url

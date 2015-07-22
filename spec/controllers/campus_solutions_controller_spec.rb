@@ -69,6 +69,43 @@ describe CampusSolutionsController do
     end
   end
 
+  context 'aid years feed' do
+    let(:feed) { :aid_years }
+    context 'non-authenticated user' do
+      it_behaves_like 'an unauthenticated user'
+    end
+
+    context 'authenticated user' do
+      let(:user) { @user_id }
+      let(:feed_key) { 'finaidSummary' }
+      it_behaves_like 'a successful feed'
+      it 'has some field mapping info' do
+        session['user_id'] = user
+        get feed
+        json = JSON.parse(response.body)
+        expect(json['feed']['finaidSummary']['finaidYear'][0]['id']).to eq '2015'
+      end
+    end
+  end
+
+  context 'financial data feed' do
+    let(:feed) { :financial_data }
+    context 'non-authenticated user' do
+      it_behaves_like 'an unauthenticated user'
+    end
+
+    context 'authenticated user' do
+      let(:user) { @user_id }
+      let(:feed_key) { 'coa' }
+      it_behaves_like 'a successful feed'
+      it 'has some field mapping info' do
+        session['user_id'] = user
+        get feed, {:aid_year => '2016', :format => 'json'}
+        json = JSON.parse(response.body)
+        expect(json['feed']['coa']['title']).to eq 'Estimated Cost of Attendance'
+      end
+    end
+  end
   context 'updating an address' do
     it 'should not let an unauthenticated user post' do
       post :address, {format: 'json', uid: '100'}

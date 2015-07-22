@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<finaidSummary>
+  <finaidYear>
+    <id>2015</id>
+    <name>Federal Aid Year 2014 - 2015</name>
+    <semesterOption>
+      <id>Fall-Spring</id>
+      <semester>Fall</semester>
+      <semester>Spring</semester>
+    </semesterOption>
+    <termsAndConditions>
+      <approved>true</approved>
+      <longMessage>HEADER MAIN BODY edit</longMessage>
+      <longTitle>HEADER MAIN edit</longTitle>
+      <shortMessage>MESSAGE UNANSWERED edit</shortMessage>
+      <shortTitle>HEADER UNANSWERED edit</shortTitle>
+    </termsAndConditions>
+  </finaidYear>
+  <finaidYear>
+    <id>2016</id>
+    <name>Federal Aid Year 2015 - 2016</name>
+    <semesterOption>
+      <id>Fall-Spring</id>
+      <semester>Fall</semester>
+      <semester>Spring</semester>
+    </semesterOption>
+    <termsAndConditions>
+      <approved></approved>
+      <longMessage>You agree to utilize your financial to pay educational related expenses.</longMessage>
+      <longTitle>Term and Conditions</longTitle>
+      <shortMessage>You will not be able view your 2015-2016 financial aid until you Agreed to the Term and
+        Conditions.
+      </shortMessage>
+      <shortTitle>You have not reviewed and Agreed to Terms and Conditions of your financial aid for the 2015-2016 Aid
+        Year.
+      </shortTitle>
+    </termsAndConditions>
+  </finaidYear>
+  <title4>
+    <approved></approved>
+    <longMessage>By agreeing to the Title IV Release, your financial aid can be utilized to pay for non Title IV charges
+      that are charged to your UCB Student Account. Non Title IV charges may include late charges, library fines,
+      parking tickets, etc. If you do not agree to the Title IV Release, please pay any non Title IV charges directly to
+      the UCB Student Financial Office in order to avoid holds on enrollment, holds on transcript, and further late
+      charges.
+    </longMessage>
+    <longTitle>Title IV Release</longTitle>
+    <shortMessage>Please either Agree or Disagree to Title IV Release in order to view your financial aid.
+    </shortMessage>
+    <shortTitle>You have not selected a Title IV Release option.</shortTitle>
+  </title4>
+</finaidSummary>
