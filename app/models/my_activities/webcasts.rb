@@ -29,7 +29,7 @@ module MyActivities
         id: '',
         linkText: 'View recording',
         source: campus_course[:course_code],
-        summary: "A new recording of your #{english_term} course, #{campus_course[:name]}, is now available.",
+        summary: "A new recording for your #{english_term} course, #{campus_course[:name]}, is now available.",
         type: 'webcast',
         title: 'Recording Available',
         user_id: uid
