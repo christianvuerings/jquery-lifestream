@@ -226,7 +226,7 @@ module CanvasCsv
       return @import_data['course_site'] if @import_data['course_site'].present?
       raise RuntimeError, 'Unable to load course details. SIS Course ID not present.' if @import_data['sis_course_id'].blank?
       course_response = Canvas::SisCourse.new(sis_course_id: @import_data['sis_course_id']).course
-      raise RuntimeError, "Unexpected error obtaining course site URL for #{@import_data['sis_course_id']}!" unless course_response[:body]
+      raise RuntimeError, "Unexpected error obtaining course site URL for #{@import_data['sis_course_id']}!" unless course_response[:statusCode] == 200
       @import_data['course_site'] = course_response[:body]
     end
 
