@@ -4,6 +4,9 @@ module CanvasCsv
 
     attr_reader :uid, :cache_key, :section_definitions
 
+    # Discourage tampering with the section created to hold the site creator.
+    NAME_OF_DEFAULT_SECTION = 'ADMIN USE ONLY - DO NOT USE'
+
     # Currently this depends on an instructor's point of view.
     def initialize(uid, options = {})
       super()
@@ -182,7 +185,7 @@ module CanvasCsv
     end
 
     def enroll_instructor
-      creation_response = Canvas::CourseSections.new(:course_id => course_details['id']).create(@import_data['site_name'], "DEFSEC:#{course_details['id']}")
+      creation_response = Canvas::CourseSections.new(:course_id => course_details['id']).create(NAME_OF_DEFAULT_SECTION, "DEFSEC:#{course_details['id']}")
       enrollment_response = if (default_section = creation_response[:body])
         CanvasLti::CourseAddUser.add_user_to_course_section(@uid, 'TeacherEnrollment', default_section['id'])
       end
