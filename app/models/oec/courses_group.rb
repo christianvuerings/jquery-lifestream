@@ -27,7 +27,7 @@ module Oec
       @campus_data_per_dept = {}
       @csv_per_dept.each do |dept_name, csv_file|
         campus_data = []
-        CSV.read(csv_file).each_with_index do |row, index|
+        Oec::Csv.read(csv_file).each_with_index do |row, index|
           campus_data << Oec::RowConverter.new(row).hashed_row if index > 0 && row.length > 0
         end
         File.delete csv_file unless keep_csv_files
