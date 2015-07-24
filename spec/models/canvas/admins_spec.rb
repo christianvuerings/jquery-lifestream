@@ -41,7 +41,7 @@ describe Canvas::Admins do
       context 'uncached' do
         it 'caches nothing' do
           expect(Rails.cache).to receive(:write).never
-          subject.admin_user?(default_account_admin, false)
+          subject.admin_user?(default_account_admin, cache: false)
         end
       end
     end

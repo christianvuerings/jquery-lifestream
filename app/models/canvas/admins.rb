@@ -21,18 +21,13 @@ module Canvas
       @account_id = account_id
     end
 
-    def admin_user?(uid, cached = true)
-      if cached
-        admins = self.class.fetch_from_cache(@account_id) { admins_list }
-      else
-        # When editing remote account admin lists, we must access the most recent data and not cache it locally.
-        admins = admins_list
-      end
+    def admin_user?(uid, options = {})
+      admins = admins_list options
       admins[:body].present? && admins[:body].index {|acct| acct['user']['sis_login_id'] == uid.to_s}.present?
     end
 
-    def admins_list
-      paged_get request_path
+    def admins_list(options)
+      optional_cache(options, key: @account_id, default: true) { wrapped_get request_path }
     end
 
     def add_admin(canvas_user_id)
@@ -43,7 +38,7 @@ module Canvas
     end
 
     def add_new_admin(canvas_login_id)
-      if admin_user? canvas_login_id, false
+      if admin_user? canvas_login_id, cache: false
         added = false
       else
         profile = Canvas::SisUserProfile.new(user_id: canvas_login_id).get
