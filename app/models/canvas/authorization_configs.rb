@@ -1,14 +1,6 @@
 module Canvas
   class AuthorizationConfigs < Proxy
 
-    # Unlike other Canvas proxies, this needs to support requests to multiple Canvas servers.
-    def initialize(options = {})
-      super(options)
-      if (canvas_url_root = options[:url_root])
-        @settings.url_root = canvas_url_root
-      end
-    end
-
     # Do not cache, since this is used to change authentication configurations on multiple Canvas servers.
     # proxy = Canvas::AuthorizationConfigs.new(:url_root => 'https://ucberkeley.beta.instructure.com')
     def authorization_configs

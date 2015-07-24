@@ -40,6 +40,7 @@ module Canvas
         access_token = options[:access_token] || @settings.admin_access_token
       end
       @client = Signet::OAuth2::Client.new(:access_token => access_token)
+      @url_root = options[:url_root] || @settings.url_root
     end
 
     def wrapped_get(api_path, opts={}, &block)
@@ -138,7 +139,7 @@ module Canvas
     end
 
     def api_root
-      "#{@settings.url_root}/api/v1"
+      "#{@url_root}/api/v1"
     end
 
     def existence_check

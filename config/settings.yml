@@ -86,6 +86,9 @@ canvas_proxy:
   maintain_user_names: true
   # URL for scripts to point to CalCentral/Junction
   app_provider_host: 'http://localhost:3000'
+  test_admin_id:
+  test_servers:
+  test_cas_url: 'https://auth-test.berkeley.edu/cas'
 ldap:
   host: 'nds.berkeley.edu'
   port: 636

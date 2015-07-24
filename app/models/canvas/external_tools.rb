@@ -23,7 +23,6 @@ module Canvas
       public_list
     end
 
-    # Unlike other Canvas proxies, this can make requests to multiple Canvas servers.
     def initialize(options = {})
       super(options)
       default_options = {canvas_account_id: @settings.account_id }
@@ -33,10 +32,6 @@ module Canvas
         @api_root = "courses/#{canvas_course_id}"
       else
         @api_root = "accounts/#{options[:canvas_account_id]}"
-      end
-
-      if (canvas_url_root = options[:url_root])
-        @settings.url_root = canvas_url_root
       end
     end
 
