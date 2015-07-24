@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CampusSolutions::Address do
 
-  context 'getting the feed' do
+  context 'getting the feed', :ignore => true do
     let(:fake_proxy) { CampusSolutions::Address.new(fake: true) }
     let(:feed) { fake_proxy.get[:feed] }
 
@@ -22,7 +22,7 @@ describe CampusSolutions::Address do
 
   end
 
-  context 'post' do
+  context 'post', :ignore => true do
     let(:fake_proxy) { CampusSolutions::Address.new(fake: true) }
 
     context 'filtering out fields not on the whitelist' do

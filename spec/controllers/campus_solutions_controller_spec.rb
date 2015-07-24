@@ -50,7 +50,7 @@ describe CampusSolutionsController do
     end
   end
 
-  context 'address feed' do
+  context 'address feed', :ignore => true do
     let(:feed) { :address }
     context 'non-authenticated user' do
       it_behaves_like 'an unauthenticated user'
@@ -106,7 +106,7 @@ describe CampusSolutionsController do
       end
     end
   end
-  context 'updating an address' do
+  context 'updating an address', :ignore => true do
     it 'should not let an unauthenticated user post' do
       post :address, {format: 'json', uid: '100'}
       expect(response.status).to eq 401

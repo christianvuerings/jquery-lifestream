@@ -11,5 +11,9 @@ module CampusSolutions
       options
     end
 
+    def post
+      get
+    end
+
   end
 end

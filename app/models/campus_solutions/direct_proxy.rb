@@ -18,6 +18,7 @@ module CampusSolutions
 
     # lets us restrict updated params to what's on the whitelist of field mappings.
     def filter_updateable_params(params)
+      return {} unless params
       updateable = {}
       known_fields = self.class.field_mappings
       params.each do |calcentral_param_name, value|

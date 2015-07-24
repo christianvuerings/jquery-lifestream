@@ -10,7 +10,9 @@ module CampusSolutions
     end
 
     def update(params = {})
-      CampusSolutions::Address.new({user_id: @uid}).post(params)
+      proxy = CampusSolutions::Address.new({user_id: @uid})
+      proxy.params = params
+      proxy.post
     end
 
   end

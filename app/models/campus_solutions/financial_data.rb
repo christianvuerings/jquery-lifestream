@@ -4,6 +4,7 @@ module CampusSolutions
     def initialize(options = {})
       super(Settings.cs_financial_data_proxy, options)
       @aid_year = options[:aid_year] || '0'
+      initialize_mocks if @fake
     end
 
     def instance_key
