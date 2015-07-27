@@ -4,9 +4,6 @@ module CanvasCsv
 
     attr_reader :uid, :cache_key, :section_definitions
 
-    # Discourage tampering with the section created to hold the site creator.
-    NAME_OF_DEFAULT_SECTION = 'ADMIN USE ONLY - DO NOT USE'
-
     # Currently this depends on an instructor's point of view.
     def initialize(uid, options = {})
       super()
@@ -28,6 +25,7 @@ module CanvasCsv
       raise RuntimeError, 'term_slug does not match a current term' if @import_data['term'].nil?
       @import_data['ccns'] = ccns
       @import_data['is_admin_by_ccns'] = is_admin_by_ccns
+      @import_data['explicit_sections_for_instructor'] = []
 
       prepare_users_courses_list
       identify_department_subaccount
@@ -43,7 +41,7 @@ module CanvasCsv
       if is_admin_by_ccns
         @background_job_total_steps -= 2
       else
-        enroll_instructor
+        add_instructor_to_section(@import_data['explicit_sections_for_instructor'].first || @section_definitions.first)
         expire_instructor_sites_cache
       end
 
@@ -184,23 +182,21 @@ module CanvasCsv
       end
     end
 
-    def enroll_instructor
-      creation_response = Canvas::CourseSections.new(:course_id => course_details['id']).create(NAME_OF_DEFAULT_SECTION, "DEFSEC:#{course_details['id']}")
-      enrollment_response = if (default_section = creation_response[:body])
-        CanvasLti::CourseAddUser.add_user_to_course_section(@uid, 'TeacherEnrollment', default_section['id'])
-      end
-      if enrollment_response.blank?
-        logger.error "Imported course from #{@import_data['courses_csv_file']} but could not add #{@uid} as teacher to section #{default_section['id']}"
+    def add_instructor_to_section(canvas_section)
+      if canvas_section && CanvasLti::CourseAddUser.add_user_to_course_section(@uid, 'TeacherEnrollment', "sis_section_id:#{canvas_section['section_id']}")
+        logger.warn "Successfully added instructor to section #{canvas_section['section_id']} as a teacher"
+        background_job_complete_step 'Added instructor to course site'
+      else
+        logger.error "Imported course from #{@import_data['courses_csv_file']} but could not add #{@uid} as teacher to section #{canvas_section['section_id']}"
         raise RuntimeError, 'Course site was created but the teacher could not be added!'
       end
-
-      logger.warn 'Successfully added instructor to default section as a teacher'
-      background_job_complete_step 'Added instructor to course site'
     end
 
     def retrieve_course_site_details
       raise RuntimeError, 'Unable to retrieve course site details. SIS Course ID not present.' if @import_data['sis_course_id'].blank?
-      @import_data['course_site_url'] = course_site_url
+      course_id = Canvas::SisCourse.new(sis_course_id: @import_data['sis_course_id']).canvas_course_id
+      raise RuntimeError, "Unexpected error obtaining course site URL for #{@import_data['sis_course_id']}" if course_id.blank?
+      @import_data['course_site_url'] = "#{Settings.canvas_proxy.url_root}/courses/#{course_id}"
       background_job_complete_step 'Retrieved new course site details'
     end
 
@@ -223,18 +219,6 @@ module CanvasCsv
 
     def csv_filename_prefix
       @export_filename_prefix ||= "#{@export_dir}/course_provision-#{DateTime.now.strftime('%F')}-#{SecureRandom.hex(8)}"
-    end
-
-    def course_details
-      return @import_data['course_site'] if @import_data['course_site'].present?
-      raise RuntimeError, 'Unable to load course details. SIS Course ID not present.' if @import_data['sis_course_id'].blank?
-      course_response = Canvas::SisCourse.new(sis_course_id: @import_data['sis_course_id']).course
-      raise RuntimeError, "Unexpected error obtaining course site URL for #{@import_data['sis_course_id']}!" unless course_response[:statusCode] == 200
-      @import_data['course_site'] = course_response[:body]
-    end
-
-    def course_site_url
-      "#{Settings.canvas_proxy.url_root}/courses/#{course_details['id']}"
     end
 
     def current_terms
@@ -326,23 +310,28 @@ module CanvasCsv
 
     def generate_section_definitions(term_yr, term_cd, sis_course_id, campus_section_data)
       raise ArgumentError, "'campus_section_data' argument is empty" if campus_section_data.empty?
-      sections = []
       existence_proxy = Canvas::ExistenceCheck.new
+      section_definitions = []
+      @import_data['explicit_sections_for_instructor'] = []
       campus_section_data.each do |course|
         course[:sections].each do |section|
           if (sis_section_id = generate_unique_sis_section_id(existence_proxy, section[:ccn], term_yr, term_cd))
-            sections << {
+            section_definition = {
               'section_id' => sis_section_id,
               'course_id' => sis_course_id,
               'name' => "#{section[:courseCode]} #{section[:section_label]}",
               'status' => 'active'
             }
+            section_definitions << section_definition
+            if !@import_data['is_admin_by_ccns'] && section[:instructors].map{|instructor| instructor[:uid]}.include?(@uid)
+              @import_data['explicit_sections_for_instructor'] << section_definition
+            end
           else
             logger.error "Unable to generate unique Canvas section SIS ID for CCN #{section[:ccn]} in #{source}; will NOT create section"
           end
         end
       end
-      sections
+      section_definitions
     end
 
     def generate_unique_sis_course_id(existence_proxy, slug, term_yr, term_cd)
