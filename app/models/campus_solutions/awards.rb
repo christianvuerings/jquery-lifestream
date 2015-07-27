@@ -6,6 +6,10 @@ module CampusSolutions
       initialize_mocks if @fake
     end
 
+    def request_options
+      super.merge('year' => 2015)
+    end
+
     def xml_filename
       'awards.xml'
     end

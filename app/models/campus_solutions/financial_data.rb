@@ -1,9 +1,10 @@
 module CampusSolutions
-  class FinancialData < DirectProxy
+  class FinancialData < IntegrationHubProxy
 
     def initialize(options = {})
-      super(options)
+      super(Settings.cs_financial_data_proxy, options)
       @aid_year = options[:aid_year] || '0'
+      initialize_mocks if @fake
     end
 
     def instance_key
@@ -24,6 +25,7 @@ module CampusSolutions
 
     def url
       # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
+      # TODO note strange form of EMPLID param syntax (this is a PS misconfig that should be fixed soon)
       "#{@settings.base_url}/UC_FA_COST_ATT.v1/EMPLID=00000137&INSTITUTION=UCB01&AID_YEAR=#{@aid_year}"
     end
 

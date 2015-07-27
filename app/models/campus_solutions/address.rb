@@ -1,5 +1,5 @@
 module CampusSolutions
-  class Address < DirectProxy
+  class Address < PostingProxy
 
     def self.field_mappings
       @field_mappings ||= FieldMapping.to_hash(

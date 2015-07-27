@@ -6,8 +6,7 @@ module CampusSolutions
       {
         query: {
           'app_id' => @settings.app_id,
-          'app_key' => @settings.app_key,
-          'year' => 2015
+          'app_key' => @settings.app_key
         }
       }
     end
