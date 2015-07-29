@@ -18,24 +18,16 @@ module ResponseWrapper
 
   # When an exception occurs, log an error and return the body with error info.
   def handle_exception(e, key, opts)
-    if e.is_a? Errors::ProxyError
-      response = e.response || default_response(opts)
-      log_message = e.log_message || ''
-      log_message += "; #{e.wrapped_exception.class} #{e.wrapped_exception.message}" if e.wrapped_exception
-      log_message += "; url: #{e.url}" if e.url
-      log_message += "; status: #{e.status}" if e.status
-    else
-      response = default_response(opts)
-      log_message = "#{e.class} #{e.message}"
-    end
-    log_message += "\nAssociated key: #{key}"
     if e.is_a?(Errors::ProxyError)
-      log_message += "; uid: #{e.uid}" if e.uid
-      log_message += ". Response body: #{e.body}" if e.body
+      message_lines = [e.message, "Associated key: #{key}#{e.uid_and_response_body}"]
+      response = e.response
+    else
+      message_lines = ["#{e.class} #{e.message}", "Associated key: #{key}"]
     end
-    log_message += "\n" + e.backtrace.join("\n ")
-    Rails.logger.error(log_message)
-    response
+    message_lines << e.backtrace.join("\n ")
+    Rails.logger.error message_lines.join("\n")
+
+    response || default_response(opts)
   end
 
   def default_response(opts)

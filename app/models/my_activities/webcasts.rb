@@ -25,13 +25,13 @@ module MyActivities
     def self.course_attributes(campus_course, uid)
       english_term = Berkeley::TermCodes.to_english(campus_course[:term_yr], campus_course[:term_cd])
       {
-        emitter: 'Webcasts',
+        emitter: 'Course Captures',
         id: '',
-        linkText: 'View webcast',
+        linkText: 'View recording',
         source: campus_course[:course_code],
-        summary: "A new webcast recording for your #{english_term} course, #{campus_course[:name]}, is now available.",
+        summary: "A new recording for your #{english_term} course, #{campus_course[:name]}, is now available.",
         type: 'webcast',
-        title: 'Webcast Available',
+        title: 'Recording Available',
         user_id: uid
       }
     end

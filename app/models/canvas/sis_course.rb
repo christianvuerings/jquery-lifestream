@@ -13,7 +13,12 @@ module Canvas
     end
 
     def canvas_course_id
-      course[:body] && course[:body]['id']
+      response = course
+      response[:statusCode] == 200 && response[:body] && response[:body]['id']
+    end
+
+    def existence_check
+      true
     end
 
     private

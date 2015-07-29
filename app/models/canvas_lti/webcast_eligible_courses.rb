@@ -56,7 +56,7 @@ module CanvasLti
             ccn = section[:ccn].to_s.to_i
             if ccn > 0
               has_recordings = recordings_per_ccn.has_key?(ccn) && recordings_per_ccn[ccn][:videos].present?
-              logger.warn "#{term_yr}-#{term_cd}-#{ccn} has Webcast recordings (canvas_course_id = #{canvas_course_id})" if has_recordings
+              logger.warn "#{term_yr}-#{term_cd}-#{ccn} has recordings (canvas_course_id = #{canvas_course_id})" if has_recordings
               is_webcast_eligible = !has_recordings && !sign_up_eligible_ccn_set.nil? && sign_up_eligible_ccn_set.include?(ccn)
               if has_recordings || is_webcast_eligible
                 section[:has_webcast_recordings] = has_recordings

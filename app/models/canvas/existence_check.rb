@@ -20,7 +20,7 @@ module Canvas
     private
 
     def resource_at_path?(path)
-      (response = raw_request path) && response.status < 400
+      (response = wrapped_get path) && response[:statusCode] < 400
     end
 
     def mock_interactions
