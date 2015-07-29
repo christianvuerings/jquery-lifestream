@@ -4,8 +4,8 @@ describe Canvas::SisCourse do
   subject             { Canvas::SisCourse.new(:user_id => user_id, :sis_course_id => sis_course_id) }
   it                  { should respond_to(:sis_course_id) }
 
-  context 'when requesting course from canvas' do
-    context 'if course exists in canvas' do
+  context 'when requesting course from Canvas' do
+    context 'if course exists in Canvas' do
       it 'returns course hash' do
         course = subject.course[:body]
         expect(course['id']).to eq 1121
@@ -37,13 +37,13 @@ describe Canvas::SisCourse do
       end
     end
 
-    context 'if course does not exist in canvas' do
+    context 'if course does not exist in Canvas' do
       before { subject.set_response(status: 404, body: '{"errors":[{"message":"The specified resource does not exist."}],"error_report_id":121214508}') }
-      it 'returns a 404 response' do
+      it 'returns a non-erroring 404 response' do
         course = subject.course
         expect(course[:statusCode]).to eq 404
-        expect(course[:error]).to be_present
-        expect(course).not_to include :body
+        expect(course[:body]).to be_present
+        expect(course).not_to include :error
       end
     end
 
@@ -54,8 +54,8 @@ describe Canvas::SisCourse do
     end
   end
 
-  context 'when requesting canvas course id' do
-    it 'returns canvas course id' do
+  context 'when requesting Canvas course ID' do
+    it 'returns Canvas course ID' do
       expect(subject.canvas_course_id).to eq 1121
     end
   end

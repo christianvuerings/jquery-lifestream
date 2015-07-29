@@ -19,5 +19,25 @@ module Errors
       @response = opts[:return_feed]
       @wrapped_exception = opts[:wrapped_exception]
     end
+
+    def message
+      properties = []
+      properties << @log_message if @log_message
+      properties << "#{@wrapped_exception.class} #{@wrapped_exception.message}" if @wrapped_exception
+      properties << "url: #{@url}" if @url
+      properties << "status: #{@status}" if @status
+      properties.join('; ')
+    end
+
+    def uid_and_response_body
+      message = ''
+      message += "; uid: #{@uid}" if @uid
+      message += ". Response body: #{@body}" if @body
+      message
+    end
+
+    def to_s
+      "#{message}#{uid_and_response_body}"
+    end
   end
 end

@@ -10,6 +10,7 @@ module CanvasLti
     def unique_sis_project_id
       15.times do
         sis_course_id = 'PROJ:' + SecureRandom.hex(8)
+        logger.debug "Checking SIS ID #{sis_course_id} for uniqueness"
         existing_course_for_id = Canvas::SisCourse.new(user_id: @uid, sis_course_id: sis_course_id).course
         return sis_course_id unless existing_course_for_id[:statusCode] == 200
       end

@@ -1,13 +1,7 @@
 #!/bin/bash
-# Script to check for overwritten CAS authentication configurations on bCourses test/beta,
-# and to reset their base URLs if needed. See CLC-3917 for details.
-#
-# Two environment variables must be set before the script is called:
-#
-#  * TEST_CAS_URL : URL root of the development/testing CAS Authentication server
-#     Example: TEST_CAS_URL='https://auth-test.example.com/cas'
-#  * DEV_TEST_CANVASES : URL roots for the development and test cloud hosted Canvas applications
-#     Example: DEV_TEST_CANVASES='https://ucb.beta.example.com,https://ucb.test.example.com'
+# Script to check for overwritten configurations on bCourses test/beta,
+# to reset their CAS authentication base URLs if needed (see CLC-3917),
+# and to enable the test-only admin if needed (see CLC-5516).
 
 # Make sure the normal shell environment is in place, since it may not be
 # when running as a cron job.
@@ -27,10 +21,16 @@ export LOGGER_STDOUT=only
 export LOGGER_LEVEL=INFO
 export JRUBY_OPTS="-Xcext.enabled=true -J-client -X-C"
 
+cd deploy
+
 echo | $LOGIT
 echo "------------------------------------------" | $LOGIT
 echo "`date`: About to run the CAS Authentication reconfiguration script..." | $LOGIT
 
-cd deploy
-
 bundle exec rake canvas:reconfigure_auth_url | $LOGIT
+
+echo | $LOGIT
+echo "------------------------------------------" | $LOGIT
+echo "`date`: About to run the Test Admin reconfiguration script..." | $LOGIT
+
+bundle exec rake canvas:add_test_admin | $LOGIT

@@ -22,14 +22,14 @@ module Oec
           path_to_target_csv = Oec::Courses.new(target_dept_name, @src_dir).output_filename
           files_to_archive[target_dept_name] = path_to_target_csv
           uids_in_target_files[target_dept_name] = []
-          CSV.read(path_to_target_csv).each_with_index do |row, index|
+          Oec::Csv.read(path_to_target_csv).each_with_index do |row, index|
             unless index == 0
               uids_in_target_files[target_dept_name] << "#{get_row_uid row}"
               put_row_per_dept(sorted_dept_rows, target_dept_name, row)
             end
           end
         end
-        CSV.read(path_to_biology_csv).each_with_index do |row, index|
+        Oec::Csv.read(path_to_biology_csv).each_with_index do |row, index|
           unless preexisting_uid?(get_row_uid(row), uids_in_target_files, files_to_archive.keys) || index == 0
             course_name = row[1]
             target_csv = dept_registry.biology_dept_name

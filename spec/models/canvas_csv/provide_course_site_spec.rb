@@ -9,53 +9,6 @@ describe CanvasCsv::ProvideCourseSite do
     {:yr=>'2014', :cd=>'D', :slug=>'fall-2014', :name=>'Fall 2014'},
     {:yr=>'2015', :cd=>'B', :slug=>'spring-2015', :name=>'Spring 2015'},
   ] }
-  let(:course_details_hash) {
-    {
-      'id'=>1253733,
-      'account_id'=>53,
-      'course_code'=>site_course_code,
-      'name'=>site_name,
-      'sis_course_id'=>sis_course_id,
-      'enrollment_term_id'=>7,
-      'default_view'=>'feed',
-      'storage_quota_mb'=>1024,
-      'is_public'=>nil,
-      'start_at'=>nil,
-      'end_at'=>nil,
-      'public_syllabus'=>false,
-      'is_public_to_auth_users'=>false,
-      'hide_final_grades'=>false,
-      'apply_assignment_group_weights'=>false,
-      'integration_id'=>nil,
-      'enrollments'=>[],
-      'workflow_state'=>'unpublished',
-      'calendar'=>{
-        'ics'=>'http://ucb.beta.example.com/feeds/calendars/course_6LKKnEp73Z2gPT2EA.ics'
-      },
-      'term'=>{
-        'id'=>7,
-        'name'=>'Spring 2015',
-        'start_at'=>nil,
-        'end_at'=>nil,
-        'sis_term_id'=>'TERM:2015-B',
-        'workflow_state'=>'active',
-      },
-    }
-  }
-  let(:section_details_hash) {
-    {
-      'id'=>119433,
-      'sis_section_id'=>nil,
-      'name'=>'Data Structures',
-      'course_id'=>5,
-      'sis_course_id'=>'CRS:COMPSCI-61B-2014-D',
-      'nonxlist_course_id'=>nil,
-      'start_at'=>nil,
-      'end_at'=>nil,
-      'integration_id'=>nil,
-      'sis_import_id'=>nil
-    }
-  }
   subject { CanvasCsv::ProvideCourseSite.new uid }
 
   it_should_behave_like 'a background job worker'
@@ -82,7 +35,7 @@ describe CanvasCsv::ProvideCourseSite do
       :import_course_site,
       :retrieve_course_site_details,
       :import_sections,
-      :enroll_instructor,
+      :add_instructor_to_section,
       :expire_instructor_sites_cache,
       :import_enrollments_in_background,
     ] }
@@ -135,12 +88,12 @@ describe CanvasCsv::ProvideCourseSite do
 
     context 'when provisioning by ccn' do
       before do
-        task_steps.delete(:enroll_instructor)
+        task_steps.delete(:add_instructor_to_section)
         task_steps.delete(:expire_instructor_sites_cache)
       end
-      it 'makes calls to each step of import except enrolling instructor and breaking cache' do
+      it 'makes calls to each step of import except adding instructor and breaking cache' do
         task_steps.each {|step| expect(subject).to receive(step).ordered}
-        expect(subject).to_not receive(:enroll_instructor)
+        expect(subject).to_not receive(:add_instructor_to_section)
         expect(subject).to_not receive(:expire_instructor_sites_cache)
         subject.create_course_site(site_name, site_course_code, 'fall-2014', ['1136', '1204'], true)
       end
@@ -440,9 +393,14 @@ describe CanvasCsv::ProvideCourseSite do
             :dept => 'MEC ENG',
             :title => 'Supervised Independent Group Studies',
             :role => 'Instructor',
-            :sections => [
-              { :ccn => '12345', :instruction_format => 'GRP', :is_primary_section => true, :section_label => 'GRP 015', :section_number => '015'}
-            ]
+            :sections => [{
+              ccn: '12345',
+              instruction_format: 'GRP',
+              instructors: [{uid: uid, instructor_func: 1}],
+              is_primary_section: true,
+              section_label: 'GRP 015',
+              section_number: '015'
+            }]
           }
         ]
       end
@@ -543,57 +501,53 @@ describe CanvasCsv::ProvideCourseSite do
     end
   end
 
-  describe '#enroll_instructor' do
-    before do
-      course_site_name = site_name
-      subject.instance_eval { @import_data['site_name'] = course_site_name }
-      allow(subject).to receive(:course_details).and_return(course_details_hash)
-      allow_any_instance_of(Canvas::CourseSections).to receive(:create).with(site_name, "DEFSEC:#{course_details_hash['id']}").and_return(body: section_details_hash)
-      allow(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(true)
+  describe '#add_instructor_to_section' do
+    let(:section_id) {random_id}
+    let(:section_definition) do
+      {'section_id' => section_id}
     end
 
-    it 'establishes a default section with SIS Section ID' do
-      expect_any_instance_of(Canvas::CourseSections).to receive(:create).with(site_name, "DEFSEC:#{course_details_hash['id']}").and_return(body: section_details_hash)
-      subject.enroll_instructor
-    end
-
-    it 'enrolls user as teacher in default section' do
-      expect(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(true)
-      subject.enroll_instructor
-    end
-
-    it 'raises exception if user enrollment fails' do
-      allow(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment', section_details_hash['id']).and_return(false)
-      expect { subject.enroll_instructor }.to raise_error(RuntimeError, 'Course site was created but the teacher could not be added!')
-    end
-
-    it 'updates completed steps list' do
-      subject.enroll_instructor
-      cached_object = BackgroundJob.find(subject.background_job_id)
-      expect(cached_object.background_job_report[:completedSteps]).to eq ['Added instructor to course site']
+    it 'adds teacher enrollments to section' do
+      expect(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment',
+        "sis_section_id:#{section_id}").and_return({'type' => 'TeacherEnrollment'})
+      subject.add_instructor_to_section section_definition
     end
   end
 
   describe '#retrieve_course_site_details' do
-    before do
-      allow(subject).to receive(:course_site_url).and_return('https://berkeley.instructure.com/courses/1253733')
-      subject.instance_eval { @import_data['sis_course_id'] = 'CRS:COMPSCI-10-2013-D' }
+    context 'when SIS course ID is not present' do
+      before { subject.instance_eval { @import_data['sis_course_id'] = nil } }
+      it 'raises exception' do
+        expect { subject.retrieve_course_site_details }.to raise_error(RuntimeError, 'Unable to retrieve course site details. SIS Course ID not present.')
+      end
     end
 
-    it 'raises exception if SIS course ID not present' do
-      subject.instance_eval { @import_data['sis_course_id'] = nil }
-      expect { subject.retrieve_course_site_details }.to raise_error(RuntimeError, 'Unable to retrieve course site details. SIS Course ID not present.')
-    end
+    context 'when SIS course ID is present' do
+      before { subject.instance_eval { @import_data['sis_course_id'] = 'CRS:ENGIN-7-2015-B' } }
+      let(:sis_course_proxy) { Canvas::SisCourse.new }
+      before do
+        expect(Canvas::SisCourse).to receive(:new).with(sis_course_id: sis_course_id).and_return sis_course_proxy
+        expect(sis_course_proxy).to receive(:canvas_course_id).and_return canvas_course_id
+        allow(Settings.canvas_proxy).to receive(:url_root).and_return 'https://berkeley.instructure.com'
+      end
 
-    it 'sets course site url' do
-      subject.retrieve_course_site_details
-      expect(subject.instance_eval { @import_data['course_site_url'] }).to eq 'https://berkeley.instructure.com/courses/1253733'
-    end
+      context 'on no response from Canvas::SisCourse' do
+        let(:canvas_course_id) { nil }
+        it 'raises exception' do
+          expect { subject.retrieve_course_site_details }.to raise_error(RuntimeError, 'Unexpected error obtaining course site URL for CRS:ENGIN-7-2015-B')
+        end
+      end
 
-    it 'updates completed steps list' do
-      subject.retrieve_course_site_details
-      cached_object = BackgroundJob.find(subject.background_job_id)
-      expect(cached_object.background_job_report[:completedSteps]).to eq ['Retrieved new course site details']
+      it 'sets course site URL' do
+        subject.retrieve_course_site_details
+        expect(subject.instance_eval { @import_data['course_site_url'] }).to eq "https://berkeley.instructure.com/courses/#{canvas_course_id}"
+      end
+
+      it 'updates completed steps list' do
+        subject.retrieve_course_site_details
+        cached_object = BackgroundJob.find(subject.background_job_id)
+        expect(cached_object.background_job_report[:completedSteps]).to eq ['Retrieved new course site details']
+      end
     end
   end
 
@@ -628,46 +582,6 @@ describe CanvasCsv::ProvideCourseSite do
       expect(CanvasCsv::SiteMembershipsMaintainer).to receive(:background).and_return(maintainer)
       expect(maintainer).to receive(:import_memberships).with(course_id, section_ids, anything, anything)
       subject.import_enrollments_in_background(course_id, section_definitions)
-    end
-  end
-
-  describe '#course_details' do
-    before { subject.instance_eval { @import_data['sis_course_id'] = 'CRS:COMPSCI-9A-2013-D' } }
-    it 'should raise exception if sis_course_id not present in import data hash' do
-      subject.instance_eval { @import_data['sis_course_id'] = nil }
-      expect { subject.course_details }.to raise_error(RuntimeError, 'Unable to load course details. SIS Course ID not present.')
-    end
-
-    it 'should raise exception if error response from Canvas::SisCourse' do
-      allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(statusCode: 503, error: 'Internal server error')
-      expect { subject.course_details }.to raise_error(RuntimeError, 'Unexpected error obtaining course site URL for CRS:COMPSCI-9A-2013-D!')
-    end
-
-    context 'when course details are not present' do
-      it 'should assign course details to shared import data hash' do
-        allow_any_instance_of(Canvas::SisCourse).to receive(:course).and_return(statusCode: 200, body: course_details_hash)
-        subject.course_details
-        loaded_course = subject.instance_eval { @import_data['course_site'] }
-        expect(loaded_course['id']).to eq 1253733
-      end
-    end
-
-    context 'when course details already present' do
-      it 'should return the existing course details' do
-        subject.instance_eval { @import_data['course_site'] = {'id' => 1253733} }
-        expect_any_instance_of(Canvas::SisCourse).to_not receive(:course)
-        result = subject.course_details
-        expect(result['id']).to eq 1253733
-      end
-    end
-  end
-
-  describe '#course_site_url' do
-    before { subject.instance_eval { @import_data['sis_course_id'] = 'CRS:COMPSCI-9A-2013-D' } }
-    it 'should return course site URL when provided with valid sis id' do
-      allow(subject).to receive(:course_details).and_return({'id' => 1253733})
-      allow(Settings.canvas_proxy).to receive(:url_root).and_return('https://berkeley.instructure.com')
-      expect(subject.course_site_url).to eq 'https://berkeley.instructure.com/courses/1253733'
     end
   end
 
@@ -895,6 +809,56 @@ describe CanvasCsv::ProvideCourseSite do
   end
 
   describe '#generate_section_definitions' do
+    let(:term_yr) { '2013' }
+    let(:term_cd) { 'D' }
+    let(:ccns) { 3.times.map { random_ccn } }
+    let(:sis_course_id) { 'CRS:ENGIN-7-2013-D-8383' }
+    let(:courses_list) do
+      [{
+        course_code: 'ENGIN 7',
+        slug: 'engin-7',
+        title: 'Introduction to Computer Programming for Scientists and Engineers',
+        role: 'Instructor',
+        sections: [{
+          ccn: ccns[0],
+          courseCode: 'ENGIN 7',
+          instruction_format: 'LEC',
+          instructors: [{uid: lecture_instructor_id, instructor_func: 1}],
+          is_primary_section: true,
+          section_label: 'LEC 002',
+          section_number: '002'
+        },
+        {
+          ccn: ccns[1],
+          courseCode: 'ENGIN 7',
+          instruction_format: 'DIS',
+          instructors: [{uid: discussion_instructor_1_id, instructor_func: 1}, {uid: discussion_instructor_2_id, instructor_func: 1}],
+          is_primary_section: false,
+          section_label: 'DIS 102',
+          section_number: '102'
+        }]
+      },
+      {
+        course_code: 'MEC ENG 98',
+        slug: 'mec_eng-98',
+        title: 'Supervised Independent Group Studies',
+        role: 'Instructor',
+        sections: [{
+          ccn: ccns[2],
+          courseCode: 'MEC ENG 98',
+          instruction_format: 'GRP',
+          instructors: [{uid: group_instructor_id, instructor_func: 1}],
+          is_primary_section: true,
+          section_label: 'GRP 015',
+          section_number: '015'
+        }]
+      }]
+    end
+    [:lecture_instructor_id, :discussion_instructor_1_id, :discussion_instructor_2_id, :group_instructor_id].each do |id|
+      let(id) { random_id }
+    end
+    before { allow_any_instance_of(Canvas::ExistenceCheck).to receive(:section_defined?).and_return(false) }
+
     it 'should raise exception if campus_section_data argument is empty' do
       expect do
         subject.generate_section_definitions('2013', 'D', 'CRS:ENGIN-7-2013-D', [])
@@ -902,46 +866,6 @@ describe CanvasCsv::ProvideCourseSite do
     end
 
     it 'should generate Canvas Section import CSV rows for the selected courses' do
-      term_yr = '2013'
-      term_cd = 'D'
-      ccns = [
-        random_ccn,
-        random_ccn,
-        random_ccn
-      ]
-      courses_list = [
-          {:course_code => 'ENGIN 7',
-           :slug => 'engin-7',
-           :title =>
-               'Introduction to Computer Programming for Scientists and Engineers',
-           :role => 'Instructor',
-           :sections =>
-               [{:ccn => ccns[0],
-                 courseCode: 'ENGIN 7',
-                 :instruction_format => 'LEC',
-                 :is_primary_section => true,
-                 :section_label => 'LEC 002',
-                 :section_number => '002'},
-                {:ccn => ccns[1],
-                  courseCode: 'ENGIN 7',
-                 :instruction_format => 'DIS',
-                 :is_primary_section => false,
-                 :section_label => 'DIS 102',
-                 :section_number => '102'}]},
-          {:course_code => 'MEC ENG 98',
-           :slug => 'mec_eng-98',
-           :title => 'Supervised Independent Group Studies',
-           :role => 'Instructor',
-           :sections =>
-               [{:ccn => ccns[2],
-                 courseCode: 'MEC ENG 98',
-                 :instruction_format => 'GRP',
-                 :is_primary_section => true,
-                 :section_label => 'GRP 015',
-                 :section_number => '015'}]}
-      ]
-      sis_course_id = 'CRS:ENGIN-7-2013-D-8383'
-      allow_any_instance_of(Canvas::ExistenceCheck).to receive(:section_defined?).and_return(false)
       canvas_sections_list = subject.generate_section_definitions(term_yr, term_cd, sis_course_id, courses_list)
       expect(canvas_sections_list.length).to eq 3
       canvas_sections_list.each do |row|
@@ -970,6 +894,7 @@ describe CanvasCsv::ProvideCourseSite do
            :role => 'Instructor',
            :sections =>
                [{:ccn => ccn,
+                 :instructors => [{uid: uid, instructor_func: 1}],
                  :instruction_format => 'DIS',
                  :is_primary_section => false,
                  :section_label => 'DIS 102',
@@ -997,6 +922,27 @@ describe CanvasCsv::ProvideCourseSite do
       expect(campus_section[:term_yr]).to eq term_yr
       expect(campus_section[:term_cd]).to eq term_cd
       expect(campus_section[:ccn]).to eq ccn
+    end
+
+    context 'site creator is not explicit instructor for any section' do
+      it 'stores no explicitly instructed sections' do
+        subject.generate_section_definitions(term_yr, term_cd, sis_course_id, courses_list)
+        expect(subject.instance_eval { @import_data['explicit_sections_for_instructor'] }).to be_empty
+      end
+    end
+
+    context 'site creator is explicit instructor for one section' do
+      let(:discussion_instructor_2_id) { uid }
+      it 'stores explicitly instructed section' do
+        subject.generate_section_definitions(term_yr, term_cd, sis_course_id, courses_list)
+        explicitly_instructed = subject.instance_eval { @import_data['explicit_sections_for_instructor'] }
+        expect(explicitly_instructed).to have(1).item
+        expect(explicitly_instructed.first).to include({
+          'course_id' => sis_course_id,
+          'name' => 'ENGIN 7 DIS 102',
+          'status' => 'active'
+        })
+      end
     end
   end
 
