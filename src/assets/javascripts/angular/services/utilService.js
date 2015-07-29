@@ -129,7 +129,10 @@ angular.module('calcentral.services').service('utilService', function($cacheFact
         }
         var frameHeight = heightElement.scrollHeight;
         var messageSubject = frameHeight > 5000 ? 'changeParent' : 'lti.frameResize';
-        var message = {subject: messageSubject, height: frameHeight};
+        var message = {
+          subject: messageSubject,
+          height: frameHeight
+        };
         iframePostMessage(JSON.stringify(message));
       }, 250);
     }
@@ -141,7 +144,10 @@ angular.module('calcentral.services').service('utilService', function($cacheFact
    */
   var iframeScrollToTop = function() {
     if (isInIframe) {
-      iframePostMessage(JSON.stringify({subject: 'changeParent', scrollToTop: true}));
+      iframePostMessage(JSON.stringify({
+        subject: 'changeParent',
+        scrollToTop: true
+      }));
     } else {
       $window.scrollTo(0, 0);
     }
@@ -152,7 +158,10 @@ angular.module('calcentral.services').service('utilService', function($cacheFact
    */
   var iframeParentLocation = function(location) {
     if (isInIframe) {
-      iframePostMessage(JSON.stringify({subject: 'changeParent', parentLocation: location}));
+      iframePostMessage(JSON.stringify({
+        subject: 'changeParent',
+        parentLocation: location
+      }));
     }
   };
 
