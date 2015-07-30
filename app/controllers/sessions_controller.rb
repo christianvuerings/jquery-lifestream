@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       # the session's "original_user_id".
       if session['original_user_id']
         if session['original_user_id'] != auth_uid
-          logger.warn "ACT-AS: Active user session for #{session['original_user_id']} exists, but CAS is giving us a different UID: #{auth_uid}. Logging user out."
+          logger.warn "ACT-AS: CAS returned UID #{auth_uid} not matching active session: #{session_message}. Logging user out."
           logout
           return redirect_to Settings.cas_logout_url
         else
@@ -20,14 +20,14 @@ class SessionsController < ApplicationController
       elsif session['user_id'] != auth_uid
         # If we're reauthenticating for any other reason, then the CAS-provided UID should
         # match the session "user_id" from the previous authentication.
-        logger.warn "REAUTHENTICATION: Active user session for #{session['user_id']} exists, but CAS is giving us a different UID: #{auth_uid}. Starting new session."
+        logger.warn "REAUTHENTICATION: CAS returned UID #{auth_uid} not matching active session: #{session_message}. Starting new session."
         reset_session
       else
         create_reauth_cookie
       end
     else
       if session['lti_authenticated_only'] && session['user_id'] != auth_uid
-        logger.warn "LTI user session for #{session['user_id']} exists, but CAS is giving us a different UID: #{auth_uid}. Logging user out."
+        logger.warn "LTI SESSION: CAS returned UID #{auth_uid} not matching active session: #{session_message}. Logging user out."
         logout
         return redirect_to Settings.cas_logout_url
       end
