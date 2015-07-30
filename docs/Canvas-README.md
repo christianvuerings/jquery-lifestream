@@ -21,18 +21,14 @@ When on a Torquebox-enabled shared servers, be sure to `cd deploy` before runnin
 
 ## Canvas maintenance shell scripts
 
-* `script/reconfigure-canvas-external-apps.sh`
+* `script/configure-all-canvas-apps-from-current-host.sh`
 
-    Checks bCourses test/beta for overwritten external app configurations, and resets them if needed.
-    Before running, two environment variables must be set:
-    * `CALCENTRAL_XML_HOST` : URL root of a CalCentral server which is accessible from the bCourses machines.
-
-        Example:
-        `CALCENTRAL_XML_HOST='https://calcentral.example.com'`
-    * `CANVAS_HOSTS_TO_CALCENTRALS` : Mapping from the bCourses test/beta servers to their assigned CalCentral app hosts.
-
-        Example:
-        `CANVAS_HOSTS_TO_CALCENTRALS='https://ucb.beta.example.com=cc-dev.example.com,https://ucb.test.example.com=cc-qa.example.com'`
+    Checks the integrated bCourses site's external app configurations, and resets them as needed to match
+    the external apps configuration defined in CalCentral/Junction. This is used to:
+    * Reset Beta and Test bCourses sites after their data has been overwritten by Instructure.
+    * Add new Junction-hosted LTI apps.
+    * Modify the name, default visibility, or other properties of existing Junction-hosted LTI apps.
+    * Set new LTI secrets for the apps.
 * `script/refresh-canvas-enrollments.sh`
 
     Runs `rake canvas:full_refresh` with `RAILS_ENV=production`.

@@ -1,7 +1,6 @@
 module Canvas
   class CourseStudents < Proxy
-
-    include SafeJsonParser
+    include PagedProxy
 
     def initialize(options = {})
       super(options)
@@ -9,21 +8,19 @@ module Canvas
     end
 
     def full_students_list
-      self.class.fetch_from_cache @course_id do
-        all_students = []
-        params = "enrollment_type=student&include[]=enrollments&per_page=100"
-        while params do
-          response = request_uncached(
-            "courses/#{@course_id}/users?#{params}",
-            "_course_students"
-          )
-          break unless (response && response.status == 200 && students_list = safe_json(response.body))
-          all_students.concat(students_list)
-          params = next_page_params(response)
-        end
-        all_students
+      self.class.fetch_from_cache(@course_id) do
+        paged_get request_path, enrollment_type: 'student', include: ['enrollments']
       end
     end
 
+    private
+
+    def mock_interactions
+      mock_paged_interaction 'canvas_course_students'
+    end
+
+    def request_path
+      "courses/#{@course_id}/users"
+    end
   end
 end

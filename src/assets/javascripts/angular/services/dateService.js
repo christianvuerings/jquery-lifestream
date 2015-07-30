@@ -1,11 +1,11 @@
-(function(angular, moment) {
-  'use strict';
+'use strict';
 
-  angular.module('calcentral.services').service('dateService', [function() {
-    // Expose methods
-    return {
-      now: Date.now(),
-      moment: moment
-    };
-  }]);
-}(window.angular, window.moment));
+var angular = require('angular');
+
+angular.module('calcentral.services').service('dateService', [function() {
+  // Expose methods
+  return {
+    now: Date.now(),
+    moment: require('moment')
+  };
+}]);

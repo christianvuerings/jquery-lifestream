@@ -44,6 +44,10 @@
           Please refine your search to limit the number of results.
         </div>
 
+        <div data-ng-show="userSearchResultsCount === userSearchResults.length" class="cc-visuallyhidden">
+          <span data-ng-bind="userSearchResultsCount"></span> user search results loaded.
+        </div>
+
         <div data-ng-show="additionSuccessMessage" class="bc-alert bc-alert-success bc-page-course-add-user-alert">
           <span data-ng-bind="userAdded.fullName"></span> was added to the
           &ldquo;<span data-ng-bind="userAdded.sectionName"></span>&rdquo; section of this course as a <span data-ng-bind="userAdded.roleName"></span>.
@@ -67,7 +71,6 @@
     </div>
 
     <div class="row collapse" data-ng-show="showSearchForm">
-
       <div class="medium-6 columns">
         <form data-ng-submit="searchUsers()" class="bc-canvas-page-form">
 
@@ -109,9 +112,7 @@
           aria-controls="bc-page-help-notice"
           aria-haspopup="true"
           data-ng-attr-aria-expanded="{{toggle.displayHelp}}">
-          <span data-ng-if="!toggle.displayHelp" class="cc-visuallyhidden">Show User Search Help</span>
-          <span data-ng-if="toggle.displayHelp" class="cc-visuallyhidden">Hide User Search Help</span>
-          <span aria-hidden="true">Need help finding someone?</span>
+          Need help finding someone?
         </button>
         <div aria-live="polite">
           <div id="bc-page-help-notice" class="bc-page-help-notice-content bc-user-search-notice" data-ng-show="toggle.displayHelp">
@@ -142,75 +143,81 @@
     </div>
 
     <div class="row collapse" data-ng-show="showUsersArea">
-      <div data-cc-spinner-directive>
+      <div data-cc-spinner-directive></div>
 
-        <div data-ng-show="userSearchResults.length > 0">
-          <form data-ng-submit="addUser()" class="bc-canvas-page-form">
+      <h2 class="cc-visuallyhidden" data-cc-focus-reset-directive="searchResultsFocus">User Search Results</h2>
 
-            <fieldset class="bc-form-fieldset">
-              <legend class="cc-visuallyhidden">Select the user you wish to add to the course site:</legend>
-              <table class="bc-table bc-table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col"><span class="cc-visuallyhidden">Actions</span></th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Calnet UID</th>
-                    <th scope="col">Email</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr data-ng-repeat="user in userSearchResults">
-                    <td>
-                      <label for="user-{{$index}}" class="cc-visuallyhidden">
-                        <span data-ng-bind="user.firstName + ' ' + user.lastName"></span>
-                        Cal Net U I D <span data-ng-bind="user.ldapUid"></span>
-                      </label>
-                      <input id="user-{{$index}}" type="radio" name="selectedUser" data-ng-model="$parent.selectedUser" data-ng-value="user" data-ng-required="true">
-                    </td>
-                    <td data-ng-bind="user.firstName + ' ' + user.lastName"></td>
-                    <td data-ng-bind="user.ldapUid"></td>
-                    <td data-ng-bind="user.emailAddress"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </fieldset>
+      <div data-ng-show="userSearchResults.length > 0">
+        <form data-ng-submit="addUser()" class="bc-canvas-page-form">
 
-            <div class="row collapse">
-              <div class="medium-7 columns">
+          <fieldset class="bc-form-fieldset">
+            <legend class="cc-visuallyhidden">Select the user you wish to add to the course site:</legend>
+            <table class="bc-table bc-table-striped">
+              <thead>
+                <tr>
+                  <th scope="col"><span class="cc-visuallyhidden">Actions</span></th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Calnet UID</th>
+                  <th scope="col">Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-ng-repeat="user in userSearchResults">
+                  <td>
+                    <input id="bc-user-search-result-{{$index}}" type="radio" name="selectedUser" data-ng-model="$parent.selectedUser"
+                      data-ng-value="user" data-ng-required="true" data-ng-attr-aria-labelled-by="bc-user-search-result-{{$index}} bc-user-search-result-ldap-uid-{{$index}}">
+                  </td>
+                  <td>
+                    <label for="bc-user-search-result-{{$index}}" class="bc-form-input-label-no-align">
+                      <span data-ng-bind="user.firstName + ' ' + user.lastName"></span>
+                    </label>
+                  </td>
+                  <td>
+                    <span data-ng-attr-id="bc-user-search-result-ldap-uid-{{$index}}">
+                      <span data-ng-bind="user.ldapUid"></span>
+                    </span>
+                  </td>
+                  <td data-ng-bind="user.emailAddress"></td>
+                </tr>
+              </tbody>
+            </table>
+          </fieldset>
 
-                <div class="row collapse">
-                  <div class="small-3 columns">
-                    <label for="user-role"><strong><span class="cc-required-field-indicator">*</span> Role</strong>:</label>
-                  </div>
-                  <div class="small-9 columns">
-                    <select id="user-role" class="bc-form-input-select" data-ng-model="selectedRole" data-ng-options="role as role.name for role in grantingRoles"></select>
-                  </div>
+          <div class="row collapse">
+            <div class="medium-7 columns">
+
+              <div class="row collapse">
+                <div class="small-3 columns">
+                  <label for="user-role"><strong><span class="cc-required-field-indicator">*</span> Role</strong>:</label>
                 </div>
-
-                <div class="row collapse">
-                  <div class="small-3 columns">
-                    <label for="course-section"><strong><span class="cc-required-field-indicator">*</span> Section</strong>:</label>
-                  </div>
-                  <div class="small-9 columns">
-                    <select id="course-section" class="bc-form-input-select" data-ng-model="selectedSection" data-ng-options="section as section.name for section in courseSections">
-                    </select>
-                  </div>
+                <div class="small-9 columns">
+                  <select id="user-role" class="bc-form-input-select" data-ng-model="selectedRole" data-ng-options="role as role.name for role in grantingRoles"></select>
                 </div>
-
               </div>
-            </div>
 
-            <div class="row collapse">
-              <div class="bc-form-actions medium-12">
-                <button type="button" class="bc-canvas-button bc-start-over-button" data-ng-click="resetForm()">Start Over</button>
-                <button data-ng-disabled="noUserSelected()" type="submit" class="bc-canvas-button bc-canvas-button-primary">Add User</button>
+              <div class="row collapse">
+                <div class="small-3 columns">
+                  <label for="course-section"><strong><span class="cc-required-field-indicator">*</span> Section</strong>:</label>
+                </div>
+                <div class="small-9 columns">
+                  <select id="course-section" class="bc-form-input-select" data-ng-model="selectedSection" data-ng-options="section as section.name for section in courseSections">
+                  </select>
+                </div>
               </div>
+
             </div>
+          </div>
 
-          </form>
-        </div>
+          <div class="row collapse">
+            <div class="bc-form-actions medium-12">
+              <button type="button" class="bc-canvas-button bc-start-over-button" data-ng-click="resetForm()">Start Over</button>
+              <button data-ng-disabled="noUserSelected()" type="submit" class="bc-canvas-button bc-canvas-button-primary">Add User</button>
+            </div>
+          </div>
 
+        </form>
       </div>
+
     </div>
 
   </div>

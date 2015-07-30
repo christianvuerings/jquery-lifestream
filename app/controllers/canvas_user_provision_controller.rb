@@ -9,7 +9,7 @@ class CanvasUserProvisionController < ApplicationController
   def user_import
     authorize(current_user, :can_administrate_canvas?)
     user_ids = params['userIds'].split(',')
-    Canvas::UserProvision.new.import_users(user_ids)
+    CanvasCsv::UserProvision.new.import_users(user_ids)
     render json: { status: 'success', userIds: user_ids }.to_json
   end
 

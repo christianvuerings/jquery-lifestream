@@ -1,0 +1,12 @@
+{
+  "id": 11938,
+  "parameters": {
+    "enrollment_term": "sis_term_id:TERM:2013-D",
+    "sections": "1",
+    "extra_text": "Term: Fall 2013; Reports: sections "
+  },
+  "progress": 100,
+  "status": "complete",
+  "report": "provisioning_csv",
+  "file_url": "https://ucberkeley.instructure.com/accounts/90242/files/35810460/download"
+}

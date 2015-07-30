@@ -2,10 +2,8 @@
   "isBasicAuthEnabled": true,
   "isLoggedIn": false,
   "features": {
-    "my_fin_aid": true,
-    "research": false,
+    "myFinAid": true,
     "textbooks": true,
-    "videos": true,
-    "app_alerts": true
+    "videos": true
   }
 }

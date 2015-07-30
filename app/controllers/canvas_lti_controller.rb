@@ -1,6 +1,6 @@
 class CanvasLtiController < ApplicationController
   include ClassLogger
-  include Canvas::ExternalAppConfigurations
+  include CanvasLti::ExternalAppConfigurations
 
   # Since LTI provider views are in an iframe, we need to skip the iframe buster.
   # Since the LTI session is initiated by a POST, to receive the request we also need to skip the CSRF check.
@@ -10,39 +10,55 @@ class CanvasLtiController < ApplicationController
   layout false
   helper_method :launch_url
 
+  EMPTY_MASQUERADE_VALUE = '$Canvas.masqueradingUser.id'
+
   def authenticate
-    logger.warn("Unexpected no-op authenticate call!")
+    logger.warn 'Unexpected no-op authenticate call!'
   end
 
   def authenticate_by_lti(lti)
-    lti_user_id = lti.get_custom_param('canvas_user_login_id')
-    if (existing_user_id = session['user_id'])
-      if existing_user_id != lti_user_id
-        logger.error("LTI is authenticated as #{lti_user_id}; logging out existing CalCentral session for #{existing_user_id}")
-        reset_session
-        session['lti_authenticated_only'] = true
-      else
-        logger.debug("LTI user #{lti_user_id} already has a CalCentral session")
-      end
+    canvas_user_login_id = lti.get_custom_param 'canvas_user_login_id'
+    canvas_user_id = lti.get_custom_param 'canvas_user_id'
+    canvas_course_id = lti.get_custom_param 'canvas_course_id'
+    canvas_masquerading_user_id = lti.get_custom_param 'canvas_masquerading_user_id'
+
+    lti_user_properties = "UID #{canvas_user_login_id}, Canvas ID #{canvas_user_id}"
+    lti_user_properties.prepend "Canvas ID #{canvas_masquerading_user_id} acting as " if canvas_masquerading_user_id != EMPTY_MASQUERADE_VALUE
+    lti_user_properties << ", course ID #{canvas_course_id}" if canvas_course_id
+
+    if !session['user_id']
+      logger.debug "LTI user: (#{lti_user_properties}) has no existing CalCentral session"
+      check_for_masquerade canvas_masquerading_user_id
+    elsif session['user_id'] == lti.get_custom_param('canvas_user_login_id')
+      logger.debug "LTI user: (#{lti_user_properties}) has existing CalCentral session: #{session_message}"
     else
-      session['lti_authenticated_only'] = true
-      logger.debug("LTI user #{lti_user_id} was not already logged into CalCentral")
+      logger.error "LTI user: (#{lti_user_properties}) does not match existing CalCentral session; logging out: #{session_message}"
+      reset_session
+      check_for_masquerade canvas_masquerading_user_id
     end
-    session['user_id'] = lti_user_id
-    session['canvas_user_id'] = lti.get_custom_param('canvas_user_id')
-    session['canvas_course_id'] = lti.get_custom_param('canvas_course_id')
+
+    session['user_id'] = canvas_user_login_id
+    session['canvas_user_id'] = canvas_user_id
+    session['canvas_course_id'] = canvas_course_id
+  end
+
+  def check_for_masquerade(masquerading_user_id)
+    if masquerading_user_id != EMPTY_MASQUERADE_VALUE
+      session['canvas_masquerading_user_id'] = masquerading_user_id
+      session['lti_authenticated_only'] = true
+    end
   end
 
   def embedded
-    lti = Canvas::Lti.new.validate_tool_provider(request)
+    lti = CanvasLti::Lti.new.validate_tool_provider(request)
     if lti
       authenticate_by_lti(lti)
-      logger.warn("Session authenticated by LTI; user = #{session['user_id']}")
-      render "public/bcourses_embedded.html"
+      logger.warn "Session authenticated by LTI: #{session_message}"
+      render 'public/bcourses_embedded.html'
     else
-      logger.error("Error parsing LTI request; returning error message")
+      logger.error 'Error parsing LTI request; returning error message'
       # TODO Test the result of a redirect or an error status return.
-      render inline: "<html><body><p>The application cannot start. An error has been logged.</p></body></html>"
+      render inline: '<html><body><p>The application cannot start. An error has been logged.</p></body></html>'
     end
   end
 
@@ -51,7 +67,7 @@ class CanvasLtiController < ApplicationController
   # to be a shared server behind https.
   # Example: https://calcentral.berkeley.edu/canvas/lti_roster_photos.xml?app_host=sometestsystem.berkeley.edu
   def launch_url(app_name)
-    if (app_host = params["app_host"])
+    if (app_host = params['app_host'])
       launch_url_for_host_and_code("https://#{app_host}", app_name)
     else
       url_for(only_path: false, action: 'embedded', url: app_name)

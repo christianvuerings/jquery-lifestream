@@ -1,0 +1,11 @@
+{
+  "id": 39050,
+  "parameters": {
+    "courses": "1",
+    "enrollment_term": "sis_term_id:TERM:2015-B"
+  },
+  "progress": 100,
+  "status": "complete",
+  "report": "provisioning_csv",
+  "file_url": "http://localhost:12345/accounts/129440/files/57734545/download"
+}

@@ -1,52 +1,52 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  angular.module('calcentral.directives').directive('ccLoadingDirective', [function() {
-    return {
-      link: function(scope, elm, attrs) {
-        var ccLoadingClass = 'cc-loading';
-        var ccLoadingClasses = 'cc-loading-error cc-loading-process cc-loading-success';
+var angular = require('angular');
 
-        var setHtml = function(html, indicator) {
-          html = html || '';
-          var icon = '';
+angular.module('calcentral.directives').directive('ccLoadingDirective', [function() {
+  return {
+    link: function(scope, elm, attrs) {
+      var ccLoadingClass = 'cc-loading';
+      var ccLoadingClasses = 'cc-loading-error cc-loading-process cc-loading-success';
 
-          if (indicator === 'Error') {
-            icon = 'fa-exclamation';
-          } else if (indicator === 'Process') {
-            icon = 'fa-spinner fa-spin';
-          } else if (indicator === 'Success') {
-            icon = 'fa-check cc-icon-green';
-          }
+      var setHtml = function(html, indicator) {
+        html = html || '';
+        var icon = '';
 
-          if (icon) {
-            icon = '<i class="fa ' + icon + '"></i>';
-          }
+        if (indicator === 'Error') {
+          icon = 'fa-exclamation';
+        } else if (indicator === 'Process') {
+          icon = 'fa-spinner fa-spin';
+        } else if (indicator === 'Success') {
+          icon = 'fa-check cc-icon-green';
+        }
 
-          elm.html(icon + html);
-        };
+        if (icon) {
+          icon = '<i class="fa ' + icon + '"></i>';
+        }
 
-        var setClass = function(indicator) {
-          elm.removeClass(ccLoadingClasses);
+        elm.html(icon + html);
+      };
 
-          if (indicator) {
-            elm.addClass('cc-loading-' + indicator.toLowerCase());
-          }
-        };
+      var setClass = function(indicator) {
+        elm.removeClass(ccLoadingClasses);
 
-        scope.$watch(attrs.ccLoadingDirective, function(indicator) {
-          var html;
+        if (indicator) {
+          elm.addClass('cc-loading-' + indicator.toLowerCase());
+        }
+      };
 
-          if (indicator) {
-            html = attrs['ccLoading' + indicator];
-          }
+      scope.$watch(attrs.ccLoadingDirective, function(indicator) {
+        var html;
 
-          setHtml(html, indicator);
-          setClass(indicator);
-        });
+        if (indicator) {
+          html = attrs['ccLoading' + indicator];
+        }
 
-        elm.addClass(ccLoadingClass);
-      }
-    };
-  }]);
-})(window.angular);
+        setHtml(html, indicator);
+        setClass(indicator);
+      });
+
+      elm.addClass(ccLoadingClass);
+    }
+  };
+}]);

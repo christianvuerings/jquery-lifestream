@@ -15,21 +15,24 @@ module MyBadges
         regBlock: get_reg_blocks
       }
       if campus_attributes[:reg_status] && campus_attributes[:reg_status][:transitionTerm]
-        result[:regStatus] = get_transition_reg_status
+        result[:regStatus] = get_transition_reg_status(campus_attributes[:reg_status][:code])
       else
         result[:regStatus] = campus_attributes[:reg_status]
       end
       result
     end
 
-    def get_transition_reg_status
+    def get_transition_reg_status(code)
       regstatus_feed = MyAcademics::TransitionTerm.new(@uid).regstatus_feed
       return {errored: true} unless regstatus_feed
 
       if regstatus_feed[:registered]
         Notifications::RegStatusTranslator.new.translate_for_feed 'R'
+      elsif code.nil?
+        # If not registered during a term transition, let nil status remain nil.
+        Notifications::RegStatusTranslator.new.translate_for_feed nil
       else
-        # If not registered during a term transition, communicate this without alarm.
+        # If status is not nil, communicate 'not registered' without alarm.
         {
           code: ' ',
           summary: "Not registered for #{regstatus_feed[:termName]}",

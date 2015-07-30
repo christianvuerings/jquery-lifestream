@@ -1,35 +1,35 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Tasks Factory
-   */
-  angular.module('calcentral.factories').factory('tasksFactory', function(apiService, $http) {
-    var clearCompletedUrl = '/api/my/tasks/clear_completed';
-    var removeUrl = '/api/my/tasks/delete/';
-    var url = '/api/my/tasks';
+var angular = require('angular');
 
-    var clearCompletedTasks = function(params) {
-      return $http.post(clearCompletedUrl, params);
-    };
+/**
+ * Tasks Factory
+ */
+angular.module('calcentral.factories').factory('tasksFactory', function(apiService, $http) {
+  var clearCompletedUrl = '/api/my/tasks/clear_completed';
+  var removeUrl = '/api/my/tasks/delete/';
+  var url = '/api/my/tasks';
 
-    var remove = function(task) {
-      return $http.post(removeUrl + task.id, task);
-    };
+  var clearCompletedTasks = function(params) {
+    return $http.post(clearCompletedUrl, params);
+  };
 
-    var getTasks = function(options) {
-      return apiService.http.request(options, url);
-    };
+  var remove = function(task) {
+    return $http.post(removeUrl + task.id, task);
+  };
 
-    var update = function(task) {
-      return $http.post(url, task);
-    };
+  var getTasks = function(options) {
+    return apiService.http.request(options, url);
+  };
 
-    return {
-      clearCompletedTasks: clearCompletedTasks,
-      remove: remove,
-      getTasks: getTasks,
-      update: update
-    };
-  });
-}(window.angular));
+  var update = function(task) {
+    return $http.post(url, task);
+  };
+
+  return {
+    clearCompletedTasks: clearCompletedTasks,
+    remove: remove,
+    getTasks: getTasks,
+    update: update
+  };
+});

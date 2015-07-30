@@ -9,25 +9,26 @@ module Canvas
     end
 
     def course(options = {})
-      default_options = {:cache => true}
-      options.reverse_merge!(default_options)
-
-      if options[:cache].present?
-        self.class.fetch_from_cache("#{@sis_course_id}") { request_course }
-      else
-        request_course
-      end
+      optional_cache(options, key: @sis_course_id.to_s, default: true) { wrapped_get request_path }
     end
 
     def canvas_course_id
-      course['id']
+      response = course
+      response[:statusCode] == 200 && response[:body] && response[:body]['id']
+    end
+
+    def existence_check
+      true
     end
 
     private
 
-    def request_course
-      response = request_uncached("courses/sis_course_id:#{@sis_course_id}?include[]=term", "_sis_course")
-      return response ? safe_json(response.body) : nil
+    def request_path
+      "courses/sis_course_id:#{@sis_course_id}?include[]=term"
+    end
+
+    def mock_json
+      read_file('fixtures', 'json', 'canvas_sis_course.json')
     end
 
   end

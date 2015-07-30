@@ -1,0 +1,22 @@
+{
+  "account_id": 128844,
+  "course_code": "COMPSCI 9C - LEC 001",
+  "default_view": "wiki",
+  "enrollment_term_id": 5343,
+  "id": 1121,
+  "is_public": false,
+  "name": "001-Ruby for Programmers",
+  "start_at": "2015-01-15T16:25:00Z",
+  "end_at": null,
+  "public_syllabus": false,
+  "storage_quota_mb": 2048,
+  "is_public_to_auth_users": false,
+  "hide_final_grades": false,
+  "apply_assignment_group_weights": true,
+  "calendar": {
+    "ics": "https://ucb.beta.example.com/feeds/calendars/course_yBrpWw4nSk5BZSKcGJC8Bff3FTDDBj52kKJ.ics"
+  },
+  "sis_course_id": "CRS:ITALIAN-1-2015-B-34D30101",
+  "integration_id": null,
+  "workflow_state": "available"
+}

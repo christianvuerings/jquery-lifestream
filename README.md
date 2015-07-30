@@ -136,7 +136,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
 1. Initialize PostgreSQL database tables:
 
     ```bash
-    rake db:schema:load db:seed
+    rake environment db:schema:load db:seed
     ```
 
 1. Make yourself powerful:
@@ -146,7 +146,7 @@ http://www.oracle.com/technetwork/java/javase/downloads/index.html
     # e.g. rake superuser:create UID=61889
     ```
 
-1. Install the frond-end tools:
+1. Install the front-end tools:
 
     ```bash
     npm install
@@ -220,6 +220,25 @@ jscs .
 ```
 
 This will check for any potential JavaScript issues and whether you formatted the code correctly.
+
+## Browsersync
+
+[Browsersync](http://www.browsersync.io/) makes developing faster by synchronizing file changes and interactions across multiple devices. Browsersync will automatically:
+
+- Update the browser when SCSS files are changed
+- Reload the browser when a template or JS file is changed
+
+Browsersync is turned on by default during development mode. To turn it off, set the option to `false`:
+
+```bash
+gulp --browsersync false
+```
+
+During production mode, Browsersync is turned off.
+
+Your `rails server` must finish starting up before executing Browsersync. Once Browsersync is executed, access your development server at [localhost:3001](http://localhost:3001/). No real time file changes will be reflected at [localhost:3000](http://localhost:3000/).
+
+While the server is running, you can access Browsersync settings at [localhost:3002](http://localhost:3002/), where you can change sync options, view history, and more.
 
 ## Role-Aware Testing
 
@@ -367,27 +386,17 @@ Logging behavior and destination can be controlled from the command line or shel
 
 See [docs/styleguide.md](docs/styleguide.md).
 
-## Recording fake data feeds and timeshifting them
+## Creating timeshifted fake data feeds
 
-Make sure your testext.local.yml file has real connections to real external services that are fakeable (Canvas, Google, etc). Now do:
+Proxies running in fake mode use WebMock to substitute fixture data for connections to external services (Canvas, Google, etc). This fake data lives in `fixtures/json` and `fixtures/xml`.
 
-```bash
-rake vcr:record
-rake vcr:prettify
-```
-
-* `vcr:record` can also take a `SPEC=".../my_favorite_spec.rb"` to help limit the recordings.
-* `vcr:prettify` can also take a `REGEX_FILTER="my_raw_recording.json"` to target a specific raw file.
-
-You can now find the prettified files in `fixtures/pretty_vcr_recordings`. You can edit these files to put in tokens that will be substituted on server startup. See `config/initializers/timeshift.rb` for the dictionary of substitutions. Edit the `debug_json` property of each response, and `timeshift.rb` will automatically convert `debug_json` to the format actually used by VCR.
+Fixture files can represent time information by tokens that are substituted with appropriately shifted values when fixture data is loaded. See `config/initializers/timeshift.rb` for the dictionary of substitutions.
 
 ## Rake tasks:
 
 To view other rake task for the project: `rake -T`
 
 * `rake spec:xml` - Runs rake spec, but pipes the output to xml using the `rspec_junit_formatter` gem, for JUnit compatible test result reports
-* `rake vcr:record` - Refresh vcr recordings and reformats the fixtures with formatted JSON output. Will also parse the reponse body's string into json output for legibility.
-* `rake vcr:list` - List the available recordings captured in the fixtures.
 
 ## Memcached tasks:
 

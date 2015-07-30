@@ -10,9 +10,7 @@ module Calmail
         response = request('removeMember', {
           body: {
             localpart: list_name,
-            unsub_address: email_address,
-            notify_owner: false,
-            send_ack: false,
+            unsub_address: email_address
           },
           on_error: {rescue_status: 500}
         })

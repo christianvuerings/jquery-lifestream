@@ -1,0 +1,26 @@
+[
+  {
+    "course_code": "API101",
+    "enrollments": [
+      {
+        "type": "student"
+      }
+    ],
+    "name": "API Testing and Design 101",
+    "start_at": "2012-09-04T00:00:00-07:00",
+    "end_at": null,
+    "account_id": 90243,
+    "hide_final_grades": false,
+    "term": {
+      "end_at": "2013-12-23T08:00:00Z",
+      "id": 4821,
+      "name": "Fall 2013",
+      "start_at": "2013-08-22T07:00:00Z"
+    },
+    "calendar": {
+      "ics": "https://ucberkeley.instructure.com/feeds/calendars/course_zEaJooSacLbZBLIdPKqIdFKwRpSGm7c2PpdG4ulA.ics"
+    },
+    "default_view": "feed",
+    "id": 767330
+  }
+]

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'MyTasks' do
   before(:each) do
     @user_id = rand(99999).to_s
@@ -134,7 +132,7 @@ describe 'MyTasks' do
     response.should == {}
   end
 
-  # Will fail in this case since the task_list_id won't match what's recorded in vcr, nor is a valid "remote" task id.
+  # Will fail in this case since the task_list_id won't match any fixtures, nor is a valid "remote" task id.
   it 'should fail google update_tasks with a remote proxy error' do
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     GoogleApps::UpdateTask.stub(:new).and_return(@fake_google_update_task_proxy)
@@ -173,10 +171,10 @@ describe 'MyTasks' do
   end
 
   it 'should return Google tasks when Canvas service is unavailable' do
-    GoogleApps::Proxy.stub(:access_granted?).and_return(true)
-    Canvas::Proxy.stub(:access_granted?).and_return(true)
-    GoogleApps::TasksList.stub(:new).and_return(@fake_google_tasks_list_proxy)
-    Canvas::Proxy.any_instance.stub(:request).and_return(nil)
+    allow(GoogleApps::Proxy).to receive(:access_granted?).and_return true
+    allow(Canvas::Proxy).to receive(:access_granted?).and_return true
+    allow(GoogleApps::TasksList).to receive(:new).and_return @fake_google_tasks_list_proxy
+    allow_any_instance_of(Canvas::Proxy).to receive(:request_internal).and_return(double(status: 500, body: 'Internal server error.'))
     my_tasks_model = MyTasks::Merged.new(@user_id)
     tasks = my_tasks_model.get_feed[:tasks]
     tasks.size.should be > 0
@@ -221,9 +219,8 @@ describe 'MyTasks' do
     Canvas::Proxy.stub(:access_granted?).and_return(true)
     Canvas::UpcomingEvents.stub(:new).and_return(@fake_canvas_upcoming_events_proxy)
     Canvas::Todo.stub(:new).and_return(@fake_canvas_todo_proxy)
-    unparseable = OpenStruct.new(:status => 200, :body => 'unparseable')
-    Canvas::UpcomingEvents.any_instance.stub(:upcoming_events).and_return(unparseable)
-    Canvas::Todo.any_instance.stub(:todo).and_return(unparseable)
+    Canvas::UpcomingEvents.any_instance.stub(:upcoming_events).and_return(statusCode: 200, body: 'unparseable')
+    allow_any_instance_of(Canvas::Todo).to receive(:todo).and_return(statusCode: 200, body: 'unparseable')
 
     my_tasks_model = MyTasks::Merged.new(@user_id)
     valid_feed = my_tasks_model.get_feed
@@ -232,7 +229,7 @@ describe 'MyTasks' do
 
   it 'should include an updatedDate for unscheduled Canvas tasks' do
     updated_at = '2015-02-22T00:47:33'
-    unscheduled_task_response = OpenStruct.new(status: 200, body: [{
+    unscheduled_task_response = {statusCode: 200, body: [{
       'assignment' => {
         'course_id' => 903842670,
         'created_at' => '2015-02-15T18:55:44Z',
@@ -248,7 +245,7 @@ describe 'MyTasks' do
       'course_id' => 903842670,
       'html_url' => 'https://ucberkeley.beta.instructure.com/courses/903842670/assignments/2587242#submit',
       'type' => 'submitting'
-    }].to_json)
+    }]}
     allow_any_instance_of(Canvas::Todo).to receive(:todo).and_return(unscheduled_task_response)
 
     feed = MyTasks::Merged.new(@user_id).get_feed

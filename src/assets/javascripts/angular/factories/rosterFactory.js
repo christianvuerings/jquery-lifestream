@@ -1,22 +1,22 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
+var angular = require('angular');
+
+/**
+ * Roster Factory
+ */
+angular.module('calcentral.factories').factory('rosterFactory', function($http) {
   /**
-   * Roster Factory
+   * Get the roster information
+   * @param {String} context 'canvas' or 'campus'
+   * @param {String} courseId ID of the course
    */
-  angular.module('calcentral.factories').factory('rosterFactory', function($http) {
-    /**
-     * Get the roster information
-     * @param {String} context 'canvas' or 'campus'
-     * @param {String} courseId ID of the course
-     */
-    var getRoster = function(context, courseId) {
-      var url = '/api/academics/rosters/' + context + '/' + courseId;
-      return $http.get(url);
-    };
+  var getRoster = function(context, courseId) {
+    var url = '/api/academics/rosters/' + context + '/' + courseId;
+    return $http.get(url);
+  };
 
-    return {
-      getRoster: getRoster
-    };
-  });
-}(window.angular));
+  return {
+    getRoster: getRoster
+  };
+});

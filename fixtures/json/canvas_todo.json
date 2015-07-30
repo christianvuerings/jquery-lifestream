@@ -1,0 +1,302 @@
+[
+  {
+    "type": "submitting",
+    "ignore_permanently": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588302/submitting?permanent=1",
+    "course_id": 767330,
+    "ignore": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588302/submitting?permanent=0",
+    "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588302#submit",
+    "context_type": "Course",
+    "assignment": {
+      "course_id": 767330,
+      "points_possible": null,
+      "due_at": ":::TWO_DAYS_AGO_MIDNIGHT_PST:::",
+      "description": "",
+      "muted": false,
+      "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588302",
+      "discussion_topic": {
+        "locked": false,
+        "attachments": [
+
+        ],
+        "author": {
+          "avatar_image_url": "https://secure.gravatar.com/avatar/963423426d6da2a4d30657d90310098e?s=50&d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png",
+          "display_name": "Chris Tweney",
+          "html_url": "https://ucberkeley.instructure.com/courses/767330/users/3075914",
+          "id": 3075914
+        },
+        "assignment_id": 2588302,
+        "delayed_post_at": null,
+        "podcast_has_student_posts": null,
+        "discussion_subentry_count": 0,
+        "permissions": {
+          "delete": false,
+          "attach": false,
+          "update": false
+        },
+        "read_state": "unread",
+        "unread_count": 0,
+        "last_reply_at": "2012-12-13T15:49:21-08:00",
+        "require_initial_post": null,
+        "url": "https://ucberkeley.instructure.com/courses/767330/discussion_topics/1646260",
+        "topic_children": [
+
+        ],
+        "user_name": "Chris Tweney",
+        "html_url": "https://ucberkeley.instructure.com/courses/767330/discussion_topics/1646260",
+        "posted_at": "2012-12-13T15:49:21-08:00",
+        "discussion_type": "side_comment",
+        "id": 1646260,
+        "root_topic_id": null,
+        "title": "Past Discussion",
+        "podcast_url": null,
+        "message": ""
+      },
+      "submission_types": [
+        "discussion_topic"
+      ],
+      "name": "Past Discussion",
+      "id": 2588302
+    }
+  },
+  {
+    "type": "submitting",
+    "ignore_permanently": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588242/submitting?permanent=1",
+    "course_id": 767330,
+    "ignore": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588242/submitting?permanent=0",
+    "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588242#submit",
+    "context_type": "Course",
+    "assignment": {
+      "course_id": 767330,
+      "points_possible": null,
+      "due_at": ":::TODAY_EARLY:::",
+      "description": "",
+      "muted": false,
+      "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588242",
+      "submission_types": [
+        "online_upload",
+        "online_text_entry",
+        "online_url",
+        "media_recording"
+      ],
+      "name": "Online-Submission Past Assignment",
+      "id": 2588242
+    }
+  },
+  {
+    "type": "submitting",
+    "ignore_permanently": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588304/submitting?permanent=1",
+    "course_id": 767330,
+    "ignore": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588304/submitting?permanent=0",
+    "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588304#submit",
+    "context_type": "Course",
+    "assignment": {
+      "anonymous_submissions": false,
+      "course_id": 767330,
+      "points_possible": null,
+      "due_at": ":::TWO_DAYS_AGO_MIDNIGHT_PST:::",
+      "description": "",
+      "muted": false,
+      "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588304",
+      "submission_types": [
+        "online_quiz"
+      ],
+      "name": "Past Quiz",
+      "id": 2588304
+    }
+  },
+  {
+    "type": "submitting",
+    "ignore_permanently": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588306/submitting?permanent=1",
+    "course_id": 767330,
+    "ignore": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588306/submitting?permanent=0",
+    "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588306#submit",
+    "context_type": "Course",
+    "assignment": {
+      "course_id": 767330,
+      "points_possible": null,
+      "due_at": ":::TWO_DAYS_AGO_MIDNIGHT_PST:::",
+      "description": null,
+      "muted": false,
+      "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588306",
+      "submission_types": [
+        "external_tool"
+      ],
+      "name": "Past External Tool Assignment",
+      "id": 2588306
+    }
+  },
+  {
+    "type": "submitting",
+    "ignore_permanently": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588244/submitting?permanent=1",
+    "course_id": 767330,
+    "ignore": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588244/submitting?permanent=0",
+    "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588244#submit",
+    "context_type": "Course",
+    "assignment": {
+      "course_id": 767330,
+      "points_possible": null,
+      "due_at": ":::UTC_NEXT_WEEK:::",
+      "description": "",
+      "muted": false,
+      "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588244",
+      "submission_types": [
+        "online_upload",
+        "online_text_entry",
+        "online_url",
+        "media_recording"
+      ],
+      "name": "Online-Submission Future Assignment",
+      "id": 2588244
+    }
+  },
+  {
+    "type": "submitting",
+    "ignore_permanently": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588303/submitting?permanent=1",
+    "course_id": 767330,
+    "ignore": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588303/submitting?permanent=0",
+    "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588303#submit",
+    "context_type": "Course",
+    "assignment": {
+      "course_id": 767330,
+      "points_possible": null,
+      "due_at": ":::UTC_NEXT_WEEK:::",
+      "description": "",
+      "muted": false,
+      "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588303",
+      "discussion_topic": {
+        "locked": false,
+        "attachments": [
+
+        ],
+        "author": {
+          "avatar_image_url": "https://secure.gravatar.com/avatar/963423426d6da2a4d30657d90310098e?s=50&d=https%3A%2F%2Fucberkeley.instructure.com%2Fimages%2Fmessages%2Favatar-50.png",
+          "display_name": "Chris Tweney",
+          "html_url": "https://ucberkeley.instructure.com/courses/767330/users/3075914",
+          "id": 3075914
+        },
+        "assignment_id": 2588303,
+        "delayed_post_at": null,
+        "podcast_has_student_posts": null,
+        "discussion_subentry_count": 0,
+        "permissions": {
+          "delete": false,
+          "attach": false,
+          "update": false
+        },
+        "read_state": "unread",
+        "unread_count": 0,
+        "last_reply_at": "2012-12-13T15:49:48-08:00",
+        "require_initial_post": null,
+        "url": "https://ucberkeley.instructure.com/courses/767330/discussion_topics/1646261",
+        "topic_children": [
+
+        ],
+        "user_name": "Chris Tweney",
+        "html_url": "https://ucberkeley.instructure.com/courses/767330/discussion_topics/1646261",
+        "posted_at": "2012-12-13T15:49:48-08:00",
+        "discussion_type": "side_comment",
+        "id": 1646261,
+        "root_topic_id": null,
+        "title": "Future Discussion",
+        "podcast_url": null,
+        "message": ""
+      },
+      "submission_types": [
+        "discussion_topic"
+      ],
+      "name": "Future Discussion",
+      "id": 2588303
+    }
+  },
+  {
+    "type": "submitting",
+    "ignore_permanently": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588305/submitting?permanent=1",
+    "course_id": 767330,
+    "ignore": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588305/submitting?permanent=0",
+    "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588305#submit",
+    "context_type": "Course",
+    "assignment": {
+      "anonymous_submissions": false,
+      "course_id": 767330,
+      "points_possible": null,
+      "due_at": ":::UTC_NEXT_WEEK:::",
+      "description": null,
+      "muted": false,
+      "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588305",
+      "submission_types": [
+        "online_quiz"
+      ],
+      "name": "Future Quiz",
+      "id": 2588305
+    }
+  },
+  {
+    "type": "submitting",
+    "ignore_permanently": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588307/submitting?permanent=1",
+    "course_id": 767330,
+    "ignore": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2588307/submitting?permanent=0",
+    "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588307#submit",
+    "context_type": "Course",
+    "assignment": {
+      "course_id": 767330,
+      "points_possible": null,
+      "due_at": ":::UTC_NEXT_WEEK:::",
+      "description": null,
+      "muted": false,
+      "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2588307",
+      "submission_types": [
+        "external_tool"
+      ],
+      "name": "Future External Tool Assignment",
+      "id": 2588307
+    }
+  },
+  {
+    "type": "submitting",
+    "ignore_permanently": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2803327/grading?permanent=1",
+    "course_id": 767330,
+    "ignore": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2803327/grading?permanent=0",
+    "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2803327#submit",
+    "context_type": "Course",
+    "assignment": {
+      "course_id": 767330,
+      "points_possible": null,
+      "due_at": null,
+      "description": null,
+      "muted": false,
+      "html_url": "https://ucberkeley.instructure.com/courses/767330/assignments/2803327",
+      "submission_types": [
+        "online_upload",
+        "online_text_entry",
+        "online_url",
+        "media_recording"
+      ],
+      "name": "Unscheduled Assignment",
+      "id": 2803327
+    }
+  },
+  {
+    "type": "grading",
+    "ignore_permanently": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2803329/grading?permanent=1",
+    "course_id": 767332,
+    "ignore": "https://ucberkeley.instructure.com/api/v1/users/self/todo/assignment_2803329/grading?permanent=0",
+    "html_url": "https://ucberkeley.instructure.com/courses/767332/assignments/2803329#submit",
+    "context_type": "Course",
+    "assignment": {
+      "course_id": 767334,
+      "points_possible": null,
+      "due_at": null,
+      "description": null,
+      "muted": false,
+      "html_url": "https://ucberkeley.instructure.com/courses/767332/assignments/2803329",
+      "submission_types": [
+        "online_upload",
+        "online_text_entry",
+        "online_url",
+        "media_recording"
+      ],
+      "name": "Unscheduled Assignment",
+      "id": 2803329
+    }
+  }
+]

@@ -23,6 +23,7 @@ $bc-canvas-button-selected-color: #fff;
   font-size: 14px;
   font-weight: normal;
   line-height: 20px;
+  margin: 0 2px;
   overflow: hidden;
   padding: 8px 14px;
   transition: background-color .2s ease-in-out;
@@ -41,7 +42,8 @@ $bc-canvas-button-selected-color: #fff;
 }
 
 a.bc-canvas-button {
-  padding: 10px 14px;
+  margin-bottom: 0;
+  padding: 8px 14px;
 }
 
 .bc-canvas-button-primary,

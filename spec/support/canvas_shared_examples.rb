@@ -7,6 +7,31 @@
 #
 ###############################################################################################
 
+shared_examples 'a Canvas proxy handling request failure' do
+  let (:status) { 500 }
+  let (:body) { 'Internal Error' }
+  before { subject.on_request(failing_request).set_response(status: status, body: body) }
+  include_context 'expecting logs from server errors'
+  it 'returns errors as objects' do
+    expect(response[:statusCode]).to eq 503
+    expect(response[:error]).to be_present
+  end
+end
+
+shared_examples 'an unpaged Canvas proxy handling request failure' do
+  include_examples 'a Canvas proxy handling request failure'
+  it 'does not include a body' do
+    expect(response).not_to include :body
+  end
+end
+
+shared_examples 'a paged Canvas proxy handling request failure' do
+  include_examples 'a Canvas proxy handling request failure'
+  it 'returns an empty array as body' do
+    expect(response[:body]).to eq []
+  end
+end
+
 ########################################################
 # Canvas Controller Authorizations
 
@@ -51,9 +76,9 @@ shared_examples 'a canvas course admin authorized api endpoint' do
   end
 
   before do
-    Canvas::UserProfile.any_instance.stub(:get).and_return(canvas_user_profile)
-    Canvas::CourseUser.any_instance.stub(:request_course_user).and_return(canvas_course_student_hash)
-    Canvas::Admins.any_instance.stub(:admin_user?).and_return(false)
+    allow_any_instance_of(Canvas::UserProfile).to receive(:get).and_return canvas_user_profile
+    allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return canvas_course_student_hash
+    allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return false
   end
 
   context 'when user is a student' do
@@ -65,7 +90,7 @@ shared_examples 'a canvas course admin authorized api endpoint' do
   end
 
   context 'when user is a course teacher' do
-    before { Canvas::CourseUser.any_instance.stub(:request_course_user).and_return(canvas_course_teacher_hash) }
+    before { allow_any_instance_of(Canvas::CourseUser).to receive(:course_user).and_return canvas_course_teacher_hash }
     it 'returns 200 success' do
       make_request
       expect(response.status).to eq(200)
@@ -73,7 +98,7 @@ shared_examples 'a canvas course admin authorized api endpoint' do
   end
 
   context 'when user is a canvas account admin' do
-    before { Canvas::Admins.any_instance.stub(:admin_user?).and_return(true) }
+    before { allow_any_instance_of(Canvas::Admins).to receive(:admin_user?).and_return true }
     it 'returns 200 success' do
       make_request
       expect(response.status).to eq(200)
@@ -89,7 +114,7 @@ shared_examples 'a background job worker' do
   let(:background_job_id) { 'Canvas::Egrades.1383330151057-67f4b934525501cb' }
 
   before do
-    allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return(background_job_id)
+    allow(BackgroundJob).to receive(:unique_job_id).and_return(background_job_id)
     subject.background_job_initialize(:total_steps => 3)
   end
 
@@ -98,7 +123,7 @@ shared_examples 'a background job worker' do
   end
 
   it 'provides consistent background job id' do
-    allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return('generated.cache.key1','generated.cache.key2')
+    allow(BackgroundJob).to receive(:unique_job_id).and_return('generated.cache.key1','generated.cache.key2')
     subject.background_job_initialize(:total_steps => 3)
     expect(subject.background_job_id).to eq "#{subject.class.name}.generated.cache.key1"
     expect(subject.background_job_id).to eq "#{subject.class.name}.generated.cache.key1"
@@ -111,10 +136,15 @@ shared_examples 'a background job worker' do
 
   it 'saves current object state to cache' do
     job_id = subject.background_job_id
-    bg_job_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    bg_job_object = BackgroundJob.find(subject.background_job_id)
     expect(bg_job_object.background_job_id).to eq job_id
     expect(bg_job_object.background_job_report).to be_an_instance_of Hash
     expect(bg_job_object.background_job_report[:jobStatus]).to eq 'New'
+  end
+
+  it 'saves job type string' do
+    subject.background_job_set_type('edit_sections')
+    expect(subject.background_job_report[:jobType]).to eq 'edit_sections'
   end
 
   context 'when background job state first saved to cache' do
@@ -130,7 +160,7 @@ shared_examples 'a background job worker' do
     end
 
     it 'returns background job report with custom report values' do
-      allow(Canvas::BackgroundJob).to receive(:unique_job_id).and_return(background_job_id)
+      allow(BackgroundJob).to receive(:unique_job_id).and_return(background_job_id)
       allow(subject).to receive(:background_job_report_custom).and_return({:customKey => 'customValue'})
       report = subject.background_job_report
       expect(report).to be_an_instance_of Hash
@@ -144,7 +174,7 @@ shared_examples 'a background job worker' do
       subject.background_job_complete_step('step 2')
     end
     it 'reports as processing based on total and completed steps' do
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       report = cached_object.background_job_report
       expect(report).to be_an_instance_of Hash
       expect(report[:jobId]).to be_an_instance_of String
@@ -162,7 +192,7 @@ shared_examples 'a background job worker' do
       subject.background_job_complete_step('step 3')
     end
     it 'reports as completed based on total and completed steps' do
-      cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+      cached_object = BackgroundJob.find(subject.background_job_id)
       report = cached_object.background_job_report
       expect(report).to be_an_instance_of Hash
       expect(report[:jobId]).to be_an_instance_of String
@@ -176,7 +206,7 @@ shared_examples 'a background job worker' do
   it 'reports errors when present' do
     subject.background_job_complete_step('step 1')
     subject.background_job_add_error('Something went wrong')
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     report = cached_object.background_job_report
     expect(report).to be_an_instance_of Hash
     expect(report[:jobId]).to be_an_instance_of String
@@ -188,7 +218,7 @@ shared_examples 'a background job worker' do
     subject.background_job_complete_step('step 2')
     subject.background_job_add_error('Something else went wrong')
     subject.background_job_complete_step('step 3')
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     report = cached_object.background_job_report
     expect(report).to be_an_instance_of Hash
     expect(report[:jobId]).to be_an_instance_of String
@@ -202,21 +232,21 @@ shared_examples 'a background job worker' do
     subject.background_job_set_total_steps('4')
     subject.background_job_complete_step('step one')
     subject.background_job_complete_step('step two')
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     expect(cached_object.background_job_report[:percentComplete]).to eq 0.50
   end
 
   it 'reports as processing or completed based on total and completed steps' do
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     expect(cached_object.background_job_report[:jobStatus]).to eq 'New'
     subject.background_job_complete_step('step 1')
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     expect(cached_object.background_job_report[:jobStatus]).to eq 'Processing'
     subject.background_job_complete_step('step 2')
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     expect(cached_object.background_job_report[:jobStatus]).to eq 'Processing'
     subject.background_job_complete_step('step 3')
-    cached_object = Canvas::BackgroundJob.find(subject.background_job_id)
+    cached_object = BackgroundJob.find(subject.background_job_id)
     expect(cached_object.background_job_report[:jobStatus]).to eq 'Completed'
   end
 

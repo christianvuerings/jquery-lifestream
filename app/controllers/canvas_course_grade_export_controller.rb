@@ -29,8 +29,8 @@ class CanvasCourseGradeExportController < ApplicationController
 
   # GET /api/academics/canvas/egrade_export/status/:canvas_course_id.json?jobId=Canvas::BackgroundJob.1383330151057-67f4b934525501cb
   def job_status
-    background_job = Canvas::BackgroundJob.find(params['jobId'])
-    render json: background_job.background_job_report.to_json and return if background_job.class == Canvas::Egrades
+    background_job = BackgroundJob.find(params['jobId'])
+    render json: background_job.background_job_report.to_json and return if background_job.is_a? CanvasLti::Egrades
     render json: { jobId: params['jobId'], jobStatus: 'Error', errors: ['Unable to find Canvas::EGrades background job'] }.to_json
   end
 
@@ -40,7 +40,7 @@ class CanvasCourseGradeExportController < ApplicationController
     raise Errors::BadRequestError, "term_yr required" unless params['term_yr']
     raise Errors::BadRequestError, "ccn required" unless params['ccn']
     raise Errors::BadRequestError, "type required" unless params['type']
-    raise Errors::BadRequestError, "invalid value for 'type' parameter" unless Canvas::Egrades::GRADE_TYPES.include?(params['type'])
+    raise Errors::BadRequestError, "invalid value for 'type' parameter" unless CanvasLti::Egrades::GRADE_TYPES.include?(params['type'])
     official_student_grades = egrades.official_student_grades_csv(params['term_cd'], params['term_yr'], params['ccn'], params['type'])
     term_season = {
       'B' => 'Spring',
@@ -65,15 +65,15 @@ class CanvasCourseGradeExportController < ApplicationController
   end
 
   def is_official_course
-    raise Pundit::NotAuthorizedError, "Canvas Course ID not present in params" if params['canvas_course_id'].blank?
-    official_course_worker = Canvas::OfficialCourse.new(:canvas_course_id => params['canvas_course_id'])
+    raise Pundit::NotAuthorizedError, 'Canvas Course ID not present in params' if params['canvas_course_id'].blank?
+    official_course_worker = CanvasLti::OfficialCourse.new(:canvas_course_id => params['canvas_course_id'])
     render json: { :isOfficialCourse => official_course_worker.is_official_course? }.to_json
   end
 
   private
 
   def egrades
-    @egrades_worker ||= Canvas::Egrades.new(:canvas_course_id => canvas_course_id)
+    @egrades_worker ||= CanvasLti::Egrades.new(:canvas_course_id => canvas_course_id)
   end
 
   def canvas_course

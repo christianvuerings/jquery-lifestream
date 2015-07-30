@@ -3,11 +3,9 @@
   "isBasicAuthEnabled": false,
   "isLoggedIn": true,
   "features": {
-    "my_fin_aid": true,
-    "research": false,
+    "myFinAid": true,
     "textbooks": true,
-    "videos": true,
-    "app_alerts": true
+    "videos": true
   },
   "actingAsUid": "1051203",
   "isSuperuser": false,

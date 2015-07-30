@@ -17,6 +17,10 @@ $bc-base-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 20px;
 }
 
+.bc-form-input-label-no-align {
+  text-align: initial;
+}
+
 // Used ONLY to remove outline from elements that
 // should not receive focus via tabIndex.
 .bc-accessibility-no-outline:focus {
@@ -111,9 +115,13 @@ button.bc-button-link {
   padding: 0;
 }
 
+// Note: Canvas style guide calls for 'Cancel' buttons before action buttons.
+// Web accessibility asks for action buttons before cancel. See CLC-5440. 
 .bc-form-actions {
   background: $bc-color-container-grey-background;
   border: 1px solid $bc-color-container-grey-border;
+  display: flex;
+  flex-direction: row-reverse;
   margin: 5px 0;
   padding: 10px 5px;
   text-align: right;
@@ -261,6 +269,48 @@ button.bc-button-link {
 .bc-header4 {
   font-size: 14px;
   line-height: 16px;
+}
+
+// Tabs
+// https://canvas.instructure.com/styleguide#tab_navigation
+.bc-tab-navigation {
+  .bc-tab-group {
+    border-bottom: 1px solid $bc-color-table-cell-border-grey;
+    margin-bottom: 20px;
+    padding: 0;
+    text-decoration: none;
+
+    .bc-tab {
+      background: transparent;
+      border: 1px solid transparent;
+      border-bottom: 0;
+      border-radius: 3px 3px 0 0;
+      float: left;
+      list-style: none;
+      margin: 0 .2em 1px 0;
+      padding: 0;
+      position: relative;
+      top: 1px;
+
+      a {
+        color: $bc-color-link;
+        float: left;
+        padding: 8px 14px;
+        text-decoration: none;
+      }
+    }
+
+    .bc-tab-active {
+      background: $bc-color-white;
+      border-color: $bc-color-table-cell-border-grey;
+      margin-bottom: 0;
+      padding-bottom: 1px;
+
+      a {
+        color: $bc-color-off-black;
+      }
+    }
+  }
 }
 
 // ***********************************
@@ -525,6 +575,7 @@ button.bc-template-canvas-maintenance-notice-button {
       font-size: 12px;
       margin: 0;
       padding: 2px 8px;
+      white-space: nowrap;
     }
 
     .bc-template-sections-table-button-undo-add {

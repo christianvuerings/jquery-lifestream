@@ -1,18 +1,18 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * Tele-BEARS Factory
-   */
-  angular.module('calcentral.factories').factory('telebearsFactory', function(apiService, $http) {
-    var appointmentUrl = '/api/my/event';
+var angular = require('angular');
 
-    var addAppointment = function(appointment) {
-      return $http.post(appointmentUrl, appointment);
-    };
+/**
+ * Tele-BEARS Factory
+ */
+angular.module('calcentral.factories').factory('telebearsFactory', function(apiService, $http) {
+  var appointmentUrl = '/api/my/event';
 
-    return {
-      addAppointment: addAppointment
-    };
-  });
-}(window.angular));
+  var addAppointment = function(appointment) {
+    return $http.post(appointmentUrl, appointment);
+  };
+
+  return {
+    addAppointment: addAppointment
+  };
+});

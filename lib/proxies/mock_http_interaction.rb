@@ -27,7 +27,11 @@ module Proxies
       set_response
     end
 
-    def set_response(options={})
+    def respond_with_file(*args)
+      set_response(body: Proxies::Mockable.read_file(*args))
+    end
+
+    def set_response(options={}, &blk)
       uri_matcher = if @request[:uri_matching]
                       parsed_uri = URI.parse(@request[:uri_matching])
                       /.*#{parsed_uri.hostname}.*#{parsed_uri.path}.*/
@@ -42,8 +46,12 @@ module Proxies
       end
       stub = stub.with(request_params) if request_params.any?
 
-      @response.merge! options
-      stub.to_return @response
+      if blk
+        stub.to_return blk
+      else
+        @response.merge! options
+        stub.to_return @response
+      end
     end
 
     def default_request

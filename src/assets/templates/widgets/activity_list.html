@@ -29,7 +29,7 @@
             <p data-ng-switch-default data-ng-bind-html="activity.summary | linky" class="cc-widget-activities-summary"></p>
           </div>
           <a class="cc-widget-activities-info-link" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', activity.source, activity.sourceUrl)" data-ng-if="activity.sourceUrl" data-ng-href="{{activity.sourceUrl}}">
-            More info
+            <span data-ng-bind="activity.linkText || 'More info'"></span>
             <span class="cc-visuallyhidden">View more info about {{ activity.title }} in {{ activity.source }}</span>
           </a>
         </div>
@@ -49,7 +49,7 @@
                   <p class="cc-widget-activities-sub-activity-summary cc-break-word" data-ng-bind-html="subActivity.summary | linky">
                   </p>
                   <a class="cc-widget-activities-info-link" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', subActivity.source, subActivity.sourceUrl)" data-ng-href="{{subActivity.sourceUrl}}">
-                    More info
+                    <span data-ng-bind="subActivity.linkText || 'More info'"></span>
                     <span class="cc-visuallyhidden">View more info about {{ subActivity.title }} in {{ subActivity.source }}</span>
                   </a>
                 </div>

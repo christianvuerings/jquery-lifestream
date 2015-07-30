@@ -67,11 +67,10 @@ describe 'My Finances details page', :testui => true do
           wait.until { @my_finances_details_page.visible_transaction_count == @fin_api_page.all_transactions.length }
         end
         it 'allow a user to filter all transactions by a specified string' do
-          transaction = @fin_api_page.all_transactions.last
-          search_string = @fin_api_page.trans_id(transaction)
           @my_finances_details_page.select_transactions_filter('All Transactions')
-          @my_finances_details_page.enter_search_string(search_string)
+          @my_finances_details_page.enter_search_string('DM0000589619')
           wait.until { @my_finances_details_page.visible_transaction_count == 1 }
+          expect(@my_finances_details_page.visible_transaction_descrip).to include('CLASS PASS FEE - TRANSIT')
           expect(@my_finances_details_page.show_more_button?).to be false
         end
         it 'allow a user to filter all transactions by a specific term' do
@@ -83,13 +82,11 @@ describe 'My Finances details page', :testui => true do
           wait.until { @my_finances_details_page.visible_transaction_count == @fin_api_page.term_transactions(term).length }
         end
         it 'allow a user to filter all transactions by a specific term and a specified string' do
-          transaction = @fin_api_page.all_transactions.last
-          search_string = @fin_api_page.trans_id(transaction)
-          search_term = @fin_api_page.trans_term(transaction)
           @my_finances_details_page.select_transactions_filter('Term')
-          @my_finances_details_page.select_term_filter(search_term)
-          @my_finances_details_page.enter_search_string(search_string)
+          @my_finances_details_page.select_term_filter('Fall 2013')
+          @my_finances_details_page.enter_search_string('DM0000589619')
           wait.until { @my_finances_details_page.visible_transaction_count == 1 }
+          expect(@my_finances_details_page.visible_transaction_descrip).to include('CLASS PASS FEE - TRANSIT')
           expect(@my_finances_details_page.show_more_button?).to be false
         end
         it 'allow a user to filter all transactions by a date range' do
@@ -125,14 +122,12 @@ describe 'My Finances details page', :testui => true do
           wait.until { @my_finances_details_page.visible_transaction_count == @fin_api_page.date_range_transactions(beginning_of_time, end_date).length }
         end
         it 'allow a user to filter all transactions by a date range and a specified string' do
-          transaction = @fin_api_page.all_transactions.last
-          date = Time.parse(@fin_api_page.trans_date(transaction)).strftime('%m/%d/%Y')
-          search_string = @fin_api_page.trans_id(transaction)
           @my_finances_details_page.select_transactions_filter('Date Range')
-          @my_finances_details_page.enter_search_start_date(date)
-          @my_finances_details_page.enter_search_end_date(date)
-          @my_finances_details_page.enter_search_string(search_string)
+          @my_finances_details_page.enter_search_start_date('10/01/2013')
+          @my_finances_details_page.enter_search_end_date('10/31/2013')
+          @my_finances_details_page.enter_search_string('DM0000589619')
           wait.until { @my_finances_details_page.visible_transaction_count == 1 }
+          expect(@my_finances_details_page.visible_transaction_descrip).to include('CLASS PASS FEE - TRANSIT')
           expect(@my_finances_details_page.show_more_button?).to be false
         end
         it 'filter transactions by balance due by default' do

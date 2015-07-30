@@ -1,23 +1,23 @@
-(function(angular) {
-  'use strict';
+'use strict';
 
-  /**
-   * API Test Factory
-   */
-  angular.module('calcentral.factories').factory('apiTestFactory', function(apiService) {
-    var smokeTestUrl = '/api/smoke_test_routes';
+var angular = require('angular');
 
-    var smokeTest = function(options) {
-      return apiService.http.request(options, smokeTestUrl);
-    };
+/**
+ * API Test Factory
+ */
+angular.module('calcentral.factories').factory('apiTestFactory', function(apiService) {
+  var smokeTestUrl = '/api/smoke_test_routes';
 
-    var request = function(options) {
-      return apiService.http.request(options);
-    };
+  var smokeTest = function(options) {
+    return apiService.http.request(options, smokeTestUrl);
+  };
 
-    return {
-      smokeTest: smokeTest,
-      request: request
-    };
-  });
-}(window.angular));
+  var request = function(options) {
+    return apiService.http.request(options);
+  };
+
+  return {
+    smokeTest: smokeTest,
+    request: request
+  };
+});

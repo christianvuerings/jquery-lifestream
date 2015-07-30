@@ -27,7 +27,7 @@
       <div data-ng-if="api.user.profile.roles.student">
         <div data-ng-if="!isProfileCurrent">
           <div data-ng-if="transitionTerm.registered" class="cc-widget-profile-message-text">
-            You are registered for the <span data-ng-bind="transitionTerm.termName"></span> term, but updated profile information is not yet available. Please check
+            You are registered for the <span data-ng-bind="transitionTerm.termName"></span> term, but complete profile information is not available. Please check
             <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>
             for the most current information.
           </div>
@@ -37,7 +37,7 @@
         </div>
         <div data-ng-if="!transitionTerm">
           <div data-ng-if="api.user.profile.roles.registered" class="cc-widget-profile-message-text">
-            You are registered as a student but not currently considered active by all campus services. Please try again later, or check
+            You are registered as a student, but complete profile information is not available. Please check
             <a href="https://sis.berkeley.edu/bearfacts/student/studentMain.do?bfaction=welcome">Bear Facts</a>
             for the most current information.
           </div>
@@ -59,7 +59,7 @@
             <li>Class enrollments, including waitlist information.</li>
             <li>Your academic status, including standing, GPA, units, major, college, and more.</li>
             <li>Your registration status, including any blocks limiting your access to campus services.</li>
-            <li>Course information, including class and exam schedules, class locations, textbooks, and webcasts.</li>
+            <li>Course information, including class and exam schedules, class locations, textbooks, and recordings.</li>
           </ul>
         </div>
       </div>
@@ -95,7 +95,7 @@
       </div>
     </div>
 
-    <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="collegeAndLevel.standing || gpaUnits.totalUnits !== null">
+    <div class="cc-table cc-table-top-border cc-clearfix" data-ng-if="collegeAndLevel.standing || gpaUnits.totalUnits">
       <table>
         <thead data-ng-if="collegeAndLevel.standing">
           <tr>

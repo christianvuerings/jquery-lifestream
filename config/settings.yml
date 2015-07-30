@@ -12,7 +12,7 @@ application:
   protocol: "http://"
   fake_cas: false
   fake_cas_id: "1" # Change this to the UID you want to fake cas auth with.
-  # Neither VCR nor WebMock are thread-safe, and so fake proxy support should
+  # WebMock is not thread-safe, and so fake proxy support should
   # be disabled when no fakes are needed (e.g., in production).
   fake_proxies_enabled: true
   # timeout (in seconds) for outgoing http request establishment
@@ -51,7 +51,6 @@ test_sqlite:
   pool: 3
 
 # Proxy support
-freshen_vcr: <%= ENV['freshen_vcr'] %>
 # MUST BE SET FOR DEVELOPMENT & PRODUCTION
 # Example generated with SecureRandom.base64(32)
 oauth2:
@@ -87,6 +86,9 @@ canvas_proxy:
   maintain_user_names: true
   # URL for scripts to point to CalCentral/Junction
   app_provider_host: 'http://localhost:3000'
+  test_admin_id:
+  test_servers:
+  test_cas_url: 'https://auth-test.berkeley.edu/cas'
 ldap:
   host: 'nds.berkeley.edu'
   port: 636
@@ -172,6 +174,10 @@ app_alerts_proxy:
   fake: false
   base_url: "http://ets.berkeley.edu/calcentral-alerts/feed"
 
+service_alerts_proxy:
+  fake: false
+  base_url: 'https://test-ets.pantheon.berkeley.edu/news-archive/calcentral-service-alert/feed'
+
 cal1card_proxy:
   fake: false
   base_url: 'https://webstage.housing.berkeley.edu/c1c/dyn/csc.asp'
@@ -216,11 +222,11 @@ cache:
     User::Api: NEXT_08_00
     User::Photo: <%= 24.hours %>
     UserApiController: <%= 4.hours %>
-    Canvas::Lti: <%= 5.minutes %>
     Canvas::CourseStudents: <%= 15.minutes %>
     Canvas::CourseTeachers: <%= 5.minutes %>
     CanvasBackgroundJobs: <%= 24.hours %>
-    Canvas::Egrades: <%= 1.minute %>
+    CanvasLti::Egrades: <%= 1.minute %>
+    CanvasLti::Lti: <%= 5.minutes %>
     Advising::MyAdvising: <%= 2.hours %>
 
     Berkeley::Terms: NEXT_08_00
@@ -282,10 +288,8 @@ background_jobs_check:
 # feature toggles. If a feature's key is false OR nil, it's disabled.
 features:
   my_fin_aid: false
-  research: false
   textbooks: false
   videos: false
-  app_alerts: false
   cal1card: false
   reauthentication: true
   audio: false
@@ -294,6 +298,8 @@ features:
   background_jobs_check: true
   course_manage_official_sections: false
   manage_site_mailing_lists: false
+  webcast_sign_up_on_calcentral: false
+  service_alerts_rss: false
 
 youtube_splash_id: 'EQ-a7xrfVag'
 
@@ -302,7 +308,7 @@ oec:
     year: 2015,
     code: "C"
   }]
-  departments: [ 'BIOLOGY', 'CATALAN', 'CHEM', 'DATASCI', 'ECON', 'EPS', 'GWS', 'INFO', 'INTEGBI', 'LGBT', 'LINGUIS', 'MATH', 'MCELLBI', 'PHYSICS', 'POL SCI', 'PORTUG', 'PSYCH', 'SPANISH', 'STAT' ]
+  departments: [ 'A,RESEC', 'BIOLOGY', 'CATALAN', 'CHEM', 'DATASCI', 'ECON', 'ENE,RES', 'ENVECON', 'EPS', 'ESPM', 'GWS', 'INFO', 'INTEGBI', 'LGBT', 'LINGUIS', 'MATH', 'MCELLBI', 'NUSCTX', 'PHYSICS', 'PLANTBI', 'POL SCI', 'PORTUG', 'PSYCH', 'SPANISH', 'STAT' ]
 
 class_calendar:
   slice_size: 10000

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CanvasProjectProvisionController do
   let(:uid) { rand(99999).to_s }
   let(:project_site_name) { 'My Test Project' }
@@ -8,12 +6,12 @@ describe CanvasProjectProvisionController do
   let(:unique_sis_project_id) { '67f4b934525501cb' }
   let(:new_course_hash) do
     {
-      "id"=>23,
-      "account_id"=> account_id,
-      "name"=> project_site_name,
-      "course_code"=> project_site_name,
-      "sis_course_id"=>"PROJ:#{unique_sis_project_id}",
-      "workflow_state"=>"unpublished"
+      'id'=>23,
+      'account_id'=> account_id,
+      'name'=> project_site_name,
+      'course_code'=> project_site_name,
+      'sis_course_id'=>"PROJ:#{unique_sis_project_id}",
+      'workflow_state'=>'unpublished'
     }
   end
   before do
@@ -22,14 +20,14 @@ describe CanvasProjectProvisionController do
   end
 
   describe '#create_project_site' do
-    before { allow_any_instance_of(Canvas::ProjectProvision).to receive(:create_project).and_return(new_course_hash) }
+    before { allow_any_instance_of(CanvasLti::ProjectProvision).to receive(:create_project).and_return(new_course_hash) }
 
-    it_should_behave_like "an api endpoint" do
-      before { allow_any_instance_of(Canvas::ProjectProvision).to receive(:create_project).and_raise(RuntimeError, "Something went wrong") }
+    it_should_behave_like 'an api endpoint' do
+      before { allow_any_instance_of(CanvasLti::ProjectProvision).to receive(:create_project).and_raise(RuntimeError, 'Something went wrong') }
       let(:make_request) { post :create_project_site, :name => project_site_name }
     end
 
-    it_should_behave_like "a user authenticated api endpoint" do
+    it_should_behave_like 'a user authenticated api endpoint' do
       let(:make_request) { post :create_project_site, :name => project_site_name }
     end
 

@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # The core framework
 # https://github.com/rails/rails
-gem 'rails', '4.1.8'
+gem 'rails', '4.1.11'
 
 gem 'actionpack-action_caching', '~>1.1.1'
 gem 'actionpack-page_caching', '~>1.0.2'
@@ -46,11 +46,6 @@ gem 'google-api-client', '~> 0.8.6'
 
 # LTI support
 gem 'ims-lti', :git => 'https://github.com/instructure/ims-lti.git'
-
-# for VCR http recording tool
-gem 'vcr', '~> 2.9.3'
-# Replace with this line for a new recording, if you truly must make a new recording.
-# gem 'vcr', :git => 'https://github.com/vcr/vcr.git'
 
 # for memcached connection
 gem 'dalli', '~> 2.7.2'
@@ -121,7 +116,7 @@ group :development, :test , :testext do
   gem 'minitest-reporters', '~> 1.0.8'
 
   # We need to specify the latest webdriver here, to support the latest firefox
-  gem 'selenium-webdriver', '~> 2.44.0'
+  gem 'selenium-webdriver', '~> 2.46.2'
 
   # Code coverage for Ruby 1.9 with a powerful configuration library and automatic merging of coverage across test suites
   # https://rubygems.org/gems/simplecov
@@ -152,7 +147,7 @@ end
 
 group :test do
   gem 'activerecord-jdbcsqlite3-adapter', '~> 1.3.16'
-  gem 'page-object', '~> 1.0.3'
+  gem 'page-object', '~> 1.1.0'
 end
 
 group :test, :testext do

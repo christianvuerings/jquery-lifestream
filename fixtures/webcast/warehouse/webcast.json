@@ -534,9 +534,9 @@
     {
       "year": 2013,
       "semester": "Fall",
-      "ccn": 1203,
-      "catalogId": "C1",
-      "deptName": "ENVECON",
+      "ccn": 7309,
+      "catalogId": "1A",
+      "deptName": "BIOLOGY",
       "audioOnly": false,
       "public": true,
       "youTubePlaylist": "-XXv-cvA_iDoDi4YEjSRuViC1hIjenaF",
@@ -545,115 +545,143 @@
       "recordings": [
         {
           "lecture": "Lecture 1",
-          "youTubeId": "hA4h5uUcFYI"
+          "youTubeId": "hA4h5uUcFYI",
+          "recordingStartUTC": "2013-08-25T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 2",
-          "youTubeId": "mpRyi0O0Ji4"
+          "youTubeId": "mpRyi0O0Ji4",
+          "recordingStartUTC": "2013-08-27T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 3",
-          "youTubeId": "UZprWZYadQY"
+          "youTubeId": "UZprWZYadQY",
+          "recordingStartUTC": "2013-08-29T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 4",
-          "youTubeId": "Pl33Ko_9P7A"
+          "youTubeId": "Pl33Ko_9P7A",
+          "recordingStartUTC": "2013-09-01T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 5",
-          "youTubeId": "0yrS_TwBKt8"
+          "youTubeId": "0yrS_TwBKt8",
+          "recordingStartUTC": "2013-09-03T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 6",
-          "youTubeId": "iLTisnUHdII"
+          "youTubeId": "iLTisnUHdII",
+          "recordingStartUTC": "2013-09-05T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 7",
-          "youTubeId": "AfrBBBOEcbE"
+          "youTubeId": "AfrBBBOEcbE",
+          "recordingStartUTC": "2013-09-08T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 8",
-          "youTubeId": "xQGDR1rnXb8"
+          "youTubeId": "xQGDR1rnXb8",
+          "recordingStartUTC": "2013-09-10T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 9",
-          "youTubeId": "kBFzUVI8V6E"
+          "youTubeId": "kBFzUVI8V6E",
+          "recordingStartUTC": "2013-09-12T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 10",
-          "youTubeId": "hTav_QtrvUM"
+          "youTubeId": "hTav_QtrvUM",
+          "recordingStartUTC": "2013-09-15T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 11",
-          "youTubeId": "FP1kgjuJcCc"
+          "youTubeId": "FP1kgjuJcCc",
+          "recordingStartUTC": "2013-09-17T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 12",
-          "youTubeId": "wF6DtdfnzRI"
+          "youTubeId": "wF6DtdfnzRI",
+          "recordingStartUTC": "2013-09-19T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 13",
-          "youTubeId": "a74--WOf2xk"
+          "youTubeId": "a74--WOf2xk",
+          "recordingStartUTC": "2013-09-22T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 15",
-          "youTubeId": "mdNiLbDdjw4"
+          "youTubeId": "mdNiLbDdjw4",
+          "recordingStartUTC": "2013-09-24T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 16:No aud last mins of lec",
-          "youTubeId": "CItwUXHrjAg"
+          "youTubeId": "CItwUXHrjAg",
+          "recordingStartUTC": "2013-09-26T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 17",
-          "youTubeId": "MTEpbIBhEVQ"
+          "youTubeId": "MTEpbIBhEVQ",
+          "recordingStartUTC": "2013-09-29T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 18",
-          "youTubeId": "na3dSFKGW2U"
+          "youTubeId": "na3dSFKGW2U",
+          "recordingStartUTC": "2013-10-01T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 19",
-          "youTubeId": "HYOcgTI9CiM"
+          "youTubeId": "HYOcgTI9CiM",
+          "recordingStartUTC": "2013-10-03T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 20",
-          "youTubeId": "jDZVcCRrv9g"
+          "youTubeId": "jDZVcCRrv9g",
+          "recordingStartUTC": "2013-10-06T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 21",
-          "youTubeId": "HK3XLGGWXYg"
+          "youTubeId": "HK3XLGGWXYg",
+          "recordingStartUTC": "2013-10-08T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 22",
-          "youTubeId": "Rj3yLrTxe4o"
+          "youTubeId": "Rj3yLrTxe4o",
+          "recordingStartUTC": "2013-10-10T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 23",
-          "youTubeId": "-F0sUIIpPAY"
+          "youTubeId": "-F0sUIIpPAY",
+          "recordingStartUTC": "2013-10-13T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 24",
-          "youTubeId": "EQHM0ZGXtPM"
+          "youTubeId": "EQHM0ZGXtPM",
+          "recordingStartUTC": "2013-10-15T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 25",
-          "youTubeId": "mEKFW4FI31s"
+          "youTubeId": "mEKFW4FI31s",
+          "recordingStartUTC": "2013-10-17T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 26",
-          "youTubeId": "OHBOtDLnFCI"
+          "youTubeId": "OHBOtDLnFCI",
+          "recordingStartUTC": "2013-10-20T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 27",
-          "youTubeId": "VHCRgCHKNps"
+          "youTubeId": "VHCRgCHKNps",
+          "recordingStartUTC": "2013-10-22T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 28:No audio after min 18",
-          "youTubeId": "YXl9PFH0m24"
+          "youTubeId": "YXl9PFH0m24",
+          "recordingStartUTC": "2013-10-24T16:06:00-08:00"
         },
         {
           "lecture": "Lecture 29: Last mins not avail",
-          "youTubeId": "u2PGzidDgdY"
+          "youTubeId": "u2PGzidDgdY",
+          "recordingStartUTC": "2013-10-27T16:06:00-08:00"
         }
       ]
     },

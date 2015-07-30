@@ -14,6 +14,16 @@ describe Webcast::SignUpEligible do
       end
     end
 
+    context 'no eligible CCNs' do
+      subject { Webcast::SignUpEligible.new }
+      before do
+        expect(subject).to receive(:get_json_data).exactly(1).times.and_return({})
+      end
+      it 'should handle empty feed with grace' do
+        expect(subject.get).to be_empty
+      end
+    end
+
     context 'sign-up phase is closed' do
       before {
         allow_any_instance_of(Webcast::SystemStatus).to receive(:get).and_return({ :isSignUpActive => false })

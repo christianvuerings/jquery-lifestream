@@ -31,23 +31,24 @@ module CalCentralPages
     # INSTRUCTORS
     elements(:section_instructors_heading, :h3, :xpath => '//h3[@data-ng-bind="section.section_label"]')
 
-    # WEBCAST
-    h2(:webcast_heading, :xpath => '//h2[text()="Webcasts"]')
-    div(:webcast_spinner_gone, :xpath => '//div[@data-ng-controller="WebcastController"]/div[@data-cc-spinner-directive=""]')
-    button(:video_tab, :xpath => '//button[text()="Video"]')
+    # COURSE CAPTURES
+    h2(:course_capture_heading, :xpath => '//h2[text()="Course Captures"]')
+    link(:video_tab, :text => 'Video')
     div(:no_video_msg, :xpath => '//div[contains(.,"No video content available.")]')
     select(:video_select, :xpath => '//select[@data-ng-model="selectedVideo"]')
     button(:video_thumbnail, :xpath => '//button[@id="cc-youtube-image-placeholder"]/img')
-    element(:video_iframe, 'iframe')
+    div(:html5_player, :xpath => '//div[@class="html5-player-chrome"]')
+    div(:video_pause_button, :xpath => '//div[@class="ytp-button ytp-button-pause"]')
     link(:itunes_video_link, :xpath => '//li[@class="cc-widget-webcast-itunes-link"]/a')
-    button(:audio_tab, :xpath => '//button[text()="Audio"]')
+    link(:audio_tab, :text => 'Audio')
     div(:no_audio_msg, :xpath => '//div[contains(.,"No audio content available.")]')
     select(:audio_select, :xpath => '//select[@data-ng-model="selectedAudio"]')
     audio(:audio, :xpath => '//audio')
     audio(:audio_source, :xpath => '//audio/source')
     link(:audio_download_link, :xpath => '//li[@data-ng-if="selectedAudio.downloadUrl"]/a')
-    link(:itunes_audio_link, :xpath => '//li[@data-ng-if="itunes.audio"]/a')
-    div(:no_webcast_msg, :xpath => '//div[contains(.,"There are no webcasts available.")]')
+    link(:itunes_audio_link, :xpath => '//li[@data-ng-if="iTunes.audio"]/a')
+    div(:no_course_capture_msg, :xpath => '//div[contains(text(),"There are no recordings available.")]')
+    link(:report_problem_link, :xpath => '//a[contains(text(),"Report a problem with this recording")]')
 
     def all_student_section_labels
       labels = []
@@ -114,18 +115,24 @@ module CalCentralPages
       listings
     end
 
-    def wait_for_webcasts
-      webcast_heading_element.when_present(WebDriverUtils.page_load_timeout)
-      webcast_spinner_gone_element.when_present(WebDriverUtils.page_load_timeout)
+    def has_html5_player?(driver)
+      video_thumbnail
+      wait_until(timeout=WebDriverUtils.page_event_timeout) { driver.find_element(:xpath, '//iframe') }
+      driver.switch_to.frame driver.find_element(:xpath, '//iframe')
+      begin
+        html5_player_element.present? ? true : false
+      ensure
+        driver.switch_to.default_content
+      end
     end
 
     def you_tube_video_auto_plays?(driver)
-      video_thumbnail_element.click
-      wait_until(timeout=WebDriverUtils.page_event_timeout) { driver.find_element(:xpath, '//iframe') }
-      driver.switch_to.frame driver.find_element(:xpath, '//iframe')
-      wait_until(timeout=WebDriverUtils.page_event_timeout) { driver.find_element(:xpath, '//div[@class="html5-player-chrome"]') }
-      auto_play = driver.find_element(:xpath, '//div[@class="ytp-button ytp-button-pause"]').displayed?
-      driver.switch_to.default_content
+      begin
+        driver.switch_to.frame driver.find_element(:xpath, '//iframe')
+        auto_play = video_pause_button_element.present?
+      ensure
+        driver.switch_to.default_content
+      end
       auto_play
     end
   end

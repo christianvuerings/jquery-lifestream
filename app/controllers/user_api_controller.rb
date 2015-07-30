@@ -19,6 +19,7 @@ class UserApiController < ApplicationController
   def mystatus
     ActiveRecordHelper.clear_stale_connections
     status = {}
+    features = HashConverter.camelize Settings.features.marshal_dump
 
     if session['user_id']
       # wrap User::Visit.record_session inside a cache lookup so that we have to write User::Visit records less often.
@@ -29,7 +30,7 @@ class UserApiController < ApplicationController
       status.merge!({
         :isBasicAuthEnabled => Settings.developer_auth.enabled,
         :isLoggedIn => true,
-        :features => Settings.features.marshal_dump,
+        :features => features,
         # Note the misleading field name.
         :actingAsUid => (current_user.directly_authenticated? ? false : current_user.real_user_id),
         :youtubeSplashId => Settings.youtube_splash_id
@@ -39,7 +40,7 @@ class UserApiController < ApplicationController
       status.merge!({
         :isBasicAuthEnabled => Settings.developer_auth.enabled,
         :isLoggedIn => false,
-        :features => Settings.features.marshal_dump,
+        :features => features,
         :youtubeSplashId => Settings.youtube_splash_id
       })
     end

@@ -14,10 +14,10 @@ describe Webcast::Recordings do
     end
   end
 
-  context 'a real, non-fake proxy' do
+  context 'a real, non-fake proxy', :testext => true do
     subject { Webcast::Recordings.new }
 
-    context 'normal return of real data', :testext => true do
+    context 'normal return of real data' do
       it 'should return a bunch of playlists' do
         result = subject.get
         courses = result[:courses]
@@ -61,7 +61,7 @@ describe Webcast::Recordings do
       end
     end
 
-    context 'course with zero recordings is different than course not scheduled for recordings', :testext => true do
+    context 'course with zero recordings is different than course not scheduled for recordings' do
       it 'returns nil recordings attribute when course is scheduled for recordings' do
         result = subject.get
         non_existent = result[:courses]['2015-B-1']

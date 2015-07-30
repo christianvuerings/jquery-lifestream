@@ -2,16 +2,16 @@ module MyActivities
   class CanvasActivities
     include ClassLogger, DatedFeed, HtmlSanitizer, SafeJsonParser
 
-    def self.append!(uid, sites, activities)
+    def self.append!(uid, classes, activities)
       return unless Canvas::Proxy.access_granted?(uid)
-      canvas_results = get_feed(uid, sites)
+      canvas_results = get_feed(uid, index_classes_by_emitter(classes))
       activities.concat canvas_results
     end
 
-    def self.get_feed(uid, canvas_sites)
+    def self.get_feed(uid, classes)
       response = Canvas::UserActivityStream.new(user_id: uid).user_activity
-      if (response && response.status == 200 && raw_feed = safe_json(response.body))
-        raw_feed.map { |entry| format_entry(uid, entry, canvas_sites) }.compact
+      if (raw_feed = response[:body])
+        raw_feed.map { |entry| format_entry(uid, entry, classes) }.compact
       else
         []
       end
@@ -19,13 +19,29 @@ module MyActivities
 
     private
 
-    def self.format_entry(uid, entry, canvas_sites)
+    def self.index_classes_by_emitter(classes)
+      indexed = {
+        campus: {},
+        canvas: {}
+      }
+      classes.each do |course|
+        case course[:emitter]
+        when 'Campus'
+          course[:listings].each { |listing| indexed[:campus][listing[:id]] = listing }
+        when Canvas::Proxy::APP_NAME
+          indexed[:canvas][course[:id]] = course
+        end
+      end
+      indexed
+    end
+
+    def self.format_entry(uid, entry, classes)
       if (date = process_date entry) && (title = process_title entry)
         {
           date: format_date(date),
           emitter: Canvas::Proxy::APP_NAME,
           id: "canvas_#{entry['id']}",
-          source: process_source(entry, canvas_sites),
+          source: process_source(entry, classes),
           sourceUrl: entry['html_url'],
           summary: process_message(entry) + process_score(entry),
           title: title,
@@ -100,11 +116,6 @@ module MyActivities
       score_message || ''
     end
 
-    def self.filter_classes(classes = [])
-      classes.select! { |entry| entry[:emitter] == 'bCourses'}
-      Hash[*classes.map { |entry| [Integer(entry[:id], 10), entry]}.flatten]
-    end
-
     def self.split_summary(text)
       (split = split_title_and_summary text) && split[1]
     end
@@ -119,20 +130,29 @@ module MyActivities
       end
     end
 
-    def self.process_source(entry, canvas_sites)
-      if %w(Course Group).include? entry['context_type']
-        type = entry['context_type'].downcase
-        entry_site = canvas_sites.find do |site|
-          site[:siteType] == type &&
-            site[:id] == entry["#{type}_id"].to_s &&
-            site[:emitter] == Canvas::Proxy::APP_NAME
-        end
-        if entry_site
-          source = entry_site[:source] if type == 'group'
-          source ||= entry_site[:name]
-        end
+    def self.process_source(entry, classes)
+      if (site = get_site_for_entry(entry, classes))
+        source = course_codes_for_site(site, classes) || site[:source] || site[:name]
       end
       source || Canvas::Proxy::APP_NAME
     end
+
+    def self.course_codes_for_site(site, classes)
+      return unless site[:courses]
+      course_listings = site[:courses].map { |course| classes[:campus][course[:id]] }.compact
+      if course_listings.any?
+        course_codes = course_listings.map { |listing| listing[:course_code] }
+        course_codes.length == 1 ? course_codes.first : course_codes
+      end
+    end
+
+    def self.get_site_for_entry(entry, classes)
+      site_type = entry['context_type'].downcase if entry['context_type']
+      site = classes[:canvas][entry["#{site_type}_id"].to_s]
+      if site && site[:siteType] == site_type
+        site
+      end
+    end
+
   end
 end
