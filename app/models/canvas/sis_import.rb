@@ -65,7 +65,7 @@ module Canvas
           connection: @multipart_conn,
           body: upload_body
         })
-        safe_json response.body
+        safe_json response[:body]
       end
     end
 

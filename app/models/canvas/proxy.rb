@@ -88,7 +88,13 @@ module Canvas
     end
 
     def raw_request(api_path, fetch_options = {})
-      safe_request { request_internal(api_path, fetch_options) }
+      safe_request do
+        response = request_internal(api_path, fetch_options)
+        {
+          statusCode: response.status,
+          body: response.body
+        }
+      end
     end
 
     def safe_request
