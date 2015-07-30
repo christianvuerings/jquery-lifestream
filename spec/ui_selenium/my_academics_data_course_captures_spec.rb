@@ -22,17 +22,17 @@ describe 'My Academics course captures card', :testui => true do
       test_users = UserUtils.load_test_users
       testable_users = []
       test_users.each do |user|
-        unless user['webcast'].nil?
+        unless user['courseCapture'].nil?
           uid = user['uid'].to_s
           logger.info("UID is #{uid}")
-          course = user['webcast']['course']
-          class_page = user['webcast']['classPagePath']
-          lecture_count = user['webcast']['lectures']
-          video_you_tube_id = user['webcast']['video']
-          video_itunes = user['webcast']['itunesVideo']
-          audio_url = user['webcast']['audio']
-          audio_download = user['webcast']['audioDownload']
-          audio_itunes = user['webcast']['itunesAudio']
+          course = user['courseCapture']['course']
+          class_page = user['courseCapture']['classPagePath']
+          lecture_count = user['courseCapture']['lectures']
+          video_you_tube_id = user['courseCapture']['video']
+          video_itunes = user['courseCapture']['itunesVideo']
+          audio_url = user['courseCapture']['audio']
+          audio_download = user['courseCapture']['audioDownload']
+          audio_itunes = user['courseCapture']['itunesAudio']
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
@@ -40,7 +40,7 @@ describe 'My Academics course captures card', :testui => true do
             splash_page.basic_auth(driver, uid)
             my_academics = CalCentralPages::MyAcademicsClassPage.new(driver)
             my_academics.load_class_page(driver, class_page)
-            my_academics.webcast_heading_element.when_visible(WebDriverUtils.academics_timeout)
+            my_academics.course_capture_heading_element.when_visible(WebDriverUtils.academics_timeout)
             testable_users.push(uid)
 
             if video_you_tube_id.nil? && !audio_url.nil?
@@ -54,10 +54,10 @@ describe 'My Academics course captures card', :testui => true do
                 expect(has_video_tab).to be false
               end
             elsif video_you_tube_id.nil? && audio_url.nil?
-              my_academics.no_webcast_msg_element.when_present(timeout=WebDriverUtils.page_load_timeout)
-              has_no_webcast_message = my_academics.no_webcast_msg_element.visible?
-              it "shows a 'no webcasts' message for UID #{uid}" do
-                expect(has_no_webcast_message).to be true
+              my_academics.no_course_capture_msg_element.when_present(timeout=WebDriverUtils.page_load_timeout)
+              has_no_course_capture_message = my_academics.no_course_capture_msg_element.visible?
+              it "shows a 'no recordings' message for UID #{uid}" do
+                expect(has_no_course_capture_message).to be true
               end
             elsif audio_url.nil? && !video_you_tube_id.nil?
               my_academics.video_thumbnail_element.when_present(timeout=WebDriverUtils.academics_timeout)
@@ -143,7 +143,7 @@ describe 'My Academics course captures card', :testui => true do
           end
         end
       end
-      it 'has a webcast UI for at least one of the test users' do
+      it 'has a course capture UI for at least one of the test users' do
         expect(testable_users.length).to be > 0
       end
     rescue => e
