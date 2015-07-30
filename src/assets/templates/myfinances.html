@@ -10,7 +10,7 @@
 
       <div data-ng-include="'cal1card.html'"></div>
 
-      <div data-ng-include="'widgets/finaid_summary.html'"></div>
+      <div data-ng-include="'widgets/finaid_summary.html'" data-ng-if="api.user.profile.features.csFinAid"></div>
     </div>
 
     <div class="medium-4 columns">
