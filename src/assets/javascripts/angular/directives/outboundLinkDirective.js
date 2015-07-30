@@ -11,7 +11,11 @@ var angular = require('angular');
  * @returns {boolean} Whether the request is for the same domain.
  */
 var isSameDomain = function(requestUrl, locationUrl) {
-  var DEFAULT_PORTS = {'http': 80, 'https': 443, 'ftp': 21};
+  var DEFAULT_PORTS = {
+    'http': 80,
+    'https': 443,
+    'ftp': 21
+  };
   var IS_SAME_DOMAIN_URL_MATCH = /^(([^:]+):)?\/\/(\w+:{0,1}\w*@)?([\w\.-]*)?(:([0-9]+))?(.*)$/;
   var URL_MATCH = /^([^:]+):\/\/(\w+:{0,1}\w*@)?([\w\.-]*)(:([0-9]+))?(\/[^\?#]*)?(\?([^#]*))?(#(.*))?$/;
 

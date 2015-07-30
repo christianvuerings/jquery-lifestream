@@ -19,10 +19,12 @@
     "~",
     "!"
   ],
+  "disallowSpaceBeforeComma": true,
   "disallowSpaceBeforePostfixUnaryOperators": [
     "++",
     "--"
   ],
+  "disallowSpaceBeforeSemicolon": true,
   "disallowSpacesInAnonymousFunctionExpression": {
     "beforeOpeningRoundBrace": true
   },
@@ -56,6 +58,8 @@
   "requireCurlyBraces": true,
   "requireDotNotation": true,
   "requireLineFeedAtFileEnd": true,
+  "requireMatchingFunctionName": true,
+  "requireObjectKeysOnNewLine": true,
   "requireOperatorBeforeLineBreak": [
     "?",
     "+",
@@ -140,11 +144,6 @@
   },
   "requireSpacesInFunctionExpression": {
     "beforeOpeningCurlyBrace": true
-  },
-  "validateJSDoc": {
-    "checkParamNames": true,
-    "checkRedundantParams": true,
-    "requireParamTypes": true
   },
   "validateLineBreaks": "LF",
   "validateIndentation": 2,
