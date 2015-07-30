@@ -26,14 +26,14 @@ module Canvas
         report_status = ActiveSupport::Notifications.instrument('proxy', { class: self.class, method: __method__ }) do
           wrapped_post "accounts/#{@account_id}/reports/#{report_type}_csv?parameters[#{object_type}]=1#{term_param}"
         end
-        unless report_status[:body]
+        unless (report_id = report_status[:body] && report_status[:body]['id'])
           logger.warn "Unable to request #{report_type} report"
           return nil
         end
 
-        check_status = check_report_status(report_type, report_status['id'])
+        check_status = check_report_status(report_type, report_id)
         unless check_status['status'] == 'complete'
-          logger.warn "Unexpected status when downloading report ID #{report_status['id']} : #{response.body}"
+          logger.warn "Unexpected status when downloading report ID #{report_id} : #{check_status}"
           return nil
         end
 
@@ -57,15 +57,15 @@ module Canvas
           end
           csv_response = ActiveSupport::Notifications.instrument('proxy', { class: self.class, method: __method__ }) do
             raw_request('', {
-              uri: file_info["url"],
+              uri: file_response[:body]['url'],
               non_oauth_connection: conn
             })
           end
-          unless csv_response.status == 200
+          unless csv_response[:statusCode] == 200
             logger.error "Unable to download report #{report_id} : #{csv_response}"
             return nil
           end
-          csv = CSV.parse(csv_response.body, {headers: true})
+          csv = CSV.parse(csv_response[:body], {headers: true})
         end
         csv
       end
