@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe AuthenticationState do
 
   describe '#directly_authenticated?' do
@@ -52,6 +50,14 @@ describe AuthenticationState do
         'lti_authenticated_only' => true
       }}
       it {should eq AuthenticationState::LTI_AUTHENTICATED_ONLY}
+    end
+    context 'when authenticated from an external app under masquerade' do
+      let(:fake_session) {{
+        'user_id' => random_id,
+        'lti_authenticated_only' => true,
+        'canvas_masquerading_user_id' => random_id
+      }}
+      it {should eq "#{AuthenticationState::LTI_AUTHENTICATED_ONLY}: masquerading Canvas ID #{fake_session['canvas_masquerading_user_id']}"}
     end
     context 'when not logged in' do
       let(:fake_session) {{
