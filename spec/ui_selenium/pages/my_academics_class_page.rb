@@ -31,8 +31,8 @@ module CalCentralPages
     # INSTRUCTORS
     elements(:section_instructors_heading, :h3, :xpath => '//h3[@data-ng-bind="section.section_label"]')
 
-    # WEBCAST
-    h2(:webcast_heading, :xpath => '//h2[text()="Webcasts"]')
+    # COURSE CAPTURES
+    h2(:webcast_heading, :xpath => '//h2[text()="Course Captures"]')
     link(:video_tab, :text => 'Video')
     div(:no_video_msg, :xpath => '//div[contains(.,"No video content available.")]')
     select(:video_select, :xpath => '//select[@data-ng-model="selectedVideo"]')
@@ -47,7 +47,7 @@ module CalCentralPages
     audio(:audio_source, :xpath => '//audio/source')
     link(:audio_download_link, :xpath => '//li[@data-ng-if="selectedAudio.downloadUrl"]/a')
     link(:itunes_audio_link, :xpath => '//li[@data-ng-if="iTunes.audio"]/a')
-    div(:no_webcast_msg, :xpath => '//div[contains(text(),"There are no webcasts scheduled.")]')
+    div(:no_webcast_msg, :xpath => '//div[contains(text(),"There are no recordings available.")]')
     link(:report_problem_link, :xpath => '//a[contains(text(),"Report a problem with this recording")]')
 
     def all_student_section_labels

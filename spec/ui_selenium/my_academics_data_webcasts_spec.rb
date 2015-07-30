@@ -9,7 +9,7 @@ require_relative 'pages/cal_central_pages'
 require_relative 'pages/splash_page'
 require_relative 'pages/my_academics_class_page'
 
-describe 'My Academics webcasts card', :testui => true do
+describe 'My Academics course captures card', :testui => true do
 
   if ENV["UI_TEST"]
 
