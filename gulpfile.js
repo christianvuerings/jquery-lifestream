@@ -17,6 +17,9 @@
   // Plug-in to inject html into other html
   var inject = require('gulp-inject');
 
+  // File system
+  var fs = require('fs');
+
   // Browserify dependencies
   var browserify = require('browserify');
   var watchify = require('watchify');
@@ -86,6 +89,8 @@
       img: 'src/assets/images/**/*.*',
       // JavaScript
       js: {
+        // Angular Javascript
+        angular: 'src/assets/javascripts/**/*.js',
         // Public JavaScript
         external: 'public/assets/javascripts/index.js',
         // Browserify creates bundled JS with internal JS files
@@ -431,6 +436,13 @@
     gulp.watch(paths.src.fonts, ['fonts']);
     gulp.watch(paths.src.templates, ['browserify']);
     gulp.watch(paths.src.img, ['images']);
+    gulp.watch(paths.src.js.angular, function(e) {
+      // Checks if new file is added or deleted
+      if (e.type === 'added' || 'deleted') {
+        // Updates file timestamp of module file (index.js) to update watchify with new/deleted files
+        fs.utimes(paths.src.js.internal, new Date(), new Date());
+      }
+    });
   });
 
   /**
