@@ -77,8 +77,8 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
    */
   var getFinaidSummary = function() {
     finaidFactory.getSummary().success(function(data) {
-      angular.extend($scope, data);
-      setDefaultSelections(data);
+      angular.extend($scope, data.feed);
+      setDefaultSelections(data.feed);
     });
   };
 
