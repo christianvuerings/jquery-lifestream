@@ -45,9 +45,9 @@ angular.module('calcentral.controllers').controller('FinaidController', function
    */
   var getFinaidSummary = function() {
     return finaidFactory.getSummary().success(function(data) {
-      combinationExists(data, $routeParams.finaidYearId, $routeParams.semesterOptionId);
-      setFinaidYear(data, $routeParams.finaidYearId);
-      setCanSeeFinaidYear(data, $scope.finaidYear);
+      combinationExists(data.feed, $routeParams.finaidYearId, $routeParams.semesterOptionId);
+      setFinaidYear(data.feed, $routeParams.finaidYearId);
+      setCanSeeFinaidYear(data.feed, $scope.finaidYear);
       $scope.finaid.isLoading = false;
     });
   };

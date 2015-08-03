@@ -14,7 +14,8 @@ angular.module('calcentral.factories').factory('finaidFactory', function(apiServ
 
   var urlFinaidYear = '/dummy/json/finaid_year.json';
 
-  var urlSummary = '/dummy/json/finaid_summary.json';
+  var urlSummary = '/api/campus_solutions/aid_years';
+  // var urlSummary = '/dummy/json/finaid_summary.json';
 
   var getBudget = function(options) {
     return apiService.http.request(options, urlBudget);

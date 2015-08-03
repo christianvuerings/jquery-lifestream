@@ -26,7 +26,7 @@ module CampusSolutions
     def url
       # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
       # TODO note strange form of EMPLID param syntax (this is a PS misconfig that should be fixed soon)
-      "#{@settings.base_url}/UC_FA_COST_ATT.v1/EMPLID=00000137&INSTITUTION=UCB01&AID_YEAR=#{@aid_year}"
+      "#{@settings.base_url}/UC_FA_COST_ATT.v1/get?EMPLID=00000137&INSTITUTION=UCB01&AID_YEAR=#{@aid_year}"
     end
 
     def convert_feed_keys(feed)
