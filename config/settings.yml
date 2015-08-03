@@ -378,7 +378,7 @@ cs_aid_years_proxy:
   app_id: 'secret'
   app_key: 'secret'
 
-cs_financial_data_proxy:
+cs_financial_aid_data_proxy:
   fake: true
   base_url: 'https://apis.berkeley.edu/PSIGW/RESTListeningConnector/PSFT_CS'
   app_id: 'secret'

@@ -137,7 +137,7 @@ Calcentral::Application.routes.draw do
   get '/api/campus_solutions/address' => 'campus_solutions#address', :via => :get, :defaults => { :format => 'json' }
   post '/api/campus_solutions/address' => 'campus_solutions#update_address', :via => :post, :defaults => { :format => 'json' }
   get '/api/campus_solutions/aid_years' => 'campus_solutions#aid_years', :via => :get, :defaults => { :format => 'json' }
-  get '/api/campus_solutions/financial_data' => 'campus_solutions#financial_data', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/financial_aid_data' => 'campus_solutions#financial_aid_data', :via => :get, :defaults => { :format => 'json' }
 
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true

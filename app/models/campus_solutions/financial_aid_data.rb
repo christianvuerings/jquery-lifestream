@@ -1,8 +1,8 @@
 module CampusSolutions
-  class FinancialData < IntegrationHubProxy
+  class FinancialAidData < IntegrationHubProxy
 
     def initialize(options = {})
-      super(Settings.cs_financial_data_proxy, options)
+      super(Settings.cs_financial_aid_data_proxy, options)
       @aid_year = options[:aid_year] || '0'
       initialize_mocks if @fake
     end
@@ -12,15 +12,12 @@ module CampusSolutions
     end
 
     def xml_filename
-      'financial_data.xml'
+      'financial_aid_data.xml'
     end
 
     def build_feed(response)
-      feed = {}
-      return feed if response.parsed_response.blank?
-
-      feed[:coa] = response.parsed_response['coa']
-      feed
+      return {} if response.parsed_response.blank?
+      response.parsed_response['root']
     end
 
     def url

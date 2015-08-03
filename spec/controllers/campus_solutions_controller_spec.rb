@@ -89,7 +89,7 @@ describe CampusSolutionsController do
   end
 
   context 'financial data feed' do
-    let(:feed) { :financial_data }
+    let(:feed) { :financial_aid_data }
     context 'non-authenticated user' do
       it_behaves_like 'an unauthenticated user'
     end
