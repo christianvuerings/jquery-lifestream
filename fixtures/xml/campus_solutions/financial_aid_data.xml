@@ -1,0 +1,230 @@
+<?xml version="1.0"?>
+<root>
+  <coa>
+    <fullyear></fullyear>
+    <message>Your budget is the estimated average and reasonable cost of completing an academic year at UC Berkeley
+    </message>
+    <semesterOptions>
+      <data>
+        <header>Fall</header>
+        <header>Spring</header>
+        <header>Summer</header>
+        <title>Standard Budget</title>
+        <items>
+          <item>
+            <amount></amount>
+            <amount></amount>
+            <amount>6402.01</amount>
+            <title>Fees</title>
+          </item>
+          <item>
+            <amount></amount>
+            <amount></amount>
+            <amount>1243</amount>
+            <title>Grad Transportation 14wk</title>
+          </item>
+          <item>
+            <amount>1290</amount>
+            <amount>1290</amount>
+            <amount>1290</amount>
+            <title>Health Insurance - UG</title>
+          </item>
+          <item>
+            <amount>11000</amount>
+            <amount>11000</amount>
+            <amount>3000</amount>
+            <title>Non-Res.Tuit Schol UG</title>
+          </item>
+          <item>
+            <amount>7194</amount>
+            <amount>7194</amount>
+            <amount>7194</amount>
+            <title>Room &amp; Board - Res. Hall</title>
+          </item>
+          <item>
+            <amount>267</amount>
+            <amount>267</amount>
+            <amount></amount>
+            <title>Transportation-Res. Hall</title>
+          </item>
+          <item>
+            <amount>6096</amount>
+            <amount>6096</amount>
+            <amount></amount>
+            <title>Tuition and Fees</title>
+          </item>
+        </items>
+        <total>25847</total>
+        <total>25847</total>
+        <total>19129.01</total>
+      </data>
+      <data>
+        <header>Fall</header>
+        <header>Spring</header>
+        <header>Summer</header>
+        <item>
+          <amount>25847</amount>
+          <amount>25847</amount>
+          <amount>19129.01</amount>
+        </item>
+        <title>Budget Grand Total</title>
+      </data>
+      <id>fall-spring-summmer</id>
+    </semesterOptions>
+    <title>Estimated Cost of Attendance</title>
+  </coa>
+  <status>
+    <message>We take many factors into consideration when determining your funding package. Updates made elsewhere to
+      your personal information may affect the amount of aid provided to you.
+    </message>
+    <categories>
+      <category>
+        <title>Aid Package Factors</title>
+        <itemGroups>
+          <item>
+            <title>Student Standing</title>
+            <value>Undergraduate</value>
+          </item>
+          <item>
+            <title>Level</title>
+            <values>
+              <value>
+                <subvalue>Fall</subvalue>
+                <subvalue>1st Year - Never Attended</subvalue>
+              </value>
+              <value>
+                <subvalue>Spring</subvalue>
+                <subvalue>1st Year - Previously Attended</subvalue>
+              </value>
+            </values>
+          </item>
+          <item>
+            <title>Expected Graduation</title>
+            <value>To Be Determined</value>
+          </item>
+        </itemGroups>
+        <itemGroups>
+          <item>
+            <title>SAP Status</title>
+            <value>SAP Undetermined</value>
+          </item>
+          <item>
+            <title>Academic Holds</title>
+            <value>To Be Determined</value>
+          </item>
+          <item>
+            <title>Candidacy Status</title>
+            <value>To Be Determined</value>
+          </item>
+          <item>
+            <title>Filing Fee Status</title>
+            <value>To Be Determined</value>
+          </item>
+          <item>
+            <title>Verification Status</title>
+            <value>Not Required|Incomplete</value>
+          </item>
+        </itemGroups>
+        <itemGroups>
+          <item>
+            <title>Residency</title>
+            <values>
+              <value>
+                <subvalue>Fall</subvalue>
+                <subvalue>Resident AB540</subvalue>
+              </value>
+            </values>
+          </item>
+          <item>
+            <title>Tax Withholding (GLACIER)</title>
+            <value>To Be Determined</value>
+          </item>
+        </itemGroups>
+        <itemGroups>
+          <item>
+            <title>Enrollment</title>
+            <values>
+              <value>
+                <subvalue>Fall</subvalue>
+                <subvalue>0</subvalue>
+              </value>
+              <value>
+                <subvalue>Spring</subvalue>
+                <subvalue>0</subvalue>
+              </value>
+              <value>
+                <subvalue>Summer</subvalue>
+                <subvalue>0</subvalue>
+              </value>
+            </values>
+          </item>
+        </itemGroups>
+        <itemGroups>
+          <item>
+            <title>Housing</title>
+            <values>
+              <value>
+                <subvalue>Fall</subvalue>
+                <subvalue>Room &amp; Board - Res. Hall</subvalue>
+              </value>
+              <value>
+                <subvalue>Spring</subvalue>
+                <subvalue>Room &amp; Board - Res. Hall</subvalue>
+              </value>
+              <value>
+                <subvalue>Summer</subvalue>
+                <subvalue>Room &amp; Board - Res. Hall</subvalue>
+              </value>
+            </values>
+          </item>
+        </itemGroups>
+        <itemGroups>
+          <item>
+            <title>SHIP Health Insurance</title>
+            <values>
+              <value>
+                <subvalue>Fall</subvalue>
+                <subvalue>To Be Determined</subvalue>
+              </value>
+            </values>
+          </item>
+        </itemGroups>
+        <itemGroups>
+          <item>
+            <title>Package Status</title>
+            <value>Packaged</value>
+          </item>
+          <item>
+            <title>Dependency Status</title>
+            <value>Dependent w/Primary EFC</value>
+          </item>
+          <item>
+            <title>Family Members in College</title>
+            <value>1</value>
+          </item>
+          <item>
+            <title>Expected Family Contribution (EFC)</title>
+            <value>15353</value>
+          </item>
+          <item>
+            <title>Berkeley Parent Contribution</title>
+            <value>To Be Determined</value>
+          </item>
+        </itemGroups>
+      </category>
+      <category>
+        <title>Terms and Conditions</title>
+        <itemGroups>
+          <item>
+            <title>Title IV</title>
+            <value>Not Authorized</value>
+          </item>
+          <item>
+            <title>FinAid Terms &amp;amp; Conditions</title>
+            <value>Not Accepted</value>
+          </item>
+        </itemGroups>
+      </category>
+    </categories>
+  </status>
+</root>
