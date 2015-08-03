@@ -84,7 +84,7 @@ describe 'My Academics profile and university requirements cards', :testui => tr
               end
 
               # UNITS
-              if academics_api_page.ttl_units.nil?
+              if academics_api_page.ttl_units.nil? || (academics_api_page.has_no_standing? && academics_api_page.ttl_units.zero?)
                 has_units = profile_card.units?
                 it "show no units for UID #{uid}" do
                   expect(has_units).to be false

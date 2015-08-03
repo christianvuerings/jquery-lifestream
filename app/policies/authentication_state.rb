@@ -1,11 +1,12 @@
 class AuthenticationState
-  attr_reader :user_id, :original_user_id, :lti_authenticated_only
+  attr_reader :user_id, :original_user_id, :canvas_masquerading_user_id, :lti_authenticated_only
 
   LTI_AUTHENTICATED_ONLY = 'Authenticated through LTI'
 
   def initialize(session)
     @user_id = session['user_id']
     @original_user_id = session['original_user_id']
+    @canvas_masquerading_user_id = session['canvas_masquerading_user_id']
     @lti_authenticated_only = session['lti_authenticated_only']
   end
 
@@ -38,6 +39,8 @@ class AuthenticationState
     if user_id.present?
       if original_user_id.present?
         return original_user_id
+      elsif canvas_masquerading_user_id
+        return "#{LTI_AUTHENTICATED_ONLY}: masquerading Canvas ID #{canvas_masquerading_user_id}"
       elsif lti_authenticated_only
         return LTI_AUTHENTICATED_ONLY
       else
@@ -50,7 +53,12 @@ class AuthenticationState
 
   # For better exception messages.
   def to_s
-    "#{super.to_s} user_id=#{@user_id}, original_user_id=#{@original_user_id}, lti_authenticated_only=#{@lti_authenticated_only}"
+    session_props = %w(user_id original_user_id canvas_masquerading_user_id lti_authenticated_only).map do |prop|
+      if (prop_value = self.send prop.to_sym)
+        "#{prop}=#{prop_value}"
+      end
+    end
+    "#{super.to_s} #{session_props.compact.join(', ')}"
   end
 
   def user_auth

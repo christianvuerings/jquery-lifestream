@@ -146,7 +146,10 @@ angular.module('calcentral.controllers').controller('CanvasCourseManageOfficialS
    * Returns staged sections for addition and deletion
    */
   var stagedSections = function() {
-    var sections = {addSections: [], deleteSections: []};
+    var sections = {
+      addSections: [],
+      deleteSections: []
+    };
     if ($scope.courseSemester) {
       angular.forEach($scope.courseSemester.classes, function(classItem) {
         angular.forEach(classItem.sections, function(section) {

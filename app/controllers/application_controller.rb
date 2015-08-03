@@ -125,6 +125,11 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  def session_message
+    session_keys = %w(user_id original_user_id canvas_user_id canvas_masquerading_user_id canvas_course_id)
+    session_keys.map { |key| "#{key}: #{session[key]}" if session[key] }.compact.join('; ')
+  end
+
   def access_log
     # HTTP_X_FORWARDED_FOR is the client's IP when we're behind Apache; REMOTE_ADDR otherwise
     remote = request.env["HTTP_X_FORWARDED_FOR"] || request.env["REMOTE_ADDR"]

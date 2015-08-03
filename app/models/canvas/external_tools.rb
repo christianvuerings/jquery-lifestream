@@ -131,9 +131,9 @@ module Canvas
     def update_course_site_tab(tab_id, options)
       url = "#{@api_root}/tabs/#{tab_id}"
       response = raw_request(url, options)
-      if response.status == 200
+      if response[:statusCode] == 200
         logger.info "Updated course site_tab with url=#{url} and options: #{options}"
-        safe_json response.body
+        safe_json response[:body]
       else
         raise Errors::ProxyError.new("Failed to update tab #{tab_id} of Canvas:#{@api_root}", response: response, url: url, uid: @uid)
       end
