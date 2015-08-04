@@ -21,9 +21,12 @@ angular.module('calcentral.controllers').controller('FinaidCoaController', funct
   };
 
   var loadCoa = function() {
-    return finaidFactory.getFinaidYearInfo(finaidService.options.finaidYear.id).success(function(data) {
-      angular.extend($scope.coa, data.coa);
-      setCurrentCoaData(finaidService.options.semesterOption.id, data.coa);
+    return finaidFactory.getFinaidYearInfo({
+      finaidYearId: finaidService.options.finaidYear.id
+    }).success(function(data) {
+      angular.extend($scope.coa, data.feed.coa);
+      $scope.errored = data.errored;
+      setCurrentCoaData(finaidService.options.semesterOption.id, data.feed.coa);
       $scope.coa.isLoading = false;
     });
   };

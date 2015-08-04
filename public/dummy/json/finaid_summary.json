@@ -1,55 +1,61 @@
 {
-  "finaidSummary": {
-    "finaidYears": [
-      {
-        "name": "2014 - 2015",
-        "id": "2015",
-        "termsAndConditions": {
-          "approved": true,
-          "shortTitle": "You have not yet accepted the financial aid terms and conditions.",
-          "shortMessage": "You may view your 2015 financial aid package by accepting the terms and conditions.",
-          "longTitle": "I accept the terms and conditions",
-          "longMessage": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut velit gravida massa fermentum sodales. Duis eu nunc interdum, condimentum ante sit amet, faucibus nunc. Donec semper consequat enim tempor condimentum. Donec pulvinar, dolor eu consequat volutpat, orci odio iaculis turpis, at tempus tortor lectus lobortis dui. Aenean gravida sodales justo, et fringilla tortor ultrices vitae. Nam tristique tellus eget nisi sagittis, at gravida risus feugiat. Duis vehicula tristique ante, ut bibendum dui lobortis quis.\n\nNulla nec dapibus neque, et efficitur libero. Nam libero lorem, ullamcorper ac finibus vitae, porta at sapien. Vestibulum accumsan faucibus velit a mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum tincidunt urna in sem efficitur volutpat. Curabitur leo metus, consectetur ut orci at, pharetra accumsan sapien. Phasellus vehicula elit eu cursus lobortis. Phasellus molestie felis at malesuada porttitor. Curabitur posuere, tellus non sodales ornare, leo justo vulputate orci, eget imperdiet mi purus in diam. Quisque ac iaculis nibh.\n\nEtiam dapibus massa nec congue egestas. Vestibulum in gravida mauris. Quisque in odio ut sapien laoreet aliquet. Nulla bibendum diam a velit viverra, imperdiet ornare massa lobortis. Pellentesque vulputate faucibus felis, et iaculis nisi vestibulum non. In rhoncus sed justo non porta. Duis dictum rutrum diam, non pharetra ligula tempus vel. Quisque in risus id erat tincidunt scelerisque ac at lorem. Maecenas leo leo, vehicula in sem pulvinar, condimentum accumsan purus. Cras placerat nisl sed est tincidunt semper. Sed ac sem quis tortor finibus tincidunt et in risus. Suspendisse ut faucibus orci, sollicitudin tempus nibh. Nunc vel sodales turpis, pellentesque venenatis tellus. Nulla rhoncus lacus eros."
-        },
-        "semesterOptions": [
-          {
-            "id": "fall-spring-summer",
-            "semesters": ["Fall", "Spring", "Summer"]
-          },
-          {
+  "statusCode": 200,
+  "feed": {
+    "finaidSummary": {
+      "finaidYears": [
+        {
+          "id": "2015",
+          "name": "2014-2015",
+          "semesterOptions": {
             "id": "fall-spring",
-            "semesters": ["Fall", "Spring"]
+            "semesters": [
+              "Fall",
+              "Spring"
+            ]
           },
-          {
-            "id": "summer",
-            "semesters": ["Summer 2015"]
+          "termsAndConditions": {
+            "approved": null,
+            "longMessage": "I agree to the following:\n\n~To immediately report to the Financial Aid and Scholarships Office the receipt of funds or support from all other sources such as awards from outside agencies, grants, scholarships, fellowships, department awards, tuition/fee waivers, etc.\n\n~To immediately report to the Financial Aid and Scholarships Office any changes in my enrollment or expected graduation date.\n\n~I understand that financial aid awards are subject to revision should there be changes in my financial aid eligibility and are subject to the availability of funds.\n\n~In accepting a scholarship, I give UC Berkeley permission to release my academic, financial and biographical information, as required by the scholarship donor, to enforce the terms and conditions of the scholarship.\n\n~To read all messages and information regarding my financial aid.\n\n~I understand that my budget is determined by my housing status. I understand that if the University cannot verify my status, I will be required to provide proof of my living arrangements and my budget will be adjusted accordingly.\n\n~To repay any funds I receive which cannot be reasonably attributed to meeting my educational expenses for the current academic year at UC Berkeley and the amount of any repayment is based on regulations published by the Secretary of Education.\n\n~I may be subject to a fine up to ten thousand dollars, imprisonment for up to five years, or both if I give false or misleading information.",
+            "longTitle": "Terms and Conditions",
+            "shortMessage": "You will not be able view your 2014-2015 financial aid until you Agreed to the Term and Conditions.",
+            "shortTitle": "You have not reviewed and Agreed to Terms and Conditions of your financial aid for the 2014-2015 Aid Year."
           }
-        ]
-      },
-      {
-        "name": "2013 - 2014",
-        "id": "2014",
-        "termsAndConditions": {
-          "approved": false,
-          "shortTitle": "You have not yet accepted the financial aid terms and conditions.",
-          "shortMessage": "You may view your 2015 financial aid package by accepting the terms and conditions.",
-          "longTitle": "I accept the terms and conditions",
-          "longMessage": "ALorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut velit gravida massa fermentum sodales. Duis eu nunc interdum, condimentum ante sit amet, faucibus nunc. Donec semper consequat enim tempor condimentum. Donec pulvinar, dolor eu consequat volutpat, orci odio iaculis turpis, at tempus tortor lectus lobortis dui. Aenean gravida sodales justo, et fringilla tortor ultrices vitae. Nam tristique tellus eget nisi sagittis, at gravida risus feugiat. Duis vehicula tristique ante, ut bibendum dui lobortis quis.\n\nNulla nec dapibus neque, et efficitur libero. Nam libero lorem, ullamcorper ac finibus vitae, porta at sapien. Vestibulum accumsan faucibus velit a mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vestibulum tincidunt urna in sem efficitur volutpat. Curabitur leo metus, consectetur ut orci at, pharetra accumsan sapien. Phasellus vehicula elit eu cursus lobortis. Phasellus molestie felis at malesuada porttitor. Curabitur posuere, tellus non sodales ornare, leo justo vulputate orci, eget imperdiet mi purus in diam. Quisque ac iaculis nibh.\n\nEtiam dapibus massa nec congue egestas. Vestibulum in gravida mauris. Quisque in odio ut sapien laoreet aliquet. Nulla bibendum diam a velit viverra, imperdiet ornare massa lobortis. Pellentesque vulputate faucibus felis, et iaculis nisi vestibulum non. In rhoncus sed justo non porta. Duis dictum rutrum diam, non pharetra ligula tempus vel. Quisque in risus id erat tincidunt scelerisque ac at lorem. Maecenas leo leo, vehicula in sem pulvinar, condimentum accumsan purus. Cras placerat nisl sed est tincidunt semper. Sed ac sem quis tortor finibus tincidunt et in risus. Suspendisse ut faucibus orci, sollicitudin tempus nibh. Nunc vel sodales turpis, pellentesque venenatis tellus. Nulla rhoncus lacus eros."
         },
-        "semesterOptions": [
-          {
+        {
+          "id": "2016",
+          "name": "2015-2016",
+          "semesterOptions": {
             "id": "fall-spring",
-            "semesters": ["Fall", "Spring"]
+            "semesters": [
+              "Fall",
+              "Spring"
+            ]
+          },
+          "termsAndConditions": {
+            "approved": true,
+            "longMessage": "I agree to the following:\n\n~To immediately report to the Financial Aid and Scholarships Office the receipt of funds or support from all other sources such as awards from outside agencies, grants, scholarships, fellowships, department awards, tuition/fee waivers, etc.\n\n~To immediately report to the Financial Aid and Scholarships Office any changes in my enrollment or expected graduation date.\n\n~I understand that financial aid awards are subject to revision should there be changes in my financial aid eligibility and are subject to the availability of funds.\n\n~In accepting a scholarship, I give UC Berkeley permission to release my academic, financial and biographical information, as required by the scholarship donor, to enforce the terms and conditions of the scholarship.\n\n~To read all messages and information regarding my financial aid.\n\n~I understand that my budget is determined by my housing status. I understand that if the University cannot verify my status, I will be required to provide proof of my living arrangements and my budget will be adjusted accordingly.\n\n~To repay any funds I receive which cannot be reasonably attributed to meeting my educational expenses for the current academic year at UC Berkeley and the amount of any repayment is based on regulations published by the Secretary of Education.\n\n~I may be subject to a fine up to ten thousand dollars, imprisonment for up to five years, or both if I give false or misleading information.",
+            "longTitle": "Terms and Conditions",
+            "shortMessage": "You will not be able view your 2015-2016 financial aid until you Agreed to the Term and Conditions.",
+            "shortTitle": "You have not reviewed and Agreed to Terms and Conditions of your financial aid for the 2015-2016 Aid Year."
           }
-        ]
+        }
+      ],
+      "title4": {
+        "approved": null,
+        "longMessage": "By agreeing to the Title IV Release,  your financial aid can be utilized to pay for non Title IV charges that are charged to your UCB Student Account.  Non Title IV charges may include late charges, library fines, parking tickets, etc.  If you do not agree to the Title IV Release, please pay any non Title IV charges directly to the UCB Student Financial Office in order to avoid holds on enrollment, holds on transcript, and further late charges.",
+        "longTitle": "Title IV Release",
+        "shortMessage": "Please either Agree or Disagree to Title IV Release in order to view your financial aid.",
+        "shortTitle": "You have not selected a Title IV Release option."
       }
-    ],
-    "title4": {
-      "approved": true,
-      "shortTitle": "You have not yet decided on the Title IV authorization.",
-      "shortMessage": "You may view your 2016 financial aid package by completing the Title IV authorization.",
-      "longTitle": "I authorize use of Title IV aid for charges",
-      "longMessage": "BLorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut velit gravida massa fermentum sodales. Duis eu nunc interdum, condimentum ante sit amet, faucibus nunc. Donec semper consequat enim tempor condimentum. Donec pulvinar, dolor eu consequat volutpat, orci odio iaculis turpis, at tempus tortor lectus lobortis dui. Aenean gravida sodales justo, et fringilla tortor ultrices vitae. Nam tristique tellus eget nisi sagittis, at gravida risus feugiat. Duis vehicula tristique ante, ut bibendum dui lobortis quis."
     }
-  }
+  },
+  "lastModified": {
+    "hash": "b2496bed80547289819e442821e83df043166ac3",
+    "timestamp": {
+      "epoch": 1438643912,
+      "dateTime": "2015-08-03T16:18:32-07:00",
+      "dateString": "8/03"
+    }
+  },
+  "feedName": "CampusSolutions::MyAidYears"
 }

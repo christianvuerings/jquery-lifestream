@@ -12,7 +12,8 @@ angular.module('calcentral.factories').factory('finaidFactory', function(apiServ
   // var urlBudget = '/dummy/json/finaid_budget.json';
   var urlBudget = urlAward;
 
-  var urlFinaidYear = '/dummy/json/finaid_year.json';
+  var urlFinaidYear = '/api/campus_solutions/financial_aid_data';
+  // var urlFinaidYear = '/dummy/json/finaid_year.json';
 
   var urlSummary = '/api/campus_solutions/aid_years';
   // var urlSummary = '/dummy/json/finaid_summary.json';
@@ -27,7 +28,7 @@ angular.module('calcentral.factories').factory('finaidFactory', function(apiServ
 
   var getFinaidYearInfo = function(options) {
     // TODO - update with real API
-    return apiService.http.request(options, urlFinaidYear + '?finaidYear=' + options.finaidYear);
+    return apiService.http.request(options, urlFinaidYear + '?aid_year=' + options.finaidYearId);
   };
 
   var getSummary = function(options) {

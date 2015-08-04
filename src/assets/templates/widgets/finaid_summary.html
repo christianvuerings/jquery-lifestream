@@ -5,7 +5,7 @@
       <strong>Details</strong>
     </a>
   </div>
-  <div class="cc-widget-text" data-cc-spinner>
+  <div class="cc-widget-text" data-cc-spinner-directive="finaidSummaryLoading.isLoading">
     <div data-ng-if="finaidSummary.finaidYears.length">
       <div data-ng-if="finaidSummary.finaidYears.length === 1">
         <span data-ng-bind="selected.finaidYear.name"></span>
@@ -30,7 +30,7 @@
           data-finaid-url="finaidUrl"
         ></div>
         <div data-ng-if="canSeeFinaidData">
-          <div class="cc-widget-finaid-summary-semester-options">
+          <div data-ng-if="selected.finaidYear.semesterOptions.length > 1">
             <div data-ng-repeat="semesterOption in selected.finaidYear.semesterOptions">
               <label>
                 <input type="radio" data-ng-change="updateSemesterOption()" data-ng-model="selected.semesterOption" data-ng-value="semesterOption" />
@@ -38,15 +38,18 @@
               </label>
             </div>
           </div>
-          <p>TODO</p>
+          <div data-ng-if="selected.finaidYear.semesterOptions.length === 1">
+            <span data-ng-bind="selected.finaidYear.semesterOptions[0].semesters | andFilter"></span>
+          </div>
+          <p>More information</p>
         </div>
         <hr>
       </div>
     </div>
 
     <div class="cc-clearfix-container cc-text-small">
-      <div class="cc-left" data-ng-if="canSeeFinaidData">
-        <a href="/finances/finaid/loans">View Previous Loans</a>
+      <div class="cc-left" data-ng-if="canSeeFinaidData && !isMainFinaid">
+        <a data-ng-href="{{finaidUrl}}">View Awards</a>
       </div>
       <div class="cc-right">
         <a href="http://financialaid.berkeley.edu/">Learn more about Financial Aid</a>

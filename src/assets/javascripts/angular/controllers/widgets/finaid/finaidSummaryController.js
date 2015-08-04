@@ -8,6 +8,9 @@ var angular = require('angular');
 angular.module('calcentral.controllers').controller('FinaidSummaryController', function(finaidFactory, finaidService, $location, $route, $routeParams, $scope) {
   // Keep a list of all the selected properties
   $scope.selected = {};
+  $scope.finaidSummaryLoading = {
+    isLoading: true
+  };
 
   /**
    * Update whether you can see the current finaid data or not
@@ -79,6 +82,7 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
     finaidFactory.getSummary().success(function(data) {
       angular.extend($scope, data.feed);
       setDefaultSelections(data.feed);
+      $scope.finaidSummaryLoading.isLoading = false;
     });
   };
 
