@@ -19,4 +19,5 @@ class ApiMyClassesPage
   def current_term
     @parsed['current_term']
   end
+
 end

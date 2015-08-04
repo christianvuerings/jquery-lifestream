@@ -474,7 +474,9 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
 
   def course_site_names(course)
     names = []
-    course_sites(course).nil? ? nil : course_sites(course).each { |site| names.push(course_site_name(site)) }
+    unless course_sites(course).nil?
+      course_sites(course).each { |site| names.push(course_site_name(site)) }
+    end
     names
   end
 
@@ -490,8 +492,12 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
 
   def course_site_descrips(course)
     descriptions = []
-    course_sites(course).nil? ? nil : course_sites(course).each do |site|
-      descriptions.push(course_site_descrip(site)) if course_site_descrip(site) != course_site_name(site) && course_site_descrip(site) != course_title(course)
+    unless course_sites(course).nil?
+      course_sites(course).each do |site|
+        unless course_site_descrip(site).nil? || course_site_descrip(site) == course_site_name(site) || course_site_descrip(site) == course_title(course)
+          descriptions.push(course_site_descrip(site))
+        end
+      end
     end
     descriptions
   end
@@ -500,12 +506,6 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     descriptions = []
     semester_courses.each { |course| descriptions.concat(course_site_descrips(course)) }
     descriptions
-  end
-
-  def course_site_urls(course)
-    urls = []
-    course_sites(course).each { |site| urls.push(site['site_url']) }
-    urls
   end
 
 end
