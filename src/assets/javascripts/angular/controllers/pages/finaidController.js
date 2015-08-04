@@ -48,6 +48,7 @@ angular.module('calcentral.controllers').controller('FinaidController', function
       combinationExists(data.feed, $routeParams.finaidYearId, $routeParams.semesterOptionId);
       setFinaidYear(data.feed, $routeParams.finaidYearId);
       setCanSeeFinaidYear(data.feed, $scope.finaidYear);
+      $scope.finaidSummary = data.feed.finaidSummary;
       $scope.finaid.isLoading = false;
     });
   };
