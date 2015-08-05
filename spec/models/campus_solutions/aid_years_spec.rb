@@ -7,7 +7,7 @@ describe CampusSolutions::AidYears do
     let(:feed) { fake_proxy.get[:feed] }
 
     it 'returns JSON fixture data by default' do
-      expect(feed['finaidSummary']['finaidYear']).to be
+      expect(feed['finaidSummary']['finaidYears']).to be
     end
     it 'can be overridden to return errors' do
       fake_proxy.set_response(status: 506, body: '')
