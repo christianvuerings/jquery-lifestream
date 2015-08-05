@@ -83,7 +83,7 @@ describe CampusSolutionsController do
         session['user_id'] = user
         get feed
         json = JSON.parse(response.body)
-        expect(json['feed']['finaidSummary']['finaidYear'][0]['id']).to eq '2015'
+        expect(json['feed']['finaidSummary']['finaidYears'][0]['id']).to eq '2015'
       end
     end
   end
