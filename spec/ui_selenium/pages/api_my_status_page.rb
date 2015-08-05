@@ -56,6 +56,10 @@ class ApiMyStatusPage
     roles['concurrentEnrollmentStudent']
   end
 
+  def is_eap?
+    @parsed['inEducationAbroadProgram']
+  end
+
   def has_student_history?
     @parsed['hasStudentHistory']
   end

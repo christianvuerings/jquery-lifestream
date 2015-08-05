@@ -387,4 +387,29 @@ class ApiMyAcademicsPage
   def tele_bears_date_time(epoch)
     academics_date(epoch) + ' | ' + academics_time(epoch)
   end
+
+  # OTHER SITE MEMBERSHIPS
+
+  def other_site_memberships
+    @parsed['otherSiteMemberships']
+  end
+
+  def other_sites(semester_name)
+    sites = []
+    other_site_memberships.nil? ? nil : other_site_memberships.each { |membership| sites.concat(membership['sites']) if membership['name'] == semester_name }
+    sites
+  end
+
+  def other_site_names(sites)
+    names = []
+    sites.each { |site| names.push(site['name']) }
+    names
+  end
+
+  def other_site_descriptions(sites)
+    descriptions = []
+    sites.each { |site| descriptions.push(site['shortDescription']) }
+    descriptions
+  end
+
 end

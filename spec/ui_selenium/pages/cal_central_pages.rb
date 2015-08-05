@@ -169,4 +169,14 @@ module CalCentralPages
     basic_auth_login_button_element.when_present(timeout=WebDriverUtils.page_load_timeout)
   end
 
+  def click_class_link_by_text(driver, link_text)
+    wait_until(timeout=WebDriverUtils.page_load_timeout) { driver.find_element(:link_text => link_text) }
+    driver.find_element(:link_text => link_text).click
+  end
+
+  def click_class_link_by_url(driver, url)
+    wait_until(timeout=WebDriverUtils.page_load_timeout) { driver.find_element(:xpath => "//a[@href='#{url}']") }
+    driver.find_element(:xpath => "//a[@href='#{url}']").click
+  end
+
 end
