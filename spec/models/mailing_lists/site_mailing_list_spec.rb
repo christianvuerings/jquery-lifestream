@@ -170,9 +170,9 @@ describe MailingLists::SiteMailingList do
         let(:fake_add_proxy) { Calmail::AddListMember.new(fake: true) }
         let(:fake_remove_proxy) { Calmail::RemoveListMember.new(fake: true) }
 
-        let(:oliver) { {'login_id' => '12345', 'first_name' => 'Oliver', 'last_name' => 'Heyer', 'email_address' => 'oheyer@berkeley.edu'}  }
-        let(:ray) { {'login_id' => '67890', 'first_name' => 'Ray', 'last_name' => 'Davis', 'email_address' => 'raydavis@berkeley.edu'}  }
-        let(:paul) { {'login_id' => '65536', 'first_name' => 'Paul', 'last_name' => 'Kerschen', 'email_address' => 'kerschen@berkeley.edu'}  }
+        let(:oliver) { {'login_id' => '12345', 'person_name' => 'Oliver Heyer', 'email_address' => 'oheyer@berkeley.edu'}  }
+        let(:ray) { {'login_id' => '67890', 'person_name' => 'Ray Davis', 'email_address' => 'raydavis@berkeley.edu'}  }
+        let(:paul) { {'login_id' => '65536', 'person_name' => 'Paul Kerschen', 'email_address' => 'kerschen@berkeley.edu'}  }
 
         before do
           allow(Canvas::CourseUsers).to receive(:new).and_return course_users

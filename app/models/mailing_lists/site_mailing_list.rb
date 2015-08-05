@@ -251,7 +251,7 @@ module MailingLists
             unless list_address_set.include? user_address
               population_results[:add][:total] += 1
               logger.debug "Adding address #{user_address}"
-              proxy_response = add_member_proxy.add_member(self.list_name, user_address, "#{user['first_name']} #{user['last_name']}")
+              proxy_response = add_member_proxy.add_member(self.list_name, user_address, user['person_name'])
               if proxy_response[:response] && proxy_response[:response][:added]
                 population_results[:add][:success] += 1
               else
