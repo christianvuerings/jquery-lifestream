@@ -1,0 +1,21 @@
+<div class="cc-widget cc-widget-finaid-funding-sources" data-ng-controller="FinaidFundingSourcesController">
+  <div class="cc-widget-title">
+    <h2>Funding Sources</h2>
+  </div>
+  <div class="cc-widget-text" data-cc-spinner-directive="finaidFundingSourcesLoading.isLoading">
+    <div data-ng-if="errored">
+      An error occurred while trying to receive your data.
+    </div>
+    <div data-ng-if="!errored">
+      <div class="cc-widget-finaid-profile-message" data-ng-bind="finaidFundingSources.message"></div>
+      <div data-ng-if="!finaidFundingSources.links.length">
+        There are no funding sources available for you.
+      </div>
+      <ul data-ng-if="finaidFundingSources.links.length">
+        <li data-ng-repeat="link in finaidFundingSources.links">
+          <a data-ng-href="{{link.url}}" data-ng-bind="link.title"></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
