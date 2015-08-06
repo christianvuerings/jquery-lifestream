@@ -10,20 +10,20 @@ describe CampusSolutions::Title4 do
       let(:params) { {
         bogus: 1,
         invalid: 2,
-        uc_response: 'N'
+        response: 'N'
       } }
       subject { fake_proxy.filter_updateable_params(params) }
       it 'should strip out invalid fields' do
         expect(subject.keys.length).to eq 1
         expect(subject[:bogus]).to be_nil
         expect(subject[:invalid]).to be_nil
-        expect(subject[:uc_response]).to be
+        expect(subject[:response]).to be
       end
     end
 
     context 'converting params to Campus Solutions field names' do
       let(:params) { {
-        uc_response: 'Y'
+        response: 'Y'
       } }
       subject {
         result = fake_proxy.construct_cs_post(params)
@@ -37,7 +37,7 @@ describe CampusSolutions::Title4 do
 
     context 'performing a post' do
       let(:params) { {
-        uc_response: 'Y'
+        response: 'Y'
       } }
       subject {
         fake_proxy.get
@@ -51,7 +51,7 @@ describe CampusSolutions::Title4 do
 
   context 'with a real external service', :testext => true do
     let(:params) { {
-      uc_response: 'Y'
+      response: 'Y'
     } }
     let(:real_proxy) { CampusSolutions::Title4.new(fake: false, user_id: random_id, params: params) }
 

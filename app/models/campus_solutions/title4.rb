@@ -9,7 +9,7 @@ module CampusSolutions
     def self.field_mappings
       @field_mappings ||= FieldMapping.to_hash(
         [
-          FieldMapping.required(:uc_response, :UC_RESPONSE)
+          FieldMapping.required(:response, :UC_RESPONSE)
         ]
       )
     end

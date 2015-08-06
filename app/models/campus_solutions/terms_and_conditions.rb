@@ -9,8 +9,8 @@ module CampusSolutions
     def self.field_mappings
       @field_mappings ||= FieldMapping.to_hash(
         [
-          FieldMapping.required(:uc_response, :UC_RESPONSE),
-          FieldMapping.required(:aid_year, :AID_YEAR)
+          FieldMapping.required(:response, :UC_RESPONSE),
+          FieldMapping.required(:aidYear, :AID_YEAR)
         ]
       )
     end
@@ -33,7 +33,7 @@ module CampusSolutions
     end
 
     def instance_key
-      "#{@uid}-#{params[:aid_year]}"
+      "#{@uid}-#{params[:aidYear]}"
     end
 
     def url

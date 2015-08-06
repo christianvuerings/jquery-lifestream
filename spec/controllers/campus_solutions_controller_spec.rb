@@ -160,8 +160,8 @@ describe CampusSolutionsController do
         post :terms_and_conditions,
              {
                bogus_field: 'abc',
-               uc_response: 'Y',
-               aid_year: '2016'
+               response: 'Y',
+               aidYear: '2016'
              }
         expect(response.status).to eq 200
         json = JSON.parse(response.body)
@@ -186,7 +186,7 @@ describe CampusSolutionsController do
         post :title4,
              {
                bogus_field: 'abc',
-               uc_response: 'Y'
+               response: 'Y'
              }
         expect(response.status).to eq 200
         json = JSON.parse(response.body)
