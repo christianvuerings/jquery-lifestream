@@ -2,92 +2,113 @@
 <root>
   <coa>
     <fullyear></fullyear>
-    <message>Your budget is the estimated average and reasonable cost of completing an academic year at UC Berkeley
-    </message>
-    <semesterOptions>
-      <data>
-        <header>Fall</header>
-        <header>Spring</header>
-        <header>Summer</header>
-        <title>Standard Budget</title>
-        <items>
-          <item>
-            <amount></amount>
-            <amount></amount>
-            <amount>6402.01</amount>
-            <title>Fees</title>
-          </item>
-          <item>
-            <amount></amount>
-            <amount></amount>
-            <amount>1243</amount>
-            <title>Grad Transportation 14wk</title>
-          </item>
-          <item>
-            <amount>1290</amount>
-            <amount>1290</amount>
-            <amount>1290</amount>
-            <title>Health Insurance - UG</title>
-          </item>
-          <item>
-            <amount>11000</amount>
-            <amount>11000</amount>
-            <amount>3000</amount>
-            <title>Non-Res.Tuit Schol UG</title>
-          </item>
-          <item>
-            <amount>7194</amount>
-            <amount>7194</amount>
-            <amount>7194</amount>
-            <title>Room &amp; Board - Res. Hall</title>
-          </item>
-          <item>
-            <amount>267</amount>
-            <amount>267</amount>
-            <amount></amount>
-            <title>Transportation-Res. Hall</title>
-          </item>
-          <item>
-            <amount>6096</amount>
-            <amount>6096</amount>
-            <amount></amount>
-            <title>Tuition and Fees</title>
-          </item>
-        </items>
-        <total>25847</total>
-        <total>25847</total>
-        <total>19129.01</total>
-      </data>
-      <data>
-        <header>Fall</header>
-        <header>Spring</header>
-        <header>Summer</header>
-        <item>
-          <amount>25847</amount>
-          <amount>25847</amount>
-          <amount>19129.01</amount>
-        </item>
-        <title>Budget Grand Total</title>
-      </data>
-      <id>fall-spring-summmer</id>
+    <message>Your budget is the estimated average and reasonable cost of completing an academic year at UC Berkeley</message>
+    <semesterOptions type="array">
+      <semesterOption>
+        <data>
+          <headers type="array">
+            <header>Fall</header>
+            <header>Spring</header>
+            <header>Summer</header>
+          </headers>
+          <title>Standard Budget</title>
+          <items type="array">
+            <item>
+              <amounts type="array">
+                <amount type="float">0</amount>
+                <amount type="float">0</amount>
+                <amount type="float">6402.01</amount>
+              </amounts>
+              <title>Fees</title>
+            </item>
+            <item>
+              <amounts type="array">
+                <amount type="float">0</amount>
+                <amount type="float">0</amount>
+                <amount type="float">1243</amount>
+              </amounts>
+              <title>Grad Transportation 14wk</title>
+            </item>
+            <item>
+              <amounts type="array">
+                <amount type="float">1290</amount>
+                <amount type="float">1290</amount>
+                <amount type="float">1290</amount>
+              </amounts>
+              <title>Health Insurance - UG</title>
+            </item>
+            <item>
+              <amounts type="array">
+                <amount type="float">11000</amount>
+                <amount type="float">11000</amount>
+                <amount type="float">3000</amount>
+              </amounts>
+              <title>Non-Res.Tuit Schol UG</title>
+            </item>
+            <item>
+              <amounts type="array">
+                <amount type="float">7194</amount>
+                <amount type="float">7194</amount>
+                <amount type="float">7194</amount>
+              </amounts>
+              <title>Room &amp; Board - Res. Hall</title>
+            </item>
+            <item>
+              <amounts type="array">
+                <amount type="float">267</amount>
+                <amount type="float">267</amount>
+                <amount type="float">0</amount>
+              </amounts>
+              <title>Transportation-Res. Hall</title>
+            </item>
+            <item>
+              <amounts type="array">
+                <amount type="float">6096</amount>
+                <amount type="float">6096</amount>
+                <amount type="float">0</amount>
+              </amounts>
+              <title>Tuition and Fees</title>
+            </item>
+          </items>
+          <total>25847</total>
+          <total>25847</total>
+          <total>19129.01</total>
+        </data>
+        <data>
+          <headers type="array">
+            <header>Fall</header>
+            <header>Spring</header>
+            <header>Summer</header>
+          </headers>
+          <items type="array">
+            <item>
+              <amounts type="array">
+                <amount type="float">25847</amount>
+                <amount type="float">25847</amount>
+                <amount type="float">19129.01</amount>
+              </amounts>
+            </item>
+          </items>
+          <title>Budget Grand Total</title>
+        </data>
+        <id>fall-spring-summer</id>
+      </semesterOption>
     </semesterOptions>
     <title>Estimated Cost of Attendance</title>
   </coa>
   <status>
-    <message>We take many factors into consideration when determining your funding package. Updates made elsewhere to
-      your personal information may affect the amount of aid provided to you.
-    </message>
-    <categories>
+    <message>We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you.</message>
+    <categories type="array">
       <category>
         <title>Aid Package Factors</title>
-        <itemGroups>
+        <itemGroups type="array">
           <item>
             <title>Student Standing</title>
             <value>Undergraduate</value>
           </item>
           <item>
             <title>Level</title>
-            <values>
+            <values type="array">
               <value>
                 <subvalue>Fall</subvalue>
                 <subvalue>1st Year - Never Attended</subvalue>
@@ -103,7 +124,7 @@
             <value>To Be Determined</value>
           </item>
         </itemGroups>
-        <itemGroups>
+        <itemGroups type="array">
           <item>
             <title>SAP Status</title>
             <value>SAP Undetermined</value>
@@ -125,10 +146,10 @@
             <value>Not Required|Incomplete</value>
           </item>
         </itemGroups>
-        <itemGroups>
+        <itemGroups type="array">
           <item>
             <title>Residency</title>
-            <values>
+            <values type="array">
               <value>
                 <subvalue>Fall</subvalue>
                 <subvalue>Resident AB540</subvalue>
@@ -140,10 +161,10 @@
             <value>To Be Determined</value>
           </item>
         </itemGroups>
-        <itemGroups>
+        <itemGroups type="array">
           <item>
             <title>Enrollment</title>
-            <values>
+            <values type="array">
               <value>
                 <subvalue>Fall</subvalue>
                 <subvalue>0</subvalue>
@@ -159,10 +180,10 @@
             </values>
           </item>
         </itemGroups>
-        <itemGroups>
+        <itemGroups type="array">
           <item>
             <title>Housing</title>
-            <values>
+            <values type="array">
               <value>
                 <subvalue>Fall</subvalue>
                 <subvalue>Room &amp; Board - Res. Hall</subvalue>
@@ -178,10 +199,10 @@
             </values>
           </item>
         </itemGroups>
-        <itemGroups>
+        <itemGroups type="array">
           <item>
             <title>SHIP Health Insurance</title>
-            <values>
+            <values type="array">
               <value>
                 <subvalue>Fall</subvalue>
                 <subvalue>To Be Determined</subvalue>
@@ -189,7 +210,7 @@
             </values>
           </item>
         </itemGroups>
-        <itemGroups>
+        <itemGroups type="array">
           <item>
             <title>Package Status</title>
             <value>Packaged</value>
@@ -214,17 +235,43 @@
       </category>
       <category>
         <title>Terms and Conditions</title>
-        <itemGroups>
-          <item>
-            <title>Title IV</title>
-            <value>Not Authorized</value>
-          </item>
-          <item>
-            <title>FinAid Terms &amp;amp; Conditions</title>
-            <value>Not Accepted</value>
-          </item>
+        <itemGroups type="array">
+          <items type="array">
+            <item>
+              <title>Title IV</title>
+              <value>Authorized</value>
+            </item>
+            <item>
+              <title>Terms &amp; Conditions</title>
+              <value></value>
+            </item>
+          </items>
         </itemGroups>
       </category>
     </categories>
   </status>
+  <shoppingSheet />
+  <financialAidSummary>
+    <items type="array" />
+  </financialAidSummary>
+  <fundingSources>
+    <links type="array">
+      <link>
+        <url>https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_ADDL_SRC_FLU.UC_FA_ADDL_SRC_FLU.GBL?ucInstitution=UCB01&amp;ucAidYear=2016</url>
+        <title>Additional Resources</title>
+      </link>
+      <link>
+        <url>#</url>
+        <title>Convert Loan to Workstudy</title>
+      </link>
+      <link>
+        <url>#</url>
+        <title>Convert Workstudy to Loan</title>
+      </link>
+      <link>
+        <url>#</url>
+        <title>Award Management (Accept/Decline Loan)</title>
+      </link>
+    </links>
+  </fundingSources>
 </root>
