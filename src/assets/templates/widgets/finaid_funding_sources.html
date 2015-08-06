@@ -2,7 +2,7 @@
   <div class="cc-widget-title">
     <h2>Funding Sources</h2>
   </div>
-  <div class="cc-widget-text" data-cc-spinner-directive="finaidFundingSourcesLoading.isLoading">
+  <div class="cc-widget-text" data-cc-spinner-directive="finaidFundingSourcesInfo.isLoading">
     <div data-ng-if="errored">
       An error occurred while trying to receive your data.
     </div>
@@ -13,7 +13,7 @@
       </div>
       <ul data-ng-if="finaidFundingSources.links.length">
         <li data-ng-repeat="link in finaidFundingSources.links">
-          <a data-ng-href="{{link.url}}" data-ng-bind="link.title"></a>
+          <a data-cc-campus-solutions-link-directive="link.url" data-cc-campus-solutions-link-directive-text="finaidFundingSourcesInfo.backToText" data-ng-bind="link.title"></a>
         </li>
       </ul>
     </div>
