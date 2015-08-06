@@ -33,4 +33,9 @@ class CampusSolutionsController < ApplicationController
     render json: model.update(params)
   end
 
+  def title4
+    model = CampusSolutions::MyTitle4.from_session(session)
+    render json: model.update(params)
+  end
+
 end
