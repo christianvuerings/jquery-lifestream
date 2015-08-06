@@ -29,16 +29,5 @@ module CampusSolutions
       updateable
     end
 
-    def construct_cs_post(filtered_params)
-      cs_post = {}
-      filtered_params.each do |calcentral_param_name, value|
-        mapping = self.class.field_mappings[calcentral_param_name]
-        next if mapping.blank?
-        cs_param_name = mapping[:campus_solutions_name]
-        cs_post[cs_param_name] = value
-      end
-      cs_post
-    end
-
   end
 end

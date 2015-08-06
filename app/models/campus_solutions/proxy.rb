@@ -20,6 +20,10 @@ module CampusSolutions
       read_file('fixtures', 'xml', 'campus_solutions', xml_filename)
     end
 
+    def mock_request
+      super.merge(uri_matching: url)
+    end
+
     def get
       internal_response = self.class.smart_fetch_from_cache(id: instance_key) do
         get_internal
