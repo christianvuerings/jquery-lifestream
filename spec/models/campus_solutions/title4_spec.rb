@@ -49,7 +49,7 @@ describe CampusSolutions::Title4 do
     end
   end
 
-  context 'with a real external service' do # , :testext => true do
+  context 'with a real external service', :testext => true do
     let(:params) { {
       uc_response: 'Y'
     } }
