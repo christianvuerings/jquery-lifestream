@@ -1,6 +1,11 @@
 module CampusSolutions
   class TermsAndConditions < PostingProxy
 
+    def initialize(options = {})
+      super(Settings.cs_terms_and_conditions_proxy, options)
+      initialize_mocks if @fake
+    end
+
     def self.field_mappings
       @field_mappings ||= FieldMapping.to_hash(
         [

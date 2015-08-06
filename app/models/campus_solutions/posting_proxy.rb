@@ -1,10 +1,10 @@
 module CampusSolutions
-  class PostingProxy < DirectProxy
+  class PostingProxy < IntegrationHubProxy
 
     attr_reader :params
 
-    def initialize(options = {})
-      super options
+    def initialize(settings, options = {})
+      super(settings, options)
       @params = options[:params]
       initialize_mocks if @fake
     end
@@ -22,6 +22,19 @@ module CampusSolutions
 
     def default_post_params
       {}
+    end
+
+    # lets us restrict updated params to what's on the whitelist of field mappings.
+    def filter_updateable_params(params)
+      return {} unless params
+      updateable = {}
+      known_fields = self.class.field_mappings
+      params.each do |calcentral_param_name, value|
+        if known_fields[calcentral_param_name.to_sym].present?
+          updateable[calcentral_param_name.to_sym] = value
+        end
+      end
+      updateable
     end
 
     def construct_cs_post(filtered_params)
