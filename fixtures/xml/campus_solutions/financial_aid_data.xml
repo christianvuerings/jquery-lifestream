@@ -250,9 +250,60 @@
       </category>
     </categories>
   </status>
-  <shoppingSheet />
+  <shoppingSheet>
+    <url>https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/s/WEBLIB_SFA.SFA_SHOPPING_SHEET.FieldFormula.IScript_ShoppingSheet</url>
+  </shoppingSheet>
   <financialAidSummary>
-    <items type="array" />
+    <netCost>
+      <items type="array">
+        <item>
+          <amount type="float">70823.01</amount>
+          <title>Estimated Cost of Attendance</title>
+        </item>
+        <item>
+          <amount type="float">34600</amount>
+          <title>Gift Aid</title>
+          <subTitle>(MONEY YOU DON'T REPAY)</subTitle>
+        </item>
+      </items>
+      <total>
+        <title>Net Cost</title>
+        <subTitle>(YOUR ESTIMATED COST)</subTitle>
+        <amount type="float">36223.01</amount>
+      </total>
+    </netCost>
+    <fundingOffered>
+      <total>
+        <title>Funding Offered</title>
+        <amount type="float">51694</amount>
+      </total>
+      <categories type="array">
+        <category>
+          <total>
+            <title>Gift Aid</title>
+            <amount type="float">34600</amount>
+          </total>
+          <items type="array">
+            <item>
+              <amount type="float">34600</amount>
+              <title>Grants and Scholarships</title>
+            </item>
+          </items>
+        </category>
+        <category>
+          <total>
+            <title>Other Funding</title>
+            <amount type="float">17094</amount>
+          </total>
+          <items type="array">
+            <item>
+              <amount type="float">17094</amount>
+              <title>Loans</title>
+            </item>
+          </items>
+        </category>
+      </categories>
+    </fundingOffered>
   </financialAidSummary>
   <fundingSources>
     <links type="array">

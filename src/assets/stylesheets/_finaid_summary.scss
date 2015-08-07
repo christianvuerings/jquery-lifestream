@@ -1,4 +1,6 @@
 .cc-widget-finaid-summary {
+  $cc-finaid-summary-blue-1: #4f89c2;
+  $cc-finaid-summary-blue-2: #a0ceeb;
   .cc-widget-finaid-summary-message-title {
     display: block;
     margin-bottom: 5px;
@@ -6,5 +8,20 @@
   .cc-widget-finaid-summary-message-text {
     margin-bottom: 10px;
     white-space: pre-line;
+  }
+  .cc-widget-finaid-summary-netcost {
+    border: 3px solid $cc-color-widget-background;
+    border-left: 0;
+    border-right: 0;
+    margin: 10px 0;
+    padding: 20px;
+  }
+  .cc-widget-finaid-summary-funding-offered-category {
+    border-left: 5px solid $cc-finaid-summary-blue-1;
+    margin-top: 10px;
+    padding-left: 5px;
+  }
+  .cc-widget-finaid-summary-funding-offered-category:nth-child(3) {
+    border-left: 5px solid $cc-finaid-summary-blue-2;
   }
 }
