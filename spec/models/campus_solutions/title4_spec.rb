@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe CampusSolutions::TermsAndConditions do
+describe CampusSolutions::Title4 do
 
   context 'post' do
     let(:params) { {} }
-    let(:fake_proxy) { CampusSolutions::TermsAndConditions.new(fake: true, user_id: random_id, params: params) }
+    let(:fake_proxy) { CampusSolutions::Title4.new(fake: true, user_id: random_id, params: params) }
 
     context 'filtering out fields not on the whitelist' do
       let(:params) { {
@@ -27,7 +27,7 @@ describe CampusSolutions::TermsAndConditions do
       } }
       subject {
         result = fake_proxy.construct_cs_post(params)
-        MultiXml.parse(result)['Terms_Conditions']
+        MultiXml.parse(result)['Title4']
       }
       it 'should convert the CalCentral params to Campus Solutions params without exploding on bogus fields' do
         expect(subject['UC_RESPONSE']).to eq 'Y'
@@ -37,8 +37,7 @@ describe CampusSolutions::TermsAndConditions do
 
     context 'performing a post' do
       let(:params) { {
-        response: 'Y',
-        aidYear: '2016'
+        response: 'Y'
       } }
       subject {
         fake_proxy.get
@@ -52,10 +51,9 @@ describe CampusSolutions::TermsAndConditions do
 
   context 'with a real external service', :testext => true do
     let(:params) { {
-      response: 'Y',
-      aidYear: '2016'
+      response: 'Y'
     } }
-    let(:real_proxy) { CampusSolutions::TermsAndConditions.new(fake: false, user_id: random_id, params: params) }
+    let(:real_proxy) { CampusSolutions::Title4.new(fake: false, user_id: random_id, params: params) }
 
     context 'performing a real post' do
       subject {
