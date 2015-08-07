@@ -7,10 +7,16 @@ var angular = require('angular');
  */
 angular.module('calcentral.controllers').controller('FinaidSummaryController', function(finaidFactory, finaidService, $location, $route, $routeParams, $scope) {
   // Keep a list of all the selected properties
-  $scope.selected = {};
-  $scope.finaidSummaryLoading = {
-    isLoading: true
-  };
+  angular.extend($scope, {
+    // Keep a list of all the selected properties
+    selected: {},
+    finaidSummaryInfo: {
+      isLoadingOptions: true,
+      isLoadingData: true
+    },
+    finaidSummaryData: {},
+    shoppingSheet: {}
+  });
 
   /**
    * Update whether you can see the current finaid data or not
@@ -45,8 +51,22 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
     }
   };
 
+  var parseFinaidYearData = function(data) {
+    angular.extend($scope.finaidSummaryData, data.feed.financialAidSummary);
+    angular.extend($scope.shoppingSheet, data.feed.shoppingSheet);
+    $scope.errored = data.errored;
+    $scope.finaidSummaryInfo.isLoadingData = false;
+  };
+
+  var getFinaidYearData = function() {
+    return finaidFactory.getFinaidYearInfo({
+      finaidYearId: finaidService.options.finaidYear.id
+    }).success(parseFinaidYearData);
+  };
+
   var selectFinaidYear = function() {
     $scope.selected.finaidYear = finaidService.options.finaidYear;
+    getFinaidYearData();
   };
 
   var selectSemesterOption = function() {
@@ -82,7 +102,7 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
     finaidFactory.getSummary().success(function(data) {
       angular.extend($scope, data.feed);
       setDefaultSelections(data.feed);
-      $scope.finaidSummaryLoading.isLoading = false;
+      $scope.finaidSummaryInfo.isLoadingOptions = false;
     });
   };
 
