@@ -44,19 +44,19 @@
           <div data-cc-spinner-directive="finaidSummaryInfo.isLoadingData">
             <div data-ng-if="finaidSummaryData.netCost" class="cc-widget-finaid-summary-netcost">
               <div data-ng-repeat="item in finaidSummaryData.netCost.items">
-                <div data-ng-include="'widgets/finaid_summary_item.html'" data-onload="item=item"></div>
+                <div data-cc-finaid-summary-item-directive data-item="item"></div>
               </div>
               <hr class="cc-hr-spacing-5" />
-              <div data-ng-include="'widgets/finaid_summary_item.html'" data-onload="item=finaidSummaryData.netCost.total"></div>
+              <div data-cc-finaid-summary-item-directive data-item="finaidSummaryData.netCost.total"></div>
             </div>
             <div data-ng-if="finaidSummaryData.fundingOffered" class="cc-widget-finaid-summary-funding-offered">
-              <div class="cc-text-bold" data-ng-include="'widgets/finaid_summary_item.html'" data-onload="item=finaidSummaryData.fundingOffered.total"></div>
+              <div class="cc-text-bold" data-cc-finaid-summary-item-directive data-item="finaidSummaryData.fundingOffered.total"></div>
               <div>
                 <div data-ng-repeat="category in finaidSummaryData.fundingOffered.categories" class="cc-widget-finaid-summary-funding-offered-category">
-                  <div data-ng-include="'widgets/finaid_summary_item.html'" data-onload="item=category.total"></div>
+                  <div data-cc-finaid-summary-item-directive data-item="category.total"></div>
                   <hr class="cc-hr-spacing-5" />
                   <div data-ng-repeat="item in category.items" class="cc-text-small">
-                    <div data-ng-include="'widgets/finaid_summary_item.html'" data-onload="item=item"></div>
+                    <div data-cc-finaid-summary-item-directive data-item="item"></div>
                   </div>
                 </div>
               </div>
