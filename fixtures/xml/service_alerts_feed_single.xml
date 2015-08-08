@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?><rss version="2.0" xml:base="https://www.ets.berkeley.edu/news-archive/calcentral-service-alert/feed" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>News</title>
+    <link>https://www.ets.berkeley.edu/news-archive/calcentral-service-alert/feed</link>
+    <description></description>
+    <language>en</language>
+    <item>
+      <title>CalCentral alerts and release notes are unavailable</title>
+      <link>https://www.ets.berkeley.edu/news/calcentral-alerts-and-release-notes-are-unavailable</link>
+      <description>As of this morning, Friday, August 7, 2015, the CalCentral web application lost access to system-wide alerts and information on the latest release. We expect the problem to be resolved with the next maintenance update of CalCentral, scheduled for Sunday, August 9, 2015, between 10:00am  and 11:00am.</description>
+      <pubDate>Fri, 07 Aug 2015 00:00:00 -0700</pubDate>
+      <dc:creator />
+      <guid isPermaLink="false">02d83bb4-0f6a-4901-a148-5d7e77de8652</guid>
+    </item>
+  </channel>
+</rss>
+
