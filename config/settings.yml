@@ -168,7 +168,7 @@ audio_proxy:
 
 blog_latest_release_notes_feed_proxy:
   fake: false
-  base_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
+  base_url: "https://www.ets.berkeley.edu/news-archive/calcentral-release-notes/feed"
 
 app_alerts_proxy:
   fake: false
@@ -176,7 +176,7 @@ app_alerts_proxy:
 
 service_alerts_proxy:
   fake: false
-  base_url: 'https://test-ets.pantheon.berkeley.edu/news-archive/calcentral-service-alert/feed'
+  base_url: 'https://www.ets.berkeley.edu/news-archive/calcentral-service-alert/feed'
 
 cal1card_proxy:
   fake: false
@@ -299,7 +299,7 @@ features:
   course_manage_official_sections: false
   manage_site_mailing_lists: false
   webcast_sign_up_on_calcentral: false
-  service_alerts_rss: false
+  service_alerts_rss: true
 
 youtube_splash_id: 'EQ-a7xrfVag'
 
