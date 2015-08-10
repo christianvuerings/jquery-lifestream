@@ -1,5 +1,6 @@
 module Canvas
   class Admins < Proxy
+    include PagedProxy
 
     def self.add_admin_to_servers(admin_id, canvas_hosts)
       canvas_hosts.each do |canvas_host|
@@ -27,7 +28,7 @@ module Canvas
     end
 
     def admins_list(options)
-      optional_cache(options, key: @account_id, default: true) { wrapped_get request_path }
+      optional_cache(options, key: @account_id, default: true) { paged_get request_path }
     end
 
     def add_admin(canvas_user_id)
@@ -56,10 +57,7 @@ module Canvas
     end
 
     def mock_interactions
-      on_request(uri_matching: request_path, method: :get).
-        respond_with_file('fixtures', 'json',
-          (@account_id == settings.account_id) ? 'canvas_admins.json' : "canvas_admins_#{@account_id}.json"
-        )
+      mock_paged_interaction("canvas_admins_#{@account_id}", uri_matching: request_path, method: :get)
       on_request(uri_matching: request_path, method: :post).
         respond_with_file('fixtures', 'json', 'canvas_add_admin.json')
     end

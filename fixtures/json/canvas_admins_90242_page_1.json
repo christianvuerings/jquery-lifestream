@@ -24,18 +24,5 @@
       "sis_login_id": "972716",
       "login_id": "972716"
     }
-  },
-  {
-    "id": 14874,
-    "role": "Developer Admin",
-    "user": {
-      "id": 3057507,
-      "name": "Eli Cochran",
-      "sortable_name": "Cochran, Eli",
-      "short_name": "Eli Cochran",
-      "sis_user_id": "322279",
-      "sis_login_id": "322279",
-      "login_id": "322279"
-    }
   }
 ]
