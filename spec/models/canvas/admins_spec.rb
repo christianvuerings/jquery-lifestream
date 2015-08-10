@@ -61,6 +61,15 @@ describe Canvas::Admins do
       end
     end
 
+    describe '#admins_list' do
+      subject { Canvas::Admins.new(fake: true) }
+      it 'pages to find all admins' do
+        result = subject.admins_list({})
+        expect(result[:body].size).to eq 3
+      end
+    end
+
+
   end
 
 end
