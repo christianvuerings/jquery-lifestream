@@ -1,6 +1,16 @@
 .cc-widget-finaid-summary {
   $cc-finaid-summary-blue-1: #4f89c2;
   $cc-finaid-summary-blue-2: #a0ceeb;
+  .cc-widget-finaid-summary-label {
+    display: block;
+    width: 75px;
+  }
+  .cc-widget-finaid-summary-select-year-container {
+    width: auto;
+  }
+  .cc-widget-finaid-summary-semester-options {
+    margin-left: 75px;
+  }
   .cc-widget-finaid-summary-message-title {
     display: block;
     margin-bottom: 5px;
@@ -21,7 +31,7 @@
     margin-top: 10px;
     padding-left: 5px;
   }
-  .cc-widget-finaid-summary-funding-offered-category:nth-child(3) {
+  .cc-widget-finaid-summary-funding-offered-category:nth-child(2) {
     border-left: 5px solid $cc-finaid-summary-blue-2;
   }
 }

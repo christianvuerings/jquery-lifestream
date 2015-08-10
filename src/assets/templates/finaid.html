@@ -10,23 +10,7 @@
     </div>
 
     <div data-ng-if="!canSeeFinaidData">
-      <div data-ng-if="!finaidYear.termsAndConditions.approved" data-item="finaidYear.termsAndConditions"></div>
-      <div
-        data-ng-if="!finaidYear.termsAndConditions.approved"
-        data-cc-finaid-permissions-directive
-        data-title="'Financial Aid Terms and Conditions'"
-        data-item="finaidYear.termsAndConditions"
-        data-button-text-dont-approve="'I Do Not Agree'"
-        data-button-text-approve="'I Do Agree'"
-      ></div>
-      <div
-        data-ng-if="finaidYear.termsAndConditions.approved && finaidSummary.title4.approved === null"
-        data-cc-finaid-permissions-directive
-        data-title="'Title IV Authorization'"
-        data-item="finaidSummary.title4"
-        data-button-text-dont-approve="'I Do Not Authorize'"
-        data-button-text-approve="'Authorize'"
-      ></div>
+      <div data-ng-include="'widgets/finaid_approvals.html'"></div>
     </div>
 
     <div data-ng-if="canSeeFinaidData">

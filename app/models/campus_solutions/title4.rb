@@ -25,7 +25,7 @@ module CampusSolutions
     def default_post_params
       # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
       {
-        EMPLID: '00000165',
+        EMPLID: '25738808',
         INSTITUTION: 'UCB01',
         LASTUPDOPRID: '1086132'
       }
