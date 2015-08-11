@@ -7,14 +7,23 @@
   </div>
   <div class="cc-widget-text" data-cc-spinner-directive="finaidSummaryInfo.isLoadingOptions">
     <div data-ng-if="finaidSummary.finaidYears.length">
-      <div data-ng-if="finaidSummary.finaidYears.length === 1">
-        <span data-ng-bind="selected.finaidYear.name"></span>
-      </div>
-      <div data-ng-if="finaidSummary.finaidYears.length > 1">
-        <div class="cc-select">
-          <select data-ng-model="selected.finaidYear" data-ng-options="f as f.name for f in finaidSummary.finaidYears" data-ng-change="updateFinaidYear()"></select>
+      <div class="cc-clearfix-container">
+        <div class="cc-widget-finaid-summary-label cc-left">
+          <label for="cc-widget-finaid-summary-select-year">
+            <strong>Aid Year:</strong>
+          </label>
         </div>
-        <hr>
+        <div data-ng-if="finaidSummary.finaidYears.length === 1">
+          <span data-ng-bind="selected.finaidYear.name"></span>
+        </div>
+        <div data-ng-if="finaidSummary.finaidYears.length > 1">
+          <div class="cc-select cc-widget-finaid-summary-select-year-container">
+            <select id="cc-widget-finaid-summary-select-year" data-ng-model="selected.finaidYear" data-ng-options="f as f.name for f in finaidSummary.finaidYears" data-ng-change="updateFinaidYear()"></select>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div data-ng-if="!canSeeFinaidData">
         <div
           data-ng-if="!selected.finaidYear.termsAndConditions.approved"
           data-cc-finaid-summary-message-directive
@@ -29,44 +38,52 @@
           data-button-text="'Complete Title IV'"
           data-finaid-url="finaidUrl"
         ></div>
-        <div data-ng-if="canSeeFinaidData">
-          <div data-ng-if="selected.finaidYear.semesterOptions.length > 1">
-            <div data-ng-repeat="semesterOption in selected.finaidYear.semesterOptions">
-              <label>
-                <input type="radio" data-ng-change="updateSemesterOption()" data-ng-model="selected.semesterOption" data-ng-value="semesterOption" />
-                <span data-ng-bind="semesterOption.semesters | andFilter"></span>
-              </label>
-            </div>
+      </div>
+      <div data-ng-if="canSeeFinaidData">
+        <div class="cc-clearfix-container">
+          <div class="cc-widget-finaid-summary-label cc-left">
+            <label>
+              <strong>Semester Type:</strong>
+            </label>
           </div>
-          <div data-ng-if="selected.finaidYear.semesterOptions.length === 1">
-            <span data-ng-bind="selected.finaidYear.semesterOptions[0].semesters | andFilter"></span>
-          </div>
-          <div data-cc-spinner-directive="finaidSummaryInfo.isLoadingData">
-            <div data-ng-if="finaidSummaryData.netCost" class="cc-widget-finaid-summary-netcost">
-              <div data-ng-repeat="item in finaidSummaryData.netCost.items">
-                <div data-cc-finaid-summary-item-directive data-item="item"></div>
+          <div class="cc-widget-finaid-summary-semester-options">
+            <div data-ng-if="selected.finaidYear.semesterOptions.length > 1">
+              <div data-ng-repeat="semesterOption in selected.finaidYear.semesterOptions">
+                <label>
+                  <input type="radio" data-ng-change="updateSemesterOption()" data-ng-model="selected.semesterOption" data-ng-value="semesterOption" />
+                  <span data-ng-bind="semesterOption.semesters | andFilter"></span>
+                </label>
               </div>
-              <hr class="cc-hr-spacing-5" />
-              <div data-cc-finaid-summary-item-directive data-item="finaidSummaryData.netCost.total"></div>
             </div>
-            <div data-ng-if="finaidSummaryData.fundingOffered" class="cc-widget-finaid-summary-funding-offered">
-              <div class="cc-text-bold" data-cc-finaid-summary-item-directive data-item="finaidSummaryData.fundingOffered.total"></div>
-              <div>
-                <div data-ng-repeat="category in finaidSummaryData.fundingOffered.categories" class="cc-widget-finaid-summary-funding-offered-category">
-                  <div data-cc-finaid-summary-item-directive data-item="category.total"></div>
-                  <hr class="cc-hr-spacing-5" />
-                  <div data-ng-repeat="item in category.items" class="cc-text-small">
-                    <div data-cc-finaid-summary-item-directive data-item="item"></div>
-                  </div>
+            <div data-ng-if="selected.finaidYear.semesterOptions.length === 1">
+              <span data-ng-bind="selected.finaidYear.semesterOptions[0].semesters | andFilter"></span>
+            </div>
+          </div>
+        </div>
+        <div data-cc-spinner-directive="finaidSummaryInfo.isLoadingData">
+          <div data-ng-if="finaidSummaryData.netCost" class="cc-widget-finaid-summary-netcost">
+            <div data-ng-repeat="item in finaidSummaryData.netCost.items">
+              <div data-cc-finaid-summary-item-directive data-item="item"></div>
+            </div>
+            <hr class="cc-hr-spacing-5" />
+            <div data-cc-finaid-summary-item-directive data-item="finaidSummaryData.netCost.total"></div>
+          </div>
+          <div data-ng-if="finaidSummaryData.fundingOffered" class="cc-widget-finaid-summary-funding-offered">
+            <div class="cc-text-bold" data-cc-finaid-summary-item-directive data-item="finaidSummaryData.fundingOffered.total"></div>
+            <div>
+              <div data-ng-repeat="category in finaidSummaryData.fundingOffered.categories" class="cc-widget-finaid-summary-funding-offered-category">
+                <div data-cc-finaid-summary-item-directive data-item="category.total"></div>
+                <hr class="cc-hr-spacing-5" />
+                <div data-ng-repeat="item in category.items" class="cc-text-small">
+                  <div data-cc-finaid-summary-item-directive data-item="item"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <hr />
       </div>
     </div>
-
+    <hr />
     <div class="cc-clearfix-container cc-text-small">
       <div class="cc-left" data-ng-if="canSeeFinaidData">
         <a data-ng-href="{{finaidUrl}}" data-ng-if="!shoppingSheet.url && !isMainFinaid">View Awards</a>

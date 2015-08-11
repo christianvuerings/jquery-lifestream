@@ -43,8 +43,8 @@ angular.module('calcentral.controllers').controller('FinaidController', function
   /**
    * Get the finaid summary information
    */
-  var getFinaidSummary = function() {
-    return finaidFactory.getSummary().success(function(data) {
+  var getFinaidSummary = function(options) {
+    return finaidFactory.getSummary(options).success(function(data) {
       combinationExists(data.feed, $routeParams.finaidYearId, $routeParams.semesterOptionId);
       setFinaidYear(data.feed, $routeParams.finaidYearId);
       setCanSeeFinaidYear(data.feed, $scope.finaidYear);
@@ -54,4 +54,13 @@ angular.module('calcentral.controllers').controller('FinaidController', function
   };
 
   getFinaidSummary();
+
+  /**
+   * We need to update the finaid summary when the approvals have changed
+   */
+  $scope.$on('calcentral.custom.api.finaid.approvals', function() {
+    getFinaidSummary({
+      refreshCache: true
+    });
+  });
 });

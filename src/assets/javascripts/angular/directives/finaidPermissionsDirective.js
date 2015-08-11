@@ -9,9 +9,13 @@ angular.module('calcentral.directives').directive('ccFinaidPermissionsDirective'
   return {
     templateUrl: 'directives/finaid_permissions.html',
     scope: {
+      buttonActionApprove: '&',
+      buttonActionDontApprove: '&',
+      buttonGoBack: '=',
       buttonTextApprove: '=',
       buttonTextDontApprove: '=',
-      item: '=',
+      header: '=',
+      text: '=',
       title: '='
     }
   };
