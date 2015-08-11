@@ -2,7 +2,7 @@ module GoogleApps
   class Drive < Proxy
 
     def self.api
-      "drive"
+      'drive'
     end
 
   end
