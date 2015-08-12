@@ -3,6 +3,7 @@ module CampusSolutions
 
     def update(params = {})
       proxy = CampusSolutions::Title4.new({user_id: @uid, params: params})
+      FinancialAidExpiry.expire @uid
       proxy.get
     end
 

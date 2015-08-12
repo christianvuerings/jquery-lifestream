@@ -1,6 +1,8 @@
 module CampusSolutions
   class FinancialAidData < IntegrationHubProxy
 
+    include Cache::RelatedCacheKeyTracker
+
     def initialize(options = {})
       super(Settings.cs_financial_aid_data_proxy, options)
       @aid_year = options[:aid_year] || '0'
@@ -9,6 +11,11 @@ module CampusSolutions
 
     def instance_key
       "#{@uid}-#{@aid_year}"
+    end
+
+    def get
+      self.class.save_related_cache_key(@uid, self.class.cache_key(instance_key))
+      super
     end
 
     def xml_filename
