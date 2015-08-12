@@ -176,7 +176,7 @@ app_alerts_proxy:
 
 service_alerts_proxy:
   fake: false
-  base_url: 'https://www.ets.berkeley.edu/news-archive/calcentral-service-alert/feed'
+  base_url: 'http://www.ets.berkeley.edu/news-archive/calcentral-service-alert/feed'
 
 cal1card_proxy:
   fake: false
@@ -257,6 +257,7 @@ cache:
 
     Textbooks::Proxy: <%= 24.hours %>
     EtsBlog::Alerts: <%= 2.minutes %>
+    EtsBlog::ServiceAlerts: <%= 2.minutes %>
 
 # Cache warmer settings
 cache_warmer:
