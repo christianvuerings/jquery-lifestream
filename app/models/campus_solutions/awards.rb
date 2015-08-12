@@ -1,6 +1,8 @@
 module CampusSolutions
   class Awards < IntegrationHubProxy
 
+    include Cache::UserCacheExpiry
+
     def initialize(options = {})
       super(Settings.cs_awards_proxy, options)
       initialize_mocks if @fake

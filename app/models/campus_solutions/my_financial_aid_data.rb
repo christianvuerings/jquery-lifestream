@@ -5,6 +5,7 @@ module CampusSolutions
     include Cache::LiveUpdatesEnabled
     include Cache::FreshenOnWarm
     include Cache::JsonAddedCacher
+    include Cache::RelatedCacheKeyTracker
 
     attr_accessor :aid_year
 
@@ -15,6 +16,11 @@ module CampusSolutions
 
     def instance_key
       "#{@uid}-#{aid_year}"
+    end
+
+    def get_feed(force_cache_write=false)
+      self.class.save_related_cache_key(@uid, self.class.cache_key(instance_key))
+      super force_cache_write
     end
 
   end

@@ -1,6 +1,8 @@
 module CampusSolutions
   class AidYears < IntegrationHubProxy
 
+    include Cache::UserCacheExpiry
+
     def initialize(options = {})
       super(Settings.cs_aid_years_proxy, options)
       initialize_mocks if @fake

@@ -1,6 +1,8 @@
 module CampusSolutions
   class Address < PostingProxy
 
+    include Cache::UserCacheExpiry
+
     def self.field_mappings
       @field_mappings ||= FieldMapping.to_hash(
         [

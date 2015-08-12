@@ -1,6 +1,8 @@
 module CampusSolutions
   class Budget < IntegrationHubProxy
 
+    include Cache::UserCacheExpiry
+
     def initialize(options = {})
       super(Settings.cs_budget_proxy, options)
       initialize_mocks if @fake

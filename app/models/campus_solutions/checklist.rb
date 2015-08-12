@@ -1,6 +1,8 @@
 module CampusSolutions
   class Checklist < Proxy
 
+    include Cache::UserCacheExpiry
+
     def initialize(options = {})
       super(Settings.cs_checklist_proxy, options)
       initialize_mocks if @fake
