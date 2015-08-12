@@ -12,25 +12,25 @@ module Cache
 
       def expire(uid=nil)
         super uid
-        keys = related_cache_keys uid
-        logger.debug "Will now expire these associated keys for uid #{uid}: #{keys}"
-        keys.keys.each do |key|
-          Rails.cache.delete key
+        related_keys = related_cache_keys uid
+        logger.debug "Will now expire these associated keys for uid #{uid}: #{related_keys.inspect}"
+        related_keys.each do |related_key|
+          Rails.cache.delete related_key
         end
         Rails.cache.delete(user_key(uid))
       end
 
       def related_cache_keys(uid=nil)
-        Rails.cache.read(user_key(uid)) || {}
+        Rails.cache.read(user_key(uid)) || Set.new
       end
 
       def save_related_cache_key(uid=nil, related_key=nil)
-        keys = related_cache_keys uid
-        return if keys[related_key].present?
-        keys[related_key] = 1
-        logger.debug "Writing related keys for uid #{uid}: #{keys}"
+        related_keys = related_cache_keys uid
+        return if related_keys.include?(related_key)
+        related_keys.add related_key
+        logger.debug "Writing related keys for uid #{uid}: #{related_keys.inspect}"
         Rails.cache.write(user_key(uid),
-                          keys,
+                          related_keys,
                           :expires_in => Settings.maximum_expires_in,
                           :force => true)
       end
