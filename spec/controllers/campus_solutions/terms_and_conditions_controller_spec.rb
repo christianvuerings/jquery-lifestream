@@ -3,7 +3,7 @@ require 'spec_helper'
 describe TermsAndConditionsController do
   context 'updating terms and conditions' do
     it 'should not let an unauthenticated user post' do
-      post :terms_and_conditions, {format: 'json', uid: '100'}
+      post :post, {format: 'json', uid: '100'}
       expect(response.status).to eq 401
     end
 
@@ -13,7 +13,7 @@ describe TermsAndConditionsController do
         User::Auth.stub(:where).and_return([User::Auth.new(uid: '1234', is_superuser: false, active: true)])
       end
       it 'should let an authenticated user post' do
-        post :terms_and_conditions,
+        post :post,
              {
                bogus_field: 'abc',
                response: 'Y',

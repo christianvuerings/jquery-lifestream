@@ -132,14 +132,15 @@ Calcentral::Application.routes.draw do
   post '/delete_users/saved' => 'stored_users#delete_all_saved', via: :post, defaults: { format: 'json' }
 
   # Campus Solutions general purpose endpoints
-  get '/api/campus_solutions/country' => 'country#country', :via => :get, :defaults => { :format => 'json' }
-  get '/api/campus_solutions/state' => 'state#state', :via => :get, :defaults => { :format => 'json' }
-  get '/api/campus_solutions/address' => 'campus_solutions#address', :via => :get, :defaults => { :format => 'json' }
-  post '/api/campus_solutions/address' => 'campus_solutions#update_address', :via => :post, :defaults => { :format => 'json' }
-  get '/api/campus_solutions/aid_years' => 'aid_years#aid_years', :via => :get, :defaults => { :format => 'json' }
-  get '/api/campus_solutions/financial_aid_data' => 'financial_aid_data#financial_aid_data', :via => :get, :defaults => { :format => 'json' }
-  post '/api/campus_solutions/terms_and_conditions' => 'terms_and_conditions#terms_and_conditions', :via => :post, :defaults => { :format => 'json' }
-  post '/api/campus_solutions/title4' => 'title4#title4', :via => :post, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/country' => 'country#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/state' => 'state#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/ethnicity' => 'ethnicity#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/address' => 'address#get', :via => :get, :defaults => { :format => 'json' }
+  post '/api/campus_solutions/address' => 'address#post', :via => :post, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/aid_years' => 'aid_years#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/financial_aid_data' => 'financial_aid_data#get', :via => :get, :defaults => { :format => 'json' }
+  post '/api/campus_solutions/terms_and_conditions' => 'terms_and_conditions#post', :via => :post, :defaults => { :format => 'json' }
+  post '/api/campus_solutions/title4' => 'title4#post', :via => :post, :defaults => { :format => 'json' }
 
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true

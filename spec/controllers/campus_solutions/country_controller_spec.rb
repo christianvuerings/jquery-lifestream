@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CountryController do
   context 'country feed' do
-    let(:feed) { :country }
+    let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'
     context 'authenticated user' do
       let(:user) { random_id }

@@ -1,6 +1,6 @@
 class AidYearsController < CampusSolutionsController
 
-  def aid_years
+  def get
     render json: CampusSolutions::MyAidYears.from_session(session).get_feed_as_json
   end
 

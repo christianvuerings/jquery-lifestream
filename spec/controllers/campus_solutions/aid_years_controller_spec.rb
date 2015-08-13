@@ -3,7 +3,7 @@ require 'spec_helper'
 describe AidYearsController do
 
   context 'aid years feed' do
-    let(:feed) { :aid_years }
+    let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'
 
     context 'authenticated user' do

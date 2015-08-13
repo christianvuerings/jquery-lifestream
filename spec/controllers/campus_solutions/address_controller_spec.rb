@@ -3,7 +3,7 @@ require 'spec_helper'
 describe AddressController do
 
   context 'address feed', :ignore => true do
-    let(:feed) { :address }
+    let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'
 
     context 'authenticated user' do
@@ -21,7 +21,7 @@ describe AddressController do
 
   context 'updating an address', :ignore => true do
     it 'should not let an unauthenticated user post' do
-      post :address, {format: 'json', uid: '100'}
+      post :post, {format: 'json', uid: '100'}
       expect(response.status).to eq 401
     end
 
@@ -31,7 +31,7 @@ describe AddressController do
         User::Auth.stub(:where).and_return([User::Auth.new(uid: '1234', is_superuser: false, active: true)])
       end
       it 'should let an authenticated user post' do
-        post :update_address,
+        post :post,
              {
                bogus_field: 'abc',
                country: 'USA',

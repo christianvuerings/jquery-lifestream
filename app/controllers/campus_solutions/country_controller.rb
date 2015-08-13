@@ -1,7 +1,7 @@
 class CountryController < CampusSolutionsController
 
-  def country
-    render json: CampusSolutions::Country.new.get
+  def get
+    json_passthrough CampusSolutions::Country
   end
 
 end

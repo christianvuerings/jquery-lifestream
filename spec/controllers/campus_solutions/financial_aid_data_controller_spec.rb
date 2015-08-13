@@ -3,7 +3,7 @@ require 'spec_helper'
 describe FinancialAidDataController do
 
   context 'financial data feed' do
-    let(:feed) { :financial_aid_data }
+    let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'
 
     context 'authenticated user' do

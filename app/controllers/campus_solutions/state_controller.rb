@@ -1,7 +1,7 @@
 class StateController < CampusSolutionsController
 
-  def state
-    render json: CampusSolutions::State.new.get
+  def get
+    json_passthrough CampusSolutions::State
   end
 
 end

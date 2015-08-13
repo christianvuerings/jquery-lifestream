@@ -1,6 +1,6 @@
 class TermsAndConditionsController < CampusSolutionsController
 
-  def terms_and_conditions
+  def post
     model = CampusSolutions::MyTermsAndConditions.from_session(session)
     render json: model.update(request.request_parameters)
   end
