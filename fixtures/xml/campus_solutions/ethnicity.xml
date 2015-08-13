@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<Ethnicty_Setup>
+  <Answer_Mapping>
+    <SCC_HISP_MAP>Hispanic/Latino</SCC_HISP_MAP>
+    <SCC_NON_HISP_MAP>Not Hispanic/Latino</SCC_NON_HISP_MAP>
+    <SCC_AMIN_ALSKA_MAP>American Indian/Alaskan Native</SCC_AMIN_ALSKA_MAP>
+    <SCC_ASIAN_MAP>Asian</SCC_ASIAN_MAP>
+    <SCC_BLK_ASAFR_MAP>African American/ Black</SCC_BLK_ASAFR_MAP>
+    <SCC_NAT_PAC_MAP>Native Hawaiian/Other Pacific Islander</SCC_NAT_PAC_MAP>
+    <SCC_WHITE_MAP>White</SCC_WHITE_MAP>
+    <SCC_NORESPONS_MAP>Not Specified</SCC_NORESPONS_MAP>
+  </Answer_Mapping>
+  <Functional_Area_Setup>
+    <SCC_ETH_FUNC_AREA>Student Center</SCC_ETH_FUNC_AREA>
+    <SCC_MSG_SET_INTRO>14000</SCC_MSG_SET_INTRO>
+    <SCC_MSG_NBR_INTRO>511</SCC_MSG_NBR_INTRO>
+    <Message_Text>There are certain governmental recordkeeping and reporting requirements for the administration of
+      civil rights laws and regulations. In order to comply with these laws, students are invited to voluntarily self
+      identify their race or ethnicity.
+
+      The information obtained will be kept confidential and may only be used in accordance with the provisions of
+      applicable laws, executive orders, and regulations. When reported, data will be aggregated and will not identify
+      any specific individual.
+    </Message_Text>
+    <SCC_MSG_SET_Q1>14000</SCC_MSG_SET_Q1>
+    <SCC_MSG_NBR_Q1>512</SCC_MSG_NBR_Q1>
+    <Message_Text>1) Are you Hispanic or Latino?</Message_Text>
+    <SCC_MSG_SET_Q2>14000</SCC_MSG_SET_Q2>
+    <SCC_MSG_NBR_Q2>513</SCC_MSG_NBR_Q2>
+    <Message_Text>2) What is your race? Select one or more.</Message_Text>
+    <SCC_ETH_ADDINFO type="boolean">Y</SCC_ETH_ADDINFO>
+    <SCC_ETH_PRIMARY type="boolean"></SCC_ETH_PRIMARY>
+    <SCC_ETH_PERCENTAGE type="boolean"></SCC_ETH_PERCENTAGE>
+    <SCC_ETH_DISPL_ONLY type="boolean"></SCC_ETH_DISPL_ONLY>
+    <SCC_MSG_SET_DSP>14000</SCC_MSG_SET_DSP>
+    <SCC_MSG_NBR_DSP>514</SCC_MSG_NBR_DSP>
+    <Message_Text>If the information is wrong, contact your administrator</Message_Text>
+    <SCC_MSG_SET_BG_Q>14000</SCC_MSG_SET_BG_Q>
+    <SCC_MSG_NBR_BG_Q>515</SCC_MSG_NBR_BG_Q>
+    <Message_Text>(Optional) Which best describes your background? Select one or more.</Message_Text>
+    <Ethnic_Group type="array">
+      <ETHNIC_GRP_CD>AFGHAN</ETHNIC_GRP_CD>
+      <DESCR>Afghan</DESCR>
+      <ETHNIC_GRP_CD>AFRICAN</ETHNIC_GRP_CD>
+      <DESCR>African</DESCR>
+      <ETHNIC_GRP_CD>ALGERIAN</ETHNIC_GRP_CD>
+      <DESCR>Algerian</DESCR>
+      <ETHNIC_GRP_CD>AMIND</ETHNIC_GRP_CD>
+      <DESCR>American Indian/Alaskan Native</DESCR>
+      <ETHNIC_GRP_CD>ARMENIAN</ETHNIC_GRP_CD>
+      <DESCR>Armenian</DESCR>
+      <ETHNIC_GRP_CD>ASIANIND</ETHNIC_GRP_CD>
+      <DESCR>Asian Indian</DESCR>
+      <ETHNIC_GRP_CD>ASSYRIAN</ETHNIC_GRP_CD>
+      <DESCR>Assyrian/Chaldean</DESCR>
+      <ETHNIC_GRP_CD>AZERBAIJ</ETHNIC_GRP_CD>
+      <DESCR>Azerbaijani</DESCR>
+      <ETHNIC_GRP_CD>BAHRAINI</ETHNIC_GRP_CD>
+      <DESCR>Bahraini</DESCR>
+      <ETHNIC_GRP_CD>BANGLADE</ETHNIC_GRP_CD>
+      <DESCR>Bangladeshi</DESCR>
+    </Ethnic_Group>
+  </Functional_Area_Setup>
+</Ethnicty_Setup>

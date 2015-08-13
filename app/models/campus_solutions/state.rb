@@ -1,8 +1,18 @@
 module CampusSolutions
   class State < DirectProxy
 
+    def initialize(options = {})
+      super options
+      @country = options[:country] || 'USA'
+      initialize_mocks if @fake
+    end
+
     def xml_filename
       'state.xml'
+    end
+
+    def instance_key
+      @country
     end
 
     def build_feed(response)
@@ -11,14 +21,14 @@ module CampusSolutions
       }
       return feed if response.parsed_response.blank?
       # TODO does front-end need to lookup by name/abbv, or is an array sufficient?
-      response.parsed_response['UC_STATE_GET_RESP']['STATE_DETAILS'].each do |state|
+      response.parsed_response['STATES'].each do |state|
         feed[:states] << state
       end
       feed
     end
 
     def url
-      "#{@settings.base_url}/UC_STATE_GET.v1/state/get"
+      "#{@settings.base_url}/UC_STATE_GET.v1/state/get/?COUNTRY=#{@country}"
     end
 
   end

@@ -8,6 +8,7 @@ describe CampusSolutions::State do
 
     it 'returns JSON fixture data by default' do
       expect(feed[:states]).to be
+      expect(feed[:states][0][:state]).to eq 'MT'
     end
     it 'can be overridden to return errors' do
       fake_proxy.set_response(status: 506, body: '')
