@@ -1,4 +1,4 @@
-module Oec
+module OecLegacy
   class Students < Export
 
     def initialize(ccn_set, annotated_ccn_hash, export_dir)
@@ -17,7 +17,7 @@ module Oec
 
     def append_records(output)
       unless @ccn_set.empty?
-        Oec::Queries.get_all_students(@ccn_set).each do |student|
+        OecLegacy::Queries.get_all_students(@ccn_set).each do |student|
           output << record_to_csv_row(student)
         end
       end

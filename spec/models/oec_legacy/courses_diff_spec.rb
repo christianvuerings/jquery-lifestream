@@ -1,9 +1,9 @@
-describe Oec::CoursesDiff do
+describe OecLegacy::CoursesDiff do
 
   let!(:departments) { %w{STAT INTEGBI POL_SCI} }
   let!(:data_corrected_by_dept) { {} }
   let!(:campus_data_per_dept) { {} }
-  let!(:src_dir) { 'fixtures/oec' }
+  let!(:src_dir) { 'fixtures/oec_legacy' }
 
   context 'comparing diff to expected CSV file' do
     before do
@@ -15,7 +15,7 @@ describe Oec::CoursesDiff do
         mock_data = "#{src_dir}/db_#{dept_name.gsub(/\s/, '_')}_courses.csv"
         CSV.read(mock_data).each_with_index do |row, index|
           if index > 0 && row.length > 0
-            hashed_row = Oec::RowConverter.new(row).hashed_row
+            hashed_row = OecLegacy::RowConverter.new(row).hashed_row
             # Arbitrary, non-zero enrollment
             hashed_row['enrollment_count'] = 50
             campus_data_per_dept[dept_name] << hashed_row
@@ -25,10 +25,10 @@ describe Oec::CoursesDiff do
     end
 
     it {
-      data_per_dept = Oec::DeptConfirmedData.new(src_dir, departments).confirmed_data_per_dept
+      data_per_dept = OecLegacy::DeptConfirmedData.new(src_dir, departments).confirmed_data_per_dept
       data_per_dept.each do |dept_name, dept_data|
         diff_yes_rows_only = dept_name == 'STAT'
-        diff = Oec::CoursesDiff.new(dept_name, campus_data_per_dept[dept_name], dept_data, 'tmp/oec', diff_yes_rows_only)
+        diff = OecLegacy::CoursesDiff.new(dept_name, campus_data_per_dept[dept_name], dept_data, 'tmp/oec', diff_yes_rows_only)
         expect(diff.base_file_name).to include dept_name
         actual_diff = CSV.read diff.export[:filename]
         expected_diff = CSV.read "#{src_dir}/expected_diff_#{dept_name}_courses.csv"

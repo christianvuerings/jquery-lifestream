@@ -1,7 +1,7 @@
-describe Oec::CourseStudents do
+describe OecLegacy::CourseStudents do
 
   context 'the exported file in the tmp directory' do
-    let!(:spec_file) { CSV.read 'fixtures/oec/course_students.csv' }
+    let!(:spec_file) { CSV.read 'fixtures/oec_legacy/course_students.csv' }
     let!(:ccn_set) { Set.new }
     let!(:annotated_ccn_hash) { { } }
 
@@ -30,11 +30,11 @@ describe Oec::CourseStudents do
           end
         end
       end
-      Oec::Queries.stub(:get_all_course_students).with(ccn_set).and_return ccn_set_results
-      Oec::Queries.stub(:get_all_course_students).with(annotated_ccn_hash.keys).and_return annotated_ccn_results
+      OecLegacy::Queries.stub(:get_all_course_students).with(ccn_set).and_return ccn_set_results
+      OecLegacy::Queries.stub(:get_all_course_students).with(annotated_ccn_hash.keys).and_return annotated_ccn_results
     }
 
-    let!(:export) { Oec::CourseStudents.new(ccn_set, annotated_ccn_hash, 'tmp/oec').export }
+    let!(:export) { OecLegacy::CourseStudents.new(ccn_set, annotated_ccn_hash, 'tmp/oec').export }
 
     subject { CSV.read export[:filename] }
     it {

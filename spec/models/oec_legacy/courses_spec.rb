@@ -1,4 +1,4 @@
-describe Oec::Courses do
+describe OecLegacy::Courses do
 
   before(:suite) do
     cross_listed_targets = {}
@@ -6,16 +6,16 @@ describe Oec::Courses do
     dept_names = %w(ANTHRO MATH 'POL SCI' STAT)
     dept_names.each do |dept_name|
       courses_query = []
-      CSV.read('fixtures/oec/courses.csv').each_with_index do |row, index|
+      CSV.read('fixtures/oec_legacy/courses.csv').each_with_index do |row, index|
         if index > 0 && row[4] == dept_name
-          result_set = Oec::RowConverter.new(row).hashed_row
+          result_set = OecLegacy::RowConverter.new(row).hashed_row
           courses_query << result_set
           cross_listed_targets[result_set['course_cntl_num'].to_i] = result_set
           cross_listed_name = result_set['cross_listed_name']
           cross_listed_names << cross_listed_name if cross_listed_name.present?
         end
       end
-      expect(Oec::Queries).to receive(:get_courses).with(nil, dept_name).exactly(1).times.and_return courses_query
+      expect(OecLegacy::Queries).to receive(:get_courses).with(nil, dept_name).exactly(1).times.and_return courses_query
       expect(courses_query.length).to eq(1) if dept_name == 'ANTHRO'
       expect(courses_query.length).to eq(2) if dept_name == 'MATH'
       expect(courses_query.length).to eq(2) if dept_name == 'POL SCI'
@@ -28,9 +28,9 @@ describe Oec::Courses do
         expect(row_by_ccn).to_not be_nil
         result_set << row_by_ccn
       end
-      expect(Oec::Queries).to receive(:get_courses).with(cross_listed_name).exactly(1).times.and_return result_set
+      expect(OecLegacy::Queries).to receive(:get_courses).with(cross_listed_name).exactly(1).times.and_return result_set
     end
-    expect(Oec::Queries).to receive(:get_secondary_cross_listings).with([]).and_return []
+    expect(OecLegacy::Queries).to receive(:get_secondary_cross_listings).with([]).and_return []
   end
 
   context 'reading ANTHRO csv file' do
@@ -62,7 +62,7 @@ describe Oec::Courses do
   end
 
   def get_csv(dept_name)
-    export = Oec::Courses.new(dept_name, 'tmp/oec').export
+    export = OecLegacy::Courses.new(dept_name, 'tmp/oec').export
     CSV.read export[:filename]
   end
 

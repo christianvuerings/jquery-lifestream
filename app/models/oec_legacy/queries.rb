@@ -1,4 +1,4 @@
-module Oec
+module OecLegacy
   class Queries < CampusOracle::Connection
     include ActiveRecordHelper
 

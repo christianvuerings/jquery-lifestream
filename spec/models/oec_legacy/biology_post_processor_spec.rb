@@ -1,4 +1,4 @@
-describe Oec::BiologyPostProcessor do
+describe OecLegacy::BiologyPostProcessor do
 
   let!(:csv_file_hash) { {} }
 
@@ -8,16 +8,16 @@ describe Oec::BiologyPostProcessor do
     expect(Settings.oec).to receive(:departments).at_least(:once).and_return dept_names
     dept_names.each do |dept_name|
       courses_query = []
-      CSV.read('fixtures/oec/db_MCELLBI_courses.csv').each_with_index do |row, index|
+      CSV.read('fixtures/oec_legacy/db_MCELLBI_courses.csv').each_with_index do |row, index|
         if index > 0 && row[4] == dept_name
-          courses_query << Oec::RowConverter.new(row).hashed_row
+          courses_query << OecLegacy::RowConverter.new(row).hashed_row
         end
       end
-      expect(Oec::Queries).to receive(:get_courses).with(nil, dept_name).exactly(1).times.and_return courses_query
-      export = Oec::Courses.new(dept_name, export_dir).export
+      expect(OecLegacy::Queries).to receive(:get_courses).with(nil, dept_name).exactly(1).times.and_return courses_query
+      export = OecLegacy::Courses.new(dept_name, export_dir).export
       csv_file_hash[dept_name] = CSV.read export[:filename]
     end
-    Oec::BiologyPostProcessor.new(export_dir, export_dir).post_process
+    OecLegacy::BiologyPostProcessor.new(export_dir, export_dir).post_process
   end
 
   context 'Biology 1A and 1B entries moved to MCELLBI and INTEGBI, respectively' do

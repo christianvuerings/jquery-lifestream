@@ -1,4 +1,4 @@
-module Oec
+module OecLegacy
   class CoursesDiff < Export
 
     COLUMN_LDAP_UID = 'ldap_uid'

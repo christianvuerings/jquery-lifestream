@@ -1,4 +1,4 @@
-module Oec
+module OecLegacy
   class DeptConfirmedData
 
     attr_reader :confirmed_data_per_dept
@@ -23,11 +23,11 @@ module Oec
           corrected_data = []
           filename = csv_file_hash[dept_name]
           uid_per_index = {}
-          Oec::Csv.read(filename).each_with_index do |row, index|
+          OecLegacy::Csv.read(filename).each_with_index do |row, index|
             if row.empty? || row[0].blank?
               warn(dept_name, "#{dept_name}#{csv_filename_suffix} has corrupt or missing data at row #{index + 1}")
             elsif index > 0
-              converter = Oec::RowConverter.new(row)
+              converter = OecLegacy::RowConverter.new(row)
               converter.warnings.each { |message| warn(dept_name, message) }
               hashed_row = converter.hashed_row
               ldap_uid = hashed_row['ldap_uid']

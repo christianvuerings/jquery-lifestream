@@ -1,4 +1,4 @@
-module Oec
+module OecLegacy
   class RowConverter
 
     attr_reader :hashed_row

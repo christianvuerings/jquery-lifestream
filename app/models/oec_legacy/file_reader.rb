@@ -1,4 +1,4 @@
-module Oec
+module OecLegacy
   class FileReader
 
     attr_reader :ccn_set, :annotated_ccn_hash

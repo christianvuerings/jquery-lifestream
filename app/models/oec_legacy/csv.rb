@@ -1,6 +1,6 @@
 require 'csv'
 
-module Oec
+module OecLegacy
   module Csv
     extend self
 

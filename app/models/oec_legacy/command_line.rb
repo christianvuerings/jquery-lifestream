@@ -1,4 +1,4 @@
-module Oec
+module OecLegacy
   class CommandLine
 
     attr_reader :src_dir
@@ -14,7 +14,7 @@ module Oec
       @is_debug_mode = options.include? 'D'
       @is_limited_diff = options.include? 'Y'
       departments_split = split_csv_line ENV['departments']
-      @departments = departments_split.empty? ? [] : Oec::DepartmentRegistry.new(departments_split).to_a
+      @departments = departments_split.empty? ? [] : OecLegacy::DepartmentRegistry.new(departments_split).to_a
     end
 
     private
