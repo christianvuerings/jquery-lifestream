@@ -17,7 +17,7 @@ describe CampusSolutions::State do
     it_should_behave_like 'a proxy that gets data'
   end
 
-  context 'real proxy' do
+  context 'real proxy', testext: true do
     let(:proxy) { CampusSolutions::State.new(fake: false) }
     it_should_behave_like 'a proxy that gets data'
   end
