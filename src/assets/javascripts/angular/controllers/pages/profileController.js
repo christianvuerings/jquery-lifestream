@@ -19,15 +19,34 @@ angular.module('calcentral.controllers').controller('ProfileController', functio
       'id': 'academic',
       'name': 'Academic Information'
     }]
+  },
+  {
+    'label': 'Alerts & Notifications',
+    'categories': [{
+      'id': 'bconnected',
+      'name': 'bConnected'
+    }]
   }];
+
+  /**
+   * Use lodash to match category ID
+   */
+  var matchId = function(categories, id) {
+    return _.find(categories, function(category) {
+      return category.id === id;
+    });
+  };
 
   /**
    * Find the category object when we get a categoryId back
    */
   var findCategory = function(categoryId) {
-    return _.find(navigation[0].categories, function(category) {
-      return category.id === categoryId;
-    });
+    for (var i = 0; i < navigation.length; i++) {
+      var selectedCategory = matchId(navigation[i].categories, categoryId);
+      if (selectedCategory) {
+        return selectedCategory;
+      }
+    }
   };
 
   /**
