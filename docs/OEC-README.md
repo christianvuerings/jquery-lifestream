@@ -1,5 +1,7 @@
 # Online Evaluation of Courses (OEC) Support tasks
 
+*Note:* as of the 9-21-2015 Junction release, OEC-related code has been moved from the `Oec` module and `oec` directories to `OecLegacy` and `oec_legacy` in order to clear room for new OEC development. The command-line interface is unchanged. Rake tasks still use the `oec` namespace, still read from the `oec` YAML settings group, and still output to `tmp/oec`.
+
 ## Configuration
 
 * The "oec" section of ./config/settings.yml has the list of terms and departments to restrict the export. It can take multiple values.
@@ -46,12 +48,12 @@ cp tmp/oec/course_students-{timestamp}.csv tmp/oec/course_students.csv
 
 ## Technical Overview
 
-The rake tasks are defined in ./lib/tasks/oec.rake. They call out to model classes that are subclasses of Oec::Export.
+The rake tasks are defined in ./lib/tasks/oec.rake. They call out to model classes that are subclasses of OecLegacy::Export.
 Calling the #export method generates a CSV file with the subclass's defined headers. The subclass uses #append_records
 to fill in the data appropriate to it.
 
-Queries to the Oracle database are all kept in Oec::Queries.
+Queries to the Oracle database are all kept in OecLegacy::Queries.
 
-Unit tests that cover all Oec code are in ./specs/models/oec. The tests use the CSV files in ./fixtures/oec to build
+Unit tests that cover all Oec code are in ./spec/models/oec_legacy. The tests use the CSV files in ./fixtures/oec_legacy to build
 up fake lists of CCNs and then verify that the output code matches the fixture CSV. If you add columns to the CSV files
 make sure to add the columns to the fixture files too, or unit tests may begin to fail.

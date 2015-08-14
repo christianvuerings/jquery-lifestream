@@ -1,6 +1,6 @@
-describe Oec::FileReader do
+describe OecLegacy::FileReader do
 
-  let!(:file_reader) { Oec::FileReader.new 'fixtures/oec/courses.csv' }
+  let!(:file_reader) { OecLegacy::FileReader.new 'fixtures/oec_legacy/courses.csv' }
   let!(:ccn_set) { file_reader.ccn_set }
   let!(:annotated_ccn_hash) { file_reader.annotated_ccn_hash }
 

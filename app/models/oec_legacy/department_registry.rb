@@ -1,4 +1,4 @@
-module Oec
+module OecLegacy
   class DepartmentRegistry < Set
 
     attr_reader :biology_relationship_matchers

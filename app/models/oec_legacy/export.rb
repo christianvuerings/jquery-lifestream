@@ -1,4 +1,4 @@
-module Oec
+module OecLegacy
   class Export < CsvExport
 
     def initialize(export_dir)

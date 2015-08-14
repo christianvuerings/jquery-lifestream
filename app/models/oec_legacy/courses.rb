@@ -1,4 +1,4 @@
-module Oec
+module OecLegacy
   class Courses < Export
 
     def initialize(dept_name, export_dir)
@@ -17,12 +17,12 @@ module Oec
 
     def append_records(output)
       visited_row_set = Set.new
-      Oec::Queries.get_courses(nil, @dept_name).each do |course|
+      OecLegacy::Queries.get_courses(nil, @dept_name).each do |course|
         row = record_to_csv_row course
         # No practical way to combine these fields in SQL, so we'll do it here in Ruby.
         if course['cross_listed_name'].present?
           # get all the cross listings of this course, even if they're in departments not part of our filter.
-          cross_listings = Oec::Queries.get_courses course['cross_listed_name']
+          cross_listings = OecLegacy::Queries.get_courses course['cross_listed_name']
           cross_listings.each do |cross_listing|
             cross_list_row = record_to_csv_row cross_listing
             if should_include_cross_listing? cross_listing
@@ -53,7 +53,7 @@ module Oec
           Rails.logger.info "#{@dept_name}.csv: Skipping #{course_id}, #{course['dept_name']} #{catalog_id} because enrollment_count=#{enrollment_count}"
         end
         if course['primary_secondary_cd'] == 'S' && check_secondary_cross_listings
-          Oec::Queries.get_secondary_cross_listings([course['course_cntl_num']]).each do |cross_listed_course|
+          OecLegacy::Queries.get_secondary_cross_listings([course['course_cntl_num']]).each do |cross_listed_course|
             if should_include_cross_listing? cross_listed_course
               row_for_cross_listing = record_to_csv_row cross_listed_course
               append_row(output, row_for_cross_listing, visited_row_set, cross_listed_course, false)

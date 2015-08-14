@@ -1,4 +1,4 @@
-module Oec
+module OecLegacy
   class CourseStudents < Export
 
     def initialize(ccn_set, annotated_ccn_hash, export_dir)
@@ -19,7 +19,7 @@ module Oec
     def append_records(output)
       if @ccn_set.length > 0
         Rails.logger.warn 'Get students of non-annotated CCN set'
-        Oec::Queries.get_all_course_students(@ccn_set).each do |record|
+        OecLegacy::Queries.get_all_course_students(@ccn_set).each do |record|
           row = record_to_csv_row record
           output << row
         end
@@ -27,7 +27,7 @@ module Oec
       # Output must have the same annotations as in courses.csv
       if @annotated_ccn_hash.length > 0
         Rails.logger.warn 'Get students of annotated CCN set'
-        Oec::Queries.get_all_course_students(@annotated_ccn_hash.keys).each do |record|
+        OecLegacy::Queries.get_all_course_students(@annotated_ccn_hash.keys).each do |record|
           row = record_to_csv_row record
           ccn = row['COURSE_ID'].split('-')[2].split('_')[0].to_i
           @annotated_ccn_hash[ccn].each do |annotation|

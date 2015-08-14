@@ -1,4 +1,4 @@
-describe Oec::Export do
+describe OecLegacy::Export do
 
   let!(:export_dir) { '/var/tmp/oec' }
   let!(:base_file_name) { 'filename' }
@@ -24,7 +24,7 @@ describe Oec::Export do
     exporter.export false
   end
 
-  class ExportStub < Oec::Export
+  class ExportStub < OecLegacy::Export
     def initialize(export_dir, base_file_name)
       super export_dir
       @base_file_name = base_file_name
