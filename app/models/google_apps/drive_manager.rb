@@ -38,13 +38,18 @@ module GoogleApps
         parameters = { :q => query }
         parameters[:pageToken] = page_token unless page_token.nil?
         api_response = client.execute(:api_method => drive_api.files.list, :parameters => parameters)
-        if api_response.status == 200
-          files = api_response.data
-          items.concat files.items
-          page_token = files.next_page_token
-        else
-          puts "An error occurred: #{api_response.data['error']['message']}"
-          page_token = nil
+        log_response api_response
+        case api_response.status
+          when 200
+            files = api_response.data
+            items.concat files.items
+            page_token = files.next_page_token
+          when 404
+            logger.debug 'No items found, returning empty array'
+            page_token = nil
+          else
+            raise Errors::ProxyError, "An error occurred: #{api_response.data['error']['message']}"
+            page_token = nil
         end
       end while page_token.to_s != ''
       items
@@ -57,8 +62,9 @@ module GoogleApps
       dir = drive_api.files.insert.request_schema.new metadata
       dir.parents = [{ :id => parent_id }] if parent_id
       result = client.execute(:api_method => drive_api.files.insert, :body_object => dir)
+      log_response result
       success = result.status == 200
-      logger.error "An error occurred: #{result.data['error']['message']}" unless success
+      raise Errors::ProxyError, "An error occurred: #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
@@ -75,8 +81,9 @@ module GoogleApps
         :body_object => file,
         :media => media,
         :parameters => { :uploadType => 'multipart', :alt => 'json'})
+      log_response result
       success = result.status == 200
-      logger.error "An error occurred: #{result.data['error']['message']}" unless success
+      raise Errors::ProxyError, "An error occurred: #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
@@ -86,8 +93,9 @@ module GoogleApps
       result = client.execute(
         :api_method => drive.files.trash,
         :parameters => { :fileId => id })
+      log_response result
       success = result.status == 200
-      logger.error "An error occurred: #{result.data['error']['message']}" unless success
+      raise Errors::ProxyError, "An error occurred: #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
@@ -109,8 +117,9 @@ module GoogleApps
         :body_object => copy_schema,
         :parameters => { :fileId => id }
       )
+      log_response result
       success = result.status == 200
-      logger.error "An error occurred: #{result.data['error']['message']}" unless success
+      raise Errors::ProxyError, "An error occurred: #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
@@ -123,8 +132,9 @@ module GoogleApps
         :body_object => new_parent,
         :parameters => { :fileId => id }
       )
+      log_response result
       success = result.status == 200
-      logger.error "An error occurred: #{result.data['error']['message']}" unless success
+      raise Errors::ProxyError, "An error occurred: #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
@@ -138,9 +148,10 @@ module GoogleApps
           'parentId' => parent_id
         }
       )
+      log_response result
       # This call may return an empty 204 on success.
       success = result.status <= 204
-      logger.error "An error occurred: #{result.data['error']['message']}" unless success
+      raise Errors::ProxyError, "An error occurred: #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
@@ -152,6 +163,10 @@ module GoogleApps
         @client.authorization = GoogleApps::Client.new_auth @credential_store
       end
       @client
+    end
+
+    def log_response(api_response)
+      logger.debug "Google Drive API request #{api_response.request.api_method.id} #{api_response.request.parameters} returned status #{api_response.status}"
     end
 
   end
