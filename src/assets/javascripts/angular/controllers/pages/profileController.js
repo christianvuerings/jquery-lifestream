@@ -19,14 +19,21 @@ angular.module('calcentral.controllers').controller('ProfileController', functio
       'id': 'academic',
       'name': 'Academic Information'
     }]
+  },
+  {
+    'label': 'Alerts & Notifications',
+    'categories': [{
+      'id': 'bconnected',
+      'name': 'bConnected'
+    }]
   }];
 
   /**
    * Find the category object when we get a categoryId back
    */
   var findCategory = function(categoryId) {
-    return _.find(navigation[0].categories, function(category) {
-      return category.id === categoryId;
+    return _.find(_.flatten(_.pluck(navigation, 'categories')), {
+      id: categoryId
     });
   };
 
