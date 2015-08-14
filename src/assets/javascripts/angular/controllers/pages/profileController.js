@@ -29,24 +29,12 @@ angular.module('calcentral.controllers').controller('ProfileController', functio
   }];
 
   /**
-   * Use lodash to match category ID
-   */
-  var matchId = function(categories, id) {
-    return _.find(categories, function(category) {
-      return category.id === id;
-    });
-  };
-
-  /**
    * Find the category object when we get a categoryId back
    */
   var findCategory = function(categoryId) {
-    for (var i = 0; i < navigation.length; i++) {
-      var selectedCategory = matchId(navigation[i].categories, categoryId);
-      if (selectedCategory) {
-        return selectedCategory;
-      }
-    }
+    return _.find(_.flatten(_.pluck(navigation, 'categories')), {
+      id: categoryId
+    });
   };
 
   /**
