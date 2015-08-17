@@ -13,12 +13,12 @@ describe CampusSolutions::State do
   end
 
   context 'mock proxy' do
-    let(:proxy) { CampusSolutions::State.new(fake: true) }
+    let(:proxy) { CampusSolutions::State.new(fake: true, country: 'USA') }
     it_should_behave_like 'a proxy that gets data'
   end
 
   context 'real proxy', testext: true do
-    let(:proxy) { CampusSolutions::State.new(fake: false) }
+    let(:proxy) { CampusSolutions::State.new(fake: false, country: 'USA') }
     it_should_behave_like 'a proxy that gets data'
   end
 
