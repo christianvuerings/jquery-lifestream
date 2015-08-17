@@ -16,7 +16,7 @@ describe CampusSolutions::NameType do
     it_should_behave_like 'a proxy that gets data'
   end
 
-  context 'real proxy' do # , testext: true do
+  context 'real proxy', testext: true do
     let(:proxy) { CampusSolutions::NameType.new(fake: false) }
     it_should_behave_like 'a proxy that gets data'
   end

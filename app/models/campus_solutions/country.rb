@@ -6,15 +6,8 @@ module CampusSolutions
     end
 
     def build_feed(response)
-      feed = {
-        countries: []
-      }
-      return feed if response.parsed_response.blank?
-      # TODO does front-end need to lookup by name/abbv, or is an array sufficient?
-      response.parsed_response['COUNTRY_RESPONSE'].each do |country|
-        feed[:countries] << country
-      end
-      feed
+      return {} if response.parsed_response.blank?
+      response.parsed_response
     end
 
     def url
