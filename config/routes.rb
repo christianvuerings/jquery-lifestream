@@ -135,6 +135,12 @@ Calcentral::Application.routes.draw do
   get '/api/campus_solutions/country' => 'country#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/state' => 'state#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/ethnicity' => 'ethnicity#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/address_label' => 'address_label#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/address_type' => 'address_type#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/name_type' => 'name_type#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/currency_code' => 'currency_code#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/language' => 'language#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/translate' => 'translate#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/address' => 'address#get', :via => :get, :defaults => { :format => 'json' }
   post '/api/campus_solutions/address' => 'address#post', :via => :post, :defaults => { :format => 'json' }
   get '/api/campus_solutions/aid_years' => 'aid_years#get', :via => :get, :defaults => { :format => 'json' }
