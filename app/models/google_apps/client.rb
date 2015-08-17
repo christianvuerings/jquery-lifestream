@@ -19,12 +19,24 @@ module GoogleApps
         end
       end
 
-      def new_fake_auth
-        new_auth("fake_access_token")
-      end
-
-      def new_client_auth(token_hash)
-        new_auth(token_hash["access_token"], token_hash)
+      def new_auth(credential_store, access_token_override = nil, options = {})
+        storage = Google::APIClient::Storage.new credential_store
+        auth = storage.authorize
+        auth.access_token = access_token_override unless access_token_override.nil?
+        if options && options['refresh_token'] && options['expiration_time']
+          auth.refresh_token = options['refresh_token']
+          auth.expires_in = 3600
+          auth.issued_at = Time.at(options['expiration_time'] - 3600)
+        end
+        if auth.nil? || (auth.expired? && auth.refresh_token.nil?)
+          config = credential_store.load_credentials
+          flow = Google::APIClient::InstalledAppFlow.new({
+                                                           :client_id => config.client_id,
+                                                           :client_secret => config.client_secret,
+                                                           :scope => config.scope})
+          auth = flow.authorize storage
+        end
+        auth
       end
 
       def generate_request_hash(page_params)
@@ -47,20 +59,6 @@ module GoogleApps
       end
 
       private
-
-      def new_auth(access_token, options={})
-        authorization = client.authorization.dup
-        authorization.client_id = Settings.google_proxy.client_id
-        authorization.client_secret = Settings.google_proxy.client_secret
-        authorization.access_token = access_token
-        ## Not setting these in explicit fake mode will prevent the api_client from attempting to refresh tokens.
-        if options && options["refresh_token"] && options["expiration_time"]
-          authorization.refresh_token = options["refresh_token"]
-          authorization.expires_in = 3600
-          authorization.issued_at = Time.at(options["expiration_time"] - 3600)
-        end
-        authorization
-      end
 
       def discover_version(api)
         client.preferred_version(api).version
