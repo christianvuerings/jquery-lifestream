@@ -19,10 +19,9 @@ module GoogleApps
         end
       end
 
-      def new_auth(credential_store, access_token_override = nil, options = {})
+      def new_auth(credential_store, options = {})
         storage = Google::APIClient::Storage.new credential_store
         auth = storage.authorize
-        auth.access_token = access_token_override unless access_token_override.nil?
         if options && options['refresh_token'] && options['expiration_time']
           auth.refresh_token = options['refresh_token']
           auth.expires_in = 3600

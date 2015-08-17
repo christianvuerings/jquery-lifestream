@@ -8,22 +8,24 @@ module GoogleApps
 
     attr_accessor :authorization, :json_filename
 
-    APP_ID = "Google"
+    APP_ID = 'Google'
 
     def initialize(options = {})
       super(Settings.google_proxy, options)
 
-      credentials = GoogleApps::CredentialStore.new
       if @fake
-        @authorization = GoogleApps::Client.new_auth(credentials, 'fake_access_token')
+        credentials = GoogleApps::CredentialStore.new(access_token: 'fake_access_token')
+        @authorization = GoogleApps::Client.new_auth credentials
       elsif options[:user_id]
         token_settings = User::Oauth2Data.get(@uid, APP_ID)
         options = token_settings || { 'access_token' => '' }
-        @authorization = GoogleApps::Client.new_auth(credentials, options['access_token'], options)
+        credentials = GoogleApps::CredentialStore.new(access_token: options['access_token'])
+        @authorization = GoogleApps::Client.new_auth(credentials, options)
       else
         auth_related_entries = [:access_token, :refresh_token, :expiration_time]
         token_settings = options.select { |k, v| auth_related_entries.include? k }.stringify_keys!
-        @authorization = GoogleApps::Client.new_auth(credentials, token_settings['access_token'], token_settings)
+        credentials = GoogleApps::CredentialStore.new(access_token: token_settings['access_token'])
+        @authorization = GoogleApps::Client.new_auth(credentials, token_settings)
       end
 
       @fake_options = options[:fake_options] || {}
