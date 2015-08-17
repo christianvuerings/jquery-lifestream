@@ -102,6 +102,13 @@ google_proxy:
   test_user_access_token: "someMumboJumbo"
   test_user_refresh_token: "someMumboJumbo"
   atom_mail_feed_url: "https://mail.google.com/mail/feed/atom/"
+  oec:
+    client_id: 'moreMumboJumbo'
+    client_secret: 'moreMumboJumbo'
+    access_token: 'tokenThis'
+    refresh_token: 'tokenThat'
+    scope: 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.apps.readonly'
+
 sakai_proxy:
   host: "https://sakai-dev.berkeley.edu"
   fake: false
