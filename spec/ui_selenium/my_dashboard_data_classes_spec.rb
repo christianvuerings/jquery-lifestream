@@ -72,8 +72,9 @@ describe 'My Dashboard My Classes card', :testui => true do
               student_classes = academics_api.semester_courses(current_student_semester)
 
               api_student_course_ids = academics_api.semester_card_course_codes(academics_api.all_semesters, current_student_semester)
-              api_student_course_titles = academics_api.course_titles student_classes
-              api_wait_list_positions = academics_api.wait_list_positions academics_api.wait_list_courses(student_classes)
+              api_student_course_titles = academics_api.course_titles academics_api.courses_by_primary_section(student_classes)
+              api_wait_list_prim_sections = academics_api.wait_list_sections academics_api.semester_primary_sections(student_classes)
+              api_wait_list_positions = academics_api.wait_list_positions api_wait_list_prim_sections
               api_student_course_site_names = academics_api.semester_course_site_names student_classes
               api_student_course_site_desc = academics_api.semester_course_site_descrips student_classes
 
@@ -106,19 +107,37 @@ describe 'My Dashboard My Classes card', :testui => true do
 
               student_classes.each do |course|
 
-                class_page_url = academics_api.course_url(course)
-                my_classes.click_class_link_by_url(driver, class_page_url)
-                class_page = CalCentralPages::MyAcademicsClassPage.new(driver)
-                class_page.class_info_heading_element.when_visible(WebDriverUtils.page_load_timeout)
-
                 api_course_title = academics_api.course_title(course)
-                class_page_course_title = class_page.course_title
 
-                it "offers a link to the class page for #{api_course_title} for UID #{uid}" do
-                  expect(class_page_course_title).to eql(api_course_title)
+                if academics_api.multiple_primaries?(course)
+                  academics_api.primary_sections(course).each do |prim_section|
+                    class_page_url = academics_api.section_url prim_section
+                    my_classes.click_class_link_by_url(driver, class_page_url)
+                    class_page = CalCentralPages::MyAcademicsClassPage.new(driver)
+                    class_page.class_info_heading_element.when_visible(WebDriverUtils.page_load_timeout)
+                    class_page_course_title = class_page.course_title
+
+                    it "offers a link to the class page for #{api_course_title} for UID #{uid}" do
+                      expect(class_page_course_title).to eql(api_course_title)
+                    end
+
+                    my_classes.load_page driver
+                  end
+
+                else
+                  class_page_url = academics_api.course_url(course)
+                  my_classes.click_class_link_by_url(driver, class_page_url)
+                  class_page = CalCentralPages::MyAcademicsClassPage.new(driver)
+                  class_page.class_info_heading_element.when_visible(WebDriverUtils.page_load_timeout)
+                  class_page_course_title = class_page.course_title
+
+                  it "offers a link to the class page for #{api_course_title} for UID #{uid}" do
+                    expect(class_page_course_title).to eql(api_course_title)
+                  end
+
+                  my_classes.load_page driver
                 end
 
-                my_classes.load_page driver
 
               end
             end
@@ -138,7 +157,7 @@ describe 'My Dashboard My Classes card', :testui => true do
               has_teaching = true
               teaching_classes = academics_api.semester_courses(current_teaching_semester)
 
-              api_teaching_course_ids = academics_api.semester_card_course_codes(academics_api.all_semesters, current_teaching_semester)
+              api_teaching_course_ids = academics_api.semester_listing_course_codes current_teaching_semester
               api_teaching_course_titles = academics_api.course_titles teaching_classes
               api_teaching_course_site_names = academics_api.semester_course_site_names teaching_classes
               api_teaching_course_site_desc = academics_api.semester_course_site_descrips teaching_classes

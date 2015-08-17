@@ -103,7 +103,7 @@ class ApiMyAcademicsPage
   end
 
   def transition_term?
-    (transition_term.present?) ? true : false
+    transition_term.nil? ? false : true
   end
 
   def trans_term_name

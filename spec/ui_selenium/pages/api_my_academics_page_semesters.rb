@@ -242,6 +242,12 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     prim_sections
   end
 
+  def semester_primary_sections(courses)
+    prim_sections = []
+    courses.each { |course| prim_sections.concat(primary_sections(course)) }
+    prim_sections
+  end
+
   # Courses with multiple primary sections can have secondaries associated with only one of the primaries
   def associated_sections(course, primary_section)
     assoc_sections = []
@@ -391,20 +397,16 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
   def wait_list_courses(semester_courses)
     wait_lists = []
     semester_courses.each do |course|
-      unless wait_list_sections(course).empty?
+      unless wait_list_sections(sections(course)).empty?
         wait_lists.push(course)
       end
     end
     wait_lists
   end
 
-  def wait_list_sections(course)
+  def wait_list_sections(sections)
     wait_list_sections = []
-    sections(course).each do |section|
-      unless wait_list_position(section).nil?
-        wait_list_sections.push(section)
-      end
-    end
+    sections.each { |section| wait_list_sections.push(section) unless wait_list_position(section).nil? }
     wait_list_sections
   end
 
@@ -428,11 +430,9 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     section['waitlistPosition']
   end
 
-  def wait_list_positions(wait_list_courses)
+  def wait_list_positions(sections)
     positions = []
-    wait_list_courses.each do |course|
-      sections(course).each { |section| positions.push(wait_list_position(section).to_s) }
-    end
+    sections.each { |section| positions.push(wait_list_position(section).to_s) }
     positions
   end
 
