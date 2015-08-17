@@ -17,9 +17,10 @@ module GoogleApps
         key = @app_name.to_sym
         credentials = google_configs[key].marshal_dump if google_configs.has_key? key
       end
-      # Per Google API spec
-      credentials[:access_token] = @access_token unless @access_token.nil?
-      credentials[:token_credential_uri] = 'https://accounts.google.com/o/oauth2/token' unless credentials.nil?
+      unless credentials.nil?
+        credentials[:access_token] = @access_token unless @access_token.nil?
+        credentials[:token_credential_uri] = 'https://accounts.google.com/o/oauth2/token'
+      end
       credentials
     end
 

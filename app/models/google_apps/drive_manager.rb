@@ -1,6 +1,8 @@
 module GoogleApps
   class DriveManager
 
+    include ClassLogger
+
     def initialize(credential_store)
       @credential_store = credential_store
     end
@@ -13,7 +15,7 @@ module GoogleApps
       dir.parents = [{ :id => parent_id }] if parent_id
       result = client.execute(:api_method => drive_api.files.insert, :body_object => dir)
       success = result.status == 200
-      Rails.logger.error "An error occurred: #{result.data['error']['message']}" unless success
+      logger.error "An error occurred: #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
@@ -31,7 +33,7 @@ module GoogleApps
         :media => media,
         :parameters => { :uploadType => 'multipart', :alt => 'json'})
       success = result.status == 200
-      Rails.logger.error "An error occurred: #{result.data['error']['message']}" unless success
+      logger.error "An error occurred: #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
