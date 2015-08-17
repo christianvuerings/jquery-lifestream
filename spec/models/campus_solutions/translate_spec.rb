@@ -16,7 +16,7 @@ describe CampusSolutions::Translate do
     it_should_behave_like 'a proxy that gets data'
   end
 
-  context 'real proxy' do # , testext: true do
+  context 'real proxy', testext: true do
     let(:proxy) { CampusSolutions::Translate.new(fake: false, country: 'USA') }
     it_should_behave_like 'a proxy that gets data'
   end

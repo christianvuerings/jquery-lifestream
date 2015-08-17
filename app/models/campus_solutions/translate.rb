@@ -3,7 +3,7 @@ module CampusSolutions
 
     def initialize(options = {})
       super options
-      @field_name = options[:field_name] || 'PHONE_TYPE'
+      @field_name = options[:field_name]
       initialize_mocks if @fake
     end
 
