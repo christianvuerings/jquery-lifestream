@@ -9,12 +9,12 @@ angular.module('calcentral.controllers').controller('CampusController', function
   campusLinksFactory.getLinks({
     category: $routeParams.category
   }).then(function(data) {
-    angular.extend($scope, data);
-
-    if (data.currentTopCategory) {
+    if (data && data.currentTopCategory) {
       // Set the page title
       var title = 'Campus - ' + data.currentTopCategory;
       apiService.util.setTitle(title);
+
+      angular.extend($scope, data);
     }
   });
 });
