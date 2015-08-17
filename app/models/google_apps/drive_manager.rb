@@ -15,7 +15,6 @@ module GoogleApps
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
       items = []
-      # mime_type, parent_id = nil
       parent_id = options[:parent_id] || 'root'
       query = "'#{parent_id}' in parents and title='#{title}' and trashed=false"
       query.concat " and mimeType='#{options[:mime_type]}'" if options.has_key? :mime_type
