@@ -11,7 +11,7 @@ module CampusSolutions
       }
       return feed if response.parsed_response.blank?
       # TODO does front-end need to lookup by name/abbv, or is an array sufficient?
-      response.parsed_response['UC_COUNTRY_GET_RESP']['COUNTRY_DETAILS'].each do |country|
+      response.parsed_response['COUNTRY_RESPONSE'].each do |country|
         feed[:countries] << country
       end
       feed
