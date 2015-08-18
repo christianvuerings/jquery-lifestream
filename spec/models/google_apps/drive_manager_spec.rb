@@ -39,6 +39,21 @@ describe 'GoogleDriveInsert' do
       expect(items[0].title).to eq @csv_filename
     end
 
+    it 'should copy CSV file to a new folder without modifying original' do
+      copy = @drive.copy_item_to_folder(@csv_file, 'root')
+
+      copied_items = @drive.find_items_by_title(@csv_filename, parent_id: 'root')
+      expect(copied_items).to have(1).item
+      expect(copied_items[0].id).to eq copy.id
+      expect(copied_items[0].title).to eq @csv_filename
+
+      original_items = @drive.find_items_by_title(@csv_filename, parent_id: @folder.id)
+      expect(original_items).to have(1).item
+      expect(original_items[0].title).to eq @csv_filename
+
+      @drive.trash_item copy.id
+    end
+
     it 'should find CSV file' do
       items = @drive.find_items_by_title(@csv_filename, parent_id: @folder.id)
       expect(items).to_not be_nil

@@ -17,6 +17,10 @@ module GoogleApps
       find_items_by_title(title, mime_type: 'application/vnd.google-apps.folder', parent_id: parent_id)
     end
 
+    def find_folders(parent_id = 'root')
+      find_items(mime_type: 'application/vnd.google-apps.folder', parent_id: parent_id)
+    end
+
     def find_items_by_title(title, options = {})
       find_items options.merge({ :title => title })
     end
@@ -83,6 +87,59 @@ module GoogleApps
         :api_method => drive.files.trash,
         :parameters => { :fileId => id })
       success = result.status == 200
+      logger.error "An error occurred: #{result.data['error']['message']}" unless success
+      success ? result.data : nil
+    end
+
+    def copy_item_to_folder(item, folder_id, copy_title=nil)
+      copy_title ||= item.title
+      if (copy = copy_item(item.id, copy_title))
+        old_parent_id = copy.parents.first.id
+        add_parent(copy.id, folder_id) && remove_parent(copy.id, old_parent_id)
+      end
+      copy
+    end
+
+    def copy_item(id, copy_title)
+      client = get_google_api
+      drive_api = client.discovered_api('drive', 'v2')
+      copy_schema = drive_api.files.copy.request_schema.new({'title' => copy_title})
+      result = client.execute(
+        :api_method => drive_api.files.copy,
+        :body_object => copy_schema,
+        :parameters => { :fileId => id }
+      )
+      success = result.status == 200
+      logger.error "An error occurred: #{result.data['error']['message']}" unless success
+      success ? result.data : nil
+    end
+
+    def add_parent(id, parent_id)
+      client = get_google_api
+      drive_api = client.discovered_api('drive', 'v2')
+      new_parent = drive_api.parents.insert.request_schema.new({'id' => parent_id})
+      result = client.execute(
+        :api_method => drive_api.parents.insert,
+        :body_object => new_parent,
+        :parameters => { :fileId => id }
+      )
+      success = result.status == 200
+      logger.error "An error occurred: #{result.data['error']['message']}" unless success
+      success ? result.data : nil
+    end
+
+    def remove_parent(id, parent_id)
+      client = get_google_api
+      drive_api = client.discovered_api('drive', 'v2')
+      result = client.execute(
+        :api_method => drive_api.parents.delete,
+        :parameters => {
+          'fileId' => id,
+          'parentId' => parent_id
+        }
+      )
+      # This call may return an empty 204 on success.
+      success = result.status <= 204
       logger.error "An error occurred: #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
