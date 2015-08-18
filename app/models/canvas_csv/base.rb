@@ -22,8 +22,7 @@ module CanvasCsv
         'user_id' => derive_sis_user_id(campus_user),
         'login_id' => campus_user['ldap_uid'].to_s,
         'password' => nil,
-        'first_name' => campus_user['first_name'],
-        'last_name' => campus_user['last_name'],
+        'full_name' => campus_user['person_name'],
         'email' => campus_user['email_address'],
         'status' => 'active'
       }
@@ -80,7 +79,7 @@ module CanvasCsv
     end
 
     def make_users_csv(filename, rows = nil)
-      make_csv(filename, 'user_id,login_id,first_name,last_name,email,status', rows)
+      make_csv(filename, 'user_id,login_id,full_name,email,status', rows)
     end
 
     def csv_count(csv_filename)

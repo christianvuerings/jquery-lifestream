@@ -25,7 +25,7 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
   end
 
   def current_semester(semesters)
-    semesters_in_time_bucket(semesters, 'current')[0]
+    semesters.nil? ? nil : semesters_in_time_bucket(semesters, 'current')[0]
   end
 
   def future_semesters(semesters)
@@ -87,7 +87,7 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
   end
 
   # Semester pages always list courses once per primary section
-  def semester_page_courses(courses)
+  def courses_by_primary_section(courses)
     course_list = []
     courses.each do |course|
       primary_sections(course).each { course_list.push(course) }
@@ -460,6 +460,52 @@ class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
     units = []
     addl_credits.each { |credit| units.push(credit['units']) }
     units
+  end
+
+  # COURSE SITES
+
+  def course_sites(course)
+    course['class_sites']
+  end
+
+  def course_site_name(course_site)
+    course_site['name']
+  end
+
+  def course_site_names(course)
+    names = []
+    unless course_sites(course).nil?
+      course_sites(course).each { |site| names.push(course_site_name(site)) }
+    end
+    names
+  end
+
+  def semester_course_site_names(semester_courses)
+    names = []
+    semester_courses.each { |course| names.concat(course_site_names(course)) }
+    names
+  end
+
+  def course_site_descrip(course_site)
+    course_site['shortDescription']
+  end
+
+  def course_site_descrips(course)
+    descriptions = []
+    unless course_sites(course).nil?
+      course_sites(course).each do |site|
+        unless course_site_descrip(site).nil? || course_site_descrip(site) == course_site_name(site) || course_site_descrip(site) == course_title(course)
+          descriptions.push(course_site_descrip(site))
+        end
+      end
+    end
+    descriptions
+  end
+
+  def semester_course_site_descrips(semester_courses)
+    descriptions = []
+    semester_courses.each { |course| descriptions.concat(course_site_descrips(course)) }
+    descriptions
   end
 
 end

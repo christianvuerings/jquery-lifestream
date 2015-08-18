@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Berkeley::Colleges do
 
   it 'should look up the College of Engineering' do
@@ -10,8 +8,8 @@ describe Berkeley::Colleges do
     expect(Berkeley::Colleges.get('grad div')).to eq 'College of Letters & Science'
   end
 
-  it "should return the abbreviation on a nonexistent college abbv" do
-    Berkeley::Colleges.get("Zazzle zotz").should == "Zazzle zotz"
+  it 'should return the abbreviation on a nonexistent college abbv' do
+    expect(Berkeley::Colleges.get('Zazzle zotz')).to eq 'Zazzle zotz'
   end
 
 end

@@ -14,8 +14,7 @@ describe CanvasCsv::MaintainUsers do
           'canvas_user_id' => rand(999999).to_s,
           'user_id' => "UID:#{uid}",
           'login_id' => uid,
-          'first_name' => 'Ema',
-          'last_name' => 'Ilcha',
+          'full_name' => 'Ema Ilcha',
           'email' => 'old@example.edu',
           'status' => 'active'
         }
@@ -23,8 +22,7 @@ describe CanvasCsv::MaintainUsers do
       let(:campus_rows) { [
         {
           'ldap_uid' => uid.to_i,
-          'first_name' => 'Ema',
-          'last_name' => 'Ilcha',
+          'person_name' => 'Ema Ilcha',
           'email_address' => 'new@example.edu',
           'affiliations' => 'EMPLOYEE-TYPE-STAFF'
         }
@@ -47,8 +45,7 @@ describe CanvasCsv::MaintainUsers do
           'canvas_user_id' => canvas_user_id,
           'user_id' => "UID:#{changed_sis_id_uid}",
           'login_id' => changed_sis_id_uid,
-          'first_name' => 'Sissy',
-          'last_name' => 'Changer',
+          'full_name' => 'Sissy Changer',
           'email' => "#{changed_sis_id_uid}@example.edu",
           'status' => 'active'
         }
@@ -56,8 +53,7 @@ describe CanvasCsv::MaintainUsers do
       let(:campus_rows) { [
         {
           'ldap_uid' => changed_sis_id_uid.to_i,
-          'first_name' => 'Sissy',
-          'last_name' => 'Changer',
+          'person_name' => 'Sissy Changer',
           'email_address' => "#{changed_sis_id_uid}@example.edu",
           'affiliations' => 'EMPLOYEE-TYPE-STAFF,STUDENT-TYPE-REGISTERED',
           'student_id' => changed_sis_id_student_id.to_i
@@ -78,8 +74,7 @@ describe CanvasCsv::MaintainUsers do
           'canvas_user_id' => rand(999999).to_s,
           'user_id' => "UID:#{uid}",
           'login_id' => uid,
-          'first_name' => 'Noam',
-          'last_name' => 'Changey',
+          'full_name' => 'Noam Changey',
           'email' => "#{uid}@example.edu",
           'status' => 'active'
         }
@@ -87,14 +82,45 @@ describe CanvasCsv::MaintainUsers do
       let(:campus_rows) { [
         {
           'ldap_uid' => uid.to_i,
-          'first_name' => 'Noam',
-          'last_name' => 'Changey',
+          'person_name' => 'Noam Changey',
           'email_address' => "#{uid}@example.edu",
           'affiliations' => 'EMPLOYEE-TYPE-STAFF,STUDENT-STATUS-EXPIRED',
           'student_id' => 9999999
         }
       ] }
       it 'just notes the UID' do
+        expect(account_changes.length).to eq(0)
+        expect(subject.sis_user_id_changes.length).to eq(0)
+        expect(known_uids.length).to eq(1)
+      end
+    end
+
+    context 'when full name matches but first name does not' do
+      let(:uid) { rand(999999).to_s }
+      let(:existing_account) {
+        {
+          'canvas_user_id' => rand(999999).to_s,
+          'user_id' => "UID:#{uid}",
+          'login_id' => uid,
+          'first_name' => 'Outerbridge',
+          'last_name' => 'Horsey',
+          'full_name' => 'Outerbridge Horsey III',
+          'email' => "#{uid}@example.edu",
+          'status' => 'active'
+        }
+      }
+      let(:campus_rows) { [
+        {
+          'ldap_uid' => uid.to_i,
+          'first_name' => 'Outerbridge III',
+          'last_name' => 'Horsey',
+          'person_name' => 'Outerbridge Horsey III',
+          'email_address' => "#{uid}@example.edu",
+          'affiliations' => 'EMPLOYEE-TYPE-STAFF,STUDENT-STATUS-EXPIRED',
+          'student_id' => 9999999
+        }
+      ] }
+      it 'considers the account to be unchanged' do
         expect(account_changes.length).to eq(0)
         expect(subject.sis_user_id_changes.length).to eq(0)
         expect(known_uids.length).to eq(1)
@@ -108,8 +134,7 @@ describe CanvasCsv::MaintainUsers do
           'canvas_user_id' => rand(999999).to_s,
           'user_id' => uid,
           'login_id' => uid,
-          'first_name' => 'Uneeda',
-          'last_name' => 'Integer',
+          'full_name' => 'Uneeda Integer',
           'email' => "#{uid}@example.edu",
           'status' => 'active'
         }
@@ -117,8 +142,7 @@ describe CanvasCsv::MaintainUsers do
       let(:campus_rows) { [
         {
           'ldap_uid' => 0,
-          'first_name' => 'Sumotha',
-          'last_name' => 'Match',
+          'person_name' => 'Sumotha Match',
           'email_address' => 'zero@example.edu',
           'affiliations' => 'STUDENT-TYPE-REGISTERED',
           'student_id' => 9999999
@@ -244,7 +268,7 @@ describe CanvasCsv::MaintainUsers do
   end
 
   describe '#provisioned_account_eq_sis_account?' do
-    let(:provisioned_account) { {'login_id' => '123', 'first_name' => 'John', 'last_name' => 'Smith', 'email' => 'johnsmith@example.com'} }
+    let(:provisioned_account) { {'login_id' => '123', 'full_name' => 'John Smith', 'email' => 'johnsmith@example.com'} }
     subject {CanvasCsv::MaintainUsers.provisioned_account_eq_sis_account?(provisioned_account, sis_account)}
 
     context 'when accounts are identical' do
@@ -253,7 +277,7 @@ describe CanvasCsv::MaintainUsers do
     end
 
     context 'when username checks are enabled' do
-      let(:sis_account) { provisioned_account.merge({'first_name' => 'Jake'}) }
+      let(:sis_account) { provisioned_account.merge({'full_name' => 'Jake Smith'}) }
       before do
         allow(Settings.canvas_proxy).to receive(:maintain_user_names).and_return(true)
       end
@@ -265,7 +289,7 @@ describe CanvasCsv::MaintainUsers do
         allow(Settings.canvas_proxy).to receive(:maintain_user_names).and_return(false)
       end
       context 'when all that differs is the name' do
-        let(:sis_account) { provisioned_account.merge({'first_name' => 'Jake', 'last_name' => 'Smythe'}) }
+        let(:sis_account) { provisioned_account.merge({'full_name' => 'Jake Smythe'}) }
         it {should be_truthy}
       end
       context 'when the email address changes' do

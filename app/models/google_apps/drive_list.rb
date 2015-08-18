@@ -6,8 +6,8 @@ module GoogleApps
       @json_filename = 'google_drive_list.json'
     end
 
-    def drive_list(optional_params={}, page_limiter=nil)
-      request :api => "drive", :resource => "files", :method => "list", :params => optional_params,
+    def drive_list(optional_params = {}, page_limiter = nil)
+      request :api => 'drive', :resource => 'files', :method => 'list', :params => optional_params,
               :page_limiter => page_limiter
     end
 

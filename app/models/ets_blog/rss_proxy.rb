@@ -18,7 +18,7 @@ module EtsBlog
     def get_feed_internal(path)
       logger.info "Fetching #{path}; fake=#{@fake}; cache expiration #{self.class.expires_in}"
       response = get_response(path, {parser: RssParser})
-      entries = response['rss']['channel']['item']
+      entries = Array.wrap(response['rss']['channel']['item'])
       if entries.present?
         entry = entries.first
         snippet = sanitize_html(entry['description'])

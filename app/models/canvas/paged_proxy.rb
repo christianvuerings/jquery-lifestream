@@ -1,8 +1,8 @@
 module Canvas
   module PagedProxy
 
-    def mock_paged_interaction(fixture_name)
-      on_request(mock_request).set_response do |request|
+    def mock_paged_interaction(fixture_name, request_object = mock_request)
+      on_request(request_object).set_response do |request|
         page_requested = request.uri.query_values['page'] || '1'
         pages = Dir.glob Rails.root.join('fixtures', 'json', "#{fixture_name}_page_*")
         if page_requested.to_i <= pages.count

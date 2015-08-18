@@ -1,0 +1,28 @@
+[
+  {
+    "id": 9122,
+    "role": "AccountAdmin",
+    "user": {
+      "id": 3075912,
+      "name": "Jon Hays",
+      "sortable_name": "Hays, Jon",
+      "short_name": "Jon Hays",
+      "sis_user_id": "323487",
+      "sis_login_id": "323487",
+      "login_id": "323487"
+    }
+  },
+  {
+    "id": 9682,
+    "role": "Support Admin",
+    "user": {
+      "id": 3113129,
+      "name": "Sage Adams",
+      "sortable_name": "Adams, Sage",
+      "short_name": "Sage Adams",
+      "sis_user_id": "972716",
+      "sis_login_id": "972716",
+      "login_id": "972716"
+    }
+  }
+]

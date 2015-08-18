@@ -6,8 +6,8 @@ describe CanvasCsv::Base do
     context 'when all users known' do
       before do
         people_attributes = [
-          { 'ldap_uid'=>'1234', 'first_name'=>'John', 'last_name'=>'Smith', 'email_address'=>'johnsmith@example.com', 'student_id'=>nil, 'affiliations'=>'EMPLOYEE-TYPE-ACADEMIC' },
-          { 'ldap_uid'=>'1235', 'first_name'=>'Jane', 'last_name'=>'Smith', 'email_address'=>'janesmith@example.com', 'student_id'=>nil, 'affiliations'=>'EMPLOYEE-TYPE-ACADEMIC' },
+          { 'ldap_uid'=>'1234', 'first_name'=>'John', 'last_name'=>'Smith', 'person_name'=> 'John Smith', 'email_address'=>'johnsmith@example.com', 'student_id'=>nil, 'affiliations'=>'EMPLOYEE-TYPE-ACADEMIC' },
+          { 'ldap_uid'=>'1235', 'first_name'=>'Jane', 'last_name'=>'Smith', 'person_name' => 'Jane Smith', 'email_address'=>'janesmith@example.com', 'student_id'=>nil, 'affiliations'=>'EMPLOYEE-TYPE-ACADEMIC' },
         ]
         expect(CampusOracle::Queries).to receive(:get_basic_people_attributes).with(['1234','1235']).and_return people_attributes
       end
@@ -17,8 +17,7 @@ describe CanvasCsv::Base do
         expect(result.count).to eq 2
         expect(result[0]['user_id']).to eq 'UID:1234'
         expect(result[0]['login_id']).to eq '1234'
-        expect(result[0]['first_name']).to eq 'John'
-        expect(result[0]['last_name']).to eq 'Smith'
+        expect(result[0]['full_name']).to eq 'John Smith'
         expect(result[0]['email']).to eq 'johnsmith@example.com'
         expect(result[0]['status']).to eq 'active'
       end
@@ -48,12 +47,12 @@ describe CanvasCsv::Base do
     let(:csv_filepath) { 'tmp/csv_count_test.csv' }
     let(:csv_rows) do
       [
-        ['45','John','Smith','johnsmith@example.com'],
-        ['46','Jane','Smith','janesmith@example.com'],
-        ['63','Robin','Williams','rwilliams@example.com'],
+        ['45','John Smith','johnsmith@example.com'],
+        ['46','Jane Smith','janesmith@example.com'],
+        ['63','Robin Williams','rwilliams@example.com'],
       ]
     end
-    let(:csv_file) { subject.make_csv(csv_filepath, 'id,first_name,last_name,email_address', csv_rows) }
+    let(:csv_file) { subject.make_csv(csv_filepath, 'id,full_name,email_address', csv_rows) }
     after { delete_files_if_exists([csv_filepath]) }
     it 'returns number of records in csv file' do
       expect(subject.csv_count csv_file).to eq 3

@@ -1,4 +1,4 @@
-describe Canvas::WebcastLtiRefresh do
+describe CanvasLti::WebcastLtiRefresh do
 
   let(:webcast_tool_id) { rand(999999) }
   let(:term_yr) { 2015 }
@@ -12,7 +12,7 @@ describe Canvas::WebcastLtiRefresh do
   ]}
 
   context 'fake proxy' do
-    subject { Canvas::WebcastLtiRefresh.new(%w(TERM:2015-B), webcast_tool_id, {fake: true}) }
+    subject { CanvasLti::WebcastLtiRefresh.new(%w(TERM:2015-B), webcast_tool_id, {fake: true}) }
     before do
       report_spring_2015 = CSV.read('fixtures/webcast/canvas-sections-report_2015-B.csv', {headers: true})
       allow_any_instance_of(Canvas::Report::Sections).to receive(:get_account_csv).with('provisioning', 'sections', 'TERM:2015-B').and_return report_spring_2015
@@ -65,7 +65,7 @@ describe Canvas::WebcastLtiRefresh do
         end
 
         it 'should un-hide Webcast tool' do
-          allow_any_instance_of(Canvas::WebcastLtiRefresh).to receive(:is_canvas_tab_hidden?).and_return true
+          allow_any_instance_of(CanvasLti::WebcastLtiRefresh).to receive(:is_canvas_tab_hidden?).and_return true
           allow_any_instance_of(Canvas::ExternalTools).to receive(:find_canvas_course_tab).and_return tab
           allow_any_instance_of(Canvas::ExternalTools).to receive(:show_course_site_tab).and_return tab
           allow_any_instance_of(Webcast::CourseSiteLog).to receive(:find_by).with(anything).and_return nil

@@ -243,8 +243,7 @@ describe CampusOracle::Queries do
   it 'should be able to get all active user uids' do
     if CampusOracle::Queries.test_data?
       uids = CampusOracle::Queries.get_all_active_people_uids
-      expect(uids).to be_an_instance_of Array
-      expect(uids.count).to eq 144
+      expect(uids).to have(146).items
       expect(uids).to include('212373')
       expect(uids).to include('95509')
       expect(uids).to_not include('592722')

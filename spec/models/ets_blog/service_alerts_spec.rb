@@ -52,6 +52,17 @@ describe EtsBlog::ServiceAlerts do
         expect(alert).to be_blank
       end
     end
+
+    context 'when the alert feed has a single item' do
+      let(:mock_xml_file) { 'service_alerts_feed_single.xml' }
+      it 'should return the item contents' do
+        alert = subject.get_latest
+        expect(alert[:title]).to be_present
+        expect(alert[:link]).to be_present
+        expect(alert[:timestamp][:epoch]).to be_present
+        expect(alert[:snippet]).to be_present
+      end
+    end
   end
 
   context 'when exceptions are raised' do
