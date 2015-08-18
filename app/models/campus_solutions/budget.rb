@@ -1,6 +1,7 @@
 module CampusSolutions
-  class Budget < IntegrationHubProxy
+  class Budget < Proxy
 
+    include IntegrationHubProxy
     include Cache::UserCacheExpiry
 
     def initialize(options = {})

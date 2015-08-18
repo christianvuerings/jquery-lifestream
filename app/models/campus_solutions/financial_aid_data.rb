@@ -1,6 +1,7 @@
 module CampusSolutions
-  class FinancialAidData < IntegrationHubProxy
+  class FinancialAidData < Proxy
 
+    include IntegrationHubProxy
     include Cache::RelatedCacheKeyTracker
 
     def initialize(options = {})

@@ -1,6 +1,8 @@
 module CampusSolutions
   class Title4 < PostingProxy
 
+    include IntegrationHubProxy
+
     def initialize(options = {})
       super(Settings.cs_title4_proxy, options)
       initialize_mocks if @fake

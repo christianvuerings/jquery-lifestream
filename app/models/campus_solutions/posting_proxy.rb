@@ -1,5 +1,5 @@
 module CampusSolutions
-  class PostingProxy < IntegrationHubProxy
+  class PostingProxy < Proxy
 
     attr_reader :params
 

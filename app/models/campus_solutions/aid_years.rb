@@ -1,6 +1,7 @@
 module CampusSolutions
-  class AidYears < IntegrationHubProxy
+  class AidYears < Proxy
 
+    include IntegrationHubProxy
     include Cache::UserCacheExpiry
 
     def initialize(options = {})

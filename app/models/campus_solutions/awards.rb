@@ -1,6 +1,7 @@
 module CampusSolutions
-  class Awards < IntegrationHubProxy
+  class Awards < Proxy
 
+    include IntegrationHubProxy
     include Cache::UserCacheExpiry
 
     def initialize(options = {})
