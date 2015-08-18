@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe CampusSolutions::Posts::Email do
+describe CampusSolutions::Email do
 
   context 'post' do
     let(:params) { {} }
-    let(:fake_proxy) { CampusSolutions::Posts::Email.new(fake: true, user_id: random_id, params: params) }
+    let(:fake_proxy) { CampusSolutions::Email.new(fake: true, user_id: random_id, params: params) }
 
     context 'filtering out fields not on the whitelist' do
       let(:params) { {
@@ -58,7 +58,7 @@ describe CampusSolutions::Posts::Email do
       email: 'foo@foo.com',
       isPreferred: 'N'
     } }
-    let(:real_proxy) { CampusSolutions::Posts::Email.new(fake: false, user_id: random_id, params: params) }
+    let(:real_proxy) { CampusSolutions::Email.new(fake: false, user_id: random_id, params: params) }
 
     context 'performing a real post' do
       subject {

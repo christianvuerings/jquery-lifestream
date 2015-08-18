@@ -1,7 +1,7 @@
 class EmailController < CampusSolutionsController
 
   def post
-    post_passthrough CampusSolutions::Models::MyEmail
+    post_passthrough CampusSolutions::MyEmail
   end
 
 end
