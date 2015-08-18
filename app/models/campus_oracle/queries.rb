@@ -26,7 +26,7 @@ module CampusOracle
       result = []
       use_pooled_connection {
         sql = <<-SQL
-        select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations
+        select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.person_name, pi.email_address, pi.student_id, pi.affiliations
         from calcentral_person_info_vw pi
         where pi.ldap_uid in (#{up_to_1000_ldap_uids.collect { |id| id.to_i }.join(', ')})
         SQL

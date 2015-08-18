@@ -49,7 +49,8 @@ describe MyBadgesController do
     before do
       session['user_id'] = user_id
       expect(Settings.google_proxy).to receive(:fake).at_least(:once).and_return(true)
-      expect(Settings.app_alerts_proxy).to receive(:fake).at_least(:once).and_return(true)
+      expect(Settings.features).to receive('service_alerts_rss').and_return(true)
+      expect(Settings.service_alerts_proxy).to receive(:fake).at_least(:once).and_return(true)
       expect(Settings.bearfacts_proxy).to receive(:fake).at_least(:once).and_return(true)
     end
     it 'should not give a real user a cached censored feed' do

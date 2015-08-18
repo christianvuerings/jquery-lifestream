@@ -75,15 +75,6 @@ module UpNext
       location_subset
     end
 
-    def handle_organizer(entry_organizer)
-      begin
-        organizer = entry_organizer["displayName"] if entry_organizer
-        organizer ||= ""
-      rescue => e
-        logger.warn "#{self.class.name}: #{e} - Error handling organizer values #{entry_organizer}"
-        return ""
-      end
-    end
 
     def handle_start_end_all_day(start_date, end_date)
       result = {}
@@ -116,12 +107,12 @@ module UpNext
           next if is_declined_event?(entry)
 
           formatted_entry = {
-            :attendees => handle_attendees(entry["attendees"]),
-            :organizer => handle_organizer(entry["organizer"]),
-            :htmlLink => entry["htmlLink"] || "",
-            :status => entry["status"] || "",
-            :summary => entry["summary"] || "",
-            :hangoutLink => entry["hangoutLink"] || ""
+            :attendees => handle_contacts(entry['attendees']) || [],
+            :organizer => handle_contact(entry['organizer']) || '',
+            :htmlLink => entry['htmlLink'] || '',
+            :status => entry['status'] || '',
+            :summary => entry['summary'] || '',
+            :hangoutLink => entry['hangoutLink'] || ''
           }
 
           formatted_entry.merge! handle_location(entry["location"])
@@ -140,17 +131,17 @@ module UpNext
       timed_events.concat(day_events)
     end
 
-    # Split apart to keep process_events simple, and allow further munging on attendees in the future.
-    def handle_attendees(attendees)
-      result = []
-      if attendees.is_a?(Array)
-        result = attendees.map { |attendee|
-          if (attendee["displayName"] && !attendee["displayName"].blank?)
-            attendee["displayName"]
-          end
-        }
+    def handle_contact(contact)
+      if contact.try(:[], 'displayName').present?
+        contact['displayName']
+      elsif contact.try(:[], 'email').present?
+        contact['email']
       end
-      result
+    end
+
+    def handle_contacts(contacts)
+      return unless contacts.try(:any?)
+      contacts.map { |contact| handle_contact(contact) }.compact
     end
 
     def is_declined_event?(entry)

@@ -97,11 +97,19 @@ ldap:
 google_proxy:
   client_id: 1
   client_secret: 'someMumboJumbo'
+  scope: 'profile email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive.readonly.metadata https://mail.google.com/mail/feed/atom/'
   fake: false
   #Maps to tammi.chang.clc@gmail.com. Used for testing + recording responses
   test_user_access_token: "someMumboJumbo"
   test_user_refresh_token: "someMumboJumbo"
   atom_mail_feed_url: "https://mail.google.com/mail/feed/atom/"
+  oec:
+    client_id: 'moreMumboJumbo'
+    client_secret: 'moreMumboJumbo'
+    access_token: 'tokenThis'
+    refresh_token: 'tokenThat'
+    scope: 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.apps.readonly'
+
 sakai_proxy:
   host: "https://sakai-dev.berkeley.edu"
   fake: false
@@ -168,7 +176,7 @@ audio_proxy:
 
 blog_latest_release_notes_feed_proxy:
   fake: false
-  base_url: "https://ets.berkeley.edu/taxonomy/term/788/all/feed"
+  base_url: "https://www.ets.berkeley.edu/news-archive/calcentral-release-notes/feed"
 
 app_alerts_proxy:
   fake: false
@@ -176,7 +184,7 @@ app_alerts_proxy:
 
 service_alerts_proxy:
   fake: false
-  base_url: 'https://test-ets.pantheon.berkeley.edu/news-archive/calcentral-service-alert/feed'
+  base_url: 'http://www.ets.berkeley.edu/news-archive/calcentral-service-alert/feed'
 
 cal1card_proxy:
   fake: false
@@ -257,6 +265,7 @@ cache:
 
     Textbooks::Proxy: <%= 24.hours %>
     EtsBlog::Alerts: <%= 2.minutes %>
+    EtsBlog::ServiceAlerts: <%= 2.minutes %>
 
     CampusSolutions::TermsAndConditions: <%= 1.seconds %>
     CampusSolutions::Title4: <%= 1.seconds %>
@@ -304,7 +313,7 @@ features:
   spamChristian: false
   cs_fin_aid: false
   webcast_sign_up_on_calcentral: false
-  service_alerts_rss: false
+  service_alerts_rss: true
 
 youtube_splash_id: 'EQ-a7xrfVag'
 

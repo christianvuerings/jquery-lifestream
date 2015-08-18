@@ -120,7 +120,7 @@ describe 'My Dashboard Up Next card', :testui => true do
 
       it 'shows event organizers' do
         logger.info("#{@up_next_card.all_event_organizers}")
-        expect(@up_next_card.all_event_organizers).to eql(@initial_event_organizers.push('ETS Quality').sort)
+        expect(@up_next_card.all_event_organizers).to eql(@initial_event_organizers.push(UserUtils.qa_gmail_username).sort)
       end
 
     end

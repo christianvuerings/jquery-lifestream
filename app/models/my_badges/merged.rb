@@ -21,7 +21,7 @@ module MyBadges
         badges: get_google_badges,
         studentInfo: StudentInfo.new(@uid).get
       }
-      feed[:alert] = EtsBlog::Alerts.new.get_latest
+      feed[:alert] = get_latest_alert
       logger.debug "#{self.class.name} get_feed is #{feed.inspect}"
       feed
     end
@@ -46,6 +46,14 @@ module MyBadges
         end
       end
       badges
+    end
+
+    def get_latest_alert
+      if Settings.features.service_alerts_rss
+        EtsBlog::ServiceAlerts.new.get_latest
+      else
+        EtsBlog::Alerts.new.get_latest
+      end
     end
 
   end
