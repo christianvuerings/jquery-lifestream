@@ -1,0 +1,15 @@
+.cc-widget-finaid-coa {
+  .cc-widget-finaid-coa-budget-total-title {
+    color: $cc-color-lighter-medium-grey;
+  }
+  .cc-widget-finaid-coa-table {
+    &:not(:last-child) {
+      margin-bottom: 15px;
+    }
+    &:last-child td {
+      border-top: 1px solid $cc-color-popover-border;
+      font-weight: bold;
+      padding-top: 5px;
+    }
+  }
+}
