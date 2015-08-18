@@ -91,11 +91,7 @@ class GoogleAuthController < ApplicationController
       :controller => 'google_auth',
       :action => 'handle_callback')
     client.state = Base64.encode64 final_redirect
-    client.scope = ['profile', 'email',
-                    'https://www.googleapis.com/auth/calendar',
-                    'https://www.googleapis.com/auth/tasks',
-                    'https://www.googleapis.com/auth/drive.readonly.metadata',
-                    'https://mail.google.com/mail/feed/atom/']
+    client.scope = Settings.google_proxy.scope
     client
   end
 
