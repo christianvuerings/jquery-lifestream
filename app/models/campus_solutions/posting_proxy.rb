@@ -9,6 +9,10 @@ module CampusSolutions
       initialize_mocks if @fake
     end
 
+    def self.expires_in
+      1.seconds
+    end
+
     def mock_request
       super.merge(method: :post)
     end
