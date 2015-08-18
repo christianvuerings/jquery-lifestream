@@ -408,3 +408,8 @@ slate_checklist_proxy:
   username: secret
   password: secret
 
+hub_edos_proxy:
+  fake: true
+  base_url: 'https://apis.berkeley.edu/something'
+  username: secret
+  password: secret

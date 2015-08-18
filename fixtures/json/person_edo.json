@@ -1,0 +1,217 @@
+{
+  "person": {
+    "identifiers": {
+      "identifier": [
+        {
+          "type": "CalNet UID",
+          "id": "61889",
+          "isDisclose": true,
+          "fromDate": "2017-02-17"
+        },
+        {
+          "type": "Student ID",
+          "id": "11667051",
+          "isDisclose": false,
+          "fromDate": "2016-05-28"
+        },
+        {
+          "type": "SSN",
+          "id": "123-45-6789",
+          "isDisclose": false,
+          "fromDate": "1975-02-05"
+        }
+      ]
+    },
+    "names": {
+      "name": [
+        {
+          "type": "Official",
+          "familyName": "Bear",
+          "givenName": "Oski",
+          "middleName": "Q.",
+          "suffixName": "III",
+          "formattedName": "Oski Q. Bear III",
+          "isPreferred": false,
+          "isDisclose": false,
+          "fromDate": "1975-02-05"
+        },
+        {
+          "type": "Preferred",
+          "familyName": "Bear",
+          "givenName": "Oski",
+          "formattedName": "Oski Bear",
+          "isPreferred": true,
+          "isDisclose": true,
+          "fromDate": "1975-02-05"
+        }
+      ]
+    },
+    "gender": {
+      "code": "M",
+      "description": "male",
+      "isDisclose": true
+    },
+    "affiliations": {
+      "affiliation": {
+        "type": "Student",
+        "status": "Inactive",
+        "fromDate": "2014-05-15"
+      }
+    },
+    "addresses": {
+      "address": [
+        {
+          "type": "Mailing",
+          "street1": "120 Sproul Hall",
+          "locality": "Berkeley",
+          "region": "CA",
+          "postalCode": "94720",
+          "country": "USA",
+          "formattedAddress": "120 Sproul Hall\\nBerkeley, CA 94720",
+          "isPrimary": true,
+          "isDisclose": false,
+          "fromDate": "2014-08-18"
+        },
+        {
+          "type": "Home",
+          "street1": "2111 Bancroft Way #550",
+          "locality": "Berkeley",
+          "region": "CA",
+          "postalCode": "94720",
+          "country": "USA",
+          "formattedAddress": "2111 Bancroft Way #550\\nBerkeley, CA 94720",
+          "isPrimary": false,
+          "isDisclose": false,
+          "fromDate": "2013-10-31"
+        }
+      ]
+    },
+    "phones": {
+      "phone": [
+        {
+          "type": "Mobile",
+          "number": "510-555-1212",
+          "isPrimary": true,
+          "isDisclose": false,
+          "fromDate": "2014-08-18"
+        },
+        {
+          "type": "Home",
+          "number": "510-555-9500",
+          "isPrimary": false,
+          "isDisclose": false,
+          "fromDate": "2013-10-31"
+        }
+      ]
+    },
+    "emails": {
+      "email": [
+        {
+          "type": "Official",
+          "emailAddress": "oski@berkeley.edu",
+          "isPrimary": true,
+          "isDisclose": true,
+          "fromDate": "2013-10-31"
+        },
+        {
+          "type": "Personal",
+          "emailAddress": "oskibear@gmail.com",
+          "isPrimary": false,
+          "isDisclose": false,
+          "fromDate": "2000-08-15"
+        }
+      ]
+    },
+    "urls": {
+      "url": {
+        "type": "Social",
+        "url": "https://www.facebook.com/cal.oski.bear",
+        "isPrimary": false,
+        "isDisclose": true,
+        "fromDate": "2014-08-01"
+      }
+    },
+    "photos": {
+      "photo": {
+        "type": "Profile",
+        "url": "htt//calspirit.berkeley.edu/oski/images/oskibio.jpg",
+        "isPrimary": false,
+        "isDisclose": true,
+        "fromDate": "2014-08-01"
+      }
+    },
+    "ethnicities": {
+      "ethnicity": {
+        "code": "101",
+        "group": "Grizzly",
+        "isHispLatino": false
+      }
+    },
+    "languages": {
+      "language": {
+        "code": "LEN",
+        "name": "English",
+        "isNative": true,
+        "isTranslate": false,
+        "isTeach": true,
+        "speakingProficiency": {
+          "description": "high"
+        },
+        "readingProficiency": {
+          "description": "high"
+        },
+        "writingProficiency": {
+          "description": "medium"
+        },
+        "evaluationDate": "2012-11-27"
+      }
+    },
+    "usaCountry": {
+      "citizenshipStatus": {
+        "description": "Native"
+      },
+      "militaryStatus": {
+        "description": "Veteran"
+      },
+      "passport": {
+        "type": "USA Passport",
+        "identifier": 496978123,
+        "status": "Active",
+        "dateIssued": "2012-09-27",
+        "issuingAuthority": "US Dept. of State",
+        "expirationDate": "2022-09-27"
+      }
+    },
+    "emergencyContacts": {
+      "emergencyContact": {
+        "name": {
+          "type": "Emergency",
+          "familyName": "Bear",
+          "givenName": "Ursa",
+          "formattedName": "Ursa Bear"
+        },
+        "address": {
+          "type": "Emergency",
+          "street1": "656 H St.",
+          "locality": "Arcata",
+          "region": "CA",
+          "postalCode": "95521",
+          "country": "USA",
+          "formattedAddress": "656 H St.\\nArcata, CA 95521"
+        },
+        "phone": {
+          "type": "Emergency",
+          "number": "707-825-3865"
+        },
+        "relationship": "sister",
+        "isPreferred": true
+      }
+    },
+    "birth": {
+      "date": "1975-02-05",
+      "locality": "Yosemite",
+      "region": "California",
+      "country": "USA"
+    }
+  }
+}
