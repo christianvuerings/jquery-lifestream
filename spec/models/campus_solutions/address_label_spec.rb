@@ -6,8 +6,10 @@ describe CampusSolutions::AddressLabel do
     subject { proxy.get }
     it_should_behave_like 'a simple proxy that returns errors'
 
-    it 'returns JSON fixture data by default' do
-      expect(subject[:feed][:addressFormat]).to be
+    it 'returns data with the expected structure' do
+      expect(subject[:feed][:labels]).to be
+      expect(subject[:feed][:labels][0][:label]).to be
+      expect(subject[:feed][:labels][0][:field]).to be
     end
   end
 

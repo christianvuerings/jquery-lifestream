@@ -6,7 +6,7 @@ describe CampusSolutions::AidYears do
     let(:fake_proxy) { CampusSolutions::AidYears.new(fake: true) }
     let(:feed) { fake_proxy.get[:feed] }
 
-    it 'returns JSON fixture data by default' do
+    it 'returns data with the expected structure' do
       expect(feed['finaidSummary']['finaidYears']).to be
     end
     it 'can be overridden to return errors' do

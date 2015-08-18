@@ -8,7 +8,7 @@ describe CampusSolutions::Budget do
     let(:fake_proxy) { CampusSolutions::Budget.new(user_id: oski_uid, fake: true) }
     let(:feed) { fake_proxy.get[:feed] }
 
-    it 'returns JSON fixture data by default' do
+    it 'returns data with the expected structure' do
       expect(feed[:ucStdntBudDtlResp]).to be
     end
 

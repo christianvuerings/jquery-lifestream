@@ -6,8 +6,9 @@ describe CampusSolutions::NameType do
     subject { proxy.get }
     it_should_behave_like 'a simple proxy that returns errors'
 
-    it 'returns JSON fixture data by default' do
+    it 'returns data with the expected structure' do
       expect(subject[:feed][:nameTypes]).to be
+      expect(subject[:feed][:nameTypes][0][:nameTypeDescr]).to eq 'Preferred'
     end
   end
 

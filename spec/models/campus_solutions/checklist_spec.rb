@@ -8,7 +8,7 @@ describe CampusSolutions::Checklist do
     let(:fake_proxy) { CampusSolutions::Checklist.new(user_id: oski_uid, fake: true) }
     let(:feed) { fake_proxy.get[:feed] }
 
-    it 'returns JSON fixture data by default' do
+    it 'returns data with the expected structure' do
       expect(feed[:personChklstItem][0][:emplid]).to eq '3030000004'
     end
     it 'can be overridden to return errors' do

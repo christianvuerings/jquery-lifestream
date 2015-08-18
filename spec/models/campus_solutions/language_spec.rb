@@ -6,8 +6,9 @@ describe CampusSolutions::Language do
     subject { proxy.get }
     it_should_behave_like 'a simple proxy that returns errors'
 
-    it 'returns JSON fixture data by default' do
+    it 'returns data with the expected structure' do
       expect(subject[:feed][:accomplishments]).to be
+      expect(subject[:feed][:accomplishments][0][:descr]).to eq 'Afrikaans'
     end
   end
 

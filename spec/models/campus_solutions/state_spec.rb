@@ -6,7 +6,7 @@ describe CampusSolutions::State do
     subject { proxy.get }
     it_should_behave_like 'a simple proxy that returns errors'
 
-    it 'returns JSON fixture data by default' do
+    it 'returns data with the expected structure' do
       expect(subject[:feed][:states]).to be
       expect(subject[:feed][:states][0][:state]).to eq 'MT'
     end

@@ -6,8 +6,10 @@ describe CampusSolutions::Translate do
     subject { proxy.get }
     it_should_behave_like 'a simple proxy that returns errors'
 
-    it 'returns JSON fixture data by default' do
+    it 'returns data with the expected structure' do
       expect(subject[:feed][:xlatvalues]).to be
+      expect(subject[:feed][:xlatvalues][:values][0][:fieldvalue]).to eq 'CELL'
+      expect(subject[:feed][:xlatvalues][:values][0][:xlatlongname]).to eq 'Mobile'
     end
   end
 

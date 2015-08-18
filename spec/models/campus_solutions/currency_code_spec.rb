@@ -6,8 +6,10 @@ describe CampusSolutions::CurrencyCode do
     subject { proxy.get }
     it_should_behave_like 'a simple proxy that returns errors'
 
-    it 'returns JSON fixture data by default' do
+    it 'returns data with the expected structure' do
       expect(subject[:feed][:currencyCodes]).to be
+      expect(subject[:feed][:currencyCodes][0][:currencyCd]).to eq 'AWG'
+      expect(subject[:feed][:currencyCodes][0][:descr]).to eq 'Aruban Guilder'
     end
   end
 
