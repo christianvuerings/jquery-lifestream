@@ -21,7 +21,7 @@ module CampusSolutions
     end
 
     def xml_filename
-      'posts/email.xml'
+      'email.xml'
     end
 
     def default_post_params

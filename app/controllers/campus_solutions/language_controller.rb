@@ -4,4 +4,8 @@ class LanguageController < CampusSolutionsController
     json_passthrough CampusSolutions::Language
   end
 
+  def post
+    post_passthrough CampusSolutions::MyLanguagePost
+  end
+
 end
