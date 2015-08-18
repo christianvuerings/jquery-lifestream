@@ -6,27 +6,8 @@ var angular = require('angular');
 /**
  * Profile controller
  */
-angular.module('calcentral.controllers').controller('ProfileController', function(apiService, $routeParams, $scope) {
-  var navigation = [{
-    'label': 'Profile',
-    'categories': [{
-      'id': 'basic',
-      'name': 'Basic Information'
-    },{
-      'id': 'contact',
-      'name': 'Contact Information'
-    },{
-      'id': 'academic',
-      'name': 'Academic Information'
-    }]
-  },
-  {
-    'label': 'Alerts & Notifications',
-    'categories': [{
-      'id': 'bconnected',
-      'name': 'bConnected'
-    }]
-  }];
+angular.module('calcentral.controllers').controller('ProfileController', function(apiService, profileMenuService, $routeParams, $scope) {
+  var navigation = profileMenuService.navigation;
 
   /**
    * Find the category object when we get a categoryId back
@@ -52,7 +33,7 @@ angular.module('calcentral.controllers').controller('ProfileController', functio
    * Set the page title
    */
   var setPageTitle = function() {
-    var title = $scope.header + ' - ' + $scope.currentCategory.name;
+    var title = $scope.currentCategory.name + ' - ' + $scope.header;
     apiService.util.setTitle(title);
   };
 
