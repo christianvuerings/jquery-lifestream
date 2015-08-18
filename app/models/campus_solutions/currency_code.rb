@@ -1,8 +1,8 @@
 module CampusSolutions
-  class Country < DirectProxy
+  class CurrencyCode < DirectProxy
 
     def xml_filename
-      'country.xml'
+      'currency_code.xml'
     end
 
     def build_feed(response)
@@ -11,7 +11,7 @@ module CampusSolutions
     end
 
     def url
-      "#{@settings.base_url}/UC_COUNTRY.v1/country/get"
+      "#{@settings.base_url}/UC_CC_CURRENCY_CD.v1/Currency_Cd/Get"
     end
 
   end

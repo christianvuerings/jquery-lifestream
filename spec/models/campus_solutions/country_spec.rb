@@ -6,9 +6,11 @@ describe CampusSolutions::Country do
     subject { proxy.get }
     it_should_behave_like 'a simple proxy that returns errors'
 
-    it 'returns JSON fixture data by default' do
+    it 'returns data with the expected structure' do
       expect(subject[:feed][:countries]).to be
       expect(subject[:feed][:countries][0][:country]).to eq 'BGD'
+      expect(subject[:feed][:countries][0][:descr]).to eq 'Bangladesh'
+      expect(subject[:feed][:countries][0][:country2char]).to eq 'BD'
     end
   end
 

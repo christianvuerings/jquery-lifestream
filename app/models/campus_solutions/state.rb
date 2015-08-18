@@ -3,7 +3,7 @@ module CampusSolutions
 
     def initialize(options = {})
       super options
-      @country = options[:country] || 'USA'
+      @country = options[:country]
       initialize_mocks if @fake
     end
 

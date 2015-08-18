@@ -1,24 +1,24 @@
 require 'spec_helper'
 
-describe CampusSolutions::State do
+describe CampusSolutions::NameType do
 
   shared_examples 'a proxy that gets data' do
     subject { proxy.get }
     it_should_behave_like 'a simple proxy that returns errors'
 
     it 'returns data with the expected structure' do
-      expect(subject[:feed][:states]).to be
-      expect(subject[:feed][:states][0][:state]).to eq 'MT'
+      expect(subject[:feed][:nameTypes]).to be
+      expect(subject[:feed][:nameTypes][0][:nameTypeDescr]).to eq 'Preferred'
     end
   end
 
   context 'mock proxy' do
-    let(:proxy) { CampusSolutions::State.new(fake: true, country: 'USA') }
+    let(:proxy) { CampusSolutions::NameType.new(fake: true) }
     it_should_behave_like 'a proxy that gets data'
   end
 
   context 'real proxy', testext: true do
-    let(:proxy) { CampusSolutions::State.new(fake: false, country: 'USA') }
+    let(:proxy) { CampusSolutions::NameType.new(fake: false) }
     it_should_behave_like 'a proxy that gets data'
   end
 

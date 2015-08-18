@@ -6,7 +6,7 @@ describe CampusSolutions::FinancialAidData do
     let(:fake_proxy) { CampusSolutions::FinancialAidData.new(fake: true) }
     let(:feed) { fake_proxy.get[:feed] }
 
-    it 'returns JSON fixture data by default' do
+    it 'returns data with the expected structure' do
       expect(feed['coa']).to be
       expect(feed['status']).to be
     end
