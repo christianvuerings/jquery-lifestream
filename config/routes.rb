@@ -149,6 +149,9 @@ Calcentral::Application.routes.draw do
   post '/api/campus_solutions/terms_and_conditions' => 'terms_and_conditions#post', :via => :post, :defaults => { :format => 'json' }
   post '/api/campus_solutions/title4' => 'title4#post', :via => :post, :defaults => { :format => 'json' }
 
+  # EDOs from integration hub
+  get '/api/edos/person' => 'hub_edo#person', :via => :get, :defaults => { :format => 'json' }
+
   # All the other paths should use the bootstrap page
   # We need this because we use html5mode=true
   #
