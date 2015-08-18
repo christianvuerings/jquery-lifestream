@@ -52,7 +52,7 @@ describe CampusSolutions::Email do
     end
   end
 
-  context 'with a real external service' do # , :testext => true do
+  context 'with a real external service', :testext => true do
     let(:params) { {
       type: 'CAMP',
       email: 'foo@foo.com',
