@@ -16,6 +16,9 @@ DROP INDEX public.index_fin_aid_years_on_current_year;
 ALTER TABLE ONLY public.user_roles DROP CONSTRAINT user_roles_pkey;
 ALTER TABLE ONLY public.user_auths DROP CONSTRAINT user_auths_pkey;
 ALTER TABLE ONLY public.summer_sub_terms DROP CONSTRAINT summer_sub_terms_pkey;
+DROP INDEX public.index_oec_course_codes_on_dept_name_and_catalog_id;
+DROP INDEX public.index_oec_course_codes_on_dept_code;
+ALTER TABLE ONLY public.oec_course_codes DROP CONSTRAINT oec_course_codes_pkey;
 ALTER TABLE ONLY public.links DROP CONSTRAINT links_pkey;
 ALTER TABLE ONLY public.link_sections DROP CONSTRAINT link_sections_pkey;
 ALTER TABLE ONLY public.link_categories DROP CONSTRAINT link_categories_pkey;
@@ -23,6 +26,7 @@ ALTER TABLE ONLY public.fin_aid_years DROP CONSTRAINT fin_aid_years_pkey;
 ALTER TABLE public.user_roles ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.user_auths ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.summer_sub_terms ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.oec_course_codes ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.links ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.link_sections ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.link_categories ALTER COLUMN id DROP DEFAULT;
@@ -33,6 +37,8 @@ DROP SEQUENCE public.user_auths_id_seq;
 DROP TABLE public.user_auths;
 DROP SEQUENCE public.summer_sub_terms_id_seq;
 DROP TABLE public.summer_sub_terms;
+DROP SEQUENCE public.oec_course_codes_id_seq;
+DROP TABLE public.oec_course_codes;
 DROP TABLE public.links_user_roles;
 DROP SEQUENCE public.links_id_seq;
 DROP TABLE public.links;
@@ -219,7 +225,7 @@ CREATE TABLE links_user_roles (
 CREATE TABLE oec_course_codes (
     id integer NOT NULL,
     dept_name character varying(255) NOT NULL,
-    catalog_id character varying(255),
+    catalog_id character varying(255) NOT NULL,
     dept_code character varying(255) NOT NULL,
     include_in_oec boolean NOT NULL,
     created_at timestamp without time zone,
