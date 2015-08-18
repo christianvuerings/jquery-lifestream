@@ -21,7 +21,7 @@ module CampusSolutions
     end
 
     def url
-      "#{@settings.base_url}/UC_CM_XLAT_VALUES.v1//GetXlats?FIELDNAME=#{@field_name}"
+      "#{@settings.base_url}/UC_CM_XLAT_VALUES.v1/GetXlats?FIELDNAME=#{@field_name}"
     end
 
   end
