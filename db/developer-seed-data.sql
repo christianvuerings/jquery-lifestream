@@ -383,6 +383,13 @@ ALTER TABLE ONLY links ALTER COLUMN id SET DEFAULT nextval('links_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY oec_course_codes ALTER COLUMN id SET DEFAULT nextval('oec_course_codes_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY summer_sub_terms ALTER COLUMN id SET DEFAULT nextval('summer_sub_terms_id_seq'::regclass);
 
 
@@ -1938,7 +1945,7 @@ ALTER TABLE ONLY links
 --
 
 ALTER TABLE ONLY oec_course_codes
-ADD CONSTRAINT oec_course_codes_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT oec_course_codes_pkey PRIMARY KEY (id);
 
 
 --
