@@ -143,6 +143,7 @@ Calcentral::Application.routes.draw do
   get '/api/campus_solutions/translate' => 'translate#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/address' => 'address#get', :via => :get, :defaults => { :format => 'json' }
   post '/api/campus_solutions/address' => 'address#post', :via => :post, :defaults => { :format => 'json' }
+  post '/api/campus_solutions/email' => 'email#post', :via => :post, :defaults => { :format => 'json' }
   get '/api/campus_solutions/aid_years' => 'aid_years#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/financial_aid_data' => 'financial_aid_data#get', :via => :get, :defaults => { :format => 'json' }
   post '/api/campus_solutions/terms_and_conditions' => 'terms_and_conditions#post', :via => :post, :defaults => { :format => 'json' }

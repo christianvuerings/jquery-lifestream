@@ -1,6 +1,7 @@
 module CampusSolutions
   class Address < PostingProxy
 
+    include IntegrationHubProxy
     include Cache::UserCacheExpiry
 
     def self.field_mappings

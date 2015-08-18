@@ -1,14 +1,14 @@
 module CampusSolutions
-  class IntegrationHubProxy < Proxy
+  module IntegrationHubProxy
 
     # TODO make year dynamic (default to current aid year)
     def request_options
-      {
+      super.merge({
         query: {
           'app_id' => @settings.app_id,
           'app_key' => @settings.app_key
         }
-      }
+      })
     end
 
     # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID

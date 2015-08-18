@@ -14,12 +14,12 @@ describe CampusSolutions::Translate do
   end
 
   context 'mock proxy' do
-    let(:proxy) { CampusSolutions::Translate.new(fake: true, country: 'USA') }
+    let(:proxy) { CampusSolutions::Translate.new(fake: true, field_name: 'PHONE_TYPE') }
     it_should_behave_like 'a proxy that gets data'
   end
 
   context 'real proxy', testext: true do
-    let(:proxy) { CampusSolutions::Translate.new(fake: false, country: 'USA') }
+    let(:proxy) { CampusSolutions::Translate.new(fake: false, field_name: 'PHONE_TYPE') }
     it_should_behave_like 'a proxy that gets data'
   end
 
