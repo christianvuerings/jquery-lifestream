@@ -1,18 +1,40 @@
-<div class="cc-widget-text" data-ng-controller="ContactController">
+<div class="cc-widget-text" data-ng-controller="ContactController" data-cc-spinner-directive>
 
-  <div class="cc-table cc-table-top-border" data-ng-if="api.user.profile.googleEmail">
+  <!-- Phone Number -->
+  <div class="cc-table cc-table-top-border">
     <table>
       <tr>
-        <th scope="row" width="30%" class="cc-table-right-spacing cc-nowrap">Email</th>
-        <td data-ng-bind="api.user.profile.googleEmail"></td>
+        <th scope="row" width="25%" class="cc-table-right-spacing cc-nowrap">Phone Number</th>
+        <td></td>
+        <td class="cc-table-right">
+          <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
+        </td>
       </tr>
     </table>
   </div>
 
+  <!-- Email -->
+  <div class="cc-table cc-table-top-border" data-ng-if="api.user.profile.googleEmail">
+    <table>
+      <tr>
+        <th scope="row" width="25%" class="cc-table-right-spacing cc-nowrap">Email</th>
+        <td>
+          <strong>Campus Email</strong>
+          <div data-ng-bind="api.user.profile.googleEmail"></div>
+          <button class="cc-button-link">Edit</strong>
+        </td>
+        <td class="cc-table-right">
+          <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Address -->
   <div class="cc-table cc-table-top-border">
     <table>
       <tr>
-        <th scope="row" width="30%" class="cc-table-right-spacing cc-nowrap">Mailing Address</th>
+        <th scope="row" width="25%" class="cc-table-right-spacing cc-nowrap">Address</th>
         <td>
           <div data-ng-repeat="address in addresses">
             <div>
@@ -27,7 +49,7 @@
           <div>
         </td>
         <td class="cc-table-right">
-          <button class="cc-button-link">Edit</button>
+          <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
         </td>
       </tr>
     </table>
