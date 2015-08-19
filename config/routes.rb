@@ -139,8 +139,10 @@ Calcentral::Application.routes.draw do
   get '/api/campus_solutions/address_type' => 'address_type#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/name_type' => 'name_type#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/currency_code' => 'currency_code#get', :via => :get, :defaults => { :format => 'json' }
-  get '/api/campus_solutions/language' => 'language#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/language_code' => 'language_code#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/translate' => 'translate#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/aid_years' => 'aid_years#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/financial_aid_data' => 'financial_aid_data#get', :via => :get, :defaults => { :format => 'json' }
   post '/api/campus_solutions/address' => 'address#post', :via => :post, :defaults => { :format => 'json' }
   post '/api/campus_solutions/email' => 'email#post', :via => :post, :defaults => { :format => 'json' }
   post '/api/campus_solutions/person_name' => 'person_name#post', :via => :post, :defaults => { :format => 'json' }
@@ -148,8 +150,6 @@ Calcentral::Application.routes.draw do
   post '/api/campus_solutions/emergency_contact' => 'emergency_contact#post', :via => :post, :defaults => { :format => 'json' }
   post '/api/campus_solutions/language' => 'language#post', :via => :post, :defaults => { :format => 'json' }
   post '/api/campus_solutions/work_experience' => 'work_experience#post', :via => :post, :defaults => { :format => 'json' }
-  get '/api/campus_solutions/aid_years' => 'aid_years#get', :via => :get, :defaults => { :format => 'json' }
-  get '/api/campus_solutions/financial_aid_data' => 'financial_aid_data#get', :via => :get, :defaults => { :format => 'json' }
   post '/api/campus_solutions/terms_and_conditions' => 'terms_and_conditions#post', :via => :post, :defaults => { :format => 'json' }
   post '/api/campus_solutions/title4' => 'title4#post', :via => :post, :defaults => { :format => 'json' }
 

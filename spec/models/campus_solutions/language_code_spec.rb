@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CampusSolutions::Language do
+describe CampusSolutions::LanguageCode do
 
   shared_examples 'a proxy that gets data' do
     subject { proxy.get }
@@ -13,12 +13,12 @@ describe CampusSolutions::Language do
   end
 
   context 'mock proxy' do
-    let(:proxy) { CampusSolutions::Language.new(fake: true) }
+    let(:proxy) { CampusSolutions::LanguageCode.new(fake: true) }
     it_should_behave_like 'a proxy that gets data'
   end
 
   context 'real proxy', testext: true do
-    let(:proxy) { CampusSolutions::Language.new(fake: false) }
+    let(:proxy) { CampusSolutions::LanguageCode.new(fake: false) }
     it_should_behave_like 'a proxy that gets data'
   end
 

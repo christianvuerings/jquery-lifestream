@@ -1,8 +1,8 @@
 module CampusSolutions
-  class Language < DirectProxy
+  class LanguageCode < DirectProxy
 
     def xml_filename
-      'language.xml'
+      'language_code.xml'
     end
 
     def build_feed(response)
