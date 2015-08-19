@@ -1,33 +1,6 @@
 <?xml version="1.0"?>
-<UC_PER_ADDR_GET_RESP xmlns="http://bcs.is.berkeley.edu">
+<UC_PER_ADDR_UPD_POST_RESP xmlns="http://bcs.is.berkeley.edu">
   <ADDRESS>
-    <EMPLID>00000176</EMPLID>
-    <ADDRESS_TYPE>ISIR</ADDRESS_TYPE>
-    <ADDRESS_TYPE_DESCR>FA ISIR Address</ADDRESS_TYPE_DESCR>
-    <EFFDT>2015-04-27</EFFDT>
-    <EFF_STATUS>A</EFF_STATUS>
-    <COUNTRY>USA</COUNTRY>
-    <ADDRESS1>27763 Melbourne Avenue</ADDRESS1>
-    <ADDRESS2></ADDRESS2>
-    <ADDRESS3></ADDRESS3>
-    <ADDRESS4></ADDRESS4>
-    <CITY>Hayward</CITY>
-    <STATE>CA</STATE>
-    <POSTAL>94545</POSTAL>
+    <Status>Successfully posted the address for emplid 13155051 for address type MAIL for effdt</Status>
   </ADDRESS>
-  <ADDRESS>
-    <EMPLID>00000176</EMPLID>
-    <ADDRESS_TYPE>LOCL</ADDRESS_TYPE>
-    <ADDRESS_TYPE_DESCR>Local</ADDRESS_TYPE_DESCR>
-    <EFFDT>2015-04-07</EFFDT>
-    <EFF_STATUS>A</EFF_STATUS>
-    <COUNTRY>USA</COUNTRY>
-    <ADDRESS1>27763 Melbourne Avenue</ADDRESS1>
-    <ADDRESS2></ADDRESS2>
-    <ADDRESS3></ADDRESS3>
-    <ADDRESS4></ADDRESS4>
-    <CITY>Hayward</CITY>
-    <STATE>CA</STATE>
-    <POSTAL>94545</POSTAL>
-  </ADDRESS>
-</UC_PER_ADDR_GET_RESP>
+</UC_PER_ADDR_UPD_POST_RESP>

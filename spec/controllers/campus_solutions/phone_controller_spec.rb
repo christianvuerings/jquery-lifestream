@@ -1,8 +1,7 @@
 require 'spec_helper'
 
-describe LanguageController do
-
-  context 'updating language' do
+describe PhoneController do
+  context 'updating phone' do
     it 'should not let an unauthenticated user post' do
       post :post, {format: 'json', uid: '100'}
       expect(response.status).to eq 401
@@ -17,13 +16,11 @@ describe LanguageController do
         post :post,
              {
                bogus_field: 'abc',
-               languageCode: 'EN',
-               isNative: 'N',
-               isTranslateToNative: 'N',
-               isTeachLanguage: 'N',
-               speakProf: '1',
-               readProf: '2',
-               teachLang: '3'
+               type: 'CELL',
+               phone: '9949919892',
+               countryCode: '91',
+               extension: '23',
+               isPreferred: 'N'
              }
         expect(response.status).to eq 200
         json = JSON.parse(response.body)
@@ -33,6 +30,4 @@ describe LanguageController do
       end
     end
   end
-
 end
-
