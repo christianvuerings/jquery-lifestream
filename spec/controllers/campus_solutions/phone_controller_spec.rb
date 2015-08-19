@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe AddressController do
-  context 'updating address' do
+describe PhoneController do
+  context 'updating phone' do
     it 'should not let an unauthenticated user post' do
       post :post, {format: 'json', uid: '100'}
       expect(response.status).to eq 401
@@ -16,19 +16,17 @@ describe AddressController do
         post :post,
              {
                bogus_field: 'abc',
-               addressType: 'HOME',
-               address1: '1 Test Lane',
-               address2: 'peters road',
-               city: 'ventura',
-               state: 'CA',
-               postal: '93001',
-               country: 'USA'
+               type: 'CELL',
+               phone: '9949919892',
+               countryCode: '91',
+               extension: '23',
+               isPreferred: 'N'
              }
         expect(response.status).to eq 200
         json = JSON.parse(response.body)
         expect(json['statusCode']).to eq 200
         expect(json['feed']).to be
-        expect(json['feed']['address']).to be
+        expect(json['feed']['status']).to be
       end
     end
   end

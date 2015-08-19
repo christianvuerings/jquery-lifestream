@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe AddressController do
-  context 'updating address' do
+describe PersonNameController do
+  context 'updating name' do
     it 'should not let an unauthenticated user post' do
       post :post, {format: 'json', uid: '100'}
       expect(response.status).to eq 401
@@ -16,19 +16,28 @@ describe AddressController do
         post :post,
              {
                bogus_field: 'abc',
-               addressType: 'HOME',
-               address1: '1 Test Lane',
-               address2: 'peters road',
-               city: 'ventura',
-               state: 'CA',
-               postal: '93001',
-               country: 'USA'
+               type: 'LEG',
+               firstName: 'Joe',
+               lastName: 'Test',
+               initials: 'JT',
+               prefix: 'Mr',
+               suffix: '',
+               royalPrefix: '',
+               royalSuffix: '',
+               title: '',
+               middleName: '',
+               secondLastName: '',
+               ac: '',
+               preferredFirstName: '',
+               partnerLastName: '',
+               partnerRoyalPrefix: '',
+               lastNamePrefNld: ''
              }
         expect(response.status).to eq 200
         json = JSON.parse(response.body)
         expect(json['statusCode']).to eq 200
         expect(json['feed']).to be
-        expect(json['feed']['address']).to be
+        expect(json['feed']['status']).to be
       end
     end
   end
