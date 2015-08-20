@@ -5,18 +5,9 @@ var angular = require('angular');
 /**
  * Contact controller
  */
-angular.module('calcentral.controllers').controller('ContactController', function(contactFactory, $scope, $q) {
-  $scope.contacts = {};
-
+angular.module('calcentral.controllers').controller('ContactController', function(profileFactory, $scope) {
   var loadContactInformation = function() {
-    $q.all([
-      contactFactory.getEmails()
-    ]).then(function(data) {
-      for (var i = 0; i < data.length; i++) {
-        if (data[i].data && data[i].data.feed) {
-          angular.extend($scope.contacts, data[i].data.feed);
-        }
-      }
+    profileFactory.getPerson().then(function() {
       $scope.isLoading = false;
     });
   };
