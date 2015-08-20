@@ -19,7 +19,7 @@ angular.module('calcentral.controllers').controller('ProfilePhoneController', fu
       var person = data.data.feed.person;
       angular.extend($scope, {
         phones: {
-          content: person.phones.phone
+          content: person.phones
         }
       });
       $scope.isLoading = false;

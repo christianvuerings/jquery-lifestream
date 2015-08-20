@@ -21,9 +21,8 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
   var parsePerson = function(data) {
     var person = data.data.feed.person;
     angular.extend($scope, {
-      // Temporary have this weird structure till https://jira.berkeley.edu/browse/SISRP-6513 is fixed
       emails: {
-        content: person.emails.email
+        content: person.emails
       }
     });
   };
