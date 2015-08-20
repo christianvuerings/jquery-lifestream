@@ -14,7 +14,8 @@ module GoogleApps
       super(Settings.google_proxy, options)
 
       if @fake
-        credentials = GoogleApps::CredentialStore.new(access_token: 'fake_access_token')
+        options.merge!({ access_token: 'fake_access_token' })
+        credentials = GoogleApps::CredentialStore.new options
         @authorization = GoogleApps::Client.new_auth credentials
       elsif options[:user_id]
         token_settings = User::Oauth2Data.get(@uid, APP_ID)
