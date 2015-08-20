@@ -55,9 +55,8 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
     });
   };
 
-  var saveCompleted = function(data) {
+  var saveCompleted = function() {
     $scope.isSaving = false;
-    console.log(data);
   };
 
   $scope.saveEmail = function(email) {
