@@ -14,11 +14,9 @@ describe Finaid::Merged do
 
     before {
       Settings.myfinaid_proxy.fake = false
-      Settings.cs_awards_proxy.fake = false
     }
     after {
       Settings.myfinaid_proxy.fake = true
-      Settings.cs_awards_proxy.fake = true
     }
 
     context 'non-student finaid' do
@@ -33,7 +31,6 @@ describe Finaid::Merged do
       context 'dead remote proxy (5xx errors)' do
         before(:each) {
           stub_request(:any, /#{Regexp.quote(Settings.myfinaid_proxy.base_url)}.*/).to_raise(Faraday::Error::ConnectionFailed)
-          stub_request(:any, /#{Regexp.quote(Settings.cs_awards_proxy.base_url)}.*/).to_raise(Faraday::Error::ConnectionFailed)
         }
         after(:each) { WebMock.reset! }
 
@@ -43,7 +40,6 @@ describe Finaid::Merged do
       context '4xx errors on remote proxy' do
         before(:each) {
           stub_request(:any, /#{Regexp.quote(Settings.myfinaid_proxy.base_url)}.*/).to_return(:status => 403)
-          stub_request(:any, /#{Regexp.quote(Settings.cs_awards_proxy.base_url)}.*/).to_return(:status => 403)
         }
         after(:each) { WebMock.reset! }
 
