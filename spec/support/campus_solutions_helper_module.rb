@@ -6,6 +6,7 @@ module CampusSolutionsHelperModule
     }
     it 'returns errors properly' do
       expect(subject[:errored]).to eq true
+      expect(subject[:statusCode]).to eq 503
     end
   end
 
@@ -24,6 +25,14 @@ module CampusSolutionsHelperModule
       json = JSON.parse(response.body)
       expect(json['statusCode']).to eq 200
       expect(json['feed'][feed_key]).to be
+    end
+  end
+
+  shared_examples 'a proxy that responds to user error gracefully' do
+    it 'returns the right status code and helpful error message' do
+      expect(subject[:statusCode]).to eq 400
+      expect(subject[:errored]).to eq true
+      expect(subject[:feed][:errmsgtext]).to be
     end
   end
 

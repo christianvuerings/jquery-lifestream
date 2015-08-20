@@ -31,9 +31,9 @@ module CampusSolutions
       if internal_response[:noStudentId] || internal_response[:statusCode] < 400
         internal_response
       else
-        {
+        internal_response.merge({
           errored: true
-        }
+        })
       end
     end
 
@@ -42,14 +42,19 @@ module CampusSolutions
       response = get_response(url, request_options)
       logger.debug "Remote server status #{response.code}, Body = #{response.body}"
       feed = build_feed response
-      if feed.blank?
-        logger.error "Build_feed returned nothing; falling back on parsed response"
-        feed = response.parsed_response
+      feed = convert_feed_keys(feed)
+      if is_errored?(feed)
+        {
+          statusCode: 400,
+          errored: true,
+          feed: feed
+        }
+      else
+        {
+          statusCode: response.code,
+          feed: feed
+        }
       end
-      {
-        statusCode: response.code,
-        feed: convert_feed_keys(feed)
-      }
     end
 
     def convert_feed_keys(feed)
@@ -58,6 +63,10 @@ module CampusSolutions
 
     def url
       @settings.base_url
+    end
+
+    def is_errored?(feed)
+      feed[:errmsgtext].present?
     end
 
     def request_options

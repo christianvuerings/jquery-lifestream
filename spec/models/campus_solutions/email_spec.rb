@@ -4,7 +4,7 @@ describe CampusSolutions::Email do
 
   context 'post' do
     let(:params) { {} }
-    let(:fake_proxy) { CampusSolutions::Email.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::Email.new(fake: true, user_id: random_id, params: params) }
 
     context 'filtering out fields not on the whitelist' do
       let(:params) { {
@@ -12,7 +12,7 @@ describe CampusSolutions::Email do
         invalid: 2,
         email: 'foo@foo.com'
       } }
-      subject { fake_proxy.filter_updateable_params(params) }
+      subject { proxy.filter_updateable_params(params) }
       it 'should strip out invalid fields' do
         expect(subject.keys.length).to eq 1
         expect(subject[:bogus]).to be_nil
@@ -27,7 +27,7 @@ describe CampusSolutions::Email do
         email: 'foo@foo.com'
       } }
       subject {
-        result = fake_proxy.construct_cs_post(params)
+        result = proxy.construct_cs_post(params)
         MultiXml.parse(result)['EMAIL_ADDRESS']
       }
       it 'should convert the CalCentral params to Campus Solutions params without exploding on bogus fields' do
@@ -43,8 +43,9 @@ describe CampusSolutions::Email do
         isPreferred: 'N'
       } }
       subject {
-        fake_proxy.get
+        proxy.get
       }
+      it_should_behave_like 'a simple proxy that returns errors'
       it 'should make a successful post' do
         expect(subject[:statusCode]).to eq 200
         expect(subject[:feed][:status]).to be
@@ -53,20 +54,30 @@ describe CampusSolutions::Email do
   end
 
   context 'with a real external service', :testext => true do
-    let(:params) { {
-      type: 'CAMP',
-      email: 'foo@foo.com',
-      isPreferred: 'N'
-    } }
-    let(:real_proxy) { CampusSolutions::Email.new(fake: false, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::Email.new(fake: false, user_id: random_id, params: params) }
+    subject { proxy.get }
 
-    context 'performing a real post' do
-      subject {
-        real_proxy.get
-      }
-      it 'should make a successful REAL post' do
-        expect(subject[:statusCode]).to eq 200
-        expect(subject[:feed][:status]).to be
+    context 'a successful post' do
+      let(:params) { {
+        type: 'CAMP',
+        email: 'foo@foo.com',
+        isPreferred: 'Y'
+      } }
+      context 'performing a real post' do
+        it 'should make a successful REAL post' do
+          expect(subject[:statusCode]).to eq 200
+          expect(subject[:feed][:status]).to be
+        end
+      end
+    end
+
+    context 'an invalid post' do
+      let(:params) { {
+        type: 'CAMP'
+      } }
+      context 'performing a real but invalid post' do
+        it_should_behave_like 'a simple proxy that returns errors'
+        it_should_behave_like 'a proxy that responds to user error gracefully'
       end
     end
   end

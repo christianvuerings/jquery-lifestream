@@ -41,7 +41,7 @@ module CampusSolutions
       )
     end
 
-    def root_xml_node
+    def request_root_xml_node
       'UC_EMER_CNTCT'
     end
 
@@ -60,8 +60,5 @@ module CampusSolutions
       "#{@settings.base_url}/UC_CC_EMER_CNTCT.v1/emercntct/post/"
     end
 
-    def build_feed(response)
-      response.parsed_response['PostResponse']
-    end
   end
 end

@@ -4,7 +4,7 @@ describe CampusSolutions::LanguagePost do
 
   context 'post' do
     let(:params) { {} }
-    let(:fake_proxy) { CampusSolutions::LanguagePost.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::LanguagePost.new(fake: true, user_id: random_id, params: params) }
 
     context 'filtering out fields not on the whitelist' do
       let(:params) { {
@@ -12,7 +12,7 @@ describe CampusSolutions::LanguagePost do
         invalid: 2,
         isNative: 'N'
       } }
-      subject { fake_proxy.filter_updateable_params(params) }
+      subject { proxy.filter_updateable_params(params) }
       it 'should strip out invalid fields' do
         expect(subject.keys.length).to eq 1
         expect(subject[:bogus]).to be_nil
@@ -27,7 +27,7 @@ describe CampusSolutions::LanguagePost do
         languageCode: 'ZZ'
       } }
       subject {
-        result = fake_proxy.construct_cs_post(params)
+        result = proxy.construct_cs_post(params)
         MultiXml.parse(result)['Languages']
       }
       it 'should convert the CalCentral params to Campus Solutions params without exploding on bogus fields' do
@@ -47,8 +47,9 @@ describe CampusSolutions::LanguagePost do
         teachLang: '3'
       } }
       subject {
-        fake_proxy.get
+        proxy.get
       }
+      it_should_behave_like 'a simple proxy that returns errors'
       it 'should make a successful post' do
         expect(subject[:statusCode]).to eq 200
         expect(subject[:feed][:status]).to be
@@ -66,12 +67,13 @@ describe CampusSolutions::LanguagePost do
       readProf: '2',
       teachLang: '3'
     } }
-    let(:real_proxy) { CampusSolutions::LanguagePost.new(fake: false, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::LanguagePost.new(fake: false, user_id: random_id, params: params) }
 
     context 'performing a real post' do
       subject {
-        real_proxy.get
+        proxy.get
       }
+      it_should_behave_like 'a simple proxy that returns errors'
       it 'should make a successful REAL post' do
         expect(subject[:statusCode]).to eq 200
         expect(subject[:feed][:status]).to be
