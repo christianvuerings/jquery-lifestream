@@ -412,3 +412,10 @@ hub_edos_proxy:
   base_url: 'https://apis.berkeley.edu/something'
   username: secret
   password: secret
+
+calnet_crosswalk_proxy:
+  fake: false
+  base_url: 'https://registry-d1.calnet.1918.berkeley.edu:8453/registry-service/api/v1/identifiers/UID/61889'
+  username: secret
+  password: secret
+
