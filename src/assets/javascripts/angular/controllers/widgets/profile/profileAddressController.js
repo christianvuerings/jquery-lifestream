@@ -18,7 +18,7 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
     var person = data.data.feed.person;
     angular.extend($scope, {
       addresses: {
-        content: person.addresses.address
+        content: person.addresses
       }
     });
   });
