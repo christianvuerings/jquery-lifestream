@@ -369,18 +369,6 @@ cs_checklist_proxy:
   username: secret
   password: secret
 
-cs_awards_proxy:
-  fake: true
-  base_url: 'https://apis.berkeley.edu/sis/finaid/awards/v1/students'
-  app_id: 'secret'
-  app_key: 'secret'
-
-cs_budget_proxy:
-  fake: true
-  base_url: 'https://apis.berkeley.edu/sis/finaid/budget/v1/students'
-  app_id: 'secret'
-  app_key: 'secret'
-
 cs_aid_years_proxy:
   fake: true
   base_url: 'https://apis.berkeley.edu/PSIGW/RESTListeningConnector/PSFT_CS'

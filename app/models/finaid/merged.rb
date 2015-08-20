@@ -10,9 +10,7 @@ module Finaid
     def initialize(uid, options={})
       super(uid, options)
       @proxies = [
-        Finaid::MyFinAid,
-        Finaid::MyAwards,
-        Finaid::MyBudget
+        Finaid::MyFinAid
       ]
     end
 
