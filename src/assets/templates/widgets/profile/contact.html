@@ -1,57 +1,97 @@
 <div class="cc-widget-text" data-ng-controller="ContactController" data-cc-spinner-directive>
 
   <!-- Phone Number -->
-  <div class="cc-table cc-table-top-border">
-    <table>
-      <tr>
-        <th scope="row" width="25%" class="cc-table-right-spacing cc-nowrap">Phone Number</th>
-        <td></td>
-        <td class="cc-table-right">
-          <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
-        </td>
-      </tr>
-    </table>
+  <div class="cc-page-widget-profile-section" data-ng-controller="ProfilePhoneController">
+    <div class="cc-page-widget-profile-section-label">Phone Number</div>
+    <div class="cc-page-widget-profile-section-content">
+      <div data-ng-repeat="phone in phones.content" class="cc-page-widget-profile-section-content-item">
+        <div>
+          <strong data-ng-bind-template="{{phone.type}} Phone"></strong>
+          <span data-ng-if="phone.isPrimary">(preferred)</span>
+        </div>
+        <div data-ng-bind="phone.number"></div>
+        <div>
+          <button class="cc-button-link">Edit</button>
+        </div>
+      </div>
+    </div>
+    <div class="cc-page-widget-profile-section-add">
+      <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
+    </div>
   </div>
 
   <!-- Email -->
-  <div class="cc-table cc-table-top-border" data-ng-if="api.user.profile.googleEmail">
-    <table>
-      <tr>
-        <th scope="row" width="25%" class="cc-table-right-spacing cc-nowrap">Email</th>
-        <td>
-          <strong>Campus Email</strong>
-          <div data-ng-bind="api.user.profile.googleEmail"></div>
-          <button class="cc-button-link">Edit</strong>
-        </td>
-        <td class="cc-table-right">
-          <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
-        </td>
-      </tr>
-    </table>
+  <div class="cc-page-widget-profile-section" data-ng-controller="ProfileEmailController" data-cc-spinner-directive>
+    <div class="cc-page-widget-profile-section-label">Email</div>
+    <div class="cc-page-widget-profile-section-content">
+      <div data-ng-repeat="email in emails.content" class="cc-page-widget-profile-section-content-item">
+        <div data-ng-if="!email.isEditing">
+          <div>
+            <strong data-ng-bind-template="{{email.type}} Email"></strong>
+            <span data-ng-if="email.isPrimary">(preferred)</span>
+          </div>
+          <div data-ng-bind="email.emailAddress"></div>
+          <div>
+            <button class="cc-button-link" data-ng-click="editEmail(email)">Edit</button>
+          </div>
+        </div>
+        <div data-ng-if="email.isEditing" class="cc-page-widget-profile-section-content-item-editing">
+          <form data-ng-submit="saveEmail(currentEditObject)" name="cc_page_widget_profile_email">
+            <div>
+              <label for="cc-page-widget-profile-email-type">
+                Email Type <span class="cc-text-light">(Required)</span>
+              </label>
+            </div>
+            <div class="cc-select" id="cc-page-widget-profile-email-type">
+              <select data-ng-options="emailType.xlatlongname for emailType in emailTypes" data-ng-model="currentEditObject.type" required aria-required="true" />
+            </div>
+            <div>
+              <label for="cc-page-widget-profile-email-address">
+                Email Address <span class="cc-text-light">(Required)</span>
+              </label>
+            </div>
+            <div>
+              <input type="text" id="cc-page-widget-profile-email-address" data-ng-model="currentEditObject.emailAddress" />
+            </div>
+            <div>
+              <input type="checkbox" id="cc-page-widget-profile-email-preferred" data-ng-model="currentEditObject.isPrimary" />
+              <label for="cc-page-widget-profile-email-preferred">Preferred email address</label>
+            </div>
+            <div>
+              <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="cc_page_widget_profile_email.$invalid">Save</button>
+              <button class="cc-button" data-ng-click="cancelEmail()">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="cc-page-widget-profile-section-add" data-ng-if="!emails.editorEnabled">
+      <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
+    </div>
   </div>
 
   <!-- Address -->
-  <div class="cc-table cc-table-top-border">
-    <table>
-      <tr>
-        <th scope="row" width="25%" class="cc-table-right-spacing cc-nowrap">Address</th>
-        <td>
-          <div data-ng-repeat="address in addresses">
-            <div>
-              <strong data-ng-bind="address.addressTypeDescr"></strong>
-            </div>
-            <div data-ng-if="address.address1" data-ng-bind="address.address1"></div>
-            <div data-ng-if="address.address2" data-ng-bind="address.address2"></div>
-            <div data-ng-if="address.address3" data-ng-bind="address.address3"></div>
-            <div data-ng-if="address.address4" data-ng-bind="address.address4"></div>
-            <div data-ng-if="address.city" data-ng-bind-template="{{address.city}}, {{address.state}} {{address.postal}}"></div>
-            <div data-ng-if="address.country" data-ng-bind="address.country"></div>
-          <div>
-        </td>
-        <td class="cc-table-right">
-          <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
-        </td>
-      </tr>
-    </table>
+  <div class="cc-page-widget-profile-section"  data-ng-controller="ProfileAddressController">
+    <div class="cc-page-widget-profile-section-label">Address</div>
+    <div class="cc-page-widget-profile-section-content">
+      <div data-ng-repeat="address in addresses.content" class="cc-page-widget-profile-section-content-item">
+        <div>
+          <strong data-ng-bind-template="{{address.type}} Address"></strong>
+          <span data-ng-if="address.isPrimary">(preferred)</span>
+        </div>
+        <div>
+          <div data-ng-bind="address.street1"></div>
+          <div data-ng-bind-template="{{address.locality}}, {{address.region}} {{address.postalCode}}"></div>
+          <div data-ng-bind="address.country" data-ng-if="address.country !== 'USA'"></div>
+        </div>
+        <div>
+          <button class="cc-button-link">Edit</button>
+        </div>
+      </div>
+    </div>
+    <div class="cc-page-widget-profile-section-add">
+      <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
+    </div>
   </div>
+
 </div>

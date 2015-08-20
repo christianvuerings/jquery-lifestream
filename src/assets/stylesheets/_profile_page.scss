@@ -1,11 +1,55 @@
 .cc-page-profile {
   overflow: hidden;
   .cc-widget {
-    width: 60%;
-    .cc-table:last-child {
-      border-bottom: 1px solid $cc-color-popover-border;
-      padding-bottom: 5px;
+    margin-right: 0;
+    width: 540px;
+  }
+  .cc-page-profile-widget {
+    .cc-page-widget-profile-section {
+      border-top: 1px solid $cc-color-popover-border;
+      display: flex;
+      > div {
+        padding: 10px;
+      }
+      .cc-page-widget-profile-section-label {
+        flex-basis: 120px;
+        flex-shrink: 0;
+      }
+      .cc-page-widget-profile-section-content {
+        width: 100%;
+      }
+      .cc-page-widget-profile-section-content-item:not(:last-child) {
+        margin-bottom: 15px;
+      }
+      .cc-page-widget-profile-section-content-item-editing {
+        background: $cc-color-blue-hover;
+        margin: -10px -10px 0 0;
+        padding: 10px;
+        form {
+          background: transparent;
+          border: 0;
+          margin: 0;
+          padding: 0;
+          label {
+            display: inline-block;
+            font-size: 13px;
+            margin: 0;
+            text-align: left;
+          }
+          > div:not(:last-child) {
+            margin-bottom: 5px;
+          }
+        }
+      }
+      .cc-page-widget-profile-section-add {
+        flex-basis: 60px;
+        flex-shrink: 0;
+      }
+      &:last-child {
+        border-bottom: 1px solid $cc-color-popover-border;
+      }
     }
+
   }
   @media #{$small-only} {
     .cc-widget {
