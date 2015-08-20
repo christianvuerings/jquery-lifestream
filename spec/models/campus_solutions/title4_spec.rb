@@ -4,7 +4,7 @@ describe CampusSolutions::Title4 do
 
   context 'post' do
     let(:params) { {} }
-    let(:fake_proxy) { CampusSolutions::Title4.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::Title4.new(fake: true, user_id: random_id, params: params) }
 
     context 'filtering out fields not on the whitelist' do
       let(:params) { {
@@ -12,7 +12,7 @@ describe CampusSolutions::Title4 do
         invalid: 2,
         response: 'N'
       } }
-      subject { fake_proxy.filter_updateable_params(params) }
+      subject { proxy.filter_updateable_params(params) }
       it 'should strip out invalid fields' do
         expect(subject.keys.length).to eq 1
         expect(subject[:bogus]).to be_nil
@@ -26,7 +26,7 @@ describe CampusSolutions::Title4 do
         response: 'Y'
       } }
       subject {
-        result = fake_proxy.construct_cs_post(params)
+        result = proxy.construct_cs_post(params)
         MultiXml.parse(result)['Title4']
       }
       it 'should convert the CalCentral params to Campus Solutions params without exploding on bogus fields' do
@@ -40,10 +40,10 @@ describe CampusSolutions::Title4 do
         response: 'Y'
       } }
       subject {
-        fake_proxy.get
+        proxy.get
       }
+      it_should_behave_like 'a simple proxy that returns errors'
       it 'should make a successful post' do
-        puts "Subject = #{subject.inspect}"
         expect(subject[:statusCode]).to eq 200
       end
     end
@@ -53,14 +53,14 @@ describe CampusSolutions::Title4 do
     let(:params) { {
       response: 'Y'
     } }
-    let(:real_proxy) { CampusSolutions::Title4.new(fake: false, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::Title4.new(fake: false, user_id: random_id, params: params) }
 
     context 'performing a real post' do
       subject {
-        real_proxy.get
+        proxy.get
       }
+      it_should_behave_like 'a simple proxy that returns errors'
       it 'should make a successful REAL post' do
-        puts "Subject = #{subject.inspect}"
         expect(subject[:statusCode]).to eq 200
       end
     end

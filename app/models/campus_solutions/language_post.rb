@@ -20,7 +20,11 @@ module CampusSolutions
       )
     end
 
-    def root_xml_node
+    def request_root_xml_node
+      'Languages'
+    end
+
+    def response_root_xml_node
       'Languages'
     end
 
@@ -39,8 +43,5 @@ module CampusSolutions
       "#{@settings.base_url}/UC_CC_LANGUAGES.v1/languages/post/"
     end
 
-    def build_feed(response)
-      response.parsed_response['Languages']
-    end
   end
 end

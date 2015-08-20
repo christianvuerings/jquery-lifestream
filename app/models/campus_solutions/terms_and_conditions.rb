@@ -17,8 +17,12 @@ module CampusSolutions
       )
     end
 
-    def root_xml_node
+    def request_root_xml_node
       'Terms_Conditions'
+    end
+
+    def response_root_xml_node
+      'UC_FA_T_C_RSP'
     end
 
     def xml_filename
@@ -40,10 +44,6 @@ module CampusSolutions
 
     def url
       "#{@settings.base_url}/UC_FA_T_C.v1/post"
-    end
-
-    def build_feed(response)
-      response.parsed_response['UC_FA_T_C_RSP']
     end
 
   end

@@ -29,7 +29,7 @@ module CampusSolutions
       )
     end
 
-    def root_xml_node
+    def request_root_xml_node
       'NAMES'
     end
 
@@ -51,8 +51,5 @@ module CampusSolutions
       "#{@settings.base_url}/UC_CC_PERS_NAME.v1/name/post/"
     end
 
-    def build_feed(response)
-      response.parsed_response['PostResponse']
-    end
   end
 end

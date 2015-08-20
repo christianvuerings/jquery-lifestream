@@ -56,8 +56,12 @@ module CampusSolutions
       )
     end
 
-    def root_xml_node
+    def request_root_xml_node
       'Prior_Work_Exp'
+    end
+
+    def response_root_xml_node
+      'PriorWork'
     end
 
     def xml_filename
@@ -75,8 +79,5 @@ module CampusSolutions
       "#{@settings.base_url}/UC_CC_PRIOR_WORK_EXP.v1/post/"
     end
 
-    def build_feed(response)
-      response.parsed_response['PriorWork']
-    end
   end
 end

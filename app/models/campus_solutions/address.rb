@@ -20,8 +20,12 @@ module CampusSolutions
       )
     end
 
-    def root_xml_node
+    def request_root_xml_node
       'UC_CC_ADDR_UPD_REQ'
+    end
+
+    def response_root_xml_node
+      'UC_PER_ADDR_UPD_POST_RESP'
     end
 
     def xml_filename
@@ -40,8 +44,5 @@ module CampusSolutions
       "#{@settings.base_url}/UC_PER_ADDR_UPD_POST.v1/address/post/"
     end
 
-    def build_feed(response)
-      response.parsed_response['UC_PER_ADDR_UPD_POST_RESP']
-    end
   end
 end

@@ -50,7 +50,24 @@ module CampusSolutions
         cs_post[cs_param_name] = value
       end
       # CampusSolutions will barf if it encounters whitespace or newlines
-      cs_post.to_xml(root: root_xml_node, dasherize: false, indent: 0)
+      cs_post.to_xml(root: request_root_xml_node, dasherize: false, indent: 0)
+    end
+
+    def request_root_xml_node
+      ''
+    end
+
+    def response_root_xml_node
+      'PostResponse'
+    end
+
+    def error_response_root_xml_node
+      'UC_CM_FAULT_DOC'
+    end
+
+    def build_feed(response)
+      parsed = response.parsed_response
+      parsed[response_root_xml_node] || parsed[error_response_root_xml_node]
     end
 
   end
