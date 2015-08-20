@@ -40,7 +40,8 @@ describe GoogleApps::Proxy do
 
     context 'test_user tokens' do
       let(:refresh_token) { Settings.google_proxy.test_user_refresh_token }
-      let(:options) { { :access_token => Settings.google_proxy.test_user_access_token, :refresh_token => refresh_token, :expiration_time => 0 } }
+      let(:options) { { :fake => true, :access_token => Settings.google_proxy.test_user_access_token,
+                        :refresh_token => refresh_token, :expiration_time => 0 } }
       it 'should pick up test_user_access_token, minus access_token' do
         expect(auth).to_not be_nil
         expect(auth.client_id).to eq Settings.google_proxy.client_id
