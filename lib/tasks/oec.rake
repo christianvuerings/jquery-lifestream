@@ -1,5 +1,19 @@
 namespace :oec do
 
+  desc 'Import per-department course CSVs'
+  task :import_courses => :environment do
+    raise ArgumentError, "term_code required" unless ENV['term_code']
+    Oec::CoursesImportTask.new(term_code: ENV['term_code']).run
+  end
+
+  desc 'Set up folder structure for new term'
+  task :term_setup => :environment do
+    raise ArgumentError, "term_code required" unless ENV['term_code']
+    Oec::TermSetupTask.new(term_code: ENV['term_code']).run
+  end
+
+  # Legacy tasks below this line
+
   br = "\n"
   hr = "#{br}-------------------------------------------------------------#{br}"
 

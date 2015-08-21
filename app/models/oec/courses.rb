@@ -1,6 +1,15 @@
 module Oec
   class Courses < Oec::CsvExport
 
+    attr_reader :dept_code
+
+    def initialize(export_dir, opts={})
+      if (@dept_code = opts.delete :dept_code)
+        opts[:filename] = "#{@dept_code}.csv"
+      end
+      super(export_dir, opts)
+    end
+
     def headers
       %w(
         COURSE_ID

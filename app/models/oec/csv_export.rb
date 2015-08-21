@@ -5,35 +5,48 @@ module Oec
       "#{self.name.demodulize.underscore}.csv"
     end
 
-    def export(overwrite_file = true)
-      file = output_filename
-      output = CSV.open(file, 'wb')
-      output << headers
-      append_records output
-      output.close
-      {
-        filename: file
-      }
+    def self.capitalize_keys(row)
+      row.inject({}) do |caps_hash, (key, value)|
+        caps_hash[key.upcase] = value
+        caps_hash
+      end
     end
 
-    def output_filename
-      export_directory.join self.class.base_filename
+    def initialize(export_dir, opts={})
+      @rows = {}
+      @filename = opts[:filename]
+      super(export_dir)
+    end
+
+    def [](key)
+      @rows[key]
+    end
+
+    def []=(key, value)
+      @rows[key] = value
+    end
+
+    def base_filename
+      @filename || self.class.base_filename
+    end
+
+    def export
+      if @rows.any?
+        output = CSV.open(output_filename, 'wb', headers: headers, write_headers: true)
+        @rows.values.each { |row| output << row }
+      else
+        output = CSV.open(output_filename, 'wb')
+        output << headers
+      end
+      output.close
     end
 
     def headers
       # subclasses override
     end
 
-    def append_records(output_file)
-      # subclasses override
-    end
-
-    def record_to_csv_row(record)
-      row = {}
-      record.keys.each do |key|
-        row[key.upcase] = record[key]
-      end
-      row
+    def output_filename
+      export_directory.join base_filename
     end
 
   end
