@@ -56,15 +56,16 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
 
   var saveCompleted = function() {
     $scope.isSaving = false;
+    $scope.closeEditor();
   };
 
   $scope.saveEmail = function(email) {
     $scope.isSaving = true;
 
     profileFactory.postEmail({
-      type: email.type.fieldvalue,
+      type: email.type.code,
       email: email.emailAddress,
-      isPreferred: email.isPrimary ? 'Y' : 'N'
+      isPreferred: email.primary ? 'Y' : 'N'
     }).then(saveCompleted);
   };
 
@@ -75,7 +76,7 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
     $scope.emails.editorEnabled = true;
   };
 
-  $scope.cancelEmail = function() {
+  $scope.closeEditor = function() {
     closeEditors(true);
     $scope.currentEditObject = {};
     $scope.emails.editorEnabled = false;
