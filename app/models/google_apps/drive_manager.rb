@@ -48,7 +48,7 @@ module GoogleApps
             logger.debug 'No items found, returning empty array'
             page_token = nil
           else
-            raise Errors::ProxyError, "An error occurred: #{api_response.data['error']['message']}"
+            raise Errors::ProxyError, "Error in find_items(#{options}): #{api_response.data['error']['message']}"
             page_token = nil
         end
       end while page_token.to_s != ''
@@ -64,7 +64,7 @@ module GoogleApps
       result = client.execute(:api_method => drive_api.files.insert, :body_object => dir)
       log_response result
       success = result.status == 200
-      raise Errors::ProxyError, "An error occurred: #{result.data['error']['message']}" unless success
+      raise Errors::ProxyError, "Error in create_folder(#{title}, ...): #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
@@ -83,7 +83,7 @@ module GoogleApps
         :parameters => { :uploadType => 'multipart', :alt => 'json'})
       log_response result
       success = result.status == 200
-      raise Errors::ProxyError, "An error occurred: #{result.data['error']['message']}" unless success
+      raise Errors::ProxyError, "Error in upload_file(#{title}): #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
@@ -95,7 +95,7 @@ module GoogleApps
         :parameters => { :fileId => id })
       log_response result
       success = result.status == 200
-      raise Errors::ProxyError, "An error occurred: #{result.data['error']['message']}" unless success
+      raise Errors::ProxyError, "Error in trash_item(#{id}): #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
@@ -119,7 +119,7 @@ module GoogleApps
       )
       log_response result
       success = result.status == 200
-      raise Errors::ProxyError, "An error occurred: #{result.data['error']['message']}" unless success
+      raise Errors::ProxyError, "Error in copy_item(#{id}): #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
@@ -134,7 +134,7 @@ module GoogleApps
       )
       log_response result
       success = result.status == 200
-      raise Errors::ProxyError, "An error occurred: #{result.data['error']['message']}" unless success
+      raise Errors::ProxyError, "Error in add_parent(#{id}, #{parent_id}): #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
@@ -151,11 +151,11 @@ module GoogleApps
       log_response result
       # This call may return an empty 204 on success.
       success = result.status <= 204
-      raise Errors::ProxyError, "An error occurred: #{result.data['error']['message']}" unless success
+      raise Errors::ProxyError, "Error in remove_parent(#{id}, #{parent_id}): #{result.data['error']['message']}" unless success
       success ? result.data : nil
     end
 
-    private
+    protected
 
     def get_google_api
       if @client.nil?
