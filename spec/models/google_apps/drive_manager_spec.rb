@@ -1,4 +1,4 @@
-describe 'GoogleDriveInsert' do
+describe GoogleApps::DriveManager do
 
   context '#real', testext: true, :order => :defined do
 
