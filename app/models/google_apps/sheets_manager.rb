@@ -10,11 +10,23 @@ module GoogleApps
     end
 
     def spreadsheet_by_id(id)
-      @session.spreadsheet_by_key id
+      api_response = @session.execute!(:api_method => @session.drive.files.get, :parameters => { :fileId => id })
+      log_response api_response
+      case api_response.status
+        when 200
+          file = @session.wrap_api_file api_response.data
+          raise Errors::ProxyError, "File is not a Google spreadsheet. Id: #{id}" unless file.is_a? GoogleDrive::Spreadsheet
+        when 404
+          logger.debug 'No items found, returning empty array'
+          file = nil
+        else
+          raise Errors::ProxyError, "Error in spreadsheet_by_id(#{id}): #{api_response.data['error']['message']}"
+      end
+      file
     end
 
-    def spreadsheet_by_title(title)
-      @session.spreadsheet_by_title title
+    def spreadsheets_by_title(title)
+      @session.spreadsheets(:q => "title = '#{title}'")
     end
 
     def upload_csv_to_spreadsheet(title, description, file_path, parent_id = 'root')
@@ -24,12 +36,15 @@ module GoogleApps
       metadata = { :title => title, :description => description }
       file = drive_api.files.insert.request_schema.new metadata
       file.parents = [{ :id => parent_id }]
-      api_result = @session.execute!(
+      api_response = @session.execute!(
         :api_method => drive_api.files.insert,
         :body_object => file,
         :media => media,
         :parameters => { :uploadType => 'multipart', :convert => true })
-      @session.wrap_api_file api_result.data
+      log_response api_response
+      success = api_response.status == 200
+      raise Errors::ProxyError, "Error in upload_csv_to_spreadsheet(#{title}, ...): #{api_response.data['error']['message']}" unless success
+      @session.wrap_api_file api_response.data
     end
 
   end
