@@ -30,6 +30,14 @@ module Oec
       end
     end
 
+    def export_to_folder(csv, dest_folder)
+      csv.export
+      log :debug, "Exported CSV file #{csv.output_filename}"
+      upload_file(csv.output_filename, csv.base_filename, 'text/csv', dest_folder)
+    ensure
+      File.delete csv.output_filename
+    end
+
     def find_or_create_folder(folder_name, parent=nil)
       find_folder(folder_name, parent) || create_folder_no_existence_check(folder_name, parent)
     end
