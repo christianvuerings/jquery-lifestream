@@ -29,5 +29,15 @@ describe GoogleApps::SheetsManager do
       expect(sheet_by_id.worksheets[0][2, 2]).to eq sheet_by_title.worksheets[0][2, 2]
     end
 
+    it 'should find no spreadsheet mapped to bogus id' do
+      sheet_by_id = @sheet_manager.spreadsheet_by_id 'bogus-id'
+      expect(sheet_by_id).to be_nil
+    end
+
+    it 'should find no spreadsheets with bogus title' do
+      spreadsheets = @sheet_manager.spreadsheets_by_title 'let us hope that no spreadsheets have this ridiculous name'
+      expect(spreadsheets).to be_empty
+    end
+
   end
 end

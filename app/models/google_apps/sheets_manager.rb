@@ -17,16 +17,21 @@ module GoogleApps
           file = @session.wrap_api_file api_response.data
           raise Errors::ProxyError, "File is not a Google spreadsheet. Id: #{id}" unless file.is_a? GoogleDrive::Spreadsheet
         when 404
-          logger.debug 'No items found, returning empty array'
+          logger.debug "No Google spreadsheet found with id = #{id}"
           file = nil
         else
           raise Errors::ProxyError, "Error in spreadsheet_by_id(#{id}): #{api_response.data['error']['message']}"
       end
       file
+    rescue Google::APIClient::ClientError => e
+      Rails.logger.error "Google API code is unhappy with spreadsheet_by_id(#{id}) call. Exception: #{e}"
+      nil
     end
 
     def spreadsheets_by_title(title)
-      @session.spreadsheets(:q => "title = '#{title}'")
+      spreadsheets = @session.spreadsheets(:q => "title = '#{title}'")
+      logger.debug "No Google spreadsheets found with title = #{title}" if spreadsheets.nil? || spreadsheets.none?
+      spreadsheets
     end
 
     def upload_csv_to_spreadsheet(title, description, file_path, parent_id = 'root')
