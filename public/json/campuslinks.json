@@ -250,8 +250,33 @@
       },
       "categories": [
         {
+          "topcategory": "Academic Planning",
+          "subcategory": "Classes"
+        },
+        {
           "topcategory": "Classes",
           "subcategory": "Classes"
+        },
+        {
+          "topcategory": "Communication \u0026 Collaboration",
+          "subcategory": "Collaboration Tools"
+        }
+      ]
+    },
+    {
+      "name": "bCourses Support",
+      "description": "Help and training for the bCourses LMS",
+      "url": "https://www.ets.berkeley.edu/discover-services/bcourses",
+      "roles": {
+        "student": false,
+        "staff": true,
+        "faculty": true,
+        "exStudent": false
+      },
+      "categories": [
+        {
+          "topcategory": "Faculty",
+          "subcategory": "Resources"
         }
       ]
     },
@@ -558,65 +583,6 @@
         {
           "topcategory": "Communication \u0026 Collaboration",
           "subcategory": "Collaboration Tools"
-        }
-      ]
-    },
-    {
-      "name": "bSpace",
-      "description": "Homework assignments, lecture slides, syllabi and class resources",
-      "url": "http://bspace.berkeley.edu",
-      "roles": {
-        "student": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Academic Planning",
-          "subcategory": "Classes"
-        },
-        {
-          "topcategory": "Classes",
-          "subcategory": "Classes"
-        },
-        {
-          "topcategory": "Communication \u0026 Collaboration",
-          "subcategory": "Collaboration Tools"
-        }
-      ]
-    },
-    {
-      "name": "bSpace Grade book",
-      "description": "A tool to enter, upload, and calculate student grades on bSpace",
-      "url": "http://gsi.berkeley.edu/teachingguide/tech/bspace-gradebook.html",
-      "roles": {
-        "student": false,
-        "staff": false,
-        "faculty": true,
-        "exStudent": false
-      },
-      "categories": [
-        {
-          "topcategory": "Faculty",
-          "subcategory": "Tools"
-        }
-      ]
-    },
-    {
-      "name": "bSpace Support",
-      "description": "A communication and collaboration program that supports teaching and learning",
-      "url": "http://ets.berkeley.edu/bspace",
-      "roles": {
-        "student": false,
-        "staff": false,
-        "faculty": true,
-        "exStudent": false
-      },
-      "categories": [
-        {
-          "topcategory": "Faculty",
-          "subcategory": "Resources"
         }
       ]
     },
