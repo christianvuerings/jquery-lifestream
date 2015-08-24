@@ -4,7 +4,7 @@ module Oec
 
     def initialize(opts)
       @log = []
-      @remote_drive = GoogleApps::DriveManager.new GoogleApps::CredentialStore.new(app_name: 'oec')
+      @remote_drive = GoogleApps::SheetsManager.new GoogleApps::CredentialStore.new(app_name: 'oec')
       @term_code = opts[:term_code]
       @tmp_path = Rails.root.join('tmp', 'oec')
     end
@@ -30,10 +30,10 @@ module Oec
       end
     end
 
-    def export_to_folder(csv, dest_folder)
+    def export_sheet(csv, dest_folder)
       csv.export
       log :debug, "Exported CSV file #{csv.output_filename}"
-      upload_file(csv.output_filename, csv.base_filename, 'text/csv', dest_folder)
+      upload_csv_to_sheet(csv.output_filename, csv.base_filename.chomp('.csv'), dest_folder)
     ensure
       File.delete csv.output_filename
     end
@@ -99,10 +99,20 @@ module Oec
       begin
         csv.export
         log :debug, "Created header-only file #{csv.output_filename}"
-        upload_file(csv.output_filename, klass.base_filename, 'text/csv', dest_folder)
+        upload_csv_to_sheet(csv.output_filename, klass.name.demodulize.underscore, dest_folder)
       ensure
         File.delete csv.output_filename
       end
+    end
+
+    def upload_csv_to_sheet(path, title, folder)
+      if @remote_drive.find_items_by_title(title, parent_id: folder.id).any?
+        raise RuntimeError, "File \"#{title}\" already exists in remote drive folder \"#{folder.title}\"; could not upload"
+      end
+      if (!@remote_drive.upload_csv_to_spreadsheet(title, '', path.to_s, folder.id))
+        raise RuntimeError, "File #{path} could not be uploaded as sheet '#{title}' to remote drive folder \"#{folder.title}\""
+      end
+      log :debug, "Uploaded file #{path} as sheet '#{title}' to remote drive folder '#{folder.title}'"
     end
 
     def upload_file(path, remote_name, type, folder)

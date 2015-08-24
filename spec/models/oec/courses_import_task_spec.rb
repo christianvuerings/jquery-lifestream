@@ -1,5 +1,8 @@
+include OecSpecHelper
+
 describe Oec::CoursesImportTask do
 
+  let(:fake_sheets_manager) { double() }
   let(:term_code) { '2015-B' }
 
   def load_fixture_courses
@@ -19,19 +22,12 @@ describe Oec::CoursesImportTask do
     end
   end
 
-  def mock_file(file_name)
-    if file_name == 'root'
-      double(title: nil, id: 'root')
-    else
-      double(title: file_name, id: "#{file_name}_id")
-    end
-  end
-
   def get_fake_code_mapping(dept_name)
     [Oec::CourseCode.new(dept_name: dept_name, catalog_id: nil, dept_code: dept_name, include_in_oec: true)]
   end
 
   before(:each) do
+    allow(GoogleApps::SheetsManager).to receive(:new).and_return fake_sheets_manager
     load_fixture_courses
     @fake_code_mapping = get_fake_code_mapping(dept_name)
     expect(Oec::Queries).to receive(:courses_for_codes).with(term_code, @fake_code_mapping).exactly(1).times.and_return @courses_query
@@ -92,32 +88,15 @@ describe Oec::CoursesImportTask do
   describe 'expected network operations' do
     subject { Oec::CoursesImportTask.new(term_code: term_code) }
 
-    let(:fake_drive_manager) { double() }
     let(:today) { '2015-04-01' }
     let(:now) { '092222' }
     let(:logfile) { "#{now}_courses_import_task.log" }
     let(:dept_name) { 'MATH' }
     let(:export_file) { "#{dept_name}.csv" }
 
-    def expect_file_upload(file_name, parent_name, type)
-      expect(fake_drive_manager).to receive(:find_items_by_title)
-        .with(file_name, parent_id: mock_file(parent_name).id)
-        .and_return []
-      expect(fake_drive_manager).to receive(:upload_file)
-        .with(file_name, '', mock_file(parent_name).id, type, Rails.root.join('tmp', 'oec', file_name).to_s)
-        .and_return(mock_file(file_name))
-    end
-
-    def expect_folder_lookup(folder_name, parent_name)
-      expect(fake_drive_manager).to receive(:find_folders_by_title)
-        .with(folder_name, mock_file(parent_name).id)
-        .at_least(1).times
-        .and_return([mock_file(folder_name)])
-    end
 
     before do
       allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H%M%S')
-      allow(GoogleApps::DriveManager).to receive(:new).and_return fake_drive_manager
       allow(Oec::CourseCode).to receive(:included_by_dept_code).and_return({dept_name => @fake_code_mapping})
     end
 
@@ -128,7 +107,7 @@ describe Oec::CoursesImportTask do
       expect_folder_lookup('reports', term_code)
       expect_folder_lookup(today, 'reports')
       expect_file_upload(logfile, today, 'text/plain')
-      expect_file_upload(export_file, today, 'text/csv')
+      expect_sheet_upload(export_file, today)
       subject.run
     end
   end

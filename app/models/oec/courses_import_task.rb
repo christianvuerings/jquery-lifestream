@@ -13,7 +13,7 @@ module Oec
         log :info, "Generating #{dept_code}.csv"
         courses = Oec::Courses.new(@tmp_path, dept_code: dept_code)
         import_courses(courses, course_codes)
-        export_to_folder(courses, imports_today)
+        export_sheet(courses, imports_today)
       end
     end
 
