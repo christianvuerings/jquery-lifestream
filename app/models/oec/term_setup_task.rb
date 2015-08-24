@@ -12,7 +12,7 @@ module Oec
 
       find_previous_term_csvs
 
-      Oec::CsvExport.subclasses.each do |csv_class|
+      [Oec::CourseInstructors, Oec::CourseSupervisors, Oec::Courses, Oec::Instructors, Oec::Supervisors].each do |csv_class|
         if @previous_term_csvs[csv_class]
           copy_file(@previous_term_csvs[csv_class], supplemental_sources)
         else
