@@ -26,12 +26,12 @@ module Oec
       @previous_term_csvs = {}
       if (previous_term_folder = find_previous_term_folder)
         if (previous_supplemental_sources = find_folder('supplemental_sources', previous_term_folder))
-          @previous_term_csvs[Oec::Instructors] = find_item('instructors.csv', previous_supplemental_sources)
-          @previous_term_csvs[Oec::Supervisors] = find_item('supervisors.csv', previous_supplemental_sources)
+          @previous_term_csvs[Oec::Instructors] = find_item('instructors', previous_supplemental_sources)
+          @previous_term_csvs[Oec::Supervisors] = find_item('supervisors', previous_supplemental_sources)
         end
         if (previous_exports = find_folder('exports', previous_term_folder))
           if (most_recent_export = find_folders(previous_exports).sort_by(&:title).last)
-            @previous_term_csvs[Oec::CourseSupervisors] = find_item('course_supervisors.csv', most_recent_export)
+            @previous_term_csvs[Oec::CourseSupervisors] = find_item('course_supervisors', most_recent_export)
           end
         end
       end
