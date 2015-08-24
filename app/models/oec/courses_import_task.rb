@@ -34,7 +34,6 @@ module Oec
     end
 
     def import_course(courses, course, check_secondary_cross_listings = true)
-      course['dept_form'] = courses.dept_code
       course_id = course['course_id']
       row_key = "#{course_id}-#{course['ldap_uid']})"
       # Avoid duplicate rows
@@ -43,6 +42,7 @@ module Oec
         if course['enrollment_count'].to_i.zero?
           log :info, "Skipping course without enrollments: #{course_id}, #{course['dept_name']} #{catalog_id}"
         else
+          course['dept_form'] = courses.dept_code unless course['cross_listed_flag'].present?
           courses[row_key] = row_for_csv course
         end
         if course['primary_secondary_cd'] == 'S' && check_secondary_cross_listings

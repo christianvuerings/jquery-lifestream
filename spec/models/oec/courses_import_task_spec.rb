@@ -46,27 +46,46 @@ describe Oec::CoursesImportTask do
       courses = Oec::Courses.new(Rails.root.join('tmp/oec'), dept_code: dept_name)
       task.import_courses(courses, @fake_code_mapping)
       courses.export
-      CSV.read(courses.output_filename).map { |row| row[0] }
+      CSV.read(courses.output_filename).slice(1..-1).map { |row| Hash[ courses.headers.zip(row) ]}
     end
 
-    context 'reading ANTHRO csv file' do
+    let(:course_id_column) { subject.map { |row| row['COURSE_ID'] } }
+
+    shared_examples 'expected CSV structure' do
+      it { expect(course_id_column).to contain_exactly(*expected_ids) }
+      it 'should include dept_form only for non-crosslisted courses' do
+        subject.each do |row|
+          if row['CROSS_LISTED_FLAG'].present?
+            expect(row['DEPT_FORM']).to be_nil
+          else
+            expect(row['DEPT_FORM']).to be_present
+          end
+        end
+      end
+    end
+
+    context 'ANTHRO dept' do
       let(:dept_name) { 'ANTHRO' }
-      it { should contain_exactly('COURSE_ID', '2015-B-02567') }
+      let(:expected_ids) { %w(2015-B-02567) }
+      include_examples 'expected CSV structure'
     end
 
-    context 'reading MATH csv file' do
+    context 'MATH dept' do
       let(:dept_name) { 'MATH' }
-      it { should contain_exactly('COURSE_ID', '2015-B-87672', '2015-B-87675', '2015-B-87673') }
+      let(:expected_ids) { %w(2015-B-87672 2015-B-87675 2015-B-87673) }
+      include_examples 'expected CSV structure'
     end
 
-    context 'reading POL SCI csv file' do
+    context 'POL SCI dept' do
       let(:dept_name) { 'POL SCI' }
-      it { should contain_exactly('COURSE_ID', '2015-B-87690', '2015-B-72199', '2015-B-71523') }
+      let(:expected_ids) { %w(2015-B-87690 2015-B-72199 2015-B-71523) }
+      include_examples 'expected CSV structure'
     end
 
-    context 'reading STAT csv file' do
+    context 'STAT dept' do
       let(:dept_name) { 'STAT' }
-      it { should contain_exactly('COURSE_ID', '2015-B-87673', '2015-B-54432', '2015-B-54441', '2015-B-72199', '2015-B-87691', '2015-B-87693') }
+      let(:expected_ids) { %w(2015-B-87673 2015-B-54432 2015-B-54441 2015-B-72199 2015-B-87691 2015-B-87693) }
+      include_examples 'expected CSV structure'
     end
   end
 
