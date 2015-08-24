@@ -12,11 +12,6 @@ describe CanvasLti::PublicAuthorizer do
     # The assertions below should not use be_falsey or be_truthy.
     # https://www.relishapp.com/rspec/rspec-expectations/v/2-2/docs/matchers/be-matchers
 
-    before do
-      allow_any_instance_of(Canvas::UserProfile).to receive(:login_id).and_return(uid)
-      allow_any_instance_of(AuthenticationStatePolicy).to receive(:can_create_canvas_project_site?).and_return(true)
-    end
-
     context 'when canvas user login id not present' do
       before { allow_any_instance_of(Canvas::UserProfile).to receive(:login_id).and_return(nil) }
       it 'returns false' do
@@ -25,28 +20,49 @@ describe CanvasLti::PublicAuthorizer do
     end
 
     context 'when canvas user login id is present' do
-      context 'when user is not authorized to create a site' do
-        before { allow_any_instance_of(AuthenticationStatePolicy).to receive(:can_create_canvas_project_site?).and_return(false) }
+      before do
+        allow_any_instance_of(Canvas::UserProfile).to receive(:login_id).and_return(uid)
+        allow_any_instance_of(AuthenticationStatePolicy).to receive(:can_create_canvas_project_site?).and_return(is_staff)
+        allow_any_instance_of(AuthenticationStatePolicy).to receive(:can_create_canvas_course_site?).and_return(is_teaching)
+      end
+
+      context 'when user is not authorized to create a project or a course site' do
+        let(:is_staff) {false}
+        let(:is_teaching) {false}
         it 'returns false' do
           expect(subject.can_create_site?).to eq false
         end
       end
 
-      context 'when user is authorized to create a site' do
+      context 'when user is authorized to create a project but not a course site' do
+        let(:is_staff) {true}
+        let(:is_teaching) {false}
+        it 'returns false' do
+          expect(subject.can_create_site?).to eq true
+        end
+        it 'does not repeat requests when response is cached' do
+          user_profile = double(:login_id => uid)
+          expect(Canvas::UserProfile).to receive(:new).once.and_return(user_profile)
+          expect(subject.can_create_site?).to eq true
+          expect(subject.can_create_site?).to eq true
+        end
+      end
+
+      context 'when user is authorized to create a course but not a project site' do
+        let(:is_staff) {false}
+        let(:is_teaching) {true}
+        it 'returns false' do
+          expect(subject.can_create_site?).to eq true
+        end
+      end
+
+      context 'when user is authorized to create either type of site' do
+        let(:is_staff) {true}
+        let(:is_teaching) {true}
         it 'returns true' do
           expect(subject.can_create_site?).to eq true
         end
       end
     end
-
-    context 'when response is cached' do
-      it 'does not repeat requests to dependencies' do
-        user_profile = double(:login_id => uid)
-        expect(Canvas::UserProfile).to receive(:new).once.and_return(user_profile)
-        expect(subject.can_create_site?).to eq true
-        expect(subject.can_create_site?).to eq true
-      end
-    end
   end
-
 end
