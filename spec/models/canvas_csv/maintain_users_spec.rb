@@ -22,7 +22,8 @@ describe CanvasCsv::MaintainUsers do
       let(:campus_rows) { [
         {
           'ldap_uid' => uid.to_i,
-          'person_name' => 'Ema Ilcha',
+          'first_name' => 'Ema',
+          'last_name' => 'Ilcha',
           'email_address' => 'new@example.edu',
           'affiliations' => 'EMPLOYEE-TYPE-STAFF'
         }
@@ -53,7 +54,8 @@ describe CanvasCsv::MaintainUsers do
       let(:campus_rows) { [
         {
           'ldap_uid' => changed_sis_id_uid.to_i,
-          'person_name' => 'Sissy Changer',
+          'first_name' => 'Sissy',
+          'last_name' => 'Changer',
           'email_address' => "#{changed_sis_id_uid}@example.edu",
           'affiliations' => 'EMPLOYEE-TYPE-STAFF,STUDENT-TYPE-REGISTERED',
           'student_id' => changed_sis_id_student_id.to_i
@@ -82,7 +84,8 @@ describe CanvasCsv::MaintainUsers do
       let(:campus_rows) { [
         {
           'ldap_uid' => uid.to_i,
-          'person_name' => 'Noam Changey',
+          'first_name' => 'Noam',
+          'last_name' => 'Changey',
           'email_address' => "#{uid}@example.edu",
           'affiliations' => 'EMPLOYEE-TYPE-STAFF,STUDENT-STATUS-EXPIRED',
           'student_id' => 9999999
@@ -95,16 +98,16 @@ describe CanvasCsv::MaintainUsers do
       end
     end
 
-    context 'when full name matches but first name does not' do
+    context 'when Canvas full_name matches campus first_name and last_name but Canvas first_name does not match campus first_name' do
       let(:uid) { rand(999999).to_s }
       let(:existing_account) {
         {
           'canvas_user_id' => rand(999999).to_s,
           'user_id' => "UID:#{uid}",
           'login_id' => uid,
-          'first_name' => 'Outerbridge',
-          'last_name' => 'Horsey',
-          'full_name' => 'Outerbridge Horsey III',
+          'first_name' => 'Eugene',
+          'last_name' => 'Debs',
+          'full_name' => 'Eugene V Debs',
           'email' => "#{uid}@example.edu",
           'status' => 'active'
         }
@@ -112,9 +115,8 @@ describe CanvasCsv::MaintainUsers do
       let(:campus_rows) { [
         {
           'ldap_uid' => uid.to_i,
-          'first_name' => 'Outerbridge III',
-          'last_name' => 'Horsey',
-          'person_name' => 'Outerbridge Horsey III',
+          'first_name' => 'Eugene V',
+          'last_name' => 'Debs',
           'email_address' => "#{uid}@example.edu",
           'affiliations' => 'EMPLOYEE-TYPE-STAFF,STUDENT-STATUS-EXPIRED',
           'student_id' => 9999999
@@ -142,7 +144,8 @@ describe CanvasCsv::MaintainUsers do
       let(:campus_rows) { [
         {
           'ldap_uid' => 0,
-          'person_name' => 'Sumotha Match',
+          'first_name' => 'Sumotha',
+          'last_name' => 'Match',
           'email_address' => 'zero@example.edu',
           'affiliations' => 'STUDENT-TYPE-REGISTERED',
           'student_id' => 9999999
