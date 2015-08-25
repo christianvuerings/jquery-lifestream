@@ -4,16 +4,14 @@
     margin-right: 0;
     width: 540px;
   }
-  .cc-page-profile-widget {
-    &:last-child {
-      border-bottom: 1px solid $cc-color-popover-border;
-    }
-  }
   .cc-page-widget-profile-section {
     border-top: 1px solid $cc-color-popover-border;
     display: flex;
     > div {
       padding: 10px;
+    }
+    &:last-child {
+      border-bottom: 1px solid $cc-color-popover-border;
     }
     .cc-page-widget-profile-section-label {
       flex-basis: 120px;

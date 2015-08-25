@@ -13,10 +13,18 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
       editorEnabled: false
     },
     emailTypes: [],
-    currentEditObject: {},
+    currentObject: {},
     isSaving: false
   });
   $scope.contacts = {};
+
+  var emptyObject = {
+    type: {
+      code: ''
+    },
+    emailAddress: '',
+    primary: false
+  };
 
   var parsePerson = function(data) {
     var person = data.data.feed.person;
@@ -50,7 +58,7 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
       $scope.$broadcast('calcentral.custom.api.profile.closeEditors');
     }
     angular.forEach($scope.emails.content, function(item) {
-      item.isEditing = false;
+      item.isModifying = false;
     });
   };
 
@@ -69,16 +77,27 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
     }).then(saveCompleted);
   };
 
-  $scope.editEmail = function(email) {
+  var saveAddEmail = function(email) {
     closeEditors(true);
-    email.isEditing = true;
-    $scope.currentEditObject = angular.copy(email);
+    email.isModifying = true;
+    $scope.currentObject = angular.copy(email);
     $scope.emails.editorEnabled = true;
+  };
+
+  $scope.addEmail = function() {
+    emptyObject.isAdding = true;
+    // Select the first item in the dropdown
+    emptyObject.type.code = $scope.emailTypes[0].fieldvalue;
+    saveAddEmail(emptyObject);
+  };
+
+  $scope.editEmail = function(email) {
+    saveAddEmail(email);
   };
 
   $scope.closeEditor = function() {
     closeEditors(true);
-    $scope.currentEditObject = {};
+    $scope.currentObject = {};
     $scope.emails.editorEnabled = false;
   };
 
