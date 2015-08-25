@@ -25,6 +25,7 @@
     "term_yr": "2015",
     "course_cntl_num": "72198",
     "ldap_uid": "10316",
+    "instructor_func": "1",
     "enrollment_count": "20"
   },
   {
@@ -52,6 +53,8 @@
     "end_date": null,
     "term_yr": "2015",
     "course_cntl_num": "71523",
+    "ldap_uid": "10316",
+    "instructor_func": "1",
     "enrollment_count": "20"
   },
   {
@@ -80,6 +83,7 @@
     "term_yr": "2015",
     "course_cntl_num": "72199",
     "ldap_uid": "10316",
+    "instructor_func": "1",
     "enrollment_count": "20"
   }
 ]

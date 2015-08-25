@@ -82,6 +82,9 @@ describe Oec::CoursesImportTask do
       let(:dept_name) { 'STAT' }
       let(:expected_ids) { %w(2015-B-87673 2015-B-54432 2015-B-54441 2015-B-72199 2015-B-87691 2015-B-87693) }
       include_examples 'expected CSV structure'
+      it 'should not include course supervisor assignments' do
+        expect(subject.map{ |row| row['INSTRUCTOR_FUNC'] }).not_to include '3'
+      end
     end
   end
 
