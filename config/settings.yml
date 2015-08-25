@@ -267,6 +267,8 @@ cache:
     EtsBlog::Alerts: <%= 2.minutes %>
     EtsBlog::ServiceAlerts: <%= 2.minutes %>
 
+    CampusSolutions::ListOfValues: <%= 24.hours %>
+
 # Cache warmer settings
 cache_warmer:
   # Number to decrement db pool to limit the number of warmer threads

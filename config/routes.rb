@@ -141,6 +141,7 @@ Calcentral::Application.routes.draw do
   get '/api/campus_solutions/currency_code' => 'currency_code#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/language_code' => 'language_code#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/translate' => 'translate#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/list_of_values' => 'list_of_values#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/aid_years' => 'aid_years#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/financial_aid_data' => 'financial_aid_data#get', :via => :get, :defaults => { :format => 'json' }
   post '/api/campus_solutions/address' => 'address#post', :via => :post, :defaults => { :format => 'json' }

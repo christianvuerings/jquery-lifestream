@@ -69,7 +69,8 @@ describe CampusSolutions::PersonName do
       preferredFirstName: '',
       partnerLastName: '',
       partnerRoyalPrefix: '',
-      lastNamePrefNld: ''
+      lastNamePrefNld: '',
+      countryNameFormat: '001'
     } }
     let(:proxy) { CampusSolutions::PersonName.new(fake: false, user_id: random_id, params: params) }
 
