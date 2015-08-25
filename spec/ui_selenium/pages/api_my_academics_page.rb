@@ -90,7 +90,7 @@ class ApiMyAcademicsPage
 
   def majors
     majors = []
-    colleges_and_majors.each { |major| majors.push(major['major']) }
+    colleges_and_majors.each { |major| majors.push(major['major'].split.join(' ')) }
     majors
   end
 
