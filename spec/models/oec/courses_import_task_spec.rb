@@ -64,6 +64,9 @@ describe Oec::CoursesImportTask do
       let(:dept_name) { 'ANTHRO' }
       let(:expected_ids) { %w(2015-B-02567) }
       include_examples 'expected CSV structure'
+      it 'should not include IND course' do
+        expect(course_id_column).not_to include('2015-B-06789')
+      end
     end
 
     context 'MATH dept' do
@@ -74,8 +77,11 @@ describe Oec::CoursesImportTask do
 
     context 'POL SCI dept' do
       let(:dept_name) { 'POL SCI' }
-      let(:expected_ids) { %w(2015-B-87690 2015-B-72199 2015-B-71523) }
+      let(:expected_ids) { %w(2015-B-87690 2015-B-72199) }
       include_examples 'expected CSV structure'
+      it 'should not include GRP course' do
+        expect(course_id_column).not_to include('2015-B-71523')
+      end
     end
 
     context 'STAT dept' do
