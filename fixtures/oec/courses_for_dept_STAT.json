@@ -25,6 +25,7 @@
     "term_yr": "2015",
     "course_cntl_num": "87672",
     "ldap_uid": "10316",
+    "instructor_func": "1",
     "enrollment_count": "20"
   },
   {
@@ -53,6 +54,7 @@
     "term_yr": "2015",
     "course_cntl_num": "87675",
     "ldap_uid": "10316",
+    "instructor_func": "2",
     "enrollment_count": "20"
   },
   {
@@ -81,6 +83,7 @@
     "term_yr": "2015",
     "course_cntl_num": "87690",
     "ldap_uid": "10316",
+    "instructor_func": "1",
     "enrollment_count": "20"
   },
   {
@@ -109,6 +112,7 @@
     "term_yr": "2015",
     "course_cntl_num": "87693",
     "ldap_uid": "10316",
+    "instructor_func": "2",
     "enrollment_count": "20"
   },
   {
@@ -137,6 +141,7 @@
     "term_yr": "2015",
     "course_cntl_num": "87673",
     "ldap_uid": "10316",
+    "instructor_func": "1",
     "enrollment_count": "20"
   },
   {
@@ -165,6 +170,37 @@
     "term_yr": "2015",
     "course_cntl_num": "87691",
     "ldap_uid": "10316",
+    "instructor_func": "1",
+    "enrollment_count": "20"
+  },
+  {
+    "term_cd": "B",
+    "course_id": "2015-B-87691",
+    "course_name": "STAT C239A LEC 001 - STATS SOCI SCI",
+    "cross_listed_flag": "Y",
+    "cross_listed_name": null,
+    "course_title_short": null,
+    "dept_name": "STAT",
+    "catalog_id": "C239A",
+    "instruction_format": "LEC",
+    "section_num": "001",
+    "primary_secondary_cd": "P",
+    "sis_id": "SIS_ID:12345678",
+    "first_name": "Super",
+    "last_name": "Visor",
+    "email_address": "stat_supervisor@berkeley.edu",
+    "blue_role": "23",
+    "evaluate": null,
+    "dept_form": null,
+    "evaluation_type": null,
+    "modular_course": null,
+    "start_date": null,
+    "end_date": null,
+    "term_yr": "2015",
+    "course_cntl_num": "87691",
+    "instructor_func": "3",
+    "ldap_uid": "12345678",
+    "instructor_func": "3",
     "enrollment_count": "20"
   }
 ]
