@@ -11,7 +11,7 @@ angular.module('calcentral.controllers').controller('ProfilePhoneController', fu
       content: [],
       editorEnabled: false
     },
-    currentEditObject: {}
+    currentObject: {}
   });
 
   var loadInformation = function() {

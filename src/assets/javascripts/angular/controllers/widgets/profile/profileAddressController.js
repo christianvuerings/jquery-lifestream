@@ -11,7 +11,7 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
       content: [],
       editorEnabled: false
     },
-    currentEditObject: {}
+    currentObject: {}
   });
 
   var getPerson = profileFactory.getPerson().then(function(data) {
