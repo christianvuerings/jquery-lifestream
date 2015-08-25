@@ -54,11 +54,13 @@ module CalnetCrosswalk
     end
 
     def url
-      @settings.base_url
+      "#{@settings.base_url}/#{@uid}"
     end
 
     def request_options
-      {}
+      {
+        digest_auth: {username: @settings.username, password: @settings.password}
+      }
     end
 
   end

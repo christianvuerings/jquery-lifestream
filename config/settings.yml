@@ -261,6 +261,8 @@ cache:
     CampusSolutions::Deposit: <%= 15.minutes %>
     CampusSolutions::Checklist: <%= 15.minutes %>
 
+    CalnetCrosswalk::Proxy: <%= 29.days %>
+
 # Cache warmer settings
 cache_warmer:
   # Number to decrement db pool to limit the number of warmer threads
@@ -415,7 +417,7 @@ hub_edos_proxy:
 
 calnet_crosswalk_proxy:
   fake: false
-  base_url: 'https://registry-d1.calnet.1918.berkeley.edu:8453/registry-service/api/v1/identifiers/UID/61889'
+  base_url: 'https://registry-d1.calnet.1918.berkeley.edu:8453/registry-service/api/v1/identifiers/UID'
   username: secret
   password: secret
 
