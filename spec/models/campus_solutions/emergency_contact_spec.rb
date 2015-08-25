@@ -67,7 +67,7 @@ describe CampusSolutions::EmergencyContact do
       num1: '1',
       num2: '2',
       houseType: 'AB',
-      addrField1: 'L1',
+      addrField1: 'AV',
       addrField2: 'L2',
       addrField3: 'L3',
       county: 'Alameda',
