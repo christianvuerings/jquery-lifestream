@@ -43,6 +43,8 @@ module Oec
           log :info, "Skipping course without enrollments: #{course_id}, #{course['dept_name']} #{catalog_id}"
         elsif course['instructor_func'] == '3'
           log :info, "Skipping supervisor assignment of ID #{course['sis_id']} to #{course_id}, #{course['dept_name']} #{catalog_id}"
+        elsif %w(CLC GRP IND SUP VOL).include? course['instruction_format']
+          log :info, "Skipping course with non-evaluated instruction format: #{course_id}, #{course['dept_name']} #{catalog_id}"
         else
           course['dept_form'] = courses.dept_code unless course['cross_listed_flag'].present?
           courses[row_key] = row_for_csv course
