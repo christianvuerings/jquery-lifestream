@@ -1,6 +1,8 @@
 module CampusSolutions
   class Ethnicity < DirectProxy
 
+    include ProfileFeatureFlagged
+
     def xml_filename
       'ethnicity.xml'
     end

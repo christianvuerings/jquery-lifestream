@@ -1,6 +1,8 @@
 module CampusSolutions
   class AddressLabel < DirectProxy
 
+    include ProfileFeatureFlagged
+
     def initialize(options = {})
       super options
       @country = options[:country]

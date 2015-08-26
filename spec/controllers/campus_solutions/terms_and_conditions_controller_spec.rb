@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TermsAndConditionsController do
+describe CampusSolutions::TermsAndConditionsController do
   context 'updating terms and conditions' do
     it 'should not let an unauthenticated user post' do
       post :post, {format: 'json', uid: '100'}

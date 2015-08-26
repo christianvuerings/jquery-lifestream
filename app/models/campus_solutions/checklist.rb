@@ -2,6 +2,7 @@ module CampusSolutions
   class Checklist < Proxy
 
     include Cache::UserCacheExpiry
+    include ProfileFeatureFlagged
 
     def initialize(options = {})
       super(Settings.cs_checklist_proxy, options)

@@ -1,6 +1,8 @@
 module CampusSolutions
   class CurrencyCode < DirectProxy
 
+    include ProfileFeatureFlagged
+
     def xml_filename
       'currency_code.xml'
     end

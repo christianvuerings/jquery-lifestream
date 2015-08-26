@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TranslateController do
+describe CampusSolutions::TranslateController do
   context 'translate feed' do
     let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'

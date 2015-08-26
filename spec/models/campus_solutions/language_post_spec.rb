@@ -50,6 +50,7 @@ describe CampusSolutions::LanguagePost do
         proxy.get
       }
       it_should_behave_like 'a simple proxy that returns errors'
+      it_behaves_like 'a proxy that properly observes the profile feature flag'
       it 'should make a successful post' do
         expect(subject[:statusCode]).to eq 200
         expect(subject[:feed][:status]).to be

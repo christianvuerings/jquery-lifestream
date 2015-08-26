@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe AddressTypeController do
+describe CampusSolutions::AddressTypeController do
   context 'address type feed' do
     let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'

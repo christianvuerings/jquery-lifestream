@@ -2,6 +2,7 @@ module CampusSolutions
   class Title4 < PostingProxy
 
     include IntegrationHubProxy
+    include FinaidFeatureFlagged
 
     def initialize(options = {})
       super(Settings.cs_title4_proxy, options)

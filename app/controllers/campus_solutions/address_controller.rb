@@ -1,7 +1,9 @@
-class AddressController < CampusSolutionsController
+module CampusSolutions
+  class AddressController < CampusSolutionsController
 
-  def post
-    render json: CampusSolutions::MyAddress.from_session(session).update(params)
+    def post
+      render json: CampusSolutions::MyAddress.from_session(session).update(params)
+    end
+
   end
-
 end

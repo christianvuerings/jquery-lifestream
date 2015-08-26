@@ -1,6 +1,8 @@
 module CampusSolutions
   class State < DirectProxy
 
+    include ProfileFeatureFlagged
+
     def initialize(options = {})
       super options
       @country = options[:country]

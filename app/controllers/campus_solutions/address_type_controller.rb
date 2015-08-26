@@ -1,7 +1,9 @@
-class AddressTypeController < CampusSolutionsController
+module CampusSolutions
+  class AddressTypeController < CampusSolutionsController
 
-  def get
-    json_passthrough CampusSolutions::AddressType
+    def get
+      json_passthrough CampusSolutions::AddressType
+    end
+
   end
-
 end

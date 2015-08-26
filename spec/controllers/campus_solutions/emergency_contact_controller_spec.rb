@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EmergencyContactController do
+describe CampusSolutions::EmergencyContactController do
   context 'updating emergency contact' do
     it 'should not let an unauthenticated user post' do
       post :post, {format: 'json', uid: '100'}

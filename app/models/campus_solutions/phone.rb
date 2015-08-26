@@ -1,20 +1,12 @@
 module CampusSolutions
   class Phone < PostingProxy
 
+    include ProfileFeatureFlagged
+
     def initialize(options = {})
       super(Settings.campus_solutions_proxy, options)
       initialize_mocks if @fake
     end
-
-#     <?xml version="1.0"?>
-#       <PERSON_PHONE>
-#     <EMPLID>10120603</EMPLID>
-# <PHONE_TYPE>CELL</PHONE_TYPE>
-#     <COUNTRY_CODE>91</COUNTRY_CODE>
-# <PHONE>9949919892</PHONE>
-#     <EXTENSION>23</EXTENSION>
-# <PREF_PHONE_FLAG>N</PREF_PHONE_FLAG>
-#     </PERSON_PHONE>
 
     def self.field_mappings
       @field_mappings ||= FieldMapping.to_hash(

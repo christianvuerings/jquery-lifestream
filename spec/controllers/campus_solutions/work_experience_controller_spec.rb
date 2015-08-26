@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe WorkExperienceController do
+describe CampusSolutions::WorkExperienceController do
   context 'updating work experience' do
     it 'should not let an unauthenticated user post' do
       post :post, {format: 'json', uid: '100'}

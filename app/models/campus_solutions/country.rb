@@ -1,6 +1,8 @@
 module CampusSolutions
   class Country < DirectProxy
 
+    include ProfileFeatureFlagged
+
     def xml_filename
       'country.xml'
     end

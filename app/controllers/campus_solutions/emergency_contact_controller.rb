@@ -1,7 +1,9 @@
-class EmergencyContactController < CampusSolutionsController
+module CampusSolutions
+  class EmergencyContactController < CampusSolutionsController
 
-  def post
-    post_passthrough CampusSolutions::MyEmergencyContact
+    def post
+      post_passthrough CampusSolutions::MyEmergencyContact
+    end
+
   end
-
 end

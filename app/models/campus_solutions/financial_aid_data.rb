@@ -3,6 +3,7 @@ module CampusSolutions
 
     include IntegrationHubProxy
     include Cache::RelatedCacheKeyTracker
+    include FinaidFeatureFlagged
 
     def initialize(options = {})
       super(Settings.cs_financial_aid_data_proxy, options)

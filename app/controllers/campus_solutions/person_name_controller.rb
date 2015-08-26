@@ -1,7 +1,9 @@
-class PersonNameController < CampusSolutionsController
+module CampusSolutions
+  class PersonNameController < CampusSolutionsController
 
-  def post
-    post_passthrough CampusSolutions::MyPersonName
+    def post
+      post_passthrough CampusSolutions::MyPersonName
+    end
+
   end
-
 end

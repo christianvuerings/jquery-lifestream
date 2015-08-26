@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CountryController do
+describe CampusSolutions::CountryController do
   context 'country feed' do
     let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'
