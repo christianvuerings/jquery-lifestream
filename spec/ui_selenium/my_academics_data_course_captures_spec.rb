@@ -132,7 +132,7 @@ describe 'My Academics course captures card', :testui => true do
             end
 
             unless video_you_tube_id.nil? && audio_url.nil?
-              has_report_problem_link = WebDriverUtils.verify_external_link(driver, my_academics.report_problem_link_element, 'Get Webcast/Podcast Support or Give Feedback | Educational Technology Services')
+              has_report_problem_link = WebDriverUtils.verify_external_link(driver, my_academics.report_problem_link_element, 'Request Support or Give Feedback | Educational Technology Services')
               it "offers a 'Report a Problem' link for UID #{uid}" do
                 expect(has_report_problem_link).to be true
               end
