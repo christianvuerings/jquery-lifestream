@@ -17,9 +17,8 @@ describe CampusSolutions::FinancialAidData do
     it_should_behave_like 'a proxy that gets data'
   end
 
-  # TODO ignored, see SISRP-6788
-  context 'real proxy', testext: true, ignore: true do
-    let(:proxy) { CampusSolutions::FinancialAidData.new(fake: false, aid_year: 2015) }
+  context 'real proxy', testext: true do
+    let(:proxy) { CampusSolutions::FinancialAidData.new(fake: false, aid_year: 2016) }
     it_should_behave_like 'a proxy that gets data'
   end
 
