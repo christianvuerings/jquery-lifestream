@@ -47,6 +47,10 @@ module CampusSolutions
       'UC_EMER_CNTCT'
     end
 
+    def error_response_root_xml_node
+      'UC_FA_T_C_FAULT'
+    end
+
     def xml_filename
       'emergency_contact.xml'
     end
