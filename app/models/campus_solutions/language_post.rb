@@ -1,6 +1,8 @@
 module CampusSolutions
   class LanguagePost < PostingProxy
 
+    include ProfileFeatureFlagged
+
     def initialize(options = {})
       super(Settings.campus_solutions_proxy, options)
       initialize_mocks if @fake

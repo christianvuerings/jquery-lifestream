@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe AddressLabelController do
+describe CampusSolutions::AddressLabelController do
   context 'address label feed' do
     let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'

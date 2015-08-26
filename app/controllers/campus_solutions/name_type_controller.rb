@@ -1,7 +1,9 @@
-class NameTypeController < CampusSolutionsController
+module CampusSolutions
+  class NameTypeController < CampusSolutionsController
 
-  def get
-    json_passthrough CampusSolutions::NameType
+    def get
+      json_passthrough CampusSolutions::NameType
+    end
+
   end
-
 end

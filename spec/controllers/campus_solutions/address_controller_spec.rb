@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe AddressController do
+describe CampusSolutions::AddressController do
+
   context 'updating address' do
     it 'should not let an unauthenticated user post' do
       post :post, {format: 'json', uid: '100'}

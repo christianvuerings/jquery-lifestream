@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe LanguageController do
+describe CampusSolutions::LanguageController do
 
   context 'updating language' do
     it 'should not let an unauthenticated user post' do

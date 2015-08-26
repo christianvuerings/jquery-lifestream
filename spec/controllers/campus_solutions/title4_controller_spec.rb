@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Title4Controller do
+describe CampusSolutions::Title4Controller do
   context 'updating title 4' do
     it 'should not let an unauthenticated user post' do
       post :post, {format: 'json', uid: '100'}

@@ -1,6 +1,8 @@
 module CampusSolutions
   class NameType < DirectProxy
 
+    include ProfileFeatureFlagged
+
     def xml_filename
       'name_type.xml'
     end

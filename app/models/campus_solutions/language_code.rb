@@ -1,6 +1,8 @@
 module CampusSolutions
   class LanguageCode < DirectProxy
 
+    include ProfileFeatureFlagged
+
     def xml_filename
       'language_code.xml'
     end

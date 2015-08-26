@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EthnicityController do
+describe CampusSolutions::EthnicityController do
   context 'ethnicity setup feed' do
     let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'

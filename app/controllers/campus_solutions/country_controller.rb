@@ -1,7 +1,9 @@
-class CountryController < CampusSolutionsController
+module CampusSolutions
+  class CountryController < CampusSolutionsController
 
-  def get
-    json_passthrough CampusSolutions::Country
+    def get
+      json_passthrough CampusSolutions::Country
+    end
+
   end
-
 end

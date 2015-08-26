@@ -25,15 +25,19 @@ module CampusSolutions
     end
 
     def get
-      internal_response = self.class.smart_fetch_from_cache(id: instance_key) do
-        get_internal
-      end
-      if internal_response[:noStudentId] || internal_response[:statusCode] < 400
-        internal_response
+      if is_feature_enabled
+        internal_response = self.class.smart_fetch_from_cache(id: instance_key) do
+          get_internal
+        end
+        if internal_response[:noStudentId] || internal_response[:statusCode] < 400
+          internal_response
+        else
+          internal_response.merge({
+                                    errored: true
+                                  })
+        end
       else
-        internal_response.merge({
-          errored: true
-        })
+        {}
       end
     end
 
@@ -80,6 +84,10 @@ module CampusSolutions
 
     def build_feed(response)
       response.parsed_response
+    end
+
+    def is_feature_enabled
+      true
     end
 
   end

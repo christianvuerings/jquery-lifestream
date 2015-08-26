@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe AidYearsController do
+describe CampusSolutions::AidYearsController do
 
   context 'aid years feed' do
     let(:feed) { :get }

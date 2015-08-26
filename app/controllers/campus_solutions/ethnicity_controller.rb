@@ -1,7 +1,9 @@
-class EthnicityController < CampusSolutionsController
+module CampusSolutions
+  class EthnicityController < CampusSolutionsController
 
-  def get
-    json_passthrough CampusSolutions::Ethnicity
+    def get
+      json_passthrough CampusSolutions::Ethnicity
+    end
+
   end
-
 end

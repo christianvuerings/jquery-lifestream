@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EmailController do
+describe CampusSolutions::EmailController do
   context 'updating email' do
     it 'should not let an unauthenticated user post' do
       post :post, {format: 'json', uid: '100'}

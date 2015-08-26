@@ -32,6 +32,7 @@ features:
   audio: true
   advising: true
   cs_fin_aid: true
+  cs_profile: true
   webcast_sign_up_on_calcentral: true
 
 cache:

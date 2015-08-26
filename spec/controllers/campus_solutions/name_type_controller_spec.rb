@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe NameTypeController do
+describe CampusSolutions::NameTypeController do
   context 'name type feed' do
     let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'

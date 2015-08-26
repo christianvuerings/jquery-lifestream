@@ -1,6 +1,8 @@
 module CampusSolutions
   class Translate < DirectProxy
 
+    include ProfileFeatureFlagged
+
     def initialize(options = {})
       super options
       @field_name = options[:field_name]

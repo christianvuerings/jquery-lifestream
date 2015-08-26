@@ -1,7 +1,9 @@
-class CurrencyCodeController < CampusSolutionsController
+module CampusSolutions
+  class CurrencyCodeController < CampusSolutionsController
 
-  def get
-    json_passthrough CampusSolutions::CurrencyCode
+    def get
+      json_passthrough CampusSolutions::CurrencyCode
+    end
+
   end
-
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe LanguageCodeController do
+describe CampusSolutions::LanguageCodeController do
   context 'language feed' do
     let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'

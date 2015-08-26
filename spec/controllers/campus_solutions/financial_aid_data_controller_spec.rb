@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe FinancialAidDataController do
+describe CampusSolutions::FinancialAidDataController do
 
   context 'financial data feed' do
     let(:feed) { :get }

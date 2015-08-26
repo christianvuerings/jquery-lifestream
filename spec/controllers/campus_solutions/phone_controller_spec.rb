@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PhoneController do
+describe CampusSolutions::PhoneController do
   context 'updating phone' do
     it 'should not let an unauthenticated user post' do
       post :post, {format: 'json', uid: '100'}

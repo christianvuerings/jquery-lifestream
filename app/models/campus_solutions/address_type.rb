@@ -1,6 +1,8 @@
 module CampusSolutions
   class AddressType < DirectProxy
 
+    include ProfileFeatureFlagged
+
     def xml_filename
       'address_type.xml'
     end

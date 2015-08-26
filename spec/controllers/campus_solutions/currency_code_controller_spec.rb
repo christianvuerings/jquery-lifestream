@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CurrencyCodeController do
+describe CampusSolutions::CurrencyCodeController do
   context 'currency code feed' do
     let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'

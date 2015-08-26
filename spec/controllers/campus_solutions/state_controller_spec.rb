@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe StateController do
+describe CampusSolutions::StateController do
   context 'state feed' do
     let(:feed) { :get }
     it_behaves_like 'an unauthenticated user'

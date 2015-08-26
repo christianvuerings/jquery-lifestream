@@ -1,35 +1,13 @@
 module CampusSolutions
   class WorkExperience < PostingProxy
 
+    include ProfileFeatureFlagged
+
     def initialize(options = {})
       super(Settings.campus_solutions_proxy, options)
       initialize_mocks if @fake
     end
 
-    <<-DOC
-<?xml version="1.0"?>
-<Prior_Work_Exp>
-<EMPLID>13320458</EMPLID>
-<EXT_ORGNIZATION_ID>9000000008</EXT_ORGNIZATION_ID>
-<IS_RETIRED>N</IS_RETIRED>
-<WORK_EXP_ADDR_TYPE>ADDR</WORK_EXP_ADDR_TYPE>
-<COUNTRY>USA</COUNTRY>
-<ADDRESS_TYPE>HOME</ADDRESS_TYPE>
-<CITY>TEST</CITY>
-<STATE>CA</STATE>
-<PHONE_TYPE/>
-<PHONE>9949919892</PHONE>
-<START_DT>2012-08-11</START_DT>
-<END_DT>2015-08-11</END_DT>
-<RETIREMENT_DT/>
-<TITLE_LONG>WORK EXP TESTING</TITLE_LONG>
-<EMPLOY_FRAC>10</EMPLOY_FRAC>
-<HOURS_PER_WEEK>4</HOURS_PER_WEEK>
-<ENDING_PAY_RATE>10000</ENDING_PAY_RATE>
-<CURRENCY_CD>USD</CURRENCY_CD>
-<PAY_FREQUENCY>M</PAY_FREQUENCY>
-</Prior_Work_Exp>
-    DOC
     def self.field_mappings
       @field_mappings ||= FieldMapping.to_hash(
         [

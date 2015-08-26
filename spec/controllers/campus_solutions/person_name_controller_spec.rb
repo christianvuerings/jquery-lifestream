@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PersonNameController do
+describe CampusSolutions::PersonNameController do
   context 'updating name' do
     it 'should not let an unauthenticated user post' do
       post :post, {format: 'json', uid: '100'}

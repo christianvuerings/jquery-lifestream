@@ -36,4 +36,23 @@ module CampusSolutionsHelperModule
     end
   end
 
+  shared_examples 'a proxy that observes a feature flag' do
+    before do
+      allow(Settings.features).to receive(flag).and_return(false)
+    end
+    it 'should return an empty feed if the feature is off' do
+      expect(subject).to be_empty
+    end
+  end
+
+  shared_examples 'a proxy that properly observes the profile feature flag' do
+    let(:flag) { :cs_profile }
+    it_behaves_like 'a proxy that observes a feature flag'
+  end
+
+  shared_examples 'a proxy that properly observes the finaid feature flag' do
+    let(:flag) { :cs_fin_aid }
+    it_behaves_like 'a proxy that observes a feature flag'
+  end
+
 end

@@ -1,7 +1,9 @@
-class PhoneController < CampusSolutionsController
+module CampusSolutions
+  class PhoneController < CampusSolutionsController
 
-  def post
-    post_passthrough CampusSolutions::MyPhone
+    def post
+      post_passthrough CampusSolutions::MyPhone
+    end
+
   end
-
 end
