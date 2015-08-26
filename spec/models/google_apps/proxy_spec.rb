@@ -15,8 +15,6 @@ describe GoogleApps::Proxy do
         expect(auth.client_id).to eq Settings.google_proxy.client_id
         expect(auth.client_secret).to eq Settings.google_proxy.client_secret
         expect(auth.access_token).to eq 'fake_access_token'
-        expect(auth.expires_in).to be_nil
-        expect(auth.expired?).to be false
       end
     end
 
