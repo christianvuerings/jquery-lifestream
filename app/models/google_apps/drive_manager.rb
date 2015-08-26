@@ -157,10 +157,24 @@ module GoogleApps
 
     protected
 
-    def get_google_api
+    def get_google_api(options = {})
       if @client.nil?
         @client = GoogleApps::Client.client
-        @client.authorization = GoogleApps::Client.new_auth @credential_store
+        storage = Google::APIClient::Storage.new @credential_store
+        auth = storage.authorize
+        if options && options[:refresh_token] && options[:expiration_time]
+          auth.refresh_token = options[:refresh_token]
+          auth.expires_in = 3600
+          auth.issued_at = Time.at(options[:expiration_time] - 3600)
+        end
+        if auth.nil? || (auth.expired? && auth.refresh_token.nil?)
+          config = @credential_store.load_credentials
+          flow = Google::APIClient::InstalledAppFlow.new({ :client_id => config.client_id,
+                                                           :client_secret => config.client_secret,
+                                                           :scope => config.scope})
+          auth = flow.authorize storage
+        end
+        @client.authorization = auth
       end
       @client
     end

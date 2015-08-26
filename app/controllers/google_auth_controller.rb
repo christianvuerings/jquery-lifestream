@@ -11,16 +11,16 @@ class GoogleAuthController < ApplicationController
     expire
     final_redirect = params['final_redirect'] || '/'
     if params['force_domain'].present? && params['force_domain'] == 'false'
-      client = get_google_api_auth(final_redirect, force_domain = false)
+      client = get_client(final_redirect, force_domain = false)
     end
-    client ||= get_google_api_auth final_redirect
+    client ||= get_client final_redirect
     url = client.authorization_uri(approval_prompt: 'force').to_s
     logger.debug "Initiating Oauth2 authorization request for user #{session['user_id']} - redirecting to #{url}"
     redirect_to url
   end
 
   def handle_callback
-    client = get_google_api_auth
+    client = get_client
     logger.debug "Handling Oauth2 authorization callback for user #{session['user_id']}"
     if params['code'] && params['error'].blank?
       client.code = params['code']
@@ -78,18 +78,21 @@ class GoogleAuthController < ApplicationController
     GoogleApps::Proxy::APP_ID
   end
 
-  private
-
-  def get_google_api_auth(final_redirect = '', force_domain = true)
-    options = { :application_name => 'CalCentral', :application_version => 'v1', :retries => 3 }
-    auth = Google::APIClient.new(options).authorization
-    auth.client_id = Settings.google_proxy.client_id
-    auth.client_secret = Settings.google_proxy.client_secret
-    auth.authorization_uri = URI('https://accounts.google.com/o/oauth2/auth?hd=berkeley.edu') if force_domain
-    auth.redirect_uri = url_for(:only_path => false, :controller => 'google_auth', :action => 'handle_callback')
-    auth.state = Base64.encode64 final_redirect
-    auth.scope = Settings.google_proxy.scope
-    auth
+  def get_client(final_redirect = '', force_domain = true)
+    google_client = Google::APIClient.new(options={:application_name => 'CalCentral', :application_version => 'v1', :retries => 3})
+    client = google_client.authorization
+    unless force_domain == false
+      client.authorization_uri= URI 'https://accounts.google.com/o/oauth2/auth?hd=berkeley.edu'
+    end
+    client.client_id = Settings.google_proxy.client_id
+    client.client_secret = Settings.google_proxy.client_secret
+    client.redirect_uri = url_for(
+      :only_path => false,
+      :controller => 'google_auth',
+      :action => 'handle_callback')
+    client.state = Base64.encode64 final_redirect
+    client.scope = Settings.google_proxy.scope
+    client
   end
 
 end
