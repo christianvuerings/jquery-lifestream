@@ -8,91 +8,98 @@
         <data type="array">
           <dataItem>
             <headers type="array">
-              <header>Fall</header>
-              <header>Spring</header>
-              <header>Summer</header>
-              <header>Total</header>
+              <header>fall</header>
+              <header>spring</header>
+              <header>summer</header>
+              <header>total</header>
             </headers>
-            <title>Standard Budget</title>
             <items type="array">
               <item>
                 <amounts type="array">
-                  <amount type="float">9000</amount>
-                  <amount type="float">9000</amount>
-                  <amount type="float">4500.01</amount>
+                  <amount type="float">6657</amount>
+                  <amount type="float">6657</amount>
+                  <amount type="float">710</amount>
                 </amounts>
-                <total type="float">22500.1</total>
-                <title>Tuition / Fees</title>
+                <total type="float">14024</total>
+                <title>Tuition/Fees</title>
                 <subItems type="array">
                   <subItem>
                     <amounts type="array">
-                      <amount type="float">4500</amount>
-                      <amount type="float">4500</amount>
-                      <amount type="float">2250.01</amount>
+                      <amount type="float">6120</amount>
+                      <amount type="float">6120</amount>
+                      <amount type="float">0</amount>
                     </amounts>
-                    <total type="float">12250.1</total>
-                    <title>Campus Fees</title>
+                    <total type="float">12240</total>
+                    <title>Fees</title>
                   </subItem>
                   <subItem>
                     <amounts type="array">
-                      <amount type="float">4500</amount>
-                      <amount type="float">4500</amount>
-                      <amount type="float">2250</amount>
+                      <amount type="float">537</amount>
+                      <amount type="float">537</amount>
+                      <amount type="float">0</amount>
                     </amounts>
-                    <total type="float">12250</total>
-                    <title>Tuition and Fees</title>
+                    <total type="float">1074</total>
+                    <title>Campus Fees &amp; Class Pass</title>
+                  </subItem>
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">0</amount>
+                      <amount type="float">0</amount>
+                      <amount type="float">710</amount>
+                    </amounts>
+                    <total type="float">710</total>
+                    <title>Summer Course Fees</title>
                   </subItem>
                 </subItems>
               </item>
               <item>
                 <amounts type="array">
+                  <amount type="float">7711</amount>
+                  <amount type="float">7711</amount>
                   <amount type="float">0</amount>
-                  <amount type="float">0</amount>
-                  <amount type="float">1243</amount>
                 </amounts>
-                <subTitles type="array">
-                  <subTitle>Residence Hall</subTitle>
-                  <subTitle></subTitle>
-                  <subTitle>Residence Hall</subTitle>
-                </subTitles>
-                <total type="float">1243</total>
-                <title>Housing / Meals</title>
+                <total type="float">15422</total>
+                <title>Housing</title>
+                <subItems type="array">
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">7194</amount>
+                      <amount type="float">7194</amount>
+                      <amount type="float">0</amount>
+                    </amounts>
+                    <total type="float">14388</total>
+                    <title>Room &amp; Board - Res. Hall</title>
+                  </subItem>
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">517</amount>
+                      <amount type="float">517</amount>
+                      <amount type="float">0</amount>
+                    </amounts>
+                    <total type="float">1034</total>
+                    <title>Food - Res. Hall</title>
+                  </subItem>
+                </subItems>
               </item>
               <item>
                 <amounts type="array">
+                  <amount type="float">620</amount>
+                  <amount type="float">620</amount>
                   <amount type="float">0</amount>
-                  <amount type="float">0</amount>
-                  <amount type="float">1243</amount>
                 </amounts>
-                <total type="float">1243</total>
-                <title>Grad Transportation 14wk</title>
-              </item>
-              <item>
-                <amounts type="array">
-                  <amount type="float">1290</amount>
-                  <amount type="float">1290</amount>
-                  <amount type="float">1290</amount>
-                </amounts>
-                <total type="float">3870</total>
-                <title>Health Insurance - UG</title>
-              </item>
-              <item>
-                <amounts type="array">
-                  <amount type="float">11000</amount>
-                  <amount type="float">11000</amount>
-                  <amount type="float">3000</amount>
-                </amounts>
-                <total type="float">25000</total>
-                <title>Non-Res.Tuit Schol UG</title>
-              </item>
-              <item>
-                <amounts type="array">
-                  <amount type="float">7194</amount>
-                  <amount type="float">7194</amount>
-                  <amount type="float">7194</amount>
-                </amounts>
-                <total type="float">21582</total>
-                <title>Room &amp; Board - Res. Hall</title>
+                <total type="float">1240</total>
+                <title>Books and Supplies</title>
+                <subItems type="array">
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">620</amount>
+                      <amount type="float">620</amount>
+                      <amount type="float">0</amount>
+                    </amounts>
+                    <total type="float">1240</total>
+                    <title>Books &amp; Supplies</title>
+                  </subItem>
+                </subItems>
               </item>
               <item>
                 <amounts type="array">
@@ -101,14 +108,69 @@
                   <amount type="float">0</amount>
                 </amounts>
                 <total type="float">534</total>
-                <title>Transportation-Res. Hall</title>
+                <title>Transportation</title>
+                <subItems type="array">
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">267</amount>
+                      <amount type="float">267</amount>
+                      <amount type="float">0</amount>
+                    </amounts>
+                    <total type="float">534</total>
+                    <title>Transportation-Res. Hall</title>
+                  </subItem>
+                </subItems>
+              </item>
+              <item>
+                <amounts type="array">
+                  <amount type="float">1290</amount>
+                  <amount type="float">1290</amount>
+                  <amount type="float">0</amount>
+                </amounts>
+                <total type="float">2580</total>
+                <title>Health Insurance</title>
+                <subItems type="array">
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">1290</amount>
+                      <amount type="float">1290</amount>
+                      <amount type="float">0</amount>
+                    </amounts>
+                    <total type="float">2580</total>
+                    <title>Health Insurance - UG</title>
+                  </subItem>
+                </subItems>
+              </item>
+              <item>
+                <amounts type="array">
+                  <amount type="float">1009</amount>
+                  <amount type="float">1009</amount>
+                  <amount type="float">0</amount>
+                </amounts>
+                <total type="float">2018</total>
+                <title>Personal Expenses</title>
+                <subItems type="array">
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">1009</amount>
+                      <amount type="float">1009</amount>
+                      <amount type="float">0</amount>
+                    </amounts>
+                    <total type="float">2018</total>
+                    <title>Personal - Res. Hall</title>
+                  </subItem>
+                </subItems>
+              </item>
+              <item>
+                <totals type="array">
+                  <total type="float">17554</total>
+                  <total type="float">17554</total>
+                  <total type="float">710</total>
+                  <total type="float">35818</total>
+                </totals>
               </item>
             </items>
-            <totals type="array">
-              <total type="float">25847</total>
-              <total type="float">25847</total>
-              <total type="float">19129.01</total>
-            </totals>
+            <title>Standard Budget Items</title>
           </dataItem>
           <dataItem>
             <headers type="array">
@@ -120,17 +182,232 @@
             <items type="array">
               <item>
                 <amounts type="array">
-                  <amount type="float">25847</amount>
-                  <amount type="float">25847</amount>
-                  <amount type="float">19129.01</amount>
+                  <amount type="float">17554</amount>
+                  <amount type="float">17554</amount>
+                  <amount type="float">710</amount>
                 </amounts>
-                <total type="float">70129.01</total>
+                <total type="float">35818</total>
               </item>
             </items>
             <title>Term Grand Total</title>
           </dataItem>
         </data>
         <id>fall-spring-summer</id>
+      </semesterOption>
+      <semesterOption>
+        <data type="array">
+          <dataItem>
+            <headers type="array">
+              <header>fall</header>
+              <header>spring</header>
+              <header>total</header>
+            </headers>
+            <items type="array">
+              <item>
+                <amounts type="array">
+                  <amount type="float">6657</amount>
+                  <amount type="float">6657</amount>
+                </amounts>
+                <total type="float">13314</total>
+                <title>Tuition/Fees</title>
+                <subItems type="array">
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">6120</amount>
+                      <amount type="float">6120</amount>
+                    </amounts>
+                    <total type="float">12240</total>
+                    <title>Fees</title>
+                  </subItem>
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">537</amount>
+                      <amount type="float">537</amount>
+                    </amounts>
+                    <total type="float">1074</total>
+                    <title>Campus Fees &amp; Class Pass</title>
+                  </subItem>
+                </subItems>
+              </item>
+              <item>
+                <amounts type="array">
+                  <amount type="float">7711</amount>
+                  <amount type="float">7711</amount>
+                </amounts>
+                <total type="float">15422</total>
+                <title>Housing</title>
+                <subItems type="array">
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">7194</amount>
+                      <amount type="float">7194</amount>
+                    </amounts>
+                    <total type="float">14388</total>
+                    <title>Room &amp; Board - Res. Hall</title>
+                  </subItem>
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">517</amount>
+                      <amount type="float">517</amount>
+                    </amounts>
+                    <total type="float">1034</total>
+                    <title>Food - Res. Hall</title>
+                  </subItem>
+                </subItems>
+              </item>
+              <item>
+                <amounts type="array">
+                  <amount type="float">620</amount>
+                  <amount type="float">620</amount>
+                </amounts>
+                <total type="float">1240</total>
+                <title>Books and Supplies</title>
+                <subItems type="array">
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">620</amount>
+                      <amount type="float">620</amount>
+                    </amounts>
+                    <total type="float">1240</total>
+                    <title>Books &amp; Supplies</title>
+                  </subItem>
+                </subItems>
+              </item>
+              <item>
+                <amounts type="array">
+                  <amount type="float">267</amount>
+                  <amount type="float">267</amount>
+                </amounts>
+                <total type="float">534</total>
+                <title>Transportation</title>
+                <subItems type="array">
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">267</amount>
+                      <amount type="float">267</amount>
+                    </amounts>
+                    <total type="float">534</total>
+                    <title>Transportation-Res. Hall</title>
+                  </subItem>
+                </subItems>
+              </item>
+              <item>
+                <amounts type="array">
+                  <amount type="float">1290</amount>
+                  <amount type="float">1290</amount>
+                </amounts>
+                <total type="float">2580</total>
+                <title>Health Insurance</title>
+                <subItems type="array">
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">1290</amount>
+                      <amount type="float">1290</amount>
+                    </amounts>
+                    <total type="float">2580</total>
+                    <title>Health Insurance - UG</title>
+                  </subItem>
+                </subItems>
+              </item>
+              <item>
+                <amounts type="array">
+                  <amount type="float">1009</amount>
+                  <amount type="float">1009</amount>
+                </amounts>
+                <total type="float">2018</total>
+                <title>Personal Expenses</title>
+                <subItems type="array">
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">1009</amount>
+                      <amount type="float">1009</amount>
+                    </amounts>
+                    <total type="float">2018</total>
+                    <title>Personal - Res. Hall</title>
+                  </subItem>
+                </subItems>
+              </item>
+              <item>
+                <totals type="array">
+                  <total type="float">17554</total>
+                  <total type="float">17554</total>
+                  <total/>
+                  <total type="float">35108</total>
+                </totals>
+              </item>
+            </items>
+            <title>Standard Budget Items</title>
+          </dataItem>
+          <dataItem>
+            <headers type="array">
+              <header>Fall</header>
+              <header>Spring</header>
+              <header>Total</header>
+            </headers>
+            <items type="array">
+              <item>
+                <amounts type="array">
+                  <amount type="float">17554</amount>
+                  <amount type="float">17554</amount>
+                </amounts>
+                <total type="float">35108</total>
+              </item>
+            </items>
+            <title>Term Grand Total</title>
+          </dataItem>
+        </data>
+        <id>fall-spring</id>
+      </semesterOption>
+      <semesterOption>
+        <data type="array">
+          <dataItem>
+            <headers type="array">
+              <header>summer</header>
+              <header>total</header>
+            </headers>
+            <items type="array">
+              <item>
+                <amounts type="array">
+                  <amount type="float">710</amount>
+                </amounts>
+                <total type="float">710</total>
+                <title>Tuition/Fees</title>
+                <subItems type="array">
+                  <subItem>
+                    <amounts type="array">
+                      <amount type="float">710</amount>
+                    </amounts>
+                    <total type="float">710</total>
+                    <title>Summer Course Fees</title>
+                  </subItem>
+                </subItems>
+              </item>
+              <item>
+                <totals type="array">
+                  <total type="float">710</total>
+                  <total type="float">710</total>
+                </totals>
+              </item>
+            </items>
+            <title>Standard Budget Items</title>
+          </dataItem>
+          <dataItem>
+            <headers type="array">
+              <header>Summer</header>
+              <header>Total</header>
+            </headers>
+            <items type="array">
+              <item>
+                <amounts type="array">
+                  <amount type="float">710</amount>
+                </amounts>
+                <total type="float">710</total>
+              </item>
+            </items>
+            <title>Term Grand Total</title>
+          </dataItem>
+        </data>
+        <id>summer</id>
       </semesterOption>
     </semesterOptions>
     <title>Estimated Cost of Attendance</title>
@@ -158,19 +435,11 @@
               </value>
             </values>
           </item>
-          <item>
-            <title>Expected Graduation</title>
-            <value>To Be Determined</value>
-          </item>
         </itemGroups>
         <itemGroups type="array">
           <item>
             <title>SAP Status</title>
             <value>SAP Undetermined</value>
-          </item>
-          <item>
-            <title>Academic Holds</title>
-            <value>To Be Determined</value>
           </item>
           <item>
             <title>Candidacy Status</title>
@@ -182,18 +451,13 @@
           </item>
           <item>
             <title>Verification Status</title>
-            <value>Not Required|Incomplete</value>
+            <value>Required to be Performed|Incomplete</value>
           </item>
         </itemGroups>
         <itemGroups type="array">
           <item>
             <title>Residency</title>
-            <values type="array">
-              <value>
-                <subvalue>Fall</subvalue>
-                <subvalue>Resident AB540</subvalue>
-              </value>
-            </values>
+            <values type="array"/>
           </item>
           <item>
             <title>Tax Withholding (GLACIER)</title>
@@ -214,7 +478,7 @@
               </value>
               <value>
                 <subvalue>Summer</subvalue>
-                <subvalue>0</subvalue>
+                <subvalue>6</subvalue>
               </value>
             </values>
           </item>
@@ -229,10 +493,6 @@
               </value>
               <value>
                 <subvalue>Spring</subvalue>
-                <subvalue>Room &amp; Board - Res. Hall</subvalue>
-              </value>
-              <value>
-                <subvalue>Summer</subvalue>
                 <subvalue>Room &amp; Board - Res. Hall</subvalue>
               </value>
             </values>
@@ -260,11 +520,11 @@
           </item>
           <item>
             <title>Family Members in College</title>
-            <value>1</value>
+            <value>4</value>
           </item>
           <item>
             <title>Expected Family Contribution (EFC)</title>
-            <value>15353</value>
+            <value>1059</value>
           </item>
           <item>
             <title>Berkeley Parent Contribution</title>
@@ -282,7 +542,7 @@
             </item>
             <item>
               <title>Terms &amp; Conditions</title>
-              <value></value>
+              <value>Accepted</value>
             </item>
           </items>
         </itemGroups>
@@ -296,52 +556,26 @@
     <netCost>
       <items type="array">
         <item>
-          <amount type="float">70823.01</amount>
+          <amount type="float">35108</amount>
           <title>Estimated Cost of Attendance</title>
         </item>
         <item>
-          <amount type="float">34600</amount>
+          <amount type="float">5725</amount>
           <title>Gift Aid</title>
           <subTitle>(MONEY YOU DON'T REPAY)</subTitle>
         </item>
       </items>
       <total>
-        <amount type="float">36223.01</amount>
+        <amount type="float">29383</amount>
         <title>Net Cost</title>
         <subTitle>(YOUR ESTIMATED COST)</subTitle>
       </total>
     </netCost>
     <fundingOffered>
       <total>
-        <amount type="float">51694</amount>
+        <amount type="float">8225</amount>
         <title>Funding Offered</title>
       </total>
-      <categories type="array">
-        <category>
-          <total>
-            <amount type="float">34600</amount>
-            <title>Gift Aid</title>
-          </total>
-          <items type="array">
-            <item>
-              <amount type="float">34600</amount>
-              <title>Grants and Scholarships</title>
-            </item>
-          </items>
-        </category>
-        <category>
-          <total>
-            <amount type="float">17094</amount>
-            <title>Other Funding</title>
-          </total>
-          <items type="array">
-            <item>
-              <amount type="float">17094</amount>
-              <title>Loans</title>
-            </item>
-          </items>
-        </category>
-      </categories>
     </fundingOffered>
   </financialAidSummary>
   <fundingSources>
@@ -351,15 +585,15 @@
         <title>Additional Resources</title>
       </link>
       <link>
-        <url>#</url>
+        <url>https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID.GBL?ucInstitution=UCB01&amp;ucAidYear=2016&amp;ucConvertType=LoanToWKS</url>
         <title>Convert Loan to Workstudy</title>
       </link>
       <link>
-        <url>#</url>
+        <url>https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID.GBL?ucInstitution=UCB01&amp;ucAidYear=2016&amp;ucConvertType=WKSToLoan</url>
         <title>Convert Workstudy to Loan</title>
       </link>
       <link>
-        <url>#</url>
+        <url>https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL?ucInstitution=UCB01&amp;ucAidYear=2016</url>
         <title>Award Management (Accept/Decline Loan)</title>
       </link>
     </links>
