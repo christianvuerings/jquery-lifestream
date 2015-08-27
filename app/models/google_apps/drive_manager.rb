@@ -3,8 +3,9 @@ module GoogleApps
 
     include ClassLogger
 
-    def initialize(credential_store)
-      @credential_store = credential_store
+    def initialize(uid, options = {})
+      @uid = uid
+      @options = options
     end
 
     def get_items_in_folder(parent_id, mime_type = nil)
@@ -157,24 +158,23 @@ module GoogleApps
 
     protected
 
-    def get_google_api(options = {})
+    def get_google_api
       if @client.nil?
+        credential_store = GoogleApps::CredentialStore.new(@uid, @options)
         @client = GoogleApps::Client.client
-        storage = Google::APIClient::Storage.new @credential_store
+        storage = Google::APIClient::Storage.new credential_store
         auth = storage.authorize
-        if options && options[:refresh_token] && options[:expiration_time]
-          auth.refresh_token = options[:refresh_token]
-          auth.expires_in = 3600
-          auth.issued_at = Time.at(options[:expiration_time] - 3600)
-        end
+        credentials = credential_store.load_credentials
         if auth.nil? || (auth.expired? && auth.refresh_token.nil?)
-          config = @credential_store.load_credentials
-          flow = Google::APIClient::InstalledAppFlow.new({ :client_id => config.client_id,
-                                                           :client_secret => config.client_secret,
-                                                           :scope => config.scope})
+          logger.warn "OAuth2 object #{auth.nil? ? 'is nil' : 'is expired'}"
+          flow = Google::APIClient::InstalledAppFlow.new({ :client_id => credentials[:client_id],
+                                                           :client_secret => credentials[:client_secret],
+                                                           :scope => credentials[:scope] })
           auth = flow.authorize storage
         end
         @client.authorization = auth
+        token_hash = @client.authorization.fetch_access_token!
+        credential_store.write_credentials(credentials.merge token_hash)
       end
       @client
     end

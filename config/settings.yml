@@ -103,12 +103,6 @@ google_proxy:
   test_user_access_token: "bogusAccessToken"
   test_user_refresh_token: "bogusRefreshToken"
   atom_mail_feed_url: "https://mail.google.com/mail/feed/atom/"
-  oec:
-    client_id: 'oecMumboJumbo'
-    client_secret: 'oecMumboJumbo'
-    access_token: 'tokenThis'
-    refresh_token: 'tokenThat'
-    scope: 'profile email https://mail.google.com/mail/feed/atom/ https://spreadsheets.google.com/feeds/ https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.apps.readonly https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly.metadata https://www.googleapis.com/auth/tasks'
 
 sakai_proxy:
   host: "https://sakai-dev.berkeley.edu"
@@ -313,6 +307,13 @@ features:
 youtube_splash_id: 'EQ-a7xrfVag'
 
 oec:
+  google:
+    uid: ''
+    client_id: 'oecClientId'
+    client_secret: 'oecClientSecret'
+    access_token: 'oecAccessToken'
+    refresh_token: 'oecRefreshToken'
+    scope: 'profile email https://mail.google.com/mail/feed/atom/ https://spreadsheets.google.com/feeds/ https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.apps.readonly https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly.metadata https://www.googleapis.com/auth/tasks'
   current_terms_codes: [{
     year: 2015,
     code: "C"

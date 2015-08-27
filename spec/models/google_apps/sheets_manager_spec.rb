@@ -3,7 +3,8 @@ describe GoogleApps::SheetsManager do
   context '#real', testext: true, :order => :defined do
 
     before(:all) do
-      @sheet_manager = GoogleApps::SheetsManager.new GoogleApps::CredentialStore.new(app_name: 'oec')
+      settings = Settings.oec.google.marshal_dump
+      @sheet_manager = GoogleApps::SheetsManager.new settings[:uid], settings
       now = DateTime.now.strftime('%m/%d/%Y at %I:%M%p')
       @folder = @sheet_manager.create_folder "GoogleApps::SheetsManager tested on #{now}"
       @sheet_title = "Sheet from CSV, #{now}"
