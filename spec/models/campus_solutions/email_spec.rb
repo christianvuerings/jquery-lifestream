@@ -54,7 +54,7 @@ describe CampusSolutions::Email do
     end
   end
 
-  context 'with a real external service', testext: true do
+  context 'with a real external service' do # , testext: true do
     let(:proxy) { CampusSolutions::Email.new(fake: false, user_id: random_id, params: params) }
     subject { proxy.get }
 
@@ -74,7 +74,9 @@ describe CampusSolutions::Email do
 
     context 'an invalid post' do
       let(:params) { {
-        type: 'CAMP'
+        type: 'CAMP',
+        email: '',
+        isPreferred: ''
       } }
       context 'performing a real but invalid post' do
         it_should_behave_like 'a simple proxy that returns errors'
