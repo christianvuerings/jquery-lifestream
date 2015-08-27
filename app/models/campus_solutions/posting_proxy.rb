@@ -33,6 +33,12 @@ module CampusSolutions
       return {} unless params
       updateable = {}
       known_fields = self.class.field_mappings
+      # make sure every required field is present even if blank
+      known_fields.values.each do |mapping|
+        if mapping[:is_required]
+          updateable[mapping[:field_name]] = ''
+        end
+      end
       params.each do |calcentral_param_name, value|
         if known_fields[calcentral_param_name.to_sym].present?
           updateable[calcentral_param_name.to_sym] = value

@@ -14,7 +14,7 @@ describe CampusSolutions::EmergencyContact do
       } }
       subject { proxy.filter_updateable_params(params) }
       it 'should strip out invalid fields' do
-        expect(subject.keys.length).to eq 1
+        expect(subject.keys.length).to eq 28
         expect(subject[:bogus]).to be_nil
         expect(subject[:invalid]).to be_nil
         expect(subject[:contactName]).to eq 'Joe'
