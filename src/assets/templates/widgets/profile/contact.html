@@ -1,55 +1,13 @@
 <div class="cc-widget-text" data-ng-controller="ContactController" data-cc-spinner-directive>
 
   <!-- Phone Number -->
-  <div class="cc-page-widget-profile-section" data-ng-controller="ProfilePhoneController">
-    <div class="cc-page-widget-profile-section-label">Phone Number</div>
-    <div class="cc-page-widget-profile-section-content">
-      <div data-ng-repeat="phone in phones.content" class="cc-page-widget-profile-section-content-item">
-        <div>
-          <strong data-ng-bind-template="{{phone.type.description}} Phone"></strong>
-          <span data-ng-if="phone.primary">(preferred)</span>
-        </div>
-        <div data-ng-bind="phone.number"></div>
-        <div>
-          <button class="cc-button-link">Edit</button>
-        </div>
-      </div>
-    </div>
-    <div class="cc-page-widget-profile-section-add">
-      <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
-    </div>
-  </div>
+  <div data-ng-include="'widgets/profile/contact_phone.html'"></div>
 
   <!-- Email -->
-  <div class="cc-page-widget-profile-section" data-ng-controller="ProfileEmailController" data-cc-spinner-directive>
-    <div class="cc-page-widget-profile-section-label">Email</div>
-    <div class="cc-page-widget-profile-section-content">
-      <div data-ng-if="currentObject.isAdding" class="cc-page-widget-profile-section-content-item">
-        <div data-ng-include="'widgets/profile/contact_email_editor.html'"></div>
-      </div>
-      <div data-ng-repeat="email in emails.content" class="cc-page-widget-profile-section-content-item">
-        <div data-ng-if="!email.isModifying">
-          <div>
-            <strong data-ng-bind-template="{{email.type.description}} Email"></strong>
-            <span data-ng-if="email.primary">(preferred)</span>
-          </div>
-          <div data-ng-bind="email.emailAddress"></div>
-          <div>
-            <button class="cc-button-link" data-ng-click="editEmail(email)">Edit</button>
-          </div>
-        </div>
-        <div data-ng-if="email.isModifying" data-ng-include="'widgets/profile/contact_email_editor.html'"></div>
-      </div>
-    </div>
-    <div class="cc-page-widget-profile-section-add" data-ng-if="!emails.editorEnabled">
-      <button class="cc-button-link" data-ng-click="addEmail()">
-        <i class="fa fa-plus"></i> Add
-      </button>
-    </div>
-  </div>
+  <div data-ng-include="'widgets/profile/contact_email.html'"></div>
 
   <!-- Address -->
-  <div class="cc-page-widget-profile-section"  data-ng-controller="ProfileAddressController">
+  <div class="cc-page-widget-profile-section" data-ng-controller="ProfileAddressController">
     <div class="cc-page-widget-profile-section-label">Address</div>
     <div class="cc-page-widget-profile-section-content">
       <div data-ng-repeat="address in addresses.content" class="cc-page-widget-profile-section-content-item">

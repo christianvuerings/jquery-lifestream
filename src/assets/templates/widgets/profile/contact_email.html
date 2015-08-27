@@ -1,0 +1,26 @@
+<div class="cc-page-widget-profile-section" data-ng-controller="ProfileEmailController" data-cc-spinner-directive>
+  <div class="cc-page-widget-profile-section-label">Email</div>
+  <div class="cc-page-widget-profile-section-content">
+    <div data-ng-if="currentObject.isAdding" class="cc-page-widget-profile-section-content-item">
+      <div data-ng-include="'widgets/profile/contact_email_editor.html'"></div>
+    </div>
+    <div data-ng-repeat="email in emails.content" class="cc-page-widget-profile-section-content-item">
+      <div data-ng-if="!email.isModifying">
+        <div>
+          <strong data-ng-bind-template="{{email.type.description}} Email"></strong>
+          <span data-ng-if="email.primary">(preferred)</span>
+        </div>
+        <div data-ng-bind="email.emailAddress"></div>
+        <div>
+          <button class="cc-button-link" data-ng-click="showEditEmail(email)">Edit</button>
+        </div>
+      </div>
+      <div data-ng-if="email.isModifying" data-ng-include="'widgets/profile/contact_email_editor.html'"></div>
+    </div>
+  </div>
+  <div class="cc-page-widget-profile-section-add" data-ng-if="!emails.editorEnabled">
+    <button class="cc-button-link" data-ng-click="showAddEmail()">
+      <i class="fa fa-plus"></i> Add
+    </button>
+  </div>
+</div>

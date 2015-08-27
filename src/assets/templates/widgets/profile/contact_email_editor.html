@@ -1,4 +1,8 @@
 <div class="cc-page-widget-profile-section-content-item-editing">
+  <div class="cc-page-widget-profile-section-content-error cc-text-red" data-ng-if="errorMessage">
+    <i class="cc-icon-red fa fa-exclamation-circle"></i>
+    <span data-ng-bind="errorMessage"></span>
+  </div>
   <form data-ng-submit="saveEmail(currentObject)" name="cc_page_widget_profile_email">
     <div>
       <label for="cc-page-widget-profile-email-type">

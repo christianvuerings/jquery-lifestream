@@ -14,7 +14,8 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
     },
     emailTypes: [],
     currentObject: {},
-    isSaving: false
+    isSaving: false,
+    errorMessage: ''
   });
   $scope.contacts = {};
 
@@ -39,12 +40,17 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
     if (!_.get(data, 'data.feed.xlatvalues.values')) {
       return;
     }
-    $scope.emailTypes = data.data.feed.xlatvalues.values;
+    $scope.emailTypes = _.filter(data.data.feed.xlatvalues.values, function(value) {
+      // Filter out the different type controls
+      // D = Display Only
+      // F = Full Edit
+      // N = Do Not Display
+      // U = Edit - No Delete
+      return value.typeControl !== 'N';
+    });
   };
 
-  var getPerson = profileFactory.getPerson({
-    refreshCache: true
-  }).then(parsePerson);
+  var getPerson = profileFactory.getPerson().then(parsePerson);
   var getEmailTypes = profileFactory.getEmailTypes().then(parseEmailTypes);
 
   var loadInformation = function() {
@@ -62,9 +68,13 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
     });
   };
 
-  var saveCompleted = function() {
+  var saveCompleted = function(data) {
     $scope.isSaving = false;
-    $scope.closeEditor();
+    if (data.data.errored) {
+      $scope.errorMessage = data.data.feed.errmsgtext;
+    } else {
+      $scope.closeEditor();
+    }
   };
 
   $scope.saveEmail = function(email) {
@@ -77,22 +87,23 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
     }).then(saveCompleted);
   };
 
-  var saveAddEmail = function(email) {
+  var showSaveAddEmail = function(email) {
     closeEditors(true);
     email.isModifying = true;
     $scope.currentObject = angular.copy(email);
+    $scope.errorMessage = '';
     $scope.emails.editorEnabled = true;
   };
 
-  $scope.addEmail = function() {
+  $scope.showAddEmail = function() {
     emptyObject.isAdding = true;
     // Select the first item in the dropdown
     emptyObject.type.code = $scope.emailTypes[0].fieldvalue;
-    saveAddEmail(emptyObject);
+    showSaveAddEmail(emptyObject);
   };
 
-  $scope.editEmail = function(email) {
-    saveAddEmail(email);
+  $scope.showEditEmail = function(email) {
+    showSaveAddEmail(email);
   };
 
   $scope.closeEditor = function() {
