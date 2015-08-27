@@ -55,11 +55,12 @@ describe CampusSolutions::EmergencyContact do
 
   context 'with a real external service', :testext => true do
     let(:params) { {
-      contactName: 'TEST',
+      # CS server will reject post unless data has changed, so make some key fields unique with timestamp
+      contactName: "Tester #{DateTime.now.to_i}",
       isSameAddressEmpl: 'N',
-      isPrimaryContact: 'Y',
+      isPrimaryContact: 'N',
       country: 'USA',
-      address1: 'lane7',
+      address1: "Lane #{DateTime.now.to_i}",
       address2: 'peters road',
       address3: 'estella st',
       address4: 'fourth field lane',
@@ -67,7 +68,7 @@ describe CampusSolutions::EmergencyContact do
       num1: '1',
       num2: '2',
       houseType: 'AB',
-      addrField1: 'L1',
+      addrField1: 'AV',
       addrField2: 'L2',
       addrField3: 'L3',
       county: 'Alameda',

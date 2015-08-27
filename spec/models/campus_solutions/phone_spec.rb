@@ -59,7 +59,7 @@ describe CampusSolutions::Phone do
       phone: '9949919892',
       countryCode: '91',
       extension: '23',
-      isPreferred: 'N'
+      isPreferred: 'Y'
     } }
     let(:proxy) { CampusSolutions::Phone.new(fake: false, user_id: random_id, params: params) }
 
