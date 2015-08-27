@@ -1,10 +1,9 @@
 module GoogleApps
   class SheetsManager < DriveManager
 
-    def initialize(credential_store)
-      super credential_store
+    def initialize(uid, options = {})
+      super uid, options
       auth = get_google_api.authorization
-      auth.fetch_access_token!
       # See https://github.com/gimite/google-drive-ruby
       @session = GoogleDrive::Session.login_with_oauth auth.access_token
     end

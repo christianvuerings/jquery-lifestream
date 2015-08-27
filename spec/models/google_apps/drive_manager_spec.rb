@@ -3,7 +3,15 @@ describe GoogleApps::DriveManager do
   context '#real', testext: true, :order => :defined do
 
     before(:all) do
-      @drive = GoogleApps::DriveManager.new GoogleApps::CredentialStore.new(app_name: 'oec')
+      app_data = {:email => 'ets.quality@gmail.com'}
+      store = GoogleApps::CredentialStore.new(1055799, {
+        :access_token => 'ya29.0gHs7gafsWRe3oOunAP2SIRGpLTbXcQzPZ40nbmU_JHqWHr73IEZlRogxFVyLBUpfN2e',
+        :refresh_token => '1/uw9QGBqRCroObKKtysnfI_DH5kgEn97bnuGLdogGsZtIgOrJDtdun6zK6XiATCKT',
+        :expires_in => 3600,
+        :app_data => app_data})
+      store.write_credentials
+      settings = Settings.oec.google.marshal_dump
+      @drive = GoogleApps::DriveManager.new settings[:uid], settings
       now = DateTime.now.strftime('%m/%d/%Y at %I:%M%p')
       title = "GoogleDriveInsert tested on #{now}"
       csv_file = 'fixtures/oec_legacy/courses.csv'
