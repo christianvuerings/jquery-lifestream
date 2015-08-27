@@ -1,0 +1,26 @@
+<div class="cc-page-widget-profile-section" data-ng-controller="ProfilePhoneController" data-cc-spinner-directive>
+  <div class="cc-page-widget-profile-section-label">Phone Number</div>
+  <div class="cc-page-widget-profile-section-content">
+    <div data-ng-if="currentObject.isAdding" class="cc-page-widget-profile-section-content-item">
+      <div data-ng-include="'widgets/profile/contact_phone_editor.html'"></div>
+    </div>
+    <div data-ng-repeat="phone in phones.content" class="cc-page-widget-profile-section-content-item">
+      <div data-ng-if="!phone.isModifying">
+        <div>
+          <strong data-ng-bind-template="{{phone.type.description}} Phone"></strong>
+          <span data-ng-if="phone.primary">(preferred)</span>
+        </div>
+        <div data-ng-bind="phone.number"></div>
+        <div>
+          <button class="cc-button-link" data-ng-click="showEditPhone(phone)">Edit</button>
+        </div>
+      </div>
+      <div data-ng-if="phone.isModifying" data-ng-include="'widgets/profile/contact_phone_editor.html'"></div>
+    </div>
+  </div>
+  <div class="cc-page-widget-profile-section-add" data-ng-if="!phones.editorEnabled">
+    <button class="cc-button-link" data-ng-click="showAddPhone()">
+      <i class="fa fa-plus"></i> Add
+    </button>
+  </div>
+</div>

@@ -18,14 +18,22 @@
       flex-shrink: 0;
     }
     .cc-page-widget-profile-section-content {
+      overflow: auto;
       width: 100%;
+    }
+    .cc-page-widget-profile-section-content-error {
+      background-color: $cc-color-red-light;
+      border-bottom: 1px solid $cc-color-red;
+      margin: -10px -10px 10px;
+      padding: 10px;
+      white-space: pre-line;
     }
     .cc-page-widget-profile-section-content-item:not(:last-child) {
       margin-bottom: 15px;
     }
     .cc-page-widget-profile-section-content-item-editing {
       background: $cc-color-blue-hover;
-      margin: -10px -10px 0 0;
+      margin: -10px -10px -10px 0;
       padding: 10px;
       form {
         background: transparent;
