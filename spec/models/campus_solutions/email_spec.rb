@@ -54,7 +54,7 @@ describe CampusSolutions::Email do
     end
   end
 
-  context 'with a real external service' do # , testext: true do
+  context 'with a real external service', testext: true do
     let(:proxy) { CampusSolutions::Email.new(fake: false, user_id: random_id, params: params) }
     subject { proxy.get }
 
