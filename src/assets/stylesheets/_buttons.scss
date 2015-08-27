@@ -120,6 +120,9 @@ button {
     font-size: 13px;
     font-weight: normal;
   }
+  &:hover i, &:focus i {
+    text-decoration: underline;
+  }
 }
 
 .cc-button-group {

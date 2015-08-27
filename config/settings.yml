@@ -96,19 +96,19 @@ ldap:
   application_password: 'someMumboJumbo'
 google_proxy:
   client_id: 1
-  client_secret: 'someMumboJumbo'
+  client_secret: 'bogusClientSecret'
   scope: 'profile email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive.readonly.metadata https://mail.google.com/mail/feed/atom/'
   fake: false
   #Maps to tammi.chang.clc@gmail.com. Used for testing + recording responses
-  test_user_access_token: "someMumboJumbo"
-  test_user_refresh_token: "someMumboJumbo"
+  test_user_access_token: "bogusAccessToken"
+  test_user_refresh_token: "bogusRefreshToken"
   atom_mail_feed_url: "https://mail.google.com/mail/feed/atom/"
   oec:
-    client_id: 'moreMumboJumbo'
-    client_secret: 'moreMumboJumbo'
+    client_id: 'oecMumboJumbo'
+    client_secret: 'oecMumboJumbo'
     access_token: 'tokenThis'
     refresh_token: 'tokenThat'
-    scope: 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.apps.readonly'
+    scope: 'profile email https://mail.google.com/mail/feed/atom/ https://spreadsheets.google.com/feeds/ https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.apps.readonly https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly.metadata https://www.googleapis.com/auth/tasks'
 
 sakai_proxy:
   host: "https://sakai-dev.berkeley.edu"

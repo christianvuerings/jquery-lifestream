@@ -17,8 +17,8 @@ describe CanvasCsv::AddNewUsers do
   let(:sis_active_uids) { %w(946122 946123 946124 946125 946126 946127).to_set }
   let(:sis_active_people) do
     [
-      {'ldap_uid'=>'946122', 'person_name'=>'Charmaine D\'Silva', 'email_address'=>'charmainedsilva@example.com', 'student_id'=>'22729405'},
-      {'ldap_uid'=>'946127', 'person_name'=>'Dwight Schrute', 'email_address'=>'dschrute@schrutefarms.com', 'student_id'=>nil},
+      {'ldap_uid'=>'946122', 'first_name'=>'Charmaine', 'last_name'=>'D\'Silva', 'email_address'=>'charmainedsilva@example.com', 'student_id'=>'22729405'},
+      {'ldap_uid'=>'946127', 'first_name'=>'Dwight', 'last_name'=>'Schrute', 'email_address'=>'dschrute@schrutefarms.com', 'student_id'=>nil},
     ]
   end
 
@@ -124,9 +124,11 @@ describe CanvasCsv::AddNewUsers do
       expect(loaded_users[0]).to be_an_instance_of Hash
       expect(loaded_users[1]).to be_an_instance_of Hash
       expect(loaded_users[0]['ldap_uid']).to eq '946122'
-      expect(loaded_users[0]['person_name']).to eq 'Charmaine D\'Silva'
+      expect(loaded_users[0]['first_name']).to eq 'Charmaine'
+      expect(loaded_users[0]['last_name']).to eq 'D\'Silva'
       expect(loaded_users[1]['ldap_uid']).to eq '946127'
-      expect(loaded_users[1]['person_name']).to eq 'Dwight Schrute'
+      expect(loaded_users[1]['first_name']).to eq 'Dwight'
+      expect(loaded_users[1]['last_name']).to eq 'Schrute'
     end
 
     it 'loads empty array when no new active users' do

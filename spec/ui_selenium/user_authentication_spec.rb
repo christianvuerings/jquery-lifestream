@@ -71,7 +71,7 @@ describe 'User authentication', :testui => true do
           @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
           academics_api = ApiMyAcademicsPageSemesters.new(@driver)
           academics_api.get_json(@driver)
-          semester = academics_api.all_semesters[0]
+          semester = academics_api.all_student_semesters[0]
           @semester_page_path = academics_api.semester_slug(semester)
           @my_academics_page = CalCentralPages::MyAcademicsPage.new(@driver)
           @my_academics_page.load_page(@driver)
@@ -93,7 +93,7 @@ describe 'User authentication', :testui => true do
           @cal_net_auth_page.login(UserUtils.oski_username, UserUtils.oski_password)
           academics_api = ApiMyAcademicsPageSemesters.new(@driver)
           academics_api.get_json(@driver)
-          semester = academics_api.all_semesters[0]
+          semester = academics_api.all_student_semesters[0]
           course = academics_api.semester_courses(semester)[0]
           @class_page_path = academics_api.course_url(course)
           @my_academics_page = CalCentralPages::MyAcademicsPage.new(@driver)

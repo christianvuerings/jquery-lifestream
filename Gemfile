@@ -43,6 +43,7 @@ gem 'httparty', '~> 0.13.3'
 # OAuth2 support
 gem 'signet', '~> 0.6.0'
 gem 'google-api-client', '~> 0.8.6'
+gem 'google_drive', '~> 1.0.1'
 
 # LTI support
 gem 'ims-lti', :git => 'https://github.com/instructure/ims-lti.git'
@@ -108,6 +109,7 @@ group :development, :testext, :production do
 end
 
 group :development, :test , :testext do
+  gem 'rspec-core', '~> 3.1.7'
   gem 'rspec-rails', '~> 3.1.0'
   gem 'rspec-mocks', '~> 3.1.3'
   gem 'rspec-support', '~> 3.1.2'
@@ -120,7 +122,8 @@ group :development, :test , :testext do
 
   # Code coverage for Ruby 1.9 with a powerful configuration library and automatic merging of coverage across test suites
   # https://rubygems.org/gems/simplecov
-  gem 'simplecov', '~> 0.9.1', require: false
+  gem 'simplecov', '~> 0.9.2', require: false
+  gem 'simplecov-html', '~> 0.9.0', require: false
 
   # Capybara is an integration testing tool for rack based web applications.
   # It simulates how a user would interact with a website

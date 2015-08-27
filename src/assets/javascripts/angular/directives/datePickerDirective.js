@@ -41,7 +41,8 @@ angular.module('calcentral.directives').directive('ccDatepickerDirective', funct
             // Every time we select a value, we completely destroy the picker.
             // We do this because then we have less events hanging around + less elements in the DOM
             closeAll();
-          }
+          },
+          theme: 'cc-datepicker-theme'
         });
 
         /**

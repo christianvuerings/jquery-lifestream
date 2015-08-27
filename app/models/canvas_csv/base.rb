@@ -22,7 +22,7 @@ module CanvasCsv
         'user_id' => derive_sis_user_id(campus_user),
         'login_id' => campus_user['ldap_uid'].to_s,
         'password' => nil,
-        'full_name' => campus_user['person_name'],
+        'full_name' => "#{campus_user['first_name']} #{campus_user['last_name']}",
         'email' => campus_user['email_address'],
         'status' => 'active'
       }
