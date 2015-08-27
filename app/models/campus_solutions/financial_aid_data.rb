@@ -26,17 +26,13 @@ module CampusSolutions
 
     def build_feed(response)
       return {} if response.parsed_response.blank?
-      response.parsed_response['root']
+      response.parsed_response['ROOT']
     end
 
     def url
       # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
       # TODO note strange form of EMPLID param syntax (this is a PS misconfig that should be fixed soon)
       "#{@settings.base_url}/UC_FA_FINANCIAL_AID_DATA.v1/get?EMPLID=25738808&INSTITUTION=UCB01&AID_YEAR=#{@aid_year}"
-    end
-
-    def convert_feed_keys(feed)
-      feed
     end
 
   end
