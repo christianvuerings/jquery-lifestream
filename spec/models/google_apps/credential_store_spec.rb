@@ -91,7 +91,7 @@ describe GoogleApps::CredentialStore do
       existing_data = User::Oauth2Data.get(@uid, @app_id)
       raise 'The random and very large id matches real data. Abort!' if existing_data.any?
       # Values in options hash will be written to the database
-      GoogleApps::CredentialStore.new(@uid, options).write_credentials
+      GoogleApps::CredentialStore.new(@uid, options).write_credentials options
     end
 
     after do
