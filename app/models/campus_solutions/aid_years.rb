@@ -25,9 +25,5 @@ module CampusSolutions
       "#{@settings.base_url}/UC_FA_GET_T_C.v1/get?EMPLID=25738808&INSTITUTION=UCB01"
     end
 
-    def convert_feed_keys(feed)
-      feed
-    end
-
   end
 end
