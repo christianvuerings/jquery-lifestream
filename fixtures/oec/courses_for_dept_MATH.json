@@ -4,7 +4,6 @@
     "course_id": "2015-B-54432",
     "course_name": "MATH C218A LEC 001 - PROB THEORY",
     "cross_listed_flag": "Y",
-    "cross_listed_name": "87672, 87673",
     "course_title_short": "PROB THEORY",
     "dept_name": "MATH",
     "catalog_id": "C218A",
@@ -26,17 +25,18 @@
     "course_cntl_num": "54432",
     "ldap_uid": "10316",
     "instructor_func": "1",
-    "enrollment_count": "20"
+    "enrollment_count": "20",
+    "cross_listed_ccns": "54432,87672",
+    "co_scheduled_ccns": "54432,87672"
   },
   {
     "term_cd": "B",
     "course_id": "2015-B-54441",
-    "course_name": "MATH C223A LEC 001 - STOCHASTIC POCESS",
-    "cross_listed_flag": "Y",
-    "cross_listed_name": "87675",
+    "course_name": "MATH 223A LEC 001 - STOCHASTIC PROCESS",
+    "cross_listed_flag": null,
     "course_title_short": "STOCHASTIC PROCESS",
     "dept_name": "MATH",
-    "catalog_id": "C223A",
+    "catalog_id": "223A",
     "instruction_format": "LEC",
     "section_num": "001",
     "primary_secondary_cd": "P",
@@ -55,6 +55,8 @@
     "course_cntl_num": "54441",
     "ldap_uid": "10316",
     "instructor_func": "1",
-    "enrollment_count": "20"
+    "enrollment_count": "20",
+    "cross_listed_ccns": "54441,87675",
+    "co_scheduled_ccns": "54441,87675"
   }
 ]

@@ -36,7 +36,7 @@ module Oec
       log :debug, "Exported CSV file #{csv.output_filename}"
       upload_csv_to_sheet(csv.output_filename, csv.base_filename.chomp('.csv'), dest_folder)
     ensure
-      File.delete csv.output_filename
+    #  File.delete csv.output_filename
     end
 
     def find_or_create_folder(folder_name, parent=nil)
