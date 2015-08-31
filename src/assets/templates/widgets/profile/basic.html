@@ -1,18 +1,9 @@
-<div class="cc-widget-text">
-  <div class="cc-table cc-table-top-border">
-    <table>
-      <tr>
-        <th scope="row" width="25%" class="cc-table-right-spacing cc-nowrap">User ID</th>
-        <td data-ng-bind="api.user.profile.uid"></td>
-      </tr>
-    </table>
-  </div>
-  <div class="cc-table cc-table-top-border" data-ng-if="api.user.profile.sid">
-    <table>
-      <tr>
-        <th scope="row" width="25%" class="cc-table-right-spacing cc-nowrap">Student ID</th>
-        <td data-ng-bind="api.user.profile.sid"></td>
-      </tr>
-    </table>
-  </div>
+<div class="cc-widget-text cc-page-widget-profile-sections" data-ng-controller="BasicController" data-cc-spinner-directive>
+
+  <!-- Student ID -->
+  <div data-ng-include="'widgets/profile/basic_student_id.html'"></div>
+
+  <!-- User ID -->
+  <div data-ng-include="'widgets/profile/basic_user_id.html'">api.user.profile.uid</div>
+
 </div>

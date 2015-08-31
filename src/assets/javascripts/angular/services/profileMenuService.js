@@ -20,7 +20,7 @@ angular.module('calcentral.services').factory('profileMenuService', function() {
         },
         {
           'id': 'emergency',
-          'name': 'Academic Information'
+          'name': 'Emergency Contact'
         },
         {
           'id': 'academic',

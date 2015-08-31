@@ -4,14 +4,16 @@
     margin-right: 0;
     width: 540px;
   }
-  .cc-page-widget-profile-section {
+  .cc-page-widget-profile-sections > div {
     border-top: 1px solid $cc-color-popover-border;
+    &:last-child {
+      border-bottom: 1px solid $cc-color-popover-border;
+    }
+  }
+  .cc-page-widget-profile-section {
     display: flex;
     > div {
       padding: 10px;
-    }
-    &:last-child {
-      border-bottom: 1px solid $cc-color-popover-border;
     }
     .cc-page-widget-profile-section-label {
       flex-basis: 120px;
@@ -54,6 +56,7 @@
     .cc-page-widget-profile-section-add {
       flex-basis: 60px;
       flex-shrink: 0;
+      text-align: right;
     }
   }
 
