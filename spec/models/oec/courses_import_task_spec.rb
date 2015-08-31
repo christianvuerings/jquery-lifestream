@@ -52,7 +52,7 @@ describe Oec::CoursesImportTask do
       it 'should include dept_form only for non-crosslisted courses' do
         subject.each do |row|
           courses.headers.each { |header| expect(row).to have_key header }
-          if row['CROSS_LISTED_FLAG'].present?
+          if row['CROSS_LISTED_FLAG'] == 'Y'
             expect(row['DEPT_FORM']).to be_nil
           else
             expect(row['DEPT_FORM']).to be_present
@@ -80,7 +80,8 @@ describe Oec::CoursesImportTask do
 
     context 'MATH dept' do
       let(:dept_name) { 'MATH' }
-      let(:expected_ids) { %w(2015-B-54432 2015-B-54441 2015-B-87672) }
+      let(:expected_ids) { %w(2015-B-54432 2015-B-54441 2015-B-87672 2015-B-87675) }
+      before { allow(Oec::CourseCode).to receive(:included?).with('STAT', anything).and_return true  }
       include_examples 'expected CSV structure'
     end
 
@@ -95,7 +96,10 @@ describe Oec::CoursesImportTask do
 
     context 'STAT dept' do
       let(:dept_name) { 'STAT' }
-      let(:expected_ids) { %w(2015-B-87672 2015-B-87673 2015-B-87675 2015-B-54432 2015-B-72199 2015-B-87690 2015-B-87693) }
+      let(:expected_ids) { %w(2015-B-87672 2015-B-87673 2015-B-87675 2015-B-54432 2015-B-54441 2015-B-72199 2015-B-87690 2015-B-87693) }
+      before { allow(Oec::CourseCode).to receive(:included?).with('MATH', anything).and_return math_included  }
+      let(:math_included) { true }
+
       include_examples 'expected CSV structure'
 
       it 'should not include course supervisor assignments' do
@@ -110,7 +114,6 @@ describe Oec::CoursesImportTask do
 
       context 'unofficial room shares' do
         let(:room_share) { subject.select{ |row| row['CROSS_LISTED_NAME'] == 'MATH 223A, STAT 206A LEC 001' } }
-        before { allow(Oec::CourseCode).to receive(:included?).with('MATH', '223A').and_return math_included  }
         context 'department participating' do
           let(:math_included) { true }
           it 'reports room shares' do
