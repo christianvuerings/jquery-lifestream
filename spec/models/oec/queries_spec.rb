@@ -37,25 +37,69 @@ describe Oec::Queries do
     end
   end
 
-  context 'looking up secondary cross listings of empty list' do
-    subject { Oec::Queries.get_secondary_cross_listings(term_code, []) }
-    it { should be_empty }
+  def expect_results(keys, opts={})
+    subject.each do |result|
+      if opts[:allow_nil]
+        keys.each { |key| expect(result).to have_key key }
+      elsif keys.is_a? Hash
+        keys.each { |key, value| expect(result[key]).to eq value }
+      else
+        keys.each { |key| expect(result[key]).to be_present }
+      end
+    end
   end
 
-  context 'looking up courses', :testext => true do
+  shared_examples 'expected result structure' do
+    it 'should include correct term values' do
+      term_yr, term_cd = term_code.split '-'
+      expect_results({'term_yr' => term_yr, 'term_cd' => term_cd})
+    end
+    it 'should include course catalog data' do
+      expect_results(
+        %w(course_cntl_num course_id course_name dept_name catalog_id instruction_format section_num primary_secondary_cd),
+        allow_nil: false
+      )
+      expect_results(%w(course_title_short cross_listed_flag), allow_nil: true)
+    end
+    it 'should include instructor data' do
+      expect_results(%w(ldap_uid sis_id first_name last_name email_address instructor_func), allow_nil: true)
+    end
+    it 'should include hard-coded values' do
+      expect_results({'blue_role' => '23'})
+    end
+    it 'should include subquery-generated values' do
+      expect_results(%w(enrollment_count), allow_nil: false)
+      expect_results(%w(cross_listed_ccns co_scheduled_ccns), allow_nil: true)
+    end
+  end
+
+  context 'course lookup by code', testext: true do
     subject do
       Oec::Queries.courses_for_codes(
         term_code,
         [Oec::CourseCode.new(dept_name: 'MATH', catalog_id: nil, dept_code: 'PMATH', include_in_oec: true)]
       )
     end
-    it { should_not be_nil }
-    it { subject[0]['course_id'].should_not be_nil }
+    include_examples 'expected result structure'
   end
 
-  context 'looking up courses with crosslistings', :testext => true do
-    subject { Oec::Queries.courses_for_cntl_nums(term_code, '7309, 7366') }
-    it { should_not be_nil }
+  context 'course lookup by ccn', testext: true do
+    let(:ccns) { %w(53507 53513) }
+    subject { Oec::Queries.courses_for_cntl_nums(term_code, ccns) }
+    include_examples 'expected result structure'
+    it 'returns the right courses' do
+      expect(subject).to have(2).items
+      expect(subject.map { |row| row['course_cntl_num'] }).to match_array ccns
+    end
   end
 
+  context 'crosslisting and room share lookup', testext: true do
+    let(:ccns) { %w(54041 54044) }
+    let(:ccn_aggregates) { [ '54041,54320', '54044,54323' ] }
+    subject { Oec::Queries.courses_for_cntl_nums(term_code, ccns) }
+    it 'returns correct aggregated ccns' do
+      expect(subject.map { |row| row['cross_listed_ccns'] }).to match_array ccn_aggregates
+      expect(subject.map { |row| row['co_scheduled_ccns'] }).to match_array ccn_aggregates
+    end
+  end
 end

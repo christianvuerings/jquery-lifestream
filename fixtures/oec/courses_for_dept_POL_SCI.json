@@ -3,8 +3,7 @@
     "term_cd": "B",
     "course_id": "2015-B-72198",
     "course_name": "POL SCI C236A LEC 001 - STATS SOCI SCI",
-    "cross_listed_flag": "Y",
-    "cross_listed_name": "87690",
+    "cross_listed_flag": null,
     "course_title_short": "STATS SOCI SCI",
     "dept_name": "POL SCI",
     "catalog_id": "C236A",
@@ -26,14 +25,15 @@
     "course_cntl_num": "72198",
     "ldap_uid": "10316",
     "instructor_func": "1",
-    "enrollment_count": "20"
+    "enrollment_count": "20",
+    "cross_listed_ccns": null,
+    "co_scheduled_ccns": null
   },
   {
     "term_cd": "B",
     "course_id": "2015-B-71523",
     "course_name": "POL SCI 98 GRP 003 DIRECTED GROUP STDY",
     "cross_listed_flag": null,
-    "cross_listed_name": null,
     "course_title_short": null,
     "dept_name": "POL SCI",
     "catalog_id": "98",
@@ -55,14 +55,15 @@
     "course_cntl_num": "71523",
     "ldap_uid": "10316",
     "instructor_func": "1",
-    "enrollment_count": "20"
+    "enrollment_count": "20",
+    "cross_listed_ccns": null,
+    "co_scheduled_ccns": null
   },
   {
     "term_cd": "B",
     "course_id": "2015-B-72199",
     "course_name": "POL SCI C236A LEC 001 - STATS SOCI SCI",
     "cross_listed_flag": "Y",
-    "cross_listed_name": null,
     "course_title_short": null,
     "dept_name": "POL SCI",
     "catalog_id": "C236A",
@@ -84,6 +85,8 @@
     "course_cntl_num": "72199",
     "ldap_uid": "10316",
     "instructor_func": "1",
-    "enrollment_count": "20"
+    "enrollment_count": "20",
+    "cross_listed_ccns": "72199,87690",
+    "co_scheduled_ccns": "72199,87690"
   }
 ]

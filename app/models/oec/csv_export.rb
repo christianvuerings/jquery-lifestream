@@ -1,5 +1,6 @@
 module Oec
   class CsvExport < ::CsvExport
+    include Enumerable
 
     def self.base_filename
       "#{self.name.demodulize.underscore}.csv"
@@ -24,6 +25,10 @@ module Oec
 
     def []=(key, value)
       @rows[key] = value
+    end
+
+    def each
+      @rows.each { |key, row| yield row }
     end
 
     def base_filename
