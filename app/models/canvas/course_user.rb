@@ -1,7 +1,8 @@
 module Canvas
   class CourseUser < Proxy
 
-    ADMIN_ROLES = %w(TeacherEnrollment TaEnrollment DesignerEnrollment Owner Maintainer)
+    ADMIN_ROLES = ['TeacherEnrollment', 'TaEnrollment', 'DesignerEnrollment',
+      'Owner', 'Maintainer', 'Lead TA']
 
     def initialize(options = {})
       super(options)
@@ -37,7 +38,7 @@ module Canvas
     def self.is_course_teachers_assistant?(canvas_course_user)
       return false if canvas_course_user.blank?
       canvas_course_user['enrollments'].each do |enrollment|
-        return true if enrollment['role'] == 'TaEnrollment'
+        return true if ['TaEnrollment', 'Lead TA'].include? enrollment['role']
       end
       false
     end
@@ -56,6 +57,8 @@ module Canvas
       roles_hash['owner'] = true if roles.include?('Owner')
       roles_hash['maintainer'] = true if roles.include?('Maintainer')
       roles_hash['member'] = true if roles.include?('Member')
+      roles_hash['leadTa'] = true if roles.include?('Lead TA')
+      roles_hash['reader'] = true if roles.include?('Reader')
       roles_hash
     end
 
