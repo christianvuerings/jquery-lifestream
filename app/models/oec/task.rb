@@ -9,11 +9,18 @@ module Oec
       @term_code = opts.delete :term_code
       @opts = opts
       @tmp_path = Rails.root.join('tmp', 'oec')
+      @course_code_filter = if opts[:dept_names]
+                             {dept_name: opts[:dept_names].split}
+                           elsif opts[:dept_codes]
+                             {dept_code: opts[:dept_codes].split}
+                           else
+                             {dept_name: Oec::CourseCode.included_dept_names}
+                           end
     end
 
     def run
       log :info, "Starting #{self.class.name}"
-      run_internal @opts
+      run_internal
       true
     rescue => e
       log :error, "#{self.class.name} aborted with error: #{e.message}\n#{e.backtrace.join "\n\t"}"
@@ -129,8 +136,7 @@ module Oec
     end
 
     def write_log
-      if (term_folder = find_folder @term_code) && (reports_folder = find_folder('reports', term_folder))
-        reports_today = find_or_create_folder(datestamp, reports_folder)
+      if (reports_today = find_or_create_today_reports_folder)
         log_name = "#{timestamp}_#{self.class.name.demodulize.underscore}.log"
         File.open(@tmp_path.join(log_name), 'wb') { |f| f.puts @log }
         unless @opts[:local_write]
@@ -143,6 +149,14 @@ module Oec
       end
     rescue => e
       logger.error "Could not write log: #{e.message}\n#{e.backtrace.join "\n\t"}"
+    end
+
+    def find_or_create_today_reports_folder
+      if (term_folder = find_folder @term_code) && (reports_folder = find_folder('reports', term_folder))
+        find_or_create_folder(datestamp, reports_folder)
+      else
+        nil
+      end
     end
   end
 end

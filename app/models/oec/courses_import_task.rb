@@ -1,7 +1,7 @@
 module Oec
   class CoursesImportTask < Task
 
-    def run_internal(opts={})
+    def run_internal
       log :info, "Will import SIS data for term #{@term_code}"
       unless (term_folder = find_folder @term_code) && (imports_folder = find_folder('imports', term_folder))
         raise RuntimeError, 'Could not locate imports folder on remote drive'
@@ -9,16 +9,7 @@ module Oec
       unless (imports_today = find_or_create_folder(datestamp, imports_folder))
         raise RuntimeError, "Could not get imports folder dated #{datestamp} on remote drive"
       end
-
-      course_code_filter = if opts[:dept_names]
-                             {dept_name: opts[:dept_names].split}
-                           elsif opts[:dept_codes]
-                             {dept_code: opts[:dept_codes].split}
-                           else
-                             {dept_name: Oec::CourseCode.included_dept_names}
-                           end
-
-      Oec::CourseCode.by_dept_code(course_code_filter).each do |dept_code, course_codes|
+      Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
         log :info, "Generating #{dept_code}.csv"
         courses = Oec::Courses.new(@tmp_path, dept_code: dept_code)
         import_courses(courses, course_codes)
