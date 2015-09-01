@@ -1,5 +1,5 @@
 module Oec
-  class Instructors < Oec::CsvExport
+  class Instructors < Worksheet
 
     def headers
       %w(

@@ -1,5 +1,5 @@
 module Oec
-  class CsvExport < ::CsvExport
+  class Worksheet < CsvExport
     include Enumerable
 
     def self.base_filename
