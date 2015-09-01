@@ -7,27 +7,6 @@
   <div data-ng-include="'widgets/profile/contact_email.html'"></div>
 
   <!-- Address -->
-  <div class="cc-page-widget-profile-section" data-ng-controller="ProfileAddressController">
-    <div class="cc-page-widget-profile-section-label">Address</div>
-    <div class="cc-page-widget-profile-section-content">
-      <div data-ng-repeat="address in addresses.content" class="cc-page-widget-profile-section-content-item">
-        <div>
-          <strong data-ng-bind-template="{{address.type.description}} Address"></strong>
-          <span data-ng-if="address.primary">(preferred)</span>
-        </div>
-        <div>
-          <div data-ng-bind="address.street1"></div>
-          <div data-ng-bind-template="{{address.locality}}, {{address.region}} {{address.postalCode}}"></div>
-          <div data-ng-bind="address.country" data-ng-if="address.country !== 'USA'"></div>
-        </div>
-        <div>
-          <button class="cc-button-link">Edit</button>
-        </div>
-      </div>
-    </div>
-    <div class="cc-page-widget-profile-section-add">
-      <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
-    </div>
-  </div>
+  <div data-ng-include="'widgets/profile/contact_address.html'"></div>
 
 </div>
