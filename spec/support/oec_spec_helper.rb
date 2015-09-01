@@ -37,8 +37,8 @@ module OecSpecHelper
     expect(fake_sheets_manager).to receive(:find_items_by_title)
       .with(file_name.chomp('.csv'), parent_id: mock_file(parent_name).id)
       .and_return []
-    expect(fake_sheets_manager).to receive(:upload_csv_to_spreadsheet)
-      .with(file_name.chomp('.csv'), '', Rails.root.join('tmp', 'oec', file_name).to_s, mock_file(parent_name).id)
+    expect(fake_sheets_manager).to receive(:upload_worksheet)
+      .with(file_name.chomp('.csv'), '', kind_of(Oec::Worksheet), mock_file(parent_name).id)
       .and_return(mock_file(file_name))
   end
 

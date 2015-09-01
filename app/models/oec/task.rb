@@ -31,10 +31,10 @@ module Oec
       end
     end
 
-    def export_sheet(csv, dest_folder)
-      csv.export
-      log :debug, "Exported CSV file #{csv.output_filename}"
-      upload_csv_to_sheet(csv.output_filename, csv.base_filename.chomp('.csv'), dest_folder)
+    def export_sheet(worksheet, dest_folder)
+      worksheet.export
+      log :debug, "Exported worksheet file #{worksheet.output_filename}"
+      upload_to_remote_drive(worksheet, worksheet.base_filename.chomp('.csv'), dest_folder)
     ensure
     #  File.delete csv.output_filename
     end
@@ -95,22 +95,23 @@ module Oec
       DateTime.now.strftime '%H%M%S'
     end
 
-    def upload_csv_headers(klass, dest_folder)
-      csv = klass.new(@tmp_path)
+    def upload_worksheet_headers(klass, dest_folder)
+      worksheet = klass.new(@tmp_path)
       begin
-        csv.export
-        log :debug, "Created header-only file #{csv.output_filename}"
-        upload_csv_to_sheet(csv.output_filename, klass.name.demodulize.underscore, dest_folder)
+        worksheet.export
+        log :debug, "Created header-only file #{worksheet.output_filename}"
+        upload_to_remote_drive(worksheet, klass.name.demodulize.underscore, dest_folder)
       ensure
-        File.delete csv.output_filename
+        File.delete worksheet.output_filename
       end
     end
 
-    def upload_csv_to_sheet(path, title, folder)
+    def upload_to_remote_drive(worksheet, title, folder)
       if @remote_drive.find_items_by_title(title, parent_id: folder.id).any?
         raise RuntimeError, "File \"#{title}\" already exists in remote drive folder \"#{folder.title}\"; could not upload"
       end
-      if (!@remote_drive.upload_csv_to_spreadsheet(title, '', path.to_s, folder.id))
+      path = worksheet.output_filename
+      if (!@remote_drive.upload_worksheet(title, '', worksheet, folder.id))
         raise RuntimeError, "File #{path} could not be uploaded as sheet '#{title}' to remote drive folder \"#{folder.title}\""
       end
       log :debug, "Uploaded file #{path} as sheet '#{title}' to remote drive folder '#{folder.title}'"
