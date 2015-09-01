@@ -1,7 +1,7 @@
 module Oec
   class TermSetupTask < Task
 
-    def run_internal
+    def run_internal(opts={})
       log :info, "Will create initial folders and files for term #{@term_code}"
 
       term_folder = create_folder @term_code

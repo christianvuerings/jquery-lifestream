@@ -4,8 +4,8 @@ module Oec
     self.table_name = 'oec_course_codes'
     attr_accessible :dept_name, :catalog_id, :dept_code, :include_in_oec
 
-    def self.included_by_dept_code
-      self.where(dept_name: included_dept_names).group_by { |course_code| course_code.dept_code }
+    def self.by_dept_code(opts)
+      self.where(opts).group_by { |course_code| course_code.dept_code }
     end
 
     def self.included_dept_names
