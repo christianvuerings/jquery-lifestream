@@ -1,5 +1,5 @@
 module Oec
-  class Courses < Oec::CsvExport
+  class Courses < Worksheet
 
     attr_reader :dept_code
 

@@ -53,7 +53,7 @@ module Oec
           false
         else
           course['dept_form'] = courses.dept_code unless course['cross_listed_flag'].present?
-          courses[row_key] = Oec::CsvExport.capitalize_keys course
+          courses[row_key] = Oec::Worksheet.capitalize_keys course
         end
       end
     end
