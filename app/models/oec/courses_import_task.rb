@@ -62,6 +62,12 @@ module Oec
           false
         else
           course['dept_form'] = courses.dept_code unless course['cross_listed_flag'].present?
+          roles = Berkeley::UserRoles.roles_from_campus_row course
+          course['evaluation_type'] = if roles[:student]
+                                        'G'
+                                      elsif roles[:faculty]
+                                        'F'
+                                      end
           courses[row_key] = Oec::Worksheet.capitalize_keys course
         end
       end

@@ -58,13 +58,14 @@ describe Oec::CoursesImportTask do
             expect(row['DEPT_FORM']).to be_present
           end
           expect(row['BLUE_ROLE']).to eq '23'
-          %w(EVALUATE EVALUATION_TYPE MODULAR_COURSE START_DATE END_DATE).each do |key|
+          %w(EVALUATE MODULAR_COURSE START_DATE END_DATE).each do |key|
             expect(row[key]).to be_nil
           end
           %w(COURSE_ID COURSE_NAME DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM).each do |key|
             expect(row[key]).to be_present
           end
           expect(%w(P S)).to include row['PRIMARY_SECONDARY_CD']
+          expect(['F', 'G', nil]).to include row['EVALUATION_TYPE']
         end
       end
     end
@@ -110,6 +111,13 @@ describe Oec::CoursesImportTask do
         crosslisting = subject.select{ |row| row['CROSS_LISTED_NAME'] == 'POL SCI/STAT C236A LEC 001' }
         expect(crosslisting.count).to eq 2
         expect(crosslisting).to all include({'CROSS_LISTED_FLAG' => 'Y'})
+      end
+
+      it 'reports non-student academic employees as faculty' do
+        expect(subject.find{|row| row['COURSE_ID'] == '2015-B-87672'}['EVALUATION_TYPE']).to eq 'F'
+      end
+      it 'reports student academic employees as GSIs' do
+        expect(subject.find{|row| row['COURSE_ID'] == '2015-B-87693'}['EVALUATION_TYPE']).to eq 'G'
       end
 
       context 'unofficial room shares' do

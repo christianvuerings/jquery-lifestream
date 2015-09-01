@@ -62,7 +62,7 @@ describe Oec::Queries do
       expect_results(%w(course_title_short cross_listed_flag), allow_nil: true)
     end
     it 'should include instructor data' do
-      expect_results(%w(ldap_uid sis_id first_name last_name email_address instructor_func), allow_nil: true)
+      expect_results(%w(ldap_uid sis_id first_name last_name email_address instructor_func affiliations), allow_nil: true)
     end
     it 'should include hard-coded values' do
       expect_results({'blue_role' => '23'})

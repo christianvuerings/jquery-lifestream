@@ -31,6 +31,7 @@ module Oec
         p.first_name,
         p.last_name,
         p.email_address,
+        p.affiliations,
         i.instructor_func,
         (
           select count(*)
