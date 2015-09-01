@@ -139,7 +139,7 @@ describe Oec::CoursesImportTask do
 
       before do
         allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H%M%S')
-        allow(Oec::CourseCode).to receive(:included_by_dept_code).and_return({dept_name => fake_code_mapping})
+        allow(Oec::CourseCode).to receive(:by_dept_code).and_return({dept_name => fake_code_mapping})
       end
 
       it 'should upload a department csv and a log file' do
@@ -224,4 +224,20 @@ describe Oec::CoursesImportTask do
       it { should eq 'MATH/STAT C51, MATH C151 LEC 001, STAT C151 VOL 001' }
     end
   end
+
+  context 'department-specific filters' do
+    let(:null_sheets_manager) { double.as_null_object }
+    before(:each) { allow(GoogleApps::SheetsManager).to receive(:new).and_return null_sheets_manager }
+
+    it 'filters by course-code department names' do
+      expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_name: %w(BIOLOGY MCELLBI)).and_return({})
+      Oec::CoursesImportTask.new(term_code: term_code, dept_names: 'BIOLOGY MCELLBI').run
+    end
+
+    it 'filters by department codes' do
+      expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_code: %w(IBIBI IMMCB)).and_return({})
+      Oec::CoursesImportTask.new(term_code: term_code, dept_codes: 'IBIBI IMMCB').run
+    end
+  end
+
 end
