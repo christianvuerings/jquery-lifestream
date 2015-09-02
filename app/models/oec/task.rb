@@ -136,10 +136,10 @@ module Oec
     end
 
     def write_log
-      if (reports_today = find_or_create_today_subfolder('reports'))
-        log_name = "#{timestamp}_#{self.class.name.demodulize.underscore}.log"
-        File.open(@tmp_path.join(log_name), 'wb') { |f| f.puts @log }
-        unless @opts[:local_write]
+      log_name = "#{timestamp}_#{self.class.name.demodulize.underscore}.log"
+      File.open(@tmp_path.join(log_name), 'wb') { |f| f.puts @log }
+      unless @opts[:local_write]
+        if (reports_today = find_or_create_today_subfolder('reports'))
           begin
             upload_file(@tmp_path.join(log_name), log_name, 'text/plain', reports_today)
           ensure
@@ -152,6 +152,7 @@ module Oec
     end
 
     def find_or_create_today_subfolder(category_name)
+      return if @opts[:local_write]
       unless (term_folder = find_folder @term_code) && (folder = find_folder(category_name, term_folder))
         raise RuntimeError, "Could not locate '#{category_name}' folder on remote drive"
       end

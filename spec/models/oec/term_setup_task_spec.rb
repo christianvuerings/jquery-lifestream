@@ -129,11 +129,7 @@ describe Oec::TermSetupTask do
     subject { described_class.new(term_code: term_code, local_write: 'Y') }
 
     it 'reads from but does not write to remote drive' do
-      expect_folder_lookup(term_code, 'root')
-      expect_folder_lookup('reports', term_code)
-      expect_folder_lookup(today, 'reports')
       expect(fake_sheets_manager).to receive(:find_folders).with(no_args).and_return []
-
       expect(fake_sheets_manager).not_to receive(:upload_file)
       subject.run
     end

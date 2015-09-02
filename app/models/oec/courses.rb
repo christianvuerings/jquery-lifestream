@@ -13,6 +13,7 @@ module Oec
     def headers
       %w(
         COURSE_ID
+        COURSE_ID_2
         COURSE_NAME
         CROSS_LISTED_FLAG
         CROSS_LISTED_NAME
