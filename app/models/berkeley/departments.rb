@@ -1,13 +1,15 @@
 module Berkeley
   class Departments
 
-    def self.get(dept_code, concise=false)
+    def self.get(dept_code, opts={})
       name = department_map[dept_code]
-      if name
-        concise ? name.sub('Department of ', '') : name
-      else
-        dept_code
-      end
+      name = shortened(name) if name && opts[:concise]
+      name || dept_code
+    end
+
+    def self.shortened(name)
+      name.sub!(/^[OCDSP][a-z]+ (of|for|in) /, '')
+      name.sub(/ (Department|Institute|Academic Program|Programs?)$/, '')
     end
 
     #L4 codes from http://www.bai.berkeley.edu/BFS/BudgetGL/treeReports/UCBDTREE.HTM

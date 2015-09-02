@@ -6,7 +6,7 @@ module Oec
         raise RuntimeError, 'Failed to retrieve today\'s reports folder from remote drive'
       end
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
-        dept_title = Berkeley::Departments.get(dept_code, true)
+        dept_title = Berkeley::Departments.get(dept_code, concise: true)
 
         log :info, "Fetch spreadsheet from remote drive: #{@term_code}/departments/#{dept_title}/Courses"
 
