@@ -3,12 +3,7 @@ module Oec
 
     def run_internal
       log :info, "Will import SIS data for term #{@term_code}"
-      unless (term_folder = find_folder @term_code) && (imports_folder = find_folder('imports', term_folder))
-        raise RuntimeError, 'Could not locate imports folder on remote drive'
-      end
-      unless (imports_today = find_or_create_folder(datestamp, imports_folder))
-        raise RuntimeError, "Could not get imports folder dated #{datestamp} on remote drive"
-      end
+      imports_today = find_or_create_today_subfolder('imports')
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
         log :info, "Generating #{dept_code}.csv"
         courses = Oec::Courses.new(@tmp_path, dept_code: dept_code)
