@@ -66,6 +66,7 @@ describe Oec::CoursesImportTask do
           end
           expect(%w(P S)).to include row['PRIMARY_SECONDARY_CD']
           expect(['F', 'G', nil]).to include row['EVALUATION_TYPE']
+          expect(row['COURSE_ID_2']).to eq row['COURSE_ID']
         end
       end
     end
@@ -88,10 +89,17 @@ describe Oec::CoursesImportTask do
 
     context 'POL SCI dept' do
       let(:dept_name) { 'POL SCI' }
-      let(:expected_ids) { %w(2015-B-87690 2015-B-72198 2015-B-72199) }
+      let(:expected_ids) { %w(2015-B-87690 2015-B-72198 2015-B-72198_GSI 2015-B-72199) }
       include_examples 'expected CSV structure'
       it 'should not include GRP course' do
         expect(course_id_column).not_to include('2015-B-71523')
+      end
+
+      it 'should flag courses with joint faculty and GSI instructors' do
+        joint_course_rows = subject.select { |row| row['COURSE_ID'].start_with? '2015-B-72198' }
+        expect(joint_course_rows).to have(2).items
+        expect(joint_course_rows.find { |row| row['COURSE_ID'] == '2015-B-72198' }['EVALUATION_TYPE']).to eq 'F'
+        expect(joint_course_rows.find { |row| row['COURSE_ID'] == '2015-B-72198_GSI' }['EVALUATION_TYPE']).to eq 'G'
       end
     end
 

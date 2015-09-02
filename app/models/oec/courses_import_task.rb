@@ -29,6 +29,7 @@ module Oec
         end
       end
       set_cross_listed_values(courses, course_codes_by_ccn)
+      flag_joint_faculty_gsi courses
     end
 
     def import_course(courses, course)
@@ -47,6 +48,7 @@ module Oec
           log :info, "Skipping course with non-evaluated instruction format: #{course_id}, #{course['dept_name']} #{catalog_id}"
           false
         else
+          course['course_id_2'] = course['course_id']
           course['dept_form'] = courses.dept_code unless course['cross_listed_flag'].present?
           roles = Berkeley::UserRoles.roles_from_campus_row course
           course['evaluation_type'] = if roles[:student]
@@ -95,6 +97,19 @@ module Oec
           "#{course_codes.join(', ')} #{section_code}"
         end
         course['CROSS_LISTED_NAME'] = cross_listings_by_section_code.join(', ')
+      end
+    end
+
+    def flag_joint_faculty_gsi(courses)
+      courses.group_by { |course| course['COURSE_ID'] }.each do |course_id, course_rows|
+        faculty_rows = course_rows.select { |row| row['EVALUATION_TYPE'] == 'F' }
+        gsi_rows = course_rows.select { |row| row['EVALUATION_TYPE'] == 'G' }
+        if faculty_rows.any? && gsi_rows.any?
+          gsi_rows.each do |gsi_row|
+            gsi_row['COURSE_ID'] = "#{gsi_row['COURSE_ID']}_GSI"
+            gsi_row['COURSE_ID_2'] = "#{gsi_row['COURSE_ID_2']}_GSI"
+          end
+        end
       end
     end
 

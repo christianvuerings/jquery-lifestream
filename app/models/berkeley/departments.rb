@@ -8,8 +8,7 @@ module Berkeley
     end
 
     def self.shortened(name)
-      name.sub!(/^[OCDSP][a-z]+ (of|for|in) /, '')
-      name.sub(/ (Department|Institute|Academic Program|Programs?)$/, '')
+      name.sub(/^[OCDSP][a-z]+ (of|for|in) /, '').sub(/ (Department|Institute|Academic Program|Programs?)$/, '')
     end
 
     #L4 codes from http://www.bai.berkeley.edu/BFS/BudgetGL/treeReports/UCBDTREE.HTM
