@@ -47,7 +47,6 @@ module CampusSolutions
 
     def request_options
       cs_post = construct_cs_post params
-      logger.debug "POST Body: #{cs_post}"
       {method: :post, body: cs_post}
     end
 

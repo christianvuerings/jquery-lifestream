@@ -20,7 +20,6 @@ module CampusSolutions
     def request_options
       updateable_params = filter_updateable_params params
       cs_post = construct_cs_post updateable_params
-      logger.debug "POST Body: #{cs_post}"
       super.merge(method: :post, body: cs_post)
     end
 
