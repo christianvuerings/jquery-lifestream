@@ -32,10 +32,7 @@ describe CampusSolutions::EthnicityDelete do
       }
       it_should_behave_like 'a simple proxy that returns errors'
       it_behaves_like 'a proxy that properly observes the profile feature flag'
-      it 'should make a successful delete' do
-        expect(subject[:statusCode]).to eq 200
-        expect(subject[:feed][:status]).to be
-      end
+      it_behaves_like 'a proxy that got data successfully'
     end
   end
 
@@ -66,10 +63,7 @@ describe CampusSolutions::EthnicityDelete do
         ethnicGroupCode: 'ASIANIND'
       } }
       context 'performing a real delete' do
-        it 'should make a successful REAL delete' do
-          expect(subject[:statusCode]).to eq 200
-          expect(subject[:feed][:status]).to be
-        end
+        it_behaves_like 'a proxy that got data successfully'
       end
     end
 
