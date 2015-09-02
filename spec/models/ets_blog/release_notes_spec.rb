@@ -25,8 +25,8 @@ describe EtsBlog::ReleaseNotes do
   context 'getting real data feed', testext: true do
     include_context 'it writes to the cache'
     subject { real_proxy.get_latest }
-    it { should_not be_blank }
-    its([:link]) { should be }
+    it { is_expected.to be_blank }
+    its([:link]) { is_expected.to be }
   end
 
   context 'server 404s' do
@@ -38,7 +38,7 @@ describe EtsBlog::ReleaseNotes do
       before do
         stub_request(:any, /.*#{feed_uri.hostname}.*/).to_return(status: 404)
       end
-      it { should be_blank }
+      it { is_expected.to be_blank }
     end
   end
 
@@ -51,14 +51,14 @@ describe EtsBlog::ReleaseNotes do
       before do
         stub_request(:any, /.*#{feed_uri.hostname}.*/).to_raise(Errno::ECONNREFUSED)
       end
-      it { should be_blank }
+      it { is_expected.to be_blank }
     end
 
     context 'error on remote server (5xx errors)' do
       before do
         stub_request(:any, /.*#{feed_uri.hostname}.*/).to_return(status: 506)
       end
-      it { should be_blank }
+      it { is_expected.to be_blank }
     end
   end
 
