@@ -1,8 +1,13 @@
 module Berkeley
   class Departments
 
-    def self.get(dept_code)
-      department_map[dept_code] || dept_code
+    def self.get(dept_code, concise=false)
+      name = department_map[dept_code]
+      if name
+        concise ? name.sub('Department of ', '') : name
+      else
+        dept_code
+      end
     end
 
     #L4 codes from http://www.bai.berkeley.edu/BFS/BudgetGL/treeReports/UCBDTREE.HTM

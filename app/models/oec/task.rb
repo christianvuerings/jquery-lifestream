@@ -136,7 +136,7 @@ module Oec
     end
 
     def write_log
-      if (reports_today = find_or_create_today_reports_folder)
+      if (reports_today = find_or_create_today_subfolder('reports'))
         log_name = "#{timestamp}_#{self.class.name.demodulize.underscore}.log"
         File.open(@tmp_path.join(log_name), 'wb') { |f| f.puts @log }
         unless @opts[:local_write]
@@ -151,12 +151,14 @@ module Oec
       logger.error "Could not write log: #{e.message}\n#{e.backtrace.join "\n\t"}"
     end
 
-    def find_or_create_today_reports_folder
-      if (term_folder = find_folder @term_code) && (reports_folder = find_folder('reports', term_folder))
-        find_or_create_folder(datestamp, reports_folder)
-      else
-        nil
+    def find_or_create_today_subfolder(category_name)
+      unless (term_folder = find_folder @term_code) && (folder = find_folder(category_name, term_folder))
+        raise RuntimeError, "Could not locate '#{category_name}' folder on remote drive"
       end
+      unless (today_folder = find_or_create_folder(datestamp, folder))
+        raise RuntimeError, "Could not find_or_create '#{category_name}' folder dated #{datestamp} on remote drive"
+      end
+      today_folder
     end
   end
 end
