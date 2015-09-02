@@ -1,10 +1,14 @@
 module CampusSolutions
   class MyEmail < UserSpecificModel
 
+    include PersonDataUpdatingModel
+
     def update(params = {})
-      proxy = CampusSolutions::Email.new({user_id: @uid, params: params})
-      PersonDataExpiry.expire @uid
-      proxy.get
+      passthrough(CampusSolutions::Email, params)
+    end
+
+    def delete(params = {})
+      passthrough(CampusSolutions::EmailDelete, params)
     end
 
   end

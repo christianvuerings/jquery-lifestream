@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<PHONE_DELETE_RESPONSE xmlns="http://bcs.is.berkeley.edu">
+  <STATUS>Successfully deleted the contact details for individual 25738808 with the phone type CELL</STATUS>
+</PHONE_DELETE_RESPONSE>

@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<EMERGENCY_CONTACT_DELETE_RESPONSE xmlns="http://bcs.is.berkeley.edu">
+  <STATUS>Emergency contact Tester Friend 18494 deleted for the individual 25738808</STATUS>
+</EMERGENCY_CONTACT_DELETE_RESPONSE>

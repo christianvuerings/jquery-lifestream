@@ -5,5 +5,9 @@ module CampusSolutions
       post_passthrough CampusSolutions::MyEmail
     end
 
+    def delete
+      delete_passthrough CampusSolutions::MyEmail
+    end
+
   end
 end

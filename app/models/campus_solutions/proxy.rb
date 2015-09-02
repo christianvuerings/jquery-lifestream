@@ -43,6 +43,7 @@ module CampusSolutions
 
     def get_internal
       logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
+      logger.debug "Request options = #{request_options}"
       response = get_response(url, request_options)
       logger.debug "Remote server status #{response.code}, Body = #{response.body}"
       feed = build_feed response

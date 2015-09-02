@@ -1,8 +1,12 @@
 module CampusSolutions
   class EthnicityController < CampusSolutionsController
 
-    def get
-      json_passthrough CampusSolutions::Ethnicity
+    def post
+      post_passthrough CampusSolutions::MyEthnicity
+    end
+
+    def delete
+      delete_passthrough CampusSolutions::MyEthnicity
     end
 
   end

@@ -135,7 +135,7 @@ Calcentral::Application.routes.draw do
   # Campus Solutions general purpose endpoints
   get '/api/campus_solutions/country' => 'campus_solutions/country#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/state' => 'campus_solutions/state#get', :via => :get, :defaults => { :format => 'json' }
-  get '/api/campus_solutions/ethnicity' => 'campus_solutions/ethnicity#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/ethnicity_setup' => 'campus_solutions/ethnicity_setup#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/address_label' => 'campus_solutions/address_label#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/address_type' => 'campus_solutions/address_type#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/name_type' => 'campus_solutions/name_type#get', :via => :get, :defaults => { :format => 'json' }
@@ -152,8 +152,16 @@ Calcentral::Application.routes.draw do
   post '/api/campus_solutions/emergency_contact' => 'campus_solutions/emergency_contact#post', :via => :post, :defaults => { :format => 'json' }
   post '/api/campus_solutions/language' => 'campus_solutions/language#post', :via => :post, :defaults => { :format => 'json' }
   post '/api/campus_solutions/work_experience' => 'campus_solutions/work_experience#post', :via => :post, :defaults => { :format => 'json' }
+  post '/api/campus_solutions/ethnicity' => 'campus_solutions/ethnicity#post', :via => :post, :defaults => { :format => 'json' }
   post '/api/campus_solutions/terms_and_conditions' => 'campus_solutions/terms_and_conditions#post', :via => :post, :defaults => { :format => 'json' }
   post '/api/campus_solutions/title4' => 'campus_solutions/title4#post', :via => :post, :defaults => { :format => 'json' }
+  delete '/api/campus_solutions/address' => 'campus_solutions/address#delete', :via => :delete, :defaults => { :format => 'json' }
+  delete '/api/campus_solutions/email' => 'campus_solutions/email#delete', :via => :delete, :defaults => { :format => 'json' }
+  delete '/api/campus_solutions/emergency_contact' => 'campus_solutions/emergency_contact#delete', :via => :post, :defaults => { :format => 'json' }
+  delete '/api/campus_solutions/language' => 'campus_solutions/language#delete', :via => :delete, :defaults => { :format => 'json' }
+  delete '/api/campus_solutions/person_name' => 'campus_solutions/person_name#delete', :via => :delete, :defaults => { :format => 'json' }
+  delete '/api/campus_solutions/phone' => 'campus_solutions/phone#delete', :via => :delete, :defaults => { :format => 'json' }
+  delete '/api/campus_solutions/ethnicity' => 'campus_solutions/ethnicity#delete', :via => :delete, :defaults => { :format => 'json' }
 
   # EDOs from integration hub
   get '/api/edos/person' => 'hub_edo#person', :via => :get, :defaults => { :format => 'json' }

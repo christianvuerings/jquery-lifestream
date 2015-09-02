@@ -46,14 +46,12 @@ describe CampusSolutions::PersonName do
       }
       it_should_behave_like 'a simple proxy that returns errors'
       it_behaves_like 'a proxy that properly observes the profile feature flag'
-      it 'should make a successful post' do
-        expect(subject[:statusCode]).to eq 200
-        expect(subject[:feed][:status]).to be
-      end
+      it_behaves_like 'a proxy that got data successfully'
     end
   end
 
-  context 'with a real external service', :testext => true do
+  # ignored, see SISRP-6950
+  context 'with a real external service', ignore: true, testext: true do
     let(:params) { {
       type: 'LEG',
       firstName: 'Joe',
@@ -80,10 +78,7 @@ describe CampusSolutions::PersonName do
         proxy.get
       }
       it_should_behave_like 'a simple proxy that returns errors'
-      it 'should make a successful REAL post' do
-        expect(subject[:statusCode]).to eq 200
-        expect(subject[:feed][:status]).to be
-      end
+      it_behaves_like 'a proxy that got data successfully'
     end
   end
 end

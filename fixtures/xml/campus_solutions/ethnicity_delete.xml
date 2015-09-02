@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<ETHNICITY_DELETE_RESPONSE xmlns="http://bcs.is.berkeley.edu">
+  <STATUS>Successfully deleted the ethnic code for Individual 25753380 for ethnic code ASIANIND</STATUS>
+</ETHNICITY_DELETE_RESPONSE>
