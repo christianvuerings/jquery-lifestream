@@ -2,7 +2,11 @@ module CampusSolutions
   class AddressController < CampusSolutionsController
 
     def post
-      render json: CampusSolutions::MyAddress.from_session(session).update(params)
+      post_passthrough CampusSolutions::MyAddress
+    end
+
+    def delete
+      delete_passthrough CampusSolutions::MyAddress
     end
 
   end

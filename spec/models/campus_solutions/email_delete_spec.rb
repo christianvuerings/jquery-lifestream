@@ -36,7 +36,7 @@ describe CampusSolutions::EmailDelete do
     end
   end
 
-  context 'with a real external service' do #  , testext: true do
+  context 'with a real external service', testext: true do
     let(:user_id) { random_id }
     let(:create_params) { {
       type: 'OTHR',

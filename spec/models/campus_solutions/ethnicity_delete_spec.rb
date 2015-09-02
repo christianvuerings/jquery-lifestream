@@ -1,28 +1,31 @@
 require 'spec_helper'
 
-describe CampusSolutions::NameDelete do
+describe CampusSolutions::EthnicityDelete do
 
-  context 'deleting name' do
+  context 'deleting ethnicity' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::NameDelete.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::EthnicityDelete.new(fake: true, user_id: random_id, params: params) }
 
     context 'converting params to Campus Solutions field names' do
       let(:params) { {
         bogus: 'foo',
-        type: 'CAMP'
+        regRegion: 'USA',
+        ethnicGroupCode: 'ASIANIND'
       } }
       subject {
         proxy.construct_cs_post(params)
       }
       it 'should convert the CalCentral params to Campus Solutions params without exploding on bogus fields' do
-        expect(subject[:query][:TYPE]).to eq 'CAMP'
-        expect(subject[:query].keys.length).to eq 2
+        expect(subject[:query][:REG_REGION]).to eq 'USA'
+        expect(subject[:query][:ETHNIC_GRP_CD]).to eq 'ASIANIND'
+        expect(subject[:query].keys.length).to eq 3
       end
     end
 
     context 'performing a delete' do
       let(:params) { {
-        type: 'CAMP'
+        regRegion: 'USA',
+        ethnicGroupCode: 'ASIANIND'
       } }
       subject {
         proxy.get
@@ -39,34 +42,28 @@ describe CampusSolutions::NameDelete do
   context 'with a real external service', testext: true do
     let(:user_id) { random_id }
     let(:create_params) { {
-      type: 'LEG',
-      firstName: 'Joey',
-      lastName: 'Test',
-      initials: 'JT',
-      prefix: 'Mr',
-      suffix: '',
-      royalPrefix: '',
-      royalSuffix: '',
-      title: '',
-      middleName: '',
-      secondLastName: '',
-      ac: '',
-      preferredFirstName: '',
-      partnerLastName: '',
-      partnerRoyalPrefix: '',
-      lastNamePrefNld: '',
-      countryNameFormat: '001'
+      regRegion: 'USA',
+      ethnicGroupCode: 'ASIANIND',
+      isPrimary: 'N',
+      isHispanicLatino: 'ab',
+      isAmiAln: 'N',
+      isAsian: 'N',
+      isBlackAfAm: 'N',
+      isHawPac: 'N',
+      isWhite: 'Y',
+      isEthnicityValidated: 'N'
     } }
     before {
-      CampusSolutions::PersonName.new(fake: false, user_id: random_id, params: create_params).get
+      CampusSolutions::EthnicityPost.new(fake: false, user_id: random_id, params: create_params).get
     }
 
-    let(:proxy) { CampusSolutions::NameDelete.new(fake: false, user_id: user_id, params: params) }
+    let(:proxy) { CampusSolutions::EthnicityDelete.new(fake: false, user_id: user_id, params: params) }
     subject { proxy.get }
 
     context 'a successful delete' do
       let(:params) { {
-        type: 'LEG'
+        regRegion: 'USA',
+        ethnicGroupCode: 'ASIANIND'
       } }
       context 'performing a real delete' do
         it 'should make a successful REAL delete' do

@@ -11,5 +11,10 @@ module CampusSolutions
       render json: model.update(request.request_parameters)
     end
 
+    def delete_passthrough(classname)
+      model = classname.from_session(session)
+      render json: model.delete(request.request_parameters)
+    end
+
   end
 end

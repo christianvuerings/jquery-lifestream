@@ -1,28 +1,28 @@
 require 'spec_helper'
 
-describe CampusSolutions::NameDelete do
+describe CampusSolutions::AddressDelete do
 
-  context 'deleting name' do
+  context 'deleting address' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::NameDelete.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::AddressDelete.new(fake: true, user_id: random_id, params: params) }
 
     context 'converting params to Campus Solutions field names' do
       let(:params) { {
         bogus: 'foo',
-        type: 'CAMP'
+        type: 'HOME'
       } }
       subject {
         proxy.construct_cs_post(params)
       }
       it 'should convert the CalCentral params to Campus Solutions params without exploding on bogus fields' do
-        expect(subject[:query][:TYPE]).to eq 'CAMP'
+        expect(subject[:query][:TYPE]).to eq 'HOME'
         expect(subject[:query].keys.length).to eq 2
       end
     end
 
     context 'performing a delete' do
       let(:params) { {
-        type: 'CAMP'
+        type: 'HOME'
       } }
       subject {
         proxy.get
@@ -39,34 +39,24 @@ describe CampusSolutions::NameDelete do
   context 'with a real external service', testext: true do
     let(:user_id) { random_id }
     let(:create_params) { {
-      type: 'LEG',
-      firstName: 'Joey',
-      lastName: 'Test',
-      initials: 'JT',
-      prefix: 'Mr',
-      suffix: '',
-      royalPrefix: '',
-      royalSuffix: '',
-      title: '',
-      middleName: '',
-      secondLastName: '',
-      ac: '',
-      preferredFirstName: '',
-      partnerLastName: '',
-      partnerRoyalPrefix: '',
-      lastNamePrefNld: '',
-      countryNameFormat: '001'
+      addressType: 'HOME',
+      address1: '1 Test Lane',
+      address2: 'peters road',
+      city: 'ventura',
+      state: 'CA',
+      postal: '93001',
+      country: 'USA'
     } }
     before {
-      CampusSolutions::PersonName.new(fake: false, user_id: random_id, params: create_params).get
+      CampusSolutions::Address.new(fake: false, user_id: random_id, params: create_params).get
     }
 
-    let(:proxy) { CampusSolutions::NameDelete.new(fake: false, user_id: user_id, params: params) }
+    let(:proxy) { CampusSolutions::AddressDelete.new(fake: false, user_id: user_id, params: params) }
     subject { proxy.get }
 
     context 'a successful delete' do
       let(:params) { {
-        type: 'LEG'
+        type: 'HOME'
       } }
       context 'performing a real delete' do
         it 'should make a successful REAL delete' do

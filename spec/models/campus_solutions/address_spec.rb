@@ -53,8 +53,7 @@ describe CampusSolutions::Address do
     end
   end
 
-  # ignored due to SISRP-6807
-  context 'with a real external service', ignore: true, testext: true do
+  context 'with a real external service', testext: true do
     let(:params) { {
       addressType: 'HOME',
       address1: '1 Test Lane',

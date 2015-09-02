@@ -1,10 +1,10 @@
 module CampusSolutions
-  class Ethnicity < DirectProxy
+  class EthnicitySetup < DirectProxy
 
     include ProfileFeatureFlagged
 
     def xml_filename
-      'ethnicity.xml'
+      'ethnicity_setup.xml'
     end
 
     def build_feed(response)

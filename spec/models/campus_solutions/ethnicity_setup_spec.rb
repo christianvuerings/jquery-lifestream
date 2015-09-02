@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CampusSolutions::Ethnicity do
+describe CampusSolutions::EthnicitySetup do
 
   shared_examples 'a proxy that gets data' do
     subject { proxy.get }
@@ -13,12 +13,12 @@ describe CampusSolutions::Ethnicity do
   end
 
   context 'mock proxy' do
-    let(:proxy) { CampusSolutions::Ethnicity.new(fake: true) }
+    let(:proxy) { CampusSolutions::EthnicitySetup.new(fake: true) }
     it_should_behave_like 'a proxy that gets data'
   end
 
   context 'real proxy', testext: true do
-    let(:proxy) { CampusSolutions::Ethnicity.new(fake: false) }
+    let(:proxy) { CampusSolutions::EthnicitySetup.new(fake: false) }
     it_should_behave_like 'a proxy that gets data'
   end
 

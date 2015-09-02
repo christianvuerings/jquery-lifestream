@@ -1,10 +1,14 @@
 module CampusSolutions
   class MyPhone < UserSpecificModel
 
+    include PersonDataUpdatingModel
+
     def update(params = {})
-      proxy = CampusSolutions::Phone.new({user_id: @uid, params: params})
-      PersonDataExpiry.expire @uid
-      proxy.get
+      passthrough(CampusSolutions::Phone, params)
+    end
+
+    def delete(params = {})
+      passthrough(CampusSolutions::PhoneDelete, params)
     end
 
   end
