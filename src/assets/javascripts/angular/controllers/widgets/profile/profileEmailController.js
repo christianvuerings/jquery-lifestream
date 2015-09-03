@@ -28,7 +28,7 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
   };
 
   var parsePerson = function(data) {
-    var person = data.data.feed.person;
+    var person = data.data.feed.student;
     angular.extend($scope, {
       emails: {
         content: person.emails

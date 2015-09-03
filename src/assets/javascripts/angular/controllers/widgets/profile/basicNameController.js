@@ -1,16 +1,24 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
- * Demographic gender controller
+ * Name Controller
  */
-angular.module('calcentral.controllers').controller('DemographicGenderController', function(profileFactory, $scope, $q) {
+angular.module('calcentral.controllers').controller('BasicNameController', function(profileFactory, $scope, $q) {
+  var findPrimary = function(names) {
+    return _.find(names, function(name) {
+      return name.type.code === 'PRI';
+    });
+  };
+
   var parsePerson = function(data) {
     var person = data.data.feed.student;
+    var name = findPrimary(person.names);
     angular.extend($scope, {
-      gender: {
-        content: person.gender
+      name: {
+        content: name
       }
     });
   };

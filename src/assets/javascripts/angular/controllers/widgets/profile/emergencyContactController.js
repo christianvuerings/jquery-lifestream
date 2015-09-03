@@ -7,7 +7,7 @@ var angular = require('angular');
  */
 angular.module('calcentral.controllers').controller('EmergencyContactController', function(profileFactory, $scope, $q) {
   var parsePerson = function(data) {
-    var person = data.data.feed.person;
+    var person = data.data.feed.student;
     angular.extend($scope, {
       emergencyContacts: {
         content: person.emergencyContacts

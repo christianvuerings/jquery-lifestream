@@ -9,7 +9,7 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   var urlTypes = '/api/campus_solutions/translate';
   var urlTypesEmail = urlTypes + '?field_name=E_ADDR_TYPE';
   var urlTypesPhone = urlTypes + '?field_name=PHONE_TYPE';
-  var urlPerson = '/api/edos/person';
+  var urlPerson = '/api/edos/student';
 
   var urlPostEmail = '/api/campus_solutions/email';
   var urlPostPhone = '/api/campus_solutions/phone';

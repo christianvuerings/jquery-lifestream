@@ -3,14 +3,14 @@
 var angular = require('angular');
 
 /**
- * Demographic gender controller
+ * Language section controller
  */
-angular.module('calcentral.controllers').controller('DemographicGenderController', function(profileFactory, $scope, $q) {
+angular.module('calcentral.controllers').controller('LanguagesSectionController', function(profileFactory, $scope, $q) {
   var parsePerson = function(data) {
     var person = data.data.feed.student;
     angular.extend($scope, {
-      gender: {
-        content: person.gender
+      languages: {
+        content: person.languages
       }
     });
   };

@@ -15,7 +15,7 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
   });
 
   var getPerson = profileFactory.getPerson().then(function(data) {
-    var person = data.data.feed.person;
+    var person = data.data.feed.student;
     angular.extend($scope, {
       addresses: {
         content: person.addresses

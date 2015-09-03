@@ -30,7 +30,7 @@ angular.module('calcentral.controllers').controller('ProfilePhoneController', fu
   };
 
   var parsePerson = function(data) {
-    var person = data.data.feed.person;
+    var person = data.data.feed.student;
     angular.extend($scope, {
       phones: {
         content: person.phones
