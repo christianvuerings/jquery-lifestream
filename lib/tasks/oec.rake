@@ -1,10 +1,10 @@
 namespace :oec do
 
   desc 'Import per-department course CSVs, compare with dept spreadsheets and report on non-empty diffs.'
-  task :import_courses => :environment do
+  task :sis_import => :environment do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
-    [Oec::CoursesImportTask, Oec::ReportDiffTask].each do |klass|
+    [Oec::SisImportTask, Oec::ReportDiffTask].each do |klass|
       klass.new(
         term_code: term_code, local_write: ENV['local_write'],
         dept_names: ENV['dept_names'], dept_codes: ENV['dept_codes']).run

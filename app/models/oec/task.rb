@@ -42,8 +42,8 @@ module Oec
 
     def export_sheet(worksheet, dest_folder)
       if @opts[:local_write]
-        worksheet.export
-        log :debug, "Exported local worksheet file '#{worksheet.output_filename}'"
+        worksheet.write_csv
+        log :debug, "Exported worksheet to local file '#{worksheet.output_filename}'"
       else
         upload_to_remote_drive(worksheet, worksheet.base_filename.chomp('.csv'), dest_folder)
       end
@@ -108,8 +108,8 @@ module Oec
     def upload_worksheet_headers(klass, dest_folder)
       worksheet = klass.new(@tmp_path)
       if @opts[:local_write]
-        worksheet.export
-        log :debug, "Exported local header-only file #{worksheet.output_filename}"
+        worksheet.write_csv
+        log :debug, "Exported to header-only local file #{worksheet.output_filename}"
       else
         upload_to_remote_drive(worksheet, klass.name.demodulize.underscore, dest_folder)
       end

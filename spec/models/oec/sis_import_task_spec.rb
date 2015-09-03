@@ -1,8 +1,8 @@
 include OecSpecHelper
 
-describe Oec::CoursesImportTask do
+describe Oec::SisImportTask do
   let(:term_code) { '2015-B' }
-  let(:task) { Oec::CoursesImportTask.new(term_code: term_code) }
+  let(:task) { Oec::SisImportTask.new(term_code: term_code) }
 
   let(:fake_sheets_manager) { double() }
   before(:each) { allow(GoogleApps::SheetsManager).to receive(:new).and_return fake_sheets_manager }
@@ -10,11 +10,11 @@ describe Oec::CoursesImportTask do
   describe 'CSV export' do
     subject do
       task.import_courses(courses, fake_code_mapping)
-      courses.export
+      courses.write_csv
       CSV.read(courses.output_filename).slice(1..-1).map { |row| Hash[ courses.headers.zip(row) ]}
     end
 
-    let(:courses) { Oec::Courses.new(Rails.root.join('tmp/oec'), dept_code: dept_name) }
+    let(:courses) { Oec::SisImportSheet.new(Rails.root.join('tmp/oec'), dept_code: dept_name) }
     let(:courses_by_ccn) { {} }
     let(:courses_for_dept) { [] }
     let(:additional_cross_listings) { Set.new }
@@ -145,11 +145,11 @@ describe Oec::CoursesImportTask do
     end
 
     describe 'expected network operations' do
-      subject { Oec::CoursesImportTask.new(term_code: term_code) }
+      subject { Oec::SisImportTask.new(term_code: term_code) }
 
       let(:today) { '2015-04-01' }
       let(:now) { '092222' }
-      let(:logfile) { "#{now}_courses_import_task.log" }
+      let(:logfile) { "#{now}_sis_import_task.log" }
       let(:dept_name) { 'MATH' }
       let(:export_file) { "#{dept_name}.csv" }
 
@@ -247,12 +247,12 @@ describe Oec::CoursesImportTask do
 
     it 'filters by course-code department names' do
       expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_name: %w(BIOLOGY MCELLBI)).and_return({})
-      Oec::CoursesImportTask.new(term_code: term_code, dept_names: 'BIOLOGY MCELLBI').run
+      Oec::SisImportTask.new(term_code: term_code, dept_names: 'BIOLOGY MCELLBI').run
     end
 
     it 'filters by department codes' do
       expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_code: %w(IBIBI IMMCB)).and_return({})
-      Oec::CoursesImportTask.new(term_code: term_code, dept_codes: 'IBIBI IMMCB').run
+      Oec::SisImportTask.new(term_code: term_code, dept_codes: 'IBIBI IMMCB').run
     end
   end
 
