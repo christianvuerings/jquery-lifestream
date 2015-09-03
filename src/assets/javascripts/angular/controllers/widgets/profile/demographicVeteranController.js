@@ -7,7 +7,7 @@ var angular = require('angular');
  */
 angular.module('calcentral.controllers').controller('DemographicVeteranController', function(profileFactory, $scope, $q) {
   var parsePerson = function(data) {
-    var person = data.data.feed.person;
+    var person = data.data.feed.student;
     angular.extend($scope, {
       veteranStatus: {
         content: person.usaCountry.militaryStatus

@@ -1,5 +1,6 @@
 <div class="cc-page-widget-profile-section" data-ng-controller="EmergencyContactController">
-  <div class="cc-page-widget-profile-section-label">Emergency Contact(s)</div>
+  <div class="cc-page-widget-profile-section-label" data-ng-pluralize count="emergencyContacts.content.length" when="{'1': 'Emergency Contact', 'other': 'Emergency Contacts'}">
+    </div>
   <div class="cc-page-widget-profile-section-content">
     <div data-ng-repeat="emergencyContact in emergencyContacts.content" class="cc-page-widget-profile-section-content-item">
       <div>
@@ -7,9 +8,8 @@
         <span data-ng-bind-template="- {{emergencyContact.relationship.description}}"></span>
         <span data-ng-if="emergencyContact.primary">(primary contact)</span>
       </div>
-      <div>
-        <div data-ng-bind="emergencyContact.phone.number"></div>
-      </div>
+      <div data-ng-bind="emergencyContact.phone.number"></div>
+      <div data-ng-bind="emergencyContact.email.emailAddress"></div>
       <div>
         <button class="cc-button-link">Edit</button>
       </div>

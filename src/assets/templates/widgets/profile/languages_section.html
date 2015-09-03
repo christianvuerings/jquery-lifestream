@@ -1,0 +1,21 @@
+<div class="cc-page-widget-profile-section" data-ng-controller="LanguagesSectionController">
+  <div class="cc-page-widget-profile-section-label" data-ng-pluralize count="languages.content.length" when="{'1': 'Language', 'other': 'Languages'}">
+    </div>
+  <div class="cc-page-widget-profile-section-content">
+    <div data-ng-repeat="language in languages.content" class="cc-page-widget-profile-section-content-item">
+      <div>
+        <strong data-ng-bind="language.name"></strong>
+        <span data-ng-if="language.native">(native)</span>
+      </div>
+      <div data-ng-bind-template="Speaking Proficiency: {{language.speakingProficiency.description}}"></div>
+      <div data-ng-bind-template="Reading Proficiency: {{language.readingProficiency.description}}"></div>
+      <div data-ng-bind-template="Writing Proficiency: {{language.writingProficiency.description}}"></div>
+      <div>
+        <button class="cc-button-link">Edit</button>
+      </div>
+    </div>
+  </div>
+  <div class="cc-page-widget-profile-section-add">
+    <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
+  </div>
+</div>

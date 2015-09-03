@@ -23,7 +23,7 @@ angular.module('calcentral.services').factory('profileMenuService', function() {
           'name': 'Emergency Contact'
         },
         {
-          'id': 'academic',
+          'id': 'academic-standing',
           'name': 'Academic Standing'
         },
         {
@@ -35,6 +35,8 @@ angular.module('calcentral.services').factory('profileMenuService', function() {
     {
       'label': 'Privacy & Permissions',
       'categories': [
+        /*
+         TODO - On hold till we have designs for these
         {
           'id': 'recordaccess',
           'name': 'Record Access'
@@ -43,6 +45,7 @@ angular.module('calcentral.services').factory('profileMenuService', function() {
           'id': 'ferpa',
           'name': 'FERPA Restrictions'
         },
+        */
         {
           'id': 'title4',
           'name': 'Title IV Release'
@@ -55,11 +58,14 @@ angular.module('calcentral.services').factory('profileMenuService', function() {
         {
           'id': 'languages',
           'name': 'Languages'
-        },
+        }
+        /*
+          TODO - On hold till SISRP-7184 is resolved
         {
           'id': 'work-experience',
           'name': 'Work Experience'
         }
+        */
       ]
     },
     {
@@ -68,11 +74,14 @@ angular.module('calcentral.services').factory('profileMenuService', function() {
         {
           'id': 'honors-awards',
           'name': 'Academic Honors & Awards'
-        },
+        }
+        /*
+          TODO - On hold till SISRP-7185 is resolved
         {
           'id': 'finaid-awards',
           'name': 'Financial Aid Awards'
         }
+        */
       ]
     },
     {

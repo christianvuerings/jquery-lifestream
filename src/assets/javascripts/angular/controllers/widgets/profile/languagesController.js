@@ -3,9 +3,9 @@
 var angular = require('angular');
 
 /**
- * Basic profile controller
+ * Languages controller
  */
-angular.module('calcentral.controllers').controller('BasicController', function(profileFactory, $scope) {
+angular.module('calcentral.controllers').controller('LanguagesController', function(profileFactory, $scope) {
   var loadInformation = function() {
     profileFactory.getPerson().then(function() {
       $scope.isLoading = false;
