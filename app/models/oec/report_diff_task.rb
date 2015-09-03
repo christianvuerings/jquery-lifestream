@@ -2,18 +2,21 @@ module Oec
   class ReportDiffTask < Task
 
     def run_internal
-      unless (reports_today = find_or_create_today_subfolder('reports'))
-        raise RuntimeError, 'Failed to retrieve today\'s reports folder from remote drive'
-      end
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
-        dept_title = Berkeley::Departments.get(dept_code, concise: true)
+        spreadsheet = @remote_drive.find_dept_courses_spreadsheet(@term_code, dept_code)
+        if spreadsheet
+          worksheet = DiffReport.new('tmp/oec')
 
-        log :info, "Fetch spreadsheet from remote drive: #{@term_code}/departments/#{dept_title}/Courses"
+          # More to come...
 
-        # More to come...
-
-        diff_file = "#{timestamp}_#{dept_title.downcase.tr(' ', '_')}_courses_diff"
-        log :info, "#{dept_title} diff summary on remote drive: #{@term_code}/reports/#{datestamp}/#{diff_file}"
+          dept_title = Berkeley::Departments.get(dept_code, concise: true)
+          file_name = "#{timestamp}_#{dept_title.downcase.tr(' ', '_')}_courses_diff"
+          reports_today = find_or_create_today_subfolder('reports')
+          @remote_drive.upload_worksheet(file_name, nil, worksheet, reports_today.id)
+          log :info, "#{dept_code} diff summary on remote drive: #{@term_code}/reports/#{datestamp}/#{file_name}"
+        else
+          log :info, "No #{@term_code} diff for dept_code=#{dept_code} because dept has no admin-managed spreadsheet."
+        end
       end
     end
 
