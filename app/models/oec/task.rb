@@ -5,7 +5,7 @@ module Oec
     def initialize(opts)
       @log = []
       uid = Settings.oec.google.uid
-      @remote_drive = GoogleApps::SheetsManager.new(uid, Settings.oec.google.marshal_dump)
+      @remote_drive = Oec::RemoteDrive.new
       @term_code = opts.delete :term_code
       @opts = opts
       @tmp_path = Rails.root.join('tmp', 'oec')
