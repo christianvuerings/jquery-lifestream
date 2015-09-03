@@ -1,22 +1,22 @@
 module Oec
-  class CoursesImportTask < Task
+  class SisImportTask < Task
 
     def run_internal
       log :info, "Will import SIS data for term #{@term_code}"
       imports_today = find_or_create_today_subfolder('imports')
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
         log :info, "Generating #{dept_code}.csv"
-        courses = Oec::Courses.new(@tmp_path, dept_code: dept_code)
-        import_courses(courses, course_codes)
-        export_sheet(courses, imports_today)
+        worksheet = Oec::SisImportSheet.new(@tmp_path, dept_code: dept_code)
+        import_courses(worksheet, course_codes)
+        export_sheet(worksheet, imports_today)
       end
     end
 
-    def import_courses(courses, course_codes)
+    def import_courses(worksheet, course_codes)
       course_codes_by_ccn = {}
       cross_listed_ccns = Set.new
       Oec::Queries.courses_for_codes(@term_code, course_codes).each do |course_row|
-        if import_course(courses, course_row)
+        if import_course(worksheet, course_row)
           course_codes_by_ccn[course_row['course_cntl_num']] ||= course_row.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
           cross_listed_ccns.merge [course_row['cross_listed_ccns'], course_row['co_scheduled_ccns']].join(',').split(',').reject(&:blank?)
         end
@@ -24,19 +24,19 @@ module Oec
       additional_cross_listings = cross_listed_ccns.reject{ |ccn| course_codes_by_ccn[ccn].present? }
       Oec::Queries.courses_for_cntl_nums(@term_code, additional_cross_listings).each do |cross_listing|
         next unless should_include_cross_listing? cross_listing
-        if import_course(courses, cross_listing)
+        if import_course(worksheet, cross_listing)
           course_codes_by_ccn[cross_listing['course_cntl_num']] = cross_listing.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
         end
       end
-      set_cross_listed_values(courses, course_codes_by_ccn)
-      flag_joint_faculty_gsi courses
+      set_cross_listed_values(worksheet, course_codes_by_ccn)
+      flag_joint_faculty_gsi worksheet
     end
 
-    def import_course(courses, course)
+    def import_course(worksheet, course)
       course_id = course['course_id']
       row_key = "#{course_id}-#{course['ldap_uid']})"
       # Avoid duplicate rows
-      unless courses[row_key]
+      unless worksheet[row_key]
         catalog_id = course['catalog_id']
         if course['enrollment_count'].to_i.zero?
           log :info, "Skipping course without enrollments: #{course_id}, #{course['dept_name']} #{catalog_id}"
@@ -49,14 +49,14 @@ module Oec
           false
         else
           course['course_id_2'] = course['course_id']
-          course['dept_form'] = courses.dept_code unless course['cross_listed_flag'].present?
+          course['dept_form'] = worksheet.dept_code unless course['cross_listed_flag'].present?
           roles = Berkeley::UserRoles.roles_from_campus_row course
           course['evaluation_type'] = if roles[:student]
                                         'G'
                                       elsif roles[:faculty]
                                         'F'
                                       end
-          courses[row_key] = Oec::Worksheet.capitalize_keys course
+          worksheet[row_key] = Oec::Worksheet.capitalize_keys course
         end
       end
     end
@@ -70,14 +70,14 @@ module Oec
       end
     end
 
-    def set_cross_listed_values(courses, course_codes_by_ccn)
-      courses.each do |course|
-        cross_listed_ccns = [course['CROSS_LISTED_CCNS'], course['CO_SCHEDULED_CCNS']].join(',').split(',').reject(&:blank?)
+    def set_cross_listed_values(worksheet, course_codes_by_ccn)
+      worksheet.each do |course_row|
+        cross_listed_ccns = [course_row['CROSS_LISTED_CCNS'], course_row['CO_SCHEDULED_CCNS']].join(',').split(',').reject(&:blank?)
         cross_listed_course_codes = course_codes_by_ccn.slice(*cross_listed_ccns).values
         # A count of less than 2 means that cross-listed course codes were screened out by import_course and should not be reported.
         next if cross_listed_course_codes.count < 2
         # Official cross-listings, as opposed to room shares, will have this value already set to 'Y'.
-        course['CROSS_LISTED_FLAG'] ||= 'RM SHARE'
+        course_row['CROSS_LISTED_FLAG'] ||= 'RM SHARE'
         last_dept_names = nil
         cross_listings_by_section_code = cross_listed_course_codes.group_by { |r| "#{r['instruction_format']} #{r['section_num']}" }.map do |section_code, rows_by_section|
           cross_listings_by_dept_name = rows_by_section.group_by { |r| r['catalog_id'] }.inject({}) do |dept_hash, (catalog_id, rows_by_catalog_id)|
@@ -96,12 +96,12 @@ module Oec
           end
           "#{course_codes.join(', ')} #{section_code}"
         end
-        course['CROSS_LISTED_NAME'] = cross_listings_by_section_code.join(', ')
+        course_row['CROSS_LISTED_NAME'] = cross_listings_by_section_code.join(', ')
       end
     end
 
-    def flag_joint_faculty_gsi(courses)
-      courses.group_by { |course| course['COURSE_ID'] }.each do |course_id, course_rows|
+    def flag_joint_faculty_gsi(worksheet)
+      worksheet.group_by { |row| row['COURSE_ID'] }.each do |course_id, course_rows|
         faculty_rows = course_rows.select { |row| row['EVALUATION_TYPE'] == 'F' }
         gsi_rows = course_rows.select { |row| row['EVALUATION_TYPE'] == 'G' }
         if faculty_rows.any? && gsi_rows.any?
