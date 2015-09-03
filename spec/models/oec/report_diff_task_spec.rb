@@ -1,3 +1,5 @@
+include OecSpecHelper
+
 describe Oec::ReportDiffTask do
 
   let(:term_code) { '2015-D' }
@@ -24,7 +26,7 @@ describe Oec::ReportDiffTask do
       }
 
       it 'should produce no diff when department spreadsheet not found' do
-        expect(fake_sheets_manager).to receive(:find_dept_courses_spreadsheet).with(dept_code).and_return nil
+        expect(fake_sheets_manager).to receive(:find_dept_courses_spreadsheet).with(term_code, dept_code).and_return nil
         subject.run
       end
     end
