@@ -23,7 +23,7 @@ module CanvasLti
       worker = Canvas::Course.new(user_id: @uid)
       response = worker.create(project_account_id, project_name, project_name, term_id, unique_sis_project_id)
       if (course_details = response[:body])
-        enrollment = CanvasLti::CourseAddUser.add_user_to_course(@uid, 'TeacherEnrollment', course_details['id'], role_id: Settings.canvas_proxy.projects_owner_role_id)
+        enrollment = CanvasLti::CourseAddUser.new(user_id: @uid, canvas_course_id: course_details['id']).add_user_to_course(@uid, 'Owner')
         {
           projectSiteId: course_details['id'],
           projectSiteUrl: "#{Settings.canvas_proxy.url_root}/courses/#{course_details['id']}",

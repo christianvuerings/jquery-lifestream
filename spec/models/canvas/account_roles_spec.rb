@@ -24,6 +24,11 @@ describe Canvas::AccountRoles do
       labels = result.collect {|r| r['label']}
       expect(labels).to include('Lead TA', 'Reader', 'Waitlist Student')
     end
+    it 'sorts to match the default Canvas UX' do
+      result = subject.defined_course_roles
+      labels = result.collect {|r| r['label']}
+      expect(labels).to eq ['Student', 'Waitlist Student', 'Teacher', 'TA', 'Lead TA', 'Reader', 'Designer', 'Observer']
+    end
   end
   context 'when a project sites account' do
     let(:account_id) {project_account_id}

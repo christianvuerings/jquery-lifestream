@@ -23,7 +23,7 @@ class CanvasCourseAddUserController < ApplicationController
       courseId: canvas_course_id,
       roles: profile[:roles],
       roleTypes: profile[:roleTypes],
-      grantingRoles: profile[:grantingRoles]
+      grantingRoles: profile[:granting_roles_and_ids].keys
     }.to_json
   end
 
@@ -37,34 +37,42 @@ class CanvasCourseAddUserController < ApplicationController
 
   # GET /api/academics/canvas/course_add_user/course_sections.json
   def course_sections
-    sections_list = CanvasLti::CourseAddUser.course_sections_list(canvas_course_id)
+    sections_list = model.course_sections_list
     render json: { courseSections: sections_list }.to_json
   end
 
   # POST /api/academics/canvas/course_add_user/add_user.json
   def add_user
+    authorize_section_id
     authorize_granted_role
-    CanvasLti::CourseAddUser.add_user_to_course_section(params['ldapUserId'], params['roleId'], params['sectionId'])
-    user_added = { :ldapUserId => params['ldapUserId'], :roleId => params['roleId'], :sectionId => params['sectionId'] }
+    role_id = user_profile[:granting_roles_and_ids][params['role']]
+    model.add_user_to_course_section(params['ldapUserId'], role_id, params['sectionId'])
+    user_added = { :ldapUserId => params['ldapUserId'], :role => params['role'], :sectionId => params['sectionId'] }
     render json: { userAdded: user_added }.to_json
   end
 
   private
 
+  def authorize_section_id
+    sections_list = model.course_sections_list
+    unless sections_list.index {|s| s['id'] == params['sectionId']}
+      raise Pundit::NotAuthorizedError, "Section #{params['sectionId']} is not in course #{canvas_course_id}"
+    end
+  end
+
   def authorize_granted_role
     granted_role_ids = []
-    user_profile[:grantingRoles].each {|role| granted_role_ids << role['id']}
-    raise Pundit::NotAuthorizedError, "Role specified is unauthorized" unless granted_role_ids.include?(params['roleId'])
+    if user_profile[:granting_roles_and_ids][params['role']].blank?
+      raise Pundit::NotAuthorizedError, "Role specified is unauthorized: #{params['role']}"
+    end
+  end
+
+  def model
+    @model ||= CanvasLti::CourseAddUser.new(user_id: session['user_id'], canvas_course_id: canvas_course_id)
   end
 
   def user_profile
-    canvas_user_profile = Canvas::SisUserProfile.new(user_id: session['user_id']).get
-    course_user_worker = Canvas::CourseUser.new(:user_id => canvas_user_profile['id'], :course_id => canvas_course_id)
-    course_user_roles = course_user_worker.roles
-    course_user_role_types = course_user_worker.role_types
-    global_admin = Canvas::Admins.new.admin_user?(session['user_id'])
-    granting_roles = CanvasLti::CourseAddUser.granting_roles(course_user_roles, global_admin)
-    { roles: course_user_roles.merge({'globalAdmin' => global_admin}), roleTypes: course_user_role_types, grantingRoles: granting_roles }
+    @user_profile ||= model.authorization_profile
   end
 
 end

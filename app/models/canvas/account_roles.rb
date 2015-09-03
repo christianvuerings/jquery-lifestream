@@ -11,7 +11,20 @@ module Canvas
 
     def defined_course_roles(options = {})
       raw_list = roles_list options
-      raw_list.select {|r| r['base_role_type'].end_with? 'Enrollment'}
+      course_roles = raw_list.select {|r| r['base_role_type'].end_with? 'Enrollment'}
+      # The default Canvas UX orders roles by enrollment type, then built-ins first, then role ID.
+      enrollment_type_order = ['StudentEnrollment', 'TeacherEnrollment', 'TaEnrollment', 'DesignerEnrollment', 'ObserverEnrollment']
+      course_roles.sort do |a, b|
+        ordering = enrollment_type_order.index(a['base_role_type']) <=> enrollment_type_order.index(b['base_role_type'])
+        if ordering == 0
+          # Custom roles have a "workflow_state" of "active" rather than "built_in".
+          ordering = b['workflow_state'] <=> a['workflow_state']
+          if ordering == 0
+            ordering = a['id'] <=> b['id']
+          end
+        end
+        ordering
+      end
     end
 
     def roles_list(options = {})
