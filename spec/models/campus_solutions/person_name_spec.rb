@@ -50,8 +50,7 @@ describe CampusSolutions::PersonName do
     end
   end
 
-  # ignored, see SISRP-6950
-  context 'with a real external service', ignore: true, testext: true do
+  context 'with a real external service', testext: true do
     let(:params) { {
       type: 'LEG',
       firstName: 'Joe',
