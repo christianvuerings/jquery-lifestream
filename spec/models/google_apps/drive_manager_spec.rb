@@ -3,7 +3,8 @@ describe GoogleApps::DriveManager do
   context '#real', testext: true, :order => :defined do
 
     before(:all) do
-      @drive = GoogleApps::DriveManager.new GoogleApps::CredentialStore.new(app_name: 'oec')
+      settings = Settings.oec.google.marshal_dump
+      @drive = GoogleApps::DriveManager.new Settings.oec.google.uid, settings
       now = DateTime.now.strftime('%m/%d/%Y at %I:%M%p')
       title = "GoogleDriveInsert tested on #{now}"
       csv_file = 'fixtures/oec_legacy/courses.csv'

@@ -126,10 +126,10 @@ angular.module('calcentral.controllers').controller('CanvasCourseAddUserControll
     var submittedSection = $scope.selectedSection;
     var submittedRole = $scope.selectedRole;
 
-    canvasCourseAddUserFactory.addUser($scope.canvasCourseId, submittedUser.ldapUid, submittedSection.id, submittedRole.id).success(function(data) {
+    canvasCourseAddUserFactory.addUser($scope.canvasCourseId, submittedUser.ldapUid, submittedSection.id, submittedRole).success(function(data) {
       $scope.userAdded = data.userAdded;
       $scope.userAdded.fullName = submittedUser.firstName + ' ' + submittedUser.lastName;
-      $scope.userAdded.roleName = submittedRole.name;
+      $scope.userAdded.role = submittedRole;
       $scope.userAdded.sectionName = submittedSection.name;
       $scope.additionSuccessMessage = true;
       $scope.showSearchForm = true;
@@ -159,7 +159,7 @@ angular.module('calcentral.controllers').controller('CanvasCourseAddUserControll
       $scope.grantingRoles = data.grantingRoles;
       $scope.selectedRole = $scope.grantingRoles[0];
 
-      $scope.userAuthorized = userIsAuthorized($scope.courseUserRoleTypes) || $scope.courseUserRoles.globalAdmin;
+      $scope.userAuthorized = userIsAuthorized($scope.courseUserRoleTypes) || ($scope.courseUserRoles.indexOf('globalAdmin') > -1);
       if ($scope.userAuthorized) {
         getCourseSections();
         $scope.showSearchForm = true;

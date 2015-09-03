@@ -1,0 +1,4811 @@
+[
+  {
+    "id": 1770,
+    "role": "AccountAdmin",
+    "label": "Account Admin",
+    "base_role_type": "AccountMembership",
+    "workflow_state": "built_in",
+    "permissions": {
+      "view_analytics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_grades": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "comment_on_others_submissions": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": true,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": true,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": true,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      }
+    }
+  },
+  {
+    "id": 1772,
+    "role": "StudentEnrollment",
+    "label": "Student",
+    "base_role_type": "StudentEnrollment",
+    "workflow_state": "built_in",
+    "permissions": {
+      "view_analytics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_grades": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "comment_on_others_submissions": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      }
+    }
+  },
+  {
+    "id": 1773,
+    "role": "TeacherEnrollment",
+    "label": "Teacher",
+    "base_role_type": "TeacherEnrollment",
+    "workflow_state": "built_in",
+    "permissions": {
+      "view_analytics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "create_conferences": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_grades": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "comment_on_others_submissions": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      }
+    }
+  },
+  {
+    "id": 1774,
+    "role": "TaEnrollment",
+    "label": "TA",
+    "base_role_type": "TaEnrollment",
+    "workflow_state": "built_in",
+    "permissions": {
+      "view_analytics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "manage_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "manage_rubrics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "comment_on_others_submissions": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "read_course_list": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "read_course_content": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      }
+    }
+  },
+  {
+    "id": 1775,
+    "role": "DesignerEnrollment",
+    "label": "Designer",
+    "base_role_type": "DesignerEnrollment",
+    "workflow_state": "built_in",
+    "permissions": {
+      "view_analytics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "create_conferences": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": false
+      },
+      "manage_grades": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "comment_on_others_submissions": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      }
+    }
+  },
+  {
+    "id": 1776,
+    "role": "ObserverEnrollment",
+    "label": "Observer",
+    "base_role_type": "ObserverEnrollment",
+    "workflow_state": "built_in",
+    "permissions": {
+      "view_analytics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_grades": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "comment_on_others_submissions": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      }
+    }
+  },
+  {
+    "id": 568,
+    "role": "Support Admin",
+    "label": "Support Admin",
+    "base_role_type": "AccountMembership",
+    "workflow_state": "active",
+    "permissions": {
+      "view_analytics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_grades": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "comment_on_others_submissions": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      }
+    },
+    "account": {
+      "id": 90242,
+      "name": "UC Berkeley",
+      "parent_account_id": null,
+      "root_account_id": null,
+      "workflow_state": "active",
+      "default_storage_quota_mb": 2048,
+      "default_user_storage_quota_mb": 200,
+      "default_group_storage_quota_mb": 500,
+      "default_time_zone": "America/Los_Angeles"
+    }
+  },
+  {
+    "id": 1366,
+    "role": "Developer Admin",
+    "label": "Developer Admin",
+    "base_role_type": "AccountMembership",
+    "workflow_state": "active",
+    "permissions": {
+      "view_analytics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "comment_on_others_submissions": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      }
+    },
+    "account": {
+      "id": 90242,
+      "name": "UC Berkeley",
+      "parent_account_id": null,
+      "root_account_id": null,
+      "workflow_state": "active",
+      "default_storage_quota_mb": 2048,
+      "default_user_storage_quota_mb": 200,
+      "default_group_storage_quota_mb": 500,
+      "default_time_zone": "America/Los_Angeles"
+    }
+  },
+  {
+    "id": 1638,
+    "role": "Student Support Admin",
+    "label": "Student Support Admin",
+    "base_role_type": "AccountMembership",
+    "workflow_state": "active",
+    "permissions": {
+      "view_analytics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "comment_on_others_submissions": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": false
+      },
+      "manage_content": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": false
+      },
+      "manage_sections": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      }
+    },
+    "account": {
+      "id": 90242,
+      "name": "UC Berkeley",
+      "parent_account_id": null,
+      "root_account_id": null,
+      "workflow_state": "active",
+      "default_storage_quota_mb": 2048,
+      "default_user_storage_quota_mb": 200,
+      "default_group_storage_quota_mb": 500,
+      "default_time_zone": "America/Los_Angeles"
+    }
+  },
+  {
+    "id": 1640,
+    "role": "Sub Account Admin",
+    "label": "Sub Account Admin",
+    "base_role_type": "AccountMembership",
+    "workflow_state": "active",
+    "permissions": {
+      "view_analytics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "comment_on_others_submissions": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      }
+    },
+    "account": {
+      "id": 90242,
+      "name": "UC Berkeley",
+      "parent_account_id": null,
+      "root_account_id": null,
+      "workflow_state": "active",
+      "default_storage_quota_mb": 2048,
+      "default_user_storage_quota_mb": 200,
+      "default_group_storage_quota_mb": 500,
+      "default_time_zone": "America/Los_Angeles"
+    }
+  },
+  {
+    "id": 1763,
+    "role": "bCourses LTI Access",
+    "label": "bCourses LTI Access",
+    "base_role_type": "AccountMembership",
+    "workflow_state": "active",
+    "permissions": {
+      "view_analytics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "comment_on_others_submissions": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      }
+    },
+    "account": {
+      "id": 90242,
+      "name": "UC Berkeley",
+      "parent_account_id": null,
+      "root_account_id": null,
+      "workflow_state": "active",
+      "default_storage_quota_mb": 2048,
+      "default_user_storage_quota_mb": 200,
+      "default_group_storage_quota_mb": 500,
+      "default_time_zone": "America/Los_Angeles"
+    }
+  },
+  {
+    "id": 1765,
+    "role": "Member",
+    "label": "Member",
+    "base_role_type": "StudentEnrollment",
+    "workflow_state": "active",
+    "permissions": {
+      "view_analytics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_grades": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "comment_on_others_submissions": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      }
+    },
+    "account": {
+      "id": 129407,
+      "name": "Projects",
+      "parent_account_id": 90242,
+      "root_account_id": 90242,
+      "workflow_state": "active",
+      "default_storage_quota_mb": 2048,
+      "default_user_storage_quota_mb": 50,
+      "default_group_storage_quota_mb": 500,
+      "default_time_zone": "America/Los_Angeles",
+      "sis_account_id": "ACCT:PROJECTS",
+      "sis_import_id": null,
+      "integration_id": null
+    }
+  },
+  {
+    "id": 1766,
+    "role": "Owner",
+    "label": "Owner",
+    "base_role_type": "TeacherEnrollment",
+    "workflow_state": "active",
+    "permissions": {
+      "view_analytics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "create_conferences": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "manage_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "manage_rubrics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "comment_on_others_submissions": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "read_course_list": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "read_course_content": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "change_course_state": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      }
+    },
+    "account": {
+      "id": 129407,
+      "name": "Projects",
+      "parent_account_id": 90242,
+      "root_account_id": 90242,
+      "workflow_state": "active",
+      "default_storage_quota_mb": 2048,
+      "default_user_storage_quota_mb": 50,
+      "default_group_storage_quota_mb": 500,
+      "default_time_zone": "America/Los_Angeles",
+      "sis_account_id": "ACCT:PROJECTS",
+      "sis_import_id": null,
+      "integration_id": null
+    }
+  },
+  {
+    "id": 1767,
+    "role": "Maintainer",
+    "label": "Maintainer",
+    "base_role_type": "TaEnrollment",
+    "workflow_state": "active",
+    "permissions": {
+      "view_analytics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "manage_grades": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "manage_rubrics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "comment_on_others_submissions": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "read_course_content": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": true,
+        "prior_default": true
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      }
+    },
+    "account": {
+      "id": 129407,
+      "name": "Projects",
+      "parent_account_id": 90242,
+      "root_account_id": 90242,
+      "workflow_state": "active",
+      "default_storage_quota_mb": 2048,
+      "default_user_storage_quota_mb": 50,
+      "default_group_storage_quota_mb": 500,
+      "default_time_zone": "America/Los_Angeles",
+      "sis_account_id": "ACCT:PROJECTS",
+      "sis_import_id": null,
+      "integration_id": null
+    }
+  },
+  {
+    "id": 1820,
+    "role": "Lead TA",
+    "label": "Lead TA",
+    "base_role_type": "TaEnrollment",
+    "workflow_state": "active",
+    "permissions": {
+      "view_analytics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_grades": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "comment_on_others_submissions": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      }
+    },
+    "account": {
+      "id": 90242,
+      "name": "UC Berkeley",
+      "parent_account_id": null,
+      "root_account_id": null,
+      "workflow_state": "active",
+      "default_storage_quota_mb": 2048,
+      "default_user_storage_quota_mb": 200,
+      "default_group_storage_quota_mb": 500,
+      "default_time_zone": "America/Los_Angeles"
+    }
+  },
+  {
+    "id": 1822,
+    "role": "Reader",
+    "label": "Reader",
+    "base_role_type": "TaEnrollment",
+    "workflow_state": "active",
+    "permissions": {
+      "view_analytics": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_webhooks": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_wiki": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "post_to_forum": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "moderate_forum": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "send_messages_all": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_outcomes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_conferences": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "create_collaborations": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_roster": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_all_grades": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_grades": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_rubrics": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "comment_on_others_submissions": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_students": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_admin_users": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_role_overrides": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_memberships": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_account_settings": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_groups": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "view_group_pages": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_files": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_assignments": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "undelete_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_grade_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_course_changes": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_question_banks": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_calendar": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_reports": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_courses": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_logins": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_observers": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_sis": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "read_sis": {
+        "enabled": true,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_list": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_statistics": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_storage_quotas": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_user_notes": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "read_course_content": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "manage_content": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_interaction_alerts": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "change_course_state": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_sections": {
+        "enabled": false,
+        "locked": false,
+        "readonly": false,
+        "explicit": false
+      },
+      "manage_feature_flags": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      },
+      "view_quiz_answer_audits": {
+        "enabled": false,
+        "locked": true,
+        "readonly": true,
+        "explicit": false
+      }
+    },
+    "account": {
+      "id": 90242,
+      "name": "UC Berkeley",
+      "parent_account_id": null,
+      "root_account_id": null,
+      "workflow_state": "active",
+      "default_storage_quota_mb": 2048,
+      "default_user_storage_quota_mb": 200,
+      "default_group_storage_quota_mb": 500,
+      "default_time_zone": "America/Los_Angeles"
+    }
+  }
+]

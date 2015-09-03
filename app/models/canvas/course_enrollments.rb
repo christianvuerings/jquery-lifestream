@@ -1,9 +1,6 @@
 module Canvas
   class CourseEnrollments < Proxy
 
-    ENROLLMENT_STATES = %w(active invited)
-    ENROLLMENT_TYPES = %w(StudentEnrollment TeacherEnrollment TaEnrollment ObserverEnrollment DesignerEnrollment)
-
     def initialize(options = {})
       super(options)
       raise ArgumentError, 'Canvas Course ID option required' unless options.has_key?(:canvas_course_id)
@@ -12,21 +9,15 @@ module Canvas
 
     # Interface to Enroll a User in a Canvas Course
     # See https://canvas.instructure.com/doc/api/enrollments.html#method.enrollments_api.create
-    # Include 'role_id' option to specify custom roles (i.e. Waitlist Student, Owner, Maintainer, Member)
-    def enroll_user(canvas_user_id, enrollment_type, enrollment_state, notify = false, options = {})
-      raise ArgumentError, 'Notification flag must be a Boolean' unless notify == true || notify == false
-      sentence_options = {:last_word_connector => ', or ', :two_words_connector => ' or '}
-      raise ArgumentError, "Enrollment type argument '#{enrollment_type}', must be #{ENROLLMENT_TYPES.to_sentence(sentence_options)}" unless ENROLLMENT_TYPES.include?(enrollment_type.to_str)
-      raise ArgumentError, "Enrollment state argument '#{enrollment_state}', must be #{ENROLLMENT_STATES.to_sentence(sentence_options)}" unless ENROLLMENT_STATES.include?(enrollment_state.to_str)
+    def enroll_user(canvas_user_id, role_id)
       request_params = {
         'enrollment' => {
           'user_id' => canvas_user_id.to_int,
-          'type' => enrollment_type.to_str,
-          'enrollment_state' => enrollment_state.to_str,
-          'notify' => !!notify,
+          'role_id' => role_id,
+          'enrollment_state' => 'active',
+          'notify' => false,
         }
       }
-      request_params['enrollment']['role_id'] = options[:role_id] if options[:role_id]
       wrapped_post "courses/#{@canvas_course_id}/enrollments", request_params
     end
 

@@ -8,6 +8,11 @@ describe Oec::TermSetupTask do
   let(:fake_sheets_manager) { double() }
   before { allow(GoogleApps::SheetsManager).to receive(:new).and_return fake_sheets_manager }
 
+  let(:today) { '2015-08-31' }
+  let(:now) { '092222' }
+  let(:logfile) { "#{now}_term_setup_task.log" }
+  before { allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H%M%S') }
+
   shared_context 'expecting folder creation' do
     before do
       expect_folder_creation(term_code, 'root', read_after_creation: true)
@@ -18,12 +23,7 @@ describe Oec::TermSetupTask do
   end
 
   shared_context 'expecting logging' do
-    let(:today) { '2015-08-31' }
-    let(:now) { '092222' }
-    let(:logfile) { "#{now}_term_setup_task.log" }
-
     before do
-      allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H%M%S')
       expect_folder_creation('reports', term_code, read_after_creation: true)
       expect_folder_creation(today, 'reports')
       expect(fake_sheets_manager).to receive(:find_items_by_title)
@@ -121,6 +121,16 @@ describe Oec::TermSetupTask do
       expect(Rails.logger).to receive(:error).at_least(1).times do |error_message|
         expect(error_message.lines.first).to include 'A confounding error'
       end
+      subject.run
+    end
+  end
+
+  context 'local-write mode' do
+    subject { described_class.new(term_code: term_code, local_write: 'Y') }
+
+    it 'reads from but does not write to remote drive' do
+      expect(fake_sheets_manager).to receive(:find_folders).with(no_args).and_return []
+      expect(fake_sheets_manager).not_to receive(:upload_file)
       subject.run
     end
   end
