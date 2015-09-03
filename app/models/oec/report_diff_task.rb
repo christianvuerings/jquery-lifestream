@@ -3,7 +3,7 @@ module Oec
 
     def run_internal
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
-        spreadsheet = @remote_drive.find_dept_courses_spreadsheet dept_code
+        spreadsheet = @remote_drive.find_dept_courses_spreadsheet(@term_code, dept_code)
         if spreadsheet
           worksheet = DiffReport.new('tmp/oec')
 
