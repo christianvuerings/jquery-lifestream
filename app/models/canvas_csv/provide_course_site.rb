@@ -183,7 +183,9 @@ module CanvasCsv
     end
 
     def add_instructor_to_section(canvas_section)
-      if canvas_section && CanvasLti::CourseAddUser.add_user_to_course_section(@uid, 'TeacherEnrollment', "sis_section_id:#{canvas_section['section_id']}")
+      worker = CanvasLti::CourseAddUser.new(user_id: @uid, canvas_course_id: @import_data['canvas_course_id'])
+      if canvas_section &&
+        worker.add_user_to_course_section(@uid, 'Teacher', "sis_section_id:#{canvas_section['section_id']}")
         logger.warn "Successfully added instructor to section #{canvas_section['section_id']} as a teacher"
         background_job_complete_step 'Added instructor to course site'
       else
@@ -194,9 +196,10 @@ module CanvasCsv
 
     def retrieve_course_site_details
       raise RuntimeError, 'Unable to retrieve course site details. SIS Course ID not present.' if @import_data['sis_course_id'].blank?
-      course_id = Canvas::SisCourse.new(sis_course_id: @import_data['sis_course_id']).canvas_course_id
-      raise RuntimeError, "Unexpected error obtaining course site URL for #{@import_data['sis_course_id']}" if course_id.blank?
-      @import_data['course_site_url'] = "#{Settings.canvas_proxy.url_root}/courses/#{course_id}"
+      canvas_course_id = Canvas::SisCourse.new(sis_course_id: @import_data['sis_course_id']).canvas_course_id
+      raise RuntimeError, "Unexpected error obtaining course site URL for #{@import_data['sis_course_id']}" if canvas_course_id.blank?
+      @import_data['canvas_course_id'] = canvas_course_id
+      @import_data['course_site_url'] = "#{Settings.canvas_proxy.url_root}/courses/#{canvas_course_id}"
       background_job_complete_step 'Retrieved new course site details'
     end
 
