@@ -1,5 +1,6 @@
 module Oec
-  class CsvExport < ::CsvExport
+  class Worksheet
+    include Enumerable
 
     def self.base_filename
       "#{self.name.demodulize.underscore}.csv"
@@ -12,10 +13,11 @@ module Oec
       end
     end
 
-    def initialize(export_dir, opts={})
+    def initialize(export_directory, opts={})
+      FileUtils.mkdir_p export_directory unless File.exists? export_directory
+      @export_directory = export_directory
+      @opts = opts
       @rows = {}
-      @filename = opts[:filename]
-      super(export_dir)
     end
 
     def [](key)
@@ -26,11 +28,23 @@ module Oec
       @rows[key] = value
     end
 
-    def base_filename
-      @filename || self.class.base_filename
+    def each
+      @rows.each { |key, row| yield row }
     end
 
-    def export
+    def base_filename
+      @opts[:filename] || self.class.base_filename
+    end
+
+    def output_filename
+      @export_directory.join base_filename
+    end
+
+    def headers
+      # subclasses override
+    end
+
+    def write_csv
       if @rows.any?
         output = CSV.open(output_filename, 'wb', headers: headers, write_headers: true)
         @rows.values.each { |row| output << row }
@@ -40,14 +54,5 @@ module Oec
       end
       output.close
     end
-
-    def headers
-      # subclasses override
-    end
-
-    def output_filename
-      export_directory.join base_filename
-    end
-
   end
 end

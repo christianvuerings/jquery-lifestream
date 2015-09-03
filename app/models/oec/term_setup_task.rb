@@ -17,7 +17,7 @@ module Oec
           copy_file(@previous_term_csvs[csv_class], supplemental_sources)
         else
           log :info, "Could not find previous #{csv_class.base_filename} for copying; will create header-only file"
-          upload_csv_headers(csv_class, supplemental_sources)
+          upload_worksheet_headers(csv_class, supplemental_sources)
         end
       end
     end

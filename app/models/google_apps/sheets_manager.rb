@@ -1,10 +1,9 @@
 module GoogleApps
   class SheetsManager < DriveManager
 
-    def initialize(credential_store)
-      super credential_store
+    def initialize(uid, options = {})
+      super uid, options
       auth = get_google_api.authorization
-      auth.fetch_access_token!
       # See https://github.com/gimite/google-drive-ruby
       @session = GoogleDrive::Session.login_with_oauth auth.access_token
     end
@@ -34,10 +33,19 @@ module GoogleApps
       spreadsheets
     end
 
-    def upload_csv_to_spreadsheet(title, description, file_path, parent_id = 'root')
+    def upload_worksheet(title, description, worksheet, parent_id = 'root')
+      content = CSV.generate do |csv|
+        headers = worksheet.headers
+        csv << headers
+        worksheet.each { |row| csv << row.values_at(*headers) }
+      end
+      upload_to_spreadsheet(title, description, StringIO.new(content), parent_id)
+    end
+
+    def upload_to_spreadsheet(title, description, path_or_io, parent_id)
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
-      media = Google::APIClient::UploadIO.new(file_path, 'text/csv')
+      media = Google::APIClient::UploadIO.new(path_or_io, 'text/csv')
       metadata = { :title => title, :description => description }
       file = drive_api.files.insert.request_schema.new metadata
       file.parents = [{ :id => parent_id }]
@@ -48,7 +56,7 @@ module GoogleApps
         :parameters => { :uploadType => 'multipart', :convert => true })
       log_response api_response
       success = api_response.status == 200
-      raise Errors::ProxyError, "Error in upload_csv_to_spreadsheet(#{title}, ...): #{api_response.data['error']['message']}" unless success
+      raise Errors::ProxyError, "Error in upload(#{title}, ...): #{api_response.data['error']['message']}" unless success
       @session.wrap_api_file api_response.data
     end
 

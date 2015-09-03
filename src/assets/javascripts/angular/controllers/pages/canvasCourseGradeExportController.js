@@ -256,7 +256,10 @@ angular.module('calcentral.controllers').controller('CanvasCourseGradeExportCont
   };
 
   var userIsAuthorized = function(courseUserRoles) {
-    return (courseUserRoles.globalAdmin || courseUserRoles.teacher);
+    var authorizedRoles = ['globalAdmin', 'Teacher'];
+    return authorizedRoles.some(function(authorizedRole) {
+      return courseUserRoles.indexOf(authorizedRole) > -1;
+    });
   };
 
   checkAuthorization();

@@ -1,15 +1,22 @@
 namespace :oec do
 
-  desc 'Import per-department course CSVs'
-  task :import_courses => :environment do
-    raise ArgumentError, "term_code required" unless ENV['term_code']
-    Oec::CoursesImportTask.new(term_code: ENV['term_code']).run
+  desc 'Import per-department course CSVs, compare with dept spreadsheets and report on non-empty diffs.'
+  task :sis_import => :environment do
+    term_code = ENV['term_code']
+    raise ArgumentError, 'term_code required' unless term_code
+    [Oec::SisImportTask, Oec::ReportDiffTask].each do |klass|
+      klass.new(
+        term_code: term_code, local_write: ENV['local_write'],
+        dept_names: ENV['dept_names'], dept_codes: ENV['dept_codes']).run
+    end
   end
 
   desc 'Set up folder structure for new term'
   task :term_setup => :environment do
-    raise ArgumentError, "term_code required" unless ENV['term_code']
-    Oec::TermSetupTask.new(term_code: ENV['term_code']).run
+    raise ArgumentError, 'term_code required' unless ENV['term_code']
+    task = Oec::TermSetupTask.new(
+      term_code: ENV['term_code'], local_write: ENV['local_write'])
+    task.run
   end
 
   # Legacy tasks below this line

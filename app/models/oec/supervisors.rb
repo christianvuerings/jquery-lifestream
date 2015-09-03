@@ -1,5 +1,5 @@
 module Oec
-  class Supervisors < Oec::CsvExport
+  class Supervisors < Worksheet
 
     def headers
       %w(
