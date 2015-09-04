@@ -261,6 +261,8 @@ cache:
     EtsBlog::ServiceAlerts: <%= 2.minutes %>
 
     CampusSolutions::ListOfValues: <%= 24.hours %>
+    CampusSolutions::MyHigherOneUrl: <%= 1.seconds %>
+    CampusSolutions::HigherOneUrl: <%= 1.seconds %>
 
 # Cache warmer settings
 cache_warmer:
