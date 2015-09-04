@@ -6,13 +6,8 @@ module Oec
     end
 
     def find_dept_courses_spreadsheet(term_code, dept_code)
-      if (term_folder = find_first_matching_folder term_code)
-        dept_title = Berkeley::Departments.get(dept_code, concise: true)
-        dept_folder = find_first_matching_folder(dept_title, term_folder)
-        find_first_matching_item('Courses', dept_folder)
-      else
-        nil
-      end
+      dept_folder = find_folder_managed_by_dept(term_code, dept_code)
+      dept_folder ? find_first_matching_item('Courses', dept_folder) : nil
     end
 
     def find_first_matching_folder(title, parent=nil)
@@ -21,6 +16,17 @@ module Oec
 
     def find_first_matching_item(title, parent=nil)
       find_items_by_title(title, parent_id: folder_id(parent)).first
+    end
+
+    private
+
+    def find_folder_managed_by_dept(term_code, dept_code)
+      term_folder = find_first_matching_folder term_code
+      term_folder ? find_first_matching_folder(Berkeley::Departments.get(dept_code, concise: true), term_folder) : nil
+    end
+
+    def folder_id(folder)
+      folder ? folder.id : 'root'
     end
 
   end
