@@ -1,6 +1,8 @@
 exclude:
   - 'app/assets/stylesheets/rails_admin/**'
   - 'src/assets/stylesheets/lib/**'
+  - 'public/**'
+  - 'node_modules/**'
 
 linters:
   DuplicateProperty:
