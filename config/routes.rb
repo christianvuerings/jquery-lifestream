@@ -135,6 +135,7 @@ Calcentral::Application.routes.draw do
   # Campus Solutions general purpose endpoints
   get '/api/campus_solutions/checklist' => 'campus_solutions/checklist#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/sir_config' => 'campus_solutions/sir_config#get', :via => :get, :defaults => { :format => 'json' }
+  get '/api/campus_solutions/deposit' => 'campus_solutions/deposit#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/country' => 'campus_solutions/country#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/state' => 'campus_solutions/state#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/campus_solutions/ethnicity_setup' => 'campus_solutions/ethnicity_setup#get', :via => :get, :defaults => { :format => 'json' }
