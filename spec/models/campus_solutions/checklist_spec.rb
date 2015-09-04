@@ -15,6 +15,8 @@ describe CampusSolutions::Checklist do
 
   context 'mock proxy' do
     let(:proxy) { CampusSolutions::Checklist.new(fake: true, user_id: oski_uid) }
+    let(:oski_uid) { '61889' }
+    subject { proxy.get }
     it_should_behave_like 'a proxy that gets data'
     it 'returns specific mock data' do
       expect(subject[:feed][:checkListItems][0][:emplid]).to eq '9000006532'
@@ -22,7 +24,7 @@ describe CampusSolutions::Checklist do
     end
   end
 
-  context 'real proxy', testext: true, ignore: true do
+  context 'real proxy', testext: true do
     let(:proxy) { CampusSolutions::Checklist.new(fake: false, user_id: oski_uid) }
     it_should_behave_like 'a proxy that gets data'
   end
