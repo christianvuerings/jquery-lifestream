@@ -159,6 +159,7 @@ Calcentral::Application.routes.draw do
   post '/api/campus_solutions/ethnicity' => 'campus_solutions/ethnicity#post', :via => :post, :defaults => { :format => 'json' }
   post '/api/campus_solutions/terms_and_conditions' => 'campus_solutions/terms_and_conditions#post', :via => :post, :defaults => { :format => 'json' }
   post '/api/campus_solutions/title4' => 'campus_solutions/title4#post', :via => :post, :defaults => { :format => 'json' }
+  post '/api/campus_solutions/sir_response' => 'campus_solutions/sir_response#post', :via => :post, :defaults => { :format => 'json' }
   delete '/api/campus_solutions/address' => 'campus_solutions/address#delete', :via => :delete, :defaults => { :format => 'json' }
   delete '/api/campus_solutions/email' => 'campus_solutions/email#delete', :via => :delete, :defaults => { :format => 'json' }
   delete '/api/campus_solutions/emergency_contact' => 'campus_solutions/emergency_contact#delete', :via => :post, :defaults => { :format => 'json' }
