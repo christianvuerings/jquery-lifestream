@@ -25,7 +25,7 @@ module CampusSolutions
 
     def url
       # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
-      "#{@settings.base_url}/UC_DEPOSIT_AMT.v1/deposit/get?EMPLID=#{@uid}&ADM_APPL_NBR=#{@adm_appl_nbr}"
+      "#{@settings.base_url}/UC_DEPOSIT_AMT.v1/deposit/get?EMPLID=24188949&ADM_APPL_NBR=#{@adm_appl_nbr}"
     end
 
   end

@@ -23,8 +23,7 @@ describe CampusSolutions::Deposit do
     end
   end
 
-  # ignore until auth is in place for UCBCALCENTRAL
-  context 'real proxy', ignore: true, testext: true do
+  context 'real proxy', testext: true do
     let(:proxy) { CampusSolutions::Deposit.new(fake: false, adm_appl_nbr: '00000087') }
     it_should_behave_like 'a proxy that gets data'
   end
