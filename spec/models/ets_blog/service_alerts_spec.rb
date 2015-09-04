@@ -26,23 +26,17 @@ describe EtsBlog::ServiceAlerts do
 
     context 'when the xml contains multibyte characters' do
       let(:mock_xml_file) { 'service_alerts_feed_diacriticals.xml' }
-      it 'should parse' do
-        alert = subject.get_latest
-        expect(alert[:title]).to eq '¡El Señor González se zampó un extraño sándwich de vodka y ajo! (¢, ®, ™, ©, •, ÷, –, ¿)'
-        expect(alert[:link]).to eq 'hדג סקרן שט בים מאוכזב ולפתע מצא לו חברה'
-        expect(alert[:snippet]).to eq 'جامع الحروف عند البلغاء يطلق على الكلام المركب من جميع حروف التهجي بدون تكرار أحدها في لفظ واحد، أما في لفظين فهو جائز'
-      end
+      include_examples 'xml with multibyte characters'
     end
 
     context 'when the alert only has a title' do
       let(:mock_xml_file) { 'service_alerts_feed_title_only.xml' }
+      include_examples 'non-empty alert'
       it 'should return basic attributes' do
         alert = subject.get_latest
-        expect(alert[:title]).to be_present
-        expect(alert[:link]).to be_present
-        expect(alert[:timestamp][:epoch]).to be_present
         expect(alert[:snippet]).to be_blank
       end
+
     end
 
     context 'when there are no alerts in the feed' do
@@ -55,11 +49,9 @@ describe EtsBlog::ServiceAlerts do
 
     context 'when the alert feed has a single item' do
       let(:mock_xml_file) { 'service_alerts_feed_single.xml' }
+      include_examples 'non-empty alert'
       it 'should return the item contents' do
         alert = subject.get_latest
-        expect(alert[:title]).to be_present
-        expect(alert[:link]).to be_present
-        expect(alert[:timestamp][:epoch]).to be_present
         expect(alert[:snippet]).to be_present
       end
     end
