@@ -20,7 +20,7 @@ module MyTasks
 
     def collect_results(response)
       collected_results = []
-      if (response && response[:feed] && results = response[:feed][:personChklstItem])
+      if (response && response[:feed] && results = response[:feed][:checkListItems])
         logger.info "Sorting SIS Checklist feed into buckets with starting_date #{@starting_date}; #{results}"
         results.each do |result|
           if (formatted_entry = yield result)
@@ -39,8 +39,8 @@ module MyTasks
         linkUrl: 'http://sisproject.berkeley.edu',
         sourceUrl: 'http://sisproject.berkeley.edu',
         status: 'inprogress',
-        title: result[:descr],
-        notes: result[:descrlong],
+        title: result[:checkListDescr],
+        notes: '',
         type: 'task'
       }
     end
@@ -51,7 +51,7 @@ module MyTasks
     end
 
     def format_checklist(result)
-      unless result.is_a?(Hash) && result[:descr].present?
+      unless result.is_a?(Hash) && result[:checkListDescr].present?
         return nil
       end
       formatted_entry = entry_from_result result
