@@ -1,0 +1,592 @@
+<?xml version="1.0"?>
+<SIR_CONFIG>
+  <SIR_FORMS type="array">
+    <FORM>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>GRAD</ACAD_CAREER>
+      <UC_SIR_FORM_CD>GD0001</UC_SIR_FORM_CD>
+      <EFFDT>1901-01-01</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR_PROGRAM>Grad Div Academic Prg</DESCR_PROGRAM>
+      <DESCR_PROGRAM_LONG>Graduate Academic &amp; Professional Programs</DESCR_PROGRAM_LONG>
+      <UC_SIR_IMAGE_CD>GRADDIV</UC_SIR_IMAGE_CD>
+      <DESCR_LONG>Congratulations! We are happy to inform you of your admission to the University of California,
+        Berkeley. We hope you will decide to attend Berkeley and we look forward to welcoming you to our campus soon!
+
+        We urge you to respond with your decision as soon as possible, as many other applicants are still awaiting word
+        of their prospects at Berkeley. Please follow the steps on how to accept our offer and reserve your place. Be
+        advised that completing your Statement of Intent to Register is the official acceptance of admission allowing
+        you to enroll in classes and register. Notifying your department alone is not sufficient. Even if you decide not
+        to attend, we would appreciate your official response. We are eager to learn of your decision.
+      </DESCR_LONG>
+      <CHKLST_ITEM_CD>AGS001</CHKLST_ITEM_CD>
+      <SIR_CONDITIONS type="array">
+        <CONDITION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>GRAD</ACAD_CAREER>
+          <UC_SIR_FORM_CD>GD0001</UC_SIR_FORM_CD>
+          <EFFDT>1901-01-01</EFFDT>
+          <SEQNUM>1</SEQNUM>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>1</MESSAGE_NBR>
+          <MESSAGE_TEXT>I pledge to abide by the university’s honor code: As a member of the UC Berkeley community, I
+            act with honesty, integrity and respect for others. (24000,1)
+          </MESSAGE_TEXT>
+        </CONDITION>
+        <CONDITION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>GRAD</ACAD_CAREER>
+          <UC_SIR_FORM_CD>GD0001</UC_SIR_FORM_CD>
+          <EFFDT>1901-01-01</EFFDT>
+          <SEQNUM>2</SEQNUM>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>2</MESSAGE_NBR>
+          <MESSAGE_TEXT>By submitting this Statement of Intent to Register, I certify that I will meet any requirements
+            specified in my admissions packet and that the statements on this form are true and complete. (24000,2)
+          </MESSAGE_TEXT>
+        </CONDITION>
+      </SIR_CONDITIONS>
+      <SIR_OPTIONS type="array">
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>GRAD</ACAD_CAREER>
+          <UC_SIR_FORM_CD>GD0001</UC_SIR_FORM_CD>
+          <EFFDT>1901-01-01</EFFDT>
+          <SEQNUM>1</SEQNUM>
+          <DESCR_LONG>I accept admission to the University of California, Berkeley and intend to register</DESCR_LONG>
+          <PROG_ACTION>DEIN</PROG_ACTION>
+          <PROG_ACTION_DESCR>Intention to Matriculate</PROG_ACTION_DESCR>
+          <PROG_REASON></PROG_REASON>
+          <PROG_REASON_DESCR></PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>3</MESSAGE_NBR>
+          <MESSAGE_TEXT>Thank you for completing your Statement of Intent to Register. (24000,3)</MESSAGE_TEXT>
+        </OPTION>
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>GRAD</ACAD_CAREER>
+          <UC_SIR_FORM_CD>GD0001</UC_SIR_FORM_CD>
+          <EFFDT>1901-01-01</EFFDT>
+          <SEQNUM>2</SEQNUM>
+          <DESCR_LONG>I decline admission to the University of California, Berkeley.</DESCR_LONG>
+          <PROG_ACTION>WAPP</PROG_ACTION>
+          <PROG_ACTION_DESCR>Applicant Withdrawal</PROG_ACTION_DESCR>
+          <PROG_REASON>SREQ</PROG_REASON>
+          <PROG_REASON_DESCR>Student Request</PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>4</MESSAGE_NBR>
+          <MESSAGE_TEXT>We are sorry you will not be attending. (24000,4)</MESSAGE_TEXT>
+        </OPTION>
+      </SIR_OPTIONS>
+    </FORM>
+    <FORM>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>GRAD</ACAD_CAREER>
+      <UC_SIR_FORM_CD>GHMBA1</UC_SIR_FORM_CD>
+      <EFFDT>1901-01-01</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR_PROGRAM>Haas Full Time MBA</DESCR_PROGRAM>
+      <DESCR_PROGRAM_LONG>Haas Full Time MBA</DESCR_PROGRAM_LONG>
+      <UC_SIR_IMAGE_CD>HAASGRAD</UC_SIR_IMAGE_CD>
+      <DESCR_LONG>We urge you to respond with your decision as soon as possible, as many other applicants are still
+        awaiting word of their prospects at Berkeley. Please follow the steps on how to accept our offer and reserve
+        your place. Be advised that completing your Statement of Intent to Register is the official acceptance of
+        admission allowing you to enroll in classes and register. Notifying your department alone is not sufficient.
+        Even if you decide not to attend, we would appreciate your official response. We are eager to learn of your
+        decision.
+      </DESCR_LONG>
+      <CHKLST_ITEM_CD>AGS002</CHKLST_ITEM_CD>
+      <SIR_CONDITIONS type="array">
+        <CONDITION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>GRAD</ACAD_CAREER>
+          <UC_SIR_FORM_CD>GHMBA1</UC_SIR_FORM_CD>
+          <EFFDT>1901-01-01</EFFDT>
+          <SEQNUM>1</SEQNUM>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>1</MESSAGE_NBR>
+          <MESSAGE_TEXT>I pledge to abide by the university’s honor code: As a member of the UC Berkeley community, I
+            act with honesty, integrity and respect for others. (24000,1)
+          </MESSAGE_TEXT>
+        </CONDITION>
+        <CONDITION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>GRAD</ACAD_CAREER>
+          <UC_SIR_FORM_CD>GHMBA1</UC_SIR_FORM_CD>
+          <EFFDT>1901-01-01</EFFDT>
+          <SEQNUM>2</SEQNUM>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>2</MESSAGE_NBR>
+          <MESSAGE_TEXT>By submitting this Statement of Intent to Register, I certify that I will meet any requirements
+            specified in my admissions packet and that the statements on this form are true and complete. (24000,2)
+          </MESSAGE_TEXT>
+        </CONDITION>
+      </SIR_CONDITIONS>
+      <SIR_OPTIONS type="array">
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>GRAD</ACAD_CAREER>
+          <UC_SIR_FORM_CD>GHMBA1</UC_SIR_FORM_CD>
+          <EFFDT>1901-01-01</EFFDT>
+          <SEQNUM>1</SEQNUM>
+          <DESCR_LONG>I accept admission to the University of California, Berkeley and intend to register.</DESCR_LONG>
+          <PROG_ACTION>DEIN</PROG_ACTION>
+          <PROG_ACTION_DESCR>Intention to Matriculate</PROG_ACTION_DESCR>
+          <PROG_REASON></PROG_REASON>
+          <PROG_REASON_DESCR></PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>5</MESSAGE_NBR>
+          <MESSAGE_TEXT>(24000,5)</MESSAGE_TEXT>
+        </OPTION>
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>GRAD</ACAD_CAREER>
+          <UC_SIR_FORM_CD>GHMBA1</UC_SIR_FORM_CD>
+          <EFFDT>1901-01-01</EFFDT>
+          <SEQNUM>2</SEQNUM>
+          <DESCR_LONG>I decline admission to the University of California, Berkeley.</DESCR_LONG>
+          <PROG_ACTION>WAPP</PROG_ACTION>
+          <PROG_ACTION_DESCR>Applicant Withdrawal</PROG_ACTION_DESCR>
+          <PROG_REASON>SREQ</PROG_REASON>
+          <PROG_REASON_DESCR>Student Request</PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>6</MESSAGE_NBR>
+          <MESSAGE_TEXT>(24000,6)</MESSAGE_TEXT>
+        </OPTION>
+      </SIR_OPTIONS>
+    </FORM>
+    <FORM>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>GRAD</ACAD_CAREER>
+      <UC_SIR_FORM_CD>GHMBA3</UC_SIR_FORM_CD>
+      <EFFDT>1901-01-01</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR_PROGRAM>Haas EMBA</DESCR_PROGRAM>
+      <DESCR_PROGRAM_LONG>Haas Executive MBA</DESCR_PROGRAM_LONG>
+      <UC_SIR_IMAGE_CD>HAASGRAD</UC_SIR_IMAGE_CD>
+      <DESCR_LONG>We urge you to respond with your decision as soon as possible, as many other applicants are still
+        awaiting word of their prospects at Berkeley. Please follow the steps on how to accept our offer and reserve
+        your place. Be advised that completing your Statement of Intent to Register is the official acceptance of
+        admission allowing you to enroll in classes and register. Notifying your department alone is not sufficient.
+        Even if you decide not to attend, we would appreciate your official response. We are eager to learn of your
+        decision.
+      </DESCR_LONG>
+      <CHKLST_ITEM_CD>AGS003</CHKLST_ITEM_CD>
+      <SIR_CONDITIONS type="array">
+        <CONDITION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>GRAD</ACAD_CAREER>
+          <UC_SIR_FORM_CD>GHMBA3</UC_SIR_FORM_CD>
+          <EFFDT>1901-01-01</EFFDT>
+          <SEQNUM>1</SEQNUM>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>1</MESSAGE_NBR>
+          <MESSAGE_TEXT>I pledge to abide by the university’s honor code: As a member of the UC Berkeley community, I
+            act with honesty, integrity and respect for others. (24000,1)
+          </MESSAGE_TEXT>
+        </CONDITION>
+        <CONDITION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>GRAD</ACAD_CAREER>
+          <UC_SIR_FORM_CD>GHMBA3</UC_SIR_FORM_CD>
+          <EFFDT>1901-01-01</EFFDT>
+          <SEQNUM>2</SEQNUM>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>2</MESSAGE_NBR>
+          <MESSAGE_TEXT>By submitting this Statement of Intent to Register, I certify that I will meet any requirements
+            specified in my admissions packet and that the statements on this form are true and complete. (24000,2)
+          </MESSAGE_TEXT>
+        </CONDITION>
+      </SIR_CONDITIONS>
+      <SIR_OPTIONS type="array">
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>GRAD</ACAD_CAREER>
+          <UC_SIR_FORM_CD>GHMBA3</UC_SIR_FORM_CD>
+          <EFFDT>1901-01-01</EFFDT>
+          <SEQNUM>1</SEQNUM>
+          <DESCR_LONG>I accept admission to the University of California, Berkeley and intend to register.</DESCR_LONG>
+          <PROG_ACTION>DEIN</PROG_ACTION>
+          <PROG_ACTION_DESCR>Intention to Matriculate</PROG_ACTION_DESCR>
+          <PROG_REASON></PROG_REASON>
+          <PROG_REASON_DESCR></PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>5</MESSAGE_NBR>
+          <MESSAGE_TEXT>(24000,5)</MESSAGE_TEXT>
+        </OPTION>
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>GRAD</ACAD_CAREER>
+          <UC_SIR_FORM_CD>GHMBA3</UC_SIR_FORM_CD>
+          <EFFDT>1901-01-01</EFFDT>
+          <SEQNUM>2</SEQNUM>
+          <DESCR_LONG>I decline admission to the University of California, Berkeley.</DESCR_LONG>
+          <PROG_ACTION>WAPP</PROG_ACTION>
+          <PROG_ACTION_DESCR>Applicant Withdrawal</PROG_ACTION_DESCR>
+          <PROG_REASON>SREQ</PROG_REASON>
+          <PROG_REASON_DESCR>Student Request</PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>6</MESSAGE_NBR>
+          <MESSAGE_TEXT>(24000,6)</MESSAGE_TEXT>
+        </OPTION>
+      </SIR_OPTIONS>
+    </FORM>
+    <FORM>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>LAW</ACAD_CAREER>
+      <UC_SIR_FORM_CD>AL001</UC_SIR_FORM_CD>
+      <EFFDT>2015-09-01</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR_PROGRAM>LAW JD 1st Year/1st Response</DESCR_PROGRAM>
+      <DESCR_PROGRAM_LONG>Berkeley School of Law</DESCR_PROGRAM_LONG>
+      <UC_SIR_IMAGE_CD>LAWJD</UC_SIR_IMAGE_CD>
+      <DESCR_LONG>Our goal in this process is to allow you flexibility in the timing of your enrollment commitment while
+        holding you to the standards of your chosen profession. Candor, integrity, and keeping one’s word are
+        characteristics vital in the legal profession. Therefore, we will indicate our trust in you by not requiring a
+        seat deposit at any time.
+      </DESCR_LONG>
+      <CHKLST_ITEM_CD>AL0001</CHKLST_ITEM_CD>
+      <SIR_CONDITIONS type="array">
+        <CONDITION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL001</UC_SIR_FORM_CD>
+          <EFFDT>2015-09-01</EFFDT>
+          <SEQNUM>1</SEQNUM>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>1</MESSAGE_NBR>
+          <MESSAGE_TEXT>I pledge to abide by the university’s honor code: As a member of the UC Berkeley community, I
+            act with honesty, integrity and respect for others. (24000,1)
+          </MESSAGE_TEXT>
+        </CONDITION>
+        <CONDITION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL001</UC_SIR_FORM_CD>
+          <EFFDT>2015-09-01</EFFDT>
+          <SEQNUM>2</SEQNUM>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>2</MESSAGE_NBR>
+          <MESSAGE_TEXT>By submitting this Statement of Intent to Register, I certify that I will meet any requirements
+            specified in my admissions packet and that the statements on this form are true and complete. (24000,2)
+          </MESSAGE_TEXT>
+        </CONDITION>
+      </SIR_CONDITIONS>
+      <SIR_OPTIONS type="array">
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL001</UC_SIR_FORM_CD>
+          <EFFDT>2015-09-01</EFFDT>
+          <SEQNUM>1</SEQNUM>
+          <DESCR_LONG>I ACCEPT admission to Berkeley Law School. I will definitely enroll at Berkeley in August. I will
+            decline all offers from other schools but understand that I may remain on waiting lists. I agree to notify
+            the Admissions Office if my plans change subsequ
+          </DESCR_LONG>
+          <PROG_ACTION>DEIN</PROG_ACTION>
+          <PROG_ACTION_DESCR>Intention to Matriculate</PROG_ACTION_DESCR>
+          <PROG_REASON></PROG_REASON>
+          <PROG_REASON_DESCR></PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>2</MESSAGE_NBR>
+          <MESSAGE_TEXT>By submitting this Statement of Intent to Register, I certify that I will meet any requirements
+            specified in my admissions packet and that the statements on this form are true and complete. (24000,2)
+          </MESSAGE_TEXT>
+        </OPTION>
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL001</UC_SIR_FORM_CD>
+          <EFFDT>2015-09-01</EFFDT>
+          <SEQNUM>2</SEQNUM>
+          <DESCR_LONG>I tentatively plan to attend Berkeley Law School in August. Please reserve a place for me. I will
+            notify you immediately once my plans become final by no later than June 1.
+          </DESCR_LONG>
+          <PROG_ACTION>DATA</PROG_ACTION>
+          <PROG_ACTION_DESCR>Data Change</PROG_ACTION_DESCR>
+          <PROG_REASON>MAYB</PROG_REASON>
+          <PROG_REASON_DESCR>SIR Law School Maybe</PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>2</MESSAGE_NBR>
+          <MESSAGE_TEXT>By submitting this Statement of Intent to Register, I certify that I will meet any requirements
+            specified in my admissions packet and that the statements on this form are true and complete. (24000,2)
+          </MESSAGE_TEXT>
+        </OPTION>
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL001</UC_SIR_FORM_CD>
+          <EFFDT>2015-09-01</EFFDT>
+          <SEQNUM>3</SEQNUM>
+          <DESCR_LONG>I DECLINE admission to Berkeley Law School.</DESCR_LONG>
+          <PROG_ACTION>WAPP</PROG_ACTION>
+          <PROG_ACTION_DESCR>Applicant Withdrawal</PROG_ACTION_DESCR>
+          <PROG_REASON>SREQ</PROG_REASON>
+          <PROG_REASON_DESCR>Student Request</PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>2</MESSAGE_NBR>
+          <MESSAGE_TEXT>By submitting this Statement of Intent to Register, I certify that I will meet any requirements
+            specified in my admissions packet and that the statements on this form are true and complete. (24000,2)
+          </MESSAGE_TEXT>
+        </OPTION>
+      </SIR_OPTIONS>
+    </FORM>
+    <FORM>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>LAW</ACAD_CAREER>
+      <UC_SIR_FORM_CD>AL001</UC_SIR_FORM_CD>
+      <EFFDT>2015-09-01</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR_PROGRAM>LAW JD 1st Year/1st Response</DESCR_PROGRAM>
+      <DESCR_PROGRAM_LONG>Berkeley School of Law</DESCR_PROGRAM_LONG>
+      <UC_SIR_IMAGE_CD>LAWJD</UC_SIR_IMAGE_CD>
+      <DESCR_LONG>Our goal in this process is to allow you flexibility in the timing of your enrollment commitment while
+        holding you to the standards of your chosen profession. Candor, integrity, and keeping one’s word are
+        characteristics vital in the legal profession. Therefore, we will indicate our trust in you by not requiring a
+        seat deposit at any time.
+      </DESCR_LONG>
+      <CHKLST_ITEM_CD>ALTRN2</CHKLST_ITEM_CD>
+      <SIR_CONDITIONS type="array">
+        <CONDITION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL001</UC_SIR_FORM_CD>
+          <EFFDT>2015-09-01</EFFDT>
+          <SEQNUM>1</SEQNUM>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>1</MESSAGE_NBR>
+          <MESSAGE_TEXT>I pledge to abide by the university’s honor code: As a member of the UC Berkeley community, I
+            act with honesty, integrity and respect for others. (24000,1)
+          </MESSAGE_TEXT>
+        </CONDITION>
+        <CONDITION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL001</UC_SIR_FORM_CD>
+          <EFFDT>2015-09-01</EFFDT>
+          <SEQNUM>2</SEQNUM>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>2</MESSAGE_NBR>
+          <MESSAGE_TEXT>By submitting this Statement of Intent to Register, I certify that I will meet any requirements
+            specified in my admissions packet and that the statements on this form are true and complete. (24000,2)
+          </MESSAGE_TEXT>
+        </CONDITION>
+      </SIR_CONDITIONS>
+      <SIR_OPTIONS type="array">
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL001</UC_SIR_FORM_CD>
+          <EFFDT>2015-09-01</EFFDT>
+          <SEQNUM>1</SEQNUM>
+          <DESCR_LONG>I ACCEPT admission to Berkeley Law School. I will definitely enroll at Berkeley in August. I will
+            decline all offers from other schools but understand that I may remain on waiting lists. I agree to notify
+            the Admissions Office if my plans change subsequ
+          </DESCR_LONG>
+          <PROG_ACTION>DEIN</PROG_ACTION>
+          <PROG_ACTION_DESCR>Intention to Matriculate</PROG_ACTION_DESCR>
+          <PROG_REASON></PROG_REASON>
+          <PROG_REASON_DESCR></PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>2</MESSAGE_NBR>
+          <MESSAGE_TEXT>By submitting this Statement of Intent to Register, I certify that I will meet any requirements
+            specified in my admissions packet and that the statements on this form are true and complete. (24000,2)
+          </MESSAGE_TEXT>
+        </OPTION>
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL001</UC_SIR_FORM_CD>
+          <EFFDT>2015-09-01</EFFDT>
+          <SEQNUM>2</SEQNUM>
+          <DESCR_LONG>I tentatively plan to attend Berkeley Law School in August. Please reserve a place for me. I will
+            notify you immediately once my plans become final by no later than June 1.
+          </DESCR_LONG>
+          <PROG_ACTION>DATA</PROG_ACTION>
+          <PROG_ACTION_DESCR>Data Change</PROG_ACTION_DESCR>
+          <PROG_REASON>MAYB</PROG_REASON>
+          <PROG_REASON_DESCR>SIR Law School Maybe</PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>2</MESSAGE_NBR>
+          <MESSAGE_TEXT>By submitting this Statement of Intent to Register, I certify that I will meet any requirements
+            specified in my admissions packet and that the statements on this form are true and complete. (24000,2)
+          </MESSAGE_TEXT>
+        </OPTION>
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL001</UC_SIR_FORM_CD>
+          <EFFDT>2015-09-01</EFFDT>
+          <SEQNUM>3</SEQNUM>
+          <DESCR_LONG>I DECLINE admission to Berkeley Law School.</DESCR_LONG>
+          <PROG_ACTION>WAPP</PROG_ACTION>
+          <PROG_ACTION_DESCR>Applicant Withdrawal</PROG_ACTION_DESCR>
+          <PROG_REASON>SREQ</PROG_REASON>
+          <PROG_REASON_DESCR>Student Request</PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>2</MESSAGE_NBR>
+          <MESSAGE_TEXT>By submitting this Statement of Intent to Register, I certify that I will meet any requirements
+            specified in my admissions packet and that the statements on this form are true and complete. (24000,2)
+          </MESSAGE_TEXT>
+        </OPTION>
+      </SIR_OPTIONS>
+    </FORM>
+    <FORM>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>LAW</ACAD_CAREER>
+      <UC_SIR_FORM_CD>AL003</UC_SIR_FORM_CD>
+      <EFFDT>2015-08-12</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR_PROGRAM>LAW JD Transfer</DESCR_PROGRAM>
+      <DESCR_PROGRAM_LONG>Berkeley School of Law</DESCR_PROGRAM_LONG>
+      <UC_SIR_IMAGE_CD></UC_SIR_IMAGE_CD>
+      <DESCR_LONG>We sincerely hope that you will accept our invitation to join the Berkeley Law student body in August.
+        We are aware that you may have applied to other law schools and that many factors may determine where you will
+        attend law school this year. In lieu of a seat deposit, we will rely on your word of honor to hold a place in
+        our class. Because our Early Interview Week (EIW) bidding process begins on July 18, we ask that you do this
+        promptly and no later than 5:00 p.m. PDT on July 15. We want to ensure that you are entered into the Career
+        Development system and able to participate in that program. Declaration of your intent to enroll is a
+        prerequisite to participate in our Early Interview Week. You must also certify that you are not participating
+        in, and will not participate in, any other school’s on-campus interview program. A false certification not only
+        puts your interviews at risk, but will also be considered a violation of the Student Honor Code. Details are
+        found under the Career Development website. If you accept our admission offer and declare your intent to enroll
+        we will presume that you will withdraw your applications at all other law schools and that you will not make a
+        deposit nor submit a letter of intent at another school. You also agree to notify us immediately if you decide
+        not to enroll or if your plans otherwise change so as to affect your matriculation.
+      </DESCR_LONG>
+      <CHKLST_ITEM_CD>OUVIOL</CHKLST_ITEM_CD>
+      <SIR_CONDITIONS type="array">
+        <CONDITION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL003</UC_SIR_FORM_CD>
+          <EFFDT>2015-08-12</EFFDT>
+          <SEQNUM>1</SEQNUM>
+          <MESSAGE_SET_NBR>24000</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>1</MESSAGE_NBR>
+          <MESSAGE_TEXT>I pledge to abide by the university’s honor code: As a member of the UC Berkeley community, I
+            act with honesty, integrity and respect for others. (24000,1)
+          </MESSAGE_TEXT>
+        </CONDITION>
+      </SIR_CONDITIONS>
+      <SIR_OPTIONS type="array">
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL003</UC_SIR_FORM_CD>
+          <EFFDT>2015-08-12</EFFDT>
+          <SEQNUM>1</SEQNUM>
+          <DESCR_LONG>"I ACCEPT admission to Berkeley Law School. I will definitely enroll at Berkeley in August. I will
+            decline all offers from other schools but understand that I may remain on waiting lists. I agree to notify
+            the Admissions Office if my plans change subseq
+          </DESCR_LONG>
+          <PROG_ACTION>DEIN</PROG_ACTION>
+          <PROG_ACTION_DESCR>Intention to Matriculate</PROG_ACTION_DESCR>
+          <PROG_REASON></PROG_REASON>
+          <PROG_REASON_DESCR></PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>0</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>0</MESSAGE_NBR>
+          <MESSAGE_TEXT>GetMessageText: No default message. (0,0)</MESSAGE_TEXT>
+        </OPTION>
+        <OPTION>
+          <INSTITUTION>UCB01</INSTITUTION>
+          <ACAD_CAREER>LAW</ACAD_CAREER>
+          <UC_SIR_FORM_CD>AL003</UC_SIR_FORM_CD>
+          <EFFDT>2015-08-12</EFFDT>
+          <SEQNUM>2</SEQNUM>
+          <DESCR_LONG>I DECLINE admission to Berkeley Law School.</DESCR_LONG>
+          <PROG_ACTION>WAPP</PROG_ACTION>
+          <PROG_ACTION_DESCR>Applicant Withdrawal</PROG_ACTION_DESCR>
+          <PROG_REASON>SREQ</PROG_REASON>
+          <PROG_REASON_DESCR>Student Request</PROG_REASON_DESCR>
+          <MESSAGE_SET_NBR>0</MESSAGE_SET_NBR>
+          <MESSAGE_NBR>0</MESSAGE_NBR>
+          <MESSAGE_TEXT>GetMessageText: No default message. (0,0)</MESSAGE_TEXT>
+        </OPTION>
+      </SIR_OPTIONS>
+    </FORM>
+  </SIR_FORMS>
+  <RESPONSE_REASONS type="array">
+    <REASON>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>LAW</ACAD_CAREER>
+      <RESPONSE_REASON>FIN</RESPONSE_REASON>
+      <EFFDT>2015-08-10</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR>Financial</DESCR>
+      <DESCRSHORT>Financial</DESCRSHORT>
+    </REASON>
+    <REASON>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>LAW</ACAD_CAREER>
+      <RESPONSE_REASON>OTHR</RESPONSE_REASON>
+      <EFFDT>2015-08-10</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR>Other</DESCR>
+      <DESCRSHORT>Other</DESCRSHORT>
+    </REASON>
+    <REASON>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>LAW</ACAD_CAREER>
+      <RESPONSE_REASON>PERS</RESPONSE_REASON>
+      <EFFDT>2015-08-10</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR>Personal/Family</DESCR>
+      <DESCRSHORT>Personal/F</DESCRSHORT>
+    </REASON>
+    <REASON>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>GRAD</ACAD_CAREER>
+      <RESPONSE_REASON>WORK</RESPONSE_REASON>
+      <EFFDT>1901-01-01</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR>Career/Employment Opportunity</DESCR>
+      <DESCRSHORT>Work</DESCRSHORT>
+    </REASON>
+    <REASON>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>GRAD</ACAD_CAREER>
+      <RESPONSE_REASON>LATE</RESPONSE_REASON>
+      <EFFDT>1901-01-01</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR>UCB offer received too late</DESCR>
+      <DESCRSHORT>Late Offer</DESCRSHORT>
+    </REASON>
+    <REASON>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>GRAD</ACAD_CAREER>
+      <RESPONSE_REASON>SCHL</RESPONSE_REASON>
+      <EFFDT>1901-01-01</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR>Attending another school</DESCR>
+      <DESCRSHORT>Other scho</DESCRSHORT>
+    </REASON>
+    <REASON>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>GRAD</ACAD_CAREER>
+      <RESPONSE_REASON>FIN</RESPONSE_REASON>
+      <EFFDT>1901-01-01</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR>Financial reasons</DESCR>
+      <DESCRSHORT>Financial</DESCRSHORT>
+    </REASON>
+    <REASON>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>GRAD</ACAD_CAREER>
+      <RESPONSE_REASON>PERS</RESPONSE_REASON>
+      <EFFDT>1901-01-01</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR>Personal/family reasons</DESCR>
+      <DESCRSHORT>Personal</DESCRSHORT>
+    </REASON>
+    <REASON>
+      <INSTITUTION>UCB01</INSTITUTION>
+      <ACAD_CAREER>GRAD</ACAD_CAREER>
+      <RESPONSE_REASON>MIL</RESPONSE_REASON>
+      <EFFDT>1901-01-01</EFFDT>
+      <EFF_STATUS>A</EFF_STATUS>
+      <DESCR>Military</DESCR>
+      <DESCRSHORT>Military</DESCRSHORT>
+    </REASON>
+  </RESPONSE_REASONS>
+</SIR_CONFIG>

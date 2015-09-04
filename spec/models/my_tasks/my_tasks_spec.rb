@@ -40,7 +40,7 @@ describe 'MyTasks' do
     let(:tasks) { my_tasks_model.get_feed[:tasks] }
 
     it 'should sort tasks into the right buckets' do
-      expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 8
+      expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 6
       expect(tasks.count{|task| task[:bucket] == 'Unscheduled'}).to eq 5
 
       # On Sundays, no "later in the week" tasks can escape the "Today" bucket. Since this moves
@@ -224,7 +224,7 @@ describe 'MyTasks' do
 
     my_tasks_model = MyTasks::Merged.new(@user_id)
     valid_feed = my_tasks_model.get_feed
-    valid_feed[:tasks].length.should == 10
+    valid_feed[:tasks].length.should == 8
   end
 
   it 'should include an updatedDate for unscheduled Canvas tasks' do
