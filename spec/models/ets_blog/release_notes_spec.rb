@@ -28,8 +28,8 @@ describe EtsBlog::ReleaseNotes do
     subject { real_proxy.get_latest }
 
     context 'getting real data feed', testext: true do
-      it { is_expected.to be_blank }
-      its(:link) { is_expected.to be }
+      it { is_expected.not_to be_blank }
+      its([:link]) { is_expected.to be }
     end
 
     context 'server 404s' do
