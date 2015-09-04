@@ -9,8 +9,10 @@
       border-top: 0;
       padding: 0 10px 10px;
     }
-    > div {
+    .cc-page-widget-profile-section {
       border-top: 1px solid $cc-color-popover-border;
+    }
+    > div {
       &:last-child {
         border-bottom: 1px solid $cc-color-popover-border;
       }
