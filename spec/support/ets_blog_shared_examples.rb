@@ -1,5 +1,15 @@
 # encoding: utf-8
 
+###############################################################################################
+# ETS Blog Shared Examples (spec/models/ets_blog)
+# -----------------------------------------------
+#
+# Used to provide test functionality that is shared across tests.
+# See https://www.relishapp.com/rspec/rspec-core/docs/example-groups/shared-examples
+#
+###############################################################################################
+
+
 shared_examples 'non-empty alert' do
   it 'checks if an alert is non-empty' do
     alert = subject.get_latest
