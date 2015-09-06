@@ -12,12 +12,12 @@ module Oec
 
       find_previous_term_csvs
 
-      [Oec::CourseInstructors, Oec::CourseSupervisors, Oec::Courses, Oec::Instructors, Oec::Supervisors].each do |csv_class|
-        if @previous_term_csvs[csv_class]
-          copy_file(@previous_term_csvs[csv_class], supplemental_sources)
+      [Oec::CourseInstructors, Oec::CourseSupervisors, Oec::Courses, Oec::Instructors, Oec::Supervisors].each do |worksheet_class|
+        if @previous_term_csvs[worksheet_class]
+          copy_file(@previous_term_csvs[worksheet_class], supplemental_sources)
         else
-          log :info, "Could not find previous #{csv_class.base_filename} for copying; will create header-only file"
-          upload_worksheet_headers(csv_class, supplemental_sources)
+          log :info, "Could not find previous sheet '#{worksheet_class.export_name}' for copying; will create header-only file"
+          export_sheet_headers(worksheet_class, supplemental_sources)
         end
       end
     end
@@ -25,13 +25,13 @@ module Oec
     def find_previous_term_csvs
       @previous_term_csvs = {}
       if (previous_term_folder = find_previous_term_folder)
-        if (previous_supplemental_sources = find_folder('supplemental_sources', previous_term_folder))
-          @previous_term_csvs[Oec::Instructors] = find_item('instructors', previous_supplemental_sources)
-          @previous_term_csvs[Oec::Supervisors] = find_item('supervisors', previous_supplemental_sources)
+        if (previous_supplemental_sources = @remote_drive.find_first_matching_folder('supplemental_sources', previous_term_folder))
+          @previous_term_csvs[Oec::Instructors] = @remote_drive.find_first_matching_item('instructors', previous_supplemental_sources)
+          @previous_term_csvs[Oec::Supervisors] = @remote_drive.find_first_matching_item('supervisors', previous_supplemental_sources)
         end
-        if (previous_exports = find_folder('exports', previous_term_folder))
-          if (most_recent_export = find_folders(previous_exports).sort_by(&:title).last)
-            @previous_term_csvs[Oec::CourseSupervisors] = find_item('course_supervisors', most_recent_export)
+        if (previous_exports =  @remote_drive.find_first_matching_folder('exports', previous_term_folder))
+          if (most_recent_export = @remote_drive.find_folders(previous_exports).sort_by(&:title).last)
+            @previous_term_csvs[Oec::CourseSupervisors] = find_first_matching_item('course_supervisors', most_recent_export)
           end
         end
       end

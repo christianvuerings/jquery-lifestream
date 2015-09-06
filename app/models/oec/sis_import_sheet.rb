@@ -7,7 +7,7 @@ module Oec
       unless (@dept_code = opts.delete :dept_code)
         raise ArgumentError, 'dept_code option required'
       end
-      opts[:filename] = "#{@dept_code}.csv"
+      opts[:export_name] = @dept_code
       super(export_dir, opts)
     end
 

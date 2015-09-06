@@ -156,6 +156,14 @@ module GoogleApps
       success ? result.data : nil
     end
 
+    def folder_id(folder)
+      folder ? folder.id : 'root'
+    end
+
+    def folder_title(folder)
+      folder ? folder.title : 'root'
+    end
+
     protected
 
     def get_google_api

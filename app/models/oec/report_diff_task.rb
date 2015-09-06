@@ -13,7 +13,7 @@ module Oec
           dept_title = Berkeley::Departments.get(dept_code, concise: true)
           file_name = "#{timestamp}_#{dept_title.downcase.tr(' ', '_')}_courses_diff"
           reports_today = find_or_create_today_subfolder('reports')
-          @remote_drive.upload_worksheet(file_name, nil, worksheet, reports_today.id)
+          upload_worksheet(worksheet, file_name, reports_today)
           log :info, "#{dept_code} diff summary on remote drive: #{@term_code}/reports/#{datestamp}/#{file_name}"
         else
           log :info, "No #{@term_code} diff for #{dept_title} because dept has no admin-managed spreadsheet."
