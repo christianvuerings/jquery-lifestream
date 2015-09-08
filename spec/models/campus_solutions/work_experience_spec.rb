@@ -48,8 +48,7 @@ describe CampusSolutions::WorkExperience do
     end
   end
 
-  # ignored, SISRP-7329
-  context 'with a real external service', ignore: true, testext: true do
+  context 'with a real external service', testext: true do
     let(:params) { {
       extOrganizationId: '9000000008',
       isRetired: 'N',
