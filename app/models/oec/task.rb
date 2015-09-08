@@ -2,12 +2,13 @@ module Oec
   class Task
     include ClassLogger
 
+    LOG_DIRECTORY = Rails.root.join('tmp', 'oec')
+
     def initialize(opts)
       @log = []
       @remote_drive = Oec::RemoteDrive.new
       @term_code = opts.delete :term_code
       @opts = opts
-      @tmp_path = Rails.root.join('tmp', 'oec')
       @course_code_filter = if opts[:dept_names]
                              {dept_name: opts[:dept_names].split}
                            elsif opts[:dept_codes]
@@ -59,7 +60,7 @@ module Oec
     end
 
     def export_sheet_headers(klass, dest_folder)
-      worksheet = klass.new @tmp_path
+      worksheet = klass.new
       if @opts[:local_write]
         worksheet.write_csv
         log :debug, "Exported to header-only local file #{worksheet.csv_export_path}"
@@ -104,15 +105,16 @@ module Oec
     def write_log
       log_name = "#{timestamp}_#{self.class.name.demodulize.underscore}.log"
       log :debug, "Exporting log file '#{log_name}'"
-      File.open(@tmp_path.join(log_name), 'wb') { |f| f.puts @log }
+      log_path = LOG_DIRECTORY.join log_name
+      File.open(log_path, 'wb') { |f| f.puts @log }
       if @opts[:local_write]
-        logger.debug "Wrote log file to path #{@tmp_path.join(log_name)}"
+        logger.debug "Wrote log file to path #{log_path}"
       else
         if (reports_today = find_or_create_today_subfolder('reports'))
           begin
-            upload_file(@tmp_path.join(log_name), log_name, 'text/plain', reports_today)
+            upload_file(log_path, log_name, 'text/plain', reports_today)
           ensure
-            File.delete @tmp_path.join(log_name)
+            File.delete log_path
           end
         end
       end

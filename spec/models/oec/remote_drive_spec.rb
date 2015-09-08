@@ -27,7 +27,7 @@ describe Oec::RemoteDrive do
 
     context 'imports folder', :order => :defined do
       before {
-        worksheet = Oec::SisImportSheet.new(Rails.root.join('tmp/oec'), dept_code: dept_code)
+        worksheet = Oec::SisImportSheet.new(dept_code: dept_code)
         course_codes = [Oec::CourseCode.new(dept_name: 'SPANISH', catalog_id: '', dept_code: dept_code, include_in_oec: true)]
         Oec::SisImportTask.new(:term_code => term_code).import_courses(worksheet, course_codes)
         @imports = subject.find_nested([term_code, 'imports'], on_failure: :error)

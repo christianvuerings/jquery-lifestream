@@ -6,7 +6,7 @@ module Oec
         spreadsheet = @remote_drive.find_dept_courses_spreadsheet(@term_code, dept_code)
         dept_title = Berkeley::Departments.get(dept_code, concise: true)
         if spreadsheet
-          worksheet = DiffReport.new('tmp/oec')
+          worksheet = DiffReport.new
 
           # More to come...
 

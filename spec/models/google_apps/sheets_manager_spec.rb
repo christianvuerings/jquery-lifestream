@@ -9,7 +9,7 @@ describe GoogleApps::SheetsManager do
       @folder = @sheet_manager.create_folder "#{GoogleApps::SheetsManager.name} test, #{now}"
       @sheet_title = "Sheet from CSV, #{now}"
       # No CSV files will be created by this test
-      @sis_import_sheet = Oec::SisImportSheet.new(Rails.root.join('tmp/oec'), dept_code: 'LPSPP')
+      @sis_import_sheet = Oec::SisImportSheet.new(dept_code: 'LPSPP')
       course_codes = [Oec::CourseCode.new(dept_name: 'SPANISH', catalog_id: '', dept_code: 'LPSPP', include_in_oec: true)]
       Oec::SisImportTask.new(:term_code => '2015-C').import_courses(@sis_import_sheet, course_codes)
       @spreadsheet = @sheet_manager.upload_worksheet(@sheet_title, "Description #{now}", @sis_import_sheet, @folder.id)
