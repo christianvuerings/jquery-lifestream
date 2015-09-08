@@ -188,7 +188,12 @@ module GoogleApps
     end
 
     def log_response(api_response)
-      logger.debug "Google Drive API request #{api_response.request.api_method.id} #{api_response.request.parameters} returned status #{api_response.status}"
+      request_description = if api_response.request.api_method
+        "#{api_response.request.api_method.id} #{api_response.request.parameters}"
+      else
+        api_response.request.uri
+      end
+      logger.debug "Google Drive API request #{request_description} returned status #{api_response.status}"
     end
 
   end
