@@ -39,7 +39,11 @@ module CampusSolutions
     end
 
     def instance_key
-      "#{@uid}-#{params[:aidYear]}"
+      if @params.present? && @params[:aidYear].present?
+        "#{@uid}-#{@params[:aidYear]}"
+      else
+        @uid
+      end
     end
 
     def url
