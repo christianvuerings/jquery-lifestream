@@ -100,6 +100,14 @@ module GoogleApps
       success ? result.data : nil
     end
 
+    def empty_trash
+      client = get_google_api
+      drive = client.discovered_api('drive', 'v2')
+      result = client.execute(:api_method => drive.files.trash)
+      log_response result
+      raise Errors::ProxyError, "Error in empty_trash: #{result.data['error']['message']}" unless result.status == 200
+    end
+
     def copy_item_to_folder(item, folder_id, copy_title=nil)
       copy_title ||= item.title
       if (copy = copy_item(item.id, copy_title))
