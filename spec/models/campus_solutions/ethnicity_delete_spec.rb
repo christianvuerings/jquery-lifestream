@@ -36,8 +36,7 @@ describe CampusSolutions::EthnicityDelete do
     end
   end
 
-  # ignored, SISRP-7330
-  context 'with a real external service', ignore: true, testext: true do
+  context 'with a real external service', testext: true do
     let(:user_id) { random_id }
     let(:create_params) { {
       regRegion: 'USA',

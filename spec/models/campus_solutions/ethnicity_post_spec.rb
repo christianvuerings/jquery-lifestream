@@ -47,8 +47,7 @@ describe CampusSolutions::EthnicityPost do
     end
   end
 
-  # ignored, SISRP-7330
-  context 'with a real external service', ignore: true, testext: true do
+  context 'with a real external service', testext: true do
     let(:proxy) { CampusSolutions::EthnicityPost.new(fake: false, user_id: random_id, params: params) }
     subject { proxy.get }
 
