@@ -8,6 +8,20 @@ module GoogleApps
       @session = GoogleDrive::Session.login_with_oauth auth.access_token
     end
 
+    def export_csv(file)
+      unless file.exportLinks && (csv_export_uri = file.exportLinks['text/csv'])
+        raise Errors::ProxyError, "No CSV export path found for file ID: #{file.id}"
+      end
+      api_response = @session.execute!(uri: csv_export_uri)
+      log_response api_response
+      case api_response.status
+        when 200
+          api_response.body
+        else
+          raise Errors::ProxyError, "Error in export_csv, file ID (#{file.id}): #{api_response.data['error']['message']}"
+      end
+    end
+
     def spreadsheet_by_id(id)
       api_response = @session.execute!(:api_method => @session.drive.files.get, :parameters => { :fileId => id })
       log_response api_response

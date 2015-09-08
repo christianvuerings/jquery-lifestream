@@ -9,10 +9,10 @@ describe GoogleApps::SheetsManager do
       @folder = @sheet_manager.create_folder "#{GoogleApps::SheetsManager.name} test, #{now}"
       @sheet_title = "Sheet from CSV, #{now}"
       # No CSV files will be created by this test
-      worksheet = Oec::SisImportSheet.new(Rails.root.join('tmp/oec'), dept_code: 'LPSPP')
+      @sis_import_sheet = Oec::SisImportSheet.new(Rails.root.join('tmp/oec'), dept_code: 'LPSPP')
       course_codes = [Oec::CourseCode.new(dept_name: 'SPANISH', catalog_id: '', dept_code: 'LPSPP', include_in_oec: true)]
-      Oec::SisImportTask.new(:term_code => '2015-C').import_courses(worksheet, course_codes)
-      @spreadsheet = @sheet_manager.upload_worksheet(@sheet_title, "Description #{now}", worksheet, @folder.id)
+      Oec::SisImportTask.new(:term_code => '2015-C').import_courses(@sis_import_sheet, course_codes)
+      @spreadsheet = @sheet_manager.upload_worksheet(@sheet_title, "Description #{now}", @sis_import_sheet, @folder.id)
     end
 
     after(:all) do
@@ -32,6 +32,17 @@ describe GoogleApps::SheetsManager do
       expect(sheet_by_title).to_not be nil
       # Arbitrary comparison
       expect(sheet_by_id.worksheets[0][2, 2]).to eq sheet_by_title.worksheets[0][2, 2]
+    end
+
+    it 'should output the same CSV values that were put in' do
+      spreadsheet_file = @sheet_manager.find_items(id: @spreadsheet.id, parent_id: @folder.id).first
+      csv_export = @sheet_manager.export_csv spreadsheet_file
+      parsed_csv = CSV.parse csv_export
+      expect(parsed_csv[0]).to eq @sis_import_sheet.headers
+      @sis_import_sheet.each_with_index do |row, i|
+        expect(parsed_csv[i+1][0]).to eq row['COURSE_ID']
+        expect(parsed_csv[i+1][@sis_import_sheet.headers.index('EVALUATION_TYPE')]).to eq row['EVALUATION_TYPE']
+      end
     end
 
     it 'should find no spreadsheet mapped to bogus id' do
