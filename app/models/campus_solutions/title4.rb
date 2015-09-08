@@ -1,11 +1,10 @@
 module CampusSolutions
   class Title4 < PostingProxy
 
-    include IntegrationHubProxy
     include FinaidFeatureFlagged
 
     def initialize(options = {})
-      super(Settings.cs_title4_proxy, options)
+      super options
       initialize_mocks if @fake
     end
 

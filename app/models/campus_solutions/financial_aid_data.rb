@@ -1,12 +1,11 @@
 module CampusSolutions
-  class FinancialAidData < Proxy
+  class FinancialAidData < DirectProxy
 
-    include IntegrationHubProxy
     include Cache::RelatedCacheKeyTracker
     include FinaidFeatureFlagged
 
     def initialize(options = {})
-      super(Settings.cs_financial_aid_data_proxy, options)
+      super options
       @aid_year = options[:aid_year] || '0'
       initialize_mocks if @fake
     end

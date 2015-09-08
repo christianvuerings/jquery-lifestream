@@ -1,12 +1,11 @@
 module CampusSolutions
-  class AidYears < Proxy
+  class AidYears < DirectProxy
 
-    include IntegrationHubProxy
     include Cache::UserCacheExpiry
     include FinaidFeatureFlagged
 
     def initialize(options = {})
-      super(Settings.cs_aid_years_proxy, options)
+      super options
       initialize_mocks if @fake
     end
 
