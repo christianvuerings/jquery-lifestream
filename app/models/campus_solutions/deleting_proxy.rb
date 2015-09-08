@@ -21,7 +21,13 @@ module CampusSolutions
     def request_options
       updateable_params = filter_updateable_params params
       params = construct_cs_post updateable_params
-      {method: :delete}.merge(params)
+      {
+        method: :delete,
+        basic_auth: {
+          username: @settings.username,
+          password: @settings.password
+        }
+      }.merge(params)
     end
 
   end

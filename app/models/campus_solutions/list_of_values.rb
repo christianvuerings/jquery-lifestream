@@ -47,7 +47,13 @@ module CampusSolutions
 
     def request_options
       cs_post = construct_cs_post params
-      {method: :post, body: cs_post}
+      {
+        method: :post,
+        body: cs_post,
+        basic_auth: {
+          username: @settings.username,
+          password: @settings.password
+        }}
     end
 
     def build_feed(response)

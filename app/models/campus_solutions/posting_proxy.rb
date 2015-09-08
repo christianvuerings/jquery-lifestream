@@ -1,10 +1,10 @@
 module CampusSolutions
-  class PostingProxy < Proxy
+  class PostingProxy < DirectProxy
 
     attr_reader :params
 
     def initialize(settings, options = {})
-      super(settings, options)
+      super options
       @params = options[:params]
       initialize_mocks if @fake
     end

@@ -10,14 +10,19 @@ describe CampusSolutions::Translate do
 
     it 'returns data with the expected structure' do
       expect(subject[:feed][:xlatvalues]).to be
-      expect(subject[:feed][:xlatvalues][:values][0][:fieldvalue]).to eq 'CELL'
-      expect(subject[:feed][:xlatvalues][:values][0][:xlatlongname]).to eq 'Mobile'
+      expect(subject[:feed][:xlatvalues][:values][0][:fieldvalue]).to be
+      expect(subject[:feed][:xlatvalues][:values][0][:xlatlongname]).to be
     end
   end
 
   context 'mock proxy' do
     let(:proxy) { CampusSolutions::Translate.new(fake: true, field_name: 'PHONE_TYPE') }
     it_should_behave_like 'a proxy that gets data'
+    subject { proxy.get }
+    it 'returns specific mock data' do
+      expect(subject[:feed][:xlatvalues][:values][0][:fieldvalue]).to eq 'CELL'
+      expect(subject[:feed][:xlatvalues][:values][0][:xlatlongname]).to eq 'Mobile'
+    end
   end
 
   context 'real proxy', testext: true do

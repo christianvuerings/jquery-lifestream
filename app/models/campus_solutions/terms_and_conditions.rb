@@ -1,11 +1,10 @@
 module CampusSolutions
   class TermsAndConditions < PostingProxy
 
-    include IntegrationHubProxy
     include FinaidFeatureFlagged
 
     def initialize(options = {})
-      super(Settings.cs_terms_and_conditions_proxy, options)
+      super options
       initialize_mocks if @fake
     end
 
@@ -40,7 +39,11 @@ module CampusSolutions
     end
 
     def instance_key
-      "#{@uid}-#{params[:aidYear]}"
+      if @params.present? && @params[:aidYear].present?
+        "#{@uid}-#{@params[:aidYear]}"
+      else
+        @uid
+      end
     end
 
     def url
