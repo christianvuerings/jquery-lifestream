@@ -12,7 +12,7 @@ describe Oec::SisImportTask do
       CSV.read(courses.csv_export_path).slice(1..-1).map { |row| Hash[ courses.headers.zip(row) ]}
     end
 
-    let(:courses) { Oec::SisImportSheet.new(Rails.root.join('tmp/oec'), dept_code: dept_name) }
+    let(:courses) { Oec::SisImportSheet.new(dept_code: dept_name) }
     let(:courses_by_ccn) { {} }
     let(:courses_for_dept) { [] }
     let(:additional_cross_listings) { Set.new }

@@ -2,6 +2,8 @@ module Oec
   class Worksheet
     include Enumerable
 
+    DEFAULT_EXPORT_PATH = Rails.root.join('tmp', 'oec')
+
     def self.capitalize_keys(row)
       row.inject({}) do |caps_hash, (key, value)|
         caps_hash[key.upcase] = value
@@ -13,9 +15,9 @@ module Oec
       self.name.demodulize.underscore
     end
 
-    def initialize(export_directory, opts={})
-      FileUtils.mkdir_p export_directory unless File.exists? export_directory
-      @export_directory = export_directory
+    def initialize(opts={})
+      @export_directory = opts[:export_path] || DEFAULT_EXPORT_PATH
+      FileUtils.mkdir_p @export_directory unless File.exists? @export_directory
       @opts = opts
       @rows = {}
     end

@@ -6,7 +6,7 @@ module Oec
       imports_today = find_or_create_today_subfolder('imports')
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
         log :info, "Generating #{dept_code}.csv"
-        worksheet = Oec::SisImportSheet.new(@tmp_path, dept_code: dept_code)
+        worksheet = Oec::SisImportSheet.new(dept_code: dept_code)
         import_courses(worksheet, course_codes)
         export_sheet(worksheet, imports_today)
       end
