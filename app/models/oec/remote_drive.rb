@@ -63,10 +63,10 @@ module Oec
       folder_titles.inject(nil) do |parent, title|
         if !(item = find_first_matching_item(title, parent))
           case opts[:on_failure]
-            when :error
-              raise RuntimeError, "Could not locate folder '#{title}' with parent '#{folder_title(parent)}' on remote drive"
-            else
-              return nil
+          when :error
+            raise RuntimeError, "Could not locate folder '#{title}' with parent '#{folder_title(parent)}' on remote drive"
+          else
+            return nil
           end
         end
         item
