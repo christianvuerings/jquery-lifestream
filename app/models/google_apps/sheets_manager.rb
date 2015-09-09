@@ -12,28 +12,24 @@ module GoogleApps
       unless file.exportLinks && (csv_export_uri = file.exportLinks['text/csv'])
         raise Errors::ProxyError, "No CSV export path found for file ID: #{file.id}"
       end
-      api_response = @session.execute!(uri: csv_export_uri)
-      log_response api_response
-      case api_response.status
-        when 200
-          api_response.body
-        else
-          raise Errors::ProxyError, "Error in export_csv, file ID (#{file.id}): #{api_response.data['error']['message']}"
-      end
+      result = @session.execute!(uri: csv_export_uri)
+      log_response result
+      raise Errors::ProxyError, "Error in export_csv, file ID (#{file.id}): #{result.data['error']['message']}" if result.error?
+      result.body
     end
 
     def spreadsheet_by_id(id)
-      api_response = @session.execute!(:api_method => @session.drive.files.get, :parameters => { :fileId => id })
-      log_response api_response
-      case api_response.status
+      result = @session.execute!(:api_method => @session.drive.files.get, :parameters => { :fileId => id })
+      log_response result
+      case result.status
         when 200
-          file = @session.wrap_api_file api_response.data
+          file = @session.wrap_api_file result.data
           raise Errors::ProxyError, "File is not a Google spreadsheet. Id: #{id}" unless file.is_a? GoogleDrive::Spreadsheet
         when 404
           logger.debug "No Google spreadsheet found with id = #{id}"
           file = nil
         else
-          raise Errors::ProxyError, "Error in spreadsheet_by_id(#{id}): #{api_response.data['error']['message']}"
+          raise Errors::ProxyError, "Error in spreadsheet_by_id(#{id}): #{result.data['error']['message']}"
       end
       file
     rescue Google::APIClient::ClientError => e
@@ -42,7 +38,7 @@ module GoogleApps
     end
 
     def spreadsheets_by_title(title)
-      spreadsheets = @session.spreadsheets(:q => "title = '#{title}'")
+      spreadsheets = @session.spreadsheets(:q => "title = '#{escape title}'")
       logger.debug "No Google spreadsheets found with title = #{title}" if spreadsheets.nil? || spreadsheets.none?
       spreadsheets
     end
@@ -60,18 +56,17 @@ module GoogleApps
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
       media = Google::APIClient::UploadIO.new(path_or_io, 'text/csv')
-      metadata = { :title => title, :description => description }
+      metadata = { :title => escape(title), :description => escape(description) }
       file = drive_api.files.insert.request_schema.new metadata
       file.parents = [{ :id => parent_id }]
-      api_response = @session.execute!(
+      result = @session.execute!(
         :api_method => drive_api.files.insert,
         :body_object => file,
         :media => media,
         :parameters => { :uploadType => 'multipart', :convert => true })
-      log_response api_response
-      success = api_response.status == 200
-      raise Errors::ProxyError, "Error in upload(#{title}, ...): #{api_response.data['error']['message']}" unless success
-      @session.wrap_api_file api_response.data
+      log_response result
+      raise Errors::ProxyError, "Error in upload(#{title}, ...): #{result.data['error']['message']}" if result.error?
+      @session.wrap_api_file result.data
     end
 
   end

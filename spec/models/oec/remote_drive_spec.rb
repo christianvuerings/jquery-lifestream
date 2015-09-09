@@ -2,7 +2,7 @@ describe Oec::RemoteDrive do
 
   subject { described_class.new }
   let(:term_code) { '2015-D' }
-  let(:dept_code) { 'LPSPP' }
+  let(:dept_code) { 'SWOME' }
   # DateTime.tomorrow to avoid collision with other testing on today's data
   let(:tomorrow) { DateTime.tomorrow.strftime('%F') }
 
