@@ -1,5 +1,5 @@
 describe Oec::SisImportTask do
-  let(:term_code) { 'fake_term' }
+  let(:term_code) { '2015-B' }
   let(:task) { Oec::SisImportTask.new(term_code: term_code) }
 
   let(:fake_remote_drive) { double() }
@@ -7,8 +7,9 @@ describe Oec::SisImportTask do
 
   before(:each) do
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
-    allow(fake_remote_drive).to receive(:find_nested).and_return(mock_google_drive_item)
-    allow(fake_remote_drive).to receive(:export_csv).and_return(supplemental_courses_csv)
+    allow(fake_remote_drive).to receive(:find_nested).and_return mock_google_drive_item
+    allow(fake_remote_drive).to receive(:export_csv).and_return supplemental_courses_csv
+    allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
   end
 
   describe 'CSV export' do
@@ -63,7 +64,7 @@ describe Oec::SisImportTask do
           end
           expect(row['BLUE_ROLE']).to eq '23'
           expect(row['EVALUATE']).to be_nil
-          %w(COURSE_ID COURSE_NAME DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM EVALUATION_TYPE).each do |key|
+          %w(COURSE_ID COURSE_NAME DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM EVALUATION_TYPE START_DATE END_DATE).each do |key|
             expect(row[key]).to be_present
           end
           expect(%w(P S)).to include row['PRIMARY_SECONDARY_CD']
@@ -113,12 +114,12 @@ describe Oec::SisImportTask do
           subject.each do |row|
             if row['COURSE_NAME'].start_with? 'POL SCI 115'
               expect(row['MODULAR_COURSE']).to eq 'Y'
-              expect(row['START_DATE']).to be_present
-              expect(row['END_DATE']).to be_present
+              expect(row['START_DATE']).to eq '01-27-2015'
+              expect(row['END_DATE']).to eq '05-16-2015'
             else
               expect(row['MODULAR_COURSE']).to be_blank
-              expect(row['START_DATE']).to be_blank
-              expect(row['END_DATE']).to be_blank
+              expect(row['START_DATE']).to eq '01-20-2015'
+              expect(row['END_DATE']).to eq '05-08-2015'
             end
           end
         end
