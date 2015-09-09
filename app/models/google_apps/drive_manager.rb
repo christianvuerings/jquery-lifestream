@@ -153,10 +153,8 @@ module GoogleApps
         }
       )
       log_response result
-      # This call may return an empty 204 on success. TODO: Can we use result.error? instead?
-      success = result.status <= 204
-      raise Errors::ProxyError, "Error in remove_parent(#{id}, #{parent_id}): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in remove_parent(#{id}, #{parent_id}): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def folder_id(folder)
