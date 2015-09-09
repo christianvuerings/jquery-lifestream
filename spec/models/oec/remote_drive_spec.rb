@@ -38,7 +38,7 @@ describe Oec::RemoteDrive do
 
       after {
         now_import_folder = subject.find_first_matching_folder(tomorrow, @imports)
-        subject.trash_item now_import_folder.id if now_import_folder
+        subject.trash_item(now_import_folder, permanently_delete: true) if now_import_folder
       }
 
       it 'should find newly created department import' do

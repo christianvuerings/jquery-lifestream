@@ -16,7 +16,7 @@ describe GoogleApps::SheetsManager do
     end
 
     after(:all) do
-      @sheet_manager.trash_item @folder['id'] if @folder
+      @sheet_manager.trash_item(@folder, permanently_delete: true) if @folder
     end
 
     it 'should upload csv to spreadsheet in target folder' do
