@@ -3,12 +3,12 @@ module Oec
 
     attr_reader :dept_code
 
-    def initialize(export_dir, opts={})
+    def initialize(opts={})
       unless (@dept_code = opts.delete :dept_code)
         raise ArgumentError, 'dept_code option required'
       end
-      opts[:filename] = "#{@dept_code}.csv"
-      super(export_dir, opts)
+      opts[:export_name] = @dept_code
+      super(opts)
     end
 
     def headers

@@ -46,6 +46,10 @@ module SpecHelperModule
     end
   end
 
+  def mock_google_drive_item(title='mock')
+    double(id: "#{title}_id", title: title)
+  end
+
   RSpec::Matchers.define :be_url do
     match do |actual|
       URI.parse(actual) rescue false

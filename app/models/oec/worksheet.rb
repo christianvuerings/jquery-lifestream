@@ -2,9 +2,7 @@ module Oec
   class Worksheet
     include Enumerable
 
-    def self.base_filename
-      "#{self.name.demodulize.underscore}.csv"
-    end
+    DEFAULT_EXPORT_PATH = Rails.root.join('tmp', 'oec')
 
     def self.capitalize_keys(row)
       row.inject({}) do |caps_hash, (key, value)|
@@ -13,9 +11,13 @@ module Oec
       end
     end
 
-    def initialize(export_directory, opts={})
-      FileUtils.mkdir_p export_directory unless File.exists? export_directory
-      @export_directory = export_directory
+    def self.export_name
+      self.name.demodulize.underscore
+    end
+
+    def initialize(opts={})
+      @export_directory = opts[:export_path] || DEFAULT_EXPORT_PATH
+      FileUtils.mkdir_p @export_directory unless File.exists? @export_directory
       @opts = opts
       @rows = {}
     end
@@ -28,16 +30,16 @@ module Oec
       @rows[key] = value
     end
 
+    def csv_export_path
+      @export_directory.join "#{export_name}.csv"
+    end
+
     def each
       @rows.each { |key, row| yield row }
     end
 
-    def base_filename
-      @opts[:filename] || self.class.base_filename
-    end
-
-    def output_filename
-      @export_directory.join base_filename
+    def export_name
+      @opts[:export_name] || self.class.export_name
     end
 
     def headers
@@ -46,10 +48,10 @@ module Oec
 
     def write_csv
       if @rows.any?
-        output = CSV.open(output_filename, 'wb', headers: headers, write_headers: true)
+        output = CSV.open(csv_export_path, 'wb', headers: headers, write_headers: true)
         @rows.values.each { |row| output << row }
       else
-        output = CSV.open(output_filename, 'wb')
+        output = CSV.open(csv_export_path, 'wb')
         output << headers
       end
       output.close

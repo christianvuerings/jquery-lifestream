@@ -1,20 +1,18 @@
-include OecSpecHelper
-
 describe Oec::SisImportTask do
-  let(:term_code) { '2015-B' }
+  let(:term_code) { 'fake_term' }
   let(:task) { Oec::SisImportTask.new(term_code: term_code) }
 
-  let(:fake_sheets_manager) { double() }
-  before(:each) { allow(GoogleApps::SheetsManager).to receive(:new).and_return fake_sheets_manager }
+  let(:fake_remote_drive) { double() }
+  before(:each) { allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive }
 
   describe 'CSV export' do
     subject do
       task.import_courses(courses, fake_code_mapping)
       courses.write_csv
-      CSV.read(courses.output_filename).slice(1..-1).map { |row| Hash[ courses.headers.zip(row) ]}
+      CSV.read(courses.csv_export_path).slice(1..-1).map { |row| Hash[ courses.headers.zip(row) ]}
     end
 
-    let(:courses) { Oec::SisImportSheet.new(Rails.root.join('tmp/oec'), dept_code: dept_name) }
+    let(:courses) { Oec::SisImportSheet.new(dept_code: dept_name) }
     let(:courses_by_ccn) { {} }
     let(:courses_for_dept) { [] }
     let(:additional_cross_listings) { Set.new }
@@ -153,19 +151,25 @@ describe Oec::SisImportTask do
       let(:dept_name) { 'MATH' }
       let(:export_file) { "#{dept_name}.csv" }
 
+      let(:imports_today_folder) { mock_google_drive_item today }
+      let(:reports_today_folder) { mock_google_drive_item today }
+
       before do
         allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H%M%S')
         allow(Oec::CourseCode).to receive(:by_dept_code).and_return({dept_name => fake_code_mapping})
+        allow(fake_remote_drive).to receive(:find_nested).and_return(mock_google_drive_item)
       end
 
       it 'should upload a department csv and a log file' do
-        expect_folder_lookup(term_code, 'root')
-        expect_folder_lookup('imports', term_code)
-        expect_folder_lookup(today, 'imports')
-        expect_folder_lookup('reports', term_code)
-        expect_folder_lookup(today, 'reports')
-        expect_file_upload(logfile, today, 'text/plain')
-        expect_sheet_upload(export_file, today)
+        expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
+          .with(today, anything, anything)
+          .and_return(imports_today_folder, reports_today_folder)
+        expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
+          .with(kind_of(Oec::Worksheet), dept_name, (Oec::Worksheet), imports_today_folder, anything)
+          .and_return mock_google_drive_item(dept_name)
+        expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
+          .with(kind_of(Pathname), logfile, 'text/plain', reports_today_folder, anything)
+          .and_return mock_google_drive_item(logfile)
         subject.run
       end
     end
@@ -243,7 +247,7 @@ describe Oec::SisImportTask do
 
   context 'department-specific filters' do
     let(:null_sheets_manager) { double.as_null_object }
-    before(:each) { allow(GoogleApps::SheetsManager).to receive(:new).and_return null_sheets_manager }
+    before(:each) { allow(Oec::RemoteDrive).to receive(:new).and_return null_sheets_manager }
 
     it 'filters by course-code department names' do
       expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_name: %w(BIOLOGY MCELLBI)).and_return({})
