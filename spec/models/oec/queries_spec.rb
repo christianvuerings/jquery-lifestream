@@ -8,7 +8,8 @@ describe Oec::Queries do
   end
 
   context 'department-specific queries' do
-    subject { Oec::Queries.depts_clause('c', course_codes) }
+    subject { Oec::Queries.depts_clause('c', course_codes, import_all) }
+    let(:import_all) { false }
 
     context 'limiting query by department code' do
       let(:course_codes) do
@@ -22,6 +23,11 @@ describe Oec::Queries do
       it { should include("(c.dept_name = 'CATALAN')", "(c.dept_name = 'PORTUG')", "(c.dept_name = 'SPANISH')") }
       it { should_not include "(c.dept_name = 'ILA')" }
       it { should_not include 'NOT' }
+
+      context 'with import_all flag' do
+        let(:import_all) { true }
+        it { should include "(c.dept_name = 'ILA')" }
+      end
     end
 
     context 'limiting query by course code' do
@@ -81,6 +87,26 @@ describe Oec::Queries do
       )
     end
     include_examples 'expected result structure'
+  end
+
+  context 'a department not participating in OEC', testext: true do
+    subject do
+      Oec::Queries.courses_for_codes(
+        term_code,
+        [Oec::CourseCode.new(dept_name: 'FRENCH', catalog_id: nil, dept_code: 'HFREN', include_in_oec: false)],
+        import_all
+      )
+    end
+
+    context 'without import_all flag' do
+      let (:import_all) { false }
+      it { should be_empty }
+    end
+
+    context 'with import_all flag' do
+      let (:import_all) { true }
+      include_examples 'expected result structure'
+    end
   end
 
   context 'course lookup by ccn', testext: true do
