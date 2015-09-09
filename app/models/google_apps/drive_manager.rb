@@ -64,9 +64,8 @@ module GoogleApps
       dir.parents = [{ :id => parent_id }] if parent_id
       result = client.execute(:api_method => drive_api.files.insert, :body_object => dir)
       log_response result
-      success = result.status == 200
-      raise Errors::ProxyError, "Error in create_folder(#{title}, ...): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in create_folder(#{title}, ...): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def upload_file(title, description, parent_id, mime_type, file_path)
@@ -83,29 +82,27 @@ module GoogleApps
         :media => media,
         :parameters => { :uploadType => 'multipart', :alt => 'json'})
       log_response result
-      success = result.status == 200
-      raise Errors::ProxyError, "Error in upload_file(#{title}): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in upload_file(#{title}): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
-    def trash_item(id)
+    def trash_item(item, opts={})
       client = get_google_api
       drive = client.discovered_api('drive', 'v2')
-      result = client.execute(
-        :api_method => drive.files.trash,
-        :parameters => { :fileId => id })
+      api_method = opts[:permanently_delete] ? drive.files.delete : drive.files.trash
+      result = client.execute(:api_method => api_method, :parameters => { :fileId => item.id })
       log_response result
-      success = result.status == 200
-      raise Errors::ProxyError, "Error in trash_item(#{id}): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in trash_item(#{id}): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def empty_trash
       client = get_google_api
       drive = client.discovered_api('drive', 'v2')
-      result = client.execute(:api_method => drive.files.trash)
+      result = client.execute(:api_method => drive.files.empty_trash)
       log_response result
-      raise Errors::ProxyError, "Error in empty_trash: #{result.data['error']['message']}" unless result.status == 200
+      raise Errors::ProxyError, "Error in empty_trash: #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def copy_item_to_folder(item, folder_id, copy_title=nil)
@@ -127,9 +124,8 @@ module GoogleApps
         :parameters => { :fileId => id }
       )
       log_response result
-      success = result.status == 200
-      raise Errors::ProxyError, "Error in copy_item(#{id}): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in copy_item(#{id}): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def add_parent(id, parent_id)
@@ -142,9 +138,8 @@ module GoogleApps
         :parameters => { :fileId => id }
       )
       log_response result
-      success = result.status == 200
-      raise Errors::ProxyError, "Error in add_parent(#{id}, #{parent_id}): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in add_parent(#{id}, #{parent_id}): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def remove_parent(id, parent_id)
@@ -158,10 +153,8 @@ module GoogleApps
         }
       )
       log_response result
-      # This call may return an empty 204 on success.
-      success = result.status <= 204
-      raise Errors::ProxyError, "Error in remove_parent(#{id}, #{parent_id}): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in remove_parent(#{id}, #{parent_id}): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def folder_id(folder)

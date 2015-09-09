@@ -17,7 +17,7 @@ describe GoogleApps::DriveManager do
     end
 
     after(:all) do
-      @drive.trash_item @folder['id'] if @folder
+      @drive.trash_item(@folder, permanently_delete: true) if @folder
     end
 
     it 'should find folder by name' do
@@ -52,19 +52,19 @@ describe GoogleApps::DriveManager do
       expect(original_items).to have(1).item
       expect(original_items[0].title).to eq @csv_filename
 
-      @drive.trash_item copy.id
+      @drive.trash_item(copy, permanently_delete: true)
     end
 
     it 'should find CSV file' do
       items = @drive.find_items_by_title(@csv_filename, parent_id: @folder.id)
       expect(items).to_not be_nil
       expect(items).to have(1).item
-      id = items[0].id
-      expect(id).to_not be_nil
-      expect(items[0].title).to eq @csv_filename
-      expect(items[0].mimeType).to eq 'text/csv'
-      expect(items[0].description).to_not be_nil
-      @drive.trash_item id
+      item = items[0]
+      expect(item).to_not be_nil
+      expect(item.title).to eq @csv_filename
+      expect(item.mimeType).to eq 'text/csv'
+      expect(item.description).to_not be_nil
+      @drive.trash_item(item, permanently_delete: true)
       # Verify not found after trashing
       items = @drive.find_items_by_title(@csv_filename, parent_id: @folder.id)
       expect(items).to be_empty
