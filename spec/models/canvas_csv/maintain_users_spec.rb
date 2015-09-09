@@ -165,6 +165,71 @@ describe CanvasCsv::MaintainUsers do
         expect(known_uids.length).to eq(0)
       end
     end
+
+    context 'when a user account no longer appears in campus systems' do
+      let(:uid) { random_id }
+      let(:student_id) { random_id }
+      let(:canvas_user_id) { random_id }
+      let(:existing_account) {
+        {
+          'canvas_user_id' => canvas_user_id,
+          'user_id' => student_id,
+          'login_id' => uid,
+          'first_name' => 'Syd',
+          'last_name' => 'Barrett',
+          'full_name' => 'Syd Barrett',
+          'email' => "#{uid}@example.edu",
+          'status' => 'active'
+        }
+      }
+      let(:campus_rows) { [] }
+      it 'deactivates the user account' do
+        expect(account_changes.length).to eq(1)
+        expect(account_changes[0]['login_id']).to eq "inactive-#{uid}"
+        expect(account_changes[0]['user_id']).to eq "UID:#{uid}"
+        expect(account_changes[0]['email']).to be_blank
+        expect(subject.sis_user_id_changes).to eq({"sis_login_id:#{uid}" => "UID:#{uid}"})
+        expect(known_uids.length).to eq(0)
+        expect(subject.user_email_deletions).to eq [canvas_user_id]
+      end
+    end
+
+    context 'when an inactivated user account reappears in campus systems' do
+      let(:uid) { random_id }
+      let(:student_id) { random_id }
+      let(:canvas_user_id) { random_id }
+      let(:existing_account) {
+        {
+          'canvas_user_id' => canvas_user_id,
+          'user_id' => "UID:#{uid}",
+          'login_id' => "inactive-#{uid}",
+          'first_name' => 'Skip',
+          'last_name' => 'James',
+          'full_name' => 'Skip James',
+          'email' => nil,
+          'status' => 'active'
+        }
+      }
+      let(:campus_rows) { [
+        {
+          'ldap_uid' => uid.to_i,
+          'first_name' => 'Skip',
+          'last_name' => 'James',
+          'email_address' => "#{uid}@example.edu",
+          'affiliations' => 'STUDENT-TYPE-REGISTERED',
+          'student_id' => student_id
+        }
+      ] }
+      it 'reactivates the user account' do
+        expect(account_changes.length).to eq(1)
+        expect(account_changes[0]['login_id']).to eq uid
+        expect(account_changes[0]['user_id']).to eq student_id
+        expect(account_changes[0]['email']).to eq "#{uid}@example.edu"
+        expect(subject.sis_user_id_changes).to eq({"sis_login_id:inactive-#{uid}" => student_id})
+        expect(known_uids.length).to eq(1)
+        expect(subject.user_email_deletions).to be_blank
+      end
+    end
   end
 
   describe '#derive_sis_user_id' do
@@ -278,6 +343,56 @@ describe CanvasCsv::MaintainUsers do
     end
   end
 
+  describe '#handle_email_deletions' do
+    let(:uid) { random_id }
+    let(:channel_id) { random_id.to_i }
+    let(:canvas_user_id) { random_id.to_i }
+    let(:fake_channels) do
+      instance_double(Canvas::CommunicationChannels, list: {
+        statusCode: 200,
+        body: [{
+          'id' => channel_id,
+          'position' => 1,
+          'user_id' => canvas_user_id,
+          'workflow_state' => 'active',
+          'address' => "#{uid}@example.edu",
+          'type' => 'email'
+        }]}
+      )
+    end
+    before do
+      expect(Canvas::CommunicationChannels).to receive(:new).with(canvas_user_id: canvas_user_id).and_return fake_channels
+    end
+    context 'in live mode' do
+      before do
+        allow(Settings.canvas_proxy).to receive(:dry_run_import).and_return(nil)
+      end
+      it 'finds and deletes all email addresses' do
+        expect(fake_channels).to receive(:delete).with(channel_id).and_return({
+          statusCode: 200,
+          body: [{
+            'id' => channel_id,
+            'position' => 1,
+            'user_id' => canvas_user_id,
+            'workflow_state' => 'retired',
+            'address' => "#{uid}@example.edu",
+            'type' => 'email'
+          }]
+        })
+        subject.handle_email_deletions [canvas_user_id]
+      end
+    end
+    context 'in dry-run mode' do
+      before do
+        allow(Settings.canvas_proxy).to receive(:dry_run_import).and_return(true)
+      end
+      it 'does not tell Canvas to change the sis_user_ids' do
+        expect(fake_channels).to receive(:delete).never
+        subject.handle_email_deletions [canvas_user_id]
+      end
+    end
+  end
+
   describe '#provisioned_account_eq_sis_account?' do
     let(:non_name_fields) do
       {
@@ -347,6 +462,10 @@ describe CanvasCsv::MaintainUsers do
       context 'when the email address changes' do
         let(:sis_account) { provisioned_account.merge({'email' => 'js@example.com'}) }
         it {should be_falsey}
+      end
+      context 'when the email column is empty' do
+        let(:sis_account) { provisioned_account.merge({'email' => nil}) }
+        it {should be_truthy}
       end
     end
 
