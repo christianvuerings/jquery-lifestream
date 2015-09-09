@@ -83,6 +83,12 @@ module Oec
       find_or_create_folder(datestamp, parent)
     end
 
+    def get_supplemental_worksheet(klass)
+      if (supplemental_course_sheet = @remote_drive.find_nested [@term_code, 'supplemental_sources', klass.export_name])
+        klass.from_csv @remote_drive.export_csv(supplemental_course_sheet)
+      end
+    end
+
     def log(level, message)
       logger.send level, message
       @log << "[#{Time.now}] #{message}"

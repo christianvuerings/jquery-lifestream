@@ -21,5 +21,9 @@ module Oec
       find_by(dept_name: dept_name, catalog_id: catalog_id) || find_by(dept_name: dept_name, catalog_id: '')
     end
 
+    def matches_row?(row)
+      self.dept_name == row['DEPT_NAME'] && (self.catalog_id == row['CATALOG_ID'] || self.catalog_id.blank?)
+    end
+
   end
 end
