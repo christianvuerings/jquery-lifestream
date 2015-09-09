@@ -32,24 +32,24 @@ module GoogleApps
       items = []
       parent_id = options[:parent_id] || 'root'
       query = "'#{parent_id}' in parents and trashed=false"
-      query.concat " and title='#{options[:title]}'" if options.has_key? :title
+      query.concat " and title='#{escape options[:title]}'" if options.has_key? :title
       query.concat " and mimeType='#{options[:mime_type]}'" if options.has_key? :mime_type
       page_token = nil
       begin
         parameters = { :q => query }
         parameters[:pageToken] = page_token unless page_token.nil?
-        api_response = client.execute(:api_method => drive_api.files.list, :parameters => parameters)
-        log_response api_response
-        case api_response.status
+        result = client.execute(:api_method => drive_api.files.list, :parameters => parameters)
+        log_response result
+        case result.status
           when 200
-            files = api_response.data
+            files = result.data
             items.concat files.items
             page_token = files.next_page_token
           when 404
             logger.debug 'No items found, returning empty array'
             page_token = nil
           else
-            raise Errors::ProxyError, "Error in find_items(#{options}): #{api_response.data['error']['message']}"
+            raise Errors::ProxyError, "Error in find_items(#{options}): #{result.data['error']['message']}"
             page_token = nil
         end
       end while page_token.to_s != ''
@@ -59,7 +59,10 @@ module GoogleApps
     def create_folder(title, parent_id = 'root')
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
-      metadata = { :title => title, :mimeType => 'application/vnd.google-apps.folder' }
+      metadata = {
+        :title => escape(title),
+        :mimeType => 'application/vnd.google-apps.folder'
+      }
       dir = drive_api.files.insert.request_schema.new metadata
       dir.parents = [{ :id => parent_id }] if parent_id
       result = client.execute(:api_method => drive_api.files.insert, :body_object => dir)
@@ -71,7 +74,11 @@ module GoogleApps
     def upload_file(title, description, parent_id, mime_type, file_path)
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
-      metadata = { :title => title, :description => description, :mimeType => mime_type }
+      metadata = {
+        :title => escape(title),
+        :description => escape(description),
+        :mimeType => mime_type
+      }
       file = drive_api.files.insert.request_schema.new metadata
       # Target directory is optional
       file.parents = [{ :id => parent_id }] if parent_id
@@ -117,7 +124,7 @@ module GoogleApps
     def copy_item(id, copy_title)
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
-      copy_schema = drive_api.files.copy.request_schema.new({'title' => copy_title})
+      copy_schema = drive_api.files.copy.request_schema.new({'title' => escape(copy_title)})
       result = client.execute(
         :api_method => drive_api.files.copy,
         :body_object => copy_schema,
@@ -165,7 +172,7 @@ module GoogleApps
       folder ? folder.title : 'root'
     end
 
-    protected
+    private
 
     def get_google_api
       if @client.nil?
@@ -195,6 +202,10 @@ module GoogleApps
         api_response.request.uri
       end
       logger.debug "Google Drive API request #{request_description} returned status #{api_response.status}"
+    end
+
+    def escape(arg)
+      arg.gsub('\'', %q(\\\'))
     end
 
   end
