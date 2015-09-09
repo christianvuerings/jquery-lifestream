@@ -47,14 +47,19 @@ describe CampusSolutions::SirResponse do
     end
   end
 
-  # ignored until errors in real post are explained
-  context 'with a real external service', ignore: true, testext: true do
+  context 'with a real external service', testext: true do
     let(:proxy) { CampusSolutions::SirResponse.new(fake: false, user_id: random_id, params: params) }
     subject { proxy.get }
 
     context 'a successful post' do
       let(:params) { {
-        studentCarNbr: '1234'
+        acadCareer: 'UGRD',
+        studentCarNbr: '0',
+        admApplNbr: '00000097',
+        applProgNbr: '0',
+        actionReason: 'PERS',
+        progAction: 'WAPP',
+        studentResponse: ''
       } }
       context 'performing a real post' do
         it_behaves_like 'a proxy that got data successfully'
@@ -63,7 +68,7 @@ describe CampusSolutions::SirResponse do
 
     context 'an invalid post' do
       let(:params) { {
-        studentCarNbr: '1234'
+        studentCarNbr: ''
       } }
       context 'performing a real but invalid post' do
         it_should_behave_like 'a simple proxy that returns errors'
