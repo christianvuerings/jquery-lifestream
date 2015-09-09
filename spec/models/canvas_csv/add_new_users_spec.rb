@@ -4,11 +4,11 @@ describe CanvasCsv::AddNewUsers do
 
   let(:user_report_csv_string) do
     [
-      'canvas_user_id,user_id,login_id,full_name,email,status',
-      '123,22729403,946123,John Smith,john.smith@berkeley.edu,active',
-      '124,UID:946124,946124,Jane Smith,janesmith@gmail.com,active',
-      '125,22729405,946125,Charmaine D\'Silva,charmainedsilva@berkeley.edu,active',
-      '126,22729407,946126,Brian Warner,bwarner@example.com,active'
+      'canvas_user_id,user_id,login_id,first_name,last_name,full_name,email,status',
+      '123,22729403,946123,John,Smith,john.smith@berkeley.edu,active',
+      '124,UID:946124,946124,Jane,Smith,Jane Smith,janesmith@gmail.com,active',
+      '125,22729405,946125,Charmaine,D\'Silva,Charmaine D\'Silva,charmainedsilva@berkeley.edu,active',
+      '126,22729407,946126,Brian,Warner,Brian Warner,bwarner@example.com,active'
      ].join("\n")
   end
 
@@ -26,8 +26,8 @@ describe CanvasCsv::AddNewUsers do
   let(:fake_now_datetime) { DateTime.strptime('2014-07-23T09:00:06+07:00', '%Y-%m-%dT%H:%M:%S%z') }
   let(:new_canvas_users) do
     [
-      {'user_id'=>'22729405','login_id'=>'946122','password'=>nil,'full_name'=>'Charmaine D\'Silva','email'=>'charmainedsilva@example.com','status'=>'active'},
-      {'user_id'=>'UID:946127','login_id'=>'946127','password'=>nil,'full_name'=>'Dwight Schrute','email'=>'dschrute@schrutefarms.com','status'=>'active'}
+      {'user_id'=>'22729405','login_id'=>'946122','password'=>nil,'first_name'=>'Charmaine','last_name'=>'D\'Silva','email'=>'charmainedsilva@example.com','status'=>'active'},
+      {'user_id'=>'UID:946127','login_id'=>'946127','password'=>nil,'first_name'=>'Dwight','last_name'=>'Schrute','email'=>'dschrute@schrutefarms.com','status'=>'active'}
     ]
   end
 
@@ -95,7 +95,7 @@ describe CanvasCsv::AddNewUsers do
       result = subject.get_canvas_user_report_file
       expect(result).to be_an_instance_of String
       csv_array = CSV.read('tmp/canvas/canvas-2014-07-23_09-00-06-users-report.csv')
-      expect(csv_array[0]).to eq %w(canvas_user_id user_id login_id full_name email status)
+      expect(csv_array[0]).to eq %w(canvas_user_id user_id login_id first_name last_name full_name email status)
       expect(csv_array[1][2]).to eq '946123'
       expect(csv_array[2][2]).to eq '946124'
       expect(csv_array[3][2]).to eq '946125'

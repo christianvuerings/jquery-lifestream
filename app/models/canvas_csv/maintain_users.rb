@@ -10,7 +10,8 @@ module CanvasCsv
       matched = provisioned_account['login_id'] == sis_account['login_id'] &&
         provisioned_account['email'] == sis_account['email']
       if matched && Settings.canvas_proxy.maintain_user_names
-        matched = provisioned_account['full_name'] == sis_account['full_name']
+        # Canvas plays elaborate games with user name imports. See the RSpec for examples.
+        matched = provisioned_account['full_name'] == "#{sis_account['first_name']} #{sis_account['last_name']}"
       end
       matched
     end

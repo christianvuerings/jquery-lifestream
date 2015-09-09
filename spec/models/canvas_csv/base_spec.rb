@@ -17,7 +17,8 @@ describe CanvasCsv::Base do
         expect(result.count).to eq 2
         expect(result[0]['user_id']).to eq 'UID:1234'
         expect(result[0]['login_id']).to eq '1234'
-        expect(result[0]['full_name']).to eq 'John Smith'
+        expect(result[0]['first_name']).to eq 'John'
+        expect(result[0]['last_name']).to eq 'Smith'
         expect(result[0]['email']).to eq 'johnsmith@example.com'
         expect(result[0]['status']).to eq 'active'
       end
