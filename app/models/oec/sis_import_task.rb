@@ -15,7 +15,7 @@ module Oec
     def import_courses(worksheet, course_codes)
       course_codes_by_ccn = {}
       cross_listed_ccns = Set.new
-      Oec::Queries.courses_for_codes(@term_code, course_codes).each do |course_row|
+      Oec::Queries.courses_for_codes(@term_code, course_codes, @opts[:import_all]).each do |course_row|
         if import_course(worksheet, course_row)
           course_codes_by_ccn[course_row['course_cntl_num']] ||= course_row.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
           cross_listed_ccns.merge [course_row['cross_listed_ccns'], course_row['co_scheduled_ccns']].join(',').split(',').reject(&:blank?)

@@ -45,7 +45,7 @@ describe Oec::SisImportTask do
     before(:each) do
       load_fixture_courses
       expect(Oec::Queries).to receive(:courses_for_codes)
-        .with(term_code, fake_code_mapping).exactly(1).times
+        .with(term_code, fake_code_mapping, nil).exactly(1).times
         .and_return courses_for_dept
       expect(Oec::Queries).to receive(:courses_for_cntl_nums)
         .with(term_code, additional_cross_listings.to_a).exactly(1).times

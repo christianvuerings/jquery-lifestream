@@ -2,14 +2,14 @@ module Oec
   class Queries < CampusOracle::Connection
     include ActiveRecordHelper
 
-    def self.courses_for_codes(term_code, course_codes)
-      return [] if course_codes.blank?
-      get_courses(term_code, depts_clause('c', course_codes))
+    def self.courses_for_codes(term_code, course_codes, import_all = false)
+      return [] unless (filter = depts_clause('c', course_codes, import_all))
+      get_courses(term_code, filter)
     end
 
     def self.courses_for_cntl_nums(term_code, course_cntl_nums)
-      return [] if course_cntl_nums.blank?
-      get_courses(term_code, ccns_clause('c', course_cntl_nums))
+      return [] unless (filter = ccns_clause('c', course_cntl_nums))
+      get_courses(term_code, filter)
     end
 
     def self.get_courses(term_code, filter_clause)
@@ -70,15 +70,15 @@ module Oec
       stringify_ints! result
     end
 
-    def self.depts_clause(table, course_codes)
-      return '' if !course_codes
+    def self.depts_clause(table, course_codes, import_all)
+      return if course_codes.blank?
       subclauses = course_codes.group_by(&:dept_name).map do |dept_name, codes|
         subclause = ''
-        if (default_code = codes.find { |code| code.catalog_id.blank? }) && default_code.include_in_oec
+        if (default_code = codes.find { |code| code.catalog_id.blank? }) && (default_code.include_in_oec || import_all)
           #All catalog IDs are included by default; note explicit exclusions
           excluded_catalog_ids = codes.reject(&:include_in_oec).map { |code| "'#{code.catalog_id}'" }
           subclause << "#{table}.dept_name = '#{dept_name}'"
-          if excluded_catalog_ids.any?
+          if !import_all && excluded_catalog_ids.any?
             subclause << " and #{table}.catalog_id NOT IN (#{excluded_catalog_ids.join(',')})"
           end
         else
@@ -90,9 +90,10 @@ module Oec
         end
         subclause
       end
+      subclauses.reject! &:blank?
       case subclauses.count
         when 0
-          ''
+          nil
         when 1
           "(#{subclauses.first})"
         else
@@ -101,7 +102,8 @@ module Oec
     end
 
     # Oracle has limit of 1000 terms per expression so we filter using a series of OR statements, when necessary.
-    def self.ccns_clause(table, ccns=[])
+    def self.ccns_clause(table, ccns)
+      return if ccns.blank?
       subclauses = ccns.each_slice(1000).map { |chunk| "#{table}.course_cntl_num IN (#{chunk.join(',')})" }
       "(#{subclauses.join(' or ')})"
     end
