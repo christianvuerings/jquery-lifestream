@@ -4,6 +4,7 @@ module HubEdos
     include ClassLogger
     include Cache::UserCacheExpiry
     include Proxies::Mockable
+    include CampusSolutions::ProfileFeatureFlagged
 
     APP_ID = 'integrationhub'
     APP_NAME = 'Integration Hub'
@@ -25,15 +26,19 @@ module HubEdos
     end
 
     def get
-      internal_response = self.class.smart_fetch_from_cache(id: instance_key) do
-        get_internal
-      end
-      if internal_response[:noStudentId] || internal_response[:statusCode] < 400
-        internal_response
+      if is_feature_enabled
+        internal_response = self.class.smart_fetch_from_cache(id: instance_key) do
+          get_internal
+        end
+        if internal_response[:noStudentId] || internal_response[:statusCode] < 400
+          internal_response
+        else
+          internal_response.merge({
+                                    errored: true
+                                  })
+        end
       else
-        {
-          errored: true
-        }
+        {}
       end
     end
 

@@ -3,17 +3,15 @@ require 'spec_helper'
 describe HubEdos::Person do
 
   context 'mock proxy' do
-    let(:fake_proxy) { HubEdos::Person.new(fake: true) }
-    let(:feed) { fake_proxy.get[:feed] }
+    let(:proxy) { HubEdos::Person.new(fake: true) }
+    subject { proxy.get }
+
+    it_behaves_like 'a proxy that properly observes the profile feature flag'
+    it_should_behave_like 'a simple proxy that returns errors'
 
     it 'returns data with the expected structure' do
-      expect(feed['person']).to be
-      expect(feed['person']['identifiers'][0]['id']).to be
-    end
-    it 'can be overridden to return errors' do
-      fake_proxy.set_response(status: 506, body: '')
-      response = fake_proxy.get
-      expect(response[:errored]).to eq true
+      expect(subject[:feed]['person']).to be
+      expect(subject[:feed]['person']['identifiers'][0]['id']).to be
     end
 
   end
