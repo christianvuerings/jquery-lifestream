@@ -1,0 +1,5 @@
+<div data-ng-controller="SirController">
+  <div data-ng-repeat="item in sir.checklistItems" data-ng-if="sir.checklistItems.length">
+    <div data-ng-include="'widgets/sir/sir_item.html'"></div>
+  </div>
+</div>
