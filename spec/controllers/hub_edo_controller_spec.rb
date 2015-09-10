@@ -6,7 +6,7 @@ describe HubEdoController do
     it_behaves_like 'an unauthenticated user'
     context 'authenticated user' do
       let(:user) { random_id }
-      let(:feed_key) { 'person' }
+      let(:feed_key) { 'student' }
       it_behaves_like 'a successful feed'
     end
   end

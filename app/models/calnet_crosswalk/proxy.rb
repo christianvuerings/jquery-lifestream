@@ -4,6 +4,7 @@ module CalnetCrosswalk
     include ClassLogger
     include Cache::UserCacheExpiry
     include Proxies::Mockable
+    include Cache::RelatedCacheKeyTracker
 
     APP_ID = 'calnetcrosswalk'
     APP_NAME = 'Calnet Crosswalk'
@@ -61,6 +62,24 @@ module CalnetCrosswalk
       {
         digest_auth: {username: @settings.username, password: @settings.password}
       }
+    end
+
+    def lookup_campus_solutions_id
+      self.class.fetch_from_cache("#{@uid}/campus_solutions_id") do
+        self.class.save_related_cache_key(@uid, self.class.cache_key("#{@uid}/campus_solutions_id"))
+        cs_id = nil
+        feed = get[:feed]
+        if feed.present?
+          feed['Person']['identifiers'].each do |identifier|
+            if identifier['identifierTypeName'] == 'CAMPUS_SOLUTIONS_ID'
+              cs_id = identifier['identifierValue']
+              logger.debug "cs_id is #{cs_id}"
+              break
+            end
+          end
+        end
+        cs_id
+      end
     end
 
   end
