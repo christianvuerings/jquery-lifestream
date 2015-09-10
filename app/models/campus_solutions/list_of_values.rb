@@ -59,7 +59,7 @@ module CampusSolutions
     def build_feed(response)
       # delivered Campus Solutions API does not give us the xml content-type header that
       # HTTParty needs for auto-parsing, so we must parse it ourselves.
-      parsed = MultiXml.parse response.body
+      parsed = MultiXml.parse response.body.force_encoding('UTF-8')
       if parsed[response_root_xml_node].present?
         # rearrange stupid CS XML (which we can't change, because delivered) into a proper array
         values = []
