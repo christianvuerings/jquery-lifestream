@@ -14,7 +14,7 @@ module GoogleApps
       end
       result = @session.execute!(uri: csv_export_uri)
       log_response result
-      raise Errors::ProxyError, "Error in export_csv, file ID (#{file.id}): #{result.data['error']['message']}" if result.error?
+      raise Errors::ProxyError, "export_csv failed with file.id=#{file.id}. Error: #{result.data['error']}" if result.error?
       result.body
     end
 
@@ -29,18 +29,23 @@ module GoogleApps
           logger.debug "No Google spreadsheet found with id = #{id}"
           file = nil
         else
-          raise Errors::ProxyError, "Error in spreadsheet_by_id(#{id}): #{result.data['error']['message']}"
+          raise Errors::ProxyError, "spreadsheet_by_id failed with id=#{id}. Error: #{result.data['error']}"
       end
       file
     rescue Google::APIClient::ClientError => e
-      Rails.logger.error "Google API code is unhappy with spreadsheet_by_id(#{id}) call. Exception: #{e}"
+      logger.error "spreadsheet_by_id failed with id=#{id}. Exception: #{e}"
       nil
     end
 
-    def spreadsheets_by_title(title)
-      spreadsheets = @session.spreadsheets(:q => "title = '#{escape title}'")
-      logger.debug "No Google spreadsheets found with title = #{title}" if spreadsheets.nil? || spreadsheets.none?
+    def spreadsheets_by_title(title, opts={})
+      query = "title='#{escape title}' and trashed=false"
+      query.concat " and '#{opts[:parent_id]}' in parents" if opts.has_key? :parent_id
+      spreadsheets = @session.spreadsheets(:q => query)
+      logger.debug "No spreadsheets found. Query: #{query}" if spreadsheets.nil? || spreadsheets.none?
       spreadsheets
+    rescue Google::APIClient::ClientError => e
+      logger.error "spreadsheets_by_title failed with query: #{query}. Exception: #{e}"
+      nil
     end
 
     def upload_worksheet(title, description, worksheet, parent_id = 'root')
@@ -65,7 +70,7 @@ module GoogleApps
         :media => media,
         :parameters => { :uploadType => 'multipart', :convert => true })
       log_response result
-      raise Errors::ProxyError, "Error in upload(#{title}, ...): #{result.data['error']['message']}" if result.error?
+      raise Errors::ProxyError, "upload failed with title=#{title}. Error: #{result.data['error']}" if result.error?
       @session.wrap_api_file result.data
     end
 
