@@ -250,8 +250,33 @@
       },
       "categories": [
         {
+          "topcategory": "Academic Planning",
+          "subcategory": "Classes"
+        },
+        {
           "topcategory": "Classes",
           "subcategory": "Classes"
+        },
+        {
+          "topcategory": "Communication \u0026 Collaboration",
+          "subcategory": "Collaboration Tools"
+        }
+      ]
+    },
+    {
+      "name": "bCourses Support",
+      "description": "Help and training for the bCourses LMS",
+      "url": "https://www.ets.berkeley.edu/discover-services/bcourses",
+      "roles": {
+        "student": false,
+        "staff": true,
+        "faculty": true,
+        "exStudent": false
+      },
+      "categories": [
+        {
+          "topcategory": "Faculty",
+          "subcategory": "Resources"
         }
       ]
     },
@@ -558,65 +583,6 @@
         {
           "topcategory": "Communication \u0026 Collaboration",
           "subcategory": "Collaboration Tools"
-        }
-      ]
-    },
-    {
-      "name": "bSpace",
-      "description": "Homework assignments, lecture slides, syllabi and class resources",
-      "url": "http://bspace.berkeley.edu",
-      "roles": {
-        "student": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Academic Planning",
-          "subcategory": "Classes"
-        },
-        {
-          "topcategory": "Classes",
-          "subcategory": "Classes"
-        },
-        {
-          "topcategory": "Communication \u0026 Collaboration",
-          "subcategory": "Collaboration Tools"
-        }
-      ]
-    },
-    {
-      "name": "bSpace Grade book",
-      "description": "A tool to enter, upload, and calculate student grades on bSpace",
-      "url": "http://gsi.berkeley.edu/teachingguide/tech/bspace-gradebook.html",
-      "roles": {
-        "student": false,
-        "staff": false,
-        "faculty": true,
-        "exStudent": false
-      },
-      "categories": [
-        {
-          "topcategory": "Faculty",
-          "subcategory": "Tools"
-        }
-      ]
-    },
-    {
-      "name": "bSpace Support",
-      "description": "A communication and collaboration program that supports teaching and learning",
-      "url": "http://ets.berkeley.edu/bspace",
-      "roles": {
-        "student": false,
-        "staff": false,
-        "faculty": true,
-        "exStudent": false
-      },
-      "categories": [
-        {
-          "topcategory": "Faculty",
-          "subcategory": "Resources"
         }
       ]
     },
@@ -1272,7 +1238,7 @@
     {
       "name": "Classroom Technology",
       "description": "Provide reliable resources and technical support to the UCB campus",
-      "url": "http://ets.berkeley.edu/classroom-technology/",
+      "url": "https://www.ets.berkeley.edu/discover-services/classroom-technology-support",
       "roles": {
         "student": false,
         "staff": false,
@@ -1338,6 +1304,23 @@
         {
           "topcategory": "Wellness",
           "subcategory": "Campus Health Center"
+        }
+      ]
+    },
+    {
+      "name": "Course Capture Support",
+      "description": "Help with audio and video recordings of class lectures and discussions",
+      "url": "https://www.ets.berkeley.edu/discover-services/course-capture",
+      "roles": {
+        "student": false,
+        "staff": false,
+        "faculty": true,
+        "exStudent": false
+      },
+      "categories": [
+        {
+          "topcategory": "Faculty",
+          "subcategory": "Resources"
         }
       ]
     },
@@ -1410,6 +1393,23 @@
         {
           "topcategory": "Support Services",
           "subcategory": "Students"
+        }
+      ]
+    },
+    {
+      "name": "Drop-in Computer Facilities",
+      "description": "Convenient and secure on-campus computing facilities for all individuals with a CalNet ID",
+      "url": "https://www.ets.berkeley.edu/discover-services/drop-computer-facilities",
+      "roles": {
+        "student": true,
+        "staff": true,
+        "faculty": true,
+        "exStudent": true
+      },
+      "categories": [
+        {
+          "topcategory": "Tools \u0026 Resources",
+          "subcategory": "Computing"
         }
       ]
     },
@@ -1690,23 +1690,6 @@
         {
           "topcategory": "Wellness",
           "subcategory": "Staff Support Services"
-        }
-      ]
-    },
-    {
-      "name": "General Access Computing Facilities",
-      "description": "Convenient and secure on-campus computing facilities for registered Berkeley affiliates",
-      "url": "http://ets.berkeley.edu/computer-facilities/general-access",
-      "roles": {
-        "student": true,
-        "staff": true,
-        "faculty": true,
-        "exStudent": true
-      },
-      "categories": [
-        {
-          "topcategory": "Tools \u0026 Resources",
-          "subcategory": "Computing"
         }
       ]
     },
@@ -2488,19 +2471,19 @@
       ]
     },
     {
-      "name": "Research Hub",
-      "description": "Tool for content management and collaboration such as managing research data and sharing documents",
-      "url": "https://hub.berkeley.edu",
+      "name": "Reserve a Study Room",
+      "description": "Reservations for library group study rooms",
+      "url": "http://berkeley.libcal.com/booking/gardner",
       "roles": {
         "student": true,
-        "staff": true,
+        "staff": false,
         "faculty": true,
         "exStudent": true
       },
       "categories": [
         {
-          "topcategory": "Communication \u0026 Collaboration",
-          "subcategory": "Collaboration Tools"
+          "topcategory": "Classes",
+          "subcategory": "Learning Resources"
         }
       ]
     },
@@ -3226,19 +3209,19 @@
       ]
     },
     {
-      "name": "Webcast Support",
-      "description": "Help with audio and video recordings of class lectures and events that made available through UC Berkeley's channels",
-      "url": "http://ets.berkeley.edu/about-webcastberkeley",
+      "name": "Wisdom Caf\u00e9",
+      "description": "Where Berkeley staff learn \u0026 share",
+      "url": "http://wisdomcafe.berkeley.edu/",
       "roles": {
         "student": false,
-        "staff": false,
+        "staff": true,
         "faculty": true,
         "exStudent": false
       },
       "categories": [
         {
-          "topcategory": "Faculty",
-          "subcategory": "Resources"
+          "topcategory": "Staff Learning",
+          "subcategory": "Professional Development"
         }
       ]
     },

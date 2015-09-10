@@ -50,7 +50,7 @@
 
         <div data-ng-show="additionSuccessMessage" class="bc-alert bc-alert-success bc-page-course-add-user-alert">
           <span data-ng-bind="userAdded.fullName"></span> was added to the
-          &ldquo;<span data-ng-bind="userAdded.sectionName"></span>&rdquo; section of this course as a <span data-ng-bind="userAdded.roleName"></span>.
+          &ldquo;<span data-ng-bind="userAdded.sectionName"></span>&rdquo; section of this course as a <span data-ng-bind="userAdded.role"></span>.
           <div class="bc-alert-close-button-container">
             <button class="fa fa-times-circle bc-close-button" data-ng-click="additionSuccessMessage=''">
               <span class="cc-visuallyhidden">Hide Alert</span>
@@ -191,7 +191,7 @@
                   <label for="user-role"><strong><span class="cc-required-field-indicator">*</span> Role</strong>:</label>
                 </div>
                 <div class="small-9 columns">
-                  <select id="user-role" class="bc-form-input-select" data-ng-model="selectedRole" data-ng-options="role as role.name for role in grantingRoles"></select>
+                  <select id="user-role" class="bc-form-input-select" data-ng-model="selectedRole" data-ng-options="role for role in grantingRoles"></select>
                 </div>
               </div>
 

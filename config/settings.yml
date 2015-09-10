@@ -69,7 +69,6 @@ canvas_proxy:
   official_courses_account_id: '129410'
   projects_account_id: '129407'
   projects_term_id: '5494'
-  projects_owner_role_id: '1766'
   turnitin_account_id: '129440'
   default_grading_scheme_id: '4068930'
   export_directory: 'tmp/canvas'
@@ -96,12 +95,14 @@ ldap:
   application_password: 'someMumboJumbo'
 google_proxy:
   client_id: 1
-  client_secret: 'someMumboJumbo'
+  client_secret: 'bogusClientSecret'
+  scope: 'profile email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive.readonly.metadata https://mail.google.com/mail/feed/atom/'
   fake: false
   #Maps to tammi.chang.clc@gmail.com. Used for testing + recording responses
-  test_user_access_token: "someMumboJumbo"
-  test_user_refresh_token: "someMumboJumbo"
+  test_user_access_token: "bogusAccessToken"
+  test_user_refresh_token: "bogusRefreshToken"
   atom_mail_feed_url: "https://mail.google.com/mail/feed/atom/"
+
 sakai_proxy:
   host: "https://sakai-dev.berkeley.edu"
   fake: false
@@ -305,6 +306,13 @@ features:
 youtube_splash_id: 'EQ-a7xrfVag'
 
 oec:
+  google:
+    uid: ''
+    client_id: 'oecClientId'
+    client_secret: 'oecClientSecret'
+    access_token: 'oecAccessToken'
+    refresh_token: 'oecRefreshToken'
+    scope: 'profile email https://mail.google.com/mail/feed/atom/ https://spreadsheets.google.com/feeds/ https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.apps.readonly https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly.metadata https://www.googleapis.com/auth/tasks'
   current_terms_codes: [{
     year: 2015,
     code: "C"

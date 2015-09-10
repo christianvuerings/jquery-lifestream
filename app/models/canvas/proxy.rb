@@ -55,6 +55,10 @@ module Canvas
       wrapped_request(api_path, {method: :put, body: params}, &block)
     end
 
+    def wrapped_delete(api_path, params = {}, &block)
+      wrapped_request(api_path, {method: :delete, body: params}, &block)
+    end
+
     def paged_get(api_path, opts={})
       map_pages = opts.delete :map_pages
       params = opts.reverse_merge(per_page: 100).to_query
