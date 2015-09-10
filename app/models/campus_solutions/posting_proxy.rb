@@ -24,7 +24,9 @@ module CampusSolutions
     end
 
     def default_post_params
-      {}
+      {
+        EMPLID: @campus_solutions_id
+      }
     end
 
     # lets us restrict updated params to what's on the whitelist of field mappings.

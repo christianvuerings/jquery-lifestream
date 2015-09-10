@@ -24,13 +24,6 @@ module CampusSolutions
       'ADDRESS_DELETE_RESPONSE'
     end
 
-    def default_post_params
-      # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
-      {
-        EMPLID: '25753380'
-      }
-    end
-
     def url
       "#{@settings.base_url}/UC_CC_PERS_ADDR.v1/Address/delete"
     end

@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe CampusSolutions::Deposit do
 
+  let(:user_id) { '12348' }
+
   shared_examples 'a proxy that gets data' do
     subject { proxy.get }
     it_should_behave_like 'a simple proxy that returns errors'
@@ -14,7 +16,7 @@ describe CampusSolutions::Deposit do
   end
 
   context 'mock proxy' do
-    let(:proxy) { CampusSolutions::Deposit.new(fake: true, adm_appl_nbr: '00000087') }
+    let(:proxy) { CampusSolutions::Deposit.new(fake: true, user_id: user_id, adm_appl_nbr: '00000087') }
     it_should_behave_like 'a proxy that gets data'
     subject { proxy.get }
     it 'should get specific mock data' do
@@ -24,7 +26,7 @@ describe CampusSolutions::Deposit do
   end
 
   context 'real proxy', testext: true do
-    let(:proxy) { CampusSolutions::Deposit.new(fake: false, adm_appl_nbr: '00000087') }
+    let(:proxy) { CampusSolutions::Deposit.new(fake: false, user_id: user_id, adm_appl_nbr: '00000087') }
     it_should_behave_like 'a proxy that gets data'
   end
 

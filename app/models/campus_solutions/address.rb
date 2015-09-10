@@ -35,11 +35,10 @@ module CampusSolutions
     end
 
     def default_post_params
-      # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
-      {
-        EMPLID: '25738808',
-        EFFDT: '2015-10-09' # TODO fix hardcode
-      }
+      super.merge(
+        {
+          EFFDT: '2015-10-09' # TODO fix hardcode
+        })
     end
 
     def url

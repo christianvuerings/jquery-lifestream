@@ -19,7 +19,7 @@ module CalnetCrosswalk
     end
 
     def json_filename
-      'calnet_crosswalk.json'
+      "calnet_crosswalk_#{@uid}.json"
     end
 
     def mock_json
@@ -27,7 +27,7 @@ module CalnetCrosswalk
     end
 
     def mock_request
-      super.merge(uri_matching: url)
+      super.merge(uri_matching: "#{@settings.base_url}/#{@uid}")
     end
 
     def get
