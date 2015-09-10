@@ -7,7 +7,7 @@ module Oec
       unless (@dept_code = opts.delete :dept_code)
         raise ArgumentError, 'dept_code option required'
       end
-      opts[:export_name] = @dept_code
+      opts[:export_name] = Berkeley::Departments.get(@dept_code, concise: true)
       super(opts)
     end
 

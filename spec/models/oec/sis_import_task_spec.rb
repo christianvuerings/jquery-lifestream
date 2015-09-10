@@ -19,11 +19,20 @@ describe Oec::SisImportTask do
       CSV.read(courses.csv_export_path).slice(1..-1).map { |row| Hash[ courses.headers.zip(row) ]}
     end
 
-    let(:courses) { Oec::SisImportSheet.new(dept_code: dept_name) }
+    let(:l4_codes) do
+      {
+        'MATH' => 'PMATH',
+        'STAT' => 'PSTAT',
+        'ANTHRO' => 'SZANT',
+        'POL SCI' => 'SPOLS'
+      }
+    end
+
+    let(:courses) { Oec::SisImportSheet.new(dept_code: l4_codes[dept_name]) }
     let(:courses_by_ccn) { {} }
     let(:courses_for_dept) { [] }
     let(:additional_cross_listings) { Set.new }
-    let(:fake_code_mapping) { [Oec::CourseCode.new(dept_name: dept_name, catalog_id: nil, dept_code: dept_name, include_in_oec: true)] }
+    let(:fake_code_mapping) { [Oec::CourseCode.new(dept_name: dept_name, catalog_id: nil, dept_code: l4_codes[dept_name], include_in_oec: true)] }
     let(:course_id_column) { subject.map { |row| row['COURSE_ID'] } }
 
     def load_fixture_courses
@@ -60,7 +69,7 @@ describe Oec::SisImportTask do
           if row['CROSS_LISTED_FLAG'] == 'Y'
             expect(row['DEPT_FORM']).to be_nil
           else
-            expect(row['DEPT_FORM']).to be_present
+            expect(row['DEPT_FORM']).to eq friendly_dept_name
           end
           expect(row['BLUE_ROLE']).to eq '23'
           expect(row['EVALUATE']).to be_nil
@@ -75,6 +84,7 @@ describe Oec::SisImportTask do
 
     context 'ANTHRO dept' do
       let(:dept_name) { 'ANTHRO' }
+      let(:friendly_dept_name) { 'ANTHROPOLOGY' }
       let(:expected_ids) { %w(2015-B-02567) }
       include_examples 'expected CSV structure'
       it 'should not include IND course' do
@@ -84,6 +94,7 @@ describe Oec::SisImportTask do
 
     context 'MATH dept' do
       let(:dept_name) { 'MATH' }
+      let(:friendly_dept_name) { 'MATHEMATICS' }
       let(:expected_ids) { %w(2015-B-54432 2015-B-54441 2015-B-87672 2015-B-87675) }
       before { allow(Oec::CourseCode).to receive(:included?).with('STAT', anything).and_return true  }
       include_examples 'expected CSV structure'
@@ -91,6 +102,7 @@ describe Oec::SisImportTask do
 
     context 'POL SCI dept' do
       let(:dept_name) { 'POL SCI' }
+      let(:friendly_dept_name) { 'POLITICAL SCIENCE' }
       let(:expected_ids) { %w(2015-B-87690 2015-B-72198 2015-B-72198_GSI 2015-B-72199) }
       include_examples 'expected CSV structure'
       it 'should not include GRP course' do
@@ -147,6 +159,7 @@ describe Oec::SisImportTask do
 
     context 'STAT dept' do
       let(:dept_name) { 'STAT' }
+      let(:friendly_dept_name) { 'STATISTICS' }
       let(:expected_ids) { %w(2015-B-87672 2015-B-87673 2015-B-87675 2015-B-54432 2015-B-54441 2015-B-72199 2015-B-87690 2015-B-87693) }
       before { allow(Oec::CourseCode).to receive(:included?).with('MATH', anything).and_return math_included  }
       let(:math_included) { true }
@@ -209,14 +222,14 @@ describe Oec::SisImportTask do
       let(:now) { '092222' }
       let(:logfile) { "#{now}_sis_import_task.log" }
       let(:dept_name) { 'MATH' }
-      let(:export_file) { "#{dept_name}.csv" }
+      let(:sheet_name) { 'Mathematics' }
 
       let(:imports_today_folder) { mock_google_drive_item today }
       let(:reports_today_folder) { mock_google_drive_item today }
 
       before do
         allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H%M%S')
-        allow(Oec::CourseCode).to receive(:by_dept_code).and_return({dept_name => fake_code_mapping})
+        allow(Oec::CourseCode).to receive(:by_dept_code).and_return({l4_codes[dept_name] => fake_code_mapping})
       end
 
       it 'should upload a department csv and a log file' do
@@ -224,8 +237,8 @@ describe Oec::SisImportTask do
           .with(today, anything, anything)
           .and_return(imports_today_folder, reports_today_folder)
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
-          .with(kind_of(Oec::Worksheet), dept_name, (Oec::Worksheet), imports_today_folder, anything)
-          .and_return mock_google_drive_item(dept_name)
+          .with(kind_of(Oec::Worksheet), sheet_name, (Oec::Worksheet), imports_today_folder, anything)
+          .and_return mock_google_drive_item(sheet_name)
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
           .with(kind_of(Pathname), logfile, 'text/plain', reports_today_folder, anything)
           .and_return mock_google_drive_item(logfile)
