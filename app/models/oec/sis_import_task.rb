@@ -146,7 +146,7 @@ module Oec
 
     def set_term_dates(worksheet)
       term_slug = Berkeley::TermCodes.to_slug(*@term_code.split('-'))
-      term = Berkeley::Terms.fetch.campus[term_slug]
+      return unless (term = Berkeley::Terms.fetch.campus[term_slug])
       term_dates = {
         'START_DATE' => term.classes_start.strftime('%m-%d-%Y'),
         'END_DATE' => term.instruction_end.strftime('%m-%d-%Y')
