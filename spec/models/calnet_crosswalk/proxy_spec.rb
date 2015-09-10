@@ -4,8 +4,8 @@ describe CalnetCrosswalk::Proxy do
 
   shared_examples 'a proxy that returns data' do
     it 'returns data with the expected structure' do
-      expect(feed[0]['Person']).to be
-      expect(feed[0]['Person']['identifiers'][0]['identifierValue']).to be
+      expect(feed['Person']).to be
+      expect(feed['Person']['identifiers'][0]['identifierValue']).to be
     end
   end
 
@@ -21,7 +21,7 @@ describe CalnetCrosswalk::Proxy do
   end
 
   context 'real proxy', testext: true do
-    let(:proxy) { CalnetCrosswalk::Proxy.new(user_id: '1', fake: false) }
+    let(:proxy) { CalnetCrosswalk::Proxy.new(user_id: '61889', fake: false) }
     let(:feed) { proxy.get[:feed] }
     it_behaves_like 'a proxy that returns data'
   end
