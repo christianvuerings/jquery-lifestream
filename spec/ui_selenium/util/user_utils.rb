@@ -70,4 +70,8 @@ class UserUtils
     JSON.parse(File.read(WebDriverUtils.live_users))['users']
   end
 
+  def self.clear_cache(driver)
+    driver.get "#{WebDriverUtils.base_url}/api/cache/clear"
+  end
+
 end
