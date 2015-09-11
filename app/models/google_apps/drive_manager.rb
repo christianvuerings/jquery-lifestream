@@ -60,7 +60,7 @@ module GoogleApps
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
       metadata = {
-        :title => escape(title),
+        :title => title,
         :mimeType => 'application/vnd.google-apps.folder'
       }
       dir = drive_api.files.insert.request_schema.new metadata
@@ -75,8 +75,8 @@ module GoogleApps
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
       metadata = {
-        :title => escape(title),
-        :description => escape(description),
+        :title => title,
+        :description => description,
         :mimeType => mime_type
       }
       file = drive_api.files.insert.request_schema.new metadata
@@ -124,7 +124,7 @@ module GoogleApps
     def copy_item(id, copy_title)
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
-      copy_schema = drive_api.files.copy.request_schema.new({'title' => escape(copy_title)})
+      copy_schema = drive_api.files.copy.request_schema.new({'title' => copy_title})
       result = client.execute(
         :api_method => drive_api.files.copy,
         :body_object => copy_schema,

@@ -61,7 +61,7 @@ module GoogleApps
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
       media = Google::APIClient::UploadIO.new(path_or_io, 'text/csv')
-      metadata = { :title => escape(title), :description => escape(description) }
+      metadata = { :title => title, :description => description }
       file = drive_api.files.insert.request_schema.new metadata
       file.parents = [{ :id => parent_id }]
       result = @session.execute!(

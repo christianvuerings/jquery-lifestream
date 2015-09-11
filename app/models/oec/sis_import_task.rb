@@ -51,7 +51,7 @@ module Oec
           false
         else
           course['course_id_2'] = course['course_id']
-          course['dept_form'] = worksheet.dept_code unless course['cross_listed_flag'].present?
+          course['dept_form'] = worksheet.export_name.upcase unless course['cross_listed_flag'].present?
           roles = Berkeley::UserRoles.roles_from_campus_row course
           course['evaluation_type'] = if roles[:student]
                                         'G'
