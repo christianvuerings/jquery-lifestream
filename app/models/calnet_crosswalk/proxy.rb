@@ -23,7 +23,12 @@ module CalnetCrosswalk
     end
 
     def mock_json
-      read_file('fixtures', 'json', json_filename)
+      json = read_file('fixtures', 'json', json_filename)
+      if json.blank?
+        # fall back to an EMPLID that we know is in CS
+        json = read_file('fixtures', 'json', 'calnet_crosswalk_12345.json')
+      end
+      json
     end
 
     def mock_request
