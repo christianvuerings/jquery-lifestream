@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe CampusSolutions::EmergencyContact do
 
+  let(:user_id) { '12345' }
+
   context 'post' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::EmergencyContact.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::EmergencyContact.new(fake: true, user_id: user_id, params: params) }
 
     context 'filtering out fields not on the whitelist' do
       let(:params) { {
@@ -82,7 +84,7 @@ describe CampusSolutions::EmergencyContact do
       extension: '123',
       emailAddr: 'foo@foo.com'
     } }
-    let(:proxy) { CampusSolutions::EmergencyContact.new(fake: false, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::EmergencyContact.new(fake: false, user_id: user_id, params: params) }
 
     context 'performing a real post' do
       subject {

@@ -3,6 +3,7 @@ module CampusSolutions
 
     include ProfileFeatureFlagged
     include Cache::RelatedCacheKeyTracker
+    include CampusSolutionsIdRequired
 
     def initialize(options = {})
       super options

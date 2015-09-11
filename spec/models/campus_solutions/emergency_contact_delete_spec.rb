@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe CampusSolutions::EmergencyContactDelete do
 
+  let(:user_id) { '12345' }
+
   context 'deleting an emergency contact' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::EmergencyContactDelete.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::EmergencyContactDelete.new(fake: true, user_id: user_id, params: params) }
 
     context 'converting params to Campus Solutions field names' do
       let(:params) { {
@@ -34,7 +36,6 @@ describe CampusSolutions::EmergencyContactDelete do
   end
 
   context 'with a real external service', testext: true do
-    let(:user_id) { random_id }
     let(:create_params) { {
       # CS server will reject post unless data has changed, so make some key fields unique with timestamp
       contactName: "Tester Friend #{user_id}",
@@ -67,7 +68,7 @@ describe CampusSolutions::EmergencyContactDelete do
       emailAddr: 'foo@foo.com'
     } }
     before {
-      CampusSolutions::EmergencyContact.new(fake: false, user_id: random_id, params: create_params).get
+      CampusSolutions::EmergencyContact.new(fake: false, user_id: user_id, params: create_params).get
     }
 
     let(:proxy) { CampusSolutions::EmergencyContactDelete.new(fake: false, user_id: user_id, params: params) }

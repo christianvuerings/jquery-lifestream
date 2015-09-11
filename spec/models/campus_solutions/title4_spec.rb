@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe CampusSolutions::Title4 do
 
+  let(:user_id) { '12345' }
+
   context 'post' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::Title4.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::Title4.new(fake: true, user_id: user_id, params: params) }
 
     context 'filtering out fields not on the whitelist' do
       let(:params) { {
@@ -52,7 +54,7 @@ describe CampusSolutions::Title4 do
     let(:params) { {
       response: 'Y'
     } }
-    let(:proxy) { CampusSolutions::Title4.new(fake: false, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::Title4.new(fake: false, user_id: user_id, params: params) }
 
     context 'performing a real post' do
       subject {

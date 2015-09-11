@@ -2,6 +2,7 @@ module CampusSolutions
   class AddressDelete < DeletingProxy
 
     include ProfileFeatureFlagged
+    include CampusSolutionsIdRequired
 
     def initialize(options = {})
       super(Settings.campus_solutions_proxy, options)

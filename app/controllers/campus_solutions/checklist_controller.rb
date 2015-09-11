@@ -2,7 +2,7 @@ module CampusSolutions
   class ChecklistController < CampusSolutionsController
 
     def get
-      json_passthrough(CampusSolutions::Checklist)
+      render json: CampusSolutions::MyChecklist.from_session(session).get_feed_as_json
     end
 
   end

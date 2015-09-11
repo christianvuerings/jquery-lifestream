@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe CampusSolutions::EmailDelete do
 
+  let(:user_id) { '12345' }
+
   context 'deleting email' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::EmailDelete.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::EmailDelete.new(fake: true, user_id: user_id, params: params) }
 
     context 'converting params to Campus Solutions field names' do
       let(:params) { {
@@ -34,14 +36,13 @@ describe CampusSolutions::EmailDelete do
   end
 
   context 'with a real external service', testext: true do
-    let(:user_id) { random_id }
     let(:create_params) { {
       type: 'OTHR',
       email: 'foo@foo.com',
       isPreferred: 'N'
     } }
     before {
-      CampusSolutions::Email.new(fake: false, user_id: random_id, params: create_params).get
+      CampusSolutions::Email.new(fake: false, user_id: user_id, params: create_params).get
     }
 
     let(:proxy) { CampusSolutions::EmailDelete.new(fake: false, user_id: user_id, params: params) }

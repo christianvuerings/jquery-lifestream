@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe CampusSolutions::LanguagePost do
 
+  let(:user_id) { '12346' }
+
   context 'post' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::LanguagePost.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::LanguagePost.new(fake: true, user_id: user_id, params: params) }
 
     context 'filtering out fields not on the whitelist' do
       let(:params) { {
@@ -65,7 +67,7 @@ describe CampusSolutions::LanguagePost do
       readProf: '2',
       teachLang: '3'
     } }
-    let(:proxy) { CampusSolutions::LanguagePost.new(fake: false, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::LanguagePost.new(fake: false, user_id: user_id, params: params) }
 
     context 'performing a real post' do
       subject {

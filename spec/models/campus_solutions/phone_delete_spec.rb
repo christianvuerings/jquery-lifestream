@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe CampusSolutions::PhoneDelete do
 
+  let(:user_id) { '12345' }
+
   context 'deleting phone' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::PhoneDelete.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::PhoneDelete.new(fake: true, user_id: user_id, params: params) }
 
     context 'converting params to Campus Solutions field names' do
       let(:params) { {
@@ -34,7 +36,6 @@ describe CampusSolutions::PhoneDelete do
   end
 
   context 'with a real external service', testext: true do
-    let(:user_id) { random_id }
     let(:create_home_params) { {
       type: 'HOME',
       phone: '9949919892',
@@ -50,8 +51,8 @@ describe CampusSolutions::PhoneDelete do
       isPreferred: 'N'
     } }
     before {
-      CampusSolutions::Phone.new(fake: false, user_id: random_id, params: create_home_params).get
-      CampusSolutions::Phone.new(fake: false, user_id: random_id, params: create_cell_params).get
+      CampusSolutions::Phone.new(fake: false, user_id: user_id, params: create_home_params).get
+      CampusSolutions::Phone.new(fake: false, user_id: user_id, params: create_cell_params).get
     }
 
     let(:proxy) { CampusSolutions::PhoneDelete.new(fake: false, user_id: user_id, params: params) }

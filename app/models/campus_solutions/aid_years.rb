@@ -3,6 +3,7 @@ module CampusSolutions
 
     include Cache::UserCacheExpiry
     include FinaidFeatureFlagged
+    include CampusSolutionsIdRequired
 
     def initialize(options = {})
       super options

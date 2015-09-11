@@ -2,9 +2,10 @@ module CampusSolutions
   class Title4 < PostingProxy
 
     include FinaidFeatureFlagged
+    include CampusSolutionsIdRequired
 
     def initialize(options = {})
-      super options
+      super(Settings.campus_solutions_proxy, options)
       initialize_mocks if @fake
     end
 
@@ -29,12 +30,11 @@ module CampusSolutions
     end
 
     def default_post_params
-      # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
-      {
-        EMPLID: '25738808',
-        INSTITUTION: 'UCB01',
-        LASTUPDOPRID: '1086132'
-      }
+      super.merge(
+        {
+          INSTITUTION: 'UCB01',
+          LASTUPDOPRID: '1086132'
+        })
     end
 
     def url

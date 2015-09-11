@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe HubEdoController do
-  let(:user) { '61889' }
+  let(:user_id) { '61889' }
   context 'person feed' do
     let(:feed) { :person }
     it_behaves_like 'an unauthenticated user'

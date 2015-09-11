@@ -2,6 +2,7 @@ module CampusSolutions
   class Email < PostingProxy
 
     include ProfileFeatureFlagged
+    include CampusSolutionsIdRequired
 
     def initialize(options = {})
       super(Settings.campus_solutions_proxy, options)
@@ -24,13 +25,6 @@ module CampusSolutions
 
     def xml_filename
       'email.xml'
-    end
-
-    def default_post_params
-      # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
-      {
-        EMPLID: '25738808'
-      }
     end
 
     def url
