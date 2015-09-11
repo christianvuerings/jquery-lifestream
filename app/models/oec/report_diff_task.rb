@@ -34,14 +34,6 @@ module Oec
       %w(COURSE_NAME FIRST_NAME LAST_NAME EMAIL_ADDRESS)
     end
 
-    def hashed(row)
-      id = row['COURSE_ID'].split '-'
-      ccn_plus_tag = id[2].split '_'
-      hash = { term_yr: id[0], term_cd: id[1], ccn: ccn_plus_tag[0] }
-      hash[:annotation] = ccn_plus_tag[1] if ccn_plus_tag.length == 2
-      hash
-    end
-
     def csv_row_hash(folder_titles, dept_code, opts={})
       file = @remote_drive.find_nested(folder_titles, opts)
       return if file.nil?
@@ -65,6 +57,14 @@ module Oec
       errors << "Invalid instructor_func: #{id[:instructor_func]}" if (id[:instructor_func] && !(0..4).include?(id[:instructor_func].to_i))
       record_errors(dept_code, id[:ccn], errors)
       errors.any? ? nil : id
+    end
+
+    def hashed(row)
+      id = row['COURSE_ID'].split '-'
+      ccn_plus_tag = id[2].split '_'
+      hash = { term_yr: id[0], term_cd: id[1], ccn: ccn_plus_tag[0] }
+      hash[:annotation] = ccn_plus_tag[1] if ccn_plus_tag.length == 2
+      hash
     end
 
     def record_errors(dept_code, course_id, errors)
