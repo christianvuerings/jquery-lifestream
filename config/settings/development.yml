@@ -71,6 +71,7 @@ features:
   course_manage_official_sections: true
   cs_fin_aid: true
   cs_profile: true
-  
+  cs_sir: true
+
 advising_proxy:
   fake: true
