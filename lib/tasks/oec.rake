@@ -1,6 +1,16 @@
 namespace :oec do
 
-  desc 'Import per-department course CSVs, compare with dept spreadsheets and report on non-empty diffs.'
+  desc 'Prepare course and enrollment data for upload to vendor'
+  task :export => :environment do
+    term_code = ENV['term_code']
+    raise ArgumentError, 'term_code required' unless term_code
+    Oec::ExportTask.new(
+      term_code: ENV['term_code'],
+      local_write: ENV['local_write']
+    ).run
+  end
+
+  desc 'Import per-department course CSVs, compare with dept spreadsheets and report on non-empty diffs'
   task :sis_import => :environment do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code

@@ -1,6 +1,7 @@
 describe Oec::Queries do
 
   let(:term_code) { '2015-B' }
+  let(:test_ccn) { Oec::Queries.test_data? ? '7309' : '7203' }
 
   before do
     term = OpenStruct.new({ :year => 2015, :code => 'B' })
@@ -128,4 +129,36 @@ describe Oec::Queries do
       expect(subject.map { |row| row['co_scheduled_ccns'] }).to match_array ccn_aggregates
     end
   end
+
+  let(:students_query) { Oec::Queries.students_for_cntl_nums(term_code, [test_ccn]) }
+
+  context 'looking up students' do
+    it 'contains expected result structure' do
+      expect(students_query).not_to be_empty
+      students_query.each do |row|
+        expect(row['first_name']).to be_present
+        expect(row['last_name']).to be_present
+        expect(row['email_address']).to be_present
+        expect(row['ldap_uid']).to be_present
+        expect(row['sis_id']).to be_present
+      end
+    end
+  end
+
+  let(:enrollments_query) { Oec::Queries.enrollments_for_cntl_nums(term_code, [test_ccn]) }
+
+  context 'looking up enrollments' do
+    it 'contains expected result structure' do
+      expect(enrollments_query).not_to be_empty
+      enrollments_query.each do |row|
+        expect(row['ldap_uid']).to be_present
+        expect(row['course_id']).to eq "#{term_code}-#{test_ccn.rjust(5, '0')}"
+      end
+    end
+
+    it 'returns matching student and enrollment data' do
+      expect(enrollments_query.map { |row| row['ldap_uid'] }).to match_array(students_query.map { |row| row['ldap_uid'] })
+    end
+  end
+
 end

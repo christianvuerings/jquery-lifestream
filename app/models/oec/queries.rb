@@ -12,6 +12,16 @@ module Oec
       get_courses(term_code, filter)
     end
 
+    def self.students_for_cntl_nums(term_code, course_cntl_nums)
+      return [] unless (filter = ccns_clause('c', course_cntl_nums))
+      get_enrollments(term_code, student_info_clause, filter)
+    end
+
+    def self.enrollments_for_cntl_nums(term_code, course_cntl_nums)
+      return [] unless (filter = ccns_clause('c', course_cntl_nums))
+      get_enrollments(term_code, course_and_ldap_uid_clause, filter)
+    end
+
     def self.get_courses(term_code, filter_clause)
       term_yr, term_cd = term_code.split('-')
       result = []
@@ -70,6 +80,26 @@ module Oec
       stringify_ints! result
     end
 
+    def self.get_enrollments(term_code, select_clause, ccns_clause)
+      term_yr, term_cd = term_code.split('-')
+      result = []
+      use_pooled_connection {
+        sql = <<-SQL
+          #{select_clause}
+          left outer join calcentral_course_info_vw c ON (c.course_cntl_num = r.course_cntl_num)
+          where
+              c.term_yr = '#{term_yr}' and c.term_cd = '#{term_cd}'
+              and c.section_cancel_flag is null
+              and #{ccns_clause}
+              and (r.enroll_status = 'E' OR r.enroll_status = 'C')
+              and #{columns_are_equal('c', 'r', 'term_yr', 'term_cd')}
+          order by ldap_uid
+        SQL
+        result = connection.select_all(sql)
+      }
+      stringify_ints! result
+    end
+
     def self.depts_clause(table, course_codes, import_all)
       return if course_codes.blank?
       subclauses = course_codes.group_by(&:dept_name).map do |dept_name, codes|
@@ -99,6 +129,27 @@ module Oec
         else
           "(#{subclauses.map { |subclause| "(#{subclause})" }.join(' or ')})"
       end
+    end
+
+    def self.course_and_ldap_uid_clause
+      <<-SQL
+        select distinct r.term_yr || '-' || r.term_cd || '-' || lpad(r.course_cntl_num, 5, '0') AS course_id,
+          r.student_ldap_uid AS ldap_uid
+        from calcentral_class_roster_vw r
+      SQL
+    end
+
+    def self.student_info_clause
+      <<-SQL
+        select distinct person.first_name, person.last_name,
+          person.email_address, person.ldap_uid,
+          CASE WHEN person.student_id IS NULL
+                 THEN 'UID:' || person.ldap_uid
+                 ELSE '' || person.student_id
+          END AS sis_id
+        from calcentral_class_roster_vw r
+        left outer join calcentral_person_info_vw person ON (person.ldap_uid = r.student_ldap_uid)
+      SQL
     end
 
     # Oracle has limit of 1000 terms per expression so we filter using a series of OR statements, when necessary.
