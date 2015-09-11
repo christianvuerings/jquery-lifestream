@@ -13,9 +13,55 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
       decline: {},
       check: false
     },
-    isFormValid: false
+    isFormValid: false,
+    isSubmitting: false,
+    hasError: false
   };
 
+  /**
+   * Based on everything the student enterred & the current checklist, create the response object.
+   */
+  var getResponseObject = function() {
+    var programAction = $scope.sirItem.form.option.progAction;
+    var admissionsManagement = $scope.item.checkListMgmtAdmp;
+
+    var response = {
+      acadCareer: admissionsManagement.acadCareer,
+      studentCarNbr: admissionsManagement.stdntCarNbr,
+      admApplNbr: admissionsManagement.admApplNbr,
+      applProgNbr: admissionsManagement.applProgNbr,
+      progAction: programAction
+    };
+
+    // Send some extra params when someone is declining
+    if (programAction === 'WAPP') {
+      response.actionReason = $scope.sirItem.form.decline.reasonCode;
+      response.studentResponse = $scope.sirItem.form.decline.reasonDescription;
+    }
+
+    return response;
+  };
+
+  /**
+   * Submit the SIR response from the student
+   * @return {[type]} [description]
+   */
+  $scope.submitSirReponse = function() {
+    $scope.sirItem.isSubmitting = true;
+
+    var response = getResponseObject();
+
+    return sirFactory.postSirResponse(response).then(function(data) {
+      if (_.get(data, 'data.errored')) {
+        $scope.sirItem.hasError = true;
+        $scope.sirItem.isSubmitting = false;
+      }
+    });
+  };
+
+  /**
+   * Check whether the current SIR form is valid
+   */
   var isFormValid = function(form) {
     // Make sure we at least select one option
     if (!form.option) {

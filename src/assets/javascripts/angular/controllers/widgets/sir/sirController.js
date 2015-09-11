@@ -105,12 +105,5 @@ angular.module('calcentral.controllers').controller('SirController', function(si
       .then(parseSirConfig);
   };
 
-  /**
-   * Wait till the user is authenticated
-   */
-  $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
-    if (isAuthenticated) {
-      initWorkflow();
-    }
-  });
+  initWorkflow();
 });
