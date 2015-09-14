@@ -17,7 +17,8 @@ module CampusSolutions
           FieldMapping.required(:applProgNbr, :APPL_PROG_NBR),
           FieldMapping.required(:actionReason, :ACTION_REASON),
           FieldMapping.required(:progAction, :PROG_ACTION),
-          FieldMapping.required(:studentResponse, :STDNT_RESPONSE)
+          FieldMapping.required(:responseReason, :RESPONSE_REASON),
+          FieldMapping.required(:responseDescription, :RESPONSE_DESCR)
         ]
       )
     end
