@@ -41,7 +41,7 @@ describe Oec::ReportDiffTask do
       it 'should report no diff' do
         task = Oec::ReportDiffTask.new(term_code: term_code, dept_codes: dept_code, date_time: tomorrow)
         task.run
-        expect(task.dept_with_diff_set).to_not include dept_code
+        expect(task.diff_reports_per_dept).to_not have_key dept_code
         expect(task.errors_per_dept).to be_empty
       end
     end
