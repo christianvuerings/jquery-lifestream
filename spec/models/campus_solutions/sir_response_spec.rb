@@ -14,7 +14,7 @@ describe CampusSolutions::SirResponse do
       } }
       subject { proxy.filter_updateable_params(params) }
       it 'should strip out invalid fields' do
-        expect(subject.keys.length).to eq 7
+        expect(subject.keys.length).to eq 8
         expect(subject[:bogus]).to be_nil
         expect(subject[:invalid]).to be_nil
         expect(subject[:studentCarNbr]).to eq '1234'
@@ -57,9 +57,10 @@ describe CampusSolutions::SirResponse do
         studentCarNbr: '0',
         admApplNbr: '00000097',
         applProgNbr: '0',
-        actionReason: 'PERS',
+        actionReason: 'SREQ',
         progAction: 'WAPP',
-        studentResponse: ''
+        responseReason: '',
+        responseDescription: ''
       } }
       context 'performing a real post' do
         it_behaves_like 'a proxy that got data successfully'
