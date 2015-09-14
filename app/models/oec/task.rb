@@ -8,6 +8,7 @@ module Oec
       @log = []
       @remote_drive = Oec::RemoteDrive.new
       @term_code = opts.delete :term_code
+      @date_time = opts[:date_time] || DateTime.now
       @opts = opts
       @course_code_filter = if opts[:dept_names]
                              {dept_name: opts[:dept_names].split}
@@ -47,7 +48,7 @@ module Oec
     end
 
     def datestamp
-      DateTime.now.strftime '%F'
+      @date_time.strftime '%F'
     end
 
     def export_sheet(worksheet, dest_folder)
@@ -83,13 +84,19 @@ module Oec
       find_or_create_folder(datestamp, parent)
     end
 
+    def get_supplemental_worksheet(klass)
+      if (supplemental_course_sheet = @remote_drive.find_nested [@term_code, 'supplemental_sources', klass.export_name])
+        klass.from_csv @remote_drive.export_csv(supplemental_course_sheet)
+      end
+    end
+
     def log(level, message)
       logger.send level, message
       @log << "[#{Time.now}] #{message}"
     end
 
     def timestamp
-      DateTime.now.strftime '%H%M%S'
+      @date_time.strftime '%H%M%S'
     end
 
     def upload_file(path, remote_name, type, folder)

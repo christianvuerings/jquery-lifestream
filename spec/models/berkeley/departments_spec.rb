@@ -19,6 +19,7 @@ describe Berkeley::Departments do
     expect(Berkeley::Departments.get('QLROT', concise: true)).to eq 'Military Affairs'
     expect(Berkeley::Departments.get('QKCWP', concise: true)).to eq 'College Writing'
     expect(Berkeley::Departments.get('QIIAS', concise: true)).to eq 'International and Area Studies'
+    expect(Berkeley::Departments.get('SPOLS', concise: true)).to eq 'Political Science'
   end
 
   it 'should never trim \'Haas School of Business\' and similar' do

@@ -32,24 +32,24 @@ module GoogleApps
       items = []
       parent_id = options[:parent_id] || 'root'
       query = "'#{parent_id}' in parents and trashed=false"
-      query.concat " and title='#{options[:title]}'" if options.has_key? :title
+      query.concat " and title='#{escape options[:title]}'" if options.has_key? :title
       query.concat " and mimeType='#{options[:mime_type]}'" if options.has_key? :mime_type
       page_token = nil
       begin
         parameters = { :q => query }
         parameters[:pageToken] = page_token unless page_token.nil?
-        api_response = client.execute(:api_method => drive_api.files.list, :parameters => parameters)
-        log_response api_response
-        case api_response.status
+        result = client.execute(:api_method => drive_api.files.list, :parameters => parameters)
+        log_response result
+        case result.status
           when 200
-            files = api_response.data
+            files = result.data
             items.concat files.items
             page_token = files.next_page_token
           when 404
             logger.debug 'No items found, returning empty array'
             page_token = nil
           else
-            raise Errors::ProxyError, "Error in find_items(#{options}): #{api_response.data['error']['message']}"
+            raise Errors::ProxyError, "Error in find_items(#{options}): #{result.data['error']['message']}"
             page_token = nil
         end
       end while page_token.to_s != ''
@@ -59,20 +59,26 @@ module GoogleApps
     def create_folder(title, parent_id = 'root')
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
-      metadata = { :title => title, :mimeType => 'application/vnd.google-apps.folder' }
+      metadata = {
+        :title => title,
+        :mimeType => 'application/vnd.google-apps.folder'
+      }
       dir = drive_api.files.insert.request_schema.new metadata
       dir.parents = [{ :id => parent_id }] if parent_id
       result = client.execute(:api_method => drive_api.files.insert, :body_object => dir)
       log_response result
-      success = result.status == 200
-      raise Errors::ProxyError, "Error in create_folder(#{title}, ...): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in create_folder(#{title}, ...): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def upload_file(title, description, parent_id, mime_type, file_path)
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
-      metadata = { :title => title, :description => description, :mimeType => mime_type }
+      metadata = {
+        :title => title,
+        :description => description,
+        :mimeType => mime_type
+      }
       file = drive_api.files.insert.request_schema.new metadata
       # Target directory is optional
       file.parents = [{ :id => parent_id }] if parent_id
@@ -83,29 +89,27 @@ module GoogleApps
         :media => media,
         :parameters => { :uploadType => 'multipart', :alt => 'json'})
       log_response result
-      success = result.status == 200
-      raise Errors::ProxyError, "Error in upload_file(#{title}): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in upload_file(#{title}): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
-    def trash_item(id)
+    def trash_item(item, opts={})
       client = get_google_api
       drive = client.discovered_api('drive', 'v2')
-      result = client.execute(
-        :api_method => drive.files.trash,
-        :parameters => { :fileId => id })
+      api_method = opts[:permanently_delete] ? drive.files.delete : drive.files.trash
+      result = client.execute(:api_method => api_method, :parameters => { :fileId => item.id })
       log_response result
-      success = result.status == 200
-      raise Errors::ProxyError, "Error in trash_item(#{id}): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in trash_item(#{id}): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def empty_trash
       client = get_google_api
       drive = client.discovered_api('drive', 'v2')
-      result = client.execute(:api_method => drive.files.trash)
+      result = client.execute(:api_method => drive.files.empty_trash)
       log_response result
-      raise Errors::ProxyError, "Error in empty_trash: #{result.data['error']['message']}" unless result.status == 200
+      raise Errors::ProxyError, "Error in empty_trash: #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def copy_item_to_folder(item, folder_id, copy_title=nil)
@@ -127,9 +131,8 @@ module GoogleApps
         :parameters => { :fileId => id }
       )
       log_response result
-      success = result.status == 200
-      raise Errors::ProxyError, "Error in copy_item(#{id}): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in copy_item(#{id}): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def add_parent(id, parent_id)
@@ -142,9 +145,8 @@ module GoogleApps
         :parameters => { :fileId => id }
       )
       log_response result
-      success = result.status == 200
-      raise Errors::ProxyError, "Error in add_parent(#{id}, #{parent_id}): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in add_parent(#{id}, #{parent_id}): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def remove_parent(id, parent_id)
@@ -158,10 +160,8 @@ module GoogleApps
         }
       )
       log_response result
-      # This call may return an empty 204 on success.
-      success = result.status <= 204
-      raise Errors::ProxyError, "Error in remove_parent(#{id}, #{parent_id}): #{result.data['error']['message']}" unless success
-      success ? result.data : nil
+      raise Errors::ProxyError, "Error in remove_parent(#{id}, #{parent_id}): #{result.data['error']['message']}" if result.error?
+      result.data
     end
 
     def folder_id(folder)
@@ -172,7 +172,7 @@ module GoogleApps
       folder ? folder.title : 'root'
     end
 
-    protected
+    private
 
     def get_google_api
       if @client.nil?
@@ -202,6 +202,10 @@ module GoogleApps
         api_response.request.uri
       end
       logger.debug "Google Drive API request #{request_description} returned status #{api_response.status}"
+    end
+
+    def escape(arg)
+      arg.gsub('\'', %q(\\\'))
     end
 
   end

@@ -15,7 +15,7 @@ module Oec
     def import_courses(worksheet, course_codes)
       course_codes_by_ccn = {}
       cross_listed_ccns = Set.new
-      Oec::Queries.courses_for_codes(@term_code, course_codes).each do |course_row|
+      Oec::Queries.courses_for_codes(@term_code, course_codes, @opts[:import_all]).each do |course_row|
         if import_course(worksheet, course_row)
           course_codes_by_ccn[course_row['course_cntl_num']] ||= course_row.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
           cross_listed_ccns.merge [course_row['cross_listed_ccns'], course_row['co_scheduled_ccns']].join(',').split(',').reject(&:blank?)
@@ -30,6 +30,8 @@ module Oec
       end
       set_cross_listed_values(worksheet, course_codes_by_ccn)
       flag_joint_faculty_gsi worksheet
+      merge_supplemental_data(worksheet, course_codes)
+      set_term_dates worksheet
     end
 
     def import_course(worksheet, course)
@@ -49,7 +51,7 @@ module Oec
           false
         else
           course['course_id_2'] = course['course_id']
-          course['dept_form'] = worksheet.dept_code unless course['cross_listed_flag'].present?
+          course['dept_form'] = worksheet.export_name.upcase unless course['cross_listed_flag'].present?
           roles = Berkeley::UserRoles.roles_from_campus_row course
           course['evaluation_type'] = if roles[:student]
                                         'G'
@@ -111,6 +113,45 @@ module Oec
           end
         end
       end
+    end
+
+    def merge_supplemental_data(worksheet, course_codes)
+      return unless (supplemental_course_sheet = get_supplemental_worksheet Oec::Courses)
+
+      # These columns in the 'courses' worksheet specify match conditions for rows to update.
+      select_columns = %w(DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM)
+      # The remaining columns hold data to be merged.
+      update_columns = worksheet.headers - select_columns
+
+      supplemental_course_sheet.each do |supplemental_row|
+        next unless course_codes.find { |code| code.matches_row? supplemental_row }
+
+        rows_to_update = select_columns.inject(worksheet) do |worksheet_selection, column|
+          if supplemental_row[column].blank? || worksheet_selection.none?
+            worksheet_selection
+          else
+            worksheet_selection.select { |worksheet_row| worksheet_row[column] == supplemental_row[column] }
+          end
+        end
+        if rows_to_update.any?
+          rows_to_update.each do |row|
+            row.update supplemental_row.select { |k,v| update_columns.include?(k) && v.present? }
+          end
+        else
+          row_key = select_columns.map { |col| supplemental_row[col] }.join('-')
+          worksheet[row_key] = supplemental_row
+        end
+      end
+    end
+
+    def set_term_dates(worksheet)
+      term_slug = Berkeley::TermCodes.to_slug(*@term_code.split('-'))
+      return unless (term = Berkeley::Terms.fetch.campus[term_slug])
+      term_dates = {
+        'START_DATE' => term.classes_start.strftime('%m-%d-%Y'),
+        'END_DATE' => term.instruction_end.strftime('%m-%d-%Y')
+      }
+      worksheet.each { |row| row.update(term_dates) unless row['MODULAR_COURSE'].present? }
     end
 
   end

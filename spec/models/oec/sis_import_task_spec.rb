@@ -1,9 +1,16 @@
 describe Oec::SisImportTask do
-  let(:term_code) { 'fake_term' }
+  let(:term_code) { '2015-B' }
   let(:task) { Oec::SisImportTask.new(term_code: term_code) }
 
   let(:fake_remote_drive) { double() }
-  before(:each) { allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive }
+  let(:supplemental_courses_csv) { Oec::Courses.new.headers.join(',') }
+
+  before(:each) do
+    allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
+    allow(fake_remote_drive).to receive(:find_nested).and_return mock_google_drive_item
+    allow(fake_remote_drive).to receive(:export_csv).and_return supplemental_courses_csv
+    allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
+  end
 
   describe 'CSV export' do
     subject do
@@ -12,11 +19,20 @@ describe Oec::SisImportTask do
       CSV.read(courses.csv_export_path).slice(1..-1).map { |row| Hash[ courses.headers.zip(row) ]}
     end
 
-    let(:courses) { Oec::SisImportSheet.new(dept_code: dept_name) }
+    let(:l4_codes) do
+      {
+        'MATH' => 'PMATH',
+        'STAT' => 'PSTAT',
+        'ANTHRO' => 'SZANT',
+        'POL SCI' => 'SPOLS'
+      }
+    end
+
+    let(:courses) { Oec::SisImportSheet.new(dept_code: l4_codes[dept_name]) }
     let(:courses_by_ccn) { {} }
     let(:courses_for_dept) { [] }
     let(:additional_cross_listings) { Set.new }
-    let(:fake_code_mapping) { [Oec::CourseCode.new(dept_name: dept_name, catalog_id: nil, dept_code: dept_name, include_in_oec: true)] }
+    let(:fake_code_mapping) { [Oec::CourseCode.new(dept_name: dept_name, catalog_id: nil, dept_code: l4_codes[dept_name], include_in_oec: true)] }
     let(:course_id_column) { subject.map { |row| row['COURSE_ID'] } }
 
     def load_fixture_courses
@@ -38,7 +54,7 @@ describe Oec::SisImportTask do
     before(:each) do
       load_fixture_courses
       expect(Oec::Queries).to receive(:courses_for_codes)
-        .with(term_code, fake_code_mapping).exactly(1).times
+        .with(term_code, fake_code_mapping, nil).exactly(1).times
         .and_return courses_for_dept
       expect(Oec::Queries).to receive(:courses_for_cntl_nums)
         .with(term_code, additional_cross_listings.to_a).exactly(1).times
@@ -53,17 +69,14 @@ describe Oec::SisImportTask do
           if row['CROSS_LISTED_FLAG'] == 'Y'
             expect(row['DEPT_FORM']).to be_nil
           else
-            expect(row['DEPT_FORM']).to be_present
+            expect(row['DEPT_FORM']).to eq friendly_dept_name
           end
           expect(row['BLUE_ROLE']).to eq '23'
-          %w(EVALUATE MODULAR_COURSE START_DATE END_DATE).each do |key|
-            expect(row[key]).to be_nil
-          end
-          %w(COURSE_ID COURSE_NAME DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM).each do |key|
+          expect(row['EVALUATE']).to be_nil
+          %w(COURSE_ID COURSE_NAME DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM EVALUATION_TYPE START_DATE END_DATE).each do |key|
             expect(row[key]).to be_present
           end
           expect(%w(P S)).to include row['PRIMARY_SECONDARY_CD']
-          expect(['F', 'G', nil]).to include row['EVALUATION_TYPE']
           expect(row['COURSE_ID_2']).to eq row['COURSE_ID']
         end
       end
@@ -71,6 +84,7 @@ describe Oec::SisImportTask do
 
     context 'ANTHRO dept' do
       let(:dept_name) { 'ANTHRO' }
+      let(:friendly_dept_name) { 'ANTHROPOLOGY' }
       let(:expected_ids) { %w(2015-B-02567) }
       include_examples 'expected CSV structure'
       it 'should not include IND course' do
@@ -80,6 +94,7 @@ describe Oec::SisImportTask do
 
     context 'MATH dept' do
       let(:dept_name) { 'MATH' }
+      let(:friendly_dept_name) { 'MATHEMATICS' }
       let(:expected_ids) { %w(2015-B-54432 2015-B-54441 2015-B-87672 2015-B-87675) }
       before { allow(Oec::CourseCode).to receive(:included?).with('STAT', anything).and_return true  }
       include_examples 'expected CSV structure'
@@ -87,6 +102,7 @@ describe Oec::SisImportTask do
 
     context 'POL SCI dept' do
       let(:dept_name) { 'POL SCI' }
+      let(:friendly_dept_name) { 'POLITICAL SCIENCE' }
       let(:expected_ids) { %w(2015-B-87690 2015-B-72198 2015-B-72198_GSI 2015-B-72199) }
       include_examples 'expected CSV structure'
       it 'should not include GRP course' do
@@ -99,10 +115,51 @@ describe Oec::SisImportTask do
         expect(joint_course_rows.find { |row| row['COURSE_ID'] == '2015-B-72198' }['EVALUATION_TYPE']).to eq 'F'
         expect(joint_course_rows.find { |row| row['COURSE_ID'] == '2015-B-72198_GSI' }['EVALUATION_TYPE']).to eq 'G'
       end
+
+      context 'supplemental data overrides' do
+        let(:supplemental_courses_csv) { File.read Rails.root.join('fixtures', 'oec', 'supplemental_sources_courses.csv') }
+        let(:expected_ids) { %w(2015-B-87690 2015-B-72198 2015-B-72198_GSI 2015-B-72199) }
+
+        include_examples 'expected CSV structure'
+
+        it 'adds modular course data to matching rows only' do
+          subject.each do |row|
+            if row['COURSE_NAME'].start_with? 'POL SCI 115'
+              expect(row['MODULAR_COURSE']).to eq 'Y'
+              expect(row['START_DATE']).to eq '01-27-2015'
+              expect(row['END_DATE']).to eq '05-16-2015'
+            else
+              expect(row['MODULAR_COURSE']).to be_blank
+              expect(row['START_DATE']).to eq '01-20-2015'
+              expect(row['END_DATE']).to eq '05-08-2015'
+            end
+          end
+        end
+
+        context 'non-matching rows in supplemental data' do
+          let(:supplemental_courses_csv) do
+            csv = File.read Rails.root.join('fixtures', 'oec', 'supplemental_sources_courses.csv')
+            csv << "\n,,,,,POL SCI,215,,,,,,,Y,01-20-2015,05-16-2015"
+            csv << "\n,,,,,FRENCH,215,,,,,,,Y,01-20-2015,05-16-2015"
+          end
+
+          it 'appends unmatched row with course code matching worksheet' do
+            expect(subject.last['DEPT_NAME']).to eq 'POL SCI'
+            expect(subject.last['CATALOG_ID']).to eq '215'
+            expect(subject.last['MODULAR_COURSE']).to eq 'Y'
+            expect(subject.last['COURSE_ID']).to be_blank
+          end
+
+          it 'does not append unmatched row with course code not matching worksheet' do
+            expect(subject.find { |row| row['DEPT_NAME'] == 'FRENCH' }).to be_nil
+          end
+        end
+      end
     end
 
     context 'STAT dept' do
       let(:dept_name) { 'STAT' }
+      let(:friendly_dept_name) { 'STATISTICS' }
       let(:expected_ids) { %w(2015-B-87672 2015-B-87673 2015-B-87675 2015-B-54432 2015-B-54441 2015-B-72199 2015-B-87690 2015-B-87693) }
       before { allow(Oec::CourseCode).to receive(:included?).with('MATH', anything).and_return math_included  }
       let(:math_included) { true }
@@ -140,6 +197,22 @@ describe Oec::SisImportTask do
           it { expect(room_share).to be_empty }
         end
       end
+
+      context 'supplemental data overrides' do
+        let(:supplemental_courses_csv) { File.read Rails.root.join('fixtures', 'oec', 'supplemental_sources_courses.csv') }
+
+        it 'overrides evaluation types in matching rows only' do
+          subject.each do |row|
+            if row['DEPT_NAME'] == 'STAT' and row['INSTRUCTION_FORMAT'] == 'LEC'
+              expect(row['EVALUATION_TYPE']).to eq 'LECT'
+            elsif row['DEPT_NAME'] == 'STAT' and row['INSTRUCTION_FORMAT'] == 'DIS'
+              expect(row['EVALUATION_TYPE']).to eq 'DISC'
+            else
+              expect(%w(F G)).to include row['EVALUATION_TYPE']
+            end
+          end
+        end
+      end
     end
 
     describe 'expected network operations' do
@@ -149,15 +222,14 @@ describe Oec::SisImportTask do
       let(:now) { '092222' }
       let(:logfile) { "#{now}_sis_import_task.log" }
       let(:dept_name) { 'MATH' }
-      let(:export_file) { "#{dept_name}.csv" }
+      let(:sheet_name) { 'Mathematics' }
 
       let(:imports_today_folder) { mock_google_drive_item today }
       let(:reports_today_folder) { mock_google_drive_item today }
 
       before do
         allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H%M%S')
-        allow(Oec::CourseCode).to receive(:by_dept_code).and_return({dept_name => fake_code_mapping})
-        allow(fake_remote_drive).to receive(:find_nested).and_return(mock_google_drive_item)
+        allow(Oec::CourseCode).to receive(:by_dept_code).and_return({l4_codes[dept_name] => fake_code_mapping})
       end
 
       it 'should upload a department csv and a log file' do
@@ -165,8 +237,8 @@ describe Oec::SisImportTask do
           .with(today, anything, anything)
           .and_return(imports_today_folder, reports_today_folder)
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
-          .with(kind_of(Oec::Worksheet), dept_name, (Oec::Worksheet), imports_today_folder, anything)
-          .and_return mock_google_drive_item(dept_name)
+          .with(kind_of(Oec::Worksheet), sheet_name, (Oec::Worksheet), imports_today_folder, anything)
+          .and_return mock_google_drive_item(sheet_name)
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
           .with(kind_of(Pathname), logfile, 'text/plain', reports_today_folder, anything)
           .and_return mock_google_drive_item(logfile)
