@@ -20,10 +20,11 @@ module Oec
 
     def analyze(dept_code)
       dept_name = Berkeley::Departments.get(dept_code, concise: true)
+      return nil if dept_name.nil?
       sis_data = csv_row_hash([@term_code, 'imports', datestamp, dept_name], dept_code)
-      record_errors(dept_code, @term_code, "#{dept_name} has no #{datestamp} 'imports' spreadsheet") && return unless sis_data.any?
+      record_error(dept_code, @term_code, "#{dept_name} has no #{datestamp} 'imports' spreadsheet") && return unless sis_data
       dept_data = csv_row_hash([@term_code, 'departments', dept_name, 'Courses'], dept_code)
-      record_errors(dept_code, @term_code, "#{dept_name} has no 'Courses' spreadsheet") && return unless dept_data.any?
+      record_error(dept_code, @term_code, "#{dept_name} has no 'Courses' spreadsheet") && return unless dept_data
       keys_of_rows_with_diff = []
       intersection = (sis_keys = sis_data.keys) & (dept_keys = dept_data.keys)
       (sis_keys | dept_keys).select do |key|
@@ -51,7 +52,7 @@ module Oec
         dept_row = dept_data[key]
         ldap_uid = sis_row ? sis_row['LDAP_UID'] : dept_row['LDAP_UID']
         id = "#{key[:term_yr]}-#{key[:term_cd]}-#{key[:ccn]}"
-        id << key[:ldap_uid] unless key[:ldap_uid].to_s.empty?
+        id << "-#{key[:ldap_uid]}" unless key[:ldap_uid].to_s.empty?
         diff_row = { '+/-' => diff_type_symbol(sis_row, dept_row), 'KEY' => id, 'LDAP_UID' => ldap_uid }
         columns_to_compare.each do |column|
           diff_row["DB_#{column}"] = sis_row ? sis_row[column] : nil
@@ -71,11 +72,12 @@ module Oec
       %w(COURSE_NAME FIRST_NAME LAST_NAME EMAIL_ADDRESS INSTRUCTOR_FUNC)
     end
 
-    def csv_row_hash(folder_titles, dept_code, opts={})
-      return unless (file = @remote_drive.find_nested(folder_titles, opts))
+    def csv_row_hash(folder_titles, dept_code)
+      return unless (file = @remote_drive.find_nested(folder_titles, @opts))
       hash = {}
       csv = @remote_drive.export_csv file
       Oec::SisImportSheet.from_csv(csv, dept_code: dept_code).each do |row|
+        row = Oec::Worksheet.capitalize_keys row
         next unless (id_hash = extract_id(dept_code, row))
         hash[id_hash] = row
       end
@@ -91,7 +93,7 @@ module Oec
       errors << "Invalid ldap_uid: #{id[:ldap_uid]}" if (id[:ldap_uid] && id[:ldap_uid].to_i <= 0)
       id[:instructor_func] = row['INSTRUCTOR_FUNC'] unless row['INSTRUCTOR_FUNC'].blank?
       errors << "Invalid instructor_func: #{id[:instructor_func]}" if (id[:instructor_func] && !(0..4).include?(id[:instructor_func].to_i))
-      record_errors(dept_code, id[:ccn], errors)
+      errors.each { |error| record_error(dept_code, id[:ccn], error) }
       errors.any? ? nil : id
     end
 
@@ -103,22 +105,24 @@ module Oec
       hash
     end
 
-    def record_errors(dept_code, course_id, errors)
-      return unless errors.any?
+    def record_error(dept_code, ccn, error)
+      return unless error
       @errors_per_dept[dept_code] ||= {}
-      @errors_per_dept[dept_code][course_id] ||= []
-      @errors_per_dept[dept_code][course_id].concat errors
+      @errors_per_dept[dept_code][ccn] ||= []
+      @errors_per_dept[dept_code][ccn] << error
     end
 
     def log_errors
       message = ''
       @errors_per_dept.each do |dept_code, errors_hash|
+        message.concat <<-summary
+
+#{Berkeley::Departments.get(dept_code)} errors
+        summary
         errors_hash.each do |id, errors|
           message.concat <<-summary
-
-          #{Berkeley::Departments.get(dept_code)} errors
-            #{id}:
-              #{errors.join("\n").concat "\n"}
+  #{id}:
+    #{errors.join("\n").concat "\n"}
           summary
         end
       end
