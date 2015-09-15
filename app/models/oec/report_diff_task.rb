@@ -122,7 +122,7 @@ module Oec
         errors_hash.each do |id, errors|
           message.concat <<-summary
   #{id}:
-    #{errors.join("\n").concat "\n"}
+    #{errors.join("\n    ").concat "\n"}
           summary
         end
       end

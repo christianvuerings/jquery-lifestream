@@ -2,6 +2,7 @@ describe Oec::ReportDiffTask do
 
   context 'Report diff on fake data' do
     let(:term_code) { '2015-D' }
+    # Map dept_code to test-data filenames under fixtures/oec
     let(:dept_code_mappings) {
       {
         'SZANT' => 'ANTHRO',
@@ -11,8 +12,6 @@ describe Oec::ReportDiffTask do
       }
     }
     let(:now) { DateTime.now }
-    let(:datetime) { now.strftime('%F') }
-    let(:remote_drive) { Oec::RemoteDrive.new }
     let (:fake_remote_drive) { double }
     subject { Oec::ReportDiffTask.new(term_code: term_code, dept_codes: dept_code_mappings.keys, local_write: true) }
 
@@ -31,7 +30,7 @@ describe Oec::ReportDiffTask do
       end
       dept_code_mappings.each do |dept_code, dept_name|
         friendly_name = Berkeley::Departments.get(dept_code, concise: true)
-        imports_path = [term_code, 'imports', datetime, friendly_name]
+        imports_path = [term_code, 'imports', now.strftime('%F'), friendly_name]
         if dept_name.nil?
           expect(fake_remote_drive).to receive(:find_nested).with(imports_path, anything).and_return nil
         else
