@@ -20,7 +20,6 @@ module Oec
 
     def analyze(dept_code)
       dept_name = Berkeley::Departments.get(dept_code, concise: true)
-      return nil if dept_name.nil?
       sis_data = csv_row_hash([@term_code, 'imports', datestamp, dept_name], dept_code)
       record_error(dept_code, @term_code, "#{dept_name} has no #{datestamp} 'imports' spreadsheet") && return unless sis_data
       dept_data = csv_row_hash([@term_code, 'departments', dept_name, 'Courses'], dept_code)
