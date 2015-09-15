@@ -184,8 +184,9 @@ module CanvasCsv
 
     def add_instructor_to_section(canvas_section)
       worker = CanvasLti::CourseAddUser.new(user_id: @uid, canvas_course_id: @import_data['canvas_course_id'])
-      if canvas_section &&
-        worker.add_user_to_course_section(@uid, 'Teacher', "sis_section_id:#{canvas_section['section_id']}")
+      teacher_role = (worker.defined_course_roles.select {|r| r['label'] == 'Teacher'}).first
+      if canvas_section && teacher_role &&
+        worker.add_user_to_course_section(@uid, teacher_role['id'], "sis_section_id:#{canvas_section['section_id']}")
         logger.warn "Successfully added instructor to section #{canvas_section['section_id']} as a teacher"
         background_job_complete_step 'Added instructor to course site'
       else
