@@ -11,6 +11,13 @@ describe HubEdos::UserAttributes do
     expect(subject[:first_name]).to eq 'Oski'
     expect(subject[:last_name]).to eq 'Bear'
     expect(subject[:person_name]).to eq 'Oski Bear'
+    expect(subject[:ug_grad_flag]).to eq 'U'
+    expect(subject[:email_address]).to eq 'oski@berkeley.edu'
+    expect(subject[:official_bmail_address]).to eq 'oski@berkeley.edu'
+    expect(subject[:educ_level]).to eq 'Sophomore'
+    expect(subject[:tot_enroll_unit]).to eq 10
+    expect(subject[:cal_residency_flag]).to eq 'Y'
+
   end
 
 end
