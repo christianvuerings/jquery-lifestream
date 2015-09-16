@@ -41,7 +41,7 @@ module CanvasCsv
           logger.warn "No LDAP UID login found for Canvas user #{canvas_user_id}; will skip"
         else
           login_id = user_logins[0]['id']
-          logger.warn "Changing SIS ID for user #{canvas_user_id} to #{new_sis_user_id}"
+          logger.debug "Changing SIS ID for user #{canvas_user_id} to #{new_sis_user_id}"
           response = logins_proxy.change_sis_user_id(login_id, new_sis_user_id)
           return true if response[:statusCode] == 200
         end
@@ -146,6 +146,7 @@ module CanvasCsv
           )
         end
         if old_account_data['user_id'] != new_account_data['user_id']
+          logger.warn "Will change SIS ID for user sis_login_id:#{old_account_data['login_id']} from #{old_account_data['user_id']} to #{new_account_data['user_id']}"
           @sis_user_id_changes["sis_login_id:#{old_account_data['login_id']}"] = new_account_data['user_id']
         end
         unless self.class.provisioned_account_eq_sis_account?(old_account_data, new_account_data)
