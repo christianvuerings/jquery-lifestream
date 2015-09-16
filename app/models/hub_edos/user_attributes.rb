@@ -25,8 +25,9 @@ module HubEdos
         extract_emails(edo, result)
         extract_education_level(edo, result)
         extract_total_units(edo, result)
-        extract_residency(edo, result)
         extract_special_program_code(edo, result)
+        extract_reg_status(edo, result)
+        extract_residency(edo, result)
         result[:statusCode] = 200
       else
         logger.error "Could not get Student EDO data for uid #{@uid}"
@@ -59,6 +60,7 @@ module HubEdos
     def extract_affiliations(edo, result)
       # TODO affiliations needs more business analysis and transformation.
       result[:affiliations] = edo[:affiliations]
+      result[:roles] = [] # TODO fill in roles with UserRoles#roles_from_affiliations logic
       result[:affiliations].each do |affiliation|
         if affiliation[:type][:code] == 'UNDERGRAD' && affiliation[:statusCode] == 'ACT'
           result[:ug_grad_flag] = 'U'
@@ -80,7 +82,7 @@ module HubEdos
     end
 
     def extract_education_level(edo, result)
-      result[:educ_level] = edo[:currentRegistration][:academicLevel][:level][:description]
+      result[:education_level] = edo[:currentRegistration][:academicLevel][:level][:description]
     end
 
     def extract_total_units(edo, result)
@@ -89,14 +91,6 @@ module HubEdos
           result[:tot_enroll_unit] = term_unit[:unitsEnrolled]
           break
         end
-      end
-    end
-
-    def extract_residency(edo, result)
-      if edo[:residency][:official][:code] == 'RES'
-        result[:cal_residency_flag] = 'Y'
-      else
-        result[:cal_residency_flag] = 'N'
       end
     end
 
@@ -109,6 +103,30 @@ module HubEdos
           break
         end
       end
+    end
+
+    def extract_reg_status(edo, result)
+      # TODO populate based on SISRP-7581 explanation. Incorporate full structure from RegStatusTranslator
+      result[:reg_status] = {}
+    end
+
+    def extract_residency(edo, result)
+      if edo[:residency][:official][:code] == 'RES'
+        result[:cal_residency_flag] = 'Y'
+      else
+        result[:cal_residency_flag] = 'N'
+      end
+      if term_transition?
+        result[:california_residency] = nil
+        result[:reg_status][:transitionTerm] = true
+      else
+        # TODO get full status from CalResidencyTranslator
+        #result[:california_residency] = cal_residency_translator.translate result[:cal_residency_flag]
+      end
+    end
+
+    def term_transition?
+      Berkeley::Terms.fetch.current.sis_term_status != 'CT'
     end
 
   end

@@ -15,7 +15,7 @@ describe HubEdos::UserAttributes do
     expect(subject[:affiliations]).to be
     expect(subject[:email_address]).to eq 'oski@berkeley.edu'
     expect(subject[:official_bmail_address]).to eq 'oski@berkeley.edu'
-    expect(subject[:educ_level]).to eq 'Sophomore'
+    expect(subject[:education_level]).to eq 'Sophomore'
     expect(subject[:tot_enroll_unit]).to eq 10
     expect(subject[:cal_residency_flag]).to eq 'Y'
     expect(subject[:education_abroad]).to be_truthy
