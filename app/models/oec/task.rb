@@ -112,6 +112,7 @@ module Oec
     def write_log
       log_name = "#{timestamp}_#{self.class.name.demodulize.underscore}.log"
       log :debug, "Exporting log file '#{log_name}'"
+      FileUtils.mkdir_p LOG_DIRECTORY unless File.exists? LOG_DIRECTORY
       log_path = LOG_DIRECTORY.join log_name
       File.open(log_path, 'wb') { |f| f.puts @log }
       if @opts[:local_write]
