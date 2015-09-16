@@ -50,12 +50,54 @@ describe Oec::ReportDiffTask do
       expect(subject.errors_per_dept).to have(2).items
       expect(subject.errors_per_dept['FOO']).to have(1).item
       expect(subject.errors_per_dept['PSTAT']).to have(2).item
-      expect(subject.errors_per_dept['PSTAT']['99999']).to have(1).item
+      expect(subject.errors_per_dept['PSTAT']['99999']).to have(2).item
       expect(subject.errors_per_dept['PSTAT']['99999'][0]).to include 'Invalid CCN annotation'
-      expect(subject.errors_per_dept['PSTAT']['87673']).to have(2).items
-      expect(subject.errors_per_dept['PSTAT']['87673'][0]).to include 'Invalid ldap_uid'
-      expect(subject.errors_per_dept['PSTAT']['87673'][1]).to include 'Invalid instructor_func'
+      expect(subject.errors_per_dept['PSTAT']['99999'][1]).to include 'Invalid ldap_uid'
+      expect(subject.errors_per_dept['PSTAT']['11111']).to have(1).items
+      expect(subject.errors_per_dept['PSTAT']['11111'][0]).to include 'Invalid instructor_func'
     end
-  end
 
+    it 'should report STAT diff' do
+      expect(subject.diff_reports_per_dept).to have(1).item
+      diff_report = subject.diff_reports_per_dept['PSTAT']
+      expect(diff_report).to be_an Oec::DiffReport
+      actual_diff = diff_report.to_a
+      expect(actual_diff).to have(8).items
+      expected_diff = {
+        '2015-B-87672-10316' => {
+          '+/-' => ' ',
+          'COURSE_NAME' => 'different_course_name',
+          'DB_COURSE_NAME' => 'STAT C205A LEC 001 - PROB THEORY',
+          'EMAIL_ADDRESS' => 'different_email_address@berkeley.edu',
+          'DB_EMAIL_ADDRESS' => 'blanco@berkeley.edu'
+        },
+        '2015-B-87690-12345678' => {
+          '+/-' => '-',
+          'COURSE_NAME' => nil,
+          'DB_COURSE_NAME' => 'STAT C236A LEC 001 - STATS SOCI SCI',
+          'EMAIL_ADDRESS' => nil,
+          'DB_EMAIL_ADDRESS' => 'stat_supervisor@berkeley.edu'
+        },
+        '2015-B-11111' => {
+          '+/-' => '+',
+          'COURSE_NAME' => 'Added by dept',
+          'DB_COURSE_NAME' => nil,
+          'EMAIL_ADDRESS' => 'trump@berkeley.edu',
+          'DB_EMAIL_ADDRESS' => nil
+        }
+      }
+      actual_diff.each do |row|
+        row_key = row['KEY']
+        if expected_diff.has_key? row_key
+          expected_diff[row_key].each do |key, expected|
+            actual = row[key]
+            expect(expected).to eq(actual), "#{row_key}: expected '#{expected}', got '#{actual}' where key=#{key}"
+          end
+          expected_diff.delete row_key
+        end
+      end
+      expect(expected_diff).to be_empty
+    end
+
+  end
 end

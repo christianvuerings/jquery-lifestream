@@ -90,10 +90,11 @@ module Oec
       errors << "Invalid CCN annotation: #{annotation}" if (annotation && !%w(A B GSI CHEM MCB).include?(annotation))
       id[:ldap_uid] = row['LDAP_UID'] unless row['LDAP_UID'].blank?
       errors << "Invalid ldap_uid: #{id[:ldap_uid]}" if (id[:ldap_uid] && id[:ldap_uid].to_i <= 0)
-      id[:instructor_func] = row['INSTRUCTOR_FUNC'] unless row['INSTRUCTOR_FUNC'].blank?
-      errors << "Invalid instructor_func: #{id[:instructor_func]}" if (id[:instructor_func] && !(0..4).include?(id[:instructor_func].to_i))
+      # instructor_func is NOT part of composite key but we do validate.
+      instructor_func = row['INSTRUCTOR_FUNC'] unless row['INSTRUCTOR_FUNC'].blank?
+      errors << "Invalid instructor_func: #{instructor_func}" if (instructor_func && !(0..4).include?(instructor_func.to_i))
       errors.each { |error| record_error(dept_code, id[:ccn], error) }
-      errors.any? ? nil : id
+      id
     end
 
     def hashed(row)
