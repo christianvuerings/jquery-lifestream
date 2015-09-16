@@ -15,13 +15,17 @@ namespace :oec do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
     [Oec::SisImportTask, Oec::ReportDiffTask].each do |klass|
-      klass.new(
+      success = klass.new(
         term_code: term_code,
         local_write: ENV['local_write'].present?,
         import_all: ENV['import_all'].present?,
         dept_names: ENV['dept_names'],
         dept_codes: ENV['dept_codes']
       ).run
+      unless success
+        Rails.logger.error "Abort due to fatal error in #{klass}. Any remaining tasks will not run."
+        break
+      end
     end
   end
 
