@@ -47,14 +47,13 @@ describe Oec::ReportDiffTask do
     }
 
     it 'should log errors' do
-      expect(subject.errors_per_dept).to have(2).items
-      expect(subject.errors_per_dept['FOO']).to have(1).item
-      expect(subject.errors_per_dept['PSTAT']).to have(2).item
-      expect(subject.errors_per_dept['PSTAT']['99999']).to have(2).item
-      expect(subject.errors_per_dept['PSTAT']['99999'][0]).to include 'Invalid CCN annotation'
-      expect(subject.errors_per_dept['PSTAT']['99999'][1]).to include 'Invalid ldap_uid'
-      expect(subject.errors_per_dept['PSTAT']['11111']).to have(1).items
-      expect(subject.errors_per_dept['PSTAT']['11111'][0]).to include 'Invalid instructor_func'
+      expect(subject.errors).to have(2).items
+      expect(subject.errors['FOO']).to have(1).item
+      expect(subject.errors['PSTAT']).to have(2).item
+      expect(subject.errors['PSTAT']['99999']).to have(2).item
+      expect(subject.errors['PSTAT']['99999'].keys).to match_array ['Invalid CCN annotation: wrong', 'Invalid ldap_uid: bad_data']
+      expect(subject.errors['PSTAT']['11111']).to have(1).items
+      expect(subject.errors['PSTAT']['11111'].keys.first).to include 'Invalid instructor_func'
     end
 
     it 'should report STAT diff' do
