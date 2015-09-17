@@ -18,5 +18,12 @@ module Oec
       )
     end
 
+    def matching_dept_name(dept_name)
+      return [] if dept_name.blank?
+      select do |row|
+        (1..5).map { |i| row["DEPT_NAME_#{i}"] }.include? dept_name
+      end
+    end
+
   end
 end

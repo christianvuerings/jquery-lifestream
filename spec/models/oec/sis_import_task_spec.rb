@@ -69,7 +69,7 @@ describe Oec::SisImportTask do
           if row['CROSS_LISTED_FLAG'] == 'Y'
             expect(row['DEPT_FORM']).to be_nil
           else
-            expect(row['DEPT_FORM']).to eq friendly_dept_name
+            expect(row['DEPT_FORM']).to eq row['DEPT_NAME']
           end
           expect(row['BLUE_ROLE']).to eq '23'
           expect(row['EVALUATE']).to be_nil

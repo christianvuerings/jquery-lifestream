@@ -4,6 +4,7 @@ describe Oec::ExportTask do
 
   let(:fake_remote_drive) { double() }
   let(:merged_course_confirmations_csv) { File.read Rails.root.join('fixtures', 'oec', 'merged_course_confirmations.csv') }
+  let(:merged_supervisor_confirmations_csv) { File.read Rails.root.join('fixtures', 'oec', 'merged_supervisor_confirmations.csv') }
 
   def read_exported_csv(filename)
     File.read Rails.root.join('tmp', 'oec', "#{filename}.csv")
@@ -36,7 +37,8 @@ describe Oec::ExportTask do
   before(:each) do
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
     allow(fake_remote_drive).to receive(:find_nested).and_return mock_google_drive_item
-    allow(fake_remote_drive).to receive(:export_csv).and_return merged_course_confirmations_csv
+    allow(fake_remote_drive).to receive(:export_csv)
+      .and_return(merged_course_confirmations_csv, merged_supervisor_confirmations_csv)
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
 
     allow(Oec::Queries).to receive(:students_for_cntl_nums).and_return student_data_rows
@@ -48,6 +50,8 @@ describe Oec::ExportTask do
   let(:students) { Oec::Students.from_csv(read_exported_csv 'students') }
   let(:course_instructors) { Oec::CourseInstructors.from_csv(read_exported_csv 'course_instructors') }
   let(:course_students) { Oec::CourseStudents.from_csv(read_exported_csv 'course_students') }
+  let(:supervisors) { Oec::Supervisors.from_csv(read_exported_csv 'supervisors') }
+  let(:course_supervisors) { Oec::CourseSupervisors.from_csv(read_exported_csv 'course_supervisors') }
 
   context 'valid fixture data' do
     before { task.run }
@@ -92,6 +96,20 @@ describe Oec::ExportTask do
         expect(students.find { |student| student['LDAP_UID'] == course_student['LDAP_UID'] }).to be_present
       end
     end
+
+    it 'should produce a sane course_supervisors sheet' do
+      expect(course_supervisors.first).to_not be_empty
+      course_supervisors.each do |course_supervisor|
+        course = courses.find { |course| course['COURSE_ID'] == course_supervisor['COURSE_ID'] }
+        supervisor = supervisors.find { |supervisor| supervisor['LDAP_UID'] == course_supervisor['LDAP_UID'] }
+        expect(course['DEPT_FORM']).to eq course_supervisor['DEPT_NAME']
+        expect([supervisor['DEPT_NAME_1'], supervisor['DEPT_NAME_2']]).to include(course_supervisor['DEPT_NAME'])
+      end
+    end
+
+    it 'should export the same supervisors sheet it was given' do
+      expect(read_exported_csv 'supervisors').to eq merged_supervisor_confirmations_csv
+    end
   end
 
   context 'data with suffixed course IDs' do
@@ -118,7 +136,7 @@ describe Oec::ExportTask do
   context 'conflicting data' do
     before do
       merged_course_confirmations_csv.concat(
-        '2015-B-32960,2015-B-32960,GWS 103 LEC 001 IDENTITY ACROSS DIF,,,GWS,103,LEC,001,P,104033,UID:104033,BAD_FIRST_NAME,Ffff,ffff@berkeley.edu,1,23,,GENDER AND WOMEN\'S STUDIES,F,,01-26-2015,05-11-2015')
+        '2015-B-32960,2015-B-32960,GWS 103 LEC 001 IDENTITY ACROSS DIF,,,GWS,103,LEC,001,P,104033,UID:104033,BAD_FIRST_NAME,Ffff,ffff@berkeley.edu,1,23,,GWS,F,,01-26-2015,05-11-2015')
     end
 
     it 'should log error and abort' do
