@@ -21,9 +21,9 @@ module Oec
     def analyze(dept_code)
       dept_name = Berkeley::Departments.get(dept_code, concise: true)
       validate(dept_code, @term_code) do |errors|
-        sis_data = csv_row_hash([@term_code, 'imports', datestamp, dept_name], dept_code)
+        sis_data = csv_row_hash([@term_code, 'imports', datestamp, dept_name], dept_code, Oec::SisImportSheet)
         errors.add("#{dept_name} has no #{datestamp} 'imports' spreadsheet") && return unless sis_data
-        dept_data = csv_row_hash([@term_code, 'departments', dept_name, 'Courses'], dept_code)
+        dept_data = csv_row_hash([@term_code, 'departments', dept_name, 'Courses'], dept_code, Oec::CourseConfirmation)
         errors.add("#{dept_name} has no 'Courses' spreadsheet") && return unless dept_data
         keys_of_rows_with_diff = []
         intersection = (sis_keys = sis_data.keys) & (dept_keys = dept_data.keys)
@@ -73,11 +73,11 @@ module Oec
       %w(COURSE_NAME FIRST_NAME LAST_NAME EMAIL_ADDRESS INSTRUCTOR_FUNC)
     end
 
-    def csv_row_hash(folder_titles, dept_code)
+    def csv_row_hash(folder_titles, dept_code, klass)
       return unless (file = @remote_drive.find_nested(folder_titles, @opts))
       hash = {}
       csv = @remote_drive.export_csv file
-      Oec::SisImportSheet.from_csv(csv, dept_code: dept_code).each do |row|
+      klass.from_csv(csv, dept_code: dept_code).each do |row|
         row = Oec::Worksheet.capitalize_keys row
         next unless (id_hash = extract_id(dept_code, row))
         hash[id_hash] = row
