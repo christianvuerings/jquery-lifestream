@@ -72,6 +72,7 @@ module Oec
       left outer join calcentral_course_instr_vw i ON (#{columns_are_equal('c', 'i', 'term_yr', 'term_cd', 'course_cntl_num')})
       left outer join calcentral_person_info_vw p ON (p.ldap_uid = i.instructor_ldap_uid)
       where c.term_yr = '#{term_yr}' and c.term_cd = '#{term_cd}'
+        and c.section_cancel_flag is null
         and #{filter_clause}
       order by c.catalog_id, c.course_cntl_num, p.ldap_uid
         SQL
