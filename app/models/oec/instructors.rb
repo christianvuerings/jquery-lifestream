@@ -11,5 +11,8 @@ module Oec
       )
     end
 
+    validate('BLUE_ROLE') { |row| 'Invalid' if row['BLUE_ROLE'] != '23' }
+    validate('LDAP_UID') { |row| 'Non-numeric' unless row['LDAP_UID'] =~ /\A\d+\Z/ }
+
   end
 end
