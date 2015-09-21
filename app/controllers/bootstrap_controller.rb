@@ -2,7 +2,7 @@ class BootstrapController < ApplicationController
   include ActiveRecordHelper
   before_filter :get_settings, :initialize_calcentral_config
   before_filter :check_lti_only
-  before_filter :check_databases_alive, :warmup_live_updates
+  before_filter :check_databases_alive, :warmup_live_updates, :check_cache_clear_flag
   layout false
 
   # View code is public/index-main.html (compiled by gulp build).
@@ -38,6 +38,16 @@ class BootstrapController < ApplicationController
 
   def warmup_live_updates
     LiveUpdatesWarmer.warmup_request session['user_id'] if session['user_id']
+  end
+
+  def check_cache_clear_flag
+    if (flag = params['ucUpdateCache'])
+      if flag == 'finaid'
+        CampusSolutions::FinancialAidExpiry.expire current_user.user_id
+      elsif flag == 'profile'
+        CampusSolutions::PersonDataExpiry.expire current_user.user_id
+      end
+    end
   end
 
 end
