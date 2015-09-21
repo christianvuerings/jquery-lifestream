@@ -49,6 +49,17 @@ namespace :oec do
     ).run
   end
 
+  desc 'Push data, stored on remote drive, to Explorance\'s Blue system'
+  task :publish_to_explorance => :environment do
+    term_code = ENV['term_code']
+    raise ArgumentError, 'term_code required' unless term_code
+    Oec::PublishTask.new(
+      term_code: term_code,
+      local_write: ENV['local_write'].present?,
+      date_to_publish: ENV['date_to_publish']
+    ).run
+  end
+
   # Legacy tasks below this line
 
   br = "\n"
