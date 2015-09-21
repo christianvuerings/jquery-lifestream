@@ -6,6 +6,10 @@ module HubEdos
       initialize_mocks if @fake
     end
 
+    def self.test_data?
+      @fake
+    end
+
     def url
       ''
     end
@@ -16,7 +20,7 @@ module HubEdos
 
     def get_internal
       edo_feed = Student.new(user_id: @uid).get
-      result = {}
+      result = ActiveSupport::HashWithIndifferentAccess.new
       if (feed = edo_feed[:feed])
         edo = HashConverter.symbolize feed['student'] # TODO will have to dynamically switch student/person EDO somehow
         extract_ids(edo, result)
@@ -60,7 +64,16 @@ module HubEdos
     def extract_affiliations(edo, result)
       # TODO affiliations needs more business analysis and transformation.
       result[:affiliations] = edo[:affiliations]
-      result[:roles] = [] # TODO fill in roles with UserRoles#roles_from_affiliations logic
+      # TODO fill in roles with UserRoles#roles_from_affiliations logic
+      result[:roles] = {
+        student: true,
+        registered: true,
+        exStudent: false,
+        faculty: false,
+        staff: false,
+        guest: false,
+        concurrentEnrollmentStudent: false
+      }
       result[:affiliations].each do |affiliation|
         if affiliation[:type][:code] == 'UNDERGRAD' && affiliation[:statusCode] == 'ACT'
           result[:ug_grad_flag] = 'U'

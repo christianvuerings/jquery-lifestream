@@ -4,13 +4,18 @@ module User
     include Cache::LiveUpdatesEnabled
     include Cache::FreshenOnWarm
     include Cache::JsonAddedCacher
+    include CampusSolutions::ProfileFeatureFlagged
     include ClassLogger
 
     def init
       use_pooled_connection {
         @calcentral_user_data ||= User::Data.where(:uid => @uid).first
       }
-      @campus_attributes ||= CampusOracle::UserAttributes.new(user_id: @uid).get_feed
+      if is_cs_profile_feature_enabled
+        @campus_attributes ||= HubEdos::UserAttributes.new(user_id: @uid).get
+      else
+        @campus_attributes ||= CampusOracle::UserAttributes.new(user_id: @uid).get_feed
+      end
       @default_name ||= @campus_attributes['person_name']
       @first_login_at ||= @calcentral_user_data ? @calcentral_user_data.first_login_at : nil
       @first_name ||= @campus_attributes['first_name'] || ""

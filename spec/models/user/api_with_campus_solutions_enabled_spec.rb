@@ -2,10 +2,10 @@ require "spec_helper"
 
 describe User::Api do
   before(:each) do
-    Settings.features.cs_profile = false
+    Settings.features.cs_profile = true
     @random_id = Time.now.to_f.to_s.gsub(".", "")
     @default_name = "Joe Default"
-    CampusOracle::UserAttributes.stub(:new).and_return(double(get_feed: {
+    HubEdos::UserAttributes.stub(:new).and_return(double(get: {
       'person_name' => @default_name,
       :roles => {
         :student => true,
@@ -14,10 +14,6 @@ describe User::Api do
         :staff => false
       }
     }))
-  end
-
-  after do
-    Settings.features.cs_profile = true
   end
 
   it "should find user with default name" do
@@ -81,13 +77,13 @@ describe User::Api do
     User::Data.where(:uid => @random_id).should == []
   end
 
-  it "should say random student gets the academics tab", if: CampusOracle::Queries.test_data? do
+  it "should say random student gets the academics tab", if: HubEdos::UserAttributes.test_data? do
     user_data = User::Api.new(@random_id).get_feed
     user_data[:hasAcademicsTab].should be_truthy
   end
 
-  it "should say a staff member with no academic history does not get the academics tab", if: CampusOracle::Queries.test_data? do
-    CampusOracle::UserAttributes.stub(:new).and_return(double(get_feed: {
+  it "should say a staff member with no academic history does not get the academics tab", if: HubEdos::UserAttributes.test_data? do
+    HubEdos::UserAttributes.stub(:new).and_return(double(get: {
       'person_name' => @default_name,
       :roles => {
         :student => false,
@@ -95,12 +91,6 @@ describe User::Api do
         :staff => true
       }
     }))
-    fake_instructor_proxy = CampusOracle::UserCourses::HasInstructorHistory.new({:fake => true})
-    fake_instructor_proxy.stub(:has_instructor_history?).and_return(false)
-    CampusOracle::UserCourses::HasInstructorHistory.stub(:new).and_return(fake_instructor_proxy)
-    fake_student_proxy = CampusOracle::UserCourses::HasStudentHistory.new({:fake => true})
-    fake_student_proxy.stub(:has_student_history?).and_return(false)
-    CampusOracle::UserCourses::HasStudentHistory.stub(:new).and_return(fake_student_proxy)
     user_data = User::Api.new("904715").get_feed
     user_data[:hasAcademicsTab].should be_falsey
   end
@@ -114,7 +104,7 @@ describe User::Api do
       }
     end
     before do
-      allow(CampusOracle::UserAttributes).to receive(:new).and_return(double(get_feed: {
+      HubEdos::UserAttributes.stub(:new).and_return(double(get: {
         roles: test_roles
       }))
     end
@@ -133,9 +123,8 @@ describe User::Api do
     end
   end
 
-
-  it "should not explode when CampusOracle returns empty feeds" do
-    CampusOracle::UserAttributes.stub(:new).and_return(double(get_feed: {
+  it "should not explode when HubEdos returns empty feeds" do
+    HubEdos::UserAttributes.stub(:new).and_return(double(get: {
     }))
     fake_instructor_proxy = CampusOracle::UserCourses::HasInstructorHistory.new({:fake => true})
     fake_instructor_proxy.stub(:has_instructor_history?).and_return(false)
