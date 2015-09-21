@@ -2,9 +2,9 @@ describe Oec::TermSetupTask do
 
   let(:term_code) { 'fake_term' }
   let(:today) { '2015-08-31' }
-  let(:now) { '092222' }
-  let(:logfile) { "#{now}_term_setup_task.log" }
-  before { allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H%M%S') }
+  let(:now) { '09:22:22' }
+  let(:logfile) { "#{now} term setup task.log" }
+  before { allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H:%M:%S') }
 
   subject { described_class.new(term_code: term_code) }
 

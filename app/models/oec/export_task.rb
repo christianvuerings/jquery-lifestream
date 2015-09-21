@@ -81,9 +81,9 @@ module Oec
       end
 
       if valid?
-        exports_today = find_or_create_today_subfolder 'exports'
+        exports_now = find_or_create_now_subfolder 'exports'
         [instructors, course_instructors, courses, students, course_students, supervisors, course_supervisors].each do |sheet|
-          export_sheet(sheet, exports_today)
+          export_sheet(sheet, exports_now)
         end
       else
         log :error, 'Validation failed! No sheets will be exported.'

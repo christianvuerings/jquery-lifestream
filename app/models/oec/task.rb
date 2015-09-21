@@ -78,6 +78,12 @@ module Oec
       )
     end
 
+    def find_or_create_now_subfolder(category_name)
+      return if @opts[:local_write]
+      parent = @remote_drive.find_nested([@term_code, category_name], on_failure: :error)
+      find_or_create_folder("#{datestamp} #{timestamp}", parent)
+    end
+
     def find_or_create_today_subfolder(category_name)
       return if @opts[:local_write]
       parent = @remote_drive.find_nested([@term_code, category_name], on_failure: :error)
@@ -96,7 +102,7 @@ module Oec
     end
 
     def timestamp
-      @date_time.strftime '%H%M%S'
+      @date_time.strftime '%H:%M:%S'
     end
 
     def upload_file(path, remote_name, type, folder)
@@ -110,10 +116,11 @@ module Oec
     end
 
     def write_log
-      log_name = "#{timestamp}_#{self.class.name.demodulize.underscore}.log"
+      log_name = "#{timestamp} #{self.class.name.demodulize.underscore.tr('_', ' ')}.log"
       log :debug, "Exporting log file '#{log_name}'"
       FileUtils.mkdir_p LOG_DIRECTORY unless File.exists? LOG_DIRECTORY
-      log_path = LOG_DIRECTORY.join log_name
+      # Local files need colons taken out of the timestamp, but remote sheets are happy to include them.
+      log_path = LOG_DIRECTORY.join log_name.gsub(':', '')
       File.open(log_path, 'wb') { |f| f.puts @log }
       if @opts[:local_write]
         logger.debug "Wrote log file to path #{log_path}"

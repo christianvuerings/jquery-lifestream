@@ -21,10 +21,10 @@ module Oec
     private
 
     def download_exports_from_drive
-      date_to_publish = @opts[:date_to_publish] || datestamp
-      tmp_dir = LOG_DIRECTORY.join("publish_#{date_to_publish}")
+      datetime_to_publish = @opts[:datetime_to_publish] || "#{datestamp} #{timestamp}"
+      tmp_dir = LOG_DIRECTORY.join("publish_#{datetime_to_publish.tr(' :', '_')}")
       FileUtils.mkdir_p tmp_dir
-      parent = @remote_drive.find_nested([@term_code, 'exports', date_to_publish], on_failure: :error)
+      parent = @remote_drive.find_nested([@term_code, 'exports', datetime_to_publish], on_failure: :error)
       files_to_publish.each do |filename|
         remote_content = @remote_drive.find_first_matching_item(filename.chomp('.csv'), parent)
         open(tmp_dir.join(filename), 'w') { |f|

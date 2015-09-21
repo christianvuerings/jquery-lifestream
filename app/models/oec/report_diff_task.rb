@@ -10,7 +10,7 @@ module Oec
       Oec::CourseCode.by_dept_code(@course_code_filter).keys.each do |dept_code|
         if (diff_report = analyze dept_code)
           diff_reports_per_dept[dept_code] = diff_report
-          file_name = "#{timestamp}_#{Berkeley::Departments.get(dept_code, concise: true).downcase.tr(' ', '_')}_courses_diff"
+          file_name = "#{timestamp} #{Berkeley::Departments.get(dept_code, concise: true)} courses diff"
           upload_worksheet(diff_report, file_name, find_or_create_today_subfolder('reports'))
           log :info, "#{dept_code} diff summary: reports/#{datestamp}/#{file_name}"
         end
@@ -21,8 +21,8 @@ module Oec
     def analyze(dept_code)
       dept_name = Berkeley::Departments.get(dept_code, concise: true)
       validate(dept_code, @term_code) do |errors|
-        sis_data = csv_row_hash([@term_code, 'imports', datestamp, dept_name], dept_code, Oec::SisImportSheet)
-        errors.add("#{dept_name} has no #{datestamp} 'imports' spreadsheet") && return unless sis_data
+        sis_data = csv_row_hash([@term_code, 'imports', "#{datestamp} #{timestamp}", dept_name], dept_code, Oec::SisImportSheet)
+        errors.add("#{dept_name} has no 'imports' '#{datestamp} #{timestamp}' spreadsheet") && return unless sis_data
         dept_data = csv_row_hash([@term_code, 'departments', dept_name, 'Courses'], dept_code, Oec::CourseConfirmation)
         errors.add("#{dept_name} has no 'Courses' spreadsheet") && return unless dept_data
         keys_of_rows_with_diff = []

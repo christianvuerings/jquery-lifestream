@@ -3,8 +3,8 @@ describe Oec::PublishTask do
   describe 'Publish' do
     let(:term_code) { '2015-B' }
     let(:fake_remote_drive) { double() }
-    let(:target_date) { '2015-09-18' }
-    let(:task) { Oec::PublishTask.new(term_code: term_code, date_to_publish: target_date, local_write: true) }
+    let(:target_date) { '2015-09-18 12:00:00' }
+    let(:task) { Oec::PublishTask.new(term_code: term_code, datetime_to_publish: target_date, local_write: true) }
 
     context 'sftp command' do
       before do
@@ -21,13 +21,13 @@ describe Oec::PublishTask do
 
       after do
         Dir.glob(Rails.root.join 'tmp', 'oec', "*#{Oec::PublishTask.name.demodulize.underscore}.log").each do |file|
-          expect(File.open(file, 'rb').read).to include "#{target_date}/courses.csv", 'sftp://'
+          expect(File.open(file, 'rb').read).to include "#{target_date.tr(' :', '_')}/courses.csv", 'sftp://'
           FileUtils.rm_rf file
         end
       end
 
-      it 'should run system command with date_to_publish in path' do
-        expect(task).to receive(:system).with(/publish_2015-09-18\/courses.csv/).and_return true
+      it 'should run system command with datetime_to_publish in path' do
+        expect(task).to receive(:system).with(/publish_2015-09-18_12_00_00\/courses.csv/).and_return true
         expect(task.run).to be true
       end
 

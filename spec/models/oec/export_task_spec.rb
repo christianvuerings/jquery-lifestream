@@ -39,7 +39,7 @@ describe Oec::ExportTask do
     allow(fake_remote_drive).to receive(:find_nested).and_return mock_google_drive_item
     allow(fake_remote_drive).to receive(:export_csv)
       .and_return(merged_course_confirmations_csv, merged_supervisor_confirmations_csv)
-    allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
+    allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09 12:00:00')
 
     allow(Oec::Queries).to receive(:students_for_cntl_nums).and_return student_data_rows
     allow(Oec::Queries).to receive(:enrollments_for_cntl_nums).and_return(enrollment_data_rows, suffixed_enrollment_data_rows)
