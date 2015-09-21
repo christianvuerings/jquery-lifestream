@@ -265,6 +265,8 @@ cache:
     CampusSolutions::ListOfValues: <%= 24.hours %>
     CampusSolutions::MyHigherOneUrl: <%= 1.seconds %>
     CampusSolutions::HigherOneUrl: <%= 1.seconds %>
+    CampusSolutions::Deposit: <%= 15.minutes %>
+    CampusSolutions::Checklist: <%= 15.minutes %>
 
 # Cache warmer settings
 cache_warmer:
