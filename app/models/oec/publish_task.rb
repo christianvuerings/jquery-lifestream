@@ -5,20 +5,20 @@ module Oec
       download_dir = download_exports_from_drive
       # SFTP stdout and stderr will go to a log file.
       FileUtils.mkdir_p LOG_DIRECTORY unless Dir.exists? LOG_DIRECTORY
-      sftp_stdout = LOG_DIRECTORY.join("sftp_#{DateTime.now.strftime '%F_%H:%M:%S'}.log").expand_path
+      filename = "#{self.class.name.demodulize.underscore}_sftp_#{DateTime.now.strftime '%F_%H:%M:%S'}.log"
+      sftp_stdout = LOG_DIRECTORY.join(filename).expand_path
       cmd = "#{sftp_command(download_dir)} > #{sftp_stdout} 2>&1"
-      log :info, "Preparing to run system command:\n#{cmd}\n"
-      system cmd
+      system(cmd) ? log(:info, "Successfully ran system command: #{cmd}") : raise(RuntimeError, "System command failed: #{cmd}")
       # Now copy the command's output to remote drive.
       sftp_stdout_to_log sftp_stdout
       FileUtils.rm_rf download_dir
     end
 
-    private
-
     def files_to_publish
       %w(courses.csv course_instructors.csv course_students.csv course_supervisors.csv instructors.csv students.csv supervisors.csv)
     end
+
+    private
 
     def download_exports_from_drive
       date_to_publish = @opts[:date_to_publish] || datestamp
