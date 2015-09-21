@@ -7,7 +7,7 @@ module HubEdos
     end
 
     def url
-      "#{@settings.base_url}"
+      "#{@settings.base_url}/#{@campus_solutions_id}"
     end
 
     def json_filename
