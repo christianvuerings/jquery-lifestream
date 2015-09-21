@@ -308,6 +308,11 @@ features:
 youtube_splash_id: 'EQ-a7xrfVag'
 
 oec:
+  explorance:
+    sftp_server: ''
+    sftp_port: 22
+    sftp_user: ''
+    sftp_password: ''
   google:
     uid: ''
     client_id: 'oecClientId'
