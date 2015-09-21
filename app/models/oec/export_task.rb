@@ -91,21 +91,5 @@ module Oec
       end
     end
 
-    def validate_and_add(sheet, row, key_columns)
-      key = key_columns.map { |col| row[col] }.join('-')
-      candidate_row = row.slice(*sheet.headers)
-      validate(sheet.export_name, key) do |errors|
-        sheet.errors_for_row(candidate_row).each { |error| errors.add error }
-        if sheet[key] && (sheet[key] != candidate_row)
-          conflicting_keys = candidate_row.keys.select { |k| candidate_row[k] != sheet[key][k] }
-          conflicting_keys.each do |conflicting_key|
-            errors.add "Conflicting values found under #{conflicting_key}: '#{sheet[key][conflicting_key]}', '#{candidate_row[conflicting_key]}'"
-          end
-        else
-          sheet[key] ||= candidate_row
-        end
-      end
-    end
-
   end
 end

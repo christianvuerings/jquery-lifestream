@@ -35,11 +35,12 @@ describe Oec::ReportDiffTask do
           expect(fake_remote_drive).to receive(:find_nested).with(imports_path, anything).and_return nil
         else
           courses_path = [term_code, 'departments', friendly_name, 'Courses']
+          sheet_classes = [Oec::SisImportSheet, Oec::CourseConfirmation]
           [ imports_path, courses_path ].each_with_index do |path, index|
             expect(fake_remote_drive).to receive(:find_nested).with(path, anything).and_return (remote_file = double)
             expect(fake_remote_drive).to receive(:export_csv).with(remote_file).and_return (import_csv = double)
             spreadsheet = fake_csv_hash[dept_name][index]
-            allow(Oec::SisImportSheet).to receive(:from_csv).with(import_csv, dept_code: dept_code).and_return spreadsheet
+            allow(sheet_classes[index]).to receive(:from_csv).with(import_csv, dept_code: dept_code).and_return spreadsheet
           end
         end
       end

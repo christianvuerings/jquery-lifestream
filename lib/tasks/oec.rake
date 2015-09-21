@@ -1,12 +1,23 @@
 namespace :oec do
 
+  task :create_confirmation_sheets => :environment do
+    term_code = ENV['term_code']
+    raise ArgumentError, 'term_code required' unless term_code
+    Oec::CreateConfirmationSheetsTask.new(
+      term_code: ENV['term_code'],
+      local_write: ENV['local_write'].present?,
+      dept_names: ENV['dept_names'],
+      dept_codes: ENV['dept_codes']
+    ).run
+  end
+
   desc 'Prepare course and enrollment data for upload to vendor'
   task :export => :environment do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
     Oec::ExportTask.new(
       term_code: ENV['term_code'],
-      local_write: ENV['local_write']
+      local_write: ENV['local_write'].present?
     ).run
   end
 
@@ -34,7 +45,7 @@ namespace :oec do
     raise ArgumentError, 'term_code required' unless ENV['term_code']
     Oec::TermSetupTask.new(
       term_code: ENV['term_code'],
-      local_write: ENV['local_write']
+      local_write: ENV['local_write'].present?
     ).run
   end
 
