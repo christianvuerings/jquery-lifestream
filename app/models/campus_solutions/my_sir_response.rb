@@ -4,6 +4,7 @@ module CampusSolutions
     include PersonDataUpdatingModel
 
     def update(params = {})
+      CampusSolutions::Checklist.expire @uid
       passthrough(CampusSolutions::SirResponse, params)
     end
 
