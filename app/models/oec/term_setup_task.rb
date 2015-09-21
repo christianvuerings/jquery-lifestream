@@ -30,8 +30,8 @@ module Oec
           @previous_term_csvs[Oec::Supervisors] = @remote_drive.find_first_matching_item('supervisors', previous_supplemental_sources)
         end
         if (previous_exports =  @remote_drive.find_first_matching_folder('exports', previous_term_folder))
-          if (most_recent_export = @remote_drive.find_folders(previous_exports).sort_by(&:title).last)
-            @previous_term_csvs[Oec::CourseSupervisors] = find_first_matching_item('course_supervisors', most_recent_export)
+          if (most_recent_export = @remote_drive.find_folders(previous_exports.id).sort_by(&:title).last)
+            @previous_term_csvs[Oec::CourseSupervisors] =  @remote_drive.find_first_matching_item('course_supervisors', most_recent_export)
           end
         end
       end
