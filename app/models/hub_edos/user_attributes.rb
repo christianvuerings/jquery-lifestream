@@ -23,6 +23,7 @@ module HubEdos
       result = ActiveSupport::HashWithIndifferentAccess.new
       if (feed = edo_feed[:feed])
         edo = HashConverter.symbolize feed['student'] # TODO will have to dynamically switch student/person EDO somehow
+        extract_passthrough_elements(edo, result)
         extract_ids(edo, result)
         extract_names(edo, result)
         extract_affiliations(edo, result)
@@ -37,6 +38,12 @@ module HubEdos
         logger.error "Could not get Student EDO data for uid #{@uid}"
       end
       result
+    end
+
+    def extract_passthrough_elements(edo, result)
+      [:names, :addresses, :phones, :emails, :ethnicities, :languages, :emergencyContacts].each do |field|
+        result[field] = edo[field]
+      end
     end
 
     def extract_ids(edo, result)
