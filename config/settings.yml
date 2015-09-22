@@ -206,7 +206,7 @@ cache:
   race_condition_ttl: <%= 10.seconds %>
   stale_connection_flush_interval: <%= 30.seconds %>
   store: "memcached"
-  log_level: <%= Logger::ERROR %>
+  log_level: <%= Logger::WARN %>
   expiration:
     default: <%= 35.minutes %>
     failure: <%= 30.seconds %>

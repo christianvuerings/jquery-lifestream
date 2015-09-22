@@ -13,7 +13,9 @@ module Cache
             {
               :expires_in => Settings.cache.maximum_expires_in,
               :namespace => ServerRuntime.get_settings["gitCommit"],
-              :race_condition_ttl => Settings.cache.race_condition_ttl
+              :race_condition_ttl => Settings.cache.race_condition_ttl,
+              :compress => true,
+              :compression_min_size => 1024 * 1023
             }
           )
         else
