@@ -4,13 +4,15 @@ describe Oec::PublishTask do
     let(:term_code) { '2015-B' }
     let(:fake_remote_drive) { double() }
     let(:target_date) { '2015-09-18 12:00:00' }
-    let(:task) { Oec::PublishTask.new(term_code: term_code, datetime_to_publish: target_date, local_write: true) }
+    let(:task) { Oec::PublishTask.new(term_code: term_code, datetime_to_publish: target_date) }
 
     context 'sftp command' do
       before do
         allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
         parent_dir = mock_google_drive_item
         allow(fake_remote_drive).to receive(:find_nested).and_return parent_dir
+        allow(fake_remote_drive).to receive(:check_conflicts_and_create_folder).and_return mock_google_drive_item
+        allow(fake_remote_drive).to receive(:check_conflicts_and_upload)
         task.files_to_publish.each do |file|
           name = file.chomp('.csv')
           item = mock_google_drive_item(name)
