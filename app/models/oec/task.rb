@@ -11,7 +11,7 @@ module Oec
       @date_time = opts[:date_time] || DateTime.now
       @opts = opts
       @course_code_filter = if opts[:dept_names]
-                             {dept_name: opts[:dept_names].split}
+                             {dept_name: opts[:dept_names].split.map { |name| name.tr('_', ' ') }}
                            elsif opts[:dept_codes]
                              {dept_code: opts[:dept_codes].split}
                            else
