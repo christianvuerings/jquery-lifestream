@@ -83,6 +83,8 @@ canvas_proxy:
   dry_run_import: <%= ENV['CANVAS_DRY_RUN_IMPORT'] || '' %>
   # Set to false to disable synchronization of obfuscated names in Dev/QA.
   maintain_user_names: true
+  # Set to false to disable user account inactivation based on campus data.
+  inactivate_expired_users: true
   # Set to false if Canvas permissions block our ability to delete an invalid email address.
   delete_bad_emails: true
   # URL for scripts to point to CalCentral/Junction

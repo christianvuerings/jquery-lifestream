@@ -134,6 +134,7 @@ module CanvasCsv
           @known_uids << login_id
           new_account_data = canvas_user_from_campus_row(campus_row)
         else
+          return unless Settings.canvas_proxy.inactivate_expired_users
           # This LDAP UID no longer appears in campus data. Mark the Canvas user account as inactive.
           logger.warn "Inactivating account for LDAP UID #{ldap_uid}" unless inactive_account
           if old_account_data['email'].present?

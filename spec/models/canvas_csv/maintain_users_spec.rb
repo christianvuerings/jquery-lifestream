@@ -166,34 +166,6 @@ describe CanvasCsv::MaintainUsers do
       end
     end
 
-    context 'when a user account no longer appears in campus systems' do
-      let(:uid) { random_id }
-      let(:student_id) { random_id }
-      let(:canvas_user_id) { random_id }
-      let(:existing_account) {
-        {
-          'canvas_user_id' => canvas_user_id,
-          'user_id' => student_id,
-          'login_id' => uid,
-          'first_name' => 'Syd',
-          'last_name' => 'Barrett',
-          'full_name' => 'Syd Barrett',
-          'email' => "#{uid}@example.edu",
-          'status' => 'active'
-        }
-      }
-      let(:campus_rows) { [] }
-      it 'deactivates the user account' do
-        expect(account_changes.length).to eq(1)
-        expect(account_changes[0]['login_id']).to eq "inactive-#{uid}"
-        expect(account_changes[0]['user_id']).to eq "UID:#{uid}"
-        expect(account_changes[0]['email']).to be_blank
-        expect(subject.sis_user_id_changes).to eq({"sis_login_id:#{uid}" => "UID:#{uid}"})
-        expect(known_uids.length).to eq(0)
-        expect(subject.user_email_deletions).to eq [canvas_user_id]
-      end
-    end
-
     context 'when an inactivated user account reappears in campus systems' do
       let(:uid) { random_id }
       let(:student_id) { random_id }
@@ -228,6 +200,50 @@ describe CanvasCsv::MaintainUsers do
         expect(subject.sis_user_id_changes).to eq({"sis_login_id:inactive-#{uid}" => student_id})
         expect(known_uids.length).to eq(1)
         expect(subject.user_email_deletions).to be_blank
+      end
+    end
+  end
+
+  context 'when a user account no longer appears in campus systems' do
+    let(:uid) { random_id }
+    let(:student_id) { random_id }
+    let(:canvas_user_id) { random_id }
+    let(:existing_account) {
+      {
+        'canvas_user_id' => canvas_user_id,
+        'user_id' => student_id,
+        'login_id' => uid,
+        'first_name' => 'Syd',
+        'last_name' => 'Barrett',
+        'full_name' => 'Syd Barrett',
+        'email' => "#{uid}@example.edu",
+        'status' => 'active'
+      }
+    }
+    let(:campus_rows) { [] }
+    before do
+      allow(Settings.canvas_proxy).to receive(:inactivate_expired_users).and_return(inactivate_expired_users)
+      subject.categorize_user_account(existing_account, campus_rows)
+    end
+    context 'when we can trust campus data sources' do
+      let(:inactivate_expired_users) { true }
+      it 'deactivates the user account' do
+        expect(account_changes.length).to eq(1)
+        expect(account_changes[0]['login_id']).to eq "inactive-#{uid}"
+        expect(account_changes[0]['user_id']).to eq "UID:#{uid}"
+        expect(account_changes[0]['email']).to be_blank
+        expect(subject.sis_user_id_changes).to eq({"sis_login_id:#{uid}" => "UID:#{uid}"})
+        expect(known_uids.length).to eq(0)
+        expect(subject.user_email_deletions).to eq [canvas_user_id]
+      end
+    end
+    context 'when we cannot trust campus data sources' do
+      let(:inactivate_expired_users) { false }
+      it 'does nothing' do
+        expect(account_changes.length).to eq(0)
+        expect(subject.sis_user_id_changes).to eq({})
+        expect(known_uids.length).to eq(0)
+        expect(subject.user_email_deletions).to eq []
       end
     end
   end
