@@ -45,7 +45,7 @@ module Oec
           message << "\n"
         end
       end
-      log :error, message unless message.blank?
+      log :error, "\n#{message}\n" unless message.blank?
     end
 
   end
