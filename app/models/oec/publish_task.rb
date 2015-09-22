@@ -3,15 +3,18 @@ module Oec
 
     def run_internal
       download_dir = download_exports_from_drive
-      # SFTP stdout and stderr will go to a log file.
-      FileUtils.mkdir_p LOG_DIRECTORY unless Dir.exists? LOG_DIRECTORY
-      filename = "#{self.class.name.demodulize.underscore}_sftp_#{DateTime.now.strftime '%F_%H:%M:%S'}.log"
-      sftp_stdout = LOG_DIRECTORY.join(filename).expand_path
-      cmd = "#{sftp_command(download_dir)} > #{sftp_stdout} 2>&1"
-      system(cmd) ? log(:info, "Successfully ran system command: #{cmd}") : raise(RuntimeError, "System command failed: #{cmd}")
-      # Now copy the command's output to remote drive.
-      sftp_stdout_to_log sftp_stdout
-      FileUtils.rm_rf download_dir
+      # If local_write then our work is done; the downloaded 'export' files will not be removed.
+      unless @opts[:local_write]
+        # SFTP stdout and stderr will go to a log file.
+        FileUtils.mkdir_p LOG_DIRECTORY unless Dir.exists? LOG_DIRECTORY
+        filename = "#{self.class.name.demodulize.underscore}_sftp_#{DateTime.now.strftime '%F_%H:%M:%S'}.log"
+        sftp_stdout = LOG_DIRECTORY.join(filename).expand_path
+        cmd = "#{sftp_command(download_dir)} > #{sftp_stdout} 2>&1"
+        system(cmd) ? log(:info, "Successfully ran system command: #{cmd}") : raise(RuntimeError, "System command failed: #{cmd}")
+        # Now copy the command's output to remote drive.
+        sftp_stdout_to_log sftp_stdout
+        FileUtils.rm_rf download_dir
+      end
     end
 
     def files_to_publish
@@ -26,11 +29,12 @@ module Oec
       FileUtils.mkdir_p tmp_dir
       parent = @remote_drive.find_nested([@term_code, 'exports', datetime_to_publish], on_failure: :error)
       files_to_publish.each do |filename|
-        remote_content = @remote_drive.find_first_matching_item(filename.chomp('.csv'), parent)
-        open(tmp_dir.join(filename), 'w') { |f|
-          f << @remote_drive.export_csv(remote_content)
-          f << "\n"
-        }
+        if (remote_content = @remote_drive.find_first_matching_item(filename.chomp('.csv'), parent))
+          open(tmp_dir.join(filename), 'w') { |f|
+            f << @remote_drive.export_csv(remote_content)
+            f << "\n"
+          }
+        end
       end
       tmp_dir.to_s
     end
