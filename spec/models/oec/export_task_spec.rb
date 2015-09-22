@@ -4,7 +4,7 @@ describe Oec::ExportTask do
 
   let(:fake_remote_drive) { double() }
   let(:merged_course_confirmations_csv) { File.read Rails.root.join('fixtures', 'oec', 'merged_course_confirmations.csv') }
-  let(:merged_supervisor_confirmations_csv) { File.read Rails.root.join('fixtures', 'oec', 'merged_supervisor_confirmations.csv') }
+  let(:merged_supervisor_confirmations_csv) { File.read Rails.root.join('fixtures', 'oec', 'supervisors.csv') }
 
   def read_exported_csv(filename)
     File.read Rails.root.join('tmp', 'oec', "#{filename}.csv")
