@@ -42,7 +42,9 @@ module HubEdos
 
     def extract_passthrough_elements(edo, result)
       [:names, :addresses, :phones, :emails, :ethnicities, :languages, :emergencyContacts].each do |field|
-        result[field] = edo[field]
+        if edo[field].present?
+          result[field] = edo[field]
+        end
       end
     end
 
