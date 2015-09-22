@@ -27,9 +27,10 @@ then
   export RAILS_ENV=production
   export LOGGER_STDOUT=only
   export LOGGER_LEVEL=INFO
+  export JRUBY_OPTS="-Xcext.enabled=true -J-client -X-C"
   echo "$(date): Run oec:${REQUESTED_TASK} task on $(hostname -s)" | ${LOGIT}
 
-  echo 'cd deploy'
+  cd deploy
   bundle exec rake oec:${REQUESTED_TASK} "${2}" | ${LOGIT}
 
   echo "$(date): The oec:${REQUESTED_TASK} task is done" | ${LOGIT}
