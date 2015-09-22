@@ -219,8 +219,8 @@ describe Oec::SisImportTask do
       subject { Oec::SisImportTask.new(term_code: term_code) }
 
       let(:today) { '2015-04-01' }
-      let(:now) { '092222' }
-      let(:logfile) { "#{now}_sis_import_task.log" }
+      let(:now) { '09:22:22' }
+      let(:logfile) { "#{now} sis import task.log" }
       let(:dept_name) { 'MATH' }
       let(:sheet_name) { 'Mathematics' }
 
@@ -228,14 +228,17 @@ describe Oec::SisImportTask do
       let(:reports_today_folder) { mock_google_drive_item today }
 
       before do
-        allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H%M%S')
+        allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H:%M:%S')
         allow(Oec::CourseCode).to receive(:by_dept_code).and_return({l4_codes[dept_name] => fake_code_mapping})
       end
 
       it 'should upload a department csv and a log file' do
         expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
+          .with("#{today} #{now}", anything, anything)
+          .and_return(imports_today_folder)
+        expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
           .with(today, anything, anything)
-          .and_return(imports_today_folder, reports_today_folder)
+          .and_return(reports_today_folder)
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
           .with(kind_of(Oec::Worksheet), sheet_name, (Oec::Worksheet), imports_today_folder, anything)
           .and_return mock_google_drive_item(sheet_name)

@@ -30,7 +30,7 @@ describe Oec::ReportDiffTask do
       end
       dept_code_mappings.each do |dept_code, dept_name|
         friendly_name = Berkeley::Departments.get(dept_code, concise: true)
-        imports_path = [term_code, 'imports', now.strftime('%F'), friendly_name]
+        imports_path = [term_code, 'imports', now.strftime('%F %H:%M:%S'), friendly_name]
         if dept_name.nil?
           expect(fake_remote_drive).to receive(:find_nested).with(imports_path, anything).and_return nil
         else

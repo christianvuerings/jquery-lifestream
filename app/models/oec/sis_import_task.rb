@@ -4,12 +4,12 @@ module Oec
     def run_internal
       @dept_forms = {}
       log :info, "Will import SIS data for term #{@term_code}"
-      imports_today = find_or_create_today_subfolder('imports')
+      imports_now = find_or_create_now_subfolder('imports')
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
         log :info, "Generating #{dept_code}.csv"
         worksheet = Oec::SisImportSheet.new(dept_code: dept_code)
         import_courses(worksheet, course_codes)
-        export_sheet(worksheet, imports_today)
+        export_sheet(worksheet, imports_now)
       end
     end
 

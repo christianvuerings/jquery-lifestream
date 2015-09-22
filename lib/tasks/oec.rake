@@ -25,9 +25,11 @@ namespace :oec do
   task :sis_import => :environment do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
+    date_time = DateTime.now
     [Oec::SisImportTask, Oec::ReportDiffTask].each do |klass|
       success = klass.new(
         term_code: term_code,
+        date_time: date_time,
         local_write: ENV['local_write'].present?,
         import_all: ENV['import_all'].present?,
         dept_names: ENV['dept_names'],
@@ -56,7 +58,7 @@ namespace :oec do
     Oec::PublishTask.new(
       term_code: term_code,
       local_write: ENV['local_write'].present?,
-      date_to_publish: ENV['date_to_publish']
+      datetime_to_publish: ENV['datetime_to_publish']
     ).run
   end
 
