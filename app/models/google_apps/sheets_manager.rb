@@ -48,11 +48,21 @@ module GoogleApps
       nil
     end
 
-    def upload_worksheet(title, description, worksheet, parent_id = 'root')
+    def upload_worksheet(title, description, worksheet, parent_id = 'root', opts={})
       content = CSV.generate do |csv|
         headers = worksheet.headers
         csv << headers
-        worksheet.each { |row| csv << row.values_at(*headers) }
+        worksheet.each do |row|
+          if opts[:format_numbers] == :text
+            csv_row = headers.map do |header|
+              # A trick to force plaintext formatting in Google Sheets.
+              row[header] =~ /\A\d+\Z/ ? "'#{row[header]}" : row[header]
+            end
+            csv << csv_row
+          else
+            csv << row.values_at(*headers)
+          end
+        end
       end
       upload_to_spreadsheet(title, description, StringIO.new(content), parent_id)
     end
