@@ -2,7 +2,7 @@ describe Oec::RemoteDrive do
 
   subject { described_class.new }
   let(:term_code) { '2015-D' }
-  let(:dept_code) { 'SWOME' }
+  let(:dept_code) { 'IQBBB' }
   # DateTime.tomorrow to avoid collision with other testing on today's data
   let(:tomorrow) { DateTime.tomorrow.strftime('%F') }
 
@@ -14,7 +14,7 @@ describe Oec::RemoteDrive do
         expect(spreadsheet).to be_nil
       end
 
-      it 'should return nil when dept not found' do
+      it 'should return nil when dept \'Courses\' spreadsheet is not found' do
         spreadsheet = subject.find_dept_courses_spreadsheet(term_code, dept_code)
         expect(spreadsheet).to be_nil
       end
