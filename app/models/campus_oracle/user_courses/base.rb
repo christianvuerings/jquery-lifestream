@@ -6,7 +6,7 @@ module CampusOracle
     class Base < BaseProxy
 
       def initialize(options = {})
-        super(Settings.sakai_proxy, options)
+        super(Settings.campusdb, options)
         @uid = @settings.fake_user_id if @fake
         @academic_terms = Berkeley::Terms.fetch.campus.values
       end

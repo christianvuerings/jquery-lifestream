@@ -38,8 +38,8 @@ campusdb:
   username: sa
   password: sa
   pool: 95
-  # Needed when the bSpace application tables are in a different namespace.
-  bspace_prefix:
+  fake: false
+  fake_user_id: "300939"
 terms:
   # Limit how far back our academic history goes.
   oldest: spring-2010
@@ -107,12 +107,6 @@ google_proxy:
   test_user_refresh_token: "bogusRefreshToken"
   atom_mail_feed_url: "https://mail.google.com/mail/feed/atom/"
 
-sakai_proxy:
-  host: "https://sakai-dev.berkeley.edu"
-  fake: false
-  fake_user_id: "300939"
-  # Timestamp in UTC, needed when testing against older DB snapshot
-  fake_now:
 cal_link_proxy:
   fake: false
   base_url: "https://callink.berkeley.edu"
@@ -247,9 +241,6 @@ cache:
     Canvas::Terms: <%= 8.hours %>
     Canvas::Todo: <%= 20.minutes %>
     Canvas::UpcomingEvents: <%= 20.minutes %>
-
-    Sakai::SakaiMergedUserSites: <%= 30.minutes %>
-    Sakai::SiteAnnouncements: <%= 30.minutes %>
 
     MyBadges::GoogleCalendar: <%= 4.minutes %>
     MyBadges::GoogleDrive: <%= 10.minutes %>

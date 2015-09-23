@@ -16,7 +16,7 @@ describe 'CampusOracle::CourseSections' do
   end
 
   describe 'get_section_data' do
-    it 'should return pre-populated test sections', :if => Sakai::SakaiData.test_data? do
+    it 'should return pre-populated test sections', :if => CampusOracle::Connection.test_data? do
       client = CampusOracle::CourseSections.new({term_yr: '2013', term_cd: 'D', ccn: '16171'})
       data = client.get_section_data
       expect(data).to_not be_empty
