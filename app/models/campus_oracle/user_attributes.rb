@@ -4,7 +4,7 @@ module CampusOracle
     include Cache::UserCacheExpiry
 
     def initialize(options = {})
-      super(Settings.sakai_proxy, options)
+      super(Settings.campusdb, options)
     end
 
     def get_feed

@@ -50,7 +50,7 @@ postgres:
   host: <%= ENV['DB_PORT_5432_TCP_ADDR'] || 'localhost' %>
   port: <%= ENV['DB_PORT_5432_TCP_PORT'] || '5432' %>
 
-sakai_proxy:
+campusdb:
   fake: true
 
 ist_jms:
