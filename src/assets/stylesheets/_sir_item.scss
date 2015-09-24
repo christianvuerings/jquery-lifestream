@@ -34,6 +34,13 @@
   .cc-widget-sir-background-berkeley:before {
     background-image: url('../images/sir/banner_berkeley_326x96.jpg');
   }
+
+  // Button Container
+  .cc-widget-sir-button-container {
+    margin-top: 10px;
+    text-align: center;
+  }
+
   // Pictures
   .cc-widget-sir-picture {
     background-size: contain;
@@ -43,6 +50,9 @@
     margin: 6px 10px 6px 0;
     width: 60px;
     z-index: 1;
+  }
+  .cc-widget-sir-picture-grad {
+    background-image: url('../images/sir/grad_fiona_doyle_100x140.jpg');
   }
   .cc-widget-sir-picture-haasgrad {
     background-image: url('../images/sir/haas_richard_lyons_100x140.jpg');
@@ -64,9 +74,9 @@
   .cc-widget-sir-form {
     background: transparent;
     border: 0;
-    .cc-widget-sir-form-button {
-      margin-top: 10px;
-      text-align: center;
+    .cc-widget-sir-form-fieldset {
+      margin: 0;
+      padding: 0;
     }
     .cc-widget-sir-form-decline-explanation {
       padding: 10px 0;

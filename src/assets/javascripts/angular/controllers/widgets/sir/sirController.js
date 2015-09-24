@@ -16,27 +16,73 @@ angular.module('calcentral.controllers').controller('SirController', function(si
     checklistItems: []
   };
 
+  var sirConfig = {};
+
+  /**
+   * Check whether 2 checklist items match on the admissions key
+   */
+  var checklistMatches = function(checklistItem, studentResponse) {
+    return (checklistItem.checkListMgmtAdmp.acadCareer === studentResponse.response.acadCareer &&
+            checklistItem.checkListMgmtAdmp.stdntCarNbr === studentResponse.response.studentCarNbr &&
+            checklistItem.checkListMgmtAdmp.admApplNbr === studentResponse.response.admApplNbr &&
+            checklistItem.checkListMgmtAdmp.applProgNbr === studentResponse.response.applProgNbr);
+  };
+
+  /**
+   * Update the checklist items that need to be updated
+   * We should only update the items that already are in the current scope & have an updated status.
+   */
+  var updateChecklistItems = function(checklistItems, studentResponse) {
+    // If we don't have any checklist items yet, we should definitely update the scope
+    if (!$scope.sir.checklistItems.length) {
+      $scope.sir.checklistItems = checklistItems;
+      return;
+    }
+
+    checklistItems.forEach(function(checklistItem) {
+      var result = _.findWhere($scope.sir.checklistItems, {
+        chklstItemCd: checklistItem.chklstItemCd
+      });
+      // If we don't find it in the current scope, it's a new item, so we should add it
+      if (!result) {
+        $scope.sir.checklistItems.push(checklistItem);
+      } else {
+        if (result.itemStatusCode !== checklistItem.itemStatusCode) {
+          // Update specific checklist item
+          if (checklistMatches(checklistItem, studentResponse)) {
+            checklistItem.studentResponse = studentResponse;
+          }
+
+          var index = _.indexOf($scope.sir.checklistItems, result);
+          $scope.sir.checklistItems.splice(index, 1, checklistItem);
+        }
+      }
+    });
+  };
+
   /**
    * Parse the CS checklist and see whether we have any
-   * non-completed admission checklists for the current user
+   * admission checklists for the current user
    */
-  var parseChecklist = function(data) {
+  var parseChecklist = function(data, studentResponse) {
     var checklistItems = _.get(data, 'data.feed.checkListItems');
-    if (!checklistItems) {
+    if (!checklistItems || !checklistItems.length) {
       return $q.reject('No checklist items');
     }
 
-    // Filter out only the incomplete checklists (will be Initiated or Received)
+    var checkStatus = $scope.sir.checklistItems.length ? '' : 'C';
+
+    // Filter the checklists (will be Initiated or Received on initial load & completed after that)
     checklistItems = _.get(data, 'data.feed.checkListItems').filter(function(checklistItem) {
       return (checklistItem &&
         checklistItem.adminFunc &&
         checklistItem.adminFunc === 'ADMP' &&
-        checklistItem.itemStatus !== 'C'
+        checklistItem.itemStatusCode !== checkStatus
       );
     });
 
     if (checklistItems.length) {
-      $scope.sir.checklistItems = checklistItems;
+      updateChecklistItems(checklistItems, studentResponse);
       return $q.resolve(checklistItems);
     } else {
       // Make sure none of the other code ever gets run
@@ -45,44 +91,59 @@ angular.module('calcentral.controllers').controller('SirController', function(si
   };
 
   /**
-   * Map the checklist to the SIR Config to
+   * We find the header for the the current config object
+   * If dont' find it, use the default one.
+   */
+  var findHeader = function(imageCode) {
+    var header = sirLookupService.lookup[imageCode];
+    if (!header) {
+      header = sirLookupService.lookup.DEFAULT;
+    }
+    return header;
+  };
+
+  /**
+   * Map an individual checklist item to the SIR Config to
    *   the specific SIR form
    *   the specific response reasons
    *   lookup the header name / image & title
    * They should map on the Checklist Item Code - chklstItemCd
    */
-  var mapChecklist = function(sirConfig) {
-    $scope.sir.checklistItems = $scope.sir.checklistItems.map(function(checklistItem) {
-      // Map the correct config object
-      var config = _.find(sirConfig.sirForms, function(form) {
-        return checklistItem.chklstItemCd === form.chklstItemCd;
-      });
-      checklistItem.config = config;
-
-      // Map to the correct header information (e.g. image / name)
-      checklistItem.header = sirLookupService.lookup[config.ucSirImageCd];
-
-      // Map to the correct response codes
-      checklistItem.responseReasons = sirConfig.responseReasons.filter(function(reason) {
-        return reason.acadCareer === config.acadCareer;
-      });
-
-      return checklistItem;
+  var mapChecklistItem = function(checklistItem) {
+    // Map the correct config object
+    var config = _.find(sirConfig.sirForms, function(form) {
+      return checklistItem.chklstItemCd === form.chklstItemCd;
     });
+    checklistItem.config = config;
+
+    // Map to the correct header information (e.g. image / name)
+    checklistItem.header = findHeader(config.ucSirImageCd);
+
+    // Map to the correct response codes
+    checklistItem.responseReasons = sirConfig.responseReasons.filter(function(reason) {
+      return reason.acadCareer === config.acadCareer;
+    });
+
+    return checklistItem;
+  };
+
+  /**
+   * Map the checklist items to the SIR Config
+   */
+  var mapChecklistItems = function() {
+    $scope.sir.checklistItems = $scope.sir.checklistItems.map(mapChecklistItem);
   };
 
   /**
    * Parse the SIR configuration object.
    * This contains information for each checklist item
-   * @param {[type]} data [description]
-   * @return {[type]} [description]
    */
   var parseSirConfig = function(data) {
-    var sirConfig = _.get(data, 'data.feed.sirConfig');
+    sirConfig = _.get(data, 'data.feed.sirConfig');
     if (!sirConfig) {
       return $q.reject('No SIR Config');
     }
-    mapChecklist(sirConfig);
+    mapChecklistItems();
     return $q.resolve(sirConfig);
   };
 
@@ -98,12 +159,23 @@ angular.module('calcentral.controllers').controller('SirController', function(si
    *   - If that's the case, show a sir card for each one
    *   - If it's in the 'Received status' and there is a deposit > 0, show the deposit part.
    */
-  var initWorkflow = function() {
-    getChecklist()
-      .then(parseChecklist)
-      .then(getSirConfig)
-      .then(parseSirConfig);
+  var initWorkflow = function(options) {
+    getChecklist({
+      refreshCache: _.get(options, 'refresh')
+    })
+    .then(function(data) {
+      return parseChecklist(data, _.get(options, 'studentResponse'));
+    })
+    .then(getSirConfig)
+    .then(parseSirConfig);
   };
 
   initWorkflow();
+
+  $scope.$on('calcentral.custom.api.sir.update', function(event, studentResponse) {
+    initWorkflow({
+      refresh: true,
+      studentResponse: studentResponse
+    });
+  });
 });
