@@ -4,7 +4,7 @@ module Oec
     include Validator
 
     def run_internal
-      merged_course_confirmations = @remote_drive.find_nested [@term_code, 'departments', 'merged_course_confirmations']
+      merged_course_confirmations = @remote_drive.find_nested [@term_code, 'departments', 'Merged course confirmations']
       merged_course_confirmations_csv = merged_course_confirmations && @remote_drive.export_csv(merged_course_confirmations)
       raise RuntimeError, 'No merged course confirmation sheet found' unless merged_course_confirmations_csv
 
@@ -14,7 +14,7 @@ module Oec
       students = Oec::Students.new
       course_students = Oec::CourseStudents.new
 
-      merged_supervisor_confirmations = @remote_drive.find_nested [@term_code, 'departments', 'merged_supervisor_confirmations']
+      merged_supervisor_confirmations = @remote_drive.find_nested [@term_code, 'departments', 'Merged supervisor confirmations']
       merged_supervisor_confirmations_csv = merged_supervisor_confirmations && @remote_drive.export_csv(merged_supervisor_confirmations)
       raise RuntimeError, 'No merged supervisor confirmation sheet found' unless merged_supervisor_confirmations_csv
 

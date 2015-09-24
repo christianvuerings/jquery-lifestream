@@ -21,6 +21,17 @@ namespace :oec do
     ).run
   end
 
+  task :merge_confirmation_sheets => :environment do
+    term_code = ENV['term_code']
+    raise ArgumentError, 'term_code required' unless term_code
+    Oec::MergeConfirmationSheetsTask.new(
+      term_code: ENV['term_code'],
+      local_write: ENV['local_write'].present?,
+      dept_names: ENV['dept_names'],
+      dept_codes: ENV['dept_codes']
+    ).run
+  end
+
   desc 'Import per-department course CSVs, compare with dept spreadsheets and report on non-empty diffs'
   task :sis_import => :environment do
     term_code = ENV['term_code']
