@@ -79,13 +79,17 @@ module Oec
       csv = @remote_drive.export_csv file
       klass.from_csv(csv, dept_code: dept_code).each do |row|
         row = Oec::Worksheet.capitalize_keys row
-        next unless (id_hash = extract_id(dept_code, row))
+        next unless (id_hash = extract_id(folder_titles, dept_code, row))
         hash[id_hash] = row
       end
       hash
+    rescue => e
+      # We do not tolerate fatal errors when loading CSV file.
+      log :error, "\nBoom! Crash! Fatal error in csv_row_hash(#{folder_titles}, #{dept_code}, #{klass})\n"
+      raise e
     end
 
-    def extract_id(dept_code, row)
+    def extract_id(folder_titles, dept_code, row)
       id = hashed row
       validate(dept_code, id[:ccn]) do |errors|
         annotation = id[:annotation]
@@ -97,6 +101,10 @@ module Oec
         errors.add "Invalid instructor_func: #{instructor_func}" if (instructor_func && !(0..4).include?(instructor_func.to_i))
       end
       id
+    rescue => e
+      log :error, "\nThis row with bad data in #{folder_titles} will be ignored: \n#{row}."
+      log :error, "We will NOT abort; the error is NOT fatal: #{e.message}\n#{e.backtrace.join "\n\t"}"
+      nil
     end
 
     def hashed(row)
