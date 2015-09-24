@@ -17,13 +17,19 @@ angular.module('calcentral.services').factory('sirLookupService', function() {
       background: 'cc-widget-sir-background-haasgrad',
       picture: 'cc-widget-sir-picture-haasgrad'
     },
-    LAWJD: {
+    LAW: {
       name: 'Sujit Choudhry',
       title: 'Dean of Law School',
       background: 'cc-widget-sir-background-lawjd',
       picture: 'cc-widget-sir-picture-lawjd'
     },
     GRADDIV: {
+      name: 'Fiona M. Doyle',
+      title: 'Dean of the Graduate Division',
+      background: 'cc-widget-sir-background-berkeley',
+      picture: 'cc-widget-sir-picture-grad'
+    },
+    DEFAULT: {
       background: 'cc-widget-sir-background-berkeley'
     }
   };

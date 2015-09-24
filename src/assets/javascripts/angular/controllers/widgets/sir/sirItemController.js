@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * SIR (Statement of Intent to Register) item controller
  */
-angular.module('calcentral.controllers').controller('SirItemController', function(sirFactory, $scope) {
+angular.module('calcentral.controllers').controller('SirItemController', function(sirFactory, $rootScope, $scope) {
   $scope.sirItem = {
     form: {
       option: false,
@@ -22,7 +22,7 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
    * Based on everything the student enterred & the current checklist, create the response object.
    */
   var getResponseObject = function() {
-    var programAction = $scope.sirItem.form.option.progAction;
+    var option = $scope.sirItem.form.option;
     var admissionsManagement = $scope.item.checkListMgmtAdmp;
 
     var response = {
@@ -30,13 +30,14 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
       studentCarNbr: admissionsManagement.stdntCarNbr,
       admApplNbr: admissionsManagement.admApplNbr,
       applProgNbr: admissionsManagement.applProgNbr,
-      progAction: programAction
+      actionReason: option.progReason,
+      progAction: option.progAction
     };
 
     // Send some extra params when someone is declining
-    if (programAction === 'WAPP') {
-      response.actionReason = $scope.sirItem.form.decline.reasonCode;
-      response.studentResponse = $scope.sirItem.form.decline.reasonDescription;
+    if (option.progAction === 'WAPP') {
+      response.responseReason = $scope.sirItem.form.decline.reasonCode;
+      response.responseDescription = $scope.sirItem.form.decline.reasonDescription;
     }
 
     return response;
@@ -50,11 +51,19 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
     $scope.sirItem.isSubmitting = true;
 
     var response = getResponseObject();
-
     return sirFactory.postSirResponse(response).then(function(data) {
+      $scope.sirItem.isSubmitting = false;
+
+      // Check for errors
       if (_.get(data, 'data.errored')) {
         $scope.sirItem.hasError = true;
-        $scope.sirItem.isSubmitting = false;
+      } else {
+        // Reload the checklistItem you were currently modifying
+        $rootScope.$broadcast('calcentral.custom.api.sir.update', {
+          option: $scope.sirItem.form.option,
+          programDescription: $scope.item.config.descrProgramLong,
+          response: response
+        });
       }
     });
   };
@@ -96,18 +105,6 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
   };
 
   /**
-   * When you select a reason in the dropdown, we should make sure we empty the description every time
-   */
-  var emptyReasonDescriptionOnChange = function() {
-    $scope.$watch('sirItem.form.decline.reasonCode', function(value) {
-      if (!value) {
-        return;
-      }
-      $scope.sirItem.form.decline.reasonDescription = '';
-    });
-  };
-
-  /**
    * Select the first response reason from the dropdown
    * This way we don't see an empty value on load
    */
@@ -122,7 +119,6 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
 
   var init = function() {
     selectFirstResponseReason();
-    emptyReasonDescriptionOnChange();
     validateForm();
   };
 

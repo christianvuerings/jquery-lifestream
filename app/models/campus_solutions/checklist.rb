@@ -15,7 +15,7 @@ module CampusSolutions
 
     # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
     def url
-      "#{@settings.base_url}/UC_CC_CHECKLIST.v1/get/checklist?EMPLID=9000006532"
+      "#{@settings.base_url}/UC_CC_CHECKLIST.v1/get/checklist?EMPLID=CC00000004"
     end
   end
 end

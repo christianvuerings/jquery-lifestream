@@ -1,14 +1,5 @@
 <div class="cc-widget cc-widget-sir" data-ng-controller="SirItemController">
-  <div class="cc-widget-sir-header {{item.header.background}}">
-    <div data-ng-if="item.header.picture" class="cc-widget-sir-picture {{item.header.picture}}" title="Picture of the Dean"></div>
-    <div>
-      <h2 class="cc-widget-sir-header-intro">Congratulations and Welcome!</h2>
-      <div class="cc-widget-sir-header-name" data-ng-if="item.header.name" data-ng-bind="item.header.name"></div>
-      <div class="cc-widget-sir-header-title" data-ng-if="item.header.title">
-        <i data-ng-bind="item.header.title"></i>
-      </div>
-    </div>
-  </div>
+  <div data-ng-include="'widgets/sir/sir_item_header.html'"></div>
   <div class="cc-widget-text cc-widget-sir-error" data-ng-if="sirItem.hasError">
     <i class="fa fa-exclamation-triangle cc-icon-red cc-widget-sir-error-icon"></i>There was an error in submitting your admissions response. Please try again later.
   </div>
@@ -24,7 +15,7 @@
     </div>
     <!-- SIR Options -->
     <form class="cc-widget-sir-form" data-ng-submit="submitSirReponse()">
-      <fieldset data-ng-disabled="sirItem.isSubmitting">
+      <fieldset class="cc-widget-sir-form-fieldset" data-ng-disabled="sirItem.isSubmitting">
         <div data-ng-repeat="sirOption in item.config.sirOptions">
           <label class="cc-widget-sir-form-label">
             <input class="cc-widget-sir-form-radio" type="radio" data-ng-model="sirItem.form.option" data-ng-value="sirOption"></input>
@@ -48,17 +39,17 @@
               <select id="cc-widget-sir-form-reasons" data-ng-model="sirItem.form.decline.reasonCode" data-ng-options="r.responseReason as r.descr for r in item.responseReasons">
               </select>
             </div>
-            <div data-ng-if="sirItem.form.decline.reasonCode === 'SCHL' || sirItem.form.decline.reasonCode === 'OTHR'" class="cc-widget-sir-form-reason-description">
-              <label for="cc-widget-sir-form-reason-description" class="cc-visuallyhidden">Description:</label>
-              <input type="text" id="cc-widget-sir-form-reason-description" data-ng-model="sirItem.form.decline.reasonDescription"></input>
+            <div class="cc-widget-sir-form-reason-description">
+              <label for="cc-widget-sir-form-reason-description" class="cc-visuallyhidden">Specify:</label>
+              <input type="text" id="cc-widget-sir-form-reason-description" placeholder="Specify" data-ng-model="sirItem.form.decline.reasonDescription" maxlength="30"></input>
             </div>
             <hr />
             <div class="cc-text-small">
-              To confirm this decision, please select the <strong>I Decline This Offer</span> button.
+              To confirm this decision, please select the <strong>I Decline This Offer</strong> button.
             </div>
           </div>
         </div>
-        <div class="cc-widget-sir-form-button">
+        <div class="cc-widget-sir-button-container">
           <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="!sirItem.isFormValid || sirItem.isSubmitting">
             <span data-ng-if="!sirItem.isSubmitting">
               <span data-ng-if="sirItem.form.option.progAction !== 'WAPP'">Continue</span>

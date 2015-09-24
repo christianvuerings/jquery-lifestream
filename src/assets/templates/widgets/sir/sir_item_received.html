@@ -1,0 +1,13 @@
+<div class="cc-widget cc-widget-sir" data-ng-controller="SirItemReceivedController" data-cc-spinner-directive="sirReceivedItem.isLoading">
+  <div data-ng-include="'widgets/sir/sir_item_header.html'"></div>
+  <div class="cc-widget-text" data-ng-if="sirReceivedItem.hasDeposit">
+    <h3>Deposit required for <span data-ng-bind="item.config.descrProgramLong"></span></h3>
+    <div>Thank you for submitting your Statement of Intent to Register (SIR).
+      Your program requires a deposit of <strong data-ng-bind="sirReceivedItem.depositInfo.dueAmt | currency"></strong>
+      by <span data-ng-bind="api.date.moment(sirReceivedItem.depositInfo.dueDt, 'YYYY-MM-DD').format('MMMM Do, YYYY')"></span>.
+    </div>
+    <div data-ng-if="sirReceivedItem.higherOneUrl" class="cc-widget-sir-button-container">
+      <a class="cc-button cc-button-blue" data-ng-href="{{sirReceivedItem.higherOneUrl}}">Pay Deposit</a>
+    </div>
+  </div>
+</div>
