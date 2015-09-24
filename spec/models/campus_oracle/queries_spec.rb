@@ -136,7 +136,7 @@ describe CampusOracle::Queries do
     end
   end
 
-  context '#get_enrolled_sections', if: Sakai::SakaiData.test_data? do
+  context '#get_enrolled_sections', if: CampusOracle::Connection.test_data? do
     subject { CampusOracle::Queries.get_enrolled_sections('300939') }
     it 'should include requested columns' do
       expect(subject).to be_present
@@ -147,7 +147,7 @@ describe CampusOracle::Queries do
     end
   end
 
-  it 'finds cross-listed course data', if: Sakai::SakaiData.test_data? do
+  it 'finds cross-listed course data', if: CampusOracle::Connection.test_data? do
     cross_listing_hash = CampusOracle::Queries.get_cross_listings(2013, 'D', %w(7853 7856 7859 83212 83214 83485))
     expect(cross_listing_hash.size).to eq 2
     expect(cross_listing_hash[7853]).to be_present

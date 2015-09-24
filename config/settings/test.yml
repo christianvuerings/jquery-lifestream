@@ -19,10 +19,6 @@ textbooks_proxy:
 terms:
   # Keyed to H2 test data
   fake_now: 2013-10-11 04:20:00
-sakai_proxy:
-  fake: false
-  # Keyed to H2 test data
-  fake_now: 2013-03-11 04:20:00
 cal_link_proxy:
   fake: true
 cal1card_proxy:

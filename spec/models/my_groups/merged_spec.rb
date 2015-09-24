@@ -13,17 +13,13 @@ describe MyGroups::Merged do
     before {MyGroups::Canvas.stub(:new).with(uid).and_return(double(fetch: [
       {name: 'qgroup', id: rand(9999).to_s, emitter: 'bCourses'}
     ]))}
-    before {MyGroups::Sakai.stub(:new).with(uid).and_return(double(fetch: [
-      {name: 'Zsite', id: rand(9999).to_s, emitter: 'bSpace'},
-      {name: 'csite', id: rand(9999).to_s, emitter: 'bSpace'}
-    ]))}
     before {MyGroups::Callink.stub(:new).with(uid).and_return(double(fetch: [
       {name: 'young bears', id: rand(9999).to_s, emitter: 'CalLink'},
       {name: 'Old Bears', id: rand(9999).to_s, emitter: 'CalLink'}
     ]))}
     it 'sorts alphabetically' do
       names = subject.collect {|g| g[:name]}
-      expect(names).to eq(['csite', 'Old Bears', 'qgroup', 'young bears', 'Zsite'])
+      expect(names).to eq(['Old Bears', 'qgroup', 'young bears'])
     end
   end
 

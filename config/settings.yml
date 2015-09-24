@@ -38,8 +38,8 @@ campusdb:
   username: sa
   password: sa
   pool: 95
-  # Needed when the bSpace application tables are in a different namespace.
-  bspace_prefix:
+  fake: false
+  fake_user_id: "300939"
 terms:
   # Limit how far back our academic history goes.
   oldest: spring-2010
@@ -83,6 +83,8 @@ canvas_proxy:
   dry_run_import: <%= ENV['CANVAS_DRY_RUN_IMPORT'] || '' %>
   # Set to false to disable synchronization of obfuscated names in Dev/QA.
   maintain_user_names: true
+  # Set to false to disable user account inactivation based on campus data.
+  inactivate_expired_users: true
   # Set to false if Canvas permissions block our ability to delete an invalid email address.
   delete_bad_emails: true
   # URL for scripts to point to CalCentral/Junction
@@ -105,12 +107,6 @@ google_proxy:
   test_user_refresh_token: "bogusRefreshToken"
   atom_mail_feed_url: "https://mail.google.com/mail/feed/atom/"
 
-sakai_proxy:
-  host: "https://sakai-dev.berkeley.edu"
-  fake: false
-  fake_user_id: "300939"
-  # Timestamp in UTC, needed when testing against older DB snapshot
-  fake_now:
 cal_link_proxy:
   fake: false
   base_url: "https://callink.berkeley.edu"
@@ -206,7 +202,7 @@ cache:
   race_condition_ttl: <%= 10.seconds %>
   stale_connection_flush_interval: <%= 30.seconds %>
   store: "memcached"
-  log_level: <%= Logger::ERROR %>
+  log_level: <%= Logger::WARN %>
   expiration:
     default: <%= 35.minutes %>
     failure: <%= 30.seconds %>
@@ -245,9 +241,6 @@ cache:
     Canvas::Terms: <%= 8.hours %>
     Canvas::Todo: <%= 20.minutes %>
     Canvas::UpcomingEvents: <%= 20.minutes %>
-
-    Sakai::SakaiMergedUserSites: <%= 30.minutes %>
-    Sakai::SiteAnnouncements: <%= 30.minutes %>
 
     MyBadges::GoogleCalendar: <%= 4.minutes %>
     MyBadges::GoogleDrive: <%= 10.minutes %>
@@ -318,6 +311,11 @@ features:
 youtube_splash_id: 'EQ-a7xrfVag'
 
 oec:
+  explorance:
+    sftp_server: ''
+    sftp_port: 22
+    sftp_user: ''
+    sftp_password: ''
   google:
     uid: ''
     client_id: 'oecClientId'

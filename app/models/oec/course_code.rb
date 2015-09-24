@@ -8,6 +8,12 @@ module Oec
       self.where(opts).group_by { |course_code| course_code.dept_code }
     end
 
+    def self.catalog_id_specific_mapping(dept_name, catalog_id)
+      # Cached retrieval for the small number of mappings, such as BIOLOGY 1A/1B, that depend on specific catalog IDs.
+      @catalog_id_specific_mappings ||= Oec::CourseCode.where.not(catalog_id: '').to_a
+      @catalog_id_specific_mappings.find { |m| m.dept_name == dept_name && m.catalog_id == catalog_id }
+    end
+
     def self.included_dept_names
       self.where(include_in_oec: true).select(:dept_name).uniq
     end

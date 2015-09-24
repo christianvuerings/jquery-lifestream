@@ -4,6 +4,22 @@ module Oec
 
     DEFAULT_EXPORT_PATH = Rails.root.join('tmp', 'oec')
 
+    class << self
+      attr_accessor :row_validations
+
+      def init_validations
+        self.row_validations ||= []
+      end
+
+      def inherited(subclass)
+        subclass.init_validations
+      end
+    end
+
+    def self.validate(key, &blk)
+      self.row_validations << {key: key, blk: blk}
+    end
+
     def self.capitalize_keys(row)
       row.inject({}) do |caps_hash, (key, value)|
         caps_hash[key.upcase] = value
@@ -22,6 +38,17 @@ module Oec
       raise ArgumentError, "Header mismatch: cannot create instance of #{self.name} from CSV" unless header_row == instance.headers
       parsed_csv.each_with_index { |row, index| instance[index] = Hash[instance.headers.zip row] }
       instance
+    end
+
+    def errors_for_row(row)
+      errors = self.class.row_validations.map do |validation|
+        if row[validation[:key]].blank?
+          "Blank #{validation[:key]}"
+        elsif (message = validation[:blk].call row)
+          "#{message} #{validation[:key]} #{row[validation[:key]]}"
+        end
+      end
+      errors.compact
     end
 
     def initialize(opts={})

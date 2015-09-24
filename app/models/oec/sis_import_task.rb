@@ -2,13 +2,14 @@ module Oec
   class SisImportTask < Task
 
     def run_internal
+      @dept_forms = {}
       log :info, "Will import SIS data for term #{@term_code}"
-      imports_today = find_or_create_today_subfolder('imports')
+      imports_now = find_or_create_now_subfolder('imports')
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
         log :info, "Generating #{dept_code}.csv"
         worksheet = Oec::SisImportSheet.new(dept_code: dept_code)
         import_courses(worksheet, course_codes)
-        export_sheet(worksheet, imports_today)
+        export_sheet(worksheet, imports_now)
       end
     end
 
@@ -51,13 +52,8 @@ module Oec
           false
         else
           course['course_id_2'] = course['course_id']
-          course['dept_form'] = worksheet.export_name.upcase unless course['cross_listed_flag'].present?
-          roles = Berkeley::UserRoles.roles_from_campus_row course
-          course['evaluation_type'] = if roles[:student]
-                                        'G'
-                                      elsif roles[:faculty]
-                                        'F'
-                                      end
+          set_dept_form course
+          set_evaluation_type course
           worksheet[row_key] = Oec::Worksheet.capitalize_keys course
         end
       end
@@ -100,6 +96,30 @@ module Oec
         end
         course_row['CROSS_LISTED_NAME'] = cross_listings_by_section_code.join(', ')
       end
+    end
+
+    def set_dept_form(course)
+      return if course['cross_listed_flag'].present?
+
+      # Sets 'dept_form' to either 'MCELLBI' or 'INTEGBI' for BIOLOGY courses; otherwise uses 'dept_name'.
+      # Expressing this with our data is a bit complicated because the system consuming the data expects "department
+      # names" to appear as they appear in course codes, but our mappings use L4 codes (IMMCB, IBIBI) and full
+      # names ("Molecular and Cell Biology", "Integrative Biology") indicating actual campus departments.
+      if (mapping = Oec::CourseCode.catalog_id_specific_mapping(course['dept_name'], course['catalog_id']))
+        @dept_forms[mapping] ||= Oec::CourseCode.where(dept_code: mapping.dept_code, catalog_id: '').pluck(:dept_name).first
+        course['dept_form'] = @dept_forms[mapping]
+      else
+        course['dept_form'] = course['dept_name']
+      end
+    end
+
+    def set_evaluation_type(course)
+      roles = Berkeley::UserRoles.roles_from_campus_row course
+      course['evaluation_type'] = if roles[:student]
+                                    'G'
+                                  elsif roles[:faculty]
+                                    'F'
+                                  end
     end
 
     def flag_joint_faculty_gsi(worksheet)

@@ -4,6 +4,14 @@ module Oec
 
     LOG_DIRECTORY = Rails.root.join('tmp', 'oec')
 
+    def self.date_format
+      '%F'
+    end
+
+    def self.timestamp_format
+      '%H:%M:%S'
+    end
+
     def initialize(opts)
       @log = []
       @remote_drive = Oec::RemoteDrive.new
@@ -11,7 +19,7 @@ module Oec
       @date_time = opts[:date_time] || DateTime.now
       @opts = opts
       @course_code_filter = if opts[:dept_names]
-                             {dept_name: opts[:dept_names].split}
+                             {dept_name: opts[:dept_names].split.map { |name| name.tr('_', ' ') }}
                            elsif opts[:dept_codes]
                              {dept_code: opts[:dept_codes].split}
                            else
@@ -47,8 +55,8 @@ module Oec
       )
     end
 
-    def datestamp
-      @date_time.strftime '%F'
+    def datestamp(arg = @date_time)
+      arg.strftime self.class.date_format
     end
 
     def export_sheet(worksheet, dest_folder)
@@ -78,10 +86,16 @@ module Oec
       )
     end
 
-    def find_or_create_today_subfolder(category_name)
+    def find_or_create_now_subfolder(category_name)
       return if @opts[:local_write]
       parent = @remote_drive.find_nested([@term_code, category_name], on_failure: :error)
-      find_or_create_folder(datestamp, parent)
+      find_or_create_folder("#{datestamp} #{timestamp}", parent)
+    end
+
+    def find_or_create_today_subfolder(category_name, date_time = @date_time)
+      return if @opts[:local_write]
+      parent = @remote_drive.find_nested([@term_code, category_name], on_failure: :error)
+      find_or_create_folder(datestamp(date_time), parent)
     end
 
     def get_supplemental_worksheet(klass)
@@ -95,8 +109,8 @@ module Oec
       @log << "[#{Time.now}] #{message}"
     end
 
-    def timestamp
-      @date_time.strftime '%H%M%S'
+    def timestamp(arg = @date_time)
+      arg.strftime self.class.timestamp_format
     end
 
     def upload_file(path, remote_name, type, folder)
@@ -110,14 +124,17 @@ module Oec
     end
 
     def write_log
-      log_name = "#{timestamp}_#{self.class.name.demodulize.underscore}.log"
+      now = DateTime.now
+      log_name = "#{timestamp now} #{self.class.name.demodulize.underscore.tr('_', ' ')}.log"
       log :debug, "Exporting log file '#{log_name}'"
-      log_path = LOG_DIRECTORY.join log_name
+      FileUtils.mkdir_p LOG_DIRECTORY unless File.exists? LOG_DIRECTORY
+      # Local files need colons taken out of the timestamp, but remote sheets are happy to include them.
+      log_path = LOG_DIRECTORY.join log_name.gsub(':', '')
       File.open(log_path, 'wb') { |f| f.puts @log }
       if @opts[:local_write]
         logger.debug "Wrote log file to path #{log_path}"
       else
-        if (reports_today = find_or_create_today_subfolder('reports'))
+        if (reports_today = find_or_create_today_subfolder('reports', now))
           begin
             upload_file(log_path, log_name, 'text/plain', reports_today)
           ensure
