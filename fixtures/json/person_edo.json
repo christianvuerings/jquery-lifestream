@@ -235,6 +235,12 @@
           },
           "number": "707-825-3865"
         },
+        "email": {
+          "type": {
+            "description": "Emergency"
+          },
+          "emailAddress": "ursa-bear@redwoods.edu"
+        },
         "relationship": {
           "code": "SIB",
           "description": "Sibling"

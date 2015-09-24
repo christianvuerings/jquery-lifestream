@@ -12,7 +12,7 @@ describe HubEdos::Student do
     it 'returns data with the expected structure' do
       expect(subject[:feed]['student']).to be
       expect(subject[:feed]['student']['identifiers'][0]['id']).to be
-      expect(subject[:feed]['student']['academicCareers'][0]['career']).to be
+      expect(subject[:feed]['student']['studentPlans'][0]['academicPlan']['academicProgram']['academicCareer']['code']).to eq 'UGRD'
     end
   end
 
@@ -24,7 +24,6 @@ describe HubEdos::Student do
     it_should_behave_like 'a simple proxy that returns errors'
 
     it 'returns data with the expected structure' do
-      p "subj = #{subject}"
       expect(subject[:feed]['student']).to be
       expect(subject[:feed]['student']['identifiers'][0]['id']).to be
     end
