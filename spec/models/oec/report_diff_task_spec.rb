@@ -13,7 +13,7 @@ describe Oec::ReportDiffTask do
     }
     let(:now) { DateTime.now }
     let (:fake_remote_drive) { double }
-    subject { Oec::ReportDiffTask.new(term_code: term_code, dept_codes: dept_code_mappings.keys, local_write: true) }
+    subject { Oec::ReportDiffTask.new(term_code: term_code, dept_codes: dept_code_mappings.keys, date_time: DateTime.now, local_write: true) }
 
     before {
       allow(Oec::CourseCode).to receive(:by_dept_code).and_return dept_code_mappings

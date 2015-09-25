@@ -53,6 +53,23 @@ namespace :oec do
     end
   end
 
+  desc 'Compare department-managed sheets against latest SIS-import sheets'
+  task :report_diff => :environment do
+    term_code = ENV['term_code']
+    raise ArgumentError, 'term_code required' unless term_code
+    opts = {
+      term_code: term_code,
+      local_write: ENV['local_write'].present?,
+      dept_names: ENV['dept_names'],
+      dept_codes: ENV['dept_codes']
+    }
+    success = Oec::ReportDiffTask.new(opts).run
+    unless success
+      Rails.logger.error "#{Oec::ReportDiffTask.class} failed on #{opts}"
+      break
+    end
+  end
+
   desc 'Set up folder structure for new term'
   task :term_setup => :environment do
     raise ArgumentError, 'term_code required' unless ENV['term_code']
