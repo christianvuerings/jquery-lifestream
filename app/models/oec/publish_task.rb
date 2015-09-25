@@ -7,7 +7,8 @@ module Oec
       unless @opts[:local_write]
         # SFTP stdout and stderr will go to a log file.
         FileUtils.mkdir_p LOG_DIRECTORY unless Dir.exists? LOG_DIRECTORY
-        filename = "#{self.class.name.demodulize.underscore}_sftp_#{DateTime.now.strftime '%F_%H:%M:%S'}.log"
+        pattern = "#{Oec::Task.date_format}_#{Oec::Task.timestamp_format}"
+        filename = "#{self.class.name.demodulize.underscore}_sftp_#{DateTime.now.strftime pattern}.log"
         sftp_stdout = LOG_DIRECTORY.join(filename).expand_path
         cmd = "#{sftp_command(download_dir)} > #{sftp_stdout} 2>&1"
         system(cmd) ? log(:info, "Successfully ran system command: #{cmd}") : raise(RuntimeError, "System command failed: #{cmd}")

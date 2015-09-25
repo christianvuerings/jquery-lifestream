@@ -16,7 +16,7 @@ module Oec
       @log = []
       @remote_drive = Oec::RemoteDrive.new
       @term_code = opts.delete :term_code
-      @date_time = opts[:date_time] || DateTime.now
+      @date_time = opts[:date_time] || default_date_time
       @opts = opts
       @course_code_filter = if opts[:dept_names]
                              {dept_name: opts[:dept_names].split.map { |name| name.tr('_', ' ') }}
@@ -39,6 +39,10 @@ module Oec
     end
 
     private
+
+    def default_date_time
+      DateTime.now
+    end
 
     def copy_file(file, dest_folder)
       return if @opts[:local_write]
