@@ -33,9 +33,9 @@ module Oec
 
     def self.from_csv(csv, opts={})
       return unless csv && (parsed_csv = CSV.parse csv)
-      header_row = parsed_csv.shift
       instance = self.new opts
-      raise ArgumentError, "Header mismatch: cannot create instance of #{self.name} from CSV" unless header_row == instance.headers
+      (header_row = parsed_csv.shift) until (header_row == instance.headers || parsed_csv.empty?)
+      raise ArgumentError, "Header mismatch: cannot create instance of #{self.name} from CSV" unless header_row
       parsed_csv.each_with_index { |row, index| instance[index] = Hash[instance.headers.zip row] }
       instance
     end

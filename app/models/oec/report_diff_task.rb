@@ -23,8 +23,8 @@ module Oec
       validate(dept_code, @term_code) do |errors|
         sis_data = csv_row_hash([@term_code, 'imports', "#{datestamp} #{timestamp}", dept_name], dept_code, Oec::SisImportSheet)
         errors.add("#{dept_name} has no 'imports' '#{datestamp} #{timestamp}' spreadsheet") && return unless sis_data
-        dept_data = csv_row_hash([@term_code, 'departments', dept_name, 'Courses'], dept_code, Oec::CourseConfirmation)
-        errors.add("#{dept_name} has no 'Courses' spreadsheet") && return unless dept_data
+        dept_data = csv_row_hash([@term_code, 'departments', dept_name], dept_code, Oec::CourseConfirmation)
+        errors.add("#{dept_name} has no department confirmation spreadsheet") && return unless dept_data
         keys_of_rows_with_diff = []
         intersection = (sis_keys = sis_data.keys) & (dept_keys = dept_data.keys)
         (sis_keys | dept_keys).select do |key|

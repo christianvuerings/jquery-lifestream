@@ -4,7 +4,8 @@ describe Oec::CreateConfirmationSheetsTask do
 
   let(:fake_remote_drive) { double() }
 
-  let(:import_sheet) { mock_google_drive_item }
+  let(:import_sheet) { mock_google_drive_item('Molecular and Cell Biology') }
+  let(:departments_folder) { mock_google_drive_item }
   let(:supervisors_sheet) { mock_google_drive_item }
 
   let(:import_csv) { File.read Rails.root.join('fixtures', 'oec', 'import_MCELLBI.csv') }
@@ -13,22 +14,26 @@ describe Oec::CreateConfirmationSheetsTask do
   before(:each) do
     allow(Oec::CourseCode).to receive(:by_dept_code).and_return({'IMMCB' => [double(dept_name: 'MCELLBI')]})
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
+    allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
+
     allow(fake_remote_drive).to receive(:check_conflicts_and_create_folder).and_return mock_google_drive_item
-    allow(fake_remote_drive).to receive(:find_first_matching_item).and_return mock_google_drive_item
     allow(fake_remote_drive).to receive(:find_folders).and_return [mock_google_drive_item]
     allow(fake_remote_drive).to receive(:find_nested).and_return mock_google_drive_item
 
-    allow(fake_remote_drive).to receive(:find_first_matching_item).with('Molecular and Cell Biology', anything).and_return import_sheet
+    allow(fake_remote_drive).to receive(:get_items_in_folder).and_return [import_sheet]
+
+    allow(fake_remote_drive).to receive(:find_first_matching_item).and_return mock_google_drive_item
+    allow(fake_remote_drive).to receive(:find_first_matching_item).with('departments', anything).and_return departments_folder
+    allow(fake_remote_drive).to receive(:find_first_matching_item).with('Molecular and Cell Biology', departments_folder).and_return nil
     allow(fake_remote_drive).to receive(:find_first_matching_item).with('supervisors', anything).and_return supervisors_sheet
+
     allow(fake_remote_drive).to receive(:export_csv).with(import_sheet).and_return import_csv
     allow(fake_remote_drive).to receive(:export_csv).with(supervisors_sheet).and_return supervisors_csv
-
-    allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
   end
 
   after(:all) do
     FileUtils.rm_rf Rails.root.join('tmp', 'oec', 'Courses.csv')
-   # FileUtils.rm_rf Rails.root.join('tmp', 'oec', 'Report Viewers.csv')
+    FileUtils.rm_rf Rails.root.join('tmp', 'oec', 'Report Viewers.csv')
     Dir.glob(Rails.root.join 'tmp', 'oec', "*#{Oec::CreateConfirmationSheetsTask.name.demodulize.underscore}.log").each do |file|
       FileUtils.rm_rf file
     end
@@ -36,12 +41,20 @@ describe Oec::CreateConfirmationSheetsTask do
 
   context 'expected API calls' do
     let(:local_write) { nil }
+    let(:template) { double(id: 'template_id', title: 'TEMPLATE', mime_type: 'application/vnd.google-apps.spreadsheet') }
+    let(:spreadsheet) { double(worksheets: [courses_worksheet, report_viewers_worksheet]) }
+    let(:courses_worksheet) { double(title: 'Courses', rows: [Oec::CourseConfirmation.new.headers]) }
+    let(:report_viewers_worksheet) { double(title: 'Report Viewers', rows: [Oec::Supervisors.new.headers]) }
 
-    it 'should upload confirmation sheets and log' do
-      expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder).with('Molecular and Cell Biology', anything, anything).and_return true
-      expect(fake_remote_drive).to receive(:check_conflicts_and_upload).with(kind_of(Oec::CourseConfirmation), 'Courses', Oec::Worksheet, anything, anything).and_return true
-      expect(fake_remote_drive).to receive(:check_conflicts_and_upload).with(kind_of(Oec::SupervisorConfirmation), 'Report Viewers', Oec::Worksheet, anything, anything).and_return true
+    it 'should copy template, update cells and upload log' do
+      expect(fake_remote_drive).to receive(:find_first_matching_item).with('TEMPLATE', anything).and_return template
+      expect(fake_remote_drive).to receive(:copy_item).with(template.id, 'Molecular and Cell Biology').and_return double(id: 'spreadsheet_id')
+      expect(fake_remote_drive).to receive(:spreadsheet_by_id).with('spreadsheet_id').and_return spreadsheet
+
+      expect(fake_remote_drive).to receive(:update_worksheet).with(courses_worksheet, anything)
+      expect(fake_remote_drive).to receive(:update_worksheet).with(report_viewers_worksheet, anything)
       expect(fake_remote_drive).to receive(:check_conflicts_and_upload).with(kind_of(Pathname), kind_of(String), 'text/plain', anything, anything).and_return true
+
       task.run
     end
   end

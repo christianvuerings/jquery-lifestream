@@ -21,14 +21,30 @@ module Oec
       merged_course_confirmations = Oec::SisImportSheet.new(export_name: 'Merged course confirmations')
       merged_supervisor_confirmations = Oec::Supervisors.new(export_name: 'Merged supervisor confirmations')
 
-      @remote_drive.find_folders(departments_folder.id).each do |department_subfolder|
-        course_confirmation_sheet = find_or_error('Courses', department_subfolder)
-        supervisor_confirmation_sheet = find_or_error('Report Viewers', department_subfolder)
-        sis_import_sheet = find_or_error(department_subfolder.title, most_recent_import)
+      department_names = Oec::CourseCode.by_dept_code(@course_code_filter).keys.map { |code| Berkeley::Departments.get(code, concise: true) }
 
-        course_confirmation = Oec::CourseConfirmation.from_csv @remote_drive.export_csv(course_confirmation_sheet)
-        supervisor_confirmation = Oec::SupervisorConfirmation.from_csv @remote_drive.export_csv(supervisor_confirmation_sheet)
-        sis_import = Oec::SisImportSheet.from_csv @remote_drive.export_csv(sis_import_sheet)
+      @remote_drive.get_items_in_folder(departments_folder.id).each do |department_item|
+        next unless department_names.include? department_item.title
+
+        if (sis_import_sheet = @remote_drive.find_first_matching_item(department_item.title, most_recent_import))
+          sis_import = Oec::SisImportSheet.from_csv @remote_drive.export_csv(sis_import_sheet)
+        else
+          raise RuntimeError "Could not find sheet '#{department_item.title}' in folder '#{most_recent_import}'"
+        end
+
+        confirmation_sheet = @remote_drive.spreadsheet_by_id department_item.id
+
+        if (course_confirmation_worksheet = confirmation_sheet.worksheets.find { |w| w.title == 'Courses' })
+          course_confirmation = Oec::CourseConfirmation.from_csv @remote_drive.export_csv(course_confirmation_worksheet)
+        else
+          raise RuntimeError "Could not find worksheet 'Courses' in sheet '#{confirmation_sheet.title}'"
+        end
+
+        if (supervisor_confirmation_worksheet = confirmation_sheet.worksheets.find { |w| w.title == 'Report Viewers' })
+          supervisor_confirmation = Oec::SupervisorConfirmation.from_csv @remote_drive.export_csv(supervisor_confirmation_worksheet)
+        else
+          raise RuntimeError "Could not find worksheet 'Report Viewers' in sheet '#{confirmation_sheet.title}'"
+        end
 
         course_confirmation.each do |course_confirmation_row|
           next unless course_confirmation_row['EVALUATE'] && course_confirmation_row['EVALUATE'].casecmp('Y') == 0
@@ -67,10 +83,6 @@ module Oec
         log :error, 'Validation failed! Confirmation sheets will not be merged.'
         log_validation_errors
       end
-    end
-
-    def find_or_error(title, folder)
-      @remote_drive.find_first_matching_item(title, folder) || (raise RuntimeError "Could not find sheet '#{title}' in folder '#{folder.title}'")
     end
 
   end
