@@ -25,7 +25,5 @@ module Oec
       )
     end
 
-    validate('LDAP_UID') { |row| 'Non-numeric' unless row['LDAP_UID'] =~ /\A\d+\Z/ }
-
   end
 end

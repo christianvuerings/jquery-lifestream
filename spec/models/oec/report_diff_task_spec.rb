@@ -34,7 +34,7 @@ describe Oec::ReportDiffTask do
         if dept_name.nil?
           expect(fake_remote_drive).to receive(:find_nested).with(imports_path, anything).and_return nil
         else
-          courses_path = [term_code, 'departments', friendly_name, 'Courses']
+          courses_path = [term_code, 'departments', friendly_name]
           sheet_classes = [Oec::SisImportSheet, Oec::CourseConfirmation]
           [ imports_path, courses_path ].each_with_index do |path, index|
             expect(fake_remote_drive).to receive(:find_nested).with(path, anything).and_return (remote_file = double)

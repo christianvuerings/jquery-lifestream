@@ -4,13 +4,21 @@ describe Oec::MergeConfirmationSheetsTask do
 
   let(:fake_remote_drive) { double() }
 
+  let(:departments_folder) { mock_google_drive_item }
   let(:last_import_folder) { mock_google_drive_item }
   let(:gws_folder) { mock_google_drive_item('Gender and Women\'s Studies') }
   let(:mcellbi_folder) { mock_google_drive_item('Molecular and Cell Biology') }
 
   def mock_sheet(filename)
+    sheet_title = if filename.start_with? 'course'
+                    'Courses'
+                  elsif filename.start_with? 'supervisor'
+                    'Report Viewers'
+                  else
+                    filename
+                  end
     sheet = {
-      sheet: mock_google_drive_item(filename),
+      sheet: mock_google_drive_item(sheet_title),
       csv: File.read(Rails.root.join('fixtures', 'oec', "#{filename}.csv"))
     }
     @mock_sheets << sheet
@@ -25,23 +33,28 @@ describe Oec::MergeConfirmationSheetsTask do
   let(:mcellbi_course_confirmation) { mock_sheet 'course_confirmations_MCELLBI' }
   let(:mcellbi_supervisor_confirmation) { mock_sheet 'supervisor_confirmations_MCELLBI' }
 
+  let(:gws_confirmation_spreadsheet) { mock_google_drive_item 'Gender and Women\'s Studies' }
+  let(:mcellbi_confirmation_spreadsheet) { mock_google_drive_item 'Molecular and Cell Biology' }
+
   before(:each) do
     @mock_sheets = []
 
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
+    allow(Oec::CourseCode).to receive(:by_dept_code).and_return({'SWOME' => [], 'IMMCB' => []})
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
 
     allow(fake_remote_drive).to receive(:check_conflicts_and_create_folder).and_return mock_google_drive_item
     allow(fake_remote_drive).to receive(:find_nested).and_return mock_google_drive_item
     allow(fake_remote_drive).to receive(:find_first_matching_item).and_return mock_google_drive_item
 
-    allow(fake_remote_drive).to receive(:find_folders).and_return([last_import_folder], [gws_folder, mcellbi_folder])
+    allow(fake_remote_drive).to receive(:find_folders).and_return [last_import_folder]
+    allow(fake_remote_drive).to receive(:get_items_in_folder).and_return [gws_confirmation_spreadsheet, mcellbi_confirmation_spreadsheet]
+    allow(fake_remote_drive).to receive(:spreadsheet_by_id).and_return(gws_confirmation_spreadsheet, mcellbi_confirmation_spreadsheet)
+    allow(gws_confirmation_spreadsheet).to receive(:worksheets).and_return [gws_course_confirmation[:sheet], gws_supervisor_confirmation[:sheet]]
+    allow(mcellbi_confirmation_spreadsheet).to receive(:worksheets).and_return [mcellbi_course_confirmation[:sheet], mcellbi_supervisor_confirmation[:sheet]]
 
+    allow(fake_remote_drive).to receive(:find_first_matching_item).with('departments', anything).and_return departments_folder
     allow(fake_remote_drive).to receive(:find_first_matching_item).with('supervisors', anything).and_return supervisors[:sheet]
-    allow(fake_remote_drive).to receive(:find_first_matching_item).with('Courses', gws_folder).and_return gws_course_confirmation[:sheet]
-    allow(fake_remote_drive).to receive(:find_first_matching_item).with('Report Viewers', gws_folder).and_return gws_supervisor_confirmation[:sheet]
-    allow(fake_remote_drive).to receive(:find_first_matching_item).with('Courses', mcellbi_folder).and_return mcellbi_course_confirmation[:sheet]
-    allow(fake_remote_drive).to receive(:find_first_matching_item).with('Report Viewers', mcellbi_folder).and_return mcellbi_supervisor_confirmation[:sheet]
     allow(fake_remote_drive).to receive(:find_first_matching_item).with('Gender and Women\'s Studies', last_import_folder).and_return gws_import[:sheet]
     allow(fake_remote_drive).to receive(:find_first_matching_item).with('Molecular and Cell Biology', last_import_folder).and_return mcellbi_import[:sheet]
 
