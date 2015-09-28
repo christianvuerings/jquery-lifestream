@@ -85,7 +85,7 @@ module Oec
     end
 
     def columns_to_compare
-      %w(COURSE_NAME FIRST_NAME LAST_NAME EMAIL_ADDRESS INSTRUCTOR_FUNC)
+      %w(COURSE_NAME FIRST_NAME LAST_NAME EMAIL_ADDRESS DEPT_FORM EVALUATION_TYPE MODULAR_COURSE START_DATE END_DATE)
     end
 
     def csv_row_hash(folder_titles, dept_code, klass)
@@ -93,9 +93,22 @@ module Oec
       hash = {}
       csv = @remote_drive.export_csv file
       klass.from_csv(csv, dept_code: dept_code).each do |row|
-        row = Oec::Worksheet.capitalize_keys row
-        next unless (id_hash = extract_id(folder_titles, dept_code, row))
-        hash[id_hash] = row
+        begin
+          row = Oec::Worksheet.capitalize_keys row
+          id = extract_id row
+          validate(dept_code, id[:ccn]) do |errors|
+            report(errors, id, :annotation, false, %w(A B GSI CHEM MCB))
+            report(errors, id, :ldap_uid, false, (1..99999999))
+            report(errors, row, 'EVALUATION_TYPE', false, %w(F G))
+            report(errors, row, 'MODULAR_COURSE', false, %w(Y N y n))
+            report(errors, row, 'START_DATE', true)
+            report(errors, row, 'END_DATE', true)
+          end
+          hash[id] = row
+        rescue => e
+          log :error, "\nThis row with bad data in #{folder_titles} will be ignored: \n#{row}."
+          log :error, "We will NOT abort; the error is NOT fatal: #{e.message}\n#{e.backtrace.join "\n\t"}"
+        end
       end
       hash
     rescue => e
@@ -104,29 +117,21 @@ module Oec
       raise e
     end
 
-    def extract_id(folder_titles, dept_code, row)
-      id = hashed row
-      validate(dept_code, id[:ccn]) do |errors|
-        annotation = id[:annotation]
-        errors.add "Invalid CCN annotation: #{annotation}" if (annotation && !%w(A B GSI CHEM MCB).include?(annotation))
-        id[:ldap_uid] = row['LDAP_UID'] unless row['LDAP_UID'].blank?
-        errors.add "Invalid ldap_uid: #{id[:ldap_uid]}" if (id[:ldap_uid] && id[:ldap_uid].to_i <= 0)
-        # instructor_func is NOT part of composite key but we do validate.
-        instructor_func = row['INSTRUCTOR_FUNC'] unless row['INSTRUCTOR_FUNC'].blank?
-        errors.add "Invalid instructor_func: #{instructor_func}" if (instructor_func && !(0..4).include?(instructor_func.to_i))
+
+    def report(errors, hash, key, required, range=nil)
+      value = (range && range.first.is_a?(Numeric) && /\A\d+\z/.match(hash[key])) ? hash[key].to_i : hash[key]
+      return if value.blank? && !required
+      unless range.nil? || range.include?(value)
+        errors.add(value.nil? ? "#{key} is blank" : "Invalid #{key}: #{value}")
       end
-      id
-    rescue => e
-      log :error, "\nThis row with bad data in #{folder_titles} will be ignored: \n#{row}."
-      log :error, "We will NOT abort; the error is NOT fatal: #{e.message}\n#{e.backtrace.join "\n\t"}"
-      nil
     end
 
-    def hashed(row)
+    def extract_id(row)
       id = row['COURSE_ID'].split '-'
       ccn_plus_tag = id[2].split '_'
       hash = { term_yr: id[0], term_cd: id[1], ccn: ccn_plus_tag[0] }
       hash[:annotation] = ccn_plus_tag[1] if ccn_plus_tag.length == 2
+      hash[:ldap_uid] = row['LDAP_UID'] unless row['LDAP_UID'].blank?
       hash
     end
 
