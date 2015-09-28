@@ -47,7 +47,6 @@ module Oec
         end
 
         course_confirmation.each do |course_confirmation_row|
-          next unless course_confirmation_row['EVALUATE'] && course_confirmation_row['EVALUATE'].casecmp('Y') == 0
           validate('Merged course confirmations', "#{course_confirmation_row['COURSE_ID']}-#{course_confirmation_row['LDAP_UID']}") do |errors|
             sis_import_rows = sis_import.select { |row| row['LDAP_UID'] == course_confirmation_row['LDAP_UID'] && row['COURSE_ID'] == course_confirmation_row['COURSE_ID']  }
             if sis_import_rows.none?
@@ -56,7 +55,7 @@ module Oec
               errors.add 'Multiple SIS import rows found matching confirmation row'
             else
               merged_row = sis_import_rows.first.merge course_confirmation_row
-              validate_and_add(merged_course_confirmations, merged_row, %w(COURSE_ID LDAP_UID))
+              validate_and_add(merged_course_confirmations, merged_row, %w(COURSE_ID LDAP_UID), strict: false)
             end
           end
         end
@@ -70,19 +69,18 @@ module Oec
               errors.add 'Multiple supervisor rows found matching confirmation row'
             else
               merged_row = supervisor_rows.first.merge supervisor_confirmation_row
-              validate_and_add(merged_supervisor_confirmations, merged_row, %w(LDAP_UID))
+              validate_and_add(merged_supervisor_confirmations, merged_row, %w(LDAP_UID), strict: false)
             end
           end
         end
       end
 
-      if valid?
-        export_sheet(merged_course_confirmations, departments_folder)
-        export_sheet(merged_supervisor_confirmations, departments_folder)
-      else
-        log :error, 'Validation failed! Confirmation sheets will not be merged.'
+      if !valid?
+        log :warn, 'Confirmation sheets generated validation errors:'
         log_validation_errors
       end
+      export_sheet(merged_course_confirmations, departments_folder)
+      export_sheet(merged_supervisor_confirmations, departments_folder)
     end
 
   end

@@ -99,33 +99,16 @@ describe Oec::MergeConfirmationSheetsTask do
       expect(merged_course_confirmation.first).to_not be_empty
     end
 
-    it 'should include only courses marked for evaluation' do
-      [gws_course_confirmation_worksheet, mcellbi_course_confirmation_worksheet].each do |confirmation|
-        confirmation.each do |confirmation_row|
-          merged_row = merged_course_confirmation.find { |row| row['COURSE_ID'] == confirmation_row['COURSE_ID'] && row['LDAP_UID'] == confirmation_row['LDAP_UID'] }
-          if confirmation_row['EVALUATE'].blank?
-            expect(merged_row).to be_nil
-          else
-            expect(merged_row).to be_present
-          end
-        end
-      end
-    end
-
     it 'should overwrite SIS import data when confirmed course data includes column' do
       [gws_course_confirmation_worksheet, gws_sis_import, mcellbi_course_confirmation_worksheet, mcellbi_sis_import].each_slice(2) do |confirmation, sis_import|
         confirmation.each do |confirmation_row|
           merged_confirmation_row = merged_course_confirmation.find { |row| row['COURSE_ID'] == confirmation_row['COURSE_ID'] && row['LDAP_UID'] == confirmation_row['LDAP_UID'] }
-          if confirmation_row['EVALUATE'].blank?
-            expect(merged_confirmation_row).to be_nil
-          else
-            sis_import_row = sis_import.find { |row| row['COURSE_ID'] == confirmation_row['COURSE_ID'] && row['LDAP_UID'] == confirmation_row['LDAP_UID'] }
-            merged_course_confirmation.headers.each do |header|
-              if confirmation.headers.include? header
-                expect(merged_confirmation_row[header]).to eq confirmation_row[header]
-              else
-                expect(merged_confirmation_row[header]).to eq sis_import_row[header]
-              end
+          sis_import_row = sis_import.find { |row| row['COURSE_ID'] == confirmation_row['COURSE_ID'] && row['LDAP_UID'] == confirmation_row['LDAP_UID'] }
+          merged_course_confirmation.headers.each do |header|
+            if confirmation.headers.include? header
+              expect(merged_confirmation_row[header]).to eq confirmation_row[header]
+            else
+              expect(merged_confirmation_row[header]).to eq sis_import_row[header]
             end
           end
         end
@@ -162,8 +145,7 @@ describe Oec::MergeConfirmationSheetsTask do
       mcellbi_course_confirmation[:csv].concat '2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,100008,Instructor,Eight,instructor8@berkeley.edu,1,Y,MCELLBI,F,,1/20/2015,5/8/2015'
     end
 
-    it 'should not export and should record errors' do
-      expect(task).not_to receive :export_sheet
+    it 'should record errors' do
       expect(Rails.logger).to receive(:error).at_least(1).times
       task.run
       expect(task.errors['Merged course confirmations']['2015-B-91111-100008'].keys).to eq ["Conflicting values found under DEPT_FORM: 'GWS', 'MCELLBI'"]
@@ -176,8 +158,7 @@ describe Oec::MergeConfirmationSheetsTask do
       gws_course_confirmation[:csv].concat '2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,100008,Instructor,Eight,instructor8@berkeley.edu,1,Y,GWS,F,,1/20/2015,5/8/2015'
     end
 
-    it 'should not export and should record errors' do
-      expect(task).not_to receive :export_sheet
+    it 'should record errors' do
       expect(Rails.logger).to receive(:error).at_least(1).times
       task.run
       expect(task.errors['Merged course confirmations']['2015-B-91111-100008'].keys).to eq ['No SIS import row found matching confirmation row']
@@ -192,8 +173,7 @@ describe Oec::MergeConfirmationSheetsTask do
       mcellbi_supervisor_confirmation[:csv].concat '999999,James,Tiptree,raccoona@berkeley.edu,DEPT_ADMIN,Y,,MCELLBI,GWS,,,'
     end
 
-    it 'should not export and should record errors' do
-      expect(task).not_to receive :export_sheet
+    it 'should record errors' do
       expect(Rails.logger).to receive(:error).at_least(1).times
       task.run
       pp task.errors
@@ -210,8 +190,7 @@ describe Oec::MergeConfirmationSheetsTask do
       mcellbi_supervisor_confirmation[:csv].concat '999999,Alice,Sheldon,raccoona@berkeley.edu,DEPT_ADMIN,,,MCELLBI,GWS,,,'
     end
 
-    it 'should not export and should record errors' do
-      expect(task).not_to receive :export_sheet
+    it 'should record errors' do
       expect(Rails.logger).to receive(:error).at_least(1).times
       task.run
       expect(task.errors['Merged supervisor confirmations']['999999'].keys).to eq ['No supervisors row found matching confirmation row']

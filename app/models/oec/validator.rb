@@ -13,7 +13,8 @@ module Oec
       errors_for_keys.blank?
     end
 
-    def validate_and_add(sheet, row, key_columns)
+    def validate_and_add(sheet, row, key_columns, opts={})
+      opts[:strict] = true unless opts[:strict].present?
       key = key_columns.map { |col| row[col] }.join('-')
       candidate_row = row.slice(*sheet.headers)
       validate(sheet.export_name, key) do |errors|
@@ -22,6 +23,11 @@ module Oec
           conflicting_keys = candidate_row.keys.select { |k| candidate_row[k] != sheet[key][k] }
           conflicting_keys.each do |conflicting_key|
             errors.add "Conflicting values found under #{conflicting_key}: '#{sheet[key][conflicting_key]}', '#{candidate_row[conflicting_key]}'"
+          end
+          if opts[:strict] == false
+            key_for_conflicting_row = "#{key}_001"
+            key_for_conflicting_row = key_for_conflicting_row.next until !sheet[key_for_conflicting_row]
+            sheet[key_for_conflicting_row] = candidate_row
           end
         else
           sheet[key] ||= candidate_row
