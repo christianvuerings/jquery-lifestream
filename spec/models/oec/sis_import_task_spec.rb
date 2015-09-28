@@ -73,7 +73,7 @@ describe Oec::SisImportTask do
           end
           expect(row['BLUE_ROLE']).to eq '23'
           expect(row['EVALUATE']).to be_nil
-          %w(COURSE_ID COURSE_NAME DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM EVALUATION_TYPE START_DATE END_DATE).each do |key|
+          %w(COURSE_ID COURSE_NAME DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM EVALUATION_TYPE).each do |key|
             expect(row[key]).to be_present
           end
           expect(%w(P S)).to include row['PRIMARY_SECONDARY_CD']
@@ -122,7 +122,7 @@ describe Oec::SisImportTask do
 
         include_examples 'expected CSV structure'
 
-        it 'adds modular course data to matching rows only' do
+        it 'inserts modular course data and default dates for non-modular courses' do
           subject.each do |row|
             if row['COURSE_NAME'].start_with? 'POL SCI 115'
               expect(row['MODULAR_COURSE']).to eq 'Y'
