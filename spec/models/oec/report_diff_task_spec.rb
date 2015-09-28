@@ -29,6 +29,9 @@ describe Oec::ReportDiffTask do
         dept_data = dept_name == 'STAT' ? JSON.parse(modified_stat_data) : sis_data
         fake_csv_hash[dept_name] = [ sis_data, dept_data]
       end
+      # Behave as if there is no previous diff report on remote drive
+      expect(fake_remote_drive).to receive(:find_nested).with([term_code, 'departments']).and_return (departments_folder = double)
+      expect(fake_remote_drive).to receive(:find_first_matching_item).with('2015-D diff report', departments_folder).and_return nil
       dept_code_mappings.each do |dept_code, dept_name|
         friendly_name = Berkeley::Departments.get(dept_code, concise: true)
         imports_path = [term_code, 'imports', now.strftime('%F %H:%M:%S'), friendly_name]
@@ -57,11 +60,8 @@ describe Oec::ReportDiffTask do
     end
 
     it 'should report STAT diff' do
-      expect(subject.diff_reports_per_dept).to have(1).item
-      diff_report = subject.diff_reports_per_dept['PSTAT']
-      expect(diff_report).to be_an Oec::DiffReport
-      actual_diff = diff_report.to_a
-      expect(actual_diff).to have(8).items
+      pstat_diff_rows = subject.diff_report.select { |row| row['DEPT_CODE'] == 'PSTAT' }
+      expect(pstat_diff_rows).to have(8).items
       expected_diff = {
         '2015-B-87672-10316' => {
           '+/-' => ' ',
@@ -85,7 +85,7 @@ describe Oec::ReportDiffTask do
           'DB_EMAIL_ADDRESS' => nil
         }
       }
-      actual_diff.each do |row|
+      pstat_diff_rows.each do |row|
         row_key = row['KEY']
         if expected_diff.has_key? row_key
           expected_diff[row_key].each do |key, expected|
