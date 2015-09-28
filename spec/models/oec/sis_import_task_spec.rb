@@ -191,6 +191,16 @@ describe Oec::SisImportTask do
             expect(room_share.count).to eq 2
             expect(room_share).to all include({'CROSS_LISTED_FLAG' => 'RM SHARE'})
           end
+          context 'zero-enrollment course in a room share' do
+            before do
+              courses_by_ccn['54441'].first['enrollment_count'] = '0'
+            end
+            it 'should screen out zero-enrollment course but include its catalog id in cross-listed name' do
+              expect(room_share.count).to eq 1
+              expect(room_share.first['CROSS_LISTED_FLAG']).to eq 'RM SHARE'
+              expect(room_share.first['CROSS_LISTED_NAME']).to eq 'MATH 223A, STAT 206A LEC 001'
+            end
+          end
         end
         context 'department not participating' do
           let(:math_included) { false }
