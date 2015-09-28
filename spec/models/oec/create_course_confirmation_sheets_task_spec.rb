@@ -96,7 +96,7 @@ describe Oec::CreateConfirmationSheetsTask do
 
   context 'conflicting course data' do
     let(:local_write) { 'Y' }
-    let(:conflicting_row) { '2015-B-58070,2015-B-58070,MCELLBI 102 LEC 001 SURV BIOCHEM & MOBI,,,MCELLBI,102,LEC,1,P,100001,UID:100001,Monster,Zero,monster.zero@berkeley.edu,1,23,,MCELLBI,F,Y,2/1/2015,4/1/2015' }
+    let(:conflicting_row) { '2015-B-58070,2015-B-58070,MCELLBI 102 LEC 001 SURV BIOCHEM & MOBI,,,MCELLBI,102,LEC,1,P,100001,UID:100001,Monster,Zero,monster.zero@berkeley.edu,1,,MCELLBI,F,Y,2/1/2015,4/1/2015' }
     before { import_csv.concat conflicting_row }
 
     it 'should not export and record errors' do
