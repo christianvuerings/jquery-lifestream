@@ -18,16 +18,15 @@ module Oec
       cross_listed_ccns = Set.new
       Oec::Queries.courses_for_codes(@term_code, course_codes, @opts[:import_all]).each do |course_row|
         if import_course(worksheet, course_row)
-          course_codes_by_ccn[course_row['course_cntl_num']] ||= course_row.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
           cross_listed_ccns.merge [course_row['cross_listed_ccns'], course_row['co_scheduled_ccns']].join(',').split(',').reject(&:blank?)
         end
+        course_codes_by_ccn[course_row['course_cntl_num']] ||= course_row.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
       end
       additional_cross_listings = cross_listed_ccns.reject{ |ccn| course_codes_by_ccn[ccn].present? }
       Oec::Queries.courses_for_cntl_nums(@term_code, additional_cross_listings).each do |cross_listing|
         next unless should_include_cross_listing? cross_listing
-        if import_course(worksheet, cross_listing)
-          course_codes_by_ccn[cross_listing['course_cntl_num']] = cross_listing.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
-        end
+        import_course(worksheet, cross_listing)
+        course_codes_by_ccn[cross_listing['course_cntl_num']] = cross_listing.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
       end
       set_cross_listed_values(worksheet, course_codes_by_ccn)
       flag_joint_faculty_gsi worksheet
@@ -72,8 +71,8 @@ module Oec
       worksheet.each do |course_row|
         cross_listed_ccns = [course_row['CROSS_LISTED_CCNS'], course_row['CO_SCHEDULED_CCNS']].join(',').split(',').reject(&:blank?)
         cross_listed_course_codes = course_codes_by_ccn.slice(*cross_listed_ccns).values
-        # A count of less than 2 means that cross-listed course codes were screened out by import_course and should not be reported.
-        next if cross_listed_course_codes.count < 2
+        # Move along unless there are multiple course codes in play.
+        next unless cross_listed_course_codes.count > 1
         # Official cross-listings, as opposed to room shares, will have this value already set to 'Y'.
         course_row['CROSS_LISTED_FLAG'] ||= 'RM SHARE'
         last_dept_names = nil
