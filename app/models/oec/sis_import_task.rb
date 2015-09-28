@@ -31,7 +31,6 @@ module Oec
       set_cross_listed_values(worksheet, course_codes_by_ccn)
       flag_joint_faculty_gsi worksheet
       merge_supplemental_data(worksheet, course_codes)
-      set_term_dates worksheet
     end
 
     def import_course(worksheet, course)
@@ -161,16 +160,22 @@ module Oec
           worksheet[row_key] = supplemental_row
         end
       end
+
+      set_term_dates(worksheet, supplemental_course_sheet)
     end
 
-    def set_term_dates(worksheet)
-      term_slug = Berkeley::TermCodes.to_slug(*@term_code.split('-'))
-      return unless (term = Berkeley::Terms.fetch.campus[term_slug])
-      term_dates = {
-        'START_DATE' => term.classes_start.strftime('%m-%d-%Y'),
-        'END_DATE' => term.instruction_end.strftime('%m-%d-%Y')
-      }
-      worksheet.each { |row| row.update(term_dates) unless row['MODULAR_COURSE'].present? }
+    def set_term_dates(worksheet, supplemental_course_sheet)
+      default_term_dates = supplemental_course_sheet.find do |row|
+        row['DEPT_NAME'].blank? &&
+        row['CATALOG_ID'].blank? &&
+        row['INSTRUCTION_FORMAT'].blank? &&
+        row['SECTION_NUM'].blank? &&
+        row['START_DATE'].present? &&
+        row['END_DATE'].present?
+      end
+      if default_term_dates
+        worksheet.each { |row| row.update(default_term_dates.slice('START_DATE', 'END_DATE')) unless row['MODULAR_COURSE'].present? }
+      end
     end
 
   end
