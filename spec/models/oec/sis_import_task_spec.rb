@@ -71,7 +71,6 @@ describe Oec::SisImportTask do
           else
             expect(row['DEPT_FORM']).to eq row['DEPT_NAME']
           end
-          expect(row['BLUE_ROLE']).to eq '23'
           expect(row['EVALUATE']).to be_nil
           %w(COURSE_ID COURSE_NAME DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM EVALUATION_TYPE).each do |key|
             expect(row[key]).to be_present
