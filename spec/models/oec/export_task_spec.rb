@@ -159,14 +159,6 @@ describe Oec::ExportTask do
     include_examples 'validation error logging'
   end
 
-  context 'invalid instructor_func' do
-    let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,6,Y,GWS,F,,01-26-2015,05-11-2015' }
-    let(:sheet_name) { 'course_instructors' }
-    let(:key) { '155555-2015-B-99999' }
-    let(:expected_message) { 'Unexpected INSTRUCTOR_FUNC 6' }
-    include_examples 'validation error logging'
-  end
-
   context 'courses sheet validations' do
     let(:sheet_name) { 'courses' }
     let(:key) { '2015-B-99999' }

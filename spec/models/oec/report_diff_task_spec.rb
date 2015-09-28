@@ -66,23 +66,23 @@ describe Oec::ReportDiffTask do
         '2015-B-87672-10316' => {
           '+/-' => ' ',
           'COURSE_NAME' => 'different_course_name',
-          'DB_COURSE_NAME' => 'STAT C205A LEC 001 - PROB THEORY',
+          'sis:COURSE_NAME' => 'STAT C205A LEC 001 - PROB THEORY',
           'EMAIL_ADDRESS' => 'different_email_address@berkeley.edu',
-          'DB_EMAIL_ADDRESS' => 'blanco@berkeley.edu'
+          'sis:EMAIL_ADDRESS' => 'blanco@berkeley.edu'
         },
         '2015-B-87690-12345678' => {
           '+/-' => '-',
           'COURSE_NAME' => nil,
-          'DB_COURSE_NAME' => 'STAT C236A LEC 001 - STATS SOCI SCI',
+          'sis:COURSE_NAME' => 'STAT C236A LEC 001 - STATS SOCI SCI',
           'EMAIL_ADDRESS' => nil,
-          'DB_EMAIL_ADDRESS' => 'stat_supervisor@berkeley.edu'
+          'sis:EMAIL_ADDRESS' => 'stat_supervisor@berkeley.edu'
         },
         '2015-B-11111' => {
           '+/-' => '+',
           'COURSE_NAME' => 'Added by dept',
-          'DB_COURSE_NAME' => nil,
+          'sis:COURSE_NAME' => nil,
           'EMAIL_ADDRESS' => 'trump@berkeley.edu',
-          'DB_EMAIL_ADDRESS' => nil
+          'sis:EMAIL_ADDRESS' => nil
         }
       }
       pstat_diff_rows.each do |row|

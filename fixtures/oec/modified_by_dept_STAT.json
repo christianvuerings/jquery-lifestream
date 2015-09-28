@@ -24,7 +24,6 @@
     "term_yr": "2015",
     "course_cntl_num": "11111",
     "ldap_uid": null,
-    "instructor_func": "5",
     "enrollment_count": "20",
     "cross_listed_ccns": null,
     "co_scheduled_ccns": null
@@ -54,7 +53,6 @@
     "term_yr": "2015",
     "course_cntl_num": "87672",
     "ldap_uid": "10316",
-    "instructor_func": "2",
     "enrollment_count": "20",
     "cross_listed_ccns": "54432,87672",
     "co_scheduled_ccns": "54432,87672"
@@ -84,7 +82,6 @@
     "term_yr": "2015",
     "course_cntl_num": "99999",
     "ldap_uid": "bad_data",
-    "instructor_func": "1",
     "enrollment_count": "20",
     "cross_listed_ccns": null,
     "co_scheduled_ccns": null
