@@ -25,6 +25,8 @@ module Oec
       suffixed_ccns = {}
 
       Oec::SisImportSheet.from_csv(merged_course_confirmations_csv, dept_code: nil).each do |confirmation|
+        next unless confirmation['EVALUATE'] && confirmation['EVALUATE'].casecmp('Y') == 0
+
         validate('courses', confirmation['COURSE_ID']) do |errors|
           errors.add('Blank instructor LDAP_UID') && next if confirmation['LDAP_UID'].blank?
           validate_and_add(courses, confirmation, %w(COURSE_ID))

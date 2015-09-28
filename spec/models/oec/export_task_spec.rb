@@ -5,6 +5,7 @@ describe Oec::ExportTask do
   let(:fake_remote_drive) { double() }
   let(:merged_course_confirmations_csv) { File.read Rails.root.join('fixtures', 'oec', 'merged_course_confirmations.csv') }
   let(:merged_supervisor_confirmations_csv) { File.read Rails.root.join('fixtures', 'oec', 'supervisors.csv') }
+  let(:merged_course_confirmations) { Oec::SisImportSheet.from_csv merged_course_confirmations_csv }
 
   def read_exported_csv(filename)
     File.read Rails.root.join('tmp', 'oec', "#{filename}.csv")
@@ -14,7 +15,10 @@ describe Oec::ExportTask do
 
   let(:enrollment_data_rows) do
     rows = []
-    course_ids.each { |course_id| 5.times { rows << {'course_id' => course_id, 'ldap_uid' => random_id} } }
+    course_ids.each do |course_id|
+      next unless merged_course_confirmations.find { |row| row['COURSE_ID'] == course_id && row['EVALUATE'] == 'Y' }
+      5.times { rows << {'course_id' => course_id, 'ldap_uid' => random_id} }
+    end
     rows
   end
 
@@ -66,11 +70,16 @@ describe Oec::ExportTask do
       end
     end
 
-    it 'should produce a sane courses sheet' do
+    it 'should produce a sane courses sheet including only courses marked for evaluation' do
       course_ids.each do |course_id|
-        matches = courses.select { |course| course['COURSE_ID'] == course_id }
-        expect(matches).to have(1).item
-        expect(matches[0]['COURSE_ID']).to eq matches[0]['COURSE_ID_2']
+        confirmation_rows = merged_course_confirmations.select { |row| row['COURSE_ID'] == course_id && row['EVALUATE'] == 'Y' }
+        course_rows = courses.select { |course| course['COURSE_ID'] == course_id }
+        if confirmation_rows.any?
+          expect(course_rows).to have(1).item
+          expect(course_rows[0]['COURSE_ID']).to eq course_rows[0]['COURSE_ID_2']
+        else
+          expect(course_rows).to be_empty
+        end
       end
     end
 
@@ -115,7 +124,7 @@ describe Oec::ExportTask do
   context 'data with suffixed course IDs' do
     before do
       merged_course_confirmations_csv.concat(
-        '2015-B-34821_GSI,2015-B-34821_GSI,LGBT C146A LEC 001 REP SEXUALITY/LIT,Y,GWS/LGBT C146A LEC 001,LGBT,C146A,LEC,001,P,562283,10945601,Clarice,Cccc,cccc@berkeley.edu,1,23,,LGBT,G,,01-26-2015,05-11-2015')
+        '2015-B-34821_GSI,2015-B-34821_GSI,LGBT C146A LEC 001 REP SEXUALITY/LIT,Y,GWS/LGBT C146A LEC 001,LGBT,C146A,LEC,001,P,562283,10945601,Clarice,Cccc,cccc@berkeley.edu,1,23,Y,LGBT,G,,01-26-2015,05-11-2015')
       expect(Oec::Queries).to receive(:enrollments_for_cntl_nums)
         .with(term_code, ['34821'])
         .and_return student_ids.map { |id| {'course_id' => '2015-B-34821', 'ldap_uid' => id} }
@@ -143,7 +152,7 @@ describe Oec::ExportTask do
   end
 
   context 'conflicting data' do
-    let(:invalid_row) { '2015-B-32960,2015-B-32960,GWS 103 LEC 001 IDENTITY ACROSS DIF,,,GWS,103,LEC,001,P,104033,UID:104033,BAD_FIRST_NAME,Ffff,ffff@berkeley.edu,1,23,,GWS,F,,01-26-2015,05-11-2015' }
+    let(:invalid_row) { '2015-B-32960,2015-B-32960,GWS 103 LEC 001 IDENTITY ACROSS DIF,,,GWS,103,LEC,001,P,104033,UID:104033,BAD_FIRST_NAME,Ffff,ffff@berkeley.edu,1,23,Y,GWS,F,,01-26-2015,05-11-2015' }
     let(:sheet_name) { 'instructors' }
     let(:key) { '104033' }
     let(:expected_message) { "Conflicting values found under FIRST_NAME: 'Flora', 'BAD_FIRST_NAME'" }
@@ -151,7 +160,7 @@ describe Oec::ExportTask do
   end
 
   context 'invalid instructor_func' do
-    let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,6,23,,GWS,F,,01-26-2015,05-11-2015' }
+    let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,6,23,Y,GWS,F,,01-26-2015,05-11-2015' }
     let(:sheet_name) { 'course_instructors' }
     let(:key) { '155555-2015-B-99999' }
     let(:expected_message) { 'Unexpected INSTRUCTOR_FUNC 6' }
@@ -163,33 +172,33 @@ describe Oec::ExportTask do
     let(:key) { '2015-B-99999' }
 
     context 'blank field' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,BIOLOGY 150 LEC 001 VINDICATION OF RIGHTS,,,BIOLOGY,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,1,23,,,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,BIOLOGY 150 LEC 001 VINDICATION OF RIGHTS,,,BIOLOGY,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,1,23,Y,,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Blank DEPT_FORM' }
       include_examples 'validation error logging'
     end
 
     context 'invalid BIOLOGY department form' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,BIOLOGY 150 LEC 001 VINDICATION OF RIGHTS,,,BIOLOGY,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,1,23,,SPANISH,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,BIOLOGY 150 LEC 001 VINDICATION OF RIGHTS,,,BIOLOGY,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,1,23,Y,SPANISH,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Unexpected for BIOLOGY course: DEPT_FORM SPANISH' }
       include_examples 'validation error logging'
     end
 
     context 'invalid course id' do
-      let(:invalid_row) { '2015-B-999991,2015-B-999991,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,1,23,,GWS,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-999991,2015-B-999991,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,1,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:key) { '2015-B-999991' }
       let(:expected_message) { 'Invalid COURSE_ID 2015-B-999991' }
       include_examples 'validation error logging'
     end
 
     context 'non-matching COURSE_ID_2' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99998,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,1,23,,GWS,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99998,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,1,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Non-matching COURSE_ID_2 2015-B-99998' }
       include_examples 'validation error logging'
     end
 
     context 'unexpected GSI evaluation type' do
       let(:key) { '2015-B-99999_GSI' }
-      let(:invalid_row) { '2015-B-99999_GSI,2015-B-99999_GSI,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,1,23,,GWS,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999_GSI,2015-B-99999_GSI,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,1,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Unexpected EVALUATION_TYPE F' }
       include_examples 'validation error logging'
     end
@@ -200,14 +209,14 @@ describe Oec::ExportTask do
 
     context 'invalid BLUE_ROLE' do
       let(:key) { '155555' }
-      let(:invalid_row) { '2015-B-99999_GSI,2015-B-99999_GSI,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,1,24,,GWS,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999_GSI,2015-B-99999_GSI,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,1,24,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Invalid BLUE_ROLE 24' }
       include_examples 'validation error logging'
     end
 
     context 'non-numeric UID' do
       let(:key) { '155555Z' }
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555Z,UID:155555Z,Zachary,Zzzz,zzzz@berkeley.edu,1,23,,GWS,F,,01-26-2015,05-11-2015' }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555Z,UID:155555Z,Zachary,Zzzz,zzzz@berkeley.edu,1,23,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Non-numeric LDAP_UID 155555Z' }
       include_examples 'validation error logging'
     end
@@ -215,8 +224,8 @@ describe Oec::ExportTask do
 
   context 'repeated errors' do
     before do
-      merged_course_confirmations_csv.concat "2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555Z,UID:155555Z,Zachary,Zzzz,zzzz@berkeley.edu,1,23,,GWS,F,,01-26-2015,05-11-2015\n"
-      merged_course_confirmations_csv.concat "2015-B-99999,2015-B-99999,GWS 150 DIS 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555Z,UID:155555Z,Zachary,Zzzz,zzzz@berkeley.edu,1,23,,GWS,F,,01-26-2015,05-11-2015\n"
+      merged_course_confirmations_csv.concat "2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555Z,UID:155555Z,Zachary,Zzzz,zzzz@berkeley.edu,1,23,Y,GWS,F,,01-26-2015,05-11-2015\n"
+      merged_course_confirmations_csv.concat "2015-B-99999,2015-B-99999,GWS 150 DIS 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555Z,UID:155555Z,Zachary,Zzzz,zzzz@berkeley.edu,1,23,Y,GWS,F,,01-26-2015,05-11-2015\n"
       expect(task).not_to receive :export_sheet
     end
 
