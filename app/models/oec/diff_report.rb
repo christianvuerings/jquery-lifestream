@@ -4,6 +4,7 @@ module Oec
     def headers
       %w(
         +/-
+        DEPT_CODE
         KEY
         LDAP_UID
         DB_COURSE_NAME

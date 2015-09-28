@@ -3,19 +3,27 @@ module Oec
 
     include Validator
 
-    attr_accessor :diff_reports_per_dept
+    attr_accessor :diff_report
 
     def run_internal
-      @diff_reports_per_dept = {}
-      Oec::CourseCode.by_dept_code(@course_code_filter).keys.each do |dept_code|
-        if (diff_report = analyze dept_code)
-          diff_reports_per_dept[dept_code] = diff_report
-          file_name = "#{timestamp} #{Berkeley::Departments.get(dept_code, concise: true)} courses diff"
-          upload_worksheet(diff_report, file_name, find_or_create_today_subfolder('reports'))
-          log :info, "#{dept_code} diff summary: reports/#{datestamp}/#{file_name}"
-        end
-      end
+      @diff_report = Oec::DiffReport.new @opts
+      Oec::CourseCode.by_dept_code(@course_code_filter).keys.each { |dept_code| analyze dept_code }
+      update_remote_drive
       log_validation_errors
+    end
+
+    private
+
+    def update_remote_drive
+      departments_folder = @remote_drive.find_nested([@term_code, 'departments'])
+      raise RuntimeError, "No departments folder found for term #{@term_code}" unless departments_folder
+      title = "#{@term_code} diff report"
+      if (remote_file = @remote_drive.find_first_matching_item(title, departments_folder))
+        # TODO: Be transactional, implement @remote_drive.update_worksheet(). For now, the benefit is not worth the risk of refactor.
+        log :info, "Permanently delete the old diff report #{remote_file.id}"
+        @remote_drive.trash_item(remote_file, permanently_delete: true)
+      end
+      upload_worksheet(@diff_report, title, departments_folder)
     end
 
     def analyze(dept_code)
@@ -40,11 +48,10 @@ module Oec
             keys_of_rows_with_diff << key
           end
         end
-        keys_of_rows_with_diff.any? ? create_diff_report(sis_data, dept_data, keys_of_rows_with_diff) : nil
+        log :info, "#{keys_of_rows_with_diff.length} row(s) with diff found in #{@term_code}/departments/#{dept_name}"
+        report_diff(dept_code, sis_data, dept_data, keys_of_rows_with_diff)
       end
     end
-
-    private
 
     def default_date_time
       # Deduce date by parsing the name of the last folder in 'imports', where SIS data lives.
@@ -61,22 +68,25 @@ module Oec
       nil
     end
 
-    def create_diff_report(sis_data, dept_data, keys)
-      diff_report = Oec::DiffReport.new @opts
+    def report_diff(dept_code, sis_data, dept_data, keys)
       keys.each do |key|
         sis_row = sis_data[key]
         dept_row = dept_data[key]
         ldap_uid = sis_row ? sis_row['LDAP_UID'] : dept_row['LDAP_UID']
         id = "#{key[:term_yr]}-#{key[:term_cd]}-#{key[:ccn]}"
         id << "-#{key[:ldap_uid]}" unless key[:ldap_uid].to_s.empty?
-        diff_row = { '+/-' => diff_type_symbol(sis_row, dept_row), 'KEY' => id, 'LDAP_UID' => ldap_uid }
+        diff_row = {
+          '+/-' => diff_type_symbol(sis_row, dept_row),
+          'DEPT_CODE' => dept_code,
+          'KEY' => id,
+          'LDAP_UID' => ldap_uid
+        }
         columns_to_compare.each do |column|
           diff_row["DB_#{column}"] = sis_row ? sis_row[column] : nil
           diff_row[column] = dept_row ? dept_row[column] : nil
         end
-        diff_report[key] = diff_row
+        @diff_report[key] = diff_row
       end
-      diff_report
     end
 
     def diff_type_symbol(sis_row, dept_row)
