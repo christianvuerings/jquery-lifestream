@@ -54,18 +54,7 @@ module Oec
     end
 
     def default_date_time
-      # Deduce date by parsing the name of the last folder in 'imports', where SIS data lives.
-      parent = @remote_drive.find_nested([@term_code, 'imports'])
-      folders = @remote_drive.find_folders(parent.id)
-      unless (last = folders.sort_by(&:title).last)
-        raise RuntimeError, "The report_diff task requires a non-empty '#{@term_code}/imports' folder"
-      end
-      log :info, "The report_diff task will use SIS data in '#{@term_code}/imports/#{last.title}'"
-      DateTime.strptime(last.title, "#{self.class.date_format} #{self.class.timestamp_format}")
-    rescue => e
-      pattern = "#{Oec::Task.date_format}_#{Oec::Task.timestamp_format}"
-      log :error, "Folder in '#{@term_code}/imports' failed to match '#{pattern}'.\n#{e.message}\n#{e.backtrace.join "\n\t"}"
-      nil
+      date_time_of_most_recent 'imports'
     end
 
     def report_diff(dept_code, sis_data, dept_data, keys)

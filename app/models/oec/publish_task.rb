@@ -11,7 +11,7 @@ module Oec
         filename = "#{self.class.name.demodulize.underscore}_sftp_#{DateTime.now.strftime pattern}.log"
         sftp_stdout = LOG_DIRECTORY.join(filename).expand_path
         cmd = "#{sftp_command(download_dir)} > #{sftp_stdout} 2>&1"
-        system(cmd) ? log(:info, "Successfully ran system command: #{cmd}") : raise(RuntimeError, "System command failed: #{cmd}")
+        system(cmd) ? log(:info, "Successfully ran system command: #{cmd}") : raise(RuntimeError, "System command failed: \n----\n#{cmd}\n----\n")
         # Now copy the command's output to remote drive.
         sftp_stdout_to_log sftp_stdout
         FileUtils.rm_rf download_dir
@@ -25,8 +25,9 @@ module Oec
     private
 
     def download_exports_from_drive
-      datetime_to_publish = @opts[:datetime_to_publish] || "#{datestamp} #{timestamp}"
-      tmp_dir = LOG_DIRECTORY.join("publish_#{datetime_to_publish.tr(' :', '_')}")
+      datetime_to_publish = @opts[:datetime_to_publish] || date_time_of_most_recent('exports')
+      pattern = "#{Oec::Task.date_format}_%H%M%S"
+      tmp_dir = LOG_DIRECTORY.join("publish_#{datetime_to_publish.strftime pattern}")
       FileUtils.mkdir_p tmp_dir
       parent = @remote_drive.find_nested([@term_code, 'exports', datetime_to_publish], on_failure: :error)
       files_to_publish.each do |filename|
@@ -41,17 +42,13 @@ module Oec
     end
 
     def sftp_command(download_dir)
-      e = Settings.oec.explorance
-      cmd = "lftp sftp://#{e.sftp_user}"
-      # If password is blank then SSH key-based auth
-      cmd.concat ":#{e.sftp_password}" unless e.sftp_password.blank?
-      cmd.concat "@#{e.sftp_server}:#{e.sftp_port} -e '#{sftp_script download_dir}'"
-      cmd
+      settings = Settings.oec.explorance
+      "lftp sftp://#{settings.sftp_user}@#{settings.sftp_server}:#{settings.sftp_port} -e '#{sftp_script download_dir}'"
     end
 
     def sftp_script(download_dir)
       download_dir.chomp!('/')
-      put_files = files_to_publish.map { |file| "put #{download_dir}/#{file}" }.join("\n")
+      put_files = files_to_publish.map { |file| " put #{download_dir}/#{file} " }.join("\n")
       %(
         #{put_files}
         exit
