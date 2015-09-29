@@ -15,7 +15,6 @@ module Oec
         FIRST_NAME
         LAST_NAME
         EMAIL_ADDRESS
-        INSTRUCTOR_FUNC
         EVALUATE
         DEPT_FORM
         EVALUATION_TYPE

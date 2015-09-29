@@ -82,7 +82,7 @@ module Oec
           'LDAP_UID' => ldap_uid
         }
         columns_to_compare.each do |column|
-          diff_row["DB_#{column}"] = sis_row ? sis_row[column] : nil
+          diff_row["sis:#{column}"] = sis_row ? sis_row[column] : nil
           diff_row[column] = dept_row ? dept_row[column] : nil
         end
         @diff_report[key] = diff_row

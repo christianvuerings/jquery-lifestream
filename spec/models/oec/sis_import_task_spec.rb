@@ -166,7 +166,7 @@ describe Oec::SisImportTask do
       include_examples 'expected CSV structure'
 
       it 'should not include course supervisor assignments' do
-        expect(subject.map{ |row| row['INSTRUCTOR_FUNC'] }).not_to include '3'
+        expect(subject.select{ |row| row['EMAIL_ADDRESS'] == 'stat_supervisor@berkeley.edu' }).to be_empty
       end
 
       it 'reports official crosslistings' do
