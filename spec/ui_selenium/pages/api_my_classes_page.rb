@@ -16,8 +16,9 @@ class ApiMyClassesPage
     @parsed = JSON.parse(body)
   end
 
-  def current_term
-    @parsed['current_term']
+  def current_term(driver)
+    classes = get_json driver
+    classes['current_term']
   end
 
 end

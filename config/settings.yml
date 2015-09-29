@@ -341,7 +341,6 @@ ui_selenium:
   pageLoadTimeout: 12
   liveUpdateTimeoutDelta: 180
   academicsTimeout: 20
-  canvasPageLoadTimeout: 30
   canvasUpdateTimeout: 60
   test_user_password: secret
   oski_username: secret

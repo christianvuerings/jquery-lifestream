@@ -17,7 +17,9 @@ module CalCentralPages
     elements(:activity_item, :list_item, :xpath => '//ul[@class="cc-widget-activities-list"]/li')
     elements(:activity_item_toggle, :div, :xpath => '//ul[@class="cc-widget-activities-list"]/li/div')
     elements(:activity_item_summary, :div, :xpath => '//ul[@class="cc-widget-activities-list"]/li//strong')
-    elements(:activity_item_desc, :div, :xpath => '//ul[@class="cc-widget-activities-list"]/li//strong/following-sibling::div')
+    elements(:activity_item_source, :span, :xpath => '//ul[@class="cc-widget-activities-list"]/li//span[@data-ng-bind="activity.source"]')
+    elements(:activity_item_date, :span, :xpath => '//ul[@class="cc-widget-activities-list"]/li//span[@data-ng-if="activity.date"]')
+    elements(:activity_item_desc, :div, :xpath => '//ul[@class="cc-widget-activities-list"]/li//p')
     elements(:activity_more_info_link, :link, :xpath => '//ul[@class="cc-widget-activities-list"]/li//a')
 
     def wait_for_recent_activity
@@ -29,42 +31,57 @@ module CalCentralPages
     def wait_for_course_activity(driver, course_site_name)
       tries ||= 5
       logger.info("Waiting for #{course_site_name} to appear on recent activity select")
-      load_page driver
       wait_for_recent_activity
       WebDriverUtils.wait_for_element_and_select(activities_select_element, course_site_name)
     rescue
       logger.warn 'Course not found on the activity select, retrying'
+      load_page driver
       retry unless (tries -= 1).zero?
+    end
+
+    def all_activity_summaries
+      summaries = []
+      activity_item_summary_elements.each { |summary| summaries << summary.text }
+      summaries
+    end
+
+    def expand_activity_detail(index)
+      activity_item_toggle_elements[index].click unless activity_more_info_link_elements[index].visible?
     end
 
     def sub_activity_toggle_elements(driver, activity_list_node)
       driver.find_elements(:xpath, "//ul[@class='cc-widget-activities-list']/li[#{activity_list_node.to_s}]//ul/li/div")
     end
 
-    def all_sub_activity_summaries(driver, activity_list_node)
-      summaries = []
+    def sub_activity_summary_elements(driver, activity_list_node)
+      driver.find_elements(:xpath, "//ul[@class='cc-widget-activities-list']/li[#{activity_list_node.to_s}]//ul/li//div[contains(@class,'cc-widget-activities-sub-activity ng-binding')]")
+    end
+
+    def sub_activity_desc_elements(driver, activity_list_node)
+      driver.find_elements(:xpath, "//ul[@class='cc-widget-activities-list']/li[#{activity_list_node.to_s}]//ul/li//p")
+    end
+
+    def sub_activity_metadata(driver, activity_list_node, elements)
+      elements_metadata = []
       toggles = sub_activity_toggle_elements(driver, activity_list_node)
-      summary_elements = driver.find_elements(:xpath, "//ul[@class='cc-widget-activities-list']/li[#{activity_list_node.to_s}]//ul/li//div[contains(@class,'cc-widget-activities-sub-activity ng-binding')]")
       toggles.each do |toggle|
+        activity_item_toggle_elements[activity_list_node - 1].click unless toggle.displayed?
+        wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_event_timeout)
+        wait.until { toggle.displayed? }
         toggle.click
-        summary = summary_elements[toggles.index(toggle)]
-        wait_until(timeout=WebDriverUtils.page_event_timeout) { summary.displayed? }
-        summaries << summary.text
+        element = elements[toggles.index(toggle)]
+        wait_until(timeout=WebDriverUtils.page_event_timeout) { element.displayed? }
+        elements_metadata << element.text
       end
-      summaries
+      elements_metadata
+    end
+
+    def all_sub_activity_summaries(driver, activity_list_node)
+      sub_activity_metadata(driver, activity_list_node, sub_activity_summary_elements(driver, activity_list_node))
     end
 
     def all_sub_activity_descriptions(driver, activity_list_node)
-      descriptions = []
-      toggles = sub_activity_toggle_elements(driver, activity_list_node)
-      description_elements = driver.find_elements(:xpath, "//ul[@class='cc-widget-activities-list']/li[#{activity_list_node.to_s}]//ul/li//p")
-      toggles.each do |toggle|
-        toggle.click
-        description = description_elements[toggles.index(toggle)]
-        wait_until(timeout=WebDriverUtils.page_event_timeout) { description.displayed? }
-        descriptions << description.text
-      end
-      descriptions
+      sub_activity_metadata(driver, activity_list_node, sub_activity_desc_elements(driver, activity_list_node))
     end
 
     def all_sub_activity_info_links(driver, activity_list_node)
@@ -72,9 +89,12 @@ module CalCentralPages
       toggles = sub_activity_toggle_elements(driver, activity_list_node)
       link_elements = driver.find_elements(:xpath, "//ul[@class='cc-widget-activities-list']/li[#{activity_list_node.to_s}]//ul/li//a[contains(.,'More info')]")
       toggles.each do |toggle|
+        activity_item_toggle_elements[activity_list_node - 1].click unless toggle.displayed?
+        wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_event_timeout)
+        wait.until { toggle.displayed? }
         toggle.click
         link = link_elements[toggles.index(toggle)]
-        wait_until(timeout=WebDriverUtils.page_event_timeout)  { link.displayed? }
+        wait_until(timeout=WebDriverUtils.page_event_timeout) { link.displayed? }
         links << link.attribute('href')
       end
       links
