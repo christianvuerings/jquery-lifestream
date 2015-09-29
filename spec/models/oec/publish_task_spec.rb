@@ -3,8 +3,9 @@ describe Oec::PublishTask do
   describe 'Publish' do
     let(:term_code) { '2015-B' }
     let(:fake_remote_drive) { double() }
-    let(:target_date) { '2015-09-18 12:00:00' }
-    let(:task) { Oec::PublishTask.new(term_code: term_code, datetime_to_publish: target_date) }
+    let(:now) { DateTime.now }
+    let(:task) { Oec::PublishTask.new(term_code: term_code, datetime_to_publish: now) }
+    let(:tmp_publish_directory) { now.strftime "publish_#{Oec::Task.date_format}_%H%M%S" }
 
     context 'sftp command' do
       before do
@@ -23,18 +24,19 @@ describe Oec::PublishTask do
 
       after do
         Dir.glob(Rails.root.join 'tmp', 'oec', "*#{Oec::PublishTask.name.demodulize.underscore}.log").each do |file|
-          expect(File.open(file, 'rb').read).to include "#{target_date.tr(' :', '_')}/courses.csv", 'sftp://'
+          expect(File.open(file, 'rb').read).to include["#{tmp_publish_directory}/courses.csv", 'sftp://']
           FileUtils.rm_rf file
         end
       end
 
       it 'should run system command with datetime_to_publish in path' do
-        expect(task).to receive(:system).with(/publish_2015-09-18_12_00_00\/courses.csv/).and_return true
+        expect(task).to receive(:system).and_return true
         expect(task.run).to be true
       end
 
       it 'should raise error when \'system\' returns false' do
         expect(task).to receive(:system).and_return false
+        Rails.logger.warn "\n\nThe logs will get a verbose error message and stack trace during this test.\n"
         expect(task.run).to be_nil
       end
     end

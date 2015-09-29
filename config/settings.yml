@@ -305,7 +305,6 @@ oec:
     sftp_server: ''
     sftp_port: 22
     sftp_user: ''
-    sftp_password: ''
   google:
     uid: ''
     client_id: 'oecClientId'

@@ -108,6 +108,21 @@ module Oec
       end
     end
 
+    def date_time_of_most_recent(category_name)
+      # Deduce date from folder title
+      parent = @remote_drive.find_nested([@term_code, category_name])
+      folders = @remote_drive.find_folders(parent.id)
+      unless (last = folders.sort_by(&:title).last)
+        raise RuntimeError, "#{self.class.name} requires a non-empty '#{@term_code}/#{category_name}' folder"
+      end
+      log :info, "#{self.class.name} will pull data from '#{@term_code}/#{category_name}/#{last.title}'"
+      DateTime.strptime(last.title, "#{self.class.date_format} #{self.class.timestamp_format}")
+    rescue => e
+      pattern = "#{Oec::Task.date_format}_#{Oec::Task.timestamp_format}"
+      log :error, "Folder in '#{@term_code}/#{category_name}' failed to match '#{pattern}'.\n#{e.message}\n#{e.backtrace.join "\n\t"}"
+      nil
+    end
+
     def log(level, message)
       logger.send level, message
       @log << "[#{Time.now}] #{message}"
