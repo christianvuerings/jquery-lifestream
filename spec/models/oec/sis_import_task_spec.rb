@@ -165,6 +165,10 @@ describe Oec::SisImportTask do
 
       include_examples 'expected CSV structure'
 
+      it 'should not include course supervisor assignments' do
+        expect(subject.select{ |row| row['EMAIL_ADDRESS'] == 'stat_supervisor@berkeley.edu' }).to be_empty
+      end
+
       it 'reports official crosslistings' do
         crosslisting = subject.select{ |row| row['CROSS_LISTED_NAME'] == 'POL SCI/STAT C236A LEC 001' }
         expect(crosslisting.count).to eq 2
