@@ -7,11 +7,11 @@
 
         <div class="row">
           <div class="small-3 columns">
-            <label class="cc-oec-label">Task to run:</label>
+            <label for="cc-page-oec-task" class="cc-oec-label">Task to run:</label>
           </div>
           <div class="small-9 columns">
             <div class="cc-select">
-              <select data-ng-model="taskParameters.selectedTask" data-ng-options="task.friendlyName for task in oecTasks">
+              <select id="cc-page-oec-task" data-ng-model="taskParameters.selectedTask" data-ng-options="task.friendlyName for task in oecTasks">
                 <option value="">Choose a task</option>
               </select>
             </div>
@@ -20,22 +20,22 @@
 
         <div class="row">
           <div class="small-3 columns">
-            <label class="cc-oec-label">Term:</label>
+            <label for="cc-page-oec-term" class="cc-oec-label">Term:</label>
           </div>
           <div class="small-9 columns">
             <div class="cc-select">
-              <select data-ng-options="term for term in oecTerms" data-ng-model="taskParameters.options.term"></select>
+              <select id="cc-page-oec-term" data-ng-options="term for term in oecTerms" data-ng-model="taskParameters.options.term"></select>
             </div>
           </div>
         </div>
 
         <div class="row">
           <div class="small-3 columns">
-            <label class="cc-oec-label">Department(s):</label>
+            <label for="cc-page-oec-department" class="cc-oec-label">Department(s):</label>
           </div>
           <div class="small-9 columns">
             <div class="cc-select">
-              <select data-ng-model="taskParameters.options.departmentCode" data-ng-options="department.code as department.name for department in oecDepartments">
+              <select id="cc-page-oec-department" data-ng-model="taskParameters.options.departmentCode" data-ng-options="department.code as department.name for department in oecDepartments">
                 <option value="">All participating departments</option>
               </select>
             </div>
