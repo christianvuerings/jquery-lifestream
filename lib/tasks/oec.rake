@@ -85,8 +85,7 @@ namespace :oec do
     raise ArgumentError, 'term_code required' unless term_code
     Oec::PublishTask.new(
       term_code: term_code,
-      local_write: ENV['local_write'].present?,
-      datetime_to_publish: ENV['datetime_to_publish']
+      local_write: ENV['local_write'].present?
     ).run
   end
 
