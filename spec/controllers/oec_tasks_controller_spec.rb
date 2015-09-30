@@ -28,6 +28,11 @@ describe OecTasksController do
       response_body = JSON.parse response.body
       expect(response_body['oecDepartments'].count).to be > 2
       expect(response_body['oecTasks'].count).to be > 2
+      response_body['oecTasks'].each do |task|
+        expect(task['name']).to be_present
+        expect(task['friendlyName']).to be_present
+        expect(task['htmlDescription']).to be_present
+      end
       expect(response_body['oecTerms'].count).to be > 2
     end
   end
