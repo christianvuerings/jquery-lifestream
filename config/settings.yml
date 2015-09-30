@@ -301,6 +301,7 @@ features:
 youtube_splash_id: 'EQ-a7xrfVag'
 
 oec:
+  administrator_uid: ''
   explorance:
     sftp_server: ''
     sftp_port: 22
