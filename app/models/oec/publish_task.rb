@@ -34,7 +34,8 @@ module Oec
     private
 
     def download_exports_from_drive
-      datetime_to_publish = @opts[:datetime_to_publish] || date_time_of_most_recent('exports')
+      datetime_to_publish = date_time_of_most_recent('exports')
+      raise RuntimeError, 'The \'exports\' directory is empty; there is nothing to publish.' unless datetime_to_publish
       pattern = "#{Oec::Task.date_format}_%H%M%S"
       download_dir = @tmp_dir.join("publish_#{datetime_to_publish.strftime pattern}")
       FileUtils.mkdir_p download_dir
