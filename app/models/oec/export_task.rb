@@ -19,7 +19,12 @@ module Oec
       raise RuntimeError, 'No merged supervisor confirmation sheet found' unless merged_supervisor_confirmations_csv
 
       supervisors = Oec::Supervisors.from_csv(merged_supervisor_confirmations_csv)
-      course_supervisors = Oec::CourseSupervisors.new
+
+      if (previous_course_supervisors = @remote_drive.find_nested [@term_code, 'supplemental_sources', 'course_supervisors'])
+        course_supervisors = Oec::CourseSupervisors.from_csv @remote_drive.export_csv(previous_course_supervisors)
+      else
+        course_supervisors = Oec::CourseSupervisors.new
+      end
 
       ccns = Set.new
       suffixed_ccns = {}
