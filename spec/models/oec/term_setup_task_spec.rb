@@ -33,6 +33,9 @@ describe Oec::TermSetupTask do
       expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
         .with('supplemental_sources', term_folder, anything).and_return supplemental_sources_folder
 
+      expect(fake_remote_drive).to receive(:copy_item_to_folder)
+        .with(anything, 'departments_id', 'TEMPLATE').and_return mock_google_drive_item
+
       %w(courses course_instructors course_supervisors instructors supervisors).each do |sheet|
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
           .with(kind_of(Oec::Worksheet), sheet, Oec::Worksheet, supplemental_sources_folder, anything)
@@ -69,8 +72,10 @@ describe Oec::TermSetupTask do
     subject { described_class.new(term_code: term_code, local_write: 'Y') }
 
     it 'reads from but does not write to remote drive' do
+      allow(fake_remote_drive).to receive(:find_nested).and_return mock_google_drive_item
       expect(fake_remote_drive).to receive(:find_folders).with(no_args).and_return []
       expect(fake_remote_drive).not_to receive(:check_conflicts_and_upload)
+      expect(fake_remote_drive).not_to receive(:copy_item_to_folder)
       subject.run
     end
   end
