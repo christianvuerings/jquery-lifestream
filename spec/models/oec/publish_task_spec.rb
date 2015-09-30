@@ -11,8 +11,6 @@ describe Oec::PublishTask do
       before do
         allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
         allow(fake_remote_drive).to receive(:find_nested).with(term_code, 'exports') # .and_return (exports_folder = double())
-        # exports_folder_id = double()
-        # allow(exports_folder).to receive(:id) { 'mock_id' }
         allow(fake_remote_drive).to receive(:find_folders).with('mock_id').and_return (exports_folder_listing = double())
         allow(exports_folder_listing).to receive(:sort_by) { exports_folder_listing }
         most_recent_folder = double()
