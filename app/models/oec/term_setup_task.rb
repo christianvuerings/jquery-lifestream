@@ -5,9 +5,10 @@ module Oec
       log :info, "Will create initial folders and files for term #{@term_code}"
 
       term_folder = create_folder @term_code
-      %w(departments exports imports reports).each do |folder_name|
+      %w(exports imports reports).each do |folder_name|
         create_folder(folder_name, term_folder)
       end
+      departments = create_folder('departments', term_folder)
       supplemental_sources = create_folder('supplemental_sources', term_folder)
 
       find_previous_term_csvs
@@ -19,6 +20,10 @@ module Oec
           log :info, "Could not find previous sheet '#{worksheet_class.export_name}' for copying; will create header-only file"
           export_sheet_headers(worksheet_class, supplemental_sources)
         end
+      end
+
+      if !@opts[:local_write] && (department_template = @remote_drive.find_nested ['templates', 'Department confirmations'])
+        @remote_drive.copy_item_to_folder(department_template, departments.id, 'TEMPLATE')
       end
     end
 
