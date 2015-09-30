@@ -29,7 +29,7 @@ module Oec
         if (sis_import_sheet = @remote_drive.find_first_matching_item(department_item.title, most_recent_import))
           sis_import = Oec::SisImportSheet.from_csv @remote_drive.export_csv(sis_import_sheet)
         else
-          raise RuntimeError "Could not find sheet '#{department_item.title}' in folder '#{most_recent_import}'"
+          raise RuntimeError, "Could not find sheet '#{department_item.title}' in folder '#{most_recent_import.title}'"
         end
 
         confirmation_sheet = @remote_drive.spreadsheet_by_id department_item.id
@@ -37,13 +37,13 @@ module Oec
         if (course_confirmation_worksheet = confirmation_sheet.worksheets.find { |w| w.title == 'Courses' })
           course_confirmation = Oec::CourseConfirmation.from_csv @remote_drive.export_csv(course_confirmation_worksheet)
         else
-          raise RuntimeError "Could not find worksheet 'Courses' in sheet '#{confirmation_sheet.title}'"
+          raise RuntimeError, "Could not find worksheet 'Courses' in sheet '#{confirmation_sheet.title}'"
         end
 
         if (supervisor_confirmation_worksheet = confirmation_sheet.worksheets.find { |w| w.title == 'Report Viewers' })
           supervisor_confirmation = Oec::SupervisorConfirmation.from_csv @remote_drive.export_csv(supervisor_confirmation_worksheet)
         else
-          raise RuntimeError "Could not find worksheet 'Report Viewers' in sheet '#{confirmation_sheet.title}'"
+          raise RuntimeError, "Could not find worksheet 'Report Viewers' in sheet '#{confirmation_sheet.title}'"
         end
 
         course_confirmation.each do |course_confirmation_row|
