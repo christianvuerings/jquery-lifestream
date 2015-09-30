@@ -2,7 +2,12 @@ module Oec
   class PublishTask < Task
 
     def run_internal
+      # The previous run might have failed to clean up properly so we wipe the slate clean before starting.
+      @tmp_dir = LOG_DIRECTORY.join('explorance')
+      FileUtils.rm_rf @tmp_dir
+      FileUtils.mkdir_p @tmp_dir
       download_dir = download_exports_from_drive
+      download_dir.chomp!('/')
       # If local_write then our work is done; the downloaded 'export' files will not be removed.
       unless @opts[:local_write]
         # SFTP stdout and stderr will go to a log file.
@@ -11,11 +16,15 @@ module Oec
         filename = "#{self.class.name.demodulize.underscore}_sftp_#{DateTime.now.strftime pattern}.log"
         sftp_stdout = LOG_DIRECTORY.join(filename).expand_path
         cmd = "#{sftp_command(download_dir)} > #{sftp_stdout} 2>&1"
-        system(cmd) ? log(:info, "Successfully ran system command: #{cmd}") : raise(RuntimeError, "System command failed: \n----\n#{cmd}\n----\n")
+        if system(cmd)
+          log :info, "Successfully ran system command: \n#{cmd}"
+        else
+          raise RuntimeError, "System command failed: \n----\n#{cmd}\n----\n"
+        end
         # Now copy the command's output to remote drive.
         sftp_stdout_to_log sftp_stdout
-        FileUtils.rm_rf download_dir
       end
+      FileUtils.rm_rf @tmp_dir
     end
 
     def files_to_publish
@@ -27,32 +36,33 @@ module Oec
     def download_exports_from_drive
       datetime_to_publish = @opts[:datetime_to_publish] || date_time_of_most_recent('exports')
       pattern = "#{Oec::Task.date_format}_%H%M%S"
-      tmp_dir = LOG_DIRECTORY.join("publish_#{datetime_to_publish.strftime pattern}")
-      FileUtils.mkdir_p tmp_dir
-      parent = @remote_drive.find_nested([@term_code, 'exports', datetime_to_publish], on_failure: :error)
+      download_dir = @tmp_dir.join("publish_#{datetime_to_publish.strftime pattern}")
+      FileUtils.mkdir_p download_dir
+      directory = datetime_to_publish.strftime "#{Oec::Task.date_format} #{Oec::Task.timestamp_format}"
+      parent = @remote_drive.find_nested([@term_code, 'exports', directory], on_failure: :error)
       files_to_publish.each do |filename|
         if (remote_content = @remote_drive.find_first_matching_item(filename.chomp('.csv'), parent))
-          open(tmp_dir.join(filename), 'w') { |f|
+          open(download_dir.join(filename), 'w') { |f|
             f << @remote_drive.export_csv(remote_content)
             f << "\n"
           }
         end
       end
-      tmp_dir.to_s
+      download_dir.to_s
     end
 
     def sftp_command(download_dir)
+      # SFTP batch-mode reads a series of commands from an input batch-file
+      batch_file = "#{@tmp_dir}/batch_file.sftp"
+      open(batch_file, 'w') { |f|
+        f << "ls -la \n"
+        files_to_publish.map do |file_to_put|
+          f << "put #{download_dir}/#{file_to_put} \n"
+        end
+        f << "exit \n"
+      }
       settings = Settings.oec.explorance
-      "lftp sftp://#{settings.sftp_user}@#{settings.sftp_server}:#{settings.sftp_port} -e '#{sftp_script download_dir}'"
-    end
-
-    def sftp_script(download_dir)
-      download_dir.chomp!('/')
-      put_files = files_to_publish.map { |file| " put #{download_dir}/#{file} " }.join("\n")
-      %(
-        #{put_files}
-        exit
-      )
+      "sftp -v -b '#{batch_file}' -oPort=#{settings.sftp_port} -oIdentityFile=#{settings.ssh_private_key_file} #{settings.sftp_user}@#{settings.sftp_server}"
     end
 
     def sftp_stdout_to_log(sftp_output)
