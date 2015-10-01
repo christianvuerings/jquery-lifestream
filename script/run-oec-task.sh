@@ -7,7 +7,7 @@ test -f "${PROFILE}" && source "${PROFILE}"
 
 cd $( dirname "${BASH_SOURCE[0]}" )/..
 
-TASK_OPTIONS=(create_confirmation_sheets export merge_confirmation_sheets publish_to_explorance report_diff sis_import term_setup)
+TASK_OPTIONS=(term_setup sis_import create_confirmation_sheets report_diff merge_confirmation_sheets validate_confirmation_sheets publish_to_explorance)
 TASK="$1"
 
 WORKING_DIR="${PWD}"

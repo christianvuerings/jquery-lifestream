@@ -88,13 +88,16 @@ module Oec
         end
       end
 
+      skip_export_step = @opts[:validation_without_export]
       if valid?
-        exports_now = find_or_create_now_subfolder 'exports'
-        [instructors, course_instructors, courses, students, course_students, supervisors, course_supervisors].each do |sheet|
-          export_sheet(sheet, exports_now)
+        unless skip_export_step
+          exports_now = find_or_create_now_subfolder 'exports'
+          [instructors, course_instructors, courses, students, course_students, supervisors, course_supervisors].each do |sheet|
+            export_sheet(sheet, exports_now)
+          end
         end
       else
-        log :error, 'Validation failed! No sheets will be exported.'
+        log :error, "Validation failed! #{'No sheets will be exported.' unless skip_export_step}"
         log_validation_errors
       end
     end

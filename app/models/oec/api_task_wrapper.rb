@@ -34,8 +34,8 @@ module Oec
         htmlDescription: 'Run a validation report on merged confirmation sheets. Validation results will appear in a dated subfolder of the <strong>reports</strong> folder.'
       },
       {
-        name: 'PublishTask',
-        friendlyName: 'Export confirmed data',
+        name: 'ExportAndPublishTask',
+        friendlyName: 'Publish confirmed data to Explorance',
         htmlDescription: 'Validate and export merged confirmation sheets. Files will be uploaded to the vendor only if validation passes. A copy of the uploaded data will appear in a timestamped subfolder of the <strong>exports</strong> folder.'
       }
     ]
