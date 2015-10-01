@@ -83,11 +83,13 @@ module HubEdos
         guest: false,
         concurrentEnrollmentStudent: false
       }
-      result[:affiliations].each do |affiliation|
-        if affiliation[:statusCode] == 'UNDERGRAD'
-          result[:ug_grad_flag] = 'U'
-        elsif affiliation[:statusCode] == 'GRAD'
-          result[:ug_grad_flag] = 'G'
+      if edo[:affiliations].present?
+        result[:affiliations].each do |affiliation|
+          if affiliation[:statusCode] == 'UNDERGRAD'
+            result[:ug_grad_flag] = 'U'
+          elsif affiliation[:statusCode] == 'GRAD'
+            result[:ug_grad_flag] = 'G'
+          end
         end
       end
     end
