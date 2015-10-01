@@ -1,0 +1,236 @@
+[
+  {
+    "id": "home",
+    "html_url": "/courses/1234567",
+    "full_url": "https://canvas.example.com/courses/1234567",
+    "position": 1,
+    "visibility": "public",
+    "label": "Home",
+    "type": "internal"
+  },
+  {
+    "id": "announcements",
+    "html_url": "/courses/1234567/announcements",
+    "full_url": "https://canvas.example.com/courses/1234567/announcements",
+    "position": 2,
+    "visibility": "public",
+    "label": "Announcements",
+    "type": "internal"
+  },
+  {
+    "id": "assignments",
+    "html_url": "/courses/1234567/assignments",
+    "full_url": "https://canvas.example.com/courses/1234567/assignments",
+    "position": 3,
+    "visibility": "public",
+    "label": "Assignments",
+    "type": "internal"
+  },
+  {
+    "id": "discussions",
+    "html_url": "/courses/1234567/discussion_topics",
+    "full_url": "https://canvas.example.com/courses/1234567/discussion_topics",
+    "position": 4,
+    "visibility": "public",
+    "label": "Discussions",
+    "type": "internal"
+  },
+  {
+    "id": "grades",
+    "html_url": "/courses/1234567/grades",
+    "full_url": "https://canvas.example.com/courses/1234567/grades",
+    "position": 5,
+    "visibility": "public",
+    "label": "Grades",
+    "type": "internal"
+  },
+  {
+    "id": "people",
+    "html_url": "/courses/1234567/users",
+    "full_url": "https://canvas.example.com/courses/1234567/users",
+    "position": 6,
+    "visibility": "public",
+    "label": "People",
+    "type": "internal"
+  },
+  {
+    "id": "pages",
+    "html_url": "/courses/1234567/wiki",
+    "full_url": "https://canvas.example.com/courses/1234567/wiki",
+    "position": 7,
+    "unused": true,
+    "visibility": "admins",
+    "label": "Pages",
+    "type": "internal"
+  },
+  {
+    "id": "files",
+    "html_url": "/courses/1234567/files",
+    "full_url": "https://canvas.example.com/courses/1234567/files",
+    "position": 8,
+    "unused": true,
+    "visibility": "admins",
+    "label": "Files",
+    "type": "internal"
+  },
+  {
+    "id": "syllabus",
+    "html_url": "/courses/1234567/assignments/syllabus",
+    "full_url": "https://canvas.example.com/courses/1234567/assignments/syllabus",
+    "position": 9,
+    "visibility": "public",
+    "label": "Syllabus",
+    "type": "internal"
+  },
+  {
+    "id": "outcomes",
+    "html_url": "/courses/1234567/outcomes",
+    "full_url": "https://canvas.example.com/courses/1234567/outcomes",
+    "position": 10,
+    "unused": true,
+    "visibility": "admins",
+    "label": "Outcomes",
+    "type": "internal"
+  },
+  {
+    "id": "quizzes",
+    "html_url": "/courses/1234567/quizzes",
+    "full_url": "https://canvas.example.com/courses/1234567/quizzes",
+    "position": 11,
+    "unused": true,
+    "visibility": "admins",
+    "label": "Quizzes",
+    "type": "internal"
+  },
+  {
+    "id": "modules",
+    "html_url": "/courses/1234567/modules",
+    "full_url": "https://canvas.example.com/courses/1234567/modules",
+    "position": 12,
+    "unused": true,
+    "visibility": "admins",
+    "label": "Modules",
+    "type": "internal"
+  },
+  {
+    "id": "conferences",
+    "html_url": "/courses/1234567/conferences",
+    "full_url": "https://canvas.example.com/courses/1234567/conferences",
+    "position": 13,
+    "visibility": "public",
+    "label": "Conferences",
+    "type": "internal"
+  },
+  {
+    "id": "collaborations",
+    "html_url": "/courses/1234567/collaborations",
+    "full_url": "https://canvas.example.com/courses/1234567/collaborations",
+    "position": 14,
+    "visibility": "public",
+    "label": "Collaborations",
+    "type": "internal"
+  },
+  {
+    "id": "context_external_tool_24485",
+    "html_url": "/courses/1234567/external_tools/24485",
+    "full_url": "https://canvas.example.com/courses/1234567/external_tools/24485",
+    "position": 15,
+    "visibility": "members",
+    "label": "Chat",
+    "type": "external",
+    "url": "https://canvas.example.com/api/v1/courses/1234567/external_tools/sessionless_launch?id=24485\u0026launch_type=course_navigation"
+  },
+  {
+    "id": "context_external_tool_32692",
+    "html_url": "/courses/1234567/external_tools/32692",
+    "full_url": "https://canvas.example.com/courses/1234567/external_tools/32692",
+    "position": 16,
+    "hidden": true,
+    "visibility": "admins",
+    "label": "Course Captures",
+    "type": "external",
+    "url": "https://canvas.example.com/api/v1/courses/1234567/external_tools/sessionless_launch?id=32692\u0026launch_type=course_navigation"
+  },
+  {
+    "id": "context_external_tool_35251",
+    "html_url": "/courses/1234567/external_tools/35251",
+    "full_url": "https://canvas.example.com/courses/1234567/external_tools/35251",
+    "position": 17,
+    "hidden": true,
+    "visibility": "admins",
+    "label": "Find a Person to Add",
+    "type": "external",
+    "url": "https://canvas.example.com/api/v1/courses/1234567/external_tools/sessionless_launch?id=35251\u0026launch_type=course_navigation"
+  },
+  {
+    "id": "context_external_tool_36940",
+    "html_url": "/courses/1234567/external_tools/36940",
+    "full_url": "https://canvas.example.com/courses/1234567/external_tools/36940",
+    "position": 18,
+    "visibility": "admins",
+    "label": "Roster Photos",
+    "type": "external",
+    "url": "https://canvas.example.com/api/v1/courses/1234567/external_tools/sessionless_launch?id=36940\u0026launch_type=course_navigation"
+  },
+  {
+    "id": "context_external_tool_36957",
+    "html_url": "/courses/1234567/external_tools/36957",
+    "full_url": "https://canvas.example.com/courses/1234567/external_tools/36957",
+    "position": 19,
+    "visibility": "admins",
+    "label": "Attendance",
+    "type": "external",
+    "url": "https://canvas.example.com/api/v1/courses/1234567/external_tools/sessionless_launch?id=36957\u0026launch_type=course_navigation"
+  },
+  {
+    "id": "context_external_tool_37784",
+    "html_url": "/courses/1234567/external_tools/37784",
+    "full_url": "https://canvas.example.com/courses/1234567/external_tools/37784",
+    "position": 20,
+    "hidden": true,
+    "visibility": "admins",
+    "label": "Download E-Grades",
+    "type": "external",
+    "url": "https://canvas.example.com/api/v1/courses/1234567/external_tools/sessionless_launch?id=37784\u0026launch_type=course_navigation"
+  },
+  {
+    "id": "context_external_tool_39335",
+    "html_url": "/courses/1234567/external_tools/39335",
+    "full_url": "https://canvas.example.com/courses/1234567/external_tools/39335",
+    "position": 21,
+    "visibility": "admins",
+    "label": "i\u003Eclicker registration",
+    "type": "external",
+    "url": "https://canvas.example.com/api/v1/courses/1234567/external_tools/sessionless_launch?id=39335\u0026launch_type=course_navigation"
+  },
+  {
+    "id": "context_external_tool_41468",
+    "html_url": "/courses/1234567/external_tools/41468",
+    "full_url": "https://canvas.example.com/courses/1234567/external_tools/41468",
+    "position": 22,
+    "visibility": "admins",
+    "label": "Official Sections",
+    "type": "external",
+    "url": "https://canvas.example.com/api/v1/courses/1234567/external_tools/sessionless_launch?id=41468\u0026launch_type=course_navigation"
+  },
+  {
+    "id": "context_external_tool_45965",
+    "html_url": "/courses/1234567/external_tools/45965",
+    "full_url": "https://canvas.example.com/courses/1234567/external_tools/45965",
+    "position": 23,
+    "hidden": true,
+    "visibility": "admins",
+    "label": "SCORM",
+    "type": "external",
+    "url": "https://canvas.example.com/api/v1/courses/1234567/external_tools/sessionless_launch?id=45965\u0026launch_type=course_navigation"
+  },
+  {
+    "id": "settings",
+    "html_url": "/courses/1234567/settings",
+    "full_url": "https://canvas.example.com/courses/1234567/settings",
+    "position": 24,
+    "visibility": "admins",
+    "label": "Settings",
+    "type": "internal"
+  }
+]

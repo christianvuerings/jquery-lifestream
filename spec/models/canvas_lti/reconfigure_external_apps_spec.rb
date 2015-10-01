@@ -12,7 +12,7 @@ describe CanvasLti::ReconfigureExternalApps do
         fake_external_tools_list = fake_external_tools_proxy.external_tools_list
         external_tools_proxy = double()
         expect(external_tools_proxy).to receive(:external_tools_list).exactly(2).times.and_return fake_external_tools_list
-        expect(external_tools_proxy).to receive(:reset_external_tool_config_by_url).exactly(6).times.and_return fake_reset_response
+        expect(external_tools_proxy).to receive(:reset_external_tool_config_by_url).exactly(8).times.and_return fake_reset_response
         allow(Canvas::ExternalTools).to receive(:new).with(url_root: fake_canvas_host, canvas_account_id: '90242').and_return external_tools_proxy
         allow(Canvas::ExternalTools).to receive(:new).with(url_root: fake_canvas_host, canvas_account_id: '129410').and_return external_tools_proxy
         subject.reset_external_app_hosts_by_url(reachable_xml_host, [
