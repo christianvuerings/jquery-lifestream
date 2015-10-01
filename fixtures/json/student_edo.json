@@ -2,19 +2,19 @@
   "student": {
     "identifiers": [
       {
-        "type": "CalNet UID",
+        "type": "campus-uid",
         "id": "61889",
         "disclose": true,
         "fromDate": "2017-02-17"
       },
       {
-        "type": "Student ID",
+        "type": "student-id",
         "id": "11667051",
         "disclose": false,
         "fromDate": "2016-05-28"
       },
       {
-        "type": "SSN",
+        "type": "ssn",
         "id": "123-45-6789",
         "disclose": false,
         "fromDate": "1975-02-05"

@@ -60,8 +60,8 @@ module HubEdos
 
     def extract_names(edo, result)
       edo[:names].each do |name|
-        # use preferred name
-        if name[:type][:code] == 'PRF'
+        # use primary name
+        if name[:type][:code] == 'PRI'
           result[:first_name] = name[:givenName]
           result[:last_name] = name[:familyName]
           result[:person_name] = name[:formattedName]
@@ -84,9 +84,9 @@ module HubEdos
         concurrentEnrollmentStudent: false
       }
       result[:affiliations].each do |affiliation|
-        if affiliation[:type][:code] == 'UNDERGRAD' && affiliation[:statusCode] == 'ACT'
+        if affiliation[:statusCode] == 'UNDERGRAD'
           result[:ug_grad_flag] = 'U'
-        elsif affiliation[:type][:code] == 'GRAD' && affiliation[:statusCode] == 'ACT'
+        elsif affiliation[:statusCode] == 'GRAD'
           result[:ug_grad_flag] = 'G'
         end
       end
@@ -105,27 +105,33 @@ module HubEdos
 
     def extract_education_level(edo, result)
       # TODO this data only supported in GoLive5
-      result[:education_level] = edo[:currentRegistration][:academicLevel][:level][:description]
+      if edo[:currentRegistration].present?
+        result[:education_level] = edo[:currentRegistration][:academicLevel][:level][:description]
+      end
     end
 
     def extract_total_units(edo, result)
       # TODO this data only supported in GoLive5
-      edo[:currentRegistration][:termUnits].each do |term_unit|
-        if term_unit[:type][:description] == 'Total'
-          result[:tot_enroll_unit] = term_unit[:unitsEnrolled]
-          break
+      if edo[:currentRegistration].present?
+        edo[:currentRegistration][:termUnits].each do |term_unit|
+          if term_unit[:type][:description] == 'Total'
+            result[:tot_enroll_unit] = term_unit[:unitsEnrolled]
+            break
+          end
         end
       end
     end
 
     def extract_special_program_code(edo, result)
-      # TODO this data only supported in GoLive5
-      result[:education_abroad] = false
-      # TODO verify business correctness of this conversion based on more examples of study-abroad students
-      edo[:currentRegistration][:specialStudyPrograms].each do |pgm|
-        if pgm[:type][:code] == 'EAP'
-          result[:education_abroad] = true
-          break
+      if edo[:currentRegistration].present?
+        # TODO this data only supported in GoLive5
+        result[:education_abroad] = false
+        # TODO verify business correctness of this conversion based on more examples of study-abroad students
+        edo[:currentRegistration][:specialStudyPrograms].each do |pgm|
+          if pgm[:type][:code] == 'EAP'
+            result[:education_abroad] = true
+            break
+          end
         end
       end
     end
@@ -137,18 +143,20 @@ module HubEdos
     end
 
     def extract_residency(edo, result)
-      # TODO this data only supported in GoLive5
-      if edo[:residency][:official][:code] == 'RES'
-        result[:cal_residency_flag] = 'Y'
-      else
-        result[:cal_residency_flag] = 'N'
-      end
-      if term_transition?
-        result[:california_residency] = nil
-        result[:reg_status][:transitionTerm] = true
-      else
-        # TODO get full status from CalResidencyTranslator
-        #result[:california_residency] = cal_residency_translator.translate result[:cal_residency_flag]
+      if edo[:residency].present?
+        # TODO this data only supported in GoLive5
+        if edo[:residency][:official][:code] == 'RES'
+          result[:cal_residency_flag] = 'Y'
+        else
+          result[:cal_residency_flag] = 'N'
+        end
+        if term_transition?
+          result[:california_residency] = nil
+          result[:reg_status][:transitionTerm] = true
+        else
+          # TODO get full status from CalResidencyTranslator
+          #result[:california_residency] = cal_residency_translator.translate result[:cal_residency_flag]
+        end
       end
     end
 

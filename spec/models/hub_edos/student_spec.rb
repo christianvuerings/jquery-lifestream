@@ -12,7 +12,6 @@ describe HubEdos::Student do
     it 'returns data with the expected structure' do
       expect(subject[:feed]['student']).to be
       expect(subject[:feed]['student']['identifiers'][0]['id']).to be
-      expect(subject[:feed]['student']['studentPlans'][0]['academicPlan']['academicProgram']['academicCareer']['code']).to eq 'UGRD'
     end
   end
 

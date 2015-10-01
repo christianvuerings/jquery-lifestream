@@ -54,7 +54,7 @@ module HubEdos
         logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
         response = get_response(url, request_options)
         logger.debug "Remote server status #{response.code}, Body = #{response.body}"
-        feed = response.parsed_response
+        feed = build_feed response
         {
           statusCode: response.code,
           feed: feed
@@ -71,8 +71,15 @@ module HubEdos
         basic_auth: {
           username: @settings.username,
           password: @settings.password
+        },
+        headers: {
+          'Accept' => 'application/json'
         }
       }
+    end
+
+    def build_feed(response)
+      response.parsed_response
     end
 
   end
