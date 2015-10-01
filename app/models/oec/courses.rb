@@ -26,6 +26,7 @@ module Oec
     validate('COURSE_ID') { |row| 'Invalid' unless row['COURSE_ID'] =~ /\A20\d{2}-[ABCD]-\d{5}(_(A|B|GSI|CHEM|MCB))?\Z/ }
     validate('COURSE_ID_2') { |row| 'Non-matching' unless row['COURSE_ID'] == row['COURSE_ID_2'] }
     validate('EVALUATION_TYPE') { |row| 'Unexpected' if row['COURSE_ID'].end_with?('_GSI') && row['EVALUATION_TYPE'] != 'G' }
+    validate('EVALUATION_TYPE') { |row| 'Unexpected' unless %w(F G LANG LECT SEMI WRIT).include? row['EVALUATION_TYPE'] }
     validate('END_DATE') do |row|
       start_date = Date.strptime(row['START_DATE'], WORKSHEET_DATE_FORMAT)
       end_date = Date.strptime(row['END_DATE'], WORKSHEET_DATE_FORMAT)

@@ -29,12 +29,23 @@ module Oec
       ccns = Set.new
       suffixed_ccns = {}
 
+      default_dates = default_term_dates
+
       Oec::SisImportSheet.from_csv(merged_course_confirmations_csv, dept_code: nil).each do |confirmation|
         next unless confirmation['EVALUATE'] && confirmation['EVALUATE'].casecmp('Y') == 0
 
         validate('courses', confirmation['COURSE_ID']) do |errors|
           errors.add('Blank instructor LDAP_UID') && next if confirmation['LDAP_UID'].blank?
           errors.add("Incorrect term code in COURSE_ID #{confirmation['COURSE_ID']}") && next unless confirmation['COURSE_ID'].start_with?(@term_code)
+          if default_dates
+            course_dates = confirmation.slice('START_DATE', 'END_DATE')
+            if confirmation['MODULAR_COURSE'].blank?
+              errors.add "Unexpected dates #{confirmation['START_DATE']} to #{confirmation['END_DATE']} for non-modular course" unless course_dates == default_dates
+            elsif confirmation['MODULAR_COURSE'] == 'Y'
+              errors.add "Default term dates #{confirmation['START_DATE']} to #{confirmation['END_DATE']} for modular course" if course_dates == default_dates
+            end
+          end
+          errors.add "Unexpected MODULAR_COURSE value #{confirmation['MODULAR_COURSE']}" unless confirmation['MODULAR_COURSE'].blank? || confirmation['MODULAR_COURSE'] == 'Y'
           validate_and_add(courses, confirmation, %w(COURSE_ID))
         end
 
