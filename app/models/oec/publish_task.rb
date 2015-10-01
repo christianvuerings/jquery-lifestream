@@ -23,8 +23,8 @@ module Oec
         end
         # Now copy the command's output to remote drive.
         sftp_stdout_to_log sftp_stdout
+        FileUtils.rm_rf @tmp_dir
       end
-      FileUtils.rm_rf @tmp_dir
     end
 
     def files_to_publish
