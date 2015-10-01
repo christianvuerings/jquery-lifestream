@@ -109,4 +109,15 @@ namespace :canvas do
     CanvasCsv::TurnitinReporter.print_term_report(ENV['TERM_ID'])
   end
 
+  desc 'Report LTI Apps enabled for a term'
+  task :report_lti_usage => :environment do
+    sis_term_id = ENV["TERM_ID"]
+    if sis_term_id.blank?
+      sis_term_id = Canvas::Terms.current_sis_term_ids.first
+    end
+    Rails.logger.warn "Beginning report on LTI configurations in #{sis_term_id}"
+    CanvasCsv::LtiUsageReporter.new(sis_term_id).run
+    Rails.logger.warn "Reports on LTI configurations in #{sis_term_id} generated"
+  end
+
 end

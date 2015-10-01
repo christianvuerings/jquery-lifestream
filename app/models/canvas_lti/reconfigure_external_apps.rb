@@ -25,7 +25,7 @@ module CanvasLti
                 logger.debug "App #{app_code} on #{canvas_host} already points to #{calcentral_host}"
               else
                 if (xml_name = app_code_to_xml_name(app_code))
-                  logger.warn "Resetting app #{app_code} on #{canvas_host} to #{calcentral_host}"
+                  logger.warn "Resetting app #{app_code} on #{canvas_host} to #{calcentral_host} for account #{canvas_account_id}"
                   tool_id = tool_config['id']
                   app_config_url = "#{reachable_xml_host}/canvas/#{xml_name}.xml?app_host=#{calcentral_host}"
                   proxy.reset_external_tool_config_by_url(tool_id, app_config_url)

@@ -86,6 +86,11 @@ module Canvas
       paged_get "#{@api_root}/external_tools"
     end
 
+    def course_site_tab_list
+      response = wrapped_get "#{@api_root}/tabs"
+      response[:statusCode] == 200 ? response[:body] : {}
+    end
+
     private
 
     def update_course_site_tab_hidden(tab, set_to_hidden)
@@ -119,11 +124,6 @@ module Canvas
       'true'.casecmp(tab[property_name].to_s) == 0
     end
 
-    def course_site_tab_list
-      response = wrapped_get "#{@api_root}/tabs"
-      response[:statusCode] == 200 ? response[:body] : {}
-    end
-
     def course_site_tabs_by_id
       Hash[course_site_tab_list.map { |t| [t['id'], t] }]
     end
@@ -152,8 +152,13 @@ module Canvas
     end
 
     def mock_interactions
+      if (id_match = /courses\/(.+)/.match @api_root)
+        file_suffix = "_course_#{id_match[1]}"
+      elsif (id_match = /accounts\/(.+)/.match @api_root)
+        file_suffix = "_#{id_match[1]}"
+      end
       on_request(uri_matching: "#{@api_root}/external_tools", method: :get).
-        respond_with_file('fixtures', 'json', 'canvas_external_tools.json')
+        respond_with_file('fixtures', 'json', "canvas_external_tools#{file_suffix}.json")
 
       on_request(uri_matching: "#{@api_root}/external_tools", method: :post).
         respond_with_file('fixtures', 'json', 'canvas_create_external_tool.json')
@@ -163,6 +168,9 @@ module Canvas
 
       on_request(uri_matching: "#{@api_root}/external_tools", method: :put, query_including: {'config_type' => 'by_xml'}).
         respond_with_file('fixtures', 'json', 'canvas_reset_external_tool_by_xml.json')
+
+      on_request(uri_matching: "#{@api_root}/tabs", method: :get).
+        respond_with_file('fixtures', 'json', "canvas_tabs#{file_suffix}.json")
     end
 
   end
