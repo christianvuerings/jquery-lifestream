@@ -34,6 +34,7 @@ module Oec
 
         validate('courses', confirmation['COURSE_ID']) do |errors|
           errors.add('Blank instructor LDAP_UID') && next if confirmation['LDAP_UID'].blank?
+          errors.add("Incorrect term code in COURSE_ID #{confirmation['COURSE_ID']}") && next unless confirmation['COURSE_ID'].start_with?(@term_code)
           validate_and_add(courses, confirmation, %w(COURSE_ID))
         end
 

@@ -151,11 +151,19 @@ describe Oec::ExportTask do
     end
   end
 
-  context 'conflicting data' do
+  context 'conflicting instructor data' do
     let(:invalid_row) { '2015-B-32960,2015-B-32960,GWS 103 LEC 001 IDENTITY ACROSS DIF,,,GWS,103,LEC,001,P,104033,UID:104033,BAD_FIRST_NAME,Ffff,ffff@berkeley.edu,Y,GWS,F,,01-26-2015,05-11-2015' }
     let(:sheet_name) { 'instructors' }
     let(:key) { '104033' }
     let(:expected_message) { "Conflicting values found under FIRST_NAME: 'Flora', 'BAD_FIRST_NAME'" }
+    include_examples 'validation error logging'
+  end
+
+  context 'conflicting course dates' do
+    let(:invalid_row) { '2015-B-32960,2015-B-32960,GWS 103 LEC 001 IDENTITY ACROSS DIF,,,GWS,103,LEC,001,P,104033,UID:104033,Flora,Ffff,ffff@berkeley.edu,Y,GWS,F,,01-30-2015,05-11-2015' }
+    let(:sheet_name) { 'courses' }
+    let(:key) { '2015-B-32960' }
+    let(:expected_message) { "Conflicting values found under START_DATE: '01-26-2015', '01-30-2015'" }
     include_examples 'validation error logging'
   end
 
@@ -192,6 +200,27 @@ describe Oec::ExportTask do
       let(:key) { '2015-B-99999_GSI' }
       let(:invalid_row) { '2015-B-99999_GSI,2015-B-99999_GSI,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,Y,GWS,F,,01-26-2015,05-11-2015' }
       let(:expected_message) { 'Unexpected EVALUATION_TYPE F' }
+      include_examples 'validation error logging'
+    end
+
+    context 'course ID in wrong term' do
+      let(:invalid_row) { '2014-B-99999,2014-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,Y,GWS,F,,01-26-2015,05-11-2015' }
+      let(:key) { '2014-B-99999' }
+      let(:expected_message) { 'Incorrect term code in COURSE_ID 2014-B-99999' }
+      include_examples 'validation error logging'
+    end
+
+    context 'end date before start date' do
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,Y,GWS,F,,03-26-2015,03-11-2015' }
+      let(:key) { '2015-B-99999' }
+      let(:expected_message) { 'Mismatched START_DATE 03-26-2015, END_DATE 03-11-2015' }
+      include_examples 'validation error logging'
+    end
+
+    context 'start and end date in different years' do
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,Y,GWS,F,,01-26-2015,05-11-2016' }
+      let(:key) { '2015-B-99999' }
+      let(:expected_message) { 'Mismatched START_DATE 01-26-2015, END_DATE 05-11-2016' }
       include_examples 'validation error logging'
     end
   end

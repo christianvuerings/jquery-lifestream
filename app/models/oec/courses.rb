@@ -26,6 +26,7 @@ module Oec
     validate('COURSE_ID') { |row| 'Invalid' unless row['COURSE_ID'] =~ /\A20\d{2}-[ABCD]-\d{5}(_(A|B|GSI|CHEM|MCB))?\Z/ }
     validate('COURSE_ID_2') { |row| 'Non-matching' unless row['COURSE_ID'] == row['COURSE_ID_2'] }
     validate('EVALUATION_TYPE') { |row| 'Unexpected' if row['COURSE_ID'].end_with?('_GSI') && row['EVALUATION_TYPE'] != 'G' }
+    validate('END_DATE') { |row| "Mismatched START_DATE #{row['START_DATE']}," unless row['START_DATE'] < row['END_DATE'] && row['START_DATE'][-4..-1] == row['END_DATE'][-4..-1] }
 
   end
 end
