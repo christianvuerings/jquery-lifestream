@@ -121,6 +121,23 @@ describe Oec::ExportTask do
     end
   end
 
+  context 'data with date formatting changed by Google' do
+    let(:course_id) { '2015-B-34822' }
+    let(:start_date) { '1/29/2015' }
+    let(:end_date) { '5/3/2015' }
+    before do
+      merged_course_confirmations_csv.concat(
+       "#{course_id},#{course_id},LGBT C146A LEC 002 REP SEXUALITY/LIT,Y,GWS/LGBT C146A LEC 002,LGBT,C146A,LEC,002,P,562283,10945601,Clarice,Cccc,cccc@berkeley.edu,Y,LGBT,G,Y,#{start_date},#{end_date}")
+    end
+
+    it 'should normalize dates' do
+      task.run
+      row = courses.find { |row| row['COURSE_ID'] == course_id }
+      expect(row['START_DATE']).to eq '01-29-2015'
+      expect(row['END_DATE']).to eq '05-03-2015'
+    end
+  end
+
   context 'data with suffixed course IDs' do
     before do
       merged_course_confirmations_csv.concat(

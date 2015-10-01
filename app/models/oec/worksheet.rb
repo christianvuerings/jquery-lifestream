@@ -3,6 +3,7 @@ module Oec
     include Enumerable
 
     DEFAULT_EXPORT_PATH = Rails.root.join('tmp', 'oec')
+    WORKSHEET_DATE_FORMAT = '%m-%d-%Y'
 
     class << self
       attr_accessor :row_validations
@@ -36,7 +37,7 @@ module Oec
       instance = self.new opts
       (header_row = parsed_csv.shift) until (header_row == instance.headers || parsed_csv.empty?)
       raise ArgumentError, "Header mismatch: cannot create instance of #{self.name} from CSV" unless header_row
-      parsed_csv.each_with_index { |row, index| instance[index] = Hash[instance.headers.zip row] }
+      parsed_csv.each_with_index { |row, index| instance[index] = instance.parse_row row  }
       instance
     end
 
@@ -80,6 +81,21 @@ module Oec
 
     def headers
       # subclasses override
+    end
+
+    def parse_row(row)
+      parsed_row = Hash[self.headers.zip row]
+      %w(START_DATE END_DATE).each do |date_header|
+        if parsed_row[date_header]
+          # Parse dash or slash separators, with or without leading zeros; output leading zeros and dash separators.
+          begin
+            parsed_row[date_header] = Date.strptime(parsed_row[date_header].tr('/', '-'), WORKSHEET_DATE_FORMAT).strftime(WORKSHEET_DATE_FORMAT)
+          rescue ArgumentError
+            raise StandardError, "Could not parse #{date_header} value: '#{parsed_row[date_header]}'"
+          end
+        end
+      end
+      parsed_row
     end
 
     def write_csv
