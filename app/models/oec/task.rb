@@ -63,6 +63,20 @@ module Oec
       arg.strftime self.class.date_format
     end
 
+    def default_term_dates
+      if (supplemental_course_sheet = get_supplemental_worksheet Oec::Courses)
+        default_term_dates_row = supplemental_course_sheet.find do |row|
+          row['DEPT_NAME'].blank? &&
+            row['CATALOG_ID'].blank? &&
+            row['INSTRUCTION_FORMAT'].blank? &&
+            row['SECTION_NUM'].blank? &&
+            row['START_DATE'].present? &&
+            row['END_DATE'].present?
+        end
+        default_term_dates_row.slice('START_DATE', 'END_DATE') if default_term_dates_row
+      end
+    end
+
     def export_sheet(worksheet, dest_folder)
       if @opts[:local_write]
         worksheet.write_csv

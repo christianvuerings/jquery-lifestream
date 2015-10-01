@@ -161,20 +161,8 @@ module Oec
         end
       end
 
-      set_term_dates(worksheet, supplemental_course_sheet)
-    end
-
-    def set_term_dates(worksheet, supplemental_course_sheet)
-      default_term_dates = supplemental_course_sheet.find do |row|
-        row['DEPT_NAME'].blank? &&
-        row['CATALOG_ID'].blank? &&
-        row['INSTRUCTION_FORMAT'].blank? &&
-        row['SECTION_NUM'].blank? &&
-        row['START_DATE'].present? &&
-        row['END_DATE'].present?
-      end
       if default_term_dates
-        worksheet.each { |row| row.update(default_term_dates.slice('START_DATE', 'END_DATE')) unless row['MODULAR_COURSE'].present? }
+        worksheet.each { |row| row.update(default_term_dates) unless row['MODULAR_COURSE'].present? }
       end
     end
 
