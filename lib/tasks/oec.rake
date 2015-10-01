@@ -1,34 +1,11 @@
 namespace :oec do
 
-  task :create_confirmation_sheets => :environment do
-    term_code = ENV['term_code']
-    raise ArgumentError, 'term_code required' unless term_code
-    Oec::CreateConfirmationSheetsTask.new(
-      term_code: ENV['term_code'],
-      local_write: ENV['local_write'].present?,
-      dept_names: ENV['dept_names'],
-      dept_codes: ENV['dept_codes']
-    ).run
-  end
-
-  desc 'Prepare course and enrollment data for upload to vendor'
-  task :export => :environment do
-    term_code = ENV['term_code']
-    raise ArgumentError, 'term_code required' unless term_code
-    Oec::ExportTask.new(
+  desc 'Set up folder structure for new term'
+  task :term_setup => :environment do
+    raise ArgumentError, 'term_code required' unless ENV['term_code']
+    Oec::TermSetupTask.new(
       term_code: ENV['term_code'],
       local_write: ENV['local_write'].present?
-    ).run
-  end
-
-  task :merge_confirmation_sheets => :environment do
-    term_code = ENV['term_code']
-    raise ArgumentError, 'term_code required' unless term_code
-    Oec::MergeConfirmationSheetsTask.new(
-      term_code: ENV['term_code'],
-      local_write: ENV['local_write'].present?,
-      dept_names: ENV['dept_names'],
-      dept_codes: ENV['dept_codes']
     ).run
   end
 
@@ -53,6 +30,18 @@ namespace :oec do
     end
   end
 
+  desc 'Generate SIS data sheets, one per dept_code, to be shared with department admins'
+  task :create_confirmation_sheets => :environment do
+    term_code = ENV['term_code']
+    raise ArgumentError, 'term_code required' unless term_code
+    Oec::CreateConfirmationSheetsTask.new(
+      term_code: ENV['term_code'],
+      local_write: ENV['local_write'].present?,
+      dept_names: ENV['dept_names'],
+      dept_codes: ENV['dept_codes']
+    ).run
+  end
+
   desc 'Compare department-managed sheets against latest SIS-import sheets'
   task :report_diff => :environment do
     term_code = ENV['term_code']
@@ -70,20 +59,34 @@ namespace :oec do
     end
   end
 
-  desc 'Set up folder structure for new term'
-  task :term_setup => :environment do
-    raise ArgumentError, 'term_code required' unless ENV['term_code']
-    Oec::TermSetupTask.new(
+  desc 'Merge all sheets in \'departments\' folder to prepare for publishing'
+  task :merge_confirmation_sheets => :environment do
+    term_code = ENV['term_code']
+    raise ArgumentError, 'term_code required' unless term_code
+    Oec::MergeConfirmationSheetsTask.new(
       term_code: ENV['term_code'],
+      local_write: ENV['local_write'].present?,
+      dept_names: ENV['dept_names'],
+      dept_codes: ENV['dept_codes']
+    ).run
+  end
+
+  desc 'Simply validate confirmation sheet data. This does not include a push to the \'exports\' directory.'
+  task :validate_confirmation_sheets => :environment do
+    term_code = ENV['term_code']
+    raise ArgumentError, 'term_code required' unless term_code
+    Oec::ExportTask.new(
+      term_code: ENV['term_code'],
+      validation_without_export: true,
       local_write: ENV['local_write'].present?
     ).run
   end
 
-  desc 'Push data, stored on remote drive, to Explorance\'s Blue system'
+  desc 'Push the most recently confirmed data to Explorance\'s Blue system'
   task :publish_to_explorance => :environment do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
-    Oec::PublishTask.new(
+    Oec::ExportAndPublishTask.new(
       term_code: term_code,
       local_write: ENV['local_write'].present?
     ).run
