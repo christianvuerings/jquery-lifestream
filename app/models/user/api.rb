@@ -24,7 +24,7 @@ module User
 
     # split brain until SIS GoLive5 makes registration data available
     def get_campus_attribute(field)
-      if is_cs_profile_feature_enabled
+      if is_cs_profile_feature_enabled && @edo_attributes[:noStudentId].blank?
         @edo_attributes[field]
       else
         @oracle_attributes[field]
