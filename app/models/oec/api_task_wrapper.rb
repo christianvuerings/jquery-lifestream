@@ -43,6 +43,7 @@ module Oec
     def initialize(task_class, params)
       @task_class = task_class
       @params = translate_params(params)
+      @params[:validate_without_export] = true if task_class == Oec::ExportTask
     end
 
     def run
