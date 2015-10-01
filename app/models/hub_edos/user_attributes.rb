@@ -36,6 +36,7 @@ module HubEdos
         result[:statusCode] = 200
       else
         logger.error "Could not get Student EDO data for uid #{@uid}"
+        result[:noStudentId] = true
       end
       result
     end
