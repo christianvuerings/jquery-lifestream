@@ -15,7 +15,7 @@ describe HubEdos::Student do
     end
   end
 
-  context 'real proxy', testext: true, ignore: true do
+  context 'real proxy', testext: true do 
     let(:proxy) { HubEdos::Student.new(fake: false, user_id: '61889') }
     subject { proxy.get }
 
