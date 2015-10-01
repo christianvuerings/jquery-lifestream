@@ -5,6 +5,11 @@ begin
   if field
     field.tap { |f| f.accessible = true; f.set nil, false }
   end
+
+  # disable Diffie-Hellman encryption to prevent "Could not generate DH keypair" error from modern Java web services.
+  # see https://github.com/jruby/jruby/issues/2872 for explanation.
+  java.security.Security.setProperty("jdk.tls.disabledAlgorithms", "SSLv3, DHE")
+
 rescue StandardError
   # Java env does not have isRestricted field, so skip
 end

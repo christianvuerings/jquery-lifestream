@@ -23,4 +23,15 @@ module HashConverter
     end
   end
 
+  def self.symbolize(value)
+    case value
+      when Array
+        value.map { |v| HashConverter.symbolize(v) }
+      when Hash
+        Hash[value.map { |k, v| [k.to_s.to_sym, HashConverter.symbolize(v)] }]
+      else
+        value
+    end
+  end
+
 end

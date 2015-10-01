@@ -2,6 +2,7 @@ module CampusSolutions
   class WorkExperience < PostingProxy
 
     include ProfileFeatureFlagged
+    include CampusSolutionsIdRequired
 
     def initialize(options = {})
       super(Settings.campus_solutions_proxy, options)
@@ -44,13 +45,6 @@ module CampusSolutions
 
     def xml_filename
       'work_experience.xml'
-    end
-
-    def default_post_params
-      # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
-      {
-        EMPLID: '13320458'
-      }
     end
 
     def url

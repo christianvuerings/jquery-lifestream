@@ -27,7 +27,7 @@ module CampusSolutionsHelperModule
 
   shared_examples 'a successful feed' do
     it 'has some data' do
-      session['user_id'] = user
+      session['user_id'] = user_id
       get feed
       json = JSON.parse(response.body)
       expect(json['statusCode']).to eq 200

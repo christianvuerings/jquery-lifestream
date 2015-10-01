@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe CampusSolutions::LanguageDelete do
 
+  let(:user_id) { '12346' }
+
   context 'deleting language' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::LanguageDelete.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::LanguageDelete.new(fake: true, user_id: user_id, params: params) }
 
     context 'converting params to Campus Solutions field names' do
       let(:params) { {
@@ -34,7 +36,6 @@ describe CampusSolutions::LanguageDelete do
   end
 
   context 'with a real external service', testext: true do
-    let(:user_id) { random_id }
     let(:create_params) { {
       languageCode: 'EN',
       isNative: 'N',
@@ -45,7 +46,7 @@ describe CampusSolutions::LanguageDelete do
       teachLang: '3'
     } }
     before {
-      CampusSolutions::LanguagePost.new(fake: false, user_id: random_id, params: create_params).get
+      CampusSolutions::LanguagePost.new(fake: false, user_id: user_id, params: create_params).get
     }
 
     let(:proxy) { CampusSolutions::LanguageDelete.new(fake: false, user_id: user_id, params: params) }

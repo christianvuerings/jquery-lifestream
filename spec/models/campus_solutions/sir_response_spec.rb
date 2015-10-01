@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe CampusSolutions::SirResponse do
 
+  let(:user_id) { '12350' }
+
   context 'post' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::SirResponse.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::SirResponse.new(fake: true, user_id: user_id, params: params) }
 
     context 'filtering out fields not on the whitelist' do
       let(:params) { {
@@ -48,7 +50,7 @@ describe CampusSolutions::SirResponse do
   end
 
   context 'with a real external service', testext: true do
-    let(:proxy) { CampusSolutions::SirResponse.new(fake: false, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::SirResponse.new(fake: false, user_id: user_id, params: params) }
     subject { proxy.get }
 
     context 'a successful post' do

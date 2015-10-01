@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe CampusSolutions::LanguageController do
 
+  let(:user_id) { '12346' }
+
   context 'updating language' do
     it 'should not let an unauthenticated user post' do
       post :post, {format: 'json', uid: '100'}
@@ -10,8 +12,8 @@ describe CampusSolutions::LanguageController do
 
     context 'authenticated user' do
       before do
-        session['user_id'] = '1234'
-        User::Auth.stub(:where).and_return([User::Auth.new(uid: '1234', is_superuser: false, active: true)])
+        session['user_id'] = user_id
+        User::Auth.stub(:where).and_return([User::Auth.new(uid: user_id, is_superuser: false, active: true)])
       end
       it 'should let an authenticated user post' do
         post :post,
@@ -42,8 +44,8 @@ describe CampusSolutions::LanguageController do
 
     context 'authenticated user' do
       before do
-        session['user_id'] = '1234'
-        User::Auth.stub(:where).and_return([User::Auth.new(uid: '1234', is_superuser: false, active: true)])
+        session['user_id'] = user_id
+        User::Auth.stub(:where).and_return([User::Auth.new(uid: user_id, is_superuser: false, active: true)])
       end
       it 'should let an authenticated user delete' do
         delete :delete,

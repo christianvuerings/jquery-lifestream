@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe CampusSolutions::EthnicityDelete do
 
+  let(:user_id) { '12346' }
+
   context 'deleting ethnicity' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::EthnicityDelete.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::EthnicityDelete.new(fake: true, user_id: user_id, params: params) }
 
     context 'converting params to Campus Solutions field names' do
       let(:params) { {
@@ -37,7 +39,6 @@ describe CampusSolutions::EthnicityDelete do
   end
 
   context 'with a real external service', testext: true do
-    let(:user_id) { random_id }
     let(:create_params) { {
       regRegion: 'USA',
       ethnicGroupCode: 'ASIANIND',
@@ -51,7 +52,7 @@ describe CampusSolutions::EthnicityDelete do
       isEthnicityValidated: 'N'
     } }
     before {
-      CampusSolutions::EthnicityPost.new(fake: false, user_id: random_id, params: create_params).get
+      CampusSolutions::EthnicityPost.new(fake: false, user_id: user_id, params: create_params).get
     }
 
     let(:proxy) { CampusSolutions::EthnicityDelete.new(fake: false, user_id: user_id, params: params) }

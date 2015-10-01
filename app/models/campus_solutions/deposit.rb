@@ -3,6 +3,7 @@ module CampusSolutions
 
     include ProfileFeatureFlagged
     include Cache::RelatedCacheKeyTracker
+    include CampusSolutionsIdRequired
 
     def initialize(options = {})
       super options
@@ -24,8 +25,7 @@ module CampusSolutions
     end
 
     def url
-      # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
-      "#{@settings.base_url}/UC_DEPOSIT_AMT.v1/deposit/get?EMPLID=CC00000004&ADM_APPL_NBR=#{@adm_appl_nbr}"
+      "#{@settings.base_url}/UC_DEPOSIT_AMT.v1/deposit/get?EMPLID=#{@campus_solutions_id}&ADM_APPL_NBR=#{@adm_appl_nbr}"
     end
 
   end

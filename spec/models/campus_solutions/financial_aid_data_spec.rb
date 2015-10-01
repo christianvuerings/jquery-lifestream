@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe CampusSolutions::FinancialAidData do
 
+  let(:user_id) { '12345' }
+
   shared_examples 'a proxy that gets data' do
     subject { proxy.get }
     it_should_behave_like 'a simple proxy that returns errors'
@@ -14,12 +16,12 @@ describe CampusSolutions::FinancialAidData do
   end
 
   context 'mock proxy' do
-    let(:proxy) { CampusSolutions::FinancialAidData.new(fake: true) }
+    let(:proxy) { CampusSolutions::FinancialAidData.new(user_id: user_id, fake: true) }
     it_should_behave_like 'a proxy that gets data'
   end
 
   context 'real proxy', testext: true do
-    let(:proxy) { CampusSolutions::FinancialAidData.new(fake: false, aid_year: 2016) }
+    let(:proxy) { CampusSolutions::FinancialAidData.new(user_id: user_id, fake: false, aid_year: 2016) }
     it_should_behave_like 'a proxy that gets data'
   end
 

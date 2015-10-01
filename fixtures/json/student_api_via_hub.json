@@ -1,0 +1,194 @@
+{
+  "StudentResponse": {
+    "correlationId": "1a47d807-b789-4127-85c3-f3a75306b5f9",
+    "source": "UCB-SIS-STUDENT",
+    "students": [
+      {
+        "identifiers": [
+          {
+            "type": "Student ID",
+            "id": 11667051,
+            "disclose": false
+          },
+          {
+            "type": "CalNet UID",
+            "id": "61889",
+            "disclose": false
+          },
+          {
+            "type": "Social Security Number",
+            "id": "XXXXXXXXX",
+            "disclose": false
+          },
+          {
+            "type": "SIS",
+            "id": 11667051,
+            "disclose": false,
+            "fromDate": "1902-02-01"
+          }
+        ],
+        "names": [
+          {
+            "type": {
+              "code": "PRI",
+              "description": "Primary"
+            },
+            "familyName": "Bear",
+            "givenName": "Oski",
+            "middleName": "",
+            "prefixName": "",
+            "suffixName": "",
+            "formattedName": "Oski Bear",
+            "preferred": false,
+            "disclose": false,
+            "fromDate": "1902-02-01"
+          }
+        ],
+        "gender": {
+          "sexAtBirth": {
+            "code": "M",
+            "description": "Male"
+          },
+          "discloseSexAtBirth": false
+        },
+        "affiliations": [
+          {
+            "statusCode": "STUDENT",
+            "statusDescription": "",
+            "fromDate": "2014-08-01"
+          },
+          {
+            "statusCode": "UNDERGRAD",
+            "statusDescription": "Undergraduate Student",
+            "fromDate": "2014-08-01",
+            "toDate": "2016-06-30"
+          }
+        ],
+        "addresses": [
+          {
+            "type": {
+              "code": "DIPL",
+              "description": "Diploma"
+            },
+            "address1": "1234 56TH ST",
+            "address2": "APT 789, BOX 101112",
+            "address3": "",
+            "number1": "",
+            "number2": "",
+            "addressField1": "",
+            "addressField2": "",
+            "addressField3": "",
+            "houseType": "",
+            "city": "BERKELEY",
+            "county": "",
+            "stateCode": "CA",
+            "postalCode": 94708,
+            "countryCode": "USA",
+            "formattedAddress": "1234 56TH ST\\nAPT 789, BOX 101112\\nBERKELEY, CA 94708",
+            "disclose": false,
+            "uiControl": {
+              "code": "Do Not Display"
+            },
+            "fromDate": "2015-01-12"
+          },
+          {
+            "type": {
+              "code": "HOME",
+              "description": "Home"
+            },
+            "address1": "2111 BANCROFT WAY  #550",
+            "address2": "",
+            "address3": "",
+            "number1": "",
+            "number2": "",
+            "addressField1": "",
+            "addressField2": "",
+            "addressField3": "",
+            "houseType": "",
+            "city": "BERKELEY",
+            "county": "",
+            "stateCode": "CA",
+            "postalCode": 94720,
+            "countryCode": "USA",
+            "formattedAddress": "2111 BANCROFT WAY  #550\\nBERKELEY, CA 94720",
+            "disclose": false,
+            "uiControl": {
+              "code": "Edit - No Delete"
+            },
+            "fromDate": "2013-10-31"
+          },
+          {
+            "type": {
+              "code": "LOCL",
+              "description": "Local"
+            },
+            "address1": "120 SPROUL HALL",
+            "address2": "",
+            "address3": "",
+            "number1": "",
+            "number2": "",
+            "addressField1": "",
+            "addressField2": "",
+            "addressField3": "",
+            "houseType": "",
+            "city": "BERKELEY",
+            "county": "",
+            "stateCode": "CA",
+            "postalCode": 94720,
+            "countryCode": "USA",
+            "formattedAddress": "120 SPROUL HALL\\nBERKELEY, CA 94720",
+            "disclose": false,
+            "uiControl": {
+              "code": "Full Edit"
+            },
+            "fromDate": "2014-08-18"
+          }
+        ],
+        "phones": [
+          {
+            "type": {
+              "code": "HOME",
+              "description": "Home/Permanent"
+            },
+            "number": "510/642-9507",
+            "countryCode": "",
+            "extension": "",
+            "primary": false,
+            "disclose": false
+          },
+          {
+            "type": {
+              "code": "LOCL",
+              "description": "Local"
+            },
+            "number": "510/555-1212",
+            "countryCode": "",
+            "extension": "",
+            "primary": true,
+            "disclose": false
+          }
+        ],
+        "emails": [
+          {
+            "type": {
+              "code": "CAMP",
+              "description": "Campus"
+            },
+            "emailAddress": "oski@berkeley.edu",
+            "primary": true,
+            "disclose": false
+          }
+        ],
+        "birth": {
+          "date": "1975-02-05",
+          "description": "",
+          "locality": "YOSEMITE,CA",
+          "stateCode": "",
+          "countryCode": ""
+        },
+        "death": "",
+        "confidential": false
+      }
+    ]
+  }
+}

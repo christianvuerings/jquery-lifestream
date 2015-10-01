@@ -3,6 +3,7 @@ module CampusSolutions
 
     include Cache::UserCacheExpiry
     include ProfileFeatureFlagged
+    include CampusSolutionsIdRequired
 
     def initialize(options = {})
       super options
@@ -13,9 +14,8 @@ module CampusSolutions
       'checklist.xml'
     end
 
-    # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
     def url
-      "#{@settings.base_url}/UC_CC_CHECKLIST.v1/get/checklist?EMPLID=CC00000004"
+      "#{@settings.base_url}/UC_CC_CHECKLIST.v1/get/checklist?EMPLID=#{@campus_solutions_id}"
     end
   end
 end

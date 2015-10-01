@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe CampusSolutions::PersonName do
 
+  let(:user_id) { '12345' }
+
   context 'post' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::PersonName.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::PersonName.new(fake: true, user_id: user_id, params: params) }
 
     context 'filtering out fields not on the whitelist' do
       let(:params) { {
@@ -70,7 +72,7 @@ describe CampusSolutions::PersonName do
       lastNamePrefNld: '',
       countryNameFormat: '001'
     } }
-    let(:proxy) { CampusSolutions::PersonName.new(fake: false, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::PersonName.new(fake: false, user_id: user_id, params: params) }
 
     context 'performing a real post' do
       subject {

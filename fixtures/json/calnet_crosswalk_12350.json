@@ -1,0 +1,26 @@
+{
+  "Person": {
+    "emails": [],
+    "identifiers": [
+      {
+        "identifierTypeName": "CALNET_ID",
+        "identifierValue": "imaginary_test_user_6",
+        "isActive": true,
+        "isPrimaryForIdentifierType": true
+      },
+      {
+        "identifierTypeName": "LEGACY_SIS_STUDENT_ID",
+        "identifierValue": "24188949",
+        "isActive": false,
+        "isPrimaryForIdentifierType": true
+      },
+      {
+        "identifierTypeName": "CAMPUS_SOLUTIONS_ID",
+        "identifierValue": "9000006545",
+        "isActive": false,
+        "isPrimaryForIdentifierType": true
+      }
+    ],
+    "uid": "12350"
+  }
+}

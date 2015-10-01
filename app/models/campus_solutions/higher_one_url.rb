@@ -3,6 +3,7 @@ module CampusSolutions
 
     include Cache::UserCacheExpiry
     include ProfileFeatureFlagged
+    include CampusSolutionsIdRequired
 
     def initialize(options = {})
       super(options)
@@ -19,9 +20,7 @@ module CampusSolutions
     end
 
     def url
-      # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
-      # TODO note strange form of EMPLID param syntax (this is a PS misconfig that should be fixed soon)
-      "#{@settings.base_url}/UC_OB_HIGHER_ONE_URL_GET.v1/get?EMPLID=CC00000004"
+      "#{@settings.base_url}/UC_OB_HIGHER_ONE_URL_GET.v1/get?EMPLID=#{@campus_solutions_id}"
     end
 
   end

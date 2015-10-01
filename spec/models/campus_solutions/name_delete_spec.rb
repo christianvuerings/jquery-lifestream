@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe CampusSolutions::NameDelete do
 
+  let(:user_id) { '12345' }
+
   context 'deleting name' do
     let(:params) { {} }
-    let(:proxy) { CampusSolutions::NameDelete.new(fake: true, user_id: random_id, params: params) }
+    let(:proxy) { CampusSolutions::NameDelete.new(fake: true, user_id: user_id, params: params) }
 
     context 'converting params to Campus Solutions field names' do
       let(:params) { {
@@ -34,7 +36,6 @@ describe CampusSolutions::NameDelete do
   end
 
   context 'with a real external service', testext: true do
-    let(:user_id) { random_id }
     let(:create_params) { {
       type: 'LEG',
       firstName: 'Joey',
@@ -55,7 +56,7 @@ describe CampusSolutions::NameDelete do
       countryNameFormat: '001'
     } }
     before {
-      CampusSolutions::PersonName.new(fake: false, user_id: random_id, params: create_params).get
+      CampusSolutions::PersonName.new(fake: false, user_id: user_id, params: create_params).get
     }
 
     let(:proxy) { CampusSolutions::NameDelete.new(fake: false, user_id: user_id, params: params) }

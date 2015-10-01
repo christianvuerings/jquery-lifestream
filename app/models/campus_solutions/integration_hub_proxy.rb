@@ -11,9 +11,8 @@ module CampusSolutions
       })
     end
 
-    # TODO ID is hardcoded until we can use ID crosswalk service to convert CalNet ID to CS Student ID
     def url
-      "#{@settings.base_url}/00000137"
+      "#{@settings.base_url}/#{@campus_solutions_id}"
     end
 
   end

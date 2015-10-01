@@ -13,12 +13,12 @@ describe CampusSolutions::AidYears do
   end
 
   context 'mock proxy' do
-    let(:proxy) { CampusSolutions::AidYears.new(fake: true) }
+    let(:proxy) { CampusSolutions::AidYears.new(fake: true, user_id: '12345') }
     it_should_behave_like 'a proxy that gets data'
   end
 
   context 'real proxy', testext: true do
-    let(:proxy) { CampusSolutions::AidYears.new(fake: false) }
+    let(:proxy) { CampusSolutions::AidYears.new(fake: false, user_id: '12345') }
     it_should_behave_like 'a proxy that gets data'
   end
 

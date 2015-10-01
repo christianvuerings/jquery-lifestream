@@ -2,6 +2,7 @@ require "spec_helper"
 
 describe User::Api do
   before(:each) do
+    Settings.features.cs_profile = false
     @random_id = Time.now.to_f.to_s.gsub(".", "")
     @default_name = "Joe Default"
     CampusOracle::UserAttributes.stub(:new).and_return(double(get_feed: {
@@ -13,6 +14,10 @@ describe User::Api do
         :staff => false
       }
     }))
+  end
+
+  after do
+    Settings.features.cs_profile = true
   end
 
   it "should find user with default name" do

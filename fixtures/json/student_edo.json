@@ -1,60 +1,73 @@
-
 {
   "student": {
-     "identifiers": [
-        {
-          "type": "CalNet UID",
-          "id": "61889",
-          "disclose": true,
-          "fromDate": "2017-02-17"
-        },
-        {
-          "type": "Student ID",
-          "id": "11667051",
-          "disclose": false,
-          "fromDate": "2016-05-28"
-        },
-        {
-          "type": "SSN",
-          "id": "123-45-6789",
-          "disclose": false,
-          "fromDate": "1975-02-05"
-        }
+    "identifiers": [
+      {
+        "type": "campus-uid",
+        "id": "61889",
+        "disclose": true,
+        "fromDate": "2017-02-17"
+      },
+      {
+        "type": "student-id",
+        "id": "11667051",
+        "disclose": false,
+        "fromDate": "2016-05-28"
+      },
+      {
+        "type": "ssn",
+        "id": "123-45-6789",
+        "disclose": false,
+        "fromDate": "1975-02-05"
+      }
     ],
     "names": [
-        {
-          "type": {
-            "code": "PRI",
-            "description": "Primary"
-          },
-          "familyName": "Bear",
-          "givenName": "Oski",
-          "middleName": "Q.",
-          "suffixName": "III",
-          "formattedName": "Oski Q. Bear III",
-          "preferred": false,
-          "disclose": false,
-          "fromDate": "1975-02-05"
+      {
+        "type": {
+          "code": "PRI",
+          "description": "Primary"
         },
-        {
-          "type": {
-            "code": "PRF",
-            "description": "Preferred"
-          },
-          "familyName": "Bear",
-          "givenName": "Oski",
-          "formattedName": "Oski Bear",
-          "preferred": true,
-          "disclose": true,
-          "fromDate": "1975-02-05"
-        }
+        "familyName": "Bear",
+        "givenName": "Oski",
+        "middleName": "Q.",
+        "suffixName": "III",
+        "formattedName": "Oski Q. Bear III",
+        "preferred": false,
+        "disclose": false,
+        "uiControl": {
+          "code": "D",
+          "description": "Display Only"
+        },
+        "fromDate": "1975-02-05"
+      },
+      {
+        "type": {
+          "code": "PRF",
+          "description": "Preferred"
+        },
+        "familyName": "Bear",
+        "givenName": "Oski",
+        "formattedName": "Oski Bear",
+        "preferred": true,
+        "disclose": true,
+        "uiControl": {
+          "code": "U",
+          "description": "Edit - No Delete"
+        },
+        "fromDate": "1975-02-05"
+      }
     ],
     "gender": {
+      "genderOfRecord": {
+        "code": "M",
+        "description": "Male"
+      },
+      "discloseGenderOfRecord": true,
       "sexAtBirth": {
         "code": "M",
         "description": "Male"
       },
-      "disclose": true
+      "discloseSexAtBirth": true,
+      "fromDate": "1975-02-05"
     },
     "affiliations": [
       {
@@ -68,87 +81,111 @@
       }
     ],
     "addresses": [
-        {
-          "type": {
-            "code": "MAIL",
-            "description": "Mailing"
-          },
-          "street1": "120 Sproul Hall",
-          "locality": "Berkeley",
-          "region": "CA",
-          "postalCode": "94720",
-          "country": "USA",
-          "formattedAddress": "120 Sproul Hall\\nBerkeley, CA 94720",
-          "primary": true,
-          "disclose": false,
-          "fromDate": "2014-08-18"
+      {
+        "type": {
+          "code": "MAIL",
+          "description": "Mailing"
         },
-        {
-          "type": {
-            "code": "HOME",
-            "description": "Home"
-          },
-          "street1": "2111 Bancroft Way #550",
-          "locality": "Berkeley",
-          "region": "CA",
-          "postalCode": "94720",
-          "country": "USA",
-          "formattedAddress": "2111 Bancroft Way #550\\nBerkeley, CA 94720",
-          "primary": false,
-          "disclose": false,
-          "fromDate": "2013-10-31"
-        }
+        "address1": "120 Sproul Hall",
+        "city": "Berkeley",
+        "stateCode": "CA",
+        "postalCode": "94720",
+        "countryCode": "USA",
+        "formattedAddress": "120 Sproul Hall\\nBerkeley, CA 94720",
+        "primary": true,
+        "disclose": false,
+        "uiControl": {
+          "code": "U",
+          "description": "Edit - No Delete"
+        },
+        "fromDate": "2014-08-18"
+      },
+      {
+        "type": {
+          "code": "HOME",
+          "description": "Home"
+        },
+        "address1": "2111 Bancroft Way #550",
+        "city": "Berkeley",
+        "stateCode": "CA",
+        "postalCode": "94720",
+        "countryCode": "USA",
+        "formattedAddress": "2111 Bancroft Way #550\\nBerkeley, CA 94720",
+        "primary": false,
+        "disclose": false,
+        "uiControl": {
+          "code": "U",
+          "description": "Edit - No Delete"
+        },
+        "fromDate": "2013-10-31"
+      }
     ],
     "phones": [
-        {
-          "type": {
-            "code": "LOCL",
-            "description": "Local"
-          },
-          "number": "510-555-1212",
-          "primary": true,
-          "disclose": false,
-          "fromDate": "2014-08-18"
+      {
+        "type": {
+          "code": "LOCL",
+          "description": "Local"
         },
-        {
-          "type": {
-            "code": "HOME",
-            "description": "Home"
-          },
-          "number": "510-555-9500",
-          "primary": false,
-          "disclose": false,
-          "fromDate": "2013-10-31"
-        }
+        "number": "510-555-1212",
+        "primary": true,
+        "disclose": false,
+        "uiControl": {
+          "code": "F",
+          "description": "Full Edit"
+        },
+        "fromDate": "2014-08-18"
+      },
+      {
+        "type": {
+          "code": "HOME",
+          "description": "Home"
+        },
+        "number": "510-555-9500",
+        "primary": false,
+        "disclose": false,
+        "uiControl": {
+          "code": "F",
+          "description": "Full Edit"
+        },
+        "fromDate": "2013-10-31"
+      }
     ],
     "emails": [
-        {
-          "type": {
-            "code": "CAMP",
-            "description": "Campus"
-          },
-          "emailAddress": "oski@berkeley.edu",
-          "primary": true,
-          "disclose": true,
-          "fromDate": "2013-10-31"
+      {
+        "type": {
+          "code": "CAMP",
+          "description": "Campus"
         },
-        {
-          "type": {
-            "code": "OTHR",
-            "description": "Other"
-          },
-          "emailAddress": "oskibear@gmail.com",
-          "primary": false,
-          "disclose": false,
-          "fromDate": "2000-08-15"
-        }
+        "emailAddress": "oski@berkeley.edu",
+        "primary": true,
+        "disclose": true,
+        "uiControl": {
+          "code": "DU",
+          "description": "Display Only"
+        },
+        "fromDate": "2013-10-31"
+      },
+      {
+        "type": {
+          "code": "OTHR",
+          "description": "Other"
+        },
+        "emailAddress": "oskibear@gmail.com",
+        "primary": false,
+        "disclose": false,
+        "uiControl": {
+          "code": "F",
+          "description": "Full Edit"
+        },
+        "fromDate": "2000-08-15"
+      }
     ],
     "urls": [
       {
         "type": {
           "description": "Social"
         },
-        "url": "http://www.facebook.com/cal.oski.bear",
+        "url": "https://www.facebook.com/cal.oski.bear",
         "primary": false,
         "disclose": true,
         "fromDate": "2014-08-01"
@@ -167,9 +204,11 @@
     ],
     "ethnicities": [
       {
-        "code": "101",
-        "group": "Grizzly",
-        "hispLatino": false
+        "group": {
+          "code": "101",
+          "description": "Grizzly"
+        },
+        "hispanicLatino": false
       }
     ],
     "languages": [
@@ -211,35 +250,21 @@
     },
     "emergencyContacts": [
       {
-        "name": {
-          "type": {
-            "description": "Emergency"
-          },
-          "familyName": "Bear",
-          "givenName": "Ursa",
-          "formattedName": "Ursa Bear"
-        },
+        "name": "Ursa Bear",
         "address": {
-          "type": {
-            "description": "Emergency"
-          },
-          "street1": "656 H St.",
-          "locality": "Arcata",
-          "region": "CA",
+          "address1": "656 H St.",
+          "city": "Arcata",
+          "stateCode": "CA",
           "postalCode": "95521",
-          "country": "USA",
+          "countryCode": "USA",
           "formattedAddress": "656 H St.\\nArcata, CA 95521"
         },
-        "phone": {
-          "type": {
-            "description": "Emergency"
-          },
-          "number": "707-825-3865"
+        "phones": {
+          "phone": {
+            "number": "707-825-3865"
+          }
         },
         "email": {
-          "type": {
-            "description": "Emergency"
-          },
           "emailAddress": "ursa-bear@redwoods.edu"
         },
         "relationship": {
@@ -250,18 +275,53 @@
       }
     ],
     "birth": {
-      "e:date": "1975-02-05",
-      "e:locality": "Yosemite",
-      "e:region": "California",
-      "e:country": "USA"
+      "date": "1975-02-05",
+      "locality": "Yosemite",
+      "stateCode": "CA",
+      "countryCode": "USA"
     },
     "confidential": false,
-    "academicCareers": [
+    "studentPlans": [
       {
-        "career": {
-          "code": "UGRD",
-          "description": "Undergraduate"
+        "academicPlan": {
+          "plan": {
+            "code": "25430U",
+            "description": "History of Art BA"
+          },
+          "type": {
+            "code": "MAJ",
+            "description": "Major"
+          },
+          "ownedBy": [
+            {
+              "organization": {
+                "code": "HISTART",
+                "description": "History of Art"
+              },
+              "percentage": 100
+            }
+          ],
+          "academicProgram": {
+            "program": {
+              "code": "UCLS",
+              "description": "Undergrad Letters & Science"
+            },
+            "ownedBy": [
+              {
+                "organization": {
+                  "code": "CLS",
+                  "description": "College of Letters and Science"
+                },
+                "percentage": 100
+              }
+            ],
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            }
+          }
         },
+        "primary": true,
         "matriculation": {
           "term": {
             "id": "2158",
@@ -278,43 +338,6 @@
         }
       }
     ],
-    "academicPlans": [
-      {
-        "plan": {
-          "code": "25430U",
-          "description": "History of Art BA"
-        },
-        "type": {
-          "code": "MAJ",
-          "description": "Major"
-        },
-        "ownedBy": {
-          "administrativeOwner": {
-            "organization": {
-              "code": "HISTART",
-              "description": "History of Art"
-            },
-            "percentage": 100
-          }
-        },
-        "primary": true,
-        "academicProgram": {
-          "program": {
-            "code": "UCLS",
-            "description": "Undergrad Letters & Science"
-          },
-          "ownedBy": {
-            "administrativeOwner": {
-              "organization": {
-                "code": "CLS",
-                "description": "College of Letters and Science"
-              },
-              "percentage": 100
-            }
-          }
-        }
-      }
-    ],
     "termsInResidence": 2,
     "cumulativeGPA": {
       "type": {
@@ -324,29 +347,29 @@
       "average": 3.873
     },
     "cumulativeUnits": [
-        {
-          "type": {
-            "description": "Total"
-          },
-          "unitsTaken": 30,
-          "unitsPassed": 30,
-          "unitsTransferred": 5.3
+      {
+        "type": {
+          "description": "Total"
         },
-        {
-          "type": {
-            "description": "For GPA"
-          },
-          "unitsTaken": 26,
-          "unitsPassed": 26,
-          "unitsTransferred": 5.3
+        "unitsTaken": 30,
+        "unitsPassed": 30,
+        "unitsTransferred": 5.3
+      },
+      {
+        "type": {
+          "description": "For GPA"
         },
-        {
-          "type": {
-            "description": "Not for GPA"
-          },
-          "unitsTaken": 4,
-          "unitsPassed": 4
-        }
+        "unitsTaken": 26,
+        "unitsPassed": 26,
+        "unitsTransferred": 5.3
+      },
+      {
+        "type": {
+          "description": "Not for GPA"
+        },
+        "unitsTaken": 4,
+        "unitsPassed": 4
+      }
     ],
     "currentRegistration": {
       "term": {
@@ -354,7 +377,7 @@
         "name": "2016 Fall",
         "academicYear": 2017
       },
-      "eligibletoRegister": true,
+      "eligibleToRegister": true,
       "registered": true,
       "new": false,
       "disabled": false,
@@ -378,29 +401,29 @@
         "fromDate": "2015-08-15"
       },
       "termUnits": [
-          {
-            "type": {
-              "description": "Total"
-            },
-            "unitsMin": 13,
-            "unitsMax": 20.5,
-            "unitsEnrolled": 10,
-            "unitsWaitlisted": 5
+        {
+          "type": {
+            "description": "Total"
           },
-          {
-            "type": {
-              "description": "For GPA"
-            },
-            "unitsEnrolled": 6,
-            "unitsWaitlisted": 5
+          "unitsMin": 13,
+          "unitsMax": 20.5,
+          "unitsEnrolled": 10,
+          "unitsWaitlisted": 5
+        },
+        {
+          "type": {
+            "description": "For GPA"
           },
-          {
-            "type": {
-              "description": "Not for GPA"
-            },
-            "unitsMax": 8,
-            "unitsEnrolled": 4
-          }
+          "unitsEnrolled": 6,
+          "unitsWaitlisted": 5
+        },
+        {
+          "type": {
+            "description": "Not for GPA"
+          },
+          "unitsMax": 8,
+          "unitsEnrolled": 4
+        }
       ],
       "specialStudyPrograms": [
         {
@@ -444,7 +467,7 @@
       },
       "county": "Alameda"
     },
-    "blocks": [
+    "holds": [
       {
         "type": {
           "code": "LF",
@@ -455,14 +478,14 @@
           "description": "Financial"
         },
         "impacts": [
-            {
-              "code": "GRADE",
-              "description": "Block viewing or printing grades"
-            },
-            {
-              "code": "IENR",
-              "description": "Block initial enrollment activity"
-            }
+          {
+            "code": "GRADE",
+            "description": "Block viewing or printing grades"
+          },
+          {
+            "code": "IENR",
+            "description": "Block initial enrollment activity"
+          }
         ],
         "fromTerm": {
           "id": "2168",
@@ -470,6 +493,7 @@
         },
         "fromDate": "2015-10-04",
         "reference": "QL737.C27 S73 1996",
+        "amountRequired": 67.85,
         "department": {
           "code": "BPS",
           "description": "Billing and Payment Services"
