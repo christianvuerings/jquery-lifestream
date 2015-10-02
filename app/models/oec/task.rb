@@ -64,8 +64,8 @@ module Oec
     end
 
     def default_term_dates
-      if (supplemental_course_sheet = get_supplemental_worksheet Oec::Courses)
-        default_term_dates_row = supplemental_course_sheet.find do |row|
+      if (course_overrides_sheet = get_overrides_worksheet Oec::Courses)
+        default_term_dates_row = course_overrides_sheet.find do |row|
           row['DEPT_NAME'].blank? &&
             row['CATALOG_ID'].blank? &&
             row['INSTRUCTION_FORMAT'].blank? &&
@@ -116,9 +116,9 @@ module Oec
       find_or_create_folder(datestamp(date_time), parent)
     end
 
-    def get_supplemental_worksheet(klass)
-      if (supplemental_course_sheet = @remote_drive.find_nested [@term_code, 'supplemental_sources', klass.export_name])
-        klass.from_csv @remote_drive.export_csv(supplemental_course_sheet)
+    def get_overrides_worksheet(klass)
+      if (course_overrides_sheet = @remote_drive.find_nested [@term_code, 'overrides', klass.export_name])
+        klass.from_csv @remote_drive.export_csv(course_overrides_sheet)
       end
     end
 

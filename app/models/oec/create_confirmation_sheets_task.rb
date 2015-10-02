@@ -9,9 +9,9 @@ module Oec
       most_recent_import = @remote_drive.find_folders(imports_folder.id).sort_by(&:title).last
       raise RuntimeError, "No SIS imports found for term #{@term_code}" unless most_recent_import
 
-      supplemental_sources = @remote_drive.find_first_matching_item('supplemental_sources', term_folder)
-      supervisors_sheet = @remote_drive.find_first_matching_item('supervisors', supplemental_sources)
-      raise RuntimeError, "No supervisor sheet found in supplemental_sources for term #{@term_code}" unless supervisors_sheet
+      overrides = @remote_drive.find_first_matching_item('overrides', term_folder)
+      supervisors_sheet = @remote_drive.find_first_matching_item('supervisors', overrides)
+      raise RuntimeError, "No supervisor sheet found in overrides for term #{@term_code}" unless supervisors_sheet
       supervisors = Oec::Supervisors.from_csv @remote_drive.export_csv(supervisors_sheet)
 
       confirmations = generate_confirmations(most_recent_import, supervisors)
