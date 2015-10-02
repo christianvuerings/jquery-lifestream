@@ -38,25 +38,40 @@ angular.module('calcentral.controllers').controller('ProfilePhoneController', fu
     });
   };
 
+  /**
+   * Parse the phone types
+   * We should only return the items that aren't yet in the person object
+   */
   var parsePhoneTypes = function(data) {
     if (!_.get(data, 'data.feed.xlatvalues.values')) {
       return;
     }
+
+    // Current types for the person
+    var currentTypes = _.pluck($scope.phones.content, 'type.code');
+
+    // Different type controls for the types:
+    // D = Display Only
+    // F = Full Edit
+    // N = Do Not Display
+    // U = Edit - No Delete
     $scope.phoneTypes = _.filter(data.data.feed.xlatvalues.values, function(value) {
-      // Filter out the different type controls
-      // D = Display Only
-      // F = Full Edit
-      // N = Do Not Display
-      // U = Edit - No Delete
-      return value.typeControl !== 'N';
+      return currentTypes.indexOf(value.fieldvalue) === -1 && value.typeControl !== 'D';
     });
   };
 
-  var getPerson = profileFactory.getPerson().then(parsePerson);
-  var getPhoneTypes = profileFactory.getPhoneTypes().then(parsePhoneTypes);
+  var getPerson = profileFactory.getPerson;
+  var getPhoneTypes = profileFactory.getPhoneTypes;
 
-  var loadInformation = function() {
-    $q.all(getPerson, getPhoneTypes).then(function() {
+  var loadInformation = function(options) {
+    $scope.isLoading = true;
+    getPerson({
+      refreshCache: _.get(options, 'refresh')
+    })
+    .then(parsePerson)
+    .then(getPhoneTypes)
+    .then(parsePhoneTypes)
+    .then(function() {
       $scope.isLoading = false;
     });
   };
@@ -70,12 +85,21 @@ angular.module('calcentral.controllers').controller('ProfilePhoneController', fu
     });
   };
 
+  $scope.deletePhone = function(phone) {
+    profileFactory.deletePhone({
+      type: phone.type.code
+    });
+  };
+
   var saveCompleted = function(data) {
     $scope.isSaving = false;
     if (data.data.errored) {
       $scope.errorMessage = data.data.feed.errmsgtext;
     } else {
       $scope.closeEditor();
+      loadInformation({
+        refresh: true
+      });
     }
   };
 

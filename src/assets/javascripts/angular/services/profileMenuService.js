@@ -23,10 +23,6 @@ angular.module('calcentral.services').factory('profileMenuService', function() {
           'name': 'Emergency Contact'
         },
         {
-          'id': 'academic-standing',
-          'name': 'Academic Standing'
-        },
-        {
           'id': 'demographic',
           'name': 'Demographic Information'
         }
@@ -56,16 +52,14 @@ angular.module('calcentral.services').factory('profileMenuService', function() {
         {
           'id': 'languages',
           'name': 'Languages'
-        }
-        /*
-          TODO - On hold till SISRP-7184 is resolved
+        },
         {
           'id': 'work-experience',
           'name': 'Work Experience'
         }
-        */
       ]
     },
+    /* TODO - After the profile sprint
     {
       'label': 'Awards',
       'categories': [
@@ -73,15 +67,14 @@ angular.module('calcentral.services').factory('profileMenuService', function() {
           'id': 'honors-awards',
           'name': 'Academic Honors & Awards'
         }
-        /*
-          TODO - On hold till SISRP-7185 is resolved
+        TODO - On hold till SISRP-7185 is resolved
         {
           'id': 'finaid-awards',
           'name': 'Financial Aid Awards'
         }
-        */
       ]
     },
+    */
     {
     'label': 'Alerts & Notifications',
     'categories': [{

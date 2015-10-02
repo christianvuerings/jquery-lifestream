@@ -4,13 +4,18 @@
     <span data-ng-bind="errorMessage"></span>
   </div>
   <form data-ng-submit="savePhone(currentObject)" name="cc_page_widget_profile_phone">
-    <div>
-      <label for="cc-page-widget-profile-phone-type">
-        Phone Type <span class="cc-text-light">(Required)</span>
-      </label>
+    <div data-ng-if="currentObject.isAdding">
+      <div>
+        <label for="cc-page-widget-profile-phone-type">
+          Phone Type <span class="cc-text-light">(Required)</span>
+        </label>
+      </div>
+      <div class="cc-select">
+        <select data-ng-options="phoneType.fieldvalue as phoneType.xlatlongname for phoneType in phoneTypes" data-ng-model="currentObject.type.code" id="cc-page-widget-profile-phone-type" required aria-required="true" />
+      </div>
     </div>
-    <div class="cc-select">
-      <select data-ng-options="phoneType.fieldvalue as phoneType.xlatlongname for phoneType in phoneTypes" data-ng-model="currentObject.type.code" id="cc-page-widget-profile-phone-type" required aria-required="true" />
+    <div data-ng-if="!currentObject.isAdding">
+      <strong data-ng-bind-template="{{phone.type.description}} Phone"></strong>
     </div>
     <div>
       <label for="cc-page-widget-profile-phone-number">
@@ -39,5 +44,8 @@
       </button>
       <button class="cc-button" data-ng-click="closeEditor()" data-ng-disabled="isSaving">Cancel</button>
     </div>
+  </form>
+  <form data-ng-submit="deletePhone(currentObject)" data-ng-if="phone.uiControl.code !== 'U'">
+    (<button class="cc-button-link" type="submit">Delete phone number</button>)
   </form>
 </div>

@@ -50,11 +50,15 @@ angular.module('calcentral.controllers').controller('ProfileEmailController', fu
     });
   };
 
-  var getPerson = profileFactory.getPerson().then(parsePerson);
-  var getEmailTypes = profileFactory.getEmailTypes().then(parseEmailTypes);
+  var getPerson = profileFactory.getPerson;
+  var getEmailTypes = profileFactory.getEmailTypes;
 
   var loadInformation = function() {
-    $q.all(getPerson, getEmailTypes).then(function() {
+    getPerson()
+    .then(parsePerson)
+    .then(getEmailTypes)
+    .then(parseEmailTypes)
+    .then(function() {
       $scope.isLoading = false;
     });
   };
