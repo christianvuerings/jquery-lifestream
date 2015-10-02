@@ -204,7 +204,7 @@ describe CanvasCsv::MaintainUsers do
     end
   end
 
-  context 'when a user account no longer appears in campus systems' do
+  context 'when a user account no longer appears in the campus DB' do
     let(:uid) { random_id }
     let(:student_id) { random_id }
     let(:canvas_user_id) { random_id }
@@ -221,8 +221,10 @@ describe CanvasCsv::MaintainUsers do
       }
     }
     let(:campus_rows) { [] }
+    let(:ldap_record) { nil }
     before do
       allow(Settings.canvas_proxy).to receive(:inactivate_expired_users).and_return(inactivate_expired_users)
+      allow_any_instance_of(CanvasCsv::Ldap).to receive(:search_by_uid).with(uid).and_return(ldap_record)
       subject.categorize_user_account(existing_account, campus_rows)
     end
     context 'when we can trust campus data sources' do
@@ -239,6 +241,22 @@ describe CanvasCsv::MaintainUsers do
     end
     context 'when we cannot trust campus data sources' do
       let(:inactivate_expired_users) { false }
+      it 'does nothing' do
+        expect(account_changes.length).to eq(0)
+        expect(subject.sis_user_id_changes).to eq({})
+        expect(known_uids.length).to eq(0)
+        expect(subject.user_email_deletions).to eq []
+      end
+    end
+    context 'when the user does appear in LDAP' do
+      let(:inactivate_expired_users) { true }
+      let(:ldap_record) do
+        {
+          dn: ["uid=#{uid},ou=guests,dc=berkeley,dc=edu"],
+          uid: [uid],
+          berkeleyeduaffiliations: ['GUEST-TYPE-COLLABORATOR']
+        }
+      end
       it 'does nothing' do
         expect(account_changes.length).to eq(0)
         expect(subject.sis_user_id_changes).to eq({})
