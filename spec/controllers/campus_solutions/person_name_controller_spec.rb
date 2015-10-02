@@ -46,7 +46,7 @@ describe CampusSolutions::PersonNameController do
   end
   context 'deleting name' do
     it 'should not let an unauthenticated user delete' do
-      delete :delete, {format: 'json', uid: '100'}
+      delete :delete, {format: 'json', type: '100'}
       expect(response.status).to eq 401
     end
 

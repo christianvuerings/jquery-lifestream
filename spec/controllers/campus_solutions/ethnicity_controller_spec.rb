@@ -40,7 +40,7 @@ describe CampusSolutions::EthnicityController do
   end
   context 'deleting ethnicity' do
     it 'should not let an unauthenticated user delete' do
-      delete :delete, {format: 'json', uid: '100'}
+      delete :delete, {format: 'json', regRegion: '100', ethnicGroupCode: 'foo'}
       expect(response.status).to eq 401
     end
 

@@ -58,7 +58,7 @@ describe CampusSolutions::EmergencyContactController do
   end
   context 'deleting emergency contact' do
     it 'should not let an unauthenticated user delete' do
-      delete :delete, {format: 'json', uid: '100'}
+      delete :delete, {format: 'json', contactName: '100'}
       expect(response.status).to eq 401
     end
 
