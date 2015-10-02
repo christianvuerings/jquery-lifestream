@@ -13,7 +13,7 @@ module Oec
 
       find_previous_term_csvs
 
-      [Oec::CourseInstructors, Oec::CourseSupervisors, Oec::Courses, Oec::Instructors, Oec::Supervisors].each do |worksheet_class|
+      [Oec::CourseInstructors, Oec::CourseSupervisors, Oec::Instructors, Oec::Supervisors].each do |worksheet_class|
         if @previous_term_csvs[worksheet_class]
           copy_file(@previous_term_csvs[worksheet_class], overrides)
         else
@@ -21,6 +21,10 @@ module Oec
           export_sheet_headers(worksheet_class, overrides)
         end
       end
+
+      courses = Oec::Courses.new
+      set_default_term_dates courses
+      export_sheet(courses, overrides)
 
       if !@opts[:local_write] && (department_template = @remote_drive.find_nested ['templates', 'Department confirmations'])
         @remote_drive.copy_item_to_folder(department_template, departments.id, 'TEMPLATE')
@@ -46,6 +50,14 @@ module Oec
       if (folders = @remote_drive.find_folders)
         folders.select { |f| f.title.match(/\d{4}-[A-D]/) && f.title < @term_code }.sort_by(&:title).last
       end
+    end
+
+    def set_default_term_dates(courses)
+      term = Berkeley::Terms.fetch.campus[Berkeley::TermCodes.to_slug *@term_code.split('-')]
+      courses[0] = {
+        'START_DATE' => term.classes_start.strftime(Oec::Worksheet::WORKSHEET_DATE_FORMAT),
+        'END_DATE' => term.instruction_end.advance(days: 2).strftime(Oec::Worksheet::WORKSHEET_DATE_FORMAT)
+      }
     end
   end
 end

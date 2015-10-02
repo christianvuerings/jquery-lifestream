@@ -1,6 +1,6 @@
 describe Oec::TermSetupTask do
 
-  let(:term_code) { 'fake_term' }
+  let(:term_code) { '2013-B' }
   let(:today) { '2015-08-31' }
   let(:now) { '09:22:22' }
   let(:logfile) { "#{now} term setup task.log" }
@@ -71,12 +71,24 @@ describe Oec::TermSetupTask do
   context 'local-write mode' do
     subject { described_class.new(term_code: term_code, local_write: 'Y') }
 
-    it 'reads from but does not write to remote drive' do
+    before do
       allow(fake_remote_drive).to receive(:find_nested).and_return mock_google_drive_item
       expect(fake_remote_drive).to receive(:find_folders).with(no_args).and_return []
+    end
+
+    it 'reads from but does not write to remote drive' do
       expect(fake_remote_drive).not_to receive(:check_conflicts_and_upload)
       expect(fake_remote_drive).not_to receive(:copy_item_to_folder)
       subject.run
+    end
+
+    it 'sets default term dates as overrides' do
+      subject.run
+      courses = Oec::Courses.from_csv File.read(Rails.root.join 'tmp', 'oec', 'courses.csv')
+      expect(courses.first).to include({
+        'START_DATE' => '01-22-2013',
+        'END_DATE' => '05-12-2013'
+      })
     end
   end
 end
