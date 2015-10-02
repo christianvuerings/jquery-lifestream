@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Profile Email controller
  */
-angular.module('calcentral.controllers').controller('ProfileEmailController', function(profileFactory, $scope, $q) {
+angular.module('calcentral.controllers').controller('ProfileEmailController', function(profileFactory, $scope) {
   angular.extend($scope, {
     emails: {
       content: [],
