@@ -1,12 +1,11 @@
 module Oec
-  class ExportTask < Task
+  module MergedSheetValidation
 
     include Validator
 
-    def run_internal
-      merged_course_confirmations = @remote_drive.find_nested [@term_code, 'departments', 'Merged course confirmations']
-      merged_course_confirmations_csv = merged_course_confirmations && @remote_drive.export_csv(merged_course_confirmations)
-      raise RuntimeError, 'No merged course confirmation sheet found' unless merged_course_confirmations_csv
+    def build_and_validate_export_sheets
+      course_confirmations_file = @remote_drive.find_nested [@term_code, 'departments', 'Merged course confirmations'], on_failure: :error
+      course_confirmations = Oec::SisImportSheet.from_csv(@remote_drive.export_csv(course_confirmations_file), dept_code: nil)
 
       instructors = Oec::Instructors.new
       course_instructors = Oec::CourseInstructors.new
@@ -14,11 +13,8 @@ module Oec
       students = Oec::Students.new
       course_students = Oec::CourseStudents.new
 
-      merged_supervisor_confirmations = @remote_drive.find_nested [@term_code, 'departments', 'Merged supervisor confirmations']
-      merged_supervisor_confirmations_csv = merged_supervisor_confirmations && @remote_drive.export_csv(merged_supervisor_confirmations)
-      raise RuntimeError, 'No merged supervisor confirmation sheet found' unless merged_supervisor_confirmations_csv
-
-      supervisors = Oec::Supervisors.from_csv(merged_supervisor_confirmations_csv)
+      supervisor_confirmations_file = @remote_drive.find_nested [@term_code, 'departments', 'Merged supervisor confirmations'], on_failure: :error
+      supervisors = Oec::Supervisors.from_csv @remote_drive.export_csv(supervisor_confirmations_file)
 
       if (previous_course_supervisors = @remote_drive.find_nested [@term_code, 'supplemental_sources', 'course_supervisors'])
         course_supervisors = Oec::CourseSupervisors.from_csv @remote_drive.export_csv(previous_course_supervisors)
@@ -31,7 +27,7 @@ module Oec
 
       default_dates = default_term_dates
 
-      Oec::SisImportSheet.from_csv(merged_course_confirmations_csv, dept_code: nil).each do |confirmation|
+      course_confirmations.each do |confirmation|
         next unless confirmation['EVALUATE'] && confirmation['EVALUATE'].casecmp('Y') == 0
 
         validate('courses', confirmation['COURSE_ID']) do |errors|
@@ -98,18 +94,13 @@ module Oec
           validate_and_add(course_students, capitalized_row, %w(LDAP_UID COURSE_ID))
         end
       end
-
-      skip_export_step = @opts[:validation_without_export]
       if valid?
-        unless skip_export_step
-          exports_now = find_or_create_now_subfolder 'exports'
-          [instructors, course_instructors, courses, students, course_students, supervisors, course_supervisors].each do |sheet|
-            export_sheet(sheet, exports_now)
-          end
-        end
+        log :info, 'Validation passed.'
+        [instructors, course_instructors, courses, students, course_students, supervisors, course_supervisors]
       else
-        log :error, "Validation failed! #{'No sheets will be exported.' unless skip_export_step}"
+        log :error, "Validation failed!"
         log_validation_errors
+        nil
       end
     end
 

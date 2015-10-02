@@ -5,6 +5,8 @@ module Oec
     DEFAULT_EXPORT_PATH = Rails.root.join('tmp', 'oec')
     WORKSHEET_DATE_FORMAT = '%m-%d-%Y'
 
+    attr_accessor :export_directory
+
     class << self
       attr_accessor :row_validations
 

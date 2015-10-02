@@ -29,12 +29,12 @@ module Oec
         htmlDescription: 'Merge department confirmation sheets into master sheets for preflight review. Two new sheets will be created in the <strong>departments</strong> folder: <strong>Merged course confirmations</strong> and <strong>Merged supervisor confirmations</strong>.'
       },
       {
-        name: 'ExportTask',
+        name: 'ValidationTask',
         friendlyName: 'Validate confirmed data',
         htmlDescription: 'Run a validation report on merged confirmation sheets. Validation results will appear in a dated subfolder of the <strong>reports</strong> folder.'
       },
       {
-        name: 'ExportAndPublishTask',
+        name: 'PublishTask',
         friendlyName: 'Publish confirmed data to Explorance',
         htmlDescription: 'Validate and export merged confirmation sheets. Files will be uploaded to the vendor only if validation passes. A copy of the uploaded data will appear in a timestamped subfolder of the <strong>exports</strong> folder.'
       }
@@ -43,7 +43,6 @@ module Oec
     def initialize(task_class, params)
       @task_class = task_class
       @params = translate_params(params)
-      @params[:validate_without_export] = true if task_class == Oec::ExportTask
     end
 
     def run
