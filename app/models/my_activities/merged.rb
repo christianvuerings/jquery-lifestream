@@ -15,7 +15,8 @@ module MyActivities
       @proxies = [
         MyActivities::NotificationActivities,
         MyActivities::RegBlocks,
-        MyActivities::Webcasts
+        MyActivities::Webcasts,
+        MyActivities::CampusSolutionsMessages
       ]
     end
 
