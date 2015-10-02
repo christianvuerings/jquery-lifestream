@@ -36,7 +36,7 @@ module Oec
       {
         name: 'ValidationTask',
         friendlyName: 'Validate confirmed data',
-        htmlDescription: 'Run a validation report on merged confirmation sheets. Validation results will appear in a dated subfolder of the <strong>reports</strong> folder.',
+        htmlDescription: 'Run a validation report on merged confirmation sheets. Validation results will appear in a dated subfolder of the <strong>logs</strong> folder.',
         acceptsDepartmentOptions: false
       },
       {
