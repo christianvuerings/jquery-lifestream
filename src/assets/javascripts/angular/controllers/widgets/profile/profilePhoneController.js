@@ -87,7 +87,9 @@ angular.module('calcentral.controllers').controller('ProfilePhoneController', fu
 
   $scope.deletePhone = function(phone) {
     profileFactory.deletePhone({
-      type: phone.type.code
+      data: {
+        type: phone.type.code
+      }
     });
   };
 

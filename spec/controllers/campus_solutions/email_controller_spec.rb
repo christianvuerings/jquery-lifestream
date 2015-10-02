@@ -33,7 +33,7 @@ describe CampusSolutions::EmailController do
   end
   context 'deleting email' do
     it 'should not let an unauthenticated user delete' do
-      delete :delete, {format: 'json', uid: '100'}
+      delete :delete, {format: 'json', type: '100'}
       expect(response.status).to eq 401
     end
 

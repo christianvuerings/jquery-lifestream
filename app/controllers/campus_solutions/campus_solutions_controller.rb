@@ -13,7 +13,7 @@ module CampusSolutions
 
     def delete_passthrough(classname)
       model = classname.from_session(session)
-      render json: model.delete(request.request_parameters)
+      render json: model.delete(params)
     end
 
   end

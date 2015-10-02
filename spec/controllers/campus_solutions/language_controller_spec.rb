@@ -38,7 +38,7 @@ describe CampusSolutions::LanguageController do
 
   context 'deleting language' do
     it 'should not let an unauthenticated user delete' do
-      delete :delete, {format: 'json', uid: '100'}
+      delete :delete, {format: 'json', jpmCatItemId: '100'}
       expect(response.status).to eq 401
     end
 
