@@ -19,7 +19,12 @@ module CampusSolutions
 
     def build_feed(response)
       return {} if response.parsed_response.blank?
-      response.parsed_response
+      feed = response.parsed_response
+      feed['LABELS'].each do |label|
+        # downcase and camelize the values of the FIELD key
+        label['FIELD'] = label['FIELD'].downcase.camelize(:lower)
+      end
+      feed
     end
 
     def url
