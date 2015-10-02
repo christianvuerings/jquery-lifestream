@@ -161,8 +161,8 @@ module Oec
         end
       end
 
-      if default_term_dates
-        worksheet.each { |row| row.update(default_term_dates) unless row['MODULAR_COURSE'].present? }
+      if (term_dates = default_term_dates)
+        worksheet.each { |row| row.update(term_dates) unless row['MODULAR_COURSE'].present? }
       end
     end
 
