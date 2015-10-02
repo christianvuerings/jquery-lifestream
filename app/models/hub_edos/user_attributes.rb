@@ -60,15 +60,20 @@ module HubEdos
     end
 
     def extract_names(edo, result)
+      # preferred name trumps primary name if present
+      find_name('PRI', edo, result) unless find_name('PRF', edo, result)
+    end
+
+    def find_name(type, edo, result)
       edo[:names].each do |name|
-        # use primary name
-        if name[:type][:code] == 'PRI'
+        if name[:type][:code] == type
           result[:first_name] = name[:givenName]
           result[:last_name] = name[:familyName]
           result[:person_name] = name[:formattedName]
-          break
+          return true
         end
       end
+      false
     end
 
     def extract_affiliations(edo, result)
