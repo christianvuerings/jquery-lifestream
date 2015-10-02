@@ -75,9 +75,8 @@ namespace :oec do
   task :validate_confirmation_sheets => :environment do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
-    Oec::ExportTask.new(
+    Oec::ValidationTask.new(
       term_code: ENV['term_code'],
-      validation_without_export: true,
       local_write: ENV['local_write'].present?
     ).run
   end
@@ -86,7 +85,7 @@ namespace :oec do
   task :publish_to_explorance => :environment do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
-    Oec::ExportAndPublishTask.new(
+    Oec::PublishTask.new(
       term_code: term_code,
       local_write: ENV['local_write'].present?
     ).run

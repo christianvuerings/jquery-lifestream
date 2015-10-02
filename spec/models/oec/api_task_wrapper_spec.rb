@@ -25,12 +25,4 @@ describe Oec::ApiTaskWrapper do
     end
   end
 
-  context 'validate without export' do
-    let(:task_class) { Oec::ExportTask }
-    let(:params) { {'term' => 'Summer 2014', 'departmentCode' => 'SYPSY'} }
-    it 'should implicitly add :validate_without_export' do
-      expect(translated_params[:validate_without_export]).to be true
-    end
-  end
-
 end
