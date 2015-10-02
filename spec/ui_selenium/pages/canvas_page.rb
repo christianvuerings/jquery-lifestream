@@ -41,14 +41,12 @@ class CanvasPage
   button(:done_button, :xpath => '//button[contains(.,"Done")]')
 
   # Announcements
-  link(:new_announcement_link, :text => 'Announcement')
   link(:html_editor_link, :xpath => '//a[contains(.,"HTML Editor")]')
   text_area(:announcement_msg, :name => 'message')
   button(:save_announcement_button, :xpath => '//h1[contains(text(),"New Discussion")]/following-sibling::div/button[contains(text(),"Save")]')
   h1(:announcement_title_heading, :class => 'discussion-title')
 
   # Discussions
-  link(:new_discussion_link, :id => 'new-discussion-btn')
   text_area(:discussion_title, :id => 'discussion-title')
   checkbox(:threaded_discussion_cbx, :id => 'threaded')
   checkbox(:graded_discussion_cbx, :id => 'use_for_grading')
@@ -57,7 +55,6 @@ class CanvasPage
   link(:primary_html_editor_link, :xpath => '//article[@id="discussion_topic"]//a[contains(.,"HTML Editor")]')
 
   # Assignments
-  link(:new_assignment_link, :text => 'Assignment')
   select_list(:assignment_type, :id => 'assignment_submission_type')
   text_area(:assignment_name, :id => 'assignment_name')
   text_area(:assignment_due_date, :class => 'DueDateInput')
@@ -185,19 +182,17 @@ class CanvasPage
   end
 
   def delete_course(course_id)
-    logger.info "Deleting course id #{course_id}"
     navigate_to "#{WebDriverUtils.canvas_base_url}/courses/#{course_id}/confirm_action?event=delete"
     WebDriverUtils.wait_for_page_and_click delete_course_button_element
     delete_course_success_element.when_visible timeout=WebDriverUtils.page_load_timeout
-    logger.info 'Course site has been deleted.'
+    logger.info "Course id #{course_id} has been deleted"
   end
 
   # COURSE ACTIVITY
 
   def create_announcement(course_id, announcement_title, announcement_body)
     logger.info "Creating announcement: #{announcement_body}"
-    navigate_to "#{WebDriverUtils.canvas_base_url}/courses/#{course_id}/announcements"
-    WebDriverUtils.wait_for_page_and_click new_announcement_link_element
+    navigate_to "#{WebDriverUtils.canvas_base_url}/courses/#{course_id}/discussion_topics/new?is_announcement=true"
     WebDriverUtils.wait_for_element_and_type(discussion_title_element, announcement_title)
     html_editor_link if html_editor_link_element.visible?
     WebDriverUtils.wait_for_element_and_type(announcement_msg_element, announcement_body)
@@ -209,8 +204,7 @@ class CanvasPage
 
   def create_discussion(course_id, discussion_name)
     logger.info "Creating discussion topic named '#{discussion_name}'"
-    navigate_to "#{WebDriverUtils.canvas_base_url}/courses/#{course_id}/discussion_topics"
-    WebDriverUtils.wait_for_page_and_click new_discussion_link_element
+    navigate_to "#{WebDriverUtils.canvas_base_url}/courses/#{course_id}/discussion_topics/new"
     WebDriverUtils.wait_for_element_and_type(discussion_title_element, discussion_name)
     check_threaded_discussion_cbx
     WebDriverUtils.wait_for_element_and_click save_and_publish_button_element
@@ -221,8 +215,7 @@ class CanvasPage
 
   def create_assignment(course_id, assignment_name, due_date)
     logger.info "Creating submission assignment named '#{assignment_name}'"
-    navigate_to "#{WebDriverUtils.canvas_base_url}/courses/#{course_id}/assignments"
-    WebDriverUtils.wait_for_page_and_click new_assignment_link_element
+    navigate_to "#{WebDriverUtils.canvas_base_url}/courses/#{course_id}/assignments/new"
     WebDriverUtils.wait_for_element_and_type(assignment_name_element, assignment_name)
     WebDriverUtils.wait_for_element_and_type(assignment_due_date_element, due_date.strftime("%b %-d %Y"))
     sleep 2

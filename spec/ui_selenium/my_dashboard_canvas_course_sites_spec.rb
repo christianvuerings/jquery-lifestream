@@ -252,51 +252,51 @@ describe 'My Dashboard', :testui => true, :order => :defined do
         end
 
         # To Do - assignments
-        it 'show an overdue assignment as an overdue To Do task' do
+        it 'shows an overdue assignment as an overdue To Do task' do
           @to_do_card.scheduled_tasks_tab_element.when_present(timeout=WebDriverUtils.page_load_timeout)
           expect(@to_do_card.overdue_task_count).to eql('1')
           expect(@to_do_card.overdue_task_one_title).to eql(@past_assignment_title)
         end
-        it 'show an overdue assignment\'s course site name on a To Do task' do
+        it 'shows an overdue assignment\'s course site name on a To Do task' do
           expect(@to_do_card.overdue_task_one_course).to eql(site_name)
         end
-        it 'show an overdue assignment\'s due date and time on a To Do task' do
+        it 'shows an overdue assignment\'s due date and time on a To Do task' do
           expect(@to_do_card.overdue_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format @past_assignment_due_date)
           expect(@to_do_card.overdue_task_one_time).to eql('11 PM')
         end
-        it 'show a link to an overdue Canvas assignment on a To Do task' do
+        it 'shows a link to an overdue Canvas assignment on a To Do task' do
           @to_do_card.toggle_overdue_task_one_detail
           @to_do_card.overdue_task_one_bcourses_link_element.when_visible timeout
           expect(@to_do_card.overdue_task_one_bcourses_link_element.attribute('href')).to eql(@past_assignment_url)
         end
-        it 'show a currently due assignment as a Today To Do task' do
+        it 'shows a currently due assignment as a Today To Do task' do
           expect(@to_do_card.today_task_count).to eql('1')
           expect(@to_do_card.today_task_one_title).to eql(@current_assignment_title)
         end
-        it 'show a currently due assignment\'s course site name on a To Do task' do
+        it 'shows a currently due assignment\'s course site name on a To Do task' do
           expect(@to_do_card.today_task_one_course).to eql(site_name)
         end
-        it 'show a currently due assignment\'s due date and date on a To Do task' do
+        it 'shows a currently due assignment\'s due date and date on a To Do task' do
           expect(@to_do_card.today_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format @current_assignment_due_date)
           expect(@to_do_card.today_task_one_time).to eql('11 PM')
         end
-        it 'show a link to a currently due Canvas assignment on a To Do task' do
+        it 'shows a link to a currently due Canvas assignment on a To Do task' do
           @to_do_card.toggle_today_task_one_detail
           @to_do_card.today_task_one_bcourses_link_element.when_visible timeout
           expect(@to_do_card.today_task_one_bcourses_link_element.attribute('href')).to eql(@current_assignment_url)
         end
-        it 'show a future assignment as a future To Do task' do
+        it 'shows a future assignment as a future To Do task' do
           expect(@to_do_card.future_task_count).to eql('1')
           expect(@to_do_card.future_task_one_title).to eql(@future_assignment_title)
         end
-        it 'show a future assignment\'s course site name on a To Do task' do
+        it 'shows a future assignment\'s course site name on a To Do task' do
           expect(@to_do_card.future_task_one_course).to eql(site_name)
         end
-        it 'show a future assignment\'s due date and time on a To Do task' do
+        it 'shows a future assignment\'s due date and time on a To Do task' do
           expect(@to_do_card.future_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format @future_assignment_due_date)
           expect(@to_do_card.future_task_one_time).to eql('11 PM')
         end
-        it 'show a link to a future due Canvas assignment on a To Do task' do
+        it 'shows a link to a future due Canvas assignment on a To Do task' do
           @to_do_card.toggle_future_task_one_detail
           @to_do_card.future_task_one_bcourses_link_element.when_visible timeout
           expect(@to_do_card.future_task_one_bcourses_link_element.attribute('href')).to eql(@future_assignment_url)

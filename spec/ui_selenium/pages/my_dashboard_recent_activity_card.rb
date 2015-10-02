@@ -46,18 +46,19 @@ module CalCentralPages
     end
 
     def sub_activity_text(driver, activity_list_node, elements)
-      elements_metadata = []
+      elements_text = []
       toggles = sub_activity_toggle_elements(driver, activity_list_node)
       toggles.each do |toggle|
-        activity_item_toggle_elements[activity_list_node - 1].click unless toggle.displayed?
-        wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_event_timeout)
-        wait.until { toggle.displayed? }
+        unless toggle.displayed?
+          activity_item_toggle_elements[activity_list_node - 1].click
+          wait_until(timeout=WebDriverUtils.page_event_timeout) { toggle.displayed? }
+        end
         toggle.click
         element = elements[toggles.index(toggle)]
         wait_until(timeout=WebDriverUtils.page_event_timeout) { element.displayed? }
-        elements_metadata << element.text
+        elements_text << element.text
       end
-      elements_metadata
+      elements_text
     end
 
     def sub_activity_summaries(driver, activity_list_node)
