@@ -16,7 +16,7 @@ require_relative 'pages/api_my_classes_page'
 
 describe 'My Dashboard', :testui => true, :order => :defined do
 
-  if ENV["UI_TEST"]
+  if ENV["UI_TEST"] && Settings.ui_selenium.layer != 'production'
 
     include ClassLogger
 
