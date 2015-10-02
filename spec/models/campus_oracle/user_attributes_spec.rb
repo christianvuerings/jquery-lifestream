@@ -76,11 +76,14 @@ describe CampusOracle::UserAttributes do
           let(:uid) {321703}
           it_behaves_like 'a parser for roles', [:concurrentEnrollmentStudent]
         end
+        context 'user with expired CalNet account' do
+          let(:uid) {6188989}
+          it_behaves_like 'a parser for roles', [:student, :registered, :expiredAccount]
+        end
       end
     end
 
   end
-
 
   context 'checking if user is staff or faculty member' do
     let(:uid) { rand(99999).to_s }

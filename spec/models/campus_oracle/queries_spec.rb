@@ -248,6 +248,7 @@ describe CampusOracle::Queries do
       expect(uids).to include('95509')
       expect(uids).to_not include('592722')
       expect(uids).to_not include('313561')
+      expect(uids).to_not include('6188989')
     end
   end
 
@@ -265,6 +266,11 @@ describe CampusOracle::Queries do
     expect(CampusOracle::Queries.is_previous_ugrad?('212389')).to be true   # grad student expired, previous ugrad
     expect(CampusOracle::Queries.is_previous_ugrad?('212390')).to be false  # grad student, but not previous ugrad
     expect(CampusOracle::Queries.is_previous_ugrad?('300939')).to be true   # ugrad only
+  end
+
+  it 'should find a user with an expired LDAP account', if: CampusOracle::Queries.test_data? do
+    expect(CampusOracle::Queries.get_person_attributes('6188989')['person_type']).to eq 'Z'
+    expect(CampusOracle::Queries.get_basic_people_attributes(['6188989']).first['person_type']).to eq 'Z'
   end
 
   context 'with default academic terms', if: CampusOracle::Queries.test_data? do
@@ -320,6 +326,11 @@ describe CampusOracle::Queries do
       expect(user_data).to be_an_instance_of Array
       expect(user_data).to have(2).items
     end
+
+    it 'should include the expired-account marker', :testext => true do
+      user_data = CampusOracle::Queries.find_people_by_name('smith', 1)
+      expect(user_data.first['person_type']).to be_present
+    end
   end
 
   context 'when searching for users by email' do
@@ -360,6 +371,11 @@ describe CampusOracle::Queries do
       user_data = CampusOracle::Queries.find_people_by_email('john', 5)
       expect(user_data).to be_an_instance_of Array
       expect(user_data).to have(5).items
+    end
+
+    it 'should include the expired-account marker', :testext => true do
+      user_data = CampusOracle::Queries.find_people_by_email('john', 1)
+      expect(user_data.first['person_type']).to be_present
     end
   end
 
@@ -426,6 +442,11 @@ describe CampusOracle::Queries do
       expect(user_data[0]).to be_an_instance_of Hash
       expect(user_data[0]['row_number'].to_i).to eq 1.0
       expect(user_data[0]['result_count'].to_i).to eq 1.0
+    end
+
+    it 'should include the expired-account marker', if: CampusOracle::Queries.test_data? do
+      user_data = CampusOracle::Queries.find_people_by_uid('6188989')
+      expect(user_data.first['person_type']).to eq 'Z'
     end
   end
 

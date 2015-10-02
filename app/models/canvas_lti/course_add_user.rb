@@ -36,7 +36,7 @@ module CanvasLti
           people = CampusOracle::Queries.find_people_by_uid(search_text)
       end
       people.collect! do |person|
-        if person['affiliations'].present? && person['affiliations'].include?('-TYPE-')
+        if person['affiliations'].present? && person['affiliations'].include?('-TYPE-') && (person['person_type'] != 'Z')
           person.delete('student_id')
           HashConverter.camelize(person)
         end

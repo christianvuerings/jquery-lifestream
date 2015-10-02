@@ -128,13 +128,19 @@ module CanvasCsv
         login_id = inactive_account[1]
       end
       if (ldap_uid = Integer(login_id, 10) rescue nil)
-        campus_row = campus_user_rows.select { |r| r['ldap_uid'].to_i == ldap_uid }.first
+        campus_row = campus_user_rows.select { |r| (r['ldap_uid'].to_i == ldap_uid) && (r['person_type'] != 'Z') }.first
         if campus_row.present?
           logger.warn "Reactivating account for LDAP UID #{ldap_uid}" if inactive_account
           @known_uids << login_id
           new_account_data = canvas_user_from_campus_row(campus_row)
         else
           return unless Settings.canvas_proxy.inactivate_expired_users
+          if (ldap_result = CanvasCsv::Ldap.new.search_by_uid(login_id)).present?
+            # Our LDAP bind does not provide enough data to fully update the Canvas account, and so
+            # all we can do is log the disconnect between LDAP and our campus DB.
+            logger.error "UID #{login_id} is not in DB but LDAP reports #{ldap_result.inspect}"
+            return
+          end
           # This LDAP UID no longer appears in campus data. Mark the Canvas user account as inactive.
           logger.warn "Inactivating account for LDAP UID #{ldap_uid}" unless inactive_account
           if old_account_data['email'].present?
