@@ -12,13 +12,29 @@ module CampusSolutions
     def self.field_mappings
       @field_mappings ||= FieldMapping.to_hash(
         [
+          FieldMapping.required(:country, :COUNTRY),
           FieldMapping.required(:addressType, :ADDRESS_TYPE),
           FieldMapping.required(:address1, :ADDRESS1),
           FieldMapping.required(:address2, :ADDRESS2),
+          FieldMapping.required(:address3, :ADDRESS3),
+          FieldMapping.required(:address4, :ADDRESS4),
           FieldMapping.required(:city, :CITY),
-          FieldMapping.required(:state, :STATE),
+          FieldMapping.required(:county, :COUNTY),
+          FieldMapping.required(:houseType, :HOUSE_TYPE),
+          FieldMapping.required(:num1, :NUM1),
+          FieldMapping.required(:num2, :NUM2),
           FieldMapping.required(:postal, :POSTAL),
-          FieldMapping.required(:country, :COUNTRY)
+          FieldMapping.required(:state, :STATE),
+          FieldMapping.required(:addrField1, :ADDR_FIELD1),
+          FieldMapping.required(:addrField2, :ADDR_FIELD2),
+          FieldMapping.required(:addrField3, :ADDR_FIELD3),
+          FieldMapping.required(:geoCode, :GEO_CODE),
+          FieldMapping.required(:inCityLimit, :IN_CITY_LIMIT),
+          FieldMapping.required(:address1Ac, :ADDRESS1_AC),
+          FieldMapping.required(:address2Ac, :ADDRESS2_AC),
+          FieldMapping.required(:address3Ac, :ADDRESS3_AC),
+          FieldMapping.required(:cityAc, :CITY_AC),
+          FieldMapping.required(:regRegion, :REG_REGION)
         ]
       )
     end
@@ -28,22 +44,15 @@ module CampusSolutions
     end
 
     def response_root_xml_node
-      'UC_PER_ADDR_UPD_POST_RESP'
+      'UC_CC_PERS_I_ADDR_POST'
     end
 
     def xml_filename
       'address.xml'
     end
 
-    def default_post_params
-      super.merge(
-        {
-          EFFDT: '2015-10-09' # TODO fix hardcode
-        })
-    end
-
     def url
-      "#{@settings.base_url}/UC_PER_ADDR_UPD_POST.v1/address/post/"
+      "#{@settings.base_url}/UC_CC_PERS_I_ADDR.v1/addr/post"
     end
 
   end
