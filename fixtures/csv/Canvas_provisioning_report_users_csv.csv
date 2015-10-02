@@ -1,30 +1,4 @@
-canvas_user_id,user_id,login_id,first_name,last_name,email,status
-3,211159,211159,Ray,Davis,raydavis@berkeley.edu,active
-4,322279,322279,Eli,Cochran,eli@example.com,active
-5,978966,978966,Christian Raymond Marcel,Vuerings,christian@example.com,active
-6,208861,208861,Allison,BLOODWORTH,abloodworth@example.com,active
-7,675750,675750,Rachel,Hollowgrass,rhollow@example.com,active
-8,323487,323487,Jon,Hays,jonmhays@example.com,active
-9,904715,904715,Chris,Tweney,chris@example.com,active
-10,238382,238382,Bernadette,Geuy,bernadette@example.com,active
-11,191779,191779,Scot,Hacker,shacker@example.com,active
-12,2040,2040,Oliver,Heyer,oliver@example.com,active
-13,730057,730057,Lisa,Rothrauff,lisa@example.com,active
-14,972716,972716,Sage,Adams,sage@example.com,active
-15,741134,741134,Bobby,White,bobby@example.com,active
-16,1012804,1012804,Justin,Lipp,jwlipp@example.com,active
-17,175137,175137,Charmaine,Falcao,charmaine@example.com,active
-18,212286,212286,Benjamin,Hubbard,ben@example.com,active
-19,53791,53791,Darlene,Kawase,darlene@example.com,active
-20,95509,95509,Kevin,Chan,kevin@example.com,active
-21,177473,177473,Jonathan,Felder,felder@example.com,active
-22,18437,18437,Greg,German,greg@example.com,active
-23,322587,322587,Empfaculty,Testa,test-322587@example.com,active
-24,300846,300846,Stu,Testb,test-300846@example.com,active
-25,322583,322583,Empstaff,Testc,test-322583@example.com,active
-31,300940,300940,Svetlana,Masterkova,svetlana@example.com,active
-46,300939,300939,Tammi,Chang,tammi.chang.clc@example.com,active
-63,11002820,11002820,Tammi,Chang,tammi.chang.clc@example.com,active
-64,61889,61889,Oski,Bear,oski.bear.clc@example.com,active
-65,730565,730565,Michelle,Someone,michelle@example.com,active
-72,999,canvassupport,Canvas,Support,canvassupport@example.com,active
+canvas_user_id,user_id,login_id,first_name,last_name,full_name,sortable_name,short_name,email,status
+3,211159,211159,Ray,Davis,Ray Davis,"Davis, Ray",,raydavis@berkeley.edu,active
+5,978966,978966,Christian Raymond Marcel,Vuerings,Christian Raymond Marcel Vuerings,"Vuerings, Christian Raymond Marcel",,christian@example.com,active
+72,999,canvassupport,Canvas,Support,Canvas Support,"Support, Canvas",,canvassupport@example.com,active

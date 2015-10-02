@@ -7,6 +7,7 @@
     "sis_user_id": "211159",
     "sis_login_id": "211159",
     "login_id": "211159",
+    "email": "raydavis@example.com",
     "enrollments": [
       {
         "associated_user_id": null,
@@ -32,6 +33,7 @@
     "sis_user_id": "238382",
     "sis_login_id": "238382",
     "login_id": "238382",
+    "email": "bernadetteg@example.com",
     "enrollments": [
       {
         "associated_user_id": null,

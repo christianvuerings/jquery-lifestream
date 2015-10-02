@@ -80,11 +80,11 @@ module CalCentralPages
       end
 
       def wait_for_fin_resources_links
-        fin_resources_list_element.when_visible(timeout=WebDriverUtils.fin_resources_links_timeout)
+        fin_resources_list_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       end
 
       def wait_for_fin_aid
-        fin_messages_list_element.when_visible(timeout=WebDriverUtils.fin_aid_timeout)
+        fin_messages_list_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       end
 
       def all_fin_aid_message_titles

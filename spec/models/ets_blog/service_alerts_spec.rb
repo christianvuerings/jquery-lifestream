@@ -13,11 +13,11 @@ describe EtsBlog::ServiceAlerts do
 
   it 'should format and return the latest well-formed feed message' do
     alert = fake_proxy.get_latest
-    alert[:title].should == 'Second CalCentral test alert'
-    alert[:snippet].should == 'This is a short summary.'
-    alert[:link].should == 'https://test-ets.pantheon.berkeley.edu/news/second-calcentral-test-alert'
-    alert[:timestamp][:dateString].should == 'Jul 08'
-    alert[:timestamp][:epoch].should == 1436338800
+    expect(alert[:title]).to eq 'Second CalCentral test alert'
+    expect(alert[:snippet]).to eq 'This is a short summary.'
+    expect(alert[:link]).to eq 'https://test-ets.pantheon.berkeley.edu/news/second-calcentral-test-alert'
+    expect(alert[:timestamp][:dateString]).to eq 'Jul 08'
+    expect(alert[:timestamp][:epoch]).to eq 1436338800
   end
 
   describe 'with other mock data' do
@@ -26,23 +26,17 @@ describe EtsBlog::ServiceAlerts do
 
     context 'when the xml contains multibyte characters' do
       let(:mock_xml_file) { 'service_alerts_feed_diacriticals.xml' }
-      it 'should parse' do
-        alert = subject.get_latest
-        alert[:title].should == '¡El Señor González se zampó un extraño sándwich de vodka y ajo! (¢, ®, ™, ©, •, ÷, –, ¿)'
-        alert[:link].should == 'hדג סקרן שט בים מאוכזב ולפתע מצא לו חברה'
-        alert[:snippet].should == 'جامع الحروف عند البلغاء يطلق على الكلام المركب من جميع حروف التهجي بدون تكرار أحدها في لفظ واحد، أما في لفظين فهو جائز'
-      end
+      include_examples 'xml with multibyte characters'
     end
 
     context 'when the alert only has a title' do
       let(:mock_xml_file) { 'service_alerts_feed_title_only.xml' }
+      include_examples 'non-empty alert'
       it 'should return basic attributes' do
         alert = subject.get_latest
-        expect(alert[:title]).to be_present
-        expect(alert[:link]).to be_present
-        expect(alert[:timestamp][:epoch]).to be_present
         expect(alert[:snippet]).to be_blank
       end
+
     end
 
     context 'when there are no alerts in the feed' do
@@ -55,11 +49,9 @@ describe EtsBlog::ServiceAlerts do
 
     context 'when the alert feed has a single item' do
       let(:mock_xml_file) { 'service_alerts_feed_single.xml' }
+      include_examples 'non-empty alert'
       it 'should return the item contents' do
         alert = subject.get_latest
-        expect(alert[:title]).to be_present
-        expect(alert[:link]).to be_present
-        expect(alert[:timestamp][:epoch]).to be_present
         expect(alert[:snippet]).to be_present
       end
     end

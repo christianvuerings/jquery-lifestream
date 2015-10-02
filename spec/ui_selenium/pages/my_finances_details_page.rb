@@ -67,7 +67,7 @@ module CalCentralPages
         logger.info('Loading My Finances details page')
         driver.get(WebDriverUtils.base_url + '/finances/details')
         if activity_spinner_element.visible?
-          activity_spinner_element.when_not_visible(timeout=WebDriverUtils.financials_timeout)
+          activity_spinner_element.when_not_visible(timeout=WebDriverUtils.page_load_timeout)
         end
       end
 

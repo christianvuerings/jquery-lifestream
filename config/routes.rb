@@ -32,6 +32,7 @@ Calcentral::Application.routes.draw do
   get '/api/my/advising' => 'my_advising#get_feed', :as => :my_advising, :defaults => {:format => 'json'}
   get '/api/my/campuslinks' => 'my_campus_links#get_feed', :as => :my_campus_links, :defaults => { :format => 'json' }
   get '/api/my/campuslinks/expire' => 'my_campus_links#expire'
+  get '/api/my/campuslinks/refresh' => 'my_campus_links#refresh', :defaults => { :format => 'json' }
   get '/api/my/updated_feeds' => 'is_updated#list', :defaults => {:format => 'json'}
   get '/api/blog' => 'blog_feed#get_blog_info', :as => :blog_info, :defaults => { :format => 'json' }
   get '/api/search_users/:id' => 'search_users#search_users', :via => :get, :defaults => { :format => 'json' }
@@ -89,6 +90,10 @@ Calcentral::Application.routes.draw do
   post '/api/academics/canvas/mailing_lists/:canvas_course_id/create' => 'canvas_mailing_lists#create', :defaults => { :format => 'json' }
   post '/api/academics/canvas/mailing_lists/:canvas_course_id/populate' => 'canvas_mailing_lists#populate', :defaults => { :format => 'json' }
   post '/api/academics/canvas/mailing_lists/:canvas_course_id/delete' => 'canvas_mailing_lists#destroy', :defaults => { :format => 'json' }
+
+  # OEC endpoints
+  get '/api/oec_tasks' => 'oec_tasks#index', :defaults => { :format => 'json' }
+  post '/api/oec_tasks/:task_name' => 'oec_tasks#run', :defaults => { :format => 'json' }
 
   # System utility endpoints
   get '/api/cache/clear' => 'cache#clear', :defaults => { :format => 'json' }

@@ -16,7 +16,9 @@ module Berkeley
     end
 
     def roles_from_campus_row(campus_row)
-      roles_from_affiliations(campus_row['affiliations'])
+      roles = roles_from_affiliations(campus_row['affiliations'])
+      roles[:expiredAccount] = (campus_row['person_type'] == 'Z')
+      roles
     end
   end
 end

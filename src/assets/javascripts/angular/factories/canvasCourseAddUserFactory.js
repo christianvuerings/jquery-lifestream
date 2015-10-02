@@ -19,11 +19,11 @@ angular.module('calcentral.factories').factory('canvasCourseAddUserFactory', fun
     return $http.get('/api/academics/canvas/course_add_user/' + canvasCourseId + '/course_sections');
   };
 
-  var addUser = function(canvasCourseId, ldapUserId, sectionId, roleId) {
+  var addUser = function(canvasCourseId, ldapUserId, sectionId, role) {
     return $http.post('/api/academics/canvas/course_add_user/' + canvasCourseId + '/add_user', {
       ldapUserId: ldapUserId,
       sectionId: sectionId,
-      roleId: roleId
+      role: role
     });
   };
 

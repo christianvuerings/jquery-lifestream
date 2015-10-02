@@ -11,9 +11,7 @@ module MyActivities
     def initialize(uid, options={})
       super(uid, options)
       @site_proxies = [
-        MyActivities::CanvasActivities,
-        MyActivities::SakaiAnnouncements
-      ]
+        MyActivities::CanvasActivities      ]
       @proxies = [
         MyActivities::NotificationActivities,
         MyActivities::RegBlocks,

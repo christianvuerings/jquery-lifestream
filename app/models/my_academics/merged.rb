@@ -19,8 +19,7 @@ module MyAcademics
         Teaching,
         Exams,
         Telebears,
-        CanvasSites,
-        SakaiSites
+        CanvasSites
       ].each do |provider|
         provider.new(@uid).merge(feed)
       end

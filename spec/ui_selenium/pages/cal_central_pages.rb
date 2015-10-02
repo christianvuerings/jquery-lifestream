@@ -146,6 +146,15 @@ module CalCentralPages
     logout_link
   end
 
+  def log_out(splash_page)
+    navigate_to WebDriverUtils.base_url
+    toggle_footer_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+    if title.include? 'Dashboard'
+      click_logout_link
+      splash_page.sign_in_element.when_visible timeout
+    end
+  end
+
   def opt_out(driver)
     logger.info('Opting out of CalCentral')
     toggle_footer_link_element.when_visible(timeout=WebDriverUtils.page_event_timeout)

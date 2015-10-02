@@ -12,6 +12,7 @@
     "user_id": 4000025,
     "enrollment_state": "active",
     "role": "StudentEnrollment",
+    "role_id": 1772,
     "last_activity_at": "2013-09-09T18:01:16Z",
     "grades": {
       "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/grades/4000025",
@@ -44,6 +45,7 @@
     "user_id": 4000026,
     "enrollment_state": "active",
     "role": "StudentEnrollment",
+    "role_id": 1772,
     "last_activity_at": null,
     "grades": {
       "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/grades/4000026",
@@ -76,6 +78,7 @@
     "user_id": 300002,
     "enrollment_state": "active",
     "role": "StudentEnrollment",
+    "role_id": 1772,
     "last_activity_at": "2013-06-17T22:35:56Z",
     "grades": {
       "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/grades/300002",
@@ -108,6 +111,7 @@
     "user_id": 4836002,
     "enrollment_state": "active",
     "role": "StudentEnrollment",
+    "role_id": 1772,
     "last_activity_at": "2013-10-15T04:29:22Z",
     "grades": {
       "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/grades/4836002",
@@ -140,6 +144,7 @@
     "user_id": 4836003,
     "enrollment_state": "active",
     "role": "StudentEnrollment",
+    "role_id": 1772,
     "last_activity_at": "2013-09-07T05:19:21Z",
     "grades": {
       "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/grades/4836003",
@@ -172,6 +177,7 @@
     "user_id": 4836004,
     "enrollment_state": "active",
     "role": "StudentEnrollment",
+    "role_id": 1772,
     "last_activity_at": "2013-08-23T00:24:50Z",
     "grades": {
       "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/grades/4836004",
@@ -204,6 +210,7 @@
     "user_id": 4836005,
     "enrollment_state": "active",
     "role": "StudentEnrollment",
+    "role_id": 1772,
     "last_activity_at": "2013-12-16T18:29:20Z",
     "grades": {
       "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/grades/4836005",
@@ -236,6 +243,7 @@
     "user_id": 4836006,
     "enrollment_state": "active",
     "role": "StudentEnrollment",
+    "role_id": 1772,
     "last_activity_at": "2013-09-09T19:00:50Z",
     "grades": {
       "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/grades/4836006",
@@ -300,6 +308,7 @@
     "user_id": 4836008,
     "enrollment_state": "active",
     "role": "StudentEnrollment",
+    "role_id": 1772,
     "last_activity_at": "2013-11-04T23:46:41Z",
     "grades": {
       "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/grades/4836008",
@@ -364,6 +373,7 @@
     "user_id": 4836010,
     "enrollment_state": "active",
     "role": "StudentEnrollment",
+    "role_id": 1772,
     "last_activity_at": "2014-01-31T21:23:22Z",
     "grades": {
       "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/grades/4836010",
@@ -428,6 +438,7 @@
     "user_id": 4836012,
     "enrollment_state": "active",
     "role": "StudentViewEnrollment",
+    "role_id": 1772,
     "last_activity_at": "2013-10-14T20:37:42Z",
     "grades": {
       "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/grades/4836012",
@@ -483,6 +494,7 @@
     "user_id": 4836014,
     "enrollment_state": "active",
     "role": "TeacherEnrollment",
+    "role_id": 1773,
     "last_activity_at": "2014-01-31T00:06:25Z",
     "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/users/4836014",
     "user": {
@@ -508,6 +520,7 @@
     "user_id": 4836015,
     "enrollment_state": "active",
     "role": "TeacherEnrollment",
+    "role_id": 1773,
     "last_activity_at": "2013-12-03T00:35:28Z",
     "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/users/4836015",
     "user": {
@@ -533,6 +546,7 @@
     "user_id": 4836016,
     "enrollment_state": "active",
     "role": "TeacherEnrollment",
+    "role_id": 1773,
     "last_activity_at": "2014-01-31T00:15:49Z",
     "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/users/4836016",
     "user": {
@@ -558,6 +572,7 @@
     "user_id": 4836017,
     "enrollment_state": "active",
     "role": "TeacherEnrollment",
+    "role_id": 1773,
     "last_activity_at": "2014-02-03T20:01:48Z",
     "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/users/4836017",
     "user": {
@@ -583,6 +598,7 @@
     "user_id": 4836018,
     "enrollment_state": "active",
     "role": "TeacherEnrollment",
+    "role_id": 1773,
     "last_activity_at": "2013-11-13T18:34:13Z",
     "html_url": "https://ucberkeley.beta.instructure.com/courses/1050123/users/4836018",
     "user": {

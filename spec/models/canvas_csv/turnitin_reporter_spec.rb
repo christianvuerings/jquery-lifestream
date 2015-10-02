@@ -1,5 +1,5 @@
 describe CanvasCsv::TurnitinReporter do
-  let!(:fake_courses_report_proxy) { Canvas::Report::Courses.new(fake: true, account_id: Settings.canvas_proxy.turnitin_account_id) }
+  let!(:fake_courses_report_proxy) { Canvas::Report::Courses.new(fake: true, account_id: Settings.canvas_proxy.account_id) }
   let(:term_id) {'TERM:2015-B'}
   subject {CanvasCsv::TurnitinReporter.new(term_id)}
 

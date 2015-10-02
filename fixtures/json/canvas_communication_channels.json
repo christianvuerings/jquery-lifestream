@@ -1,0 +1,10 @@
+[
+  {
+  	"id": 712460,
+  	"position": 1, 
+  	"user_id": 3057506,
+  	"workflow_state": "active",
+  	"address": "test-300846@berkeley.edu",
+  	"type": "email"
+  }
+]

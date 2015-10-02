@@ -15,7 +15,7 @@ describe Canvas::CourseEnrollments do
       "end_at":null,
       "type":"TeacherEnrollment",
       "role":"Owner",
-      "role_id":12,
+      "role_id":1774,
       "limit_privileges_to_course_section":false,
       "last_activity_at":null,
       "sis_import_id":null,
@@ -40,41 +40,11 @@ describe Canvas::CourseEnrollments do
     before { subject.on_request(method: :post).set_response(status: 200, body: add_enrollment_response_body) }
 
     it 'raises exception if canvas_user_id is not an integer' do
-      expect { subject.enroll_user('not_an_integer', 'TaEnrollment', 'active', false) }.to raise_error(NoMethodError, 'undefined method `to_int\' for "not_an_integer":String')
-    end
-
-    it 'raises exception if enrollment_type is not a string' do
-      expect { subject.enroll_user(canvas_user_id, 1234, 'active', false) }.to raise_error(NoMethodError, 'undefined method `to_str\' for 1234:Fixnum')
-    end
-
-    it 'raises exception if enrollment state is not a string' do
-      expect { subject.enroll_user(canvas_user_id, 'TaEnrollment', 1234, false) }.to raise_error(NoMethodError, 'undefined method `to_str\' for 1234:Fixnum')
-    end
-
-    it 'raises exception if enrollment type string is not valid' do
-      expect { subject.enroll_user(canvas_user_id, 'AssistantEnrollment', 'active', false) }.to raise_error(ArgumentError, 'Enrollment type argument \'AssistantEnrollment\', must be StudentEnrollment, TeacherEnrollment, TaEnrollment, ObserverEnrollment, or DesignerEnrollment')
-    end
-
-    it 'raises exception if enrollment state is not valid' do
-      expect { subject.enroll_user(canvas_user_id, 'TaEnrollment', 'inactive', false) }.to raise_error(ArgumentError, 'Enrollment state argument \'inactive\', must be active or invited')
-    end
-
-    it 'raises exception if notification flag is not true or false' do
-      expect { subject.enroll_user(canvas_user_id, 'TaEnrollment', 'active', 'not true or false') }.to raise_error(ArgumentError, 'Notification flag must be a Boolean')
-      expect { subject.enroll_user(canvas_user_id, 'TaEnrollment', 'active', 0) }.to raise_error(ArgumentError, 'Notification flag must be a Boolean')
-      expect { subject.enroll_user(canvas_user_id, 'TaEnrollment', 'active', 1) }.to raise_error(ArgumentError, 'Notification flag must be a Boolean')
-    end
-
-    it 'raises exception if enrollment type string is not valid' do
-      expect { subject.enroll_user(canvas_user_id, 'AssistantEnrollment', 'active', false) }.to raise_error(ArgumentError, 'Enrollment type argument \'AssistantEnrollment\', must be StudentEnrollment, TeacherEnrollment, TaEnrollment, ObserverEnrollment, or DesignerEnrollment')
-    end
-
-    it 'raises exception if enrollment state is not valid' do
-      expect { subject.enroll_user(canvas_user_id, 'TaEnrollment', 'inactive', false) }.to raise_error(ArgumentError, 'Enrollment state argument \'inactive\', must be active or invited')
+      expect { subject.enroll_user('not_an_integer', 1774) }.to raise_error(NoMethodError, 'undefined method `to_int\' for "not_an_integer":String')
     end
 
     it 'returns confirmation of enrollment' do
-      response = subject.enroll_user(canvas_user_id, 'TaEnrollment', 'active', false, :role_id => 12)[:body]
+      response = subject.enroll_user(canvas_user_id, 1774)[:body]
       expect(response['id']).to eq 20959
       expect(response['root_account_id']).to eq 90242
       expect(response['user_id']).to eq 1234567
@@ -82,12 +52,12 @@ describe Canvas::CourseEnrollments do
       expect(response['course_section_id']).to eq 1311
       expect(response['enrollment_state']).to eq 'active'
       expect(response['role']).to eq 'Owner'
-      expect(response['role_id']).to eq 12
+      expect(response['role_id']).to eq 1774
     end
 
     context 'on request failure' do
       let(:failing_request) { {method: :post} }
-      let(:response) { subject.enroll_user(canvas_user_id, 'TaEnrollment', 'active', false, :role_id => 12) }
+      let(:response) { subject.enroll_user(canvas_user_id, 1774) }
       it_should_behave_like 'an unpaged Canvas proxy handling request failure'
     end
   end

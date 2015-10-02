@@ -686,12 +686,6 @@
               "name": "BIO 1A Everyone",
               "emitter": "bCourses",
               "site_url": "https://ucberkeley.beta.instructure.com/courses/11866397"
-            },
-            {
-              "id": "de1f491a-525e-4848-952b-11866397",
-              "site_url": "https://bspace-dev.berkeley.edu/portal/site/de1f491a-525e-4848-952b-11866397",
-              "emitter": "bSpace",
-              "name": "Bio 1A DIS 008 Su13"
             }
           ],
           "sections": [
@@ -840,17 +834,6 @@
                 {
                   "ccn": "27619"
                 },
-                {
-                  "ccn": "49713"
-                }
-              ]
-            },
-            {
-              "id": "de1f491a-525e-4848-952b-11866397",
-              "site_url": "https://bspace-dev.berkeley.edu/portal/site/de1f491a-525e-4848-952b-11866397",
-              "emitter": "bSpace",
-              "name": "Bio 123A DIS 008 Su13",
-              "sections": [
                 {
                   "ccn": "49713"
                 }

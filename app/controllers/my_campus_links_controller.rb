@@ -17,4 +17,11 @@ class MyCampusLinksController < ApplicationController
     get_feed
   end
 
+  def refresh
+    authorize(current_user, :can_author?)
+    Links::CampusLinkLoader.delete_links!
+    Links::CampusLinkLoader.load_links! "/public/json/campuslinks.json"
+    expire
+  end
+
 end

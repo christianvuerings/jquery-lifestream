@@ -331,21 +331,6 @@
       "term_cd": "C",
       "courses": [
       ]
-    },
-    {
-      "id": "095d5b02-afde-4186-a668-0b84734b1d5c",
-      "site_url": "https://notquitebspace.example.edu/portal/site/095d5b02-afde-4186-a668-0b84734b1d5c",
-      "emitter": "bSpace",
-      "groups": [
-        "7c4d4a5c-07c6-4ab8-a32c-78c6820f2596"
-      ],
-      "name": "BIOLOGY 1A DIS 03 Su13",
-      "shortDescription": "Talk about life",
-      "courses": [
-        {
-          "id": "BIOLOGY:1A:2013-C"
-        }
-      ]
     }
   ],
   "current_term": "Summer 2013",
