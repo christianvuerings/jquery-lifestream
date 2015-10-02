@@ -55,8 +55,6 @@ class CanvasPage
   elements(:discussion_reply, :list_item, :xpath => '//ul[@class="discussion-entries"]/li')
   link(:primary_reply_link, :xpath => '//article[@id="discussion_topic"]//a[@data-event="addReply"]')
   link(:primary_html_editor_link, :xpath => '//article[@id="discussion_topic"]//a[contains(.,"HTML Editor")]')
-  text_area(:primary_reply_input, :xpath => '//article[@id="discussion_topic"]//textarea[@class="reply-textarea"]')
-  button(:primary_post_reply_button, :xpath => '//article[@id="discussion_topic"]//button[contains(.,"Post Reply")]')
 
   # Assignments
   link(:new_assignment_link, :text => 'Assignment')
@@ -78,6 +76,12 @@ class CanvasPage
     navigate_to "#{WebDriverUtils.canvas_base_url}"
   end
 
+  def log_in(cal_net_page, username, password)
+    load_homepage
+    cal_net_page.login(username, password)
+    recent_activity_heading_element.when_visible timeout=WebDriverUtils.page_load_timeout
+  end
+
   def accept_login_messages(course_id)
     wait_until(timeout=WebDriverUtils.page_load_timeout) { current_url.include? "#{course_id}" }
     sleep 1
@@ -88,7 +92,7 @@ class CanvasPage
       submit_button
     end
     recent_activity_heading_element.when_visible timeout=WebDriverUtils.page_load_timeout
-    sleep 3
+    sleep 1
     if accept_course_invite?
       logger.info 'Accepting course invite'
       accept_course_invite
@@ -96,14 +100,10 @@ class CanvasPage
     end
   end
 
-  def log_out(driver)
-    driver.switch_to.default_content
-    WebDriverUtils.wait_for_element_and_click logout_link_element
-  end
-
-  def hard_log_out
+  def log_out(cal_net_page)
     navigate_to "#{WebDriverUtils.canvas_base_url}/logout"
     WebDriverUtils.wait_for_page_and_click logout_confirm_element
+    cal_net_page.logout_conf_heading_element.when_visible timeout=WebDriverUtils.page_load_timeout
   end
 
   def load_sub_account
@@ -134,7 +134,7 @@ class CanvasPage
   end
 
   def search_for_course(test_id)
-    tries ||= 5
+    tries ||= 3
     load_sub_account
     search_course_input_element.when_visible timeout=WebDriverUtils.page_event_timeout
     self.search_course_input = "#{test_id}"
@@ -156,6 +156,7 @@ class CanvasPage
   def add_users(course_id, test_users)
     test_users.each do |user|
       begin
+        # Canvas add-user function is often flaky in test envs, so retry if it fails
         tries ||= 3
         load_users_page course_id
         user_role = user['canvasRole']
@@ -169,11 +170,18 @@ class CanvasPage
         add_users_success_element.when_visible timeout
         done_button
       rescue
-        # Canvas add-user function is often flaky in test envs, so retry if it fails
         logger.warn 'Add User failed, retrying'
         retry unless (tries -=1).zero?
       end
     end
+  end
+
+  def create_complete_test_course(current_term, site_code, site_name, test_id, test_users)
+    create_course_site(current_term, site_code, site_name)
+    course_id = search_for_course test_id
+    publish_course course_id
+    add_users(course_id, test_users)
+    course_id
   end
 
   def delete_course(course_id)
@@ -196,7 +204,7 @@ class CanvasPage
     WebDriverUtils.wait_for_element_and_click save_announcement_button_element
     announcement_title_heading_element.when_visible timeout=WebDriverUtils.page_load_timeout
     logger.info "Announcement URL is #{current_url}"
-    current_url.gsub!('discussion_topics','announcements')
+    current_url.gsub!('discussion_topics', 'announcements')
   end
 
   def create_discussion(course_id, discussion_name)
@@ -216,10 +224,8 @@ class CanvasPage
     navigate_to "#{WebDriverUtils.canvas_base_url}/courses/#{course_id}/assignments"
     WebDriverUtils.wait_for_page_and_click new_assignment_link_element
     WebDriverUtils.wait_for_element_and_type(assignment_name_element, assignment_name)
-    WebDriverUtils.wait_for_element_and_type(assignment_due_date_element, WebDriverUtils.ui_date_input_format(due_date))
-    sleep 3
-    assignment_type_element.when_visible timeout=WebDriverUtils.page_load_timeout
-    self.assignment_type = 'Online'
+    WebDriverUtils.wait_for_element_and_type(assignment_due_date_element, due_date.strftime("%b %-d %Y"))
+    sleep 2
     text_entry_cbx_element.when_visible timeout=WebDriverUtils.page_event_timeout
     check_text_entry_cbx
     WebDriverUtils.wait_for_element_and_click save_and_publish_button_element
