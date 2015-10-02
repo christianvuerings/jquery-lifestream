@@ -167,9 +167,9 @@ module Oec
       if @opts[:local_write]
         logger.debug "Wrote log file to path #{log_path}"
       else
-        if (reports_today = find_or_create_today_subfolder('reports', now))
+        if (logs_today = find_or_create_today_subfolder('logs', now))
           begin
-            upload_file(log_path, log_name, 'text/plain', reports_today)
+            upload_file(log_path, log_name, 'text/plain', logs_today)
           ensure
             File.delete log_path
           end

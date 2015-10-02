@@ -5,7 +5,7 @@ module Oec
       log :info, "Will create initial folders and files for term #{@term_code}"
 
       term_folder = create_folder @term_code
-      %w(exports imports reports).each do |folder_name|
+      %w(exports imports logs).each do |folder_name|
         create_folder(folder_name, term_folder)
       end
       departments = create_folder('departments', term_folder)

@@ -169,16 +169,16 @@ describe Oec::SisImportTask do
         expect(subject.select{ |row| row['EMAIL_ADDRESS'] == 'stat_supervisor@berkeley.edu' }).to be_empty
       end
 
-      it 'reports official crosslistings' do
+      it 'flags official crosslistings' do
         crosslisting = subject.select{ |row| row['CROSS_LISTED_NAME'] == 'POL SCI/STAT C236A LEC 001' }
         expect(crosslisting.count).to eq 2
         expect(crosslisting).to all include({'CROSS_LISTED_FLAG' => 'Y'})
       end
 
-      it 'reports non-student academic employees as faculty' do
+      it 'flags non-student academic employees as faculty' do
         expect(subject.find{|row| row['COURSE_ID'] == '2015-B-87672'}['EVALUATION_TYPE']).to eq 'F'
       end
-      it 'reports student academic employees as GSIs' do
+      it 'flags student academic employees as GSIs' do
         expect(subject.find{|row| row['COURSE_ID'] == '2015-B-87693'}['EVALUATION_TYPE']).to eq 'G'
       end
 
@@ -186,7 +186,7 @@ describe Oec::SisImportTask do
         let(:room_share) { subject.select{ |row| row['CROSS_LISTED_NAME'] == 'MATH 223A, STAT 206A LEC 001' } }
         context 'department participating' do
           let(:math_included) { true }
-          it 'reports room shares' do
+          it 'flags room shares' do
             expect(room_share.count).to eq 2
             expect(room_share).to all include({'CROSS_LISTED_FLAG' => 'RM SHARE'})
           end
@@ -234,7 +234,7 @@ describe Oec::SisImportTask do
       let(:sheet_name) { 'Mathematics' }
 
       let(:imports_today_folder) { mock_google_drive_item today }
-      let(:reports_today_folder) { mock_google_drive_item today }
+      let(:logs_today_folder) { mock_google_drive_item today }
 
       before do
         allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H:%M:%S')
@@ -247,12 +247,12 @@ describe Oec::SisImportTask do
           .and_return(imports_today_folder)
         expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
           .with(today, anything, anything)
-          .and_return(reports_today_folder)
+          .and_return(logs_today_folder)
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
           .with(kind_of(Oec::Worksheet), sheet_name, (Oec::Worksheet), imports_today_folder, anything)
           .and_return mock_google_drive_item(sheet_name)
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
-          .with(kind_of(Pathname), logfile, 'text/plain', reports_today_folder, anything)
+          .with(kind_of(Pathname), logfile, 'text/plain', logs_today_folder, anything)
           .and_return mock_google_drive_item(logfile)
         subject.run
       end
