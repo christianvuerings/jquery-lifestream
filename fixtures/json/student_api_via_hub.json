@@ -34,6 +34,21 @@
               "description": "Primary"
             },
             "familyName": "Bear",
+            "givenName": "Ursinus Theodorus",
+            "middleName": "",
+            "prefixName": "",
+            "suffixName": "",
+            "formattedName": "Ursinus Theodorus Bear",
+            "preferred": false,
+            "disclose": false,
+            "fromDate": "1902-02-01"
+          },
+          {
+            "type": {
+              "code": "PRF",
+              "description": "Preferred"
+            },
+            "familyName": "Bear",
             "givenName": "Oski",
             "middleName": "",
             "prefixName": "",
