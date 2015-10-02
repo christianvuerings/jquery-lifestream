@@ -13,7 +13,7 @@ module Oec
 
       find_previous_term_csvs
 
-      [Oec::CourseInstructors, Oec::CourseSupervisors, Oec::Instructors, Oec::Supervisors].each do |worksheet_class|
+      [Oec::CourseSupervisors, Oec::Instructors, Oec::Supervisors].each do |worksheet_class|
         if @previous_term_csvs[worksheet_class]
           copy_file(@previous_term_csvs[worksheet_class], overrides)
         else

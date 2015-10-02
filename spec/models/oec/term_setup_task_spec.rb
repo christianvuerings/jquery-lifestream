@@ -36,7 +36,7 @@ describe Oec::TermSetupTask do
       expect(fake_remote_drive).to receive(:copy_item_to_folder)
         .with(anything, 'departments_id', 'TEMPLATE').and_return mock_google_drive_item
 
-      %w(courses course_instructors course_supervisors instructors supervisors).each do |sheet|
+      %w(courses course_supervisors instructors supervisors).each do |sheet|
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
           .with(kind_of(Oec::Worksheet), sheet, Oec::Worksheet, overrides_folder, anything)
           .and_return mock_google_drive_item(sheet)
