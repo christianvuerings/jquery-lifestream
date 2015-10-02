@@ -16,4 +16,5 @@ campusdb:
   timeout: 5000
 canvas_proxy:
   export_directory: '/home/app_calcentral/calcentral/tmp/canvas'
-sakai_proxy:
+  # Set to "true" when Canvas allows it.
+  delete_bad_emails: false

@@ -162,9 +162,9 @@ describe 'My Academics teaching', :testui => true do
                         api_course_title = academics_api_page.course_title(course)
                         api_sections = academics_api_page.sections_by_listing(course)
                         api_section_schedule_labels = academics_api_page.section_schedule_labels(api_sections)
-                        api_section_schedules = academics_api_page.course_section_schedules(api_sections)
-                        api_section_instructor_labels = academics_api_page.section_labels(api_sections)
-                        api_section_instructors = academics_api_page.course_instructor_names(api_sections)
+                        api_section_schedules = academics_api_page.sections_schedules(api_sections)
+                        api_section_instructor_labels = academics_api_page.sections_labels(api_sections)
+                        api_section_instructors = academics_api_page.sections_instructor_names(api_sections)
 
                         class_page_course_title = class_page.course_title
                         class_page_cross_listings = class_page.all_cross_listings

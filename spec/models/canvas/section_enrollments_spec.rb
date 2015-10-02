@@ -1,24 +1,8 @@
 describe Canvas::SectionEnrollments do
 
-  let(:user_id)                       { 1234567 }
-  let(:canvas_section_id)             { 1004321 }
-  let(:add_enrollment_response_body)  { '{
-      "id":20959382,
-      "root_account_id":90242,
-      "course_id":1161161,
-      "course_section_id":1311313,
-      "user_id":1234567,
-      "associated_user_id":null,
-      "enrollment_state":"active",
-      "type":"TaEnrollment",
-      "role":"TaEnrollment",
-      "limit_privileges_to_course_section":false,
-      "last_activity_at":null,
-      "html_url":"https://ucberkeley.beta.instructure.com/courses/1161161/users/1234567",
-      "created_at":"2014-02-03T21:34:38Z",
-      "updated_at":"2014-02-03T21:34:38Z"
-    }'
-  }
+  let(:user_id) { 1234567 }
+  let(:canvas_section_id) { 1004321 }
+  let(:ta_role_id) { 1774 }
   subject { Canvas::SectionEnrollments.new(section_id: canvas_section_id) }
 
   context 'when initializing' do
@@ -28,41 +12,19 @@ describe Canvas::SectionEnrollments do
   end
 
   context 'when enrolling user into canvas course section' do
-    before do
-      subject.on_request(method: :post).set_response(status: 200, body: add_enrollment_response_body)
-    end
-
     it 'raises exception if user id is not an integer' do
-      expect { subject.enroll_user('not_an_integer', 'TaEnrollment', 'active', false) }.to raise_error(ArgumentError, 'User ID must be a Fixnum')
+      expect { subject.enroll_user('not_an_integer', ta_role_id) }.to raise_error(ArgumentError, 'User ID must be a Fixnum')
     end
 
-    it 'raises exception if enrollment type is not a string' do
-      expect { subject.enroll_user(user_id, 1234, 'active', false) }.to raise_error(ArgumentError, 'Enrollment type must be a String')
-    end
-
-    it 'raises exception if enrollment state is not a string' do
-      expect { subject.enroll_user(user_id, 'TaEnrollment', 1234, false) }.to raise_error(ArgumentError, 'Enrollment state must be a String')
-    end
-
-    it 'raises exception if notification flag is not true or false' do
-      expect { subject.enroll_user(user_id, 'TaEnrollment', 'active', 'not true or false') }.to raise_error(ArgumentError, 'Notification flag must be a Boolean')
-      expect { subject.enroll_user(user_id, 'TaEnrollment', 'active', 0) }.to raise_error(ArgumentError, 'Notification flag must be a Boolean')
-      expect { subject.enroll_user(user_id, 'TaEnrollment', 'active', 1) }.to raise_error(ArgumentError, 'Notification flag must be a Boolean')
-    end
-
-    it 'raises exception if enrollment type string is not valid' do
-      expect { subject.enroll_user(user_id, 'AssistantEnrollment', 'active', false) }.to raise_error(ArgumentError, 'Enrollment type argument \'AssistantEnrollment\', must be StudentEnrollment, TeacherEnrollment, TaEnrollment, ObserverEnrollment, or DesignerEnrollment')
-    end
-
-    it 'raises exception if enrollment state is not valid' do
-      expect { subject.enroll_user(user_id, 'TaEnrollment', 'inactive', false) }.to raise_error(ArgumentError, 'Enrollment state argument \'inactive\', must be active or invited')
+    it 'raises exception if role ID is not an integer' do
+      expect { subject.enroll_user(user_id, 'TaEnrollment') }.to raise_error(ArgumentError, 'Role ID must be a Fixnum')
     end
 
     it 'returns confirmation of enrollment' do
-      response = subject.enroll_user(user_id, 'TaEnrollment', 'active', false)
+      response = subject.enroll_user(user_id, ta_role_id)
       expect(response[:statusCode]).to eq 200
       expect(response[:body]).to include({
-        'id' => 20959382,
+        'id' => 20618200,
         'user_id' => 1234567,
         'course_id' => 1161161,
         'course_section_id' => 1311313,
@@ -73,7 +35,7 @@ describe Canvas::SectionEnrollments do
 
     context 'on request failure' do
       let(:failing_request) { {method: :post} }
-      let(:response) { subject.enroll_user(user_id, 'TaEnrollment', 'active', false) }
+      let(:response) { subject.enroll_user(user_id, ta_role_id) }
       it_should_behave_like 'an unpaged Canvas proxy handling request failure'
     end
   end
@@ -89,6 +51,7 @@ describe Canvas::SectionEnrollments do
       expect(enrollments[0]['type']).to eq 'StudentEnrollment'
       expect(enrollments[0]['enrollment_state']).to eq 'active'
       expect(enrollments[0]['role']).to eq 'StudentEnrollment'
+      expect(enrollments[0]['role_id']).to eq 1772
       expect(enrollments[0]['user']).to be_an_instance_of Hash
       expect(enrollments[0]['user']['id']).to eq 4000025
       expect(enrollments[0]['user']['name']).to eq 'Carlos  J. Dick'

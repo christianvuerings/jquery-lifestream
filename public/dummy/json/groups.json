@@ -8,22 +8,6 @@
       "siteType": "group"
     },
     {
-      "name": "OE IT Design Initiative",
-      "shortDescription": "OE IT Design Initiative: Solution for all our needs",
-      "id": "7ea7d89c-b87c-4221-a2ea-16aee252b967",
-      "site_url": "https://sakai-dev.berkeley.edu/portal/site/7ea7d89c-b87c-4221-a2ea-16aee252b967",
-      "emitter": "bSpace",
-      "siteType": "course"
-    },
-    {
-      "name": "UIE Seminars & UCD Group Resources",
-      "shortDescription": "UIE Seminars & UCD Group Resources: Lots of goodies",
-      "id": "b1df3076-88c5-43cc-00d2-632b196f8497",
-      "site_url": "https://sakai-dev.berkeley.edu/portal/site/b1df3076-88c5-43cc-00d2-632b196f8497",
-      "emitter": "bSpace",
-      "siteType": "project"
-    },
-    {
       "name": "A course where I teach",
       "shortDescription": "A Canvas course site: Now a group!",
       "id": "4398539",

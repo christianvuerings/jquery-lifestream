@@ -8,7 +8,7 @@ module CampusOracle
         log_access(connection, connection_handler, name)
         sql = <<-SQL
       select pi.ldap_uid, pi.student_id, pi.ug_grad_flag, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name,
-        pi.person_name, pi.email_address, pi.affiliations,
+        pi.person_name, pi.email_address, pi.affiliations, pi.person_type,
         reg.reg_status_cd, reg.educ_level, reg.admin_cancel_flag, reg.acad_blk_flag, reg.admin_blk_flag,
         reg.fin_blk_flag, reg.reg_blk_flag, reg.tot_enroll_unit, reg.cal_residency_flag, reg.reg_special_pgm_cd
       from calcentral_person_info_vw pi
@@ -26,7 +26,8 @@ module CampusOracle
       result = []
       use_pooled_connection {
         sql = <<-SQL
-        select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.person_name, pi.email_address, pi.student_id, pi.affiliations
+        select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations,
+          pi.person_type
         from calcentral_person_info_vw pi
         where pi.ldap_uid in (#{up_to_1000_ldap_uids.collect { |id| id.to_i }.join(', ')})
         SQL
@@ -41,7 +42,7 @@ module CampusOracle
         sql = <<-SQL
         select pi.ldap_uid
         from calcentral_person_info_vw pi
-        where (affiliations LIKE '%-TYPE-%')
+        where (affiliations LIKE '%-TYPE-%') and (person_type != 'Z')
         SQL
         uids = connection.select_all(sql)
       }
@@ -67,6 +68,7 @@ module CampusOracle
                   pi.email_address,
                   pi.student_id,
                   pi.affiliations,
+                  pi.person_type,
                   row_number() over(order by 1) row_number,
                   count(*) over() result_count
           from calcentral_person_info_vw pi
@@ -95,6 +97,7 @@ module CampusOracle
                   pi.email_address,
                   pi.student_id,
                   pi.affiliations,
+                  pi.person_type,
                   row_number() over(order by 1) row_number,
                   count(*) over() result_count
           from calcentral_person_info_vw pi
@@ -129,7 +132,8 @@ module CampusOracle
       result = []
       use_pooled_connection {
         sql = <<-SQL
-      select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations, 1.0 row_number, 1.0 result_count
+      select pi.ldap_uid, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name, pi.email_address, pi.student_id, pi.affiliations,
+        pi.person_type, 1.0 row_number, 1.0 result_count
       from calcentral_person_info_vw pi
       where pi.ldap_uid = #{user_id_string}
       and rownum <= 1

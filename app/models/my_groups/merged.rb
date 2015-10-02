@@ -8,8 +8,7 @@ module MyGroups
       groups = []
       [
         Callink,
-        Canvas,
-        Sakai
+        Canvas
       ].each do |provider|
         groups.concat(provider.new(@uid).fetch)
       end

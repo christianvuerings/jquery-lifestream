@@ -4,7 +4,7 @@ describe CanvasLti::WebcastLtiRefresh do
   let(:term_yr) { 2015 }
   let(:term_cd) { 'B' }
   let(:ccn_with_webcast) { 51990 }
-  let(:ineligible_ccn_without_webcast) { 00000 }
+  let(:ineligible_ccn_without_webcast) { 65560 }
   let(:eligible_ccn_without_webcast) { 51992 }
   let(:course_with_webcast) {[
     { :term_yr => term_yr, :term_cd => term_cd, :ccn => ccn_with_webcast },
@@ -48,8 +48,14 @@ describe CanvasLti::WebcastLtiRefresh do
 
       context 'course site is ineligible, no recordings' do
         before do
-          ineligible = [ { :term_yr => term_yr, :term_cd => term_cd, :ccn => ineligible_ccn_without_webcast } ]
-          allow_any_instance_of(Canvas::CourseSections).to receive(:official_section_identifiers).and_return ineligible
+          allow_any_instance_of(Canvas::Report::Sections).to receive(:get_account_csv).with('provisioning', 'sections', 'TERM:2015-B').and_return([
+            {
+              'canvas_section_id'=>'1523114',
+              'section_id'=>"SEC:2015-B-#{ineligible_ccn_without_webcast}",
+              'canvas_course_id'=>'1336780',
+              'course_id'=>'5200570'
+            }
+          ])
         end
 
         it 'should skip courses with no recordings' do

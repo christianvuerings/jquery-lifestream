@@ -90,7 +90,7 @@ class ApiMyAcademicsPage
 
   def majors
     majors = []
-    colleges_and_majors.each { |major| majors.push(major['major']) }
+    colleges_and_majors.each { |major| majors.push(major['major'].split.join(' ')) }
     majors
   end
 
@@ -103,7 +103,7 @@ class ApiMyAcademicsPage
   end
 
   def transition_term?
-    (transition_term.present?) ? true : false
+    transition_term.nil? ? false : true
   end
 
   def trans_term_name

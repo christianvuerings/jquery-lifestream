@@ -42,7 +42,7 @@ module CanvasLti
         elsif hide_tab
           modified_tab = hide_course_site_tab(canvas_course_id, tab, external_tools)
         else
-          logger.warn "Do nothing to course #{canvas_course_id}: has_recordings=#{has_recordings}, is_webcast_eligible=#{is_webcast_eligible}, is_sign_up_active=#{is_sign_up_active} show_tab=#{show_tab}, hide_tab=#{hide_tab}, is_tab_showing=#{is_tab_showing}"
+          logger.info "Do nothing to course #{canvas_course_id}: has_recordings=#{has_recordings}, is_webcast_eligible=#{is_webcast_eligible}, is_sign_up_active=#{is_sign_up_active} show_tab=#{show_tab}, hide_tab=#{hide_tab}, is_tab_showing=#{is_tab_showing}"
         end
       end
       modified_tab
@@ -53,7 +53,7 @@ module CanvasLti
       record = Webcast::CourseSiteLog.find_by canvas_course_site_id: canvas_course_id
       if record
         unhidden_date = record.webcast_tool_unhidden_at.strftime('%m/%d/%Y')
-        logger.warn "Do nothing to course site #{canvas_course_id} because Course Captures tool was un-hidden on #{unhidden_date}."
+        logger.info "Do nothing to course site #{canvas_course_id} because Course Captures tool was un-hidden on #{unhidden_date}."
       else
         modified_tab = external_tools.show_course_site_tab tab
         logger.warn "The Course Captures tool #{modified_tab ? 'has been' : 'FAILED to be' } un-hidden on course site #{canvas_course_id}"

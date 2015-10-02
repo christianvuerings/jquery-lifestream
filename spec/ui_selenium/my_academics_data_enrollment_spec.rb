@@ -46,7 +46,7 @@ describe 'My Academics enrollments', :testui => true do
             if status_api_page.has_student_history? && status_api_page.has_academics_tab?
               academics_api_page = ApiMyAcademicsPageSemesters.new(driver)
               academics_api_page.get_json(driver)
-              all_semesters = academics_api_page.all_semesters
+              all_semesters = academics_api_page.all_student_semesters
 
               my_academics = CalCentralPages::MyAcademicsSemestersCard.new(driver)
               my_academics.load_page(driver)
@@ -149,7 +149,7 @@ describe 'My Academics enrollments', :testui => true do
                       api_enrolled_course_titles = academics_api_page.course_titles(semester_page_enrolled_courses)
                       api_enrolled_grade_options = academics_api_page.grade_options(enrolled_courses)
                       api_enrolled_units = academics_api_page.units_by_enrollment(enrolled_courses)
-                      api_enrolled_section_labels = academics_api_page.all_section_labels(enrolled_courses)
+                      api_enrolled_section_labels = academics_api_page.courses_section_labels(enrolled_courses)
 
                       semester_page_codes = semester_page.all_enrolled_course_codes
                       semester_page_titles = semester_page.all_enrolled_course_titles
@@ -185,8 +185,9 @@ describe 'My Academics enrollments', :testui => true do
                       if wait_list_courses.any?
                         api_wait_list_course_codes = academics_api_page.wait_list_course_codes(wait_list_courses)
                         api_wait_list_course_titles = academics_api_page.wait_list_course_titles(wait_list_courses)
-                        api_wait_list_sections = academics_api_page.all_section_labels(wait_list_courses)
-                        api_wait_list_positions = academics_api_page.wait_list_positions(wait_list_courses)
+                        api_wait_list_sections = academics_api_page.wait_list_semester_sections(wait_list_courses)
+                        api_wait_list_section_labels = academics_api_page.courses_section_labels(wait_list_courses)
+                        api_wait_list_positions = academics_api_page.wait_list_positions api_wait_list_sections
                         api_wait_list_sizes = academics_api_page.enrollment_limits(wait_list_courses)
 
                         sem_page_wait_list_codes = semester_page.all_waitlist_course_codes
@@ -204,7 +205,7 @@ describe 'My Academics enrollments', :testui => true do
                           expect(sem_page_wait_list_titles.all? &:blank?).to be false
                         end
                         it "shows the wait list sections on the #{semester_name} semester page for UID #{uid}" do
-                          expect(sem_page_wait_list_sections).to eql(api_wait_list_sections)
+                          expect(sem_page_wait_list_sections).to eql(api_wait_list_section_labels)
                           expect(sem_page_wait_list_sections.all? &:blank?).to be false
                         end
                         it "shows the wait list positions on the #{semester_name} semester page for UID #{uid}" do
@@ -228,15 +229,15 @@ describe 'My Academics enrollments', :testui => true do
 
                           # Multiple primary sections in a course have one class page per primary section
                           if academics_api_page.multiple_primaries?(course)
-                            academics_api_page.primary_sections(course).each do |prim_section|
+                            academics_api_page.course_primary_sections(course).each do |prim_section|
 
                               api_sections = academics_api_page.associated_sections(course, prim_section)
-                              api_section_labels = academics_api_page.section_labels(api_sections)
-                              api_section_ccns = academics_api_page.section_ccns(api_sections)
-                              api_section_instructors = academics_api_page.course_instructor_names(api_sections)
-                              api_section_units = academics_api_page.section_units(api_sections)
-                              api_section_schedules = academics_api_page.course_section_schedules(api_sections)
-                              api_grade_options = academics_api_page.section_grade_options(api_sections)
+                              api_section_labels = academics_api_page.sections_labels(api_sections)
+                              api_section_ccns = academics_api_page.sections_ccns(api_sections)
+                              api_section_instructors = academics_api_page.sections_instructor_names(api_sections)
+                              api_section_units = academics_api_page.sections_units(api_sections)
+                              api_section_schedules = academics_api_page.sections_schedules(api_sections)
+                              api_grade_options = academics_api_page.sections_grade_options(api_sections)
 
                               class_page_url = academics_api_page.section_url(prim_section)
                               semester_page.click_class_link_by_url(driver, class_page_url)
@@ -313,13 +314,13 @@ describe 'My Academics enrollments', :testui => true do
 
                           # Single primary section in a course has a single class page
                           else
-                            api_sections = academics_api_page.sections(course)
-                            api_section_labels = academics_api_page.section_labels(api_sections)
-                            api_section_ccns = academics_api_page.section_ccns(api_sections)
-                            api_section_instructors = academics_api_page.course_instructor_names(api_sections)
-                            api_section_units = academics_api_page.section_units(api_sections)
-                            api_section_schedules = academics_api_page.course_section_schedules(api_sections)
-                            api_grade_options = academics_api_page.section_grade_options(api_sections)
+                            api_sections = academics_api_page.course_sections(course)
+                            api_section_labels = academics_api_page.sections_labels(api_sections)
+                            api_section_ccns = academics_api_page.sections_ccns(api_sections)
+                            api_section_instructors = academics_api_page.sections_instructor_names(api_sections)
+                            api_section_units = academics_api_page.sections_units(api_sections)
+                            api_section_schedules = academics_api_page.sections_schedules(api_sections)
+                            api_grade_options = academics_api_page.sections_grade_options(api_sections)
 
                             class_page_url = academics_api_page.course_url(course)
                             semester_page.click_class_link_by_url(driver, class_page_url)

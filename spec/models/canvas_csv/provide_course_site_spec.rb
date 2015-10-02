@@ -506,10 +506,11 @@ describe CanvasCsv::ProvideCourseSite do
     let(:section_definition) do
       {'section_id' => section_id}
     end
-
+    let(:teacher_role_id) { 1773 }
+    before { subject.instance_eval { @import_data['canvas_course_id'] = 99999 } }
     it 'adds teacher enrollments to section' do
-      expect(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, 'TeacherEnrollment',
-        "sis_section_id:#{section_id}").and_return({'type' => 'TeacherEnrollment'})
+      expect_any_instance_of(CanvasLti::CourseAddUser).to receive(:add_user_to_course_section).with(uid, teacher_role_id,
+        "sis_section_id:#{section_id}").and_return({'role' => 'TeacherEnrollment', 'role_id' => teacher_role_id})
       subject.add_instructor_to_section section_definition
     end
   end

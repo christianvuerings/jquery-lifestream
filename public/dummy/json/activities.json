@@ -1,48 +1,6 @@
 {
   "activities": [
     {
-      "id": 1,
-      "title": "Evacuate Dwinelle Hall",
-      "summary": "Evacuate Dwinelle Hall immediately, gas leak",
-      "source": "Warn Me",
-      "type": "alert",
-      "date": {
-        "epoch": 1349049728,
-        "dateTime": "2013-01-15T19:52:27+00:00",
-        "dateString": "Today"
-      },
-      "sourceUrl": "https://warnme.berkeley.edu/",
-      "emitter": "bSpace"
-    },
-    {
-      "id": "1a",
-      "title": "Evacuate Sproul Hall",
-      "summary": "Evacuate Sproul Hall immediately, student registration week",
-      "source": "Warn Me",
-      "type": "alert",
-      "date": {
-        "epoch": 1349049728,
-        "dateTime": "2013-01-15T19:52:27+00:00",
-        "dateString": "Today"
-      },
-      "sourceUrl": "https:// warnme.berkeley.edu/",
-      "emitter": "bSpace"
-    },
-    {
-      "id": "1b",
-      "title": "Evacuate Morrison",
-      "summary": "Evacuate Morrison immediately, middle schooler's piano recital week",
-      "source": "Warn Me",
-      "type": "alert",
-      "date": {
-        "epoch": 1349049729,
-        "dateTime": "2013-01-15T19:52:27+00:00",
-        "dateString": "Today"
-      },
-      "sourceUrl": "https://warnme.berkeley.edu/",
-      "emitter": "bSpace"
-    },
-    {
       "id": 2,
       "title": "Incomplete Grade Notice - Math 1B",
       "summary": "You have 90 days to complete Math 1B and submit a Petition to Remove an Incomplete",
@@ -97,20 +55,6 @@
       },
       "sourceUrl": "http://studentbilling.berkeley.edu/",
       "emitter": "Campus"
-    },
-    {
-      "id": 6,
-      "title": "Appointment Signups Updated - Office Hours",
-      "summary": "Student may sign up for office hours once per week",
-      "source": "CHEM 1A",
-      "type": "announcement",
-      "date": {
-        "epoch": 1348185901,
-        "dateTime": "2013-12-26T19:52:27+00:00",
-        "dateString": "12/26"
-      },
-      "sourceUrl": "https://sakai.example.com/portal/site/b1df3076-88c5-43cc-00d2-632b196f8497",
-      "emitter": "bSpace"
     },
     {
       "id": 7,

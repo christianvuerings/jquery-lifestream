@@ -3,7 +3,6 @@ application:
 
 app_alerts_proxy:
   fake: true
-  base_url: "http://ets-dev.berkeley.edu/calcentral-alerts/feed"
 
 bearfacts_proxy:
   fake: true
@@ -14,20 +13,6 @@ blog_latest_release_notes_feed_proxy:
 cache:
   store: "memory"
   log_level: <%= Logger::DEBUG %>
-  expiration:
-    default: <%= 35.minutes %>
-    MyAcademics::Merged: <%= 1.day %>
-    MyActivities: <%= 1.day %>
-    MyBadges::Merged: <%= 1.day %>
-    MyCampusLinksController: <%= 1.day %>
-    MyClasses::Merged: <%= 1.day %>
-    Financials::MyFinancials: <%= 1.day %>
-    Finaid::MyFinAid: <%= 1.day %>
-    Cal1card::MyCal1card: <%= 1.day %>
-    MyGroups::Merged: <%= 1.day %>
-    MyTasks::Merged: <%= 1.day %>
-    UpNext::MyUpNext: <%= 1.day %>
-    User::Api: <%= 1.day %>
 
 cal_link_proxy:
   fake: true
@@ -65,7 +50,7 @@ postgres:
   host: <%= ENV['DB_PORT_5432_TCP_ADDR'] || 'localhost' %>
   port: <%= ENV['DB_PORT_5432_TCP_PORT'] || '5432' %>
 
-sakai_proxy:
+campusdb:
   fake: true
 
 ist_jms:

@@ -1,0 +1,28 @@
+.cc-oec {
+  background: $cc-color-white;
+  h1 {
+    margin: 0 10px;
+    padding-top: 20px;
+  }
+
+  .cc-oec-content {
+    background: $cc-color-white;
+    padding: 10px;
+    .row {
+      margin: 10px;
+    }
+  }
+
+  .cc-oec-departments-text {
+    font-size: 12px;
+    margin: 5px 0 0 5px;
+  }
+
+  .cc-oec-label {
+    margin-right: 0;
+  }
+
+  .cc-oec-text {
+    margin: 15px 0;
+  }
+}

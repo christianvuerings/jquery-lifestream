@@ -101,7 +101,7 @@ describe 'The My Dashboard task manager', :testui => true do
               @to_do_card.overdue_show_more_button
             end
             wait_for_task.until { @to_do_card.overdue_task_one_title == "task #{i.to_s}" }
-            wait_for_task.until { @to_do_card.overdue_task_one_date == WebDriverUtils.ui_date_display_format(date) }
+            wait_for_task.until { @to_do_card.overdue_task_one_date == WebDriverUtils.ui_numeric_date_format(date) }
             expect(@to_do_card.overdue_task_count).to eql(i.to_s)
           end
         end
@@ -117,7 +117,7 @@ describe 'The My Dashboard task manager', :testui => true do
               @to_do_card.today_show_more_button
             end
             wait_for_task.until { @to_do_card.last_today_task_title == "task #{i.to_s}" }
-            wait_for_task.until { @to_do_card.last_today_task_date == WebDriverUtils.ui_date_display_format(date) }
+            wait_for_task.until { @to_do_card.last_today_task_date == WebDriverUtils.ui_numeric_date_format(date) }
             expect(@to_do_card.today_task_count).to eql(i.to_s)
           end
         end
@@ -133,7 +133,7 @@ describe 'The My Dashboard task manager', :testui => true do
               @to_do_card.future_show_more_button
             end
             wait_for_task.until { @to_do_card.last_future_task_title == "task #{i.to_s}" }
-            wait_for_task.until { @to_do_card.last_future_task_date == WebDriverUtils.ui_date_display_format(date) }
+            wait_for_task.until { @to_do_card.last_future_task_date == WebDriverUtils.ui_numeric_date_format(date) }
             expect(@to_do_card.future_task_count).to eql(i.to_s)
           end
         end
@@ -148,7 +148,7 @@ describe 'The My Dashboard task manager', :testui => true do
               @to_do_card.unsched_show_more_button
             end
             wait_for_task.until { @to_do_card.unsched_task_one_title == "task #{i.to_s}" }
-            wait_for_task.until { @to_do_card.unsched_task_one_date == WebDriverUtils.ui_date_display_format(today) }
+            wait_for_task.until { @to_do_card.unsched_task_one_date == WebDriverUtils.ui_numeric_date_format(today) }
             expect(@to_do_card.unsched_task_count).to eql(i.to_s)
           end
         end
@@ -196,7 +196,7 @@ describe 'The My Dashboard task manager', :testui => true do
           @to_do_card.click_scheduled_tasks_tab
           @to_do_card.overdue_task_one_element.when_visible(timeout=task_wait)
           expect(@to_do_card.overdue_task_one_title).to eql('Unscheduled task that will be due yesterday')
-          expect(@to_do_card.overdue_task_one_date).to eql(WebDriverUtils.ui_date_display_format(yesterday))
+          expect(@to_do_card.overdue_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format(yesterday))
         end
 
         it 'allows a user to make an unscheduled task due today' do
@@ -212,7 +212,7 @@ describe 'The My Dashboard task manager', :testui => true do
           @to_do_card.click_scheduled_tasks_tab
           @to_do_card.today_task_one_element.when_visible(timeout=task_wait)
           expect(@to_do_card.today_task_one_title).to eql('Unscheduled task that will be due today')
-          expect(@to_do_card.today_task_one_date).to eql(WebDriverUtils.ui_date_display_format(today))
+          expect(@to_do_card.today_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format(today))
         end
 
         it 'allows a user to make an unscheduled task due in the future' do
@@ -228,7 +228,7 @@ describe 'The My Dashboard task manager', :testui => true do
           @to_do_card.click_scheduled_tasks_tab
           @to_do_card.future_task_one_element.when_visible(timeout=task_wait)
           expect(@to_do_card.future_task_one_title).to eql('Unscheduled task that will be scheduled for tomorrow')
-          expect(@to_do_card.future_task_one_date).to eql(WebDriverUtils.ui_date_display_format(tomorrow))
+          expect(@to_do_card.future_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format(tomorrow))
         end
 
         it 'allows a user to make an overdue task unscheduled' do
@@ -243,7 +243,7 @@ describe 'The My Dashboard task manager', :testui => true do
           @to_do_card.click_unscheduled_tasks_tab
           @to_do_card.unsched_task_one_element.when_visible(timeout=task_wait)
           expect(@to_do_card.unsched_task_one_title).to eql('Overdue task that will be unscheduled')
-          expect(@to_do_card.unsched_task_one_date).to eql(WebDriverUtils.ui_date_display_format(today))
+          expect(@to_do_card.unsched_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format(today))
         end
 
         it 'requires that an edited task have a valid date format' do
@@ -324,17 +324,17 @@ describe 'The My Dashboard task manager', :testui => true do
           @to_do_card.save_today_task_one_edits
           @to_do_card.toggle_overdue_task_one_detail
           wait_for_task.until { @to_do_card.overdue_task_one_title == 'Overdue task edited' }
-          expect(@to_do_card.overdue_task_one_date).to eql(WebDriverUtils.ui_date_display_format(yesterday - 1))
+          expect(@to_do_card.overdue_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format(yesterday - 1))
           @to_do_card.overdue_task_one_notes_element.when_visible(timeout=task_wait)
           expect(@to_do_card.overdue_task_one_notes).to eql('Overdue task notes edited')
           @to_do_card.toggle_today_task_one_detail
           wait_for_task.until { @to_do_card.today_task_one_title == 'Today task edited' }
-          expect(@to_do_card.today_task_one_date).to eql(WebDriverUtils.ui_date_display_format(today))
+          expect(@to_do_card.today_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format(today))
           @to_do_card.today_task_one_notes_element.when_visible(timeout=task_wait)
           expect(@to_do_card.today_task_one_notes).to eql('Today task notes edited')
           @to_do_card.toggle_future_task_one_detail
           wait_for_task.until { @to_do_card.future_task_one_title == 'Future task edited' }
-          expect(@to_do_card.future_task_one_date).to eql(WebDriverUtils.ui_date_display_format(tomorrow + 1))
+          expect(@to_do_card.future_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format(tomorrow + 1))
           @to_do_card.future_task_one_notes_element.when_visible(timeout=task_wait)
           expect(@to_do_card.future_task_one_notes).to eql('Future task notes edited')
         end
@@ -350,7 +350,7 @@ describe 'The My Dashboard task manager', :testui => true do
           @to_do_card.toggle_today_task_one_detail
           @to_do_card.today_task_one_notes_element.when_visible(timeout=task_wait)
           expect(@to_do_card.today_task_one_title).to eql('The original task title')
-          expect(@to_do_card.today_task_one_date).to eql(WebDriverUtils.ui_date_display_format(today))
+          expect(@to_do_card.today_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format(today))
           expect(@to_do_card.today_task_one_notes).to eql('The original task notes')
         end
       end

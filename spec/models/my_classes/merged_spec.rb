@@ -5,7 +5,6 @@ describe MyClasses::Merged do
   describe '#get_feed_internal' do
     context 'when no campus course associations or LMS access' do
       before { allow(Canvas::Proxy).to receive(:access_granted?).with(user_id).and_return false }
-      before { allow(Sakai::Proxy).to receive(:access_granted?).with(user_id).and_return false }
       before { allow(CampusOracle::UserCourses::All).to receive(:new).and_return double({get_all_campus_courses: {}}) }
       it 'includes term with no classes' do
         expect(feed[:current_term]).to be_present

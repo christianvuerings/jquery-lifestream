@@ -25,7 +25,7 @@ module CanvasCsv
 
     # Returns initialized Net::LDAP client
     def client
-      Net::LDAP.new({
+      @client ||= Net::LDAP.new({
         host: Settings.ldap.host,
         port: Settings.ldap.port,
         encryption: { method: :simple_tls },
@@ -35,6 +35,15 @@ module CanvasCsv
           password: Settings.ldap.application_password
         }
       })
+    end
+
+    def search_by_uid(uid)
+      filter = Net::LDAP::Filter.eq('uid', uid.to_s)
+      results = client.search(base: PEOPLE_DN, filter: filter)
+      if results.empty?
+        results = client.search(base: GUEST_DN, filter: filter)
+      end
+      results.first
     end
 
     # Performs search for guest users updated since last import

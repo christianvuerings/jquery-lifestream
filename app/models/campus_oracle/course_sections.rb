@@ -2,7 +2,7 @@ module CampusOracle
   class CourseSections < BaseProxy
 
     def initialize(options = {})
-      super(Settings.sakai_proxy, options)
+      super(Settings.campusdb, options)
       @term_yr = options[:term_yr]
       @term_cd = options[:term_cd]
       @ccn = options[:ccn]
