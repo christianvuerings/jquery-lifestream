@@ -14,6 +14,10 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   var urlPostEmail = '/api/campus_solutions/email';
   var urlPostPhone = '/api/campus_solutions/phone';
 
+  var deletePhone = function(options) {
+    return $http.delete(urlPostPhone, options);
+  };
+
   var getEmailTypes = function(options) {
     return apiService.http.request(options, urlTypesEmail);
   };
@@ -32,6 +36,7 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   };
 
   return {
+    deletePhone: deletePhone,
     getEmailTypes: getEmailTypes,
     getPerson: getPerson,
     getPhoneTypes: getPhoneTypes,

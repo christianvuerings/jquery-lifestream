@@ -4,12 +4,13 @@
     <div data-ng-repeat="address in addresses.content" class="cc-page-widget-profile-section-content-item">
       <div>
         <strong data-ng-bind-template="{{address.type.description}} Address"></strong>
-        <span data-ng-if="address.primary">(preferred)</span>
       </div>
       <div>
-        <div data-ng-bind="address.street1"></div>
-        <div data-ng-bind-template="{{address.locality}}, {{address.region}} {{address.postalCode}}"></div>
-        <div data-ng-bind="address.country" data-ng-if="address.country !== 'USA'"></div>
+        <div data-ng-bind="address.address1"></div>
+        <div data-ng-bind="address.address2"></div>
+        <div data-ng-bind="address.address3"></div>
+        <div data-ng-bind-template="{{address.city}}, {{address.stateCode}} {{address.postalCode}}"></div>
+        <div data-ng-bind="address.countryCode" data-ng-if="address.countryCode !== 'USA'"></div>
       </div>
       <div>
         <button class="cc-button-link">Edit</button>

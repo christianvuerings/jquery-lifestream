@@ -11,14 +11,14 @@
           <span data-ng-if="phone.primary">(preferred)</span>
         </div>
         <div data-ng-bind="phone.number"></div>
-        <div>
+        <div data-ng-if="phone.uiControl.code !== 'D'">
           <button class="cc-button-link" data-ng-click="showEditPhone(phone)">Edit</button>
         </div>
       </div>
       <div data-ng-if="phone.isModifying" data-ng-include="'widgets/profile/contact_phone_editor.html'"></div>
     </div>
   </div>
-  <div class="cc-page-widget-profile-section-add" data-ng-if="!phones.editorEnabled">
+  <div class="cc-page-widget-profile-section-add" data-ng-if="!phones.editorEnabled && phoneTypes.length">
     <button class="cc-button-link" data-ng-click="showAddPhone()">
       <i class="fa fa-plus"></i> Add
     </button>
