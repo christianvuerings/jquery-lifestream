@@ -23,7 +23,7 @@ module Canvas
     end
 
     def request_path
-      "accounts/#{settings.account_id}/account_authorization_configs"
+      "accounts/#{settings.account_id}/authentication_providers"
     end
 
   end
