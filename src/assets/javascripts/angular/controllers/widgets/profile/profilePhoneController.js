@@ -6,7 +6,7 @@ var _ = require('lodash');
 /**
  * Profile Phone controller
  */
-angular.module('calcentral.controllers').controller('ProfilePhoneController', function(profileFactory, $scope, $q) {
+angular.module('calcentral.controllers').controller('ProfilePhoneController', function(profileFactory, $scope) {
   angular.extend($scope, {
     phones: {
       content: [],
@@ -85,16 +85,7 @@ angular.module('calcentral.controllers').controller('ProfilePhoneController', fu
     });
   };
 
-  $scope.deletePhone = function(phone) {
-    profileFactory.deletePhone({
-      data: {
-        type: phone.type.code
-      }
-    });
-  };
-
-  var saveCompleted = function(data) {
-    $scope.isSaving = false;
+  var actionCompleted = function(data) {
     if (data.data.errored) {
       $scope.errorMessage = data.data.feed.errmsgtext;
     } else {
@@ -103,6 +94,23 @@ angular.module('calcentral.controllers').controller('ProfilePhoneController', fu
         refresh: true
       });
     }
+  };
+
+  var deleteCompleted = function(data) {
+    $scope.isDeleting = false;
+    actionCompleted(data);
+  };
+
+  $scope.deletePhone = function(phone) {
+    $scope.isDeleting = true;
+    profileFactory.deletePhone({
+      type: phone.type.code
+    }).then(deleteCompleted);
+  };
+
+  var saveCompleted = function(data) {
+    $scope.isSaving = false;
+    actionCompleted(data);
   };
 
   $scope.savePhone = function(phone) {
