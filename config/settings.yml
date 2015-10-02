@@ -69,7 +69,6 @@ canvas_proxy:
   official_courses_account_id: '129410'
   projects_account_id: '129407'
   projects_term_id: '5494'
-  turnitin_account_id: '129440'
   default_grading_scheme_id: '4068930'
   export_directory: 'tmp/canvas'
   lti_key: 'someMumboJumbo'
