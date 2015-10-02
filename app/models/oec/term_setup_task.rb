@@ -9,16 +9,16 @@ module Oec
         create_folder(folder_name, term_folder)
       end
       departments = create_folder('departments', term_folder)
-      supplemental_sources = create_folder('supplemental_sources', term_folder)
+      overrides = create_folder('overrides', term_folder)
 
       find_previous_term_csvs
 
       [Oec::CourseInstructors, Oec::CourseSupervisors, Oec::Courses, Oec::Instructors, Oec::Supervisors].each do |worksheet_class|
         if @previous_term_csvs[worksheet_class]
-          copy_file(@previous_term_csvs[worksheet_class], supplemental_sources)
+          copy_file(@previous_term_csvs[worksheet_class], overrides)
         else
           log :info, "Could not find previous sheet '#{worksheet_class.export_name}' for copying; will create header-only file"
-          export_sheet_headers(worksheet_class, supplemental_sources)
+          export_sheet_headers(worksheet_class, overrides)
         end
       end
 
@@ -30,9 +30,9 @@ module Oec
     def find_previous_term_csvs
       @previous_term_csvs = {}
       if (previous_term_folder = find_previous_term_folder)
-        if (previous_supplemental_sources = @remote_drive.find_first_matching_folder('supplemental_sources', previous_term_folder))
-          @previous_term_csvs[Oec::Instructors] = @remote_drive.find_first_matching_item('instructors', previous_supplemental_sources)
-          @previous_term_csvs[Oec::Supervisors] = @remote_drive.find_first_matching_item('supervisors', previous_supplemental_sources)
+        if (previous_overrides = @remote_drive.find_first_matching_folder('overrides', previous_term_folder))
+          @previous_term_csvs[Oec::Instructors] = @remote_drive.find_first_matching_item('instructors', previous_overrides)
+          @previous_term_csvs[Oec::Supervisors] = @remote_drive.find_first_matching_item('supervisors', previous_overrides)
         end
         if (previous_exports =  @remote_drive.find_first_matching_folder('exports', previous_term_folder))
           if (most_recent_export = @remote_drive.find_folders(previous_exports.id).sort_by(&:title).last)

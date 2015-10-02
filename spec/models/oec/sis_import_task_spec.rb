@@ -3,12 +3,12 @@ describe Oec::SisImportTask do
   let(:task) { Oec::SisImportTask.new(term_code: term_code) }
 
   let(:fake_remote_drive) { double() }
-  let(:supplemental_courses_csv) { Oec::Courses.new.headers.join(',') }
+  let(:course_overrides_row) { Oec::Courses.new.headers.join(',') }
 
   before(:each) do
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
     allow(fake_remote_drive).to receive(:find_nested).and_return mock_google_drive_item
-    allow(fake_remote_drive).to receive(:export_csv).and_return supplemental_courses_csv
+    allow(fake_remote_drive).to receive(:export_csv).and_return course_overrides_row
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
   end
 
@@ -115,8 +115,8 @@ describe Oec::SisImportTask do
         expect(joint_course_rows.find { |row| row['COURSE_ID'] == '2015-B-72198_GSI' }['EVALUATION_TYPE']).to eq 'G'
       end
 
-      context 'supplemental data overrides' do
-        let(:supplemental_courses_csv) { File.read Rails.root.join('fixtures', 'oec', 'supplemental_sources_courses.csv') }
+      context 'data overrides' do
+        let(:course_overrides_row) { File.read Rails.root.join('fixtures', 'oec', 'overrides_courses.csv') }
         let(:expected_ids) { %w(2015-B-87690 2015-B-72198 2015-B-72198_GSI 2015-B-72199) }
 
         include_examples 'expected CSV structure'
@@ -135,9 +135,9 @@ describe Oec::SisImportTask do
           end
         end
 
-        context 'non-matching rows in supplemental data' do
-          let(:supplemental_courses_csv) do
-            csv = File.read Rails.root.join('fixtures', 'oec', 'supplemental_sources_courses.csv')
+        context 'non-matching rows in overrides data' do
+          let(:course_overrides_row) do
+            csv = File.read Rails.root.join('fixtures', 'oec', 'overrides_courses.csv')
             csv << "\n,,,,,POL SCI,215,,,,,,,Y,01-20-2015,05-16-2015"
             csv << "\n,,,,,FRENCH,215,,,,,,,Y,01-20-2015,05-16-2015"
           end
@@ -207,8 +207,8 @@ describe Oec::SisImportTask do
         end
       end
 
-      context 'supplemental data overrides' do
-        let(:supplemental_courses_csv) { File.read Rails.root.join('fixtures', 'oec', 'supplemental_sources_courses.csv') }
+      context 'data overrides' do
+        let(:course_overrides_row) { File.read Rails.root.join('fixtures', 'oec', 'overrides_courses.csv') }
 
         it 'overrides evaluation types in matching rows only' do
           subject.each do |row|

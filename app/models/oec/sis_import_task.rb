@@ -30,7 +30,7 @@ module Oec
       end
       set_cross_listed_values(worksheet, course_codes_by_ccn)
       flag_joint_faculty_gsi worksheet
-      merge_supplemental_data(worksheet, course_codes)
+      merge_overrides_data(worksheet, course_codes)
     end
 
     def import_course(worksheet, course)
@@ -133,31 +133,31 @@ module Oec
       end
     end
 
-    def merge_supplemental_data(worksheet, course_codes)
-      return unless (supplemental_course_sheet = get_supplemental_worksheet Oec::Courses)
+    def merge_overrides_data(worksheet, course_codes)
+      return unless (course_overrides_sheet = get_overrides_worksheet Oec::Courses)
 
       # These columns in the 'courses' worksheet specify match conditions for rows to update.
       select_columns = %w(DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM)
       # The remaining columns hold data to be merged.
       update_columns = worksheet.headers - select_columns
 
-      supplemental_course_sheet.each do |supplemental_row|
-        next unless course_codes.find { |code| code.matches_row? supplemental_row }
+      course_overrides_sheet.each do |overrides_row|
+        next unless course_codes.find { |code| code.matches_row? overrides_row }
 
         rows_to_update = select_columns.inject(worksheet) do |worksheet_selection, column|
-          if supplemental_row[column].blank? || worksheet_selection.none?
+          if overrides_row[column].blank? || worksheet_selection.none?
             worksheet_selection
           else
-            worksheet_selection.select { |worksheet_row| worksheet_row[column] == supplemental_row[column] }
+            worksheet_selection.select { |worksheet_row| worksheet_row[column] == overrides_row[column] }
           end
         end
         if rows_to_update.any?
           rows_to_update.each do |row|
-            row.update supplemental_row.select { |k,v| update_columns.include?(k) && v.present? }
+            row.update overrides_row.select { |k,v| update_columns.include?(k) && v.present? }
           end
         else
-          row_key = select_columns.map { |col| supplemental_row[col] }.join('-')
-          worksheet[row_key] = supplemental_row
+          row_key = select_columns.map { |col| overrides_row[col] }.join('-')
+          worksheet[row_key] = overrides_row
         end
       end
 

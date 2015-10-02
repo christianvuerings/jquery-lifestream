@@ -18,7 +18,7 @@ describe Oec::TermSetupTask do
 
     let(:term_folder) { mock_google_drive_item term_code }
     let(:reports_today_folder) { mock_google_drive_item today }
-    let(:supplemental_sources_folder) { mock_google_drive_item 'supplemental_sources' }
+    let(:overrides_folder) { mock_google_drive_item 'overrides' }
 
     it 'creates folders, uploads sheets, and writes log' do
       expect(fake_remote_drive).to receive(:find_folders).with(no_args).and_return []
@@ -31,14 +31,14 @@ describe Oec::TermSetupTask do
       end
 
       expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
-        .with('supplemental_sources', term_folder, anything).and_return supplemental_sources_folder
+        .with('overrides', term_folder, anything).and_return overrides_folder
 
       expect(fake_remote_drive).to receive(:copy_item_to_folder)
         .with(anything, 'departments_id', 'TEMPLATE').and_return mock_google_drive_item
 
       %w(courses course_instructors course_supervisors instructors supervisors).each do |sheet|
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
-          .with(kind_of(Oec::Worksheet), sheet, Oec::Worksheet, supplemental_sources_folder, anything)
+          .with(kind_of(Oec::Worksheet), sheet, Oec::Worksheet, overrides_folder, anything)
           .and_return mock_google_drive_item(sheet)
       end
 
