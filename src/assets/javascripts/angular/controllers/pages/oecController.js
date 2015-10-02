@@ -30,7 +30,14 @@ angular.module('calcentral.controllers').controller('OecController', function(ap
     });
   };
 
+  var sanitizeTaskOptions = function() {
+    if (!$scope.taskParameters.selectedTask.acceptsDepartmentOptions) {
+      $scope.taskParameters.options.departmentCode = null;
+    }
+  };
+
   $scope.runOecTask = function() {
+    sanitizeTaskOptions();
     return oecFactory.runOecTask($scope.taskParameters.selectedTask.name, $scope.taskParameters.options).success(function(data) {
       if (data.success) {
         $scope.taskInProgress = true;
