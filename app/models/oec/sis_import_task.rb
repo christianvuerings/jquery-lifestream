@@ -6,6 +6,7 @@ module Oec
       log :info, "Will import SIS data for term #{@term_code}"
       imports_now = find_or_create_now_subfolder('imports')
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
+        @term_dates ||= default_term_dates
         log :info, "Generating #{dept_code}.csv"
         worksheet = Oec::SisImportSheet.new(dept_code: dept_code)
         import_courses(worksheet, course_codes)
@@ -30,7 +31,8 @@ module Oec
       end
       set_cross_listed_values(worksheet, course_codes_by_ccn)
       flag_joint_faculty_gsi worksheet
-      merge_overrides_data(worksheet, course_codes)
+      apply_overrides(worksheet, Oec::Courses, course_codes, %w(DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM))
+      apply_overrides(worksheet, Oec::Instructors, course_codes, %w(LDAP_UID SIS_ID))
     end
 
     def import_course(worksheet, course)
@@ -133,16 +135,14 @@ module Oec
       end
     end
 
-    def merge_overrides_data(worksheet, course_codes)
-      return unless (course_overrides_sheet = get_overrides_worksheet Oec::Courses)
+    def apply_overrides(worksheet, type, course_codes, select_columns)
+      return unless (overrides_sheet = get_overrides_worksheet type)
 
-      # These columns in the 'courses' worksheet specify match conditions for rows to update.
-      select_columns = %w(DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM)
       # The remaining columns hold data to be merged.
       update_columns = worksheet.headers - select_columns
 
-      course_overrides_sheet.each do |overrides_row|
-        next unless course_codes.find { |code| code.matches_row? overrides_row }
+      overrides_sheet.each do |overrides_row|
+        next if (type == Oec::Courses) && !course_codes.find { |code| code.matches_row? overrides_row }
 
         rows_to_update = select_columns.inject(worksheet) do |worksheet_selection, column|
           if overrides_row[column].blank? || worksheet_selection.none?
@@ -161,8 +161,8 @@ module Oec
         end
       end
 
-      if (term_dates = default_term_dates)
-        worksheet.each { |row| row.update(term_dates) unless row['MODULAR_COURSE'].present? }
+      if (type == Oec::Courses) && @term_dates
+        worksheet.each { |row| row.update(@term_dates) unless row['MODULAR_COURSE'].present? }
       end
     end
 

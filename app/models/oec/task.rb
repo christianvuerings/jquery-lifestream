@@ -117,8 +117,8 @@ module Oec
     end
 
     def get_overrides_worksheet(klass)
-      if (course_overrides_sheet = @remote_drive.find_nested [@term_code, 'overrides', klass.export_name])
-        klass.from_csv @remote_drive.export_csv(course_overrides_sheet)
+      if (overrides_sheet = @remote_drive.find_nested [@term_code, 'overrides', klass.export_name])
+        klass.from_csv @remote_drive.export_csv overrides_sheet
       end
     end
 
