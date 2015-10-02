@@ -36,7 +36,7 @@ class ApiMyAdvisingPage
 
   def all_future_appt_dates
     dates = []
-    all_future_appt_epochs.each { |epoch| dates.push(WebDriverUtils.ui_date_display_format(Time.strptime(epoch, '%s'))) }
+    all_future_appt_epochs.each { |epoch| dates.push(WebDriverUtils.ui_numeric_date_format(Time.strptime(epoch, '%s'))) }
     dates
   end
 

@@ -329,21 +329,19 @@ class_calendar:
 ui_selenium:
   baseUrl: https://calcentral-dev.berkeley.edu
   calNetUrl: https://auth-test.berkeley.edu
+  canvas_qa_sub_account: secret
   googleAuthUrl: /api/google/request_authorization?force_domain=false
   layer: development
 
   # Alternative browsers for Selenium tests: chrome, safari, ie
   webDriver: firefox
 
-  googleOauthTimeout: 10
   googleTaskTimeout: 12
   pageEventTimeout: 3
   pageLoadTimeout: 12
   liveUpdateTimeoutDelta: 180
-  finResourcesLinksTimeout: 10
-  financialsTimeout: 5
-  academicsTimeout: 15
-  finAidTimeout: 20
+  academicsTimeout: 20
+  canvasUpdateTimeout: 60
   test_user_password: secret
   oski_username: secret
   oski_password: secret

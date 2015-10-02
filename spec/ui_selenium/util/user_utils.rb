@@ -70,4 +70,12 @@ class UserUtils
     JSON.parse(File.read(WebDriverUtils.live_users))['users']
   end
 
+  def self.clear_cache(driver, splash_page, my_dashboard_page)
+    splash_page.load_page driver
+    splash_page.basic_auth(driver, UserUtils.admin_uid)
+    driver.get "#{WebDriverUtils.base_url}/api/cache/clear"
+    my_dashboard_page.load_page driver
+    my_dashboard_page.click_logout_link
+  end
+
 end
