@@ -128,7 +128,7 @@ module CanvasCsv
         login_id = inactive_account[1]
       end
       if (ldap_uid = Integer(login_id, 10) rescue nil)
-        campus_row = campus_user_rows.select { |r| r['ldap_uid'].to_i == ldap_uid }.first
+        campus_row = campus_user_rows.select { |r| (r['ldap_uid'].to_i == ldap_uid) && (r['person_type'] != 'Z') }.first
         if campus_row.present?
           logger.warn "Reactivating account for LDAP UID #{ldap_uid}" if inactive_account
           @known_uids << login_id

@@ -7,6 +7,7 @@ describe CanvasLti::CourseAddUser do
   let(:current_student_uid) { "#{common_uid}1" }
   let(:current_employee_former_student_uid) { "#{common_uid}2" }
   let(:former_employee_former_student_uid) { "#{common_uid}3" }
+  let(:user_with_expired_calnet_account_uid) { "#{common_uid}4" }
 
   let(:current_student) do
     {
@@ -15,7 +16,8 @@ describe CanvasLti::CourseAddUser do
       'last_name'=>common_last_name,
       'email_address'=>"#{common_email}@berkeley.edu",
       'student_id'=>rand(999999),
-      'affiliations'=>'STUDENT-TYPE-REGISTERED'
+      'affiliations'=>'STUDENT-TYPE-REGISTERED',
+      'person_type'=>'U'
     }
   end
 
@@ -26,7 +28,8 @@ describe CanvasLti::CourseAddUser do
       'last_name'=>common_last_name,
       'email_address'=>"#{common_email}@media.berkeley.edu",
       'student_id'=>rand(999999),
-      'affiliations'=>'EMPLOYEE-TYPE-STAFF,STUDENT-STATUS-EXPIRED'
+      'affiliations'=>'EMPLOYEE-TYPE-STAFF,STUDENT-STATUS-EXPIRED',
+      'person_type'=>'S'
     }
   end
 
@@ -37,7 +40,20 @@ describe CanvasLti::CourseAddUser do
       'last_name'=>common_last_name,
       'email_address'=>"#{common_email}@example.com",
       'student_id'=>rand(999999),
-      'affiliations'=>'EMPLOYEE-STATUS-EXPIRED,STUDENT-STATUS-EXPIRED'
+      'affiliations'=>'EMPLOYEE-STATUS-EXPIRED,STUDENT-STATUS-EXPIRED',
+      'person_type'=>'G'
+    }
+  end
+
+  let(:user_with_expired_calnet_account) do
+    {
+      'ldap_uid'=>user_with_expired_calnet_account_uid,
+      'first_name'=>common_first_name,
+      'last_name'=>common_last_name,
+      'email_address'=>"#{common_email}@berkeley.edu",
+      'student_id'=>rand(999999),
+      'affiliations'=>'STUDENT-TYPE-REGISTERED',
+      'person_type'=>'Z'
     }
   end
 
@@ -45,7 +61,8 @@ describe CanvasLti::CourseAddUser do
     [
       current_student,
       current_employee_former_student,
-      former_employee_former_student
+      former_employee_former_student,
+      user_with_expired_calnet_account
     ]
   end
 
@@ -127,6 +144,7 @@ describe CanvasLti::CourseAddUser do
         expect(subject.select{ |n| n[:ldapUid] == current_student_uid }).to be_present
         expect(subject.select{ |n| n[:ldapUid] == current_employee_former_student_uid }).to be_present
         expect(subject.select{ |n| n[:ldapUid] == former_employee_former_student_uid }).to be_empty
+        expect(subject.select{ |n| n[:ldapUid] == user_with_expired_calnet_account_uid }).to be_empty
       end
     end
 

@@ -227,6 +227,29 @@ describe CanvasCsv::MaintainUsers do
       allow_any_instance_of(CanvasCsv::Ldap).to receive(:search_by_uid).with(uid).and_return(ldap_record)
       subject.categorize_user_account(existing_account, campus_rows)
     end
+    context 'when the campus DB account is marked as having no active CalNet account' do
+      let(:campus_rows) { [
+        {
+          'ldap_uid' => uid.to_i,
+          'first_name' => 'Syd',
+          'last_name' => 'Barrett',
+          'email_address' => "#{uid}@example.edu",
+          'affiliations' => 'STUDENT-TYPE-REGISTERED',
+          'student_id' => student_id,
+          'person_type' => 'Z'
+        }
+      ] }
+      let(:inactivate_expired_users) { true }
+      it 'deactivates the user account' do
+        expect(account_changes.length).to eq(1)
+        expect(account_changes[0]['login_id']).to eq "inactive-#{uid}"
+        expect(account_changes[0]['user_id']).to eq "UID:#{uid}"
+        expect(account_changes[0]['email']).to be_blank
+        expect(subject.sis_user_id_changes).to eq({"sis_login_id:#{uid}" => "UID:#{uid}"})
+        expect(known_uids.length).to eq(0)
+        expect(subject.user_email_deletions).to eq [canvas_user_id]
+      end
+    end
     context 'when we can trust campus data sources' do
       let(:inactivate_expired_users) { true }
       it 'deactivates the user account' do
