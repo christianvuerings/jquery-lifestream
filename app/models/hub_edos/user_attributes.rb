@@ -105,7 +105,7 @@ module HubEdos
         if email[:primary] == true
           result[:email_address] = email[:emailAddress]
         end
-        if email[:type][:code] == 'CAMP'
+        if email[:type].present? && email[:type][:code] == 'CAMP'
           result[:official_bmail_address] = email[:emailAddress]
         end
       end
