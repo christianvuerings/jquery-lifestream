@@ -8,8 +8,8 @@ describe CampusSolutions::PendingMessages do
     it_behaves_like 'a proxy that properly observes the profile feature flag'
     it_behaves_like 'a proxy that got data successfully'
     it 'returns data with the expected structure' do
-      expect(subject[:feed][:pendingMessages][0][:emplid]).to be
-      expect(subject[:feed][:pendingMessages][0][:descr]).to be
+      expect(subject[:feed][:commMessagePendingResponse][0][:emplid]).to be
+      expect(subject[:feed][:commMessagePendingResponse][0][:descr]).to be
     end
   end
 
@@ -19,8 +19,8 @@ describe CampusSolutions::PendingMessages do
     it_should_behave_like 'a proxy that gets data'
     it 'returns specific mock data' do
       p "subj=#{subject}"
-      expect(subject[:feed][:pendingMessages][0][:emplid]).to eq '24188949'
-      expect(subject[:feed][:pendingMessages][0][:descr]).to eq 'Campus Provided Software'
+      expect(subject[:feed][:commMessagePendingResponse][0][:emplid]).to eq '24188949'
+      expect(subject[:feed][:commMessagePendingResponse][0][:descr]).to eq 'Campus Provided Software'
     end
   end
 
