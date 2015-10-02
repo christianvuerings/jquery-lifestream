@@ -1,20 +1,29 @@
 describe Oec::SisImportTask do
   let(:term_code) { '2015-B' }
-  let(:task) { Oec::SisImportTask.new(term_code: term_code) }
+  let(:task) { Oec::SisImportTask.new(term_code: term_code, local_write: true) }
 
   let(:fake_remote_drive) { double() }
   let(:course_overrides_row) { Oec::Courses.new.headers.join(',') }
+  let(:instructor_overrides_row) { Oec::Instructors.new.headers.join(',') }
 
   before(:each) do
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
-    allow(fake_remote_drive).to receive(:find_nested).and_return mock_google_drive_item
-    allow(fake_remote_drive).to receive(:export_csv).and_return course_overrides_row
+    course_overrides = mock_google_drive_item 'course_overrides'
+    allow(fake_remote_drive).to receive(:find_nested).with([term_code, 'overrides', Oec::Courses.export_name]).and_return course_overrides
+    allow(fake_remote_drive).to receive(:export_csv).with(course_overrides).and_return course_overrides_row
+
+    instructor_overrides = mock_google_drive_item 'instructor_overrides'
+    allow(fake_remote_drive).to receive(:find_nested).with([term_code, 'overrides', Oec::Instructors.export_name]).and_return instructor_overrides
+    allow(fake_remote_drive).to receive(:export_csv).with(instructor_overrides).and_return instructor_overrides_row
+
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
   end
 
   describe 'CSV export' do
     subject do
-      task.import_courses(courses, fake_code_mapping)
+      allow(Oec::CourseCode).to receive(:by_dept_code).and_return({ dept_code: fake_code_mapping })
+      allow(Oec::SisImportSheet).to receive(:new).and_return courses
+      task.run_internal
       courses.write_csv
       CSV.read(courses.csv_export_path).slice(1..-1).map { |row| Hash[ courses.headers.zip(row) ]}
     end
@@ -117,6 +126,7 @@ describe Oec::SisImportTask do
 
       context 'data overrides' do
         let(:course_overrides_row) { File.read Rails.root.join('fixtures', 'oec', 'overrides_courses.csv') }
+        let(:instructor_overrides_row) { File.read Rails.root.join('fixtures', 'oec', 'overrides_instructors.csv') }
         let(:expected_ids) { %w(2015-B-87690 2015-B-72198 2015-B-72198_GSI 2015-B-72199) }
 
         include_examples 'expected CSV structure'
@@ -132,6 +142,10 @@ describe Oec::SisImportTask do
               expect(row['START_DATE']).to eq '01-20-2015'
               expect(row['END_DATE']).to eq '05-08-2015'
             end
+            edited_row = row['LDAP_UID'] == '10316'
+            expect(row['FIRST_NAME'] == 'Lady').to be edited_row
+            expect(row['LAST_NAME'] == 'Gaga').to be edited_row
+            expect(row['EMAIL_ADDRESS'] == 'born-this-way@berkeley.edu').to be edited_row
           end
         end
 
@@ -239,6 +253,8 @@ describe Oec::SisImportTask do
       before do
         allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H:%M:%S')
         allow(Oec::CourseCode).to receive(:by_dept_code).and_return({l4_codes[dept_name] => fake_code_mapping})
+        allow(fake_remote_drive).to receive(:find_nested)
+        allow(fake_remote_drive).to receive(:export_csv)
       end
 
       it 'should upload a department csv and a log file' do
