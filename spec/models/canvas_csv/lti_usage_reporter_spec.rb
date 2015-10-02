@@ -104,6 +104,13 @@ canvas_course_id,course_id,short_name,long_name,canvas_account_id,account_id,can
       expect(tool_row['URL']).to be_present
       expect(tool_row['Courses Visible'].to_s).to eq '1'
     end
+    it 'keeps Excel from interpreting a list of account IDs as one spectacularly large number' do
+      subject.tool_url_to_summary = {
+        'acme.com' => {label: 'Acme Quality', url: 'acme.com', accounts: [12345,67890], nbr_courses_visible: 13}
+      }
+      subject.generate_summary_report
+      expect(summary_report.first['Accounts']).to eq '12345, 67890'
+    end
   end
 
   describe '#courses_report' do

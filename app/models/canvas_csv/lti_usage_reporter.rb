@@ -52,7 +52,7 @@ module CanvasCsv
         csv << {
           'Tool' => summary[:label],
           'URL' => summary[:url],
-          'Accounts' => summary[:accounts].join(','),
+          'Accounts' => summary[:accounts].join(', '),
           'Courses Visible' => courses_count
         }
       end
