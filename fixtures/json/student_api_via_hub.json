@@ -1,6 +1,6 @@
 {
   "StudentResponse": {
-    "correlationId": "1a47d807-b789-4127-85c3-f3a75306b5f9",
+    "correlationId": "e517f0a5-9703-4e13-980a-8dce77d9e041",
     "source": "UCB-SIS-STUDENT",
     "students": [
       {
@@ -30,23 +30,27 @@
         "names": [
           {
             "type": {
-              "code": "PRI",
-              "description": "Primary"
+              "code": "PRF",
+              "description": "Preferred"
             },
             "familyName": "Bear",
-            "givenName": "Ursinus Theodorus",
+            "givenName": "Osk",
             "middleName": "",
             "prefixName": "",
             "suffixName": "",
-            "formattedName": "Ursinus Theodorus Bear",
-            "preferred": false,
+            "formattedName": "Osk Bear",
+            "preferred": true,
             "disclose": false,
-            "fromDate": "1902-02-01"
+            "uiControl": {
+              "code": "U",
+              "description": "Edit - No Delete"
+            },
+            "fromDate": "2015-10-02"
           },
           {
             "type": {
-              "code": "PRF",
-              "description": "Preferred"
+              "code": "PRI",
+              "description": "Primary"
             },
             "familyName": "Bear",
             "givenName": "Oski",
@@ -56,29 +60,31 @@
             "formattedName": "Oski Bear",
             "preferred": false,
             "disclose": false,
+            "uiControl": {
+              "code": "D",
+              "description": "Display Only"
+            },
             "fromDate": "1902-02-01"
           }
         ],
         "gender": {
-          "sexAtBirth": {
+          "genderOfRecord": {
             "code": "M",
             "description": "Male"
           },
-          "discloseSexAtBirth": false
-        },
-        "affiliations": [
-          {
-            "statusCode": "STUDENT",
-            "statusDescription": "",
-            "fromDate": "2014-08-01"
+          "discloseGenderOfRecord": false,
+          "sexAtBirth": {
+            "code": "",
+            "description": ""
           },
-          {
-            "statusCode": "UNDERGRAD",
-            "statusDescription": "Undergraduate Student",
-            "fromDate": "2014-08-01",
-            "toDate": "2016-06-30"
-          }
-        ],
+          "discloseSexAtBirth": false,
+          "genderIdentity": {
+            "code": "",
+            "description": ""
+          },
+          "discloseGenderIdentity": false,
+          "fromDate": "1902-02-01"
+        },
         "addresses": [
           {
             "type": {
@@ -88,21 +94,22 @@
             "address1": "1234 56TH ST",
             "address2": "APT 789, BOX 101112",
             "address3": "",
-            "number1": "",
-            "number2": "",
-            "addressField1": "",
-            "addressField2": "",
-            "addressField3": "",
+            "num1": "",
+            "num2": "",
+            "addrField1": "",
+            "addrField2": "",
+            "addrField3": "",
             "houseType": "",
             "city": "BERKELEY",
             "county": "",
             "stateCode": "CA",
             "postalCode": 94708,
             "countryCode": "USA",
-            "formattedAddress": "1234 56TH ST\\nAPT 789, BOX 101112\\nBERKELEY, CA 94708",
+            "formattedAddress": "1234 56TH ST\nAPT 789, BOX 101112\nBERKELEY, CA 94708",
             "disclose": false,
             "uiControl": {
-              "code": "Do Not Display"
+              "code": "N",
+              "description": "Do Not Display"
             },
             "fromDate": "2015-01-12"
           },
@@ -114,21 +121,22 @@
             "address1": "2111 BANCROFT WAY  #550",
             "address2": "",
             "address3": "",
-            "number1": "",
-            "number2": "",
-            "addressField1": "",
-            "addressField2": "",
-            "addressField3": "",
+            "num1": "",
+            "num2": "",
+            "addrField1": "",
+            "addrField2": "",
+            "addrField3": "",
             "houseType": "",
             "city": "BERKELEY",
             "county": "",
             "stateCode": "CA",
             "postalCode": 94720,
             "countryCode": "USA",
-            "formattedAddress": "2111 BANCROFT WAY  #550\\nBERKELEY, CA 94720",
+            "formattedAddress": "2111 BANCROFT WAY  #550\nBERKELEY, CA 94720",
             "disclose": false,
             "uiControl": {
-              "code": "Edit - No Delete"
+              "code": "U",
+              "description": "Edit - No Delete"
             },
             "fromDate": "2013-10-31"
           },
@@ -140,21 +148,22 @@
             "address1": "120 SPROUL HALL",
             "address2": "",
             "address3": "",
-            "number1": "",
-            "number2": "",
-            "addressField1": "",
-            "addressField2": "",
-            "addressField3": "",
+            "num1": "",
+            "num2": "",
+            "addrField1": "",
+            "addrField2": "",
+            "addrField3": "",
             "houseType": "",
             "city": "BERKELEY",
             "county": "",
             "stateCode": "CA",
             "postalCode": 94720,
             "countryCode": "USA",
-            "formattedAddress": "120 SPROUL HALL\\nBERKELEY, CA 94720",
+            "formattedAddress": "120 SPROUL HALL\nBERKELEY, CA 94720",
             "disclose": false,
             "uiControl": {
-              "code": "Full Edit"
+              "code": "F",
+              "description": "Full Edit"
             },
             "fromDate": "2014-08-18"
           }
@@ -162,44 +171,82 @@
         "phones": [
           {
             "type": {
+              "code": "CELL",
+              "description": "Mobile"
+            },
+            "number": "415/123-4567",
+            "countryCode": "",
+            "extension": 123,
+            "primary": true,
+            "disclose": false,
+            "uiControl": {
+              "code": "D",
+              "description": "Display Only"
+            }
+          },
+          {
+            "type": {
               "code": "HOME",
               "description": "Home/Permanent"
             },
             "number": "510/642-9507",
             "countryCode": "",
-            "extension": "",
+            "extension": 101,
             "primary": false,
-            "disclose": false
-          },
-          {
-            "type": {
-              "code": "LOCL",
-              "description": "Local"
-            },
-            "number": "510/555-1212",
-            "countryCode": "",
-            "extension": "",
-            "primary": true,
-            "disclose": false
+            "disclose": false,
+            "uiControl": {
+              "code": "U",
+              "description": "Edit - No Delete"
+            }
           }
         ],
         "emails": [
           {
             "type": {
-              "code": "CAMP",
-              "description": "Campus"
+              "code": "OTHR",
+              "description": "Other"
             },
             "emailAddress": "oski@berkeley.edu",
             "primary": true,
-            "disclose": false
+            "disclose": false,
+            "uiControl": {
+              "code": "F",
+              "description": "Full Edit"
+            }
           }
         ],
+        "ethnicities": [
+          {
+            "group": {
+              "code": 2,
+              "description": "Black/African American"
+            },
+            "hispanicLatino": false,
+            "detail": {
+              "code": "BLACK",
+              "description": "African American/ Black"
+            }
+          }
+        ],
+        "usaCountry": {
+          "citizenshipStatus": {
+            "code": 1,
+            "description": "Native"
+          },
+          "militaryStatus": {
+            "code": "",
+            "description": "",
+            "fromDate": "1902-02-01"
+          },
+          "passport": "",
+          "visa": ""
+        },
         "birth": {
           "date": "1975-02-05",
-          "description": "",
+          "description": "United States",
           "locality": "YOSEMITE,CA",
           "stateCode": "",
-          "countryCode": ""
+          "countryCode": "USA"
         },
         "death": "",
         "confidential": false
