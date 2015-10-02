@@ -17,6 +17,11 @@ describe CampusSolutions::AddressLabel do
   context 'mock proxy' do
     let(:proxy) { CampusSolutions::AddressLabel.new(fake: true, country: 'USA') }
     it_should_behave_like 'a proxy that gets data'
+    subject { proxy.get }
+    it 'should properly camelize the fields' do
+      expect(subject[:feed][:labels][0][:label]).to eq 'ADDRESS1'
+      expect(subject[:feed][:labels][0][:field]).to eq 'address1'
+    end
   end
 
   context 'real proxy', testext: true do
