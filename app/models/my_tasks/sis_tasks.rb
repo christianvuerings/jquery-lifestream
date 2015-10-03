@@ -35,12 +35,12 @@ module MyTasks
     def entry_from_result(result)
       {
         emitter: CampusSolutions::Proxy::APP_ID,
-        linkDescription: "View in #{CampusSolutions::Proxy::APP_NAME}",
-        linkUrl: 'http://sisproject.berkeley.edu',
-        sourceUrl: 'http://sisproject.berkeley.edu',
+        linkDescription: result[:checkListDocMgmt][:linkUrlLbl],
+        linkUrl: result[:checkListDocMgmt][:linkUrl],
+        sourceUrl: '',
         status: 'inprogress',
         title: result[:checkListDescr],
-        notes: '',
+        notes: result[:itemComment],
         type: 'task'
       }
     end
