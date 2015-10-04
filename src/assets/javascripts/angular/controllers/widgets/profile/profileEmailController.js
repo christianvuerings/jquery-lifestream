@@ -6,114 +6,88 @@ var _ = require('lodash');
 /**
  * Profile Email controller
  */
-angular.module('calcentral.controllers').controller('ProfileEmailController', function(profileFactory, $scope) {
+angular.module('calcentral.controllers').controller('ProfileEmailController', function(apiService, profileFactory, $scope) {
   angular.extend($scope, {
-    emails: {
+    currentObject: {},
+    emptyObject: {
+      type: {
+        code: ''
+      },
+      emailAddress: '',
+      primary: false
+    },
+    items: {
       content: [],
       editorEnabled: false
     },
-    emailTypes: [],
-    currentObject: {},
+    types: [],
     isSaving: false,
     errorMessage: ''
   });
   $scope.contacts = {};
 
-  var emptyObject = {
-    type: {
-      code: ''
-    },
-    emailAddress: '',
-    primary: false
-  };
-
   var parsePerson = function(data) {
-    var person = data.data.feed.student;
-    angular.extend($scope, {
-      emails: {
-        content: person.emails
-      }
-    });
+    apiService.profile.parseSection($scope, data, 'emails');
   };
 
-  var parseEmailTypes = function(data) {
-    if (!_.get(data, 'data.feed.xlatvalues.values')) {
-      return;
-    }
-    $scope.emailTypes = _.filter(data.data.feed.xlatvalues.values, function(value) {
-      // Filter out the different type controls
-      // D = Display Only
-      // F = Full Edit
-      // N = Do Not Display
-      // U = Edit - No Delete
-      return value.typeControl !== 'N';
-    });
+  var parseTypes = function(data) {
+    $scope.types = apiService.profile.filterTypes(_.get(data, 'data.feed.xlatvalues.values'), $scope.items);
   };
 
   var getPerson = profileFactory.getPerson;
-  var getEmailTypes = profileFactory.getEmailTypes;
+  var getTypes = profileFactory.getTypesEmail;
 
-  var loadInformation = function() {
-    getPerson()
+  var loadInformation = function(options) {
+    $scope.isLoading = true;
+    getPerson({
+      refreshCache: _.get(options, 'refresh')
+    })
     .then(parsePerson)
-    .then(getEmailTypes)
-    .then(parseEmailTypes)
+    .then(getTypes)
+    .then(parseTypes)
     .then(function() {
       $scope.isLoading = false;
     });
   };
 
-  var closeEditors = function(broadcast) {
-    if (broadcast) {
-      $scope.$broadcast('calcentral.custom.api.profile.closeEditors');
-    }
-    angular.forEach($scope.emails.content, function(item) {
-      item.isModifying = false;
-    });
+  var actionCompleted = function(data) {
+    apiService.profile.actionCompleted($scope, data, loadInformation);
+  };
+
+  var deleteCompleted = function(data) {
+    $scope.isDeleting = false;
+    actionCompleted(data);
+  };
+
+  $scope.delete = function(item) {
+    return apiService.profile.delete($scope, profileFactory.deleteEmail, {
+      type: item.type.code
+    }).then(deleteCompleted);
   };
 
   var saveCompleted = function(data) {
     $scope.isSaving = false;
-    if (data.data.errored) {
-      $scope.errorMessage = data.data.feed.errmsgtext;
-    } else {
-      $scope.closeEditor();
-    }
+    actionCompleted(data);
   };
 
-  $scope.saveEmail = function(email) {
-    $scope.isSaving = true;
-
-    profileFactory.postEmail({
-      type: email.type.code,
-      email: email.emailAddress,
-      isPreferred: email.primary ? 'Y' : 'N'
+  $scope.save = function(item) {
+    apiService.profile.save($scope, profileFactory.postEmail, {
+      type: item.type.code,
+      email: item.emailAddress,
+      isPreferred: item.primary ? 'Y' : 'N'
     }).then(saveCompleted);
   };
 
-  var showSaveAddEmail = function(email) {
-    closeEditors(true);
-    email.isModifying = true;
-    $scope.currentObject = angular.copy(email);
-    $scope.errorMessage = '';
-    $scope.emails.editorEnabled = true;
+  $scope.showAdd = function() {
+    apiService.profile.showAdd($scope);
   };
 
-  $scope.showAddEmail = function() {
-    emptyObject.isAdding = true;
-    // Select the first item in the dropdown
-    emptyObject.type.code = $scope.emailTypes[0].fieldvalue;
-    showSaveAddEmail(emptyObject);
-  };
-
-  $scope.showEditEmail = function(email) {
-    showSaveAddEmail(email);
+  $scope.showEdit = function(item) {
+    apiService.profile.showEdit($scope, item);
   };
 
   $scope.closeEditor = function() {
-    closeEditors(true);
-    $scope.currentObject = {};
-    $scope.emails.editorEnabled = false;
+    apiService.profile.closeEditor($scope);
   };
 
   loadInformation();

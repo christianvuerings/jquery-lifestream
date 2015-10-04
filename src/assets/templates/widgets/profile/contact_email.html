@@ -4,22 +4,22 @@
     <div data-ng-if="currentObject.isAdding" class="cc-page-widget-profile-section-content-item">
       <div data-ng-include="'widgets/profile/contact_email_editor.html'"></div>
     </div>
-    <div data-ng-repeat="email in emails.content" class="cc-page-widget-profile-section-content-item">
-      <div data-ng-if="!email.isModifying">
+    <div data-ng-repeat="item in items.content" class="cc-page-widget-profile-section-content-item">
+      <div data-ng-if="!item.isModifying">
         <div>
-          <strong data-ng-bind-template="{{email.type.description}} Email"></strong>
-          <span data-ng-if="email.primary">(preferred)</span>
+          <strong data-ng-bind-template="{{item.type.description}} Email"></strong>
+          <span data-ng-if="item.primary">(preferred)</span>
         </div>
-        <div data-ng-bind="email.emailAddress"></div>
-        <div>
-          <button class="cc-button-link" data-ng-click="showEditEmail(email)">Edit</button>
+        <div data-ng-bind="item.emailAddress"></div>
+        <div data-ng-if="item.uiControl.code !== 'D'">
+          <button class="cc-button-link" data-ng-click="showEdit(item)">Edit</button>
         </div>
       </div>
-      <div data-ng-if="email.isModifying" data-ng-include="'widgets/profile/contact_email_editor.html'"></div>
+      <div data-ng-if="item.isModifying" data-ng-include="'widgets/profile/contact_email_editor.html'"></div>
     </div>
   </div>
-  <div class="cc-page-widget-profile-section-add" data-ng-if="!emails.editorEnabled">
-    <button class="cc-button-link" data-ng-click="showAddEmail()">
+  <div class="cc-page-widget-profile-section-add" data-ng-if="!items.editorEnabled && types.length">
+    <button class="cc-button-link" data-ng-click="showAdd()">
       <i class="fa fa-plus"></i> Add
     </button>
   </div>

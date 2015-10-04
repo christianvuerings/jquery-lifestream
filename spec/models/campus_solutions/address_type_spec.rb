@@ -9,7 +9,7 @@ describe CampusSolutions::AddressType do
     it_behaves_like 'a proxy that got data successfully'
     it 'returns data with the expected structure' do
       expect(subject[:feed][:addressTypes]).to be
-      expect(subject[:feed][:addressTypes][0][:addressType]).to be
+      expect(subject[:feed][:addressTypes][0][:fieldvalue]).to be
       expect(subject[:feed][:addressTypes][0][:descr]).to be
     end
   end
