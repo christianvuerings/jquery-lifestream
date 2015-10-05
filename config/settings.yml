@@ -329,6 +329,7 @@ class_calendar:
 ui_selenium:
   baseUrl: https://calcentral-dev.berkeley.edu
   calNetUrl: https://auth-test.berkeley.edu
+  canvas_base_url: https://ucberkeley.beta.instructure.edu
   canvas_qa_sub_account: secret
   googleAuthUrl: /api/google/request_authorization?force_domain=false
   layer: development

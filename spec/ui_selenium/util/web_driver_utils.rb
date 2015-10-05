@@ -38,7 +38,7 @@ class WebDriverUtils
   end
 
   def self.canvas_base_url
-    Settings.canvas_proxy.url_root
+    Settings.ui_selenium.canvas_base_url
   end
 
   def self.canvas_qa_sub_account
