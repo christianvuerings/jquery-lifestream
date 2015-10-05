@@ -10,4 +10,8 @@
       <a class="cc-button cc-button-blue" data-ng-href="{{sirReceivedItem.higherOneUrl}}">Pay Deposit</a>
     </div>
   </div>
+  <div class="cc-widget-text" data-ng-if="!sirReceivedItem.hasDeposit">
+    <h3>SIR received for <span data-ng-bind="item.config.descrProgramLong"></span></h3>
+    <div>Your Statement of Intent to Register (SIR) has been received successfully. The university is currently processing your statement.</div>
+  </div>
 </div>

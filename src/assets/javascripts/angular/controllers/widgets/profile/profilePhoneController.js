@@ -6,62 +6,38 @@ var _ = require('lodash');
 /**
  * Profile Phone controller
  */
-angular.module('calcentral.controllers').controller('ProfilePhoneController', function(profileFactory, $scope) {
+angular.module('calcentral.controllers').controller('ProfilePhoneController', function(apiService, profileFactory, $scope) {
   angular.extend($scope, {
-    phones: {
+    emptyObject: {
+      type: {
+        code: ''
+      },
+      number: '',
+      countryCode: '',
+      extension: '',
+      primary: false
+    },
+    items: {
       content: [],
       editorEnabled: false
     },
-    phoneTypes: [],
+    types: [],
     currentObject: {},
     isSaving: false,
     errorMessage: ''
   });
   $scope.contacts = {};
 
-  var emptyObject = {
-    type: {
-      code: ''
-    },
-    number: '',
-    countryCode: '',
-    extension: '',
-    primary: false
-  };
-
   var parsePerson = function(data) {
-    var person = data.data.feed.student;
-    angular.extend($scope, {
-      phones: {
-        content: person.phones
-      }
-    });
+    apiService.profile.parseSection($scope, data, 'phones');
   };
 
-  /**
-   * Parse the phone types
-   * We should only return the items that aren't yet in the person object
-   */
-  var parsePhoneTypes = function(data) {
-    if (!_.get(data, 'data.feed.xlatvalues.values')) {
-      return;
-    }
-
-    // Current types for the person
-    var currentTypes = _.pluck($scope.phones.content, 'type.code');
-
-    // Different type controls for the types:
-    // D = Display Only
-    // F = Full Edit
-    // N = Do Not Display
-    // U = Edit - No Delete
-    $scope.phoneTypes = _.filter(data.data.feed.xlatvalues.values, function(value) {
-      return currentTypes.indexOf(value.fieldvalue) === -1 && value.typeControl !== 'D';
-    });
+  var parseTypes = function(data) {
+    $scope.types = apiService.profile.filterTypes(_.get(data, 'data.feed.xlatvalues.values'), $scope.items);
   };
 
   var getPerson = profileFactory.getPerson;
-  var getPhoneTypes = profileFactory.getPhoneTypes;
+  var getTypes = profileFactory.getTypesPhone;
 
   var loadInformation = function(options) {
     $scope.isLoading = true;
@@ -69,31 +45,15 @@ angular.module('calcentral.controllers').controller('ProfilePhoneController', fu
       refreshCache: _.get(options, 'refresh')
     })
     .then(parsePerson)
-    .then(getPhoneTypes)
-    .then(parsePhoneTypes)
+    .then(getTypes)
+    .then(parseTypes)
     .then(function() {
       $scope.isLoading = false;
     });
   };
 
-  var closeEditors = function(broadcast) {
-    if (broadcast) {
-      $scope.$broadcast('calcentral.custom.api.profile.closeEditors');
-    }
-    angular.forEach($scope.phones.content, function(item) {
-      item.isModifying = false;
-    });
-  };
-
   var actionCompleted = function(data) {
-    if (data.data.errored) {
-      $scope.errorMessage = data.data.feed.errmsgtext;
-    } else {
-      $scope.closeEditor();
-      loadInformation({
-        refresh: true
-      });
-    }
+    apiService.profile.actionCompleted($scope, data, loadInformation);
   };
 
   var deleteCompleted = function(data) {
@@ -101,10 +61,9 @@ angular.module('calcentral.controllers').controller('ProfilePhoneController', fu
     actionCompleted(data);
   };
 
-  $scope.deletePhone = function(phone) {
-    $scope.isDeleting = true;
-    profileFactory.deletePhone({
-      type: phone.type.code
+  $scope.delete = function(item) {
+    return apiService.profile.delete($scope, profileFactory.deletePhone, {
+      type: item.type.code
     }).then(deleteCompleted);
   };
 
@@ -113,41 +72,26 @@ angular.module('calcentral.controllers').controller('ProfilePhoneController', fu
     actionCompleted(data);
   };
 
-  $scope.savePhone = function(phone) {
-    $scope.isSaving = true;
-
-    profileFactory.postPhone({
-      type: phone.type.code,
-      phone: phone.number,
-      countryCode: phone.countryCode,
-      extension: phone.extension,
-      isPreferred: phone.primary ? 'Y' : 'N'
+  $scope.save = function(item) {
+    apiService.profile.save($scope, profileFactory.postPhone, {
+      type: item.type.code,
+      phone: item.number,
+      countryCode: item.countryCode,
+      extension: item.extension,
+      isPreferred: item.primary ? 'Y' : 'N'
     }).then(saveCompleted);
   };
 
-  var showSaveAddPhone = function(phone) {
-    closeEditors(true);
-    phone.isModifying = true;
-    $scope.currentObject = angular.copy(phone);
-    $scope.errorMessage = '';
-    $scope.phones.editorEnabled = true;
+  $scope.showAdd = function() {
+    apiService.profile.showAdd($scope);
   };
 
-  $scope.showAddPhone = function() {
-    emptyObject.isAdding = true;
-    // Select the first item in the dropdown
-    emptyObject.type.code = $scope.phoneTypes[0].fieldvalue;
-    showSaveAddPhone(emptyObject);
-  };
-
-  $scope.showEditPhone = function(phone) {
-    showSaveAddPhone(phone);
+  $scope.showEdit = function(item) {
+    apiService.profile.showEdit($scope, item);
   };
 
   $scope.closeEditor = function() {
-    closeEditors(true);
-    $scope.currentObject = {};
-    $scope.phones.editorEnabled = false;
+    apiService.profile.closeEditor($scope);
   };
 
   loadInformation();

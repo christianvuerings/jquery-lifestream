@@ -1,23 +1,28 @@
-<div class="cc-page-widget-profile-section" data-ng-controller="ProfileAddressController">
+<div class="cc-page-widget-profile-section" data-ng-controller="ProfileAddressController" data-cc-spinner-directive>
   <div class="cc-page-widget-profile-section-label">Address</div>
   <div class="cc-page-widget-profile-section-content">
-    <div data-ng-repeat="address in addresses.content" class="cc-page-widget-profile-section-content-item">
-      <div>
-        <strong data-ng-bind-template="{{address.type.description}} Address"></strong>
+    <div data-ng-if="currentObject.isAdding" class="cc-page-widget-profile-section-content-item">
+      <div data-ng-include="'widgets/profile/contact_address_editor.html'"></div>
+    </div>
+    <div data-ng-repeat="item in items.content" class="cc-page-widget-profile-section-content-item">
+      <div data-ng-if="!item.isModifying">
+        <div>
+          <strong data-ng-bind-template="{{item.type.description}} Address"></strong>
+        </div>
+        <div>
+          <div data-ng-bind-html="item.formattedAddress"></div>
+          <div data-ng-bind="item.countryCode" data-ng-if="item.countryCode !== 'USA'"></div>
+        </div>
+        <div data-ng-if="item.uiControl.code !== 'D'">
+          <button class="cc-button-link" data-ng-click="showEdit(item)">Edit</button>
+        </div>
       </div>
-      <div>
-        <div data-ng-bind="address.address1"></div>
-        <div data-ng-bind="address.address2"></div>
-        <div data-ng-bind="address.address3"></div>
-        <div data-ng-bind-template="{{address.city}}, {{address.stateCode}} {{address.postalCode}}"></div>
-        <div data-ng-bind="address.countryCode" data-ng-if="address.countryCode !== 'USA'"></div>
-      </div>
-      <div>
-        <button class="cc-button-link">Edit</button>
-      </div>
+      <div data-ng-if="item.isModifying" data-ng-include="'widgets/profile/contact_address_editor.html'"></div>
     </div>
   </div>
-  <div class="cc-page-widget-profile-section-add">
-    <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
+  <div class="cc-page-widget-profile-section-add" data-ng-if="!items.editorEnabled && types.length">
+    <button class="cc-button-link" data-ng-click="showAdd()">
+      <i class="fa fa-plus"></i> Add
+    </button>
   </div>
 </div>

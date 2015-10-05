@@ -4,22 +4,22 @@
     <div data-ng-if="currentObject.isAdding" class="cc-page-widget-profile-section-content-item">
       <div data-ng-include="'widgets/profile/contact_phone_editor.html'"></div>
     </div>
-    <div data-ng-repeat="phone in phones.content" class="cc-page-widget-profile-section-content-item">
-      <div data-ng-if="!phone.isModifying">
+    <div data-ng-repeat="item in items.content" class="cc-page-widget-profile-section-content-item">
+      <div data-ng-if="!item.isModifying">
         <div>
-          <strong data-ng-bind-template="{{phone.type.description}} Phone"></strong>
-          <span data-ng-if="phone.primary">(preferred)</span>
+          <strong data-ng-bind-template="{{item.type.description}} Phone"></strong>
+          <span data-ng-if="item.primary">(preferred)</span>
         </div>
-        <div data-ng-bind="phone.number"></div>
-        <div data-ng-if="phone.uiControl.code !== 'D'">
-          <button class="cc-button-link" data-ng-click="showEditPhone(phone)">Edit</button>
+        <div data-ng-bind="item.number"></div>
+        <div data-ng-if="item.uiControl.code !== 'D'">
+          <button class="cc-button-link" data-ng-click="showEdit(item)">Edit</button>
         </div>
       </div>
-      <div data-ng-if="phone.isModifying" data-ng-include="'widgets/profile/contact_phone_editor.html'"></div>
+      <div data-ng-if="item.isModifying" data-ng-include="'widgets/profile/contact_phone_editor.html'"></div>
     </div>
   </div>
-  <div class="cc-page-widget-profile-section-add" data-ng-if="!phones.editorEnabled && phoneTypes.length">
-    <button class="cc-button-link" data-ng-click="showAddPhone()">
+  <div class="cc-page-widget-profile-section-add" data-ng-if="!items.editorEnabled && types.length">
+    <button class="cc-button-link" data-ng-click="showAdd()">
       <i class="fa fa-plus"></i> Add
     </button>
   </div>
