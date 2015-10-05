@@ -77,9 +77,23 @@ describe 'My Academics profile and university requirements cards', :testui => tr
                 end
               else
                 api_gpa = academics_api_page.gpa
+                shows_gpa = profile_card.gpa_element.visible?
+                it "hide the GPA by default for UID #{uid}" do
+                  expect(shows_gpa).to be false
+                end
+
+                profile_card.show_gpa
+                gpa_revealed = profile_card.gpa_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
                 my_academics_gpa = profile_card.gpa
-                it "show the GPA for UID #{uid}" do
+                it "show the GPA for UID #{uid} when a user clicks 'Show'" do
+                  expect(gpa_revealed).to be true
                   expect(my_academics_gpa).to eql(api_gpa)
+                end
+
+                profile_card.hide_gpa
+                gpa_hidden = profile_card.gpa_element.when_not_visible(timeout=WebDriverUtils.page_event_timeout)
+                it "hide the GPA for UID #{uid} when a user clicks 'Hide'" do
+                  expect(gpa_hidden).to be true
                 end
               end
 
