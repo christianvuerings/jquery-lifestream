@@ -23,6 +23,13 @@ module CampusSolutions
       feed['LABELS'].each do |label|
         # downcase and camelize the values of the FIELD key
         label['FIELD'] = label['FIELD'].downcase.camelize(:lower)
+        # humanize the LABEL and insert spaces before digits
+        human_label = ''
+        label_words = label['LABEL'].titlecase.split(/(\d)/)
+        label_words.each do |word|
+          human_label = human_label + ' ' + word
+        end
+        label['LABEL'] = human_label.strip
       end
       feed
     end
