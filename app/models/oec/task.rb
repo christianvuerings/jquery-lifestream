@@ -2,7 +2,7 @@ module Oec
   class Task
     include ClassLogger
 
-    LOG_DIRECTORY = Rails.root.join('tmp', 'oec')
+    LOG_DIRECTORY = Pathname.new Settings.oec.local_write_directory
 
     def self.date_format
       '%F'

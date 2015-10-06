@@ -301,6 +301,7 @@ youtube_splash_id: 'EQ-a7xrfVag'
 
 oec:
   administrator_uid: ''
+  local_write_directory: 'tmp/oec'
   explorance:
     sftp_server: ''
     sftp_port: 22
