@@ -70,20 +70,27 @@ module CalnetCrosswalk
     end
 
     def lookup_campus_solutions_id
-      self.class.fetch_from_cache("#{@uid}/campus_solutions_id") do
-        self.class.save_related_cache_key(@uid, self.class.cache_key("#{@uid}/campus_solutions_id"))
-        cs_id = nil
+      lookup_id 'CAMPUS_SOLUTIONS_ID'
+    end
+
+    def lookup_student_id
+      lookup_id 'LEGACY_SIS_STUDENT_ID'
+    end
+
+    def lookup_id(id_type)
+      self.class.fetch_from_cache("#{@uid}/#{id_type}") do
+        self.class.save_related_cache_key(@uid, self.class.cache_key("#{@uid}/#{id_type}"))
+        id = nil
         feed = get[:feed]
         if feed.present?
           feed['Person']['identifiers'].each do |identifier|
-            if identifier['identifierTypeName'] == 'CAMPUS_SOLUTIONS_ID'
-              cs_id = identifier['identifierValue']
-              logger.debug "cs_id is #{cs_id}"
+            if identifier['identifierTypeName'] == id_type
+              id = identifier['identifierValue']
               break
             end
           end
         end
-        cs_id
+        id
       end
     end
 

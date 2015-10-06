@@ -11,11 +11,11 @@ describe HubEdos::Student do
 
     it 'returns data with the expected structure' do
       expect(subject[:feed]['student']).to be
-      expect(subject[:feed]['student']['identifiers'][0]['id']).to be
+      expect(subject[:feed]['student']['identifiers'][0]['type']).to be
     end
   end
 
-  context 'real proxy', testext: true do 
+  context 'real proxy', testext: true do
     let(:proxy) { HubEdos::Student.new(fake: false, user_id: '61889') }
     subject { proxy.get }
 
@@ -24,7 +24,7 @@ describe HubEdos::Student do
 
     it 'returns data with the expected structure' do
       expect(subject[:feed]['student']).to be
-      expect(subject[:feed]['student']['identifiers'][0]['id']).to be
+      expect(subject[:feed]['student']['identifiers'][0]['type']).to be
     end
 
   end

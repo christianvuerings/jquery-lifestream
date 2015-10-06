@@ -1,6 +1,8 @@
 module HubEdos
   class UserAttributes < Proxy
 
+    include User::Student
+
     def initialize(options = {})
       super(Settings.hub_edos_proxy, options)
       initialize_mocks if @fake
@@ -23,8 +25,8 @@ module HubEdos
       result = ActiveSupport::HashWithIndifferentAccess.new
       if (feed = edo_feed[:feed])
         edo = HashConverter.symbolize feed['student'] # TODO will have to dynamically switch student/person EDO somehow
+        set_ids(result)
         extract_passthrough_elements(edo, result)
-        extract_ids(edo, result)
         extract_names(edo, result)
         extract_affiliations(edo, result)
         extract_emails(edo, result)
@@ -41,20 +43,15 @@ module HubEdos
       result
     end
 
+    def set_ids(result)
+      result[:ldap_uid] = @uid
+      result[:student_id] = lookup_student_id_from_crosswalk
+    end
+
     def extract_passthrough_elements(edo, result)
       [:names, :addresses, :phones, :emails, :ethnicities, :languages, :emergencyContacts].each do |field|
         if edo[field].present?
           result[field] = edo[field]
-        end
-      end
-    end
-
-    def extract_ids(edo, result)
-      edo[:identifiers].each do |id|
-        if id[:type] == 'CalNet UID'
-          result[:ldap_uid] = id[:id]
-        elsif id[:type] == 'Student ID'
-          result[:student_id] = id[:id]
         end
       end
     end
