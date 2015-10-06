@@ -19,7 +19,7 @@ module HubEdos
     def build_feed(response)
       raw_response = response.parsed_response
       {
-        'student' => raw_response['StudentResponse']['students'][0]
+        'student' => raw_response['studentResponse']['students']['students'][0]
       }
     end
 
