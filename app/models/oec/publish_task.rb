@@ -3,6 +3,8 @@ module Oec
 
     include MergedSheetValidation
 
+    attr_accessor :staging_dir
+
     def run_internal
       unless (export_sheets = build_and_validate_export_sheets)
         log :error, 'No files will be published'
@@ -10,11 +12,11 @@ module Oec
       end
 
       # The previous run might have failed to clean up properly so we wipe the slate clean before starting.
-      @tmp_dir = LOG_DIRECTORY.join('explorance')
-      FileUtils.rm_rf @tmp_dir
+      @staging_dir = LOG_DIRECTORY.join 'explorance'
+      FileUtils.rm_rf @staging_dir
 
       pattern = "#{Oec::Task.date_format}_%H%M%S"
-      csv_staging_dir = @tmp_dir.join("publish_#{@date_time.strftime pattern}")
+      csv_staging_dir = @staging_dir.join("publish_#{@date_time.strftime pattern}")
       FileUtils.mkdir_p csv_staging_dir
 
       files_to_publish = []
@@ -44,7 +46,7 @@ module Oec
         else
           raise RuntimeError, "System command failed: \n----\n#{cmd}\n----\n"
         end
-        FileUtils.rm_rf @tmp_dir
+        FileUtils.rm_rf @staging_dir
       end
     end
 
@@ -52,7 +54,7 @@ module Oec
 
     def sftp_command(csv_staging_dir, files_to_publish)
       # SFTP batch-mode reads a series of commands from an input batch-file
-      batch_file = "#{@tmp_dir}/batch_file.sftp"
+      batch_file = "#{@staging_dir.expand_path}/batch_file.sftp"
       open(batch_file, 'w') { |f|
         f << "ls -la \n"
         files_to_publish.map do |file_to_put|
