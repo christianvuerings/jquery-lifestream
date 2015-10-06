@@ -7,7 +7,7 @@ describe Oec::PublishTask do
   include_context 'OEC enrollment data merge'
 
   def read_exported_csv(filename)
-    File.read Rails.root.join('tmp', 'oec', 'explorance', tmp_publish_directory, "#{filename}.csv")
+    File.read task.staging_dir.join(tmp_publish_directory, "#{filename}.csv")
   end
 
   let(:instructors) { Oec::Instructors.from_csv(read_exported_csv 'instructors') }
@@ -35,6 +35,12 @@ describe Oec::PublishTask do
 
     context 'valid fixture data' do
       before { task.run }
+
+      it 'should create local staging directory' do
+        path = "#{task.staging_dir.expand_path}/#{tmp_publish_directory}"
+        expect(path).to start_with '/'
+        expect(File).to exist path
+      end
 
       it 'should produce a sane instructors sheet' do
         expect(instructors).to have(16).items
@@ -144,16 +150,10 @@ describe Oec::PublishTask do
       allow(fake_remote_drive).to receive(:find_nested).and_return parent_dir
       allow(fake_remote_drive).to receive(:check_conflicts_and_create_folder).and_return mock_google_drive_item
       allow(fake_remote_drive).to receive(:check_conflicts_and_upload)
-      # task.files_to_publish.each do |file|
-      #   name = file.chomp('.csv')
-      #   item = mock_google_drive_item(name)
-      #   allow(fake_remote_drive).to receive(:find_first_matching_item).with(name, parent_dir).and_return item
-      #   allow(fake_remote_drive).to receive(:export_csv).with(item).and_return "content_of_#{file}"
-      # end
     end
 
     after do
-      Dir.glob(Rails.root.join 'tmp', 'oec', "*#{Oec::PublishTask.name.demodulize.underscore}.log").each do |file|
+      Dir.glob(task.staging_dir.join "*#{Oec::PublishTask.name.demodulize.underscore}.log").each do |file|
         expect(File.open(file, 'rb').read).to include["#{tmp_publish_directory}/courses.csv", 'sftp://']
         FileUtils.rm_rf file
       end
