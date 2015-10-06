@@ -33,12 +33,16 @@ module MyTasks
     end
 
     def entry_from_result(result)
+      status = 'inprogress'
+      if %w(Completed Paidoff Waived Cancelled).include?(result[:itemStatus])
+        status = 'completed'
+      end
       {
         emitter: CampusSolutions::Proxy::APP_ID,
         linkDescription: result[:checkListDocMgmt][:linkUrlLbl],
         linkUrl: result[:checkListDocMgmt][:linkUrl],
         sourceUrl: 'http://sis-project.berkeley.edu',
-        status: 'inprogress',
+        status: status,
         title: result[:checkListDescr],
         notes: result[:itemComment],
         type: 'task'
@@ -52,10 +56,6 @@ module MyTasks
 
     def format_checklist(result)
       unless result.is_a?(Hash) && result[:checkListDescr].present?
-        return nil
-      end
-      if %w(Completed Paidoff Waived Cancelled).include?(result[:itemStatus])
-        # don't include completed things
         return nil
       end
       formatted_entry = entry_from_result result
