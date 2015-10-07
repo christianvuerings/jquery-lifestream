@@ -255,11 +255,21 @@ cache:
     EtsBlog::Alerts: <%= 2.minutes %>
     EtsBlog::ServiceAlerts: <%= 2.minutes %>
 
-    CampusSolutions::ListOfValues: <%= 24.hours %>
-    CampusSolutions::MyHigherOneUrl: <%= 1.seconds %>
-    CampusSolutions::HigherOneUrl: <%= 1.seconds %>
-    CampusSolutions::Deposit: <%= 15.minutes %>
+    CampusSolutions::AddressLabel: <%= 29.days %>
+    CampusSolutions::AddressType: <%= 29.days %>
     CampusSolutions::Checklist: <%= 15.minutes %>
+    CampusSolutions::Country: <%= 29.days %>
+    CampusSolutions::CurrencyCode: <%= 29.days %>
+    CampusSolutions::Deposit: <%= 15.minutes %>
+    CampusSolutions::EthnicitySetup: <%= 29.days %>
+    CampusSolutions::LanguageCode: <%= 29.days %>
+    CampusSolutions::ListOfValues: <%= 24.hours %>
+    CampusSolutions::HigherOneUrl: <%= 1.seconds %>
+    CampusSolutions::MyHigherOneUrl: <%= 1.seconds %>
+    CampusSolutions::NameType: <%= 29.days %>
+    CampusSolutions::SirConfig: <%= 24.hours %>
+    CampusSolutions::State: <%= 29.days %>
+    CampusSolutions::Translate: <%= 24.hours %>
 
     CalnetCrosswalk::Proxy: <%= 29.days %>
 
