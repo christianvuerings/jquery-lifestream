@@ -29,7 +29,7 @@ angular.module('calcentral.directives').directive('ccCampusSolutionsLinkDirectiv
         if (!value) {
           return;
         }
-        if (/^http/.test(value)) {
+        if (/^http/.test(value) && scope.$eval(attrs.ccCampusSolutionsLinkDirectiveEnabled) !== false) {
           value = updateQueryStringParameter(value, 'ucFrom', 'CalCentral');
           value = updateQueryStringParameter(value, 'ucFromLink', $location.absUrl());
           var textAttribute = attrs.ccCampusSolutionsLinkDirectiveText;
