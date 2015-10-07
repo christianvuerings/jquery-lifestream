@@ -11,7 +11,7 @@ TASK_OPTIONS=(term_setup sis_import create_confirmation_sheets report_diff merge
 TASK="$1"
 
 WORKING_DIR="${PWD}"
-THIS_SCRIPT=$(basename '$0')
+THIS_SCRIPT=$(basename $0)
 LOG=$(date +"${WORKING_DIR}/log/${THIS_SCRIPT}_%F_%H:%M:%S.log")
 LOGIT="tee -a ${LOG}"
 
@@ -39,11 +39,12 @@ then
 
 else
   PSV=`( IFS=$'|'; echo "${TASK_OPTIONS[*]}" )`
-  cat << EOF
+  read -d '' usage << EOF
 Usage:
 
-[term_code='2015-D'] [local_write='Y'] [dept_codes='IMMCB PMATH ...'] $0 [${PSV}]
+[term_code='2015-D'] [local_write='Y'] [dept_codes='IMMCB PMATH ...'] ...  ${0} [${PSV}]
 EOF
+  echo "${usage}" | ${LOGIT}
 fi
 
 echo | ${LOGIT}
