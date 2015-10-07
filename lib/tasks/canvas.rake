@@ -62,7 +62,7 @@ namespace :canvas do
       Rails.logger.error 'Must specify DEV_TEST_CANVASES="https://ucb.beta.example.com,https://ucb.test.example.com"'
     else
       CanvasLti::ReconfigureAuthorizationConfigs.reconfigure(test_cas_url, non_production_canvases)
-      Rails.logger.info "Reconfiguration complete for #{dev_test_canvases_string}"
+      Rails.logger.info "Reconfiguration complete for #{non_production_canvases}"
     end
   end
 
