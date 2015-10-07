@@ -307,6 +307,7 @@ features:
   cs_fin_aid: false
   cs_profile: false
   cs_sir: false
+  slate_checklist: false
   webcast_sign_up_on_calcentral: false
   service_alerts_rss: true
 
