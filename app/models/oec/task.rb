@@ -1,5 +1,6 @@
 module Oec
   class Task
+    extend Cache::Cacheable
     include ClassLogger
 
     LOG_DIRECTORY = Pathname.new Settings.oec.local_write_directory
@@ -8,16 +9,24 @@ module Oec
       '%F'
     end
 
+    def self.cache_key(id)
+      "Oec::Task/#{id}"
+    end
+
     def self.timestamp_format
       '%H:%M:%S'
     end
 
     def initialize(opts)
+      @opts = opts
       @log = []
+      @status = 'In progress'
+      @api_task_id = opts.delete :api_task_id
+      write_status_to_cache if opts[:log_to_cache]
+
       @remote_drive = Oec::RemoteDrive.new
       @term_code = opts.delete :term_code
       @date_time = opts[:date_time] || default_date_time
-      @opts = opts
       @course_code_filter = if opts[:dept_names]
                              {dept_name: opts[:dept_names].split.map { |name| name.tr('_', ' ') }}
                            elsif opts[:dept_codes]
@@ -30,12 +39,15 @@ module Oec
     def run
       log :info, "Starting #{self.class.name}"
       run_internal
+      @status = 'Success'
       true
     rescue => e
       log :error, "#{self.class.name} aborted with error: #{e.message}\n#{e.backtrace.join "\n\t"}"
+      @status = 'Error'
       nil
     ensure
       write_log
+      write_status_to_cache if @opts[:log_to_cache]
     end
 
     private
@@ -140,6 +152,7 @@ module Oec
     def log(level, message)
       logger.send level, message
       @log << "[#{Time.now}] #{message}"
+      write_status_to_cache if @opts[:log_to_cache]
     end
 
     def timestamp(arg = @date_time)
@@ -176,7 +189,14 @@ module Oec
         end
       end
     rescue => e
-      logger.error "Could not write log: #{e.message}\n#{e.backtrace.join "\n\t"}"
+      log :error, "Could not write log: #{e.message}\n#{e.backtrace.join "\n\t"}"
+    end
+
+    def write_status_to_cache
+      self.class.write_cache(
+        {status: @status, log: @log},
+        @api_task_id
+      )
     end
 
   end

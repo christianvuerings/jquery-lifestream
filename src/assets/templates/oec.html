@@ -3,7 +3,7 @@
     <h1 class="cc-heading-page-title">OEC Control Panel</h1>
     <div class="cc-oec-content medium-12 columns">
 
-      <form data-ng-if="!taskInProgress" data-ng-submit="runOecTask()">
+      <form data-ng-if="!oecTaskStatus" data-ng-submit="runOecTask()">
 
         <div class="row">
           <div class="small-3 columns">
@@ -63,11 +63,25 @@
         </div>
       </form>
 
-      <div data-ng-if="taskInProgress">
+      <div data-ng-if="oecTaskStatus">
         <div class="cc-oec-text">
-          Your <strong data-ng-bind="taskParameters.selectedTask.friendlyName"></strong> task has started. Watch the action in <a data-ng-href="{{oecDriveUrl}}">your Google Drive account</a>.
+          Your <strong data-ng-bind="taskParameters.selectedTask.friendlyName"></strong> task has started. Results will appear in <a data-ng-href="{{oecDriveUrl}}">your Google Drive account</a>.
         </div>
-        <button class="cc-button cc-button-blue" data-ng-click="initialize()">Start over</button>
+        <div class="cc-oec-status" data-ng-if="oecTaskStatus.status === 'In progress'">
+          In progress...
+        </div>
+        <div class="cc-oec-status" data-ng-if="oecTaskStatus.status !== 'In progress'">
+          <i class="cc-icon fa cc-oec-status-icon"
+             data-ng-class="{true:'fa-check-circle cc-icon-green',false:'fa-exclamation-circle cc-icon-red'}[oecTaskStatus.status==='Success']">
+          </i>
+          <div>
+            <span data-ng-bind="oecTaskStatus.status"></span>.
+          </div>
+        </div>
+        <div class="cc-oec-text">
+          <div class="cc-oec-log" data-ng-repeat="logLine in oecTaskStatus.log" data-ng-bind="logLine"></div>
+        </div>
+        <button class="cc-button cc-button-blue" data-ng-click="initialize()">Back</button>
       </div>
     </div>
   </div>

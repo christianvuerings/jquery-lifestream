@@ -94,6 +94,7 @@ Calcentral::Application.routes.draw do
   # OEC endpoints
   get '/api/oec_tasks' => 'oec_tasks#index', :defaults => { :format => 'json' }
   post '/api/oec_tasks/:task_name' => 'oec_tasks#run', :defaults => { :format => 'json' }
+  get '/api/oec_tasks/status/:task_id' => 'oec_tasks#task_status',  :defaults => { :format => 'json' }
 
   # System utility endpoints
   get '/api/cache/clear' => 'cache#clear', :defaults => { :format => 'json' }
