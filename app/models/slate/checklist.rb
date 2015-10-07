@@ -14,15 +14,19 @@ module Slate
     end
 
     def get
-      internal_response = self.class.smart_fetch_from_cache(id: @uid) do
-        get_internal
-      end
-      if internal_response[:noStudentId] || internal_response[:statusCode] < 400
-        internal_response
+      if Settings.features.slate_checklist
+        internal_response = self.class.smart_fetch_from_cache(id: @uid) do
+          get_internal
+        end
+        if internal_response[:noStudentId] || internal_response[:statusCode] < 400
+          internal_response
+        else
+          {
+            errored: true
+          }
+        end
       else
-        {
-          errored: true
-        }
+        {}
       end
     end
 

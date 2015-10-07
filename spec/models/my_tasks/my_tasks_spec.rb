@@ -44,16 +44,16 @@ describe 'MyTasks' do
 
     it 'should sort tasks into the right buckets' do
       expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 6
-      expect(tasks.count{|task| task[:bucket] == 'Unscheduled'}).to eq 5
+      expect(tasks.count{|task| task[:bucket] == 'Unscheduled'}).to eq 2
 
       # On Sundays, no "later in the week" tasks can escape the "Today" bucket. Since this moves
       # some "Future" tasks to "Today", more total tasks will be in the feed on Sunday.
       if Time.zone.today.sunday?
         expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 7
-        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 9
+        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 8
       else
         expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 2
-        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 18
+        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 17
       end
 
       expect(tasks.count{|task| %w(Overdue Today Future Unscheduled).exclude? task[:bucket]}).to eq 0
@@ -227,7 +227,7 @@ describe 'MyTasks' do
 
     my_tasks_model = MyTasks::Merged.new(@user_id)
     valid_feed = my_tasks_model.get_feed
-    valid_feed[:tasks].length.should == 8
+    valid_feed[:tasks].length.should == 4
   end
 
   it 'should include an updatedDate for unscheduled Canvas tasks' do
