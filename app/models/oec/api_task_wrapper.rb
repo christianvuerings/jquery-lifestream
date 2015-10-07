@@ -47,17 +47,27 @@ module Oec
       }
     ]
 
+    def self.generate_task_id
+      [Time.now.to_f.to_s.gsub('.', ''), SecureRandom.hex(8)].join '-'
+    end
+
     def initialize(task_class, params)
       @task_class = task_class
       @params = translate_params(params)
     end
 
-    def run
-      @task_class.new(@params).run
+    def run(task_id)
+      task = @task_class.new @params.merge(api_task_id: task_id, log_to_cache: true)
+      task.run
     end
 
     def start_in_background
-      self.background.run
+      task_id = self.class.generate_task_id
+      self.background.run task_id
+      {
+        id: task_id,
+        status: 'In progress'
+      }
     end
 
     private
