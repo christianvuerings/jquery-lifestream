@@ -17,10 +17,22 @@ module HubEdos
     end
 
     def build_feed(response)
-      raw_response = response.parsed_response
+      transformed_response = transform_address_keys(response.parsed_response)
       {
-        'student' => raw_response['studentResponse']['students']['students'][0]
+        'student' => transformed_response['studentResponse']['students']['students'][0]
       }
+    end
+
+    def transform_address_keys(response)
+      # this should really be done in the Integration Hub, but they won that argument due to time constraints.
+      response['studentResponse']['students']['students'].each do |student|
+        student['addresses'].each do |address|
+          address['state'] = address.delete('stateCode')
+          address['postal'] = address.delete('postalCode')
+          address['country'] = address.delete('countryCode')
+        end
+      end
+      response
     end
 
   end
