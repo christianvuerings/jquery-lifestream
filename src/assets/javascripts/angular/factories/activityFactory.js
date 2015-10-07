@@ -35,7 +35,7 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
       alert: 'exclamation-circle',
       announcement: 'bullhorn',
       assignment: 'book',
-      campusSolutions: 'comments',
+      campusSolutions: 'sticky-note',
       discussion: 'comments',
       financial: 'usd',
       gradePosting: 'trophy',
