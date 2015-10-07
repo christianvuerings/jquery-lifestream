@@ -151,13 +151,8 @@ module Oec
             worksheet_selection.select { |worksheet_row| worksheet_row[column] == overrides_row[column] }
           end
         end
-        if rows_to_update.any?
-          rows_to_update.each do |row|
-            row.update overrides_row.select { |k,v| update_columns.include?(k) && v.present? }
-          end
-        else
-          row_key = select_columns.map { |col| overrides_row[col] }.join('-')
-          worksheet[row_key] = overrides_row
+        rows_to_update.each do |row|
+          row.update overrides_row.select { |k,v| update_columns.include?(k) && v.present? }
         end
       end
 

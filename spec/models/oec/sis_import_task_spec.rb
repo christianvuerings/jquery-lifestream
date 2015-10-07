@@ -156,14 +156,8 @@ describe Oec::SisImportTask do
             csv << "\n,,,,,FRENCH,215,,,,,,,Y,01-20-2015,05-16-2015"
           end
 
-          it 'appends unmatched row with course code matching worksheet' do
-            expect(subject.last['DEPT_NAME']).to eq 'POL SCI'
-            expect(subject.last['CATALOG_ID']).to eq '215'
-            expect(subject.last['MODULAR_COURSE']).to eq 'Y'
-            expect(subject.last['COURSE_ID']).to be_blank
-          end
-
-          it 'does not append unmatched row with course code not matching worksheet' do
+          it 'ignores unmatched rows' do
+            expect(subject.find { |row| row['DEPT_NAME'] == 'POL SCI' && row['CATALOG_ID'] == '215' }).to be_nil
             expect(subject.find { |row| row['DEPT_NAME'] == 'FRENCH' }).to be_nil
           end
         end
