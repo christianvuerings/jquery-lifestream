@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="cc-oec-text">
-          <div class="cc-oec-log" data-ng-repeat="logLine in oecTaskStatus.log" data-ng-bind="logLine"></div>
+          <div class="cc-oec-log" data-ng-repeat="logLine in oecTaskStatus.log track by $index" data-ng-bind="logLine"></div>
         </div>
         <button class="cc-button cc-button-blue" data-ng-click="initialize()">Back</button>
       </div>

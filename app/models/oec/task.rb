@@ -151,7 +151,7 @@ module Oec
 
     def log(level, message)
       logger.send level, message
-      @log << "[#{Time.now}] #{message}"
+      @log << "[#{Time.now.strftime '%T'}] #{message}"
       write_status_to_cache if @opts[:log_to_cache]
     end
 
