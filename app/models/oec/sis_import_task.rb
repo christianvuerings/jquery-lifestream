@@ -1,6 +1,8 @@
 module Oec
   class SisImportTask < Task
 
+    on_success_run Oec::ReportDiffTask, if: proc { !@opts[:local_write] }
+
     def run_internal
       @dept_forms = {}
       log :info, "Will import SIS data for term #{@term_code}"

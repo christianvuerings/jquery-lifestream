@@ -5,6 +5,12 @@ module Oec
 
     LOG_DIRECTORY = Pathname.new Settings.oec.local_write_directory
 
+    class << self; attr_accessor :success_callback; end
+
+    def self.on_success_run(task_class, opts={})
+      self.success_callback = opts.merge(class: task_class)
+    end
+
     def self.date_format
       '%F'
     end
@@ -21,11 +27,11 @@ module Oec
       @opts = opts
       @log = []
       @status = 'In progress'
-      @api_task_id = opts.delete :api_task_id
+      @api_task_id = opts[:api_task_id]
       write_status_to_cache if opts[:log_to_cache]
 
       @remote_drive = Oec::RemoteDrive.new
-      @term_code = opts.delete :term_code
+      @term_code = opts[:term_code]
       @date_time = opts[:date_time] || default_date_time
       @course_code_filter = if opts[:dept_names]
                              {dept_name: opts[:dept_names].split.map { |name| name.tr('_', ' ') }}
@@ -39,7 +45,7 @@ module Oec
     def run
       log :info, "Starting #{self.class.name}"
       run_internal
-      @status = 'Success'
+      @status = 'Success' unless self.class.success_callback
       true
     rescue => e
       log :error, "#{self.class.name} aborted with error: #{e.message}\n#{e.backtrace.join "\n\t"}"
@@ -48,6 +54,7 @@ module Oec
     ensure
       write_log
       write_status_to_cache if @opts[:log_to_cache]
+      run_success_callback if self.class.success_callback && @status != 'Error'
     end
 
     private
@@ -155,6 +162,12 @@ module Oec
       write_status_to_cache if @opts[:log_to_cache]
     end
 
+    def run_success_callback
+      return if (condition = self.class.success_callback[:if]) && !instance_eval(&condition)
+      task_opts = @opts.merge(previous_task_log: @log)
+      self.class.success_callback[:class].new(task_opts).run
+    end
+
     def timestamp(arg = @date_time)
       arg.strftime self.class.timestamp_format
     end
@@ -193,8 +206,10 @@ module Oec
     end
 
     def write_status_to_cache
+      previous_log_if_any = @opts[:previous_task_log] || []
+      log = previous_log_if_any + @log
       self.class.write_cache(
-        {status: @status, log: @log},
+        {status: @status, log: log},
         @api_task_id
       )
     end
