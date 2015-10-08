@@ -82,9 +82,15 @@
           </div>
         </div>
       </div>
+      <hr />
     </div>
-    <hr />
-    <div class="cc-clearfix-container cc-text-small">
+    <div data-ng-if="!finaidSummary.finaidYears.length">
+      <div>You do not currently have any Financial Aid information ready to view.
+        Please check <a href="http://financialaid.berkeley.edu/">Financial Aid &amp; Scholarships</a>
+        or contact <a href="http://studentcentral.berkeley.edu/">Cal Student Central</a> for more information.
+      </div>
+    </div>
+    <div class="cc-clearfix-container cc-text-small" data-ng-if="finaidSummary.finaidYears.length">
       <div class="cc-left" data-ng-if="canSeeFinaidData">
         <a data-ng-href="{{finaidUrl}}" data-ng-if="!shoppingSheet.url && !isMainFinaid">View Awards</a>
         <a data-ng-href="{{shoppingSheet.url}}" data-ng-if="shoppingSheet.url"><i class="fa fa-file-text"></i> Shopping Sheet</a>

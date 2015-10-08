@@ -31,6 +31,9 @@ angular.module('calcentral.controllers').controller('FinaidSummaryController', f
    * Set the default selections on the finaid year and semester options
    */
   var setDefaultSelections = function(data) {
+    if (!data.finaidSummary) {
+      return;
+    }
     finaidService.setDefaultFinaidYear(data, $routeParams.finaidYearId);
     finaidService.setDefaultSemesterOption($routeParams.semesterOptionId);
     selectFinaidYear();
