@@ -38,7 +38,7 @@ module Oec
                            elsif opts[:dept_codes]
                              {dept_code: opts[:dept_codes].split}
                            else
-                             {dept_name: Oec::CourseCode.included_dept_names}
+                             {include_in_oec: true}
                            end
     end
 
