@@ -83,6 +83,7 @@ angular.module('calcentral.services').service('profileService', function() {
    * Save a certain item in a section
    */
   var save = function($scope, action, item) {
+    $scope.errorMessage = '';
     $scope.isSaving = true;
     return action(item);
   };
@@ -90,10 +91,13 @@ angular.module('calcentral.services').service('profileService', function() {
   /**
    * Show the editor to add / edit object
    */
-  var showSaveAdd = function($scope, item) {
+  var showSaveAdd = function($scope, item, isAdding) {
     closeEditors($scope);
+    angular.merge($scope.currentObject, {
+      data: item,
+      isAdding: isAdding
+    });
     item.isModifying = true;
-    $scope.currentObject = angular.copy(item);
     $scope.errorMessage = '';
     $scope.items.editorEnabled = true;
   };
@@ -103,10 +107,13 @@ angular.module('calcentral.services').service('profileService', function() {
    */
   var showAdd = function($scope) {
     var emptyObject = angular.copy($scope.emptyObject);
-    emptyObject.isAdding = true;
-    // Select the first item in the dropdown
-    emptyObject.type.code = $scope.types[0].fieldvalue;
-    showSaveAdd($scope, emptyObject);
+    angular.merge(emptyObject, {
+      type: {
+        // Select the first item in the dropdown
+        code: $scope.types[0].fieldvalue
+      }
+    });
+    showSaveAdd($scope, emptyObject, true);
   };
 
   /**
