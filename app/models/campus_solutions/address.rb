@@ -27,14 +27,7 @@ module CampusSolutions
           FieldMapping.required(:state, :STATE),
           FieldMapping.required(:addrField1, :ADDR_FIELD1),
           FieldMapping.required(:addrField2, :ADDR_FIELD2),
-          FieldMapping.required(:addrField3, :ADDR_FIELD3),
-          FieldMapping.required(:geoCode, :GEO_CODE),
-          FieldMapping.required(:inCityLimit, :IN_CITY_LIMIT),
-          FieldMapping.required(:address1Ac, :ADDRESS1_AC),
-          FieldMapping.required(:address2Ac, :ADDRESS2_AC),
-          FieldMapping.required(:address3Ac, :ADDRESS3_AC),
-          FieldMapping.required(:cityAc, :CITY_AC),
-          FieldMapping.required(:regRegion, :REG_REGION)
+          FieldMapping.required(:addrField3, :ADDR_FIELD3)
         ]
       )
     end
