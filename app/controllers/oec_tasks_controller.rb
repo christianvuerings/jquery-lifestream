@@ -15,10 +15,9 @@ class OecTasksController < ApplicationController
   # GET /api/oec_tasks
 
   def index
-    departments = Berkeley::Departments.department_map.map { |k,v| {code: k, name: Berkeley::Departments.shortened(v)} }
     render json: {
       currentTerm: Berkeley::Terms.fetch.current.to_english,
-      oecDepartments: departments.sort_by { |dept| dept[:name] },
+      oecDepartments: Oec::ApiTaskWrapper.department_list,
       oecTasks: Oec::ApiTaskWrapper::TASK_LIST,
       oecTerms: Berkeley::Terms.fetch.campus.values.map { |term| term.to_english }
     }

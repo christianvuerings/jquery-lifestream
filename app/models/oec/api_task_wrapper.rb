@@ -47,6 +47,18 @@ module Oec
       }
     ]
 
+    def self.department_list
+      participating_department_codes = Oec::CourseCode.by_dept_code(include_in_oec: true).keys
+      departments = Berkeley::Departments.department_map.map do |k,v|
+        {
+          code: k,
+          name: Berkeley::Departments.shortened(v),
+          participating: participating_department_codes.include?(k)
+        }
+      end
+      departments.sort_by { |dept| dept[:name] }
+    end
+
     def self.generate_task_id
       [Time.now.to_f.to_s.gsub('.', ''), SecureRandom.hex(8)].join '-'
     end
