@@ -45,6 +45,26 @@ describe GoogleApps::SheetsManager do
       end
     end
 
+    it 'should update cells in batch' do
+      spreadsheet_file = @sheet_manager.find_items(id: @spreadsheet.id, parent_id: @folder.id).first
+      worksheet = @sheet_manager.spreadsheet_by_id(@spreadsheet.id).worksheets.first
+      @sheet_manager.update_worksheet(worksheet, {
+        [2, 2] => 'Kilroy',
+        [2, 3] => 'was',
+        [4, 4] => 'here'
+      })
+      csv_export = @sheet_manager.export_csv spreadsheet_file
+      parsed_csv = CSV.parse csv_export
+      # The CSV export is indexed from zero, but the Sheets API is indexed from one.
+      expect(parsed_csv[1][1]).to eq 'Kilroy'
+      expect(parsed_csv[1][2]).to eq 'was'
+      expect(parsed_csv[3][3]).to eq 'here'
+      # Other cells are unmodified.
+      @sis_import_sheet.each_with_index do |row, i|
+        expect(parsed_csv[i+1][0]).to eq row['COURSE_ID']
+      end
+    end
+
     it 'should find no spreadsheet mapped to bogus id' do
       sheet_by_id = @sheet_manager.spreadsheet_by_id 'bogus-id'
       expect(sheet_by_id).to be_nil

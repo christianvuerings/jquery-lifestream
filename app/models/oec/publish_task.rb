@@ -1,60 +1,69 @@
 module Oec
   class PublishTask < Task
 
+    include MergedSheetValidation
+
+    attr_accessor :staging_dir
+
     def run_internal
-      download_dir = download_exports_from_drive
-      # If local_write then our work is done; the downloaded 'export' files will not be removed.
+      unless (export_sheets = build_and_validate_export_sheets)
+        log :error, 'No files will be published'
+        return
+      end
+
+      # The previous run might have failed to clean up properly so we wipe the slate clean before starting.
+      @staging_dir = LOG_DIRECTORY.join 'explorance'
+      FileUtils.rm_rf @staging_dir
+
+      pattern = "#{Oec::Task.date_format}_%H%M%S"
+      csv_staging_dir = @staging_dir.join("publish_#{@date_time.strftime pattern}")
+      FileUtils.mkdir_p csv_staging_dir
+
+      files_to_publish = []
+      export_sheets.each do |sheet|
+        sheet.export_directory = csv_staging_dir
+        sheet.write_csv
+        files_to_publish << "#{sheet.export_name}.csv"
+      end
+
+      # If local_write then our work is done; the staged CSVs will not be removed.
       unless @opts[:local_write]
         # SFTP stdout and stderr will go to a log file.
         FileUtils.mkdir_p LOG_DIRECTORY unless Dir.exists? LOG_DIRECTORY
-        filename = "#{self.class.name.demodulize.underscore}_sftp_#{DateTime.now.strftime '%F_%H:%M:%S'}.log"
+        pattern = "#{Oec::Task.date_format}_#{Oec::Task.timestamp_format}"
+        filename = "#{self.class.name.demodulize.underscore}_sftp_#{DateTime.now.strftime pattern}.log"
         sftp_stdout = LOG_DIRECTORY.join(filename).expand_path
-        cmd = "#{sftp_command(download_dir)} > #{sftp_stdout} 2>&1"
-        system(cmd) ? log(:info, "Successfully ran system command: #{cmd}") : raise(RuntimeError, "System command failed: #{cmd}")
-        # Now copy the command's output to remote drive.
-        sftp_stdout_to_log sftp_stdout
-        FileUtils.rm_rf download_dir
-      end
-    end
+        cmd = "#{sftp_command(csv_staging_dir, files_to_publish)} > #{sftp_stdout} 2>&1"
+        if system(cmd)
+          log :info, "Successfully ran system command: \n#{cmd}"
+          # Now copy the command's output to remote drive.
+          sftp_stdout_to_log sftp_stdout
 
-    def files_to_publish
-      %w(courses.csv course_instructors.csv course_students.csv course_supervisors.csv instructors.csv students.csv supervisors.csv)
+          exports_now = find_or_create_now_subfolder 'exports'
+          export_sheets.each do |sheet|
+            export_sheet(sheet, exports_now)
+          end
+        else
+          raise RuntimeError, "System command failed: \n----\n#{cmd}\n----\n"
+        end
+        FileUtils.rm_rf @staging_dir
+      end
     end
 
     private
 
-    def download_exports_from_drive
-      datetime_to_publish = @opts[:datetime_to_publish] || "#{datestamp} #{timestamp}"
-      tmp_dir = LOG_DIRECTORY.join("publish_#{datetime_to_publish.tr(' :', '_')}")
-      FileUtils.mkdir_p tmp_dir
-      parent = @remote_drive.find_nested([@term_code, 'exports', datetime_to_publish], on_failure: :error)
-      files_to_publish.each do |filename|
-        if (remote_content = @remote_drive.find_first_matching_item(filename.chomp('.csv'), parent))
-          open(tmp_dir.join(filename), 'w') { |f|
-            f << @remote_drive.export_csv(remote_content)
-            f << "\n"
-          }
+    def sftp_command(csv_staging_dir, files_to_publish)
+      # SFTP batch-mode reads a series of commands from an input batch-file
+      batch_file = "#{@staging_dir.expand_path}/batch_file.sftp"
+      open(batch_file, 'w') { |f|
+        f << "ls -la \n"
+        files_to_publish.map do |file_to_put|
+          f << "put #{csv_staging_dir.expand_path}/#{file_to_put} \n"
         end
-      end
-      tmp_dir.to_s
-    end
-
-    def sftp_command(download_dir)
-      e = Settings.oec.explorance
-      cmd = "lftp sftp://#{e.sftp_user}"
-      # If password is blank then SSH key-based auth
-      cmd.concat ":#{e.sftp_password}" unless e.sftp_password.blank?
-      cmd.concat "@#{e.sftp_server}:#{e.sftp_port} -e '#{sftp_script download_dir}'"
-      cmd
-    end
-
-    def sftp_script(download_dir)
-      download_dir.chomp!('/')
-      put_files = files_to_publish.map { |file| "put #{download_dir}/#{file}" }.join("\n")
-      %(
-        #{put_files}
-        exit
-      )
+        f << "exit \n"
+      }
+      settings = Settings.oec.explorance
+      "sftp -v -b '#{batch_file}' -oPort=#{settings.sftp_port} -oIdentityFile=#{settings.ssh_private_key_file} #{settings.sftp_user}@#{settings.sftp_server}"
     end
 
     def sftp_stdout_to_log(sftp_output)

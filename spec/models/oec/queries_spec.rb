@@ -71,9 +71,6 @@ describe Oec::Queries do
     it 'should include instructor data' do
       expect_results(%w(ldap_uid sis_id first_name last_name email_address instructor_func affiliations), allow_nil: true)
     end
-    it 'should include hard-coded values' do
-      expect_results({'blue_role' => '23'})
-    end
     it 'should include subquery-generated values' do
       expect_results(%w(enrollment_count), allow_nil: false)
       expect_results(%w(cross_listed_ccns co_scheduled_ccns), allow_nil: true)

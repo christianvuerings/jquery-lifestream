@@ -53,6 +53,10 @@ angular.module('calcentral.config').config(function($routeProvider) {
     templateUrl: 'cars_details.html',
     controller: 'MyFinancesController'
   }).
+  when('/oec', {
+    templateUrl: 'oec.html',
+    controller: 'OecController'
+  }).
   when('/finances/finaid/:finaidYearId?/:semesterOptionId?', {
     templateUrl: 'finaid.html',
     controller: 'MyFinancesController'

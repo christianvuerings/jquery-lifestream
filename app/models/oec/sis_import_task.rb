@@ -1,13 +1,16 @@
 module Oec
   class SisImportTask < Task
 
+    on_success_run Oec::ReportDiffTask, if: proc { !@opts[:local_write] }
+
     def run_internal
       @dept_forms = {}
       log :info, "Will import SIS data for term #{@term_code}"
       imports_now = find_or_create_now_subfolder('imports')
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
-        log :info, "Generating #{dept_code}.csv"
+        @term_dates ||= default_term_dates
         worksheet = Oec::SisImportSheet.new(dept_code: dept_code)
+        log :info, "Generating sheet: '#{worksheet.export_name}'"
         import_courses(worksheet, course_codes)
         export_sheet(worksheet, imports_now)
       end
@@ -18,21 +21,20 @@ module Oec
       cross_listed_ccns = Set.new
       Oec::Queries.courses_for_codes(@term_code, course_codes, @opts[:import_all]).each do |course_row|
         if import_course(worksheet, course_row)
-          course_codes_by_ccn[course_row['course_cntl_num']] ||= course_row.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
           cross_listed_ccns.merge [course_row['cross_listed_ccns'], course_row['co_scheduled_ccns']].join(',').split(',').reject(&:blank?)
         end
+        course_codes_by_ccn[course_row['course_cntl_num']] ||= course_row.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
       end
       additional_cross_listings = cross_listed_ccns.reject{ |ccn| course_codes_by_ccn[ccn].present? }
       Oec::Queries.courses_for_cntl_nums(@term_code, additional_cross_listings).each do |cross_listing|
         next unless should_include_cross_listing? cross_listing
-        if import_course(worksheet, cross_listing)
-          course_codes_by_ccn[cross_listing['course_cntl_num']] = cross_listing.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
-        end
+        import_course(worksheet, cross_listing)
+        course_codes_by_ccn[cross_listing['course_cntl_num']] = cross_listing.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
       end
       set_cross_listed_values(worksheet, course_codes_by_ccn)
       flag_joint_faculty_gsi worksheet
-      merge_supplemental_data(worksheet, course_codes)
-      set_term_dates worksheet
+      apply_overrides(worksheet, Oec::Courses, course_codes, %w(DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM))
+      apply_overrides(worksheet, Oec::Instructors, course_codes, %w(LDAP_UID SIS_ID))
     end
 
     def import_course(worksheet, course)
@@ -72,8 +74,8 @@ module Oec
       worksheet.each do |course_row|
         cross_listed_ccns = [course_row['CROSS_LISTED_CCNS'], course_row['CO_SCHEDULED_CCNS']].join(',').split(',').reject(&:blank?)
         cross_listed_course_codes = course_codes_by_ccn.slice(*cross_listed_ccns).values
-        # A count of less than 2 means that cross-listed course codes were screened out by import_course and should not be reported.
-        next if cross_listed_course_codes.count < 2
+        # Move along unless there are multiple course codes in play.
+        next unless cross_listed_course_codes.count > 1
         # Official cross-listings, as opposed to room shares, will have this value already set to 'Y'.
         course_row['CROSS_LISTED_FLAG'] ||= 'RM SHARE'
         last_dept_names = nil
@@ -135,43 +137,30 @@ module Oec
       end
     end
 
-    def merge_supplemental_data(worksheet, course_codes)
-      return unless (supplemental_course_sheet = get_supplemental_worksheet Oec::Courses)
+    def apply_overrides(worksheet, type, course_codes, select_columns)
+      return unless (overrides_sheet = get_overrides_worksheet type)
 
-      # These columns in the 'courses' worksheet specify match conditions for rows to update.
-      select_columns = %w(DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM)
       # The remaining columns hold data to be merged.
       update_columns = worksheet.headers - select_columns
 
-      supplemental_course_sheet.each do |supplemental_row|
-        next unless course_codes.find { |code| code.matches_row? supplemental_row }
+      overrides_sheet.each do |overrides_row|
+        next if (type == Oec::Courses) && !course_codes.find { |code| code.matches_row? overrides_row }
 
         rows_to_update = select_columns.inject(worksheet) do |worksheet_selection, column|
-          if supplemental_row[column].blank? || worksheet_selection.none?
+          if overrides_row[column].blank? || worksheet_selection.none?
             worksheet_selection
           else
-            worksheet_selection.select { |worksheet_row| worksheet_row[column] == supplemental_row[column] }
+            worksheet_selection.select { |worksheet_row| worksheet_row[column] == overrides_row[column] }
           end
         end
-        if rows_to_update.any?
-          rows_to_update.each do |row|
-            row.update supplemental_row.select { |k,v| update_columns.include?(k) && v.present? }
-          end
-        else
-          row_key = select_columns.map { |col| supplemental_row[col] }.join('-')
-          worksheet[row_key] = supplemental_row
+        rows_to_update.each do |row|
+          row.update overrides_row.select { |k,v| update_columns.include?(k) && v.present? }
         end
       end
-    end
 
-    def set_term_dates(worksheet)
-      term_slug = Berkeley::TermCodes.to_slug(*@term_code.split('-'))
-      return unless (term = Berkeley::Terms.fetch.campus[term_slug])
-      term_dates = {
-        'START_DATE' => term.classes_start.strftime('%m-%d-%Y'),
-        'END_DATE' => term.instruction_end.strftime('%m-%d-%Y')
-      }
-      worksheet.each { |row| row.update(term_dates) unless row['MODULAR_COURSE'].present? }
+      if (type == Oec::Courses) && @term_dates
+        worksheet.each { |row| row.update(@term_dates) unless row['MODULAR_COURSE'].present? }
+      end
     end
 
   end

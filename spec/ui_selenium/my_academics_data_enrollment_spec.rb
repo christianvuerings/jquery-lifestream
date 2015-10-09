@@ -66,7 +66,8 @@ describe 'My Academics enrollments', :testui => true do
                 end
 
                 show_more_button_visible = my_academics.show_more_element.visible?
-                if all_semester_names.length > default_semester_names.length || !academics_api_page.addl_credits.nil?
+                if all_semester_names.length > default_semester_names.length ||
+                  (academics_api_page.past_semesters(all_semesters).any? && !academics_api_page.addl_credits.nil?)
                   it "offers a 'Show More' button for UID #{uid}" do
                     expect(show_more_button_visible).to be true
                   end

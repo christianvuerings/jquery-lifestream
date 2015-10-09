@@ -15,7 +15,6 @@ module Oec
         FIRST_NAME
         LAST_NAME
         EMAIL_ADDRESS
-        INSTRUCTOR_FUNC
         EVALUATE
         DEPT_FORM
         EVALUATION_TYPE
@@ -24,8 +23,6 @@ module Oec
         END_DATE
       )
     end
-
-    validate('LDAP_UID') { |row| 'Non-numeric' unless row['LDAP_UID'] =~ /\A\d+\Z/ }
 
   end
 end

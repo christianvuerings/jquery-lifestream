@@ -11,6 +11,11 @@ describe CanvasLti::ReconfigureAuthorizationConfigs do
           'log_in_url' => nil,
           'login_handle_name' => 'LDAP UID',
           'unknown_user_url' => ''
+        },
+        {
+          'auth_type' => 'canvas',
+          'id' => 1800,
+          'position' => 2
         }
       ]
     }

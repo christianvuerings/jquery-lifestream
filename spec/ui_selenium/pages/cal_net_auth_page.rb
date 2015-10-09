@@ -29,8 +29,8 @@ require_relative '../util/user_utils'
     end
 
     def logout
-      logout_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      logout_link
+      navigate_to "#{WebDriverUtils.cal_net_url}/cas/logout"
+      logout_conf_heading_element.when_visible timeout=WebDriverUtils.page_load_timeout
     end
 
   end
