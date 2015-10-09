@@ -58,7 +58,7 @@ module Oec
       open(batch_file, 'w') { |f|
         f << "ls -la \n"
         files_to_publish.map do |file_to_put|
-          f << "put #{csv_staging_dir}/#{file_to_put} \n"
+          f << "put #{csv_staging_dir.expand_path}/#{file_to_put} \n"
         end
         f << "exit \n"
       }
