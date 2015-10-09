@@ -44,7 +44,7 @@ module CalCentralPages
     end
 
     def wait_for_fin_resources_links
-      fin_resources_list_element.when_visible(timeout=WebDriverUtils.fin_resources_links_timeout)
+      fin_resources_list_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     end
 
     def has_no_cars_data_msg?

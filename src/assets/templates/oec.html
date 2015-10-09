@@ -1,0 +1,109 @@
+<div class="cc-oec" data-cc-spinner-directive>
+  <div data-ng-if="!displayError">
+    <h1 class="cc-heading-page-title">OEC Control Panel</h1>
+    <div class="cc-oec-content medium-12 columns">
+
+      <form data-ng-if="!oecTaskStatus" data-ng-submit="runOecTask()">
+
+        <div class="row">
+          <div class="small-3 columns">
+            <label for="cc-page-oec-task" class="cc-oec-label">Task to run:</label>
+          </div>
+          <div class="small-9 columns">
+            <div class="cc-select">
+              <select id="cc-page-oec-task" data-ng-model="taskParameters.selectedTask" data-ng-options="task.friendlyName for task in oecTasks">
+                <option value="">Choose a task</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-3 columns">
+            <label for="cc-page-oec-term" class="cc-oec-label">Term:</label>
+          </div>
+          <div class="small-9 columns">
+            <div class="cc-select">
+              <select id="cc-page-oec-term" data-ng-options="term for term in oecTerms" data-ng-model="taskParameters.options.term"></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" data-ng-if="taskParameters.selectedTask.acceptsDepartmentOptions">
+          <div class="small-3 columns">
+            <label for="cc-page-oec-department" class="cc-oec-label">Department(s):</label>
+          </div>
+          <div class="small-9 columns">
+            <div class="cc-select">
+              <select id="cc-page-oec-department"
+                      data-ng-model="taskParameters.options.departmentCode"
+                      data-ng-options="department.code as department.name for department in oecDepartments">
+                <option value="">All participating departments</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-9 small-offset-3 columns cc-oec-text" data-ng-if="taskParameters.selectedTask.name">
+            <strong data-ng-bind-html="taskParameters.selectedTask.friendlyName"></strong>:
+            <span data-ng-bind-html="taskParameters.selectedTask.htmlDescription"></span>
+          </div>
+
+          <div class="small-9 small-offset-3 columns cc-oec-text" data-ng-if="taskParameters.selectedTask.acceptsDepartmentOptions && !taskParameters.options.departmentCode.length">
+            <strong>All participating departments</strong> are selected. The following departments will be included:
+            <ul>
+              <li data-ng-repeat="department in oecDepartments" data-ng-if="department.participating" data-ng-bind="department.name"></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-9 small-offset-3 columns">
+            <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="!taskParameters.selectedTask.name.length || !taskParameters.options.term.length">
+              Run task
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div data-ng-if="oecTaskStatus">
+        <div class="cc-oec-text">
+          Your <strong data-ng-bind="taskParameters.selectedTask.friendlyName"></strong> task has started. Results will appear in <a data-ng-href="{{oecDriveUrl}}">your Google Drive account</a>.
+        </div>
+        <div class="cc-oec-status" data-ng-if="oecTaskStatus.status === 'In progress'">
+          In progress...
+        </div>
+        <div class="cc-oec-status" data-ng-if="oecTaskStatus.status !== 'In progress'">
+          <i class="cc-icon fa cc-oec-status-icon"
+             data-ng-class="{true:'fa-check-circle cc-icon-green',false:'fa-exclamation-circle cc-icon-red'}[oecTaskStatus.status==='Success']">
+          </i>
+          <div>
+            <span data-ng-bind="oecTaskStatus.status"></span>.
+          </div>
+        </div>
+        <div class="cc-oec-text">
+          <div class="cc-oec-log" data-ng-repeat="logLine in oecTaskStatus.log track by $index" data-ng-bind="logLine"></div>
+        </div>
+        <button class="cc-button cc-button-blue" data-ng-click="initialize()">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <div data-ng-if="displayError === 'unauthorized'">
+    <h1 class="cc-heading-page-title">Access Denied</h1>
+    <div class="cc-oec-content">
+      You are not authorized to use this feature.
+    </div>
+  </div>
+
+  <div data-ng-if="displayError === 'failure'">
+    <h1 class="cc-heading-page-title">Unexpected Error</h1>
+    <div class="cc-oec-content">
+      <div class="cc-oec-text">
+        Sorry! Please try again, or, if the error persists, contact CalCentral support.
+      </div>
+      <button class="cc-button cc-button-blue" data-ng-click="initialize()">Start over</button>
+    </div>
+  </div>
+</div>

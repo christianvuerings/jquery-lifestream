@@ -204,7 +204,7 @@ describe CanvasCsv::MaintainUsers do
     end
   end
 
-  context 'when a user account no longer appears in campus systems' do
+  context 'when a user account no longer appears in the campus DB' do
     let(:uid) { random_id }
     let(:student_id) { random_id }
     let(:canvas_user_id) { random_id }
@@ -221,9 +221,34 @@ describe CanvasCsv::MaintainUsers do
       }
     }
     let(:campus_rows) { [] }
+    let(:ldap_record) { nil }
     before do
       allow(Settings.canvas_proxy).to receive(:inactivate_expired_users).and_return(inactivate_expired_users)
+      allow_any_instance_of(CanvasCsv::Ldap).to receive(:search_by_uid).with(uid).and_return(ldap_record)
       subject.categorize_user_account(existing_account, campus_rows)
+    end
+    context 'when the campus DB account is marked as having no active CalNet account' do
+      let(:campus_rows) { [
+        {
+          'ldap_uid' => uid.to_i,
+          'first_name' => 'Syd',
+          'last_name' => 'Barrett',
+          'email_address' => "#{uid}@example.edu",
+          'affiliations' => 'STUDENT-TYPE-REGISTERED',
+          'student_id' => student_id,
+          'person_type' => 'Z'
+        }
+      ] }
+      let(:inactivate_expired_users) { true }
+      it 'deactivates the user account' do
+        expect(account_changes.length).to eq(1)
+        expect(account_changes[0]['login_id']).to eq "inactive-#{uid}"
+        expect(account_changes[0]['user_id']).to eq "UID:#{uid}"
+        expect(account_changes[0]['email']).to be_blank
+        expect(subject.sis_user_id_changes).to eq({"sis_login_id:#{uid}" => "UID:#{uid}"})
+        expect(known_uids.length).to eq(0)
+        expect(subject.user_email_deletions).to eq [canvas_user_id]
+      end
     end
     context 'when we can trust campus data sources' do
       let(:inactivate_expired_users) { true }
@@ -239,6 +264,22 @@ describe CanvasCsv::MaintainUsers do
     end
     context 'when we cannot trust campus data sources' do
       let(:inactivate_expired_users) { false }
+      it 'does nothing' do
+        expect(account_changes.length).to eq(0)
+        expect(subject.sis_user_id_changes).to eq({})
+        expect(known_uids.length).to eq(0)
+        expect(subject.user_email_deletions).to eq []
+      end
+    end
+    context 'when the user does appear in LDAP' do
+      let(:inactivate_expired_users) { true }
+      let(:ldap_record) do
+        {
+          dn: ["uid=#{uid},ou=guests,dc=berkeley,dc=edu"],
+          uid: [uid],
+          berkeleyeduaffiliations: ['GUEST-TYPE-COLLABORATOR']
+        }
+      end
       it 'does nothing' do
         expect(account_changes.length).to eq(0)
         expect(subject.sis_user_id_changes).to eq({})

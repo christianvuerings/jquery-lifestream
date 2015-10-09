@@ -1488,7 +1488,7 @@
     {
       "name": "Emergency Preparedness",
       "description": "How to be prepared and ready for emergencies",
-      "url": "http://oep.berkeley.edu/",
+      "url": "http://oem.berkeley.edu/get-prepared",
       "roles": {
         "student": true,
         "staff": true,

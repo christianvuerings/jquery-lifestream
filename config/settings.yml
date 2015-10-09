@@ -69,7 +69,6 @@ canvas_proxy:
   official_courses_account_id: '129410'
   projects_account_id: '129407'
   projects_term_id: '5494'
-  turnitin_account_id: '129440'
   default_grading_scheme_id: '4068930'
   export_directory: 'tmp/canvas'
   lti_key: 'someMumboJumbo'
@@ -324,11 +323,13 @@ features:
 youtube_splash_id: 'EQ-a7xrfVag'
 
 oec:
+  administrator_uid: ''
+  local_write_directory: 'tmp/oec'
   explorance:
     sftp_server: ''
     sftp_port: 22
     sftp_user: ''
-    sftp_password: ''
+    ssh_private_key_file: ''
   google:
     uid: ''
     client_id: 'oecClientId'
@@ -352,21 +353,20 @@ class_calendar:
 ui_selenium:
   baseUrl: https://calcentral-dev.berkeley.edu
   calNetUrl: https://auth-test.berkeley.edu
+  canvas_base_url: https://ucberkeley.beta.instructure.com
+  canvas_qa_sub_account: secret
   googleAuthUrl: /api/google/request_authorization?force_domain=false
   layer: development
 
   # Alternative browsers for Selenium tests: chrome, safari, ie
   webDriver: firefox
 
-  googleOauthTimeout: 10
   googleTaskTimeout: 12
   pageEventTimeout: 3
   pageLoadTimeout: 12
   liveUpdateTimeoutDelta: 180
-  finResourcesLinksTimeout: 10
-  financialsTimeout: 5
-  academicsTimeout: 15
-  finAidTimeout: 20
+  academicsTimeout: 20
+  canvasUpdateTimeout: 60
   test_user_password: secret
   oski_username: secret
   oski_password: secret

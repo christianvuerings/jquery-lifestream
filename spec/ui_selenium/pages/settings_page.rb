@@ -52,7 +52,7 @@ module CalCentralPages
         disconnect_yes_button_element.when_not_present(timeout=WebDriverUtils.page_event_timeout)
         connect_button_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
         logger.info('Pausing so that OAuth token is revoked')
-        sleep(WebDriverUtils.google_oauth_timeout)
+        sleep(WebDriverUtils.page_load_timeout)
       else
         logger.info('User not connected')
       end

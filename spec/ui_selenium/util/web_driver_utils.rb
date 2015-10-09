@@ -37,6 +37,14 @@ class WebDriverUtils
     Settings.ui_selenium.calNetUrl
   end
 
+  def self.canvas_base_url
+    Settings.ui_selenium.canvas_base_url
+  end
+
+  def self.canvas_qa_sub_account
+    Settings.ui_selenium.canvas_qa_sub_account
+  end
+
   def self.google_auth_url
     Settings.ui_selenium.googleAuthUrl
   end
@@ -45,24 +53,8 @@ class WebDriverUtils
     Settings.ui_selenium.pageLoadTimeout
   end
 
-  def self.financials_timeout
-    Settings.ui_selenium.financialsTimeout
-  end
-
   def self.academics_timeout
     Settings.ui_selenium.academicsTimeout
-  end
-
-  def self.fin_aid_timeout
-    Settings.ui_selenium.finAidTimeout
-  end
-
-  def self.fin_resources_links_timeout
-    Settings.ui_selenium.finResourcesLinksTimeout
-  end
-
-  def self.google_oauth_timeout
-    Settings.ui_selenium.googleOauthTimeout
   end
 
   def self.google_task_timeout
@@ -71,6 +63,10 @@ class WebDriverUtils
 
   def self.page_event_timeout
     Settings.ui_selenium.pageEventTimeout
+  end
+
+  def self.canvas_update_timeout
+    Settings.ui_selenium.canvasUpdateTimeout
   end
 
   def self.mail_live_update_timeout
@@ -85,7 +81,7 @@ class WebDriverUtils
     File.join(CalcentralConfig.local_dir, "uids.json")
   end
 
-  def self.ui_date_display_format(date)
+  def self.ui_numeric_date_format(date)
     today = Date.today
     if date.strftime("%Y") == today.strftime("%Y")
       date_format = date.strftime("%m/%d")
@@ -95,8 +91,35 @@ class WebDriverUtils
     date_format
   end
 
+  def self.ui_alphanumeric_date_format(date)
+    date.strftime("%b %-d")
+  end
+
   def self.ui_date_input_format(date)
     date.strftime("%m/%d/%Y")
+  end
+
+  def self.wait_for_page_and_click(element)
+    element.when_visible timeout=page_load_timeout
+    element.click
+  end
+
+  def self.wait_for_element_and_click(element)
+    element.when_visible timeout=page_event_timeout
+    element.click
+  end
+
+  def self.wait_for_element_and_type(element, text)
+    wait_for_element_and_click element
+    element.clear
+    element.send_keys text
+  end
+
+  def self.wait_for_element_and_select(element, option)
+    element.when_visible(timeout=page_event_timeout)
+    wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_event_timeout)
+    wait.until { element.include? option }
+    element.select option
   end
 
   def self.verify_external_link(driver, link, expected_page_title)

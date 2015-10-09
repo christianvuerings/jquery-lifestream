@@ -91,6 +91,11 @@ Calcentral::Application.routes.draw do
   post '/api/academics/canvas/mailing_lists/:canvas_course_id/populate' => 'canvas_mailing_lists#populate', :defaults => { :format => 'json' }
   post '/api/academics/canvas/mailing_lists/:canvas_course_id/delete' => 'canvas_mailing_lists#destroy', :defaults => { :format => 'json' }
 
+  # OEC endpoints
+  get '/api/oec_tasks' => 'oec_tasks#index', :defaults => { :format => 'json' }
+  post '/api/oec_tasks/:task_name' => 'oec_tasks#run', :defaults => { :format => 'json' }
+  get '/api/oec_tasks/status/:task_id' => 'oec_tasks#task_status',  :defaults => { :format => 'json' }
+
   # System utility endpoints
   get '/api/cache/clear' => 'cache#clear', :defaults => { :format => 'json' }
   get '/api/cache/delete' => 'cache#delete', :defaults => { :format => 'json' }

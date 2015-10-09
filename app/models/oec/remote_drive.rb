@@ -1,6 +1,8 @@
 module Oec
   class RemoteDrive < GoogleApps::SheetsManager
 
+    HUMAN_URL = 'https://drive.google.com/drive/my-drive'
+
     def initialize
       super(Settings.oec.google.uid, Settings.oec.google.marshal_dump)
     end

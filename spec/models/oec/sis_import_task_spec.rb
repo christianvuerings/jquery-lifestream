@@ -1,20 +1,46 @@
 describe Oec::SisImportTask do
   let(:term_code) { '2015-B' }
-  let(:task) { Oec::SisImportTask.new(term_code: term_code) }
+  let(:task) { Oec::SisImportTask.new(term_code: term_code, local_write: local_write) }
 
   let(:fake_remote_drive) { double() }
-  let(:supplemental_courses_csv) { Oec::Courses.new.headers.join(',') }
+  let(:course_overrides_row) { Oec::Courses.new.headers.join(',') }
+  let(:instructor_overrides_row) { Oec::Instructors.new.headers.join(',') }
 
   before(:each) do
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
-    allow(fake_remote_drive).to receive(:find_nested).and_return mock_google_drive_item
-    allow(fake_remote_drive).to receive(:export_csv).and_return supplemental_courses_csv
+    course_overrides = mock_google_drive_item 'course_overrides'
+    allow(fake_remote_drive).to receive(:find_nested).with([term_code, 'overrides', Oec::Courses.export_name]).and_return course_overrides
+    allow(fake_remote_drive).to receive(:export_csv).with(course_overrides).and_return course_overrides_row
+
+    instructor_overrides = mock_google_drive_item 'instructor_overrides'
+    allow(fake_remote_drive).to receive(:find_nested).with([term_code, 'overrides', Oec::Instructors.export_name]).and_return instructor_overrides
+    allow(fake_remote_drive).to receive(:export_csv).with(instructor_overrides).and_return instructor_overrides_row
+
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
+  end
+
+  shared_context 'local-write mode and no follow-up diff' do
+    let(:local_write) { true }
+    before do
+      expect(Oec::ReportDiffTask).not_to receive(:new)
+    end
+  end
+
+  shared_context 'follow-up diff and no local-write mode' do
+    let(:local_write) { false }
+    before do
+      expect(Oec::ReportDiffTask).to receive(:new).and_call_original
+      expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
+        .with(kind_of(Pathname), report_diff_logfile, 'text/plain', logs_today_folder, anything)
+        .and_return mock_google_drive_item(report_diff_logfile)
+    end
   end
 
   describe 'CSV export' do
     subject do
-      task.import_courses(courses, fake_code_mapping)
+      allow(Oec::CourseCode).to receive(:by_dept_code).and_return({ dept_code: fake_code_mapping })
+      allow(Oec::SisImportSheet).to receive(:new).and_return courses
+      task.run_internal
       courses.write_csv
       CSV.read(courses.csv_export_path).slice(1..-1).map { |row| Hash[ courses.headers.zip(row) ]}
     end
@@ -62,6 +88,8 @@ describe Oec::SisImportTask do
     end
 
     shared_examples 'expected CSV structure' do
+      include_context 'local-write mode and no follow-up diff'
+
       it { expect(course_id_column).to contain_exactly(*expected_ids) }
       it 'should include dept_form only for non-crosslisted courses' do
         subject.each do |row|
@@ -71,9 +99,8 @@ describe Oec::SisImportTask do
           else
             expect(row['DEPT_FORM']).to eq row['DEPT_NAME']
           end
-          expect(row['BLUE_ROLE']).to eq '23'
           expect(row['EVALUATE']).to be_nil
-          %w(COURSE_ID COURSE_NAME DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM EVALUATION_TYPE START_DATE END_DATE).each do |key|
+          %w(COURSE_ID COURSE_NAME DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM EVALUATION_TYPE).each do |key|
             expect(row[key]).to be_present
           end
           expect(%w(P S)).to include row['PRIMARY_SECONDARY_CD']
@@ -116,13 +143,14 @@ describe Oec::SisImportTask do
         expect(joint_course_rows.find { |row| row['COURSE_ID'] == '2015-B-72198_GSI' }['EVALUATION_TYPE']).to eq 'G'
       end
 
-      context 'supplemental data overrides' do
-        let(:supplemental_courses_csv) { File.read Rails.root.join('fixtures', 'oec', 'supplemental_sources_courses.csv') }
+      context 'data overrides' do
+        let(:course_overrides_row) { File.read Rails.root.join('fixtures', 'oec', 'overrides_courses.csv') }
+        let(:instructor_overrides_row) { File.read Rails.root.join('fixtures', 'oec', 'overrides_instructors.csv') }
         let(:expected_ids) { %w(2015-B-87690 2015-B-72198 2015-B-72198_GSI 2015-B-72199) }
 
         include_examples 'expected CSV structure'
 
-        it 'adds modular course data to matching rows only' do
+        it 'inserts modular course data and default dates for non-modular courses' do
           subject.each do |row|
             if row['COURSE_NAME'].start_with? 'POL SCI 115'
               expect(row['MODULAR_COURSE']).to eq 'Y'
@@ -133,24 +161,22 @@ describe Oec::SisImportTask do
               expect(row['START_DATE']).to eq '01-20-2015'
               expect(row['END_DATE']).to eq '05-08-2015'
             end
+            edited_row = row['LDAP_UID'] == '10316'
+            expect(row['FIRST_NAME'] == 'Lady').to be edited_row
+            expect(row['LAST_NAME'] == 'Gaga').to be edited_row
+            expect(row['EMAIL_ADDRESS'] == 'born-this-way@berkeley.edu').to be edited_row
           end
         end
 
-        context 'non-matching rows in supplemental data' do
-          let(:supplemental_courses_csv) do
-            csv = File.read Rails.root.join('fixtures', 'oec', 'supplemental_sources_courses.csv')
+        context 'non-matching rows in overrides data' do
+          let(:course_overrides_row) do
+            csv = File.read Rails.root.join('fixtures', 'oec', 'overrides_courses.csv')
             csv << "\n,,,,,POL SCI,215,,,,,,,Y,01-20-2015,05-16-2015"
             csv << "\n,,,,,FRENCH,215,,,,,,,Y,01-20-2015,05-16-2015"
           end
 
-          it 'appends unmatched row with course code matching worksheet' do
-            expect(subject.last['DEPT_NAME']).to eq 'POL SCI'
-            expect(subject.last['CATALOG_ID']).to eq '215'
-            expect(subject.last['MODULAR_COURSE']).to eq 'Y'
-            expect(subject.last['COURSE_ID']).to be_blank
-          end
-
-          it 'does not append unmatched row with course code not matching worksheet' do
+          it 'ignores unmatched rows' do
+            expect(subject.find { |row| row['DEPT_NAME'] == 'POL SCI' && row['CATALOG_ID'] == '215' }).to be_nil
             expect(subject.find { |row| row['DEPT_NAME'] == 'FRENCH' }).to be_nil
           end
         end
@@ -167,19 +193,19 @@ describe Oec::SisImportTask do
       include_examples 'expected CSV structure'
 
       it 'should not include course supervisor assignments' do
-        expect(subject.map{ |row| row['INSTRUCTOR_FUNC'] }).not_to include '3'
+        expect(subject.select{ |row| row['EMAIL_ADDRESS'] == 'stat_supervisor@berkeley.edu' }).to be_empty
       end
 
-      it 'reports official crosslistings' do
+      it 'flags official crosslistings' do
         crosslisting = subject.select{ |row| row['CROSS_LISTED_NAME'] == 'POL SCI/STAT C236A LEC 001' }
         expect(crosslisting.count).to eq 2
         expect(crosslisting).to all include({'CROSS_LISTED_FLAG' => 'Y'})
       end
 
-      it 'reports non-student academic employees as faculty' do
+      it 'flags non-student academic employees as faculty' do
         expect(subject.find{|row| row['COURSE_ID'] == '2015-B-87672'}['EVALUATION_TYPE']).to eq 'F'
       end
-      it 'reports student academic employees as GSIs' do
+      it 'flags student academic employees as GSIs' do
         expect(subject.find{|row| row['COURSE_ID'] == '2015-B-87693'}['EVALUATION_TYPE']).to eq 'G'
       end
 
@@ -187,9 +213,19 @@ describe Oec::SisImportTask do
         let(:room_share) { subject.select{ |row| row['CROSS_LISTED_NAME'] == 'MATH 223A, STAT 206A LEC 001' } }
         context 'department participating' do
           let(:math_included) { true }
-          it 'reports room shares' do
+          it 'flags room shares' do
             expect(room_share.count).to eq 2
             expect(room_share).to all include({'CROSS_LISTED_FLAG' => 'RM SHARE'})
+          end
+          context 'zero-enrollment course in a room share' do
+            before do
+              courses_by_ccn['54441'].first['enrollment_count'] = '0'
+            end
+            it 'should screen out zero-enrollment course but include its catalog id in cross-listed name' do
+              expect(room_share.count).to eq 1
+              expect(room_share.first['CROSS_LISTED_FLAG']).to eq 'RM SHARE'
+              expect(room_share.first['CROSS_LISTED_NAME']).to eq 'MATH 223A, STAT 206A LEC 001'
+            end
           end
         end
         context 'department not participating' do
@@ -198,8 +234,8 @@ describe Oec::SisImportTask do
         end
       end
 
-      context 'supplemental data overrides' do
-        let(:supplemental_courses_csv) { File.read Rails.root.join('fixtures', 'oec', 'supplemental_sources_courses.csv') }
+      context 'data overrides' do
+        let(:course_overrides_row) { File.read Rails.root.join('fixtures', 'oec', 'overrides_courses.csv') }
 
         it 'overrides evaluation types in matching rows only' do
           subject.each do |row|
@@ -218,18 +254,23 @@ describe Oec::SisImportTask do
     describe 'expected network operations' do
       subject { Oec::SisImportTask.new(term_code: term_code) }
 
+      include_context 'follow-up diff and no local-write mode'
+
       let(:today) { '2015-04-01' }
       let(:now) { '09:22:22' }
-      let(:logfile) { "#{now} sis import task.log" }
+      let(:sis_import_logfile) { "#{now} sis import task.log" }
+      let(:report_diff_logfile) { "#{now} report diff task.log" }
       let(:dept_name) { 'MATH' }
       let(:sheet_name) { 'Mathematics' }
 
       let(:imports_today_folder) { mock_google_drive_item today }
-      let(:reports_today_folder) { mock_google_drive_item today }
+      let(:logs_today_folder) { mock_google_drive_item today }
 
       before do
         allow(DateTime).to receive(:now).and_return DateTime.strptime("#{today} #{now}", '%F %H:%M:%S')
         allow(Oec::CourseCode).to receive(:by_dept_code).and_return({l4_codes[dept_name] => fake_code_mapping})
+        allow(fake_remote_drive).to receive(:find_nested)
+        allow(fake_remote_drive).to receive(:export_csv)
       end
 
       it 'should upload a department csv and a log file' do
@@ -238,13 +279,14 @@ describe Oec::SisImportTask do
           .and_return(imports_today_folder)
         expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
           .with(today, anything, anything)
-          .and_return(reports_today_folder)
+          .at_least(1).times
+          .and_return(logs_today_folder)
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
           .with(kind_of(Oec::Worksheet), sheet_name, (Oec::Worksheet), imports_today_folder, anything)
           .and_return mock_google_drive_item(sheet_name)
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
-          .with(kind_of(Pathname), logfile, 'text/plain', reports_today_folder, anything)
-          .and_return mock_google_drive_item(logfile)
+          .with(kind_of(Pathname), sis_import_logfile, 'text/plain', logs_today_folder, anything)
+          .and_return mock_google_drive_item(sis_import_logfile)
         subject.run
       end
     end
@@ -256,6 +298,8 @@ describe Oec::SisImportTask do
       task.set_cross_listed_values([ course ], course_codes)
       course['CROSS_LISTED_NAME']
     end
+
+    include_context 'local-write mode and no follow-up diff'
 
     context 'departments sharing catalog id and section code' do
       let(:course_codes) do
@@ -324,14 +368,16 @@ describe Oec::SisImportTask do
     let(:null_sheets_manager) { double.as_null_object }
     before(:each) { allow(Oec::RemoteDrive).to receive(:new).and_return null_sheets_manager }
 
+    include_context 'local-write mode and no follow-up diff'
+
     it 'filters by course-code department names' do
       expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_name: %w(BIOLOGY MCELLBI)).and_return({})
-      Oec::SisImportTask.new(term_code: term_code, dept_names: 'BIOLOGY MCELLBI').run
+      Oec::SisImportTask.new(term_code: term_code, dept_names: 'BIOLOGY MCELLBI', local_write: true).run
     end
 
     it 'filters by department codes' do
       expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_code: %w(IBIBI IMMCB)).and_return({})
-      Oec::SisImportTask.new(term_code: term_code, dept_codes: 'IBIBI IMMCB').run
+      Oec::SisImportTask.new(term_code: term_code, dept_codes: 'IBIBI IMMCB', local_write: true).run
     end
   end
 

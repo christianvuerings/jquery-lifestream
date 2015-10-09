@@ -1,5 +1,30 @@
 namespace :oec do
 
+  desc 'Set up folder structure for new term'
+  task :term_setup => :environment do
+    raise ArgumentError, 'term_code required' unless ENV['term_code']
+    Oec::TermSetupTask.new(
+      term_code: ENV['term_code'],
+      local_write: ENV['local_write'].present?
+    ).run
+  end
+
+  desc 'Import per-department course CSVs, compare with dept spreadsheets and report on non-empty diffs'
+  task :sis_import => :environment do
+    term_code = ENV['term_code']
+    raise ArgumentError, 'term_code required' unless term_code
+    date_time = DateTime.now
+    Oec::SisImportTask.new(
+      term_code: term_code,
+      date_time: date_time,
+      local_write: ENV['local_write'].present?,
+      import_all: ENV['import_all'].present?,
+      dept_names: ENV['dept_names'],
+      dept_codes: ENV['dept_codes']
+    ).run
+  end
+
+  desc 'Generate SIS data sheets, one per dept_code, to be shared with department admins'
   task :create_confirmation_sheets => :environment do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
@@ -11,16 +36,24 @@ namespace :oec do
     ).run
   end
 
-  desc 'Prepare course and enrollment data for upload to vendor'
-  task :export => :environment do
+  desc 'Compare department-managed sheets against latest SIS-import sheets'
+  task :report_diff => :environment do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
-    Oec::ExportTask.new(
-      term_code: ENV['term_code'],
-      local_write: ENV['local_write'].present?
-    ).run
+    opts = {
+      term_code: term_code,
+      local_write: ENV['local_write'].present?,
+      dept_names: ENV['dept_names'],
+      dept_codes: ENV['dept_codes']
+    }
+    success = Oec::ReportDiffTask.new(opts).run
+    unless success
+      Rails.logger.error "#{Oec::ReportDiffTask.class} failed on #{opts}"
+      break
+    end
   end
 
+  desc 'Merge all sheets in \'departments\' folder to prepare for publishing'
   task :merge_confirmation_sheets => :environment do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
@@ -32,44 +65,23 @@ namespace :oec do
     ).run
   end
 
-  desc 'Import per-department course CSVs, compare with dept spreadsheets and report on non-empty diffs'
-  task :sis_import => :environment do
+  desc 'Simply validate confirmation sheet data. This does not include a push to the \'exports\' directory.'
+  task :validate_confirmation_sheets => :environment do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
-    date_time = DateTime.now
-    [Oec::SisImportTask, Oec::ReportDiffTask].each do |klass|
-      success = klass.new(
-        term_code: term_code,
-        date_time: date_time,
-        local_write: ENV['local_write'].present?,
-        import_all: ENV['import_all'].present?,
-        dept_names: ENV['dept_names'],
-        dept_codes: ENV['dept_codes']
-      ).run
-      unless success
-        Rails.logger.error "Abort due to fatal error in #{klass}. Any remaining tasks will not run."
-        break
-      end
-    end
-  end
-
-  desc 'Set up folder structure for new term'
-  task :term_setup => :environment do
-    raise ArgumentError, 'term_code required' unless ENV['term_code']
-    Oec::TermSetupTask.new(
+    Oec::ValidationTask.new(
       term_code: ENV['term_code'],
       local_write: ENV['local_write'].present?
     ).run
   end
 
-  desc 'Push data, stored on remote drive, to Explorance\'s Blue system'
+  desc 'Push the most recently confirmed data to Explorance\'s Blue system'
   task :publish_to_explorance => :environment do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
     Oec::PublishTask.new(
       term_code: term_code,
-      local_write: ENV['local_write'].present?,
-      datetime_to_publish: ENV['datetime_to_publish']
+      local_write: ENV['local_write'].present?
     ).run
   end
 

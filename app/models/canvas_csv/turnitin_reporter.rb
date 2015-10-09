@@ -32,9 +32,9 @@ module CanvasCsv
       report_rows = []
 
       # Download Canvas Courses in the TurnItIn-enabled sub-account for the current term.
-      canvas_courses = Canvas::Report::Courses.new(account_id: Settings.canvas_proxy.turnitin_account_id).get_csv(@sis_term_id);
+      canvas_courses = Canvas::Report::Courses.new(account_id: Settings.canvas_proxy.account_id).get_csv(@sis_term_id);
       # TODO Temporary workaround for development
-      # canvas_courses = Canvas::Report::Courses.new(account_id: Settings.canvas_proxy.turnitin_account_id, ssl: {verify: false}).get_csv(@sis_term_id);
+      # canvas_courses = Canvas::Report::Courses.new(account_id: Settings.canvas_proxy.account_id, ssl: {verify: false}).get_csv(@sis_term_id);
 
       # Loop through the Course Sites which are in the special TurnItIn-enabled sub-account.
       canvas_courses.each do |course_row|

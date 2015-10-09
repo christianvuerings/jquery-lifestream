@@ -1,11 +1,22 @@
 module Oec
   class Task
+    extend Cache::Cacheable
     include ClassLogger
 
-    LOG_DIRECTORY = Rails.root.join('tmp', 'oec')
+    LOG_DIRECTORY = Pathname.new Settings.oec.local_write_directory
+
+    class << self; attr_accessor :success_callback; end
+
+    def self.on_success_run(task_class, opts={})
+      self.success_callback = opts.merge(class: task_class)
+    end
 
     def self.date_format
       '%F'
+    end
+
+    def self.cache_key(id)
+      "Oec::Task/#{id}"
     end
 
     def self.timestamp_format
@@ -13,32 +24,44 @@ module Oec
     end
 
     def initialize(opts)
-      @log = []
-      @remote_drive = Oec::RemoteDrive.new
-      @term_code = opts.delete :term_code
-      @date_time = opts[:date_time] || DateTime.now
       @opts = opts
+      @log = []
+      @status = 'In progress'
+      @api_task_id = opts[:api_task_id]
+      write_status_to_cache if opts[:log_to_cache]
+
+      @remote_drive = Oec::RemoteDrive.new
+      @term_code = opts[:term_code]
+      @date_time = opts[:date_time] || default_date_time
       @course_code_filter = if opts[:dept_names]
                              {dept_name: opts[:dept_names].split.map { |name| name.tr('_', ' ') }}
                            elsif opts[:dept_codes]
                              {dept_code: opts[:dept_codes].split}
                            else
-                             {dept_name: Oec::CourseCode.included_dept_names}
+                             {include_in_oec: true}
                            end
     end
 
     def run
       log :info, "Starting #{self.class.name}"
       run_internal
+      @status = 'Success' unless self.class.success_callback
       true
     rescue => e
       log :error, "#{self.class.name} aborted with error: #{e.message}\n#{e.backtrace.join "\n\t"}"
+      @status = 'Error'
       nil
     ensure
       write_log
+      write_status_to_cache if @opts[:log_to_cache]
+      run_success_callback if self.class.success_callback && @status != 'Error'
     end
 
     private
+
+    def default_date_time
+      DateTime.now
+    end
 
     def copy_file(file, dest_folder)
       return if @opts[:local_write]
@@ -57,6 +80,20 @@ module Oec
 
     def datestamp(arg = @date_time)
       arg.strftime self.class.date_format
+    end
+
+    def default_term_dates
+      if (course_overrides_sheet = get_overrides_worksheet Oec::Courses)
+        default_term_dates_row = course_overrides_sheet.find do |row|
+          row['DEPT_NAME'].blank? &&
+            row['CATALOG_ID'].blank? &&
+            row['INSTRUCTION_FORMAT'].blank? &&
+            row['SECTION_NUM'].blank? &&
+            row['START_DATE'].present? &&
+            row['END_DATE'].present?
+        end
+        default_term_dates_row.slice('START_DATE', 'END_DATE') if default_term_dates_row
+      end
     end
 
     def export_sheet(worksheet, dest_folder)
@@ -98,15 +135,37 @@ module Oec
       find_or_create_folder(datestamp(date_time), parent)
     end
 
-    def get_supplemental_worksheet(klass)
-      if (supplemental_course_sheet = @remote_drive.find_nested [@term_code, 'supplemental_sources', klass.export_name])
-        klass.from_csv @remote_drive.export_csv(supplemental_course_sheet)
+    def get_overrides_worksheet(klass)
+      if (overrides_sheet = @remote_drive.find_nested [@term_code, 'overrides', klass.export_name])
+        klass.from_csv @remote_drive.export_csv overrides_sheet
       end
+    end
+
+    def date_time_of_most_recent(category_name)
+      # Deduce date from folder title
+      parent = @remote_drive.find_nested([@term_code, category_name])
+      folders = @remote_drive.find_folders(parent.id)
+      unless (last = folders.sort_by(&:title).last)
+        raise RuntimeError, "#{self.class.name} requires a non-empty '#{@term_code}/#{category_name}' folder"
+      end
+      log :info, "#{self.class.name} will pull data from '#{@term_code}/#{category_name}/#{last.title}'"
+      DateTime.strptime(last.title, "#{self.class.date_format} #{self.class.timestamp_format}")
+    rescue => e
+      pattern = "#{Oec::Task.date_format}_#{Oec::Task.timestamp_format}"
+      log :error, "Folder in '#{@term_code}/#{category_name}' failed to match '#{pattern}'.\n#{e.message}\n#{e.backtrace.join "\n\t"}"
+      nil
     end
 
     def log(level, message)
       logger.send level, message
-      @log << "[#{Time.now}] #{message}"
+      @log << "[#{Time.now.strftime '%T'}] #{message}"
+      write_status_to_cache if @opts[:log_to_cache]
+    end
+
+    def run_success_callback
+      return if (condition = self.class.success_callback[:if]) && !instance_eval(&condition)
+      task_opts = @opts.merge(previous_task_log: @log)
+      self.class.success_callback[:class].new(task_opts).run
     end
 
     def timestamp(arg = @date_time)
@@ -134,16 +193,25 @@ module Oec
       if @opts[:local_write]
         logger.debug "Wrote log file to path #{log_path}"
       else
-        if (reports_today = find_or_create_today_subfolder('reports', now))
+        if (logs_today = find_or_create_today_subfolder('logs', now))
           begin
-            upload_file(log_path, log_name, 'text/plain', reports_today)
+            upload_file(log_path, log_name, 'text/plain', logs_today)
           ensure
             File.delete log_path
           end
         end
       end
     rescue => e
-      logger.error "Could not write log: #{e.message}\n#{e.backtrace.join "\n\t"}"
+      log :error, "Could not write log: #{e.message}\n#{e.backtrace.join "\n\t"}"
+    end
+
+    def write_status_to_cache
+      previous_log_if_any = @opts[:previous_task_log] || []
+      log = previous_log_if_any + @log
+      self.class.write_cache(
+        {status: @status, log: log},
+        @api_task_id
+      )
     end
 
   end

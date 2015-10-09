@@ -50,7 +50,6 @@ module Oec
             and #{columns_are_equal('r', 'c', 'term_yr', 'term_cd', 'course_cntl_num')}
             and rownum < 2
         ) as enrollment_count,
-        '23' AS blue_role,
         (
           select listagg(lpad(course_cntl_num, 5, '0'), ',') within group (order by course_cntl_num)
           from calcentral_cross_listing_vw

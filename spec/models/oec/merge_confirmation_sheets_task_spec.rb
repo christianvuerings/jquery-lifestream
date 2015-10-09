@@ -4,13 +4,21 @@ describe Oec::MergeConfirmationSheetsTask do
 
   let(:fake_remote_drive) { double() }
 
+  let(:departments_folder) { mock_google_drive_item }
   let(:last_import_folder) { mock_google_drive_item }
   let(:gws_folder) { mock_google_drive_item('Gender and Women\'s Studies') }
   let(:mcellbi_folder) { mock_google_drive_item('Molecular and Cell Biology') }
 
   def mock_sheet(filename)
+    sheet_title = if filename.start_with? 'course'
+                    'Courses'
+                  elsif filename.start_with? 'supervisor'
+                    'Report Viewers'
+                  else
+                    filename
+                  end
     sheet = {
-      sheet: mock_google_drive_item(filename),
+      sheet: mock_google_drive_item(sheet_title),
       csv: File.read(Rails.root.join('fixtures', 'oec', "#{filename}.csv"))
     }
     @mock_sheets << sheet
@@ -25,23 +33,28 @@ describe Oec::MergeConfirmationSheetsTask do
   let(:mcellbi_course_confirmation) { mock_sheet 'course_confirmations_MCELLBI' }
   let(:mcellbi_supervisor_confirmation) { mock_sheet 'supervisor_confirmations_MCELLBI' }
 
+  let(:gws_confirmation_spreadsheet) { mock_google_drive_item 'Gender and Women\'s Studies' }
+  let(:mcellbi_confirmation_spreadsheet) { mock_google_drive_item 'Molecular and Cell Biology' }
+
   before(:each) do
     @mock_sheets = []
 
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
+    allow(Oec::CourseCode).to receive(:by_dept_code).and_return({'SWOME' => [], 'IMMCB' => []})
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
 
     allow(fake_remote_drive).to receive(:check_conflicts_and_create_folder).and_return mock_google_drive_item
     allow(fake_remote_drive).to receive(:find_nested).and_return mock_google_drive_item
     allow(fake_remote_drive).to receive(:find_first_matching_item).and_return mock_google_drive_item
 
-    allow(fake_remote_drive).to receive(:find_folders).and_return([last_import_folder], [gws_folder, mcellbi_folder])
+    allow(fake_remote_drive).to receive(:find_folders).and_return [last_import_folder]
+    allow(fake_remote_drive).to receive(:get_items_in_folder).and_return [gws_confirmation_spreadsheet, mcellbi_confirmation_spreadsheet]
+    allow(fake_remote_drive).to receive(:spreadsheet_by_id).and_return(gws_confirmation_spreadsheet, mcellbi_confirmation_spreadsheet)
+    allow(gws_confirmation_spreadsheet).to receive(:worksheets).and_return [gws_course_confirmation[:sheet], gws_supervisor_confirmation[:sheet]]
+    allow(mcellbi_confirmation_spreadsheet).to receive(:worksheets).and_return [mcellbi_course_confirmation[:sheet], mcellbi_supervisor_confirmation[:sheet]]
 
+    allow(fake_remote_drive).to receive(:find_first_matching_item).with('departments', anything).and_return departments_folder
     allow(fake_remote_drive).to receive(:find_first_matching_item).with('supervisors', anything).and_return supervisors[:sheet]
-    allow(fake_remote_drive).to receive(:find_first_matching_item).with('Courses', gws_folder).and_return gws_course_confirmation[:sheet]
-    allow(fake_remote_drive).to receive(:find_first_matching_item).with('Report Viewers', gws_folder).and_return gws_supervisor_confirmation[:sheet]
-    allow(fake_remote_drive).to receive(:find_first_matching_item).with('Courses', mcellbi_folder).and_return mcellbi_course_confirmation[:sheet]
-    allow(fake_remote_drive).to receive(:find_first_matching_item).with('Report Viewers', mcellbi_folder).and_return mcellbi_supervisor_confirmation[:sheet]
     allow(fake_remote_drive).to receive(:find_first_matching_item).with('Gender and Women\'s Studies', last_import_folder).and_return gws_import[:sheet]
     allow(fake_remote_drive).to receive(:find_first_matching_item).with('Molecular and Cell Biology', last_import_folder).and_return mcellbi_import[:sheet]
 
@@ -86,33 +99,16 @@ describe Oec::MergeConfirmationSheetsTask do
       expect(merged_course_confirmation.first).to_not be_empty
     end
 
-    it 'should include only courses marked for evaluation' do
-      [gws_course_confirmation_worksheet, mcellbi_course_confirmation_worksheet].each do |confirmation|
-        confirmation.each do |confirmation_row|
-          merged_row = merged_course_confirmation.find { |row| row['COURSE_ID'] == confirmation_row['COURSE_ID'] && row['LDAP_UID'] == confirmation_row['LDAP_UID'] }
-          if confirmation_row['EVALUATE'].blank?
-            expect(merged_row).to be_nil
-          else
-            expect(merged_row).to be_present
-          end
-        end
-      end
-    end
-
     it 'should overwrite SIS import data when confirmed course data includes column' do
       [gws_course_confirmation_worksheet, gws_sis_import, mcellbi_course_confirmation_worksheet, mcellbi_sis_import].each_slice(2) do |confirmation, sis_import|
         confirmation.each do |confirmation_row|
           merged_confirmation_row = merged_course_confirmation.find { |row| row['COURSE_ID'] == confirmation_row['COURSE_ID'] && row['LDAP_UID'] == confirmation_row['LDAP_UID'] }
-          if confirmation_row['EVALUATE'].blank?
-            expect(merged_confirmation_row).to be_nil
-          else
-            sis_import_row = sis_import.find { |row| row['COURSE_ID'] == confirmation_row['COURSE_ID'] && row['LDAP_UID'] == confirmation_row['LDAP_UID'] }
-            merged_course_confirmation.headers.each do |header|
-              if confirmation.headers.include? header
-                expect(merged_confirmation_row[header]).to eq confirmation_row[header]
-              else
-                expect(merged_confirmation_row[header]).to eq sis_import_row[header]
-              end
+          sis_import_row = sis_import.find { |row| row['COURSE_ID'] == confirmation_row['COURSE_ID'] && row['LDAP_UID'] == confirmation_row['LDAP_UID'] }
+          merged_course_confirmation.headers.each do |header|
+            if confirmation.headers.include? header
+              expect(merged_confirmation_row[header]).to eq confirmation_row[header]
+            else
+              expect(merged_confirmation_row[header]).to eq sis_import_row[header]
             end
           end
         end
@@ -143,14 +139,13 @@ describe Oec::MergeConfirmationSheetsTask do
   context 'when two departments mark a course for evaluation with conflicting data' do
     let(:local_write) { 'Y' }
     before do
-      gws_import[:csv].concat '2015-B-91111,2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,GWS,165,LEC,001,P,100008,Instructor,Eight,instructor8@berkeley.edu,1,,,F,,1/20/2015,5/8/2015'
-      mcellbi_import[:csv].concat '2015-B-91111,2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,GWS,165,LEC,001,P,100008,Instructor,Eight,instructor8@berkeley.edu,1,,,F,,1/20/2015,5/8/2015'
-      gws_course_confirmation[:csv].concat '2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,100008,Instructor,Eight,instructor8@berkeley.edu,1,Y,GWS,F,,1/20/2015,5/8/2015'
-      mcellbi_course_confirmation[:csv].concat '2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,100008,Instructor,Eight,instructor8@berkeley.edu,1,Y,MCELLBI,F,,1/20/2015,5/8/2015'
+      gws_import[:csv].concat '2015-B-91111,2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,GWS,165,LEC,001,P,100008,Instructor,Eight,instructor8@berkeley.edu,,,F,,1/20/2015,5/8/2015'
+      mcellbi_import[:csv].concat '2015-B-91111,2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,GWS,165,LEC,001,P,100008,Instructor,Eight,instructor8@berkeley.edu,,,F,,1/20/2015,5/8/2015'
+      gws_course_confirmation[:csv].concat '2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,100008,Instructor,Eight,instructor8@berkeley.edu,Y,GWS,F,,1/20/2015,5/8/2015'
+      mcellbi_course_confirmation[:csv].concat '2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,100008,Instructor,Eight,instructor8@berkeley.edu,Y,MCELLBI,F,,1/20/2015,5/8/2015'
     end
 
-    it 'should not export and should record errors' do
-      expect(task).not_to receive :export_sheet
+    it 'should record errors' do
       expect(Rails.logger).to receive(:error).at_least(1).times
       task.run
       expect(task.errors['Merged course confirmations']['2015-B-91111-100008'].keys).to eq ["Conflicting values found under DEPT_FORM: 'GWS', 'MCELLBI'"]
@@ -160,11 +155,10 @@ describe Oec::MergeConfirmationSheetsTask do
   context 'when confirmed course data cannot be matched to SIS import' do
     let(:local_write) { 'Y' }
     before do
-      gws_course_confirmation[:csv].concat '2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,100008,Instructor,Eight,instructor8@berkeley.edu,1,Y,GWS,F,,1/20/2015,5/8/2015'
+      gws_course_confirmation[:csv].concat '2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,100008,Instructor,Eight,instructor8@berkeley.edu,Y,GWS,F,,1/20/2015,5/8/2015'
     end
 
-    it 'should not export and should record errors' do
-      expect(task).not_to receive :export_sheet
+    it 'should record errors' do
       expect(Rails.logger).to receive(:error).at_least(1).times
       task.run
       expect(task.errors['Merged course confirmations']['2015-B-91111-100008'].keys).to eq ['No SIS import row found matching confirmation row']
@@ -179,8 +173,7 @@ describe Oec::MergeConfirmationSheetsTask do
       mcellbi_supervisor_confirmation[:csv].concat '999999,James,Tiptree,raccoona@berkeley.edu,DEPT_ADMIN,Y,,MCELLBI,GWS,,,'
     end
 
-    it 'should not export and should record errors' do
-      expect(task).not_to receive :export_sheet
+    it 'should record errors' do
       expect(Rails.logger).to receive(:error).at_least(1).times
       task.run
       pp task.errors
@@ -197,8 +190,7 @@ describe Oec::MergeConfirmationSheetsTask do
       mcellbi_supervisor_confirmation[:csv].concat '999999,Alice,Sheldon,raccoona@berkeley.edu,DEPT_ADMIN,,,MCELLBI,GWS,,,'
     end
 
-    it 'should not export and should record errors' do
-      expect(task).not_to receive :export_sheet
+    it 'should record errors' do
       expect(Rails.logger).to receive(:error).at_least(1).times
       task.run
       expect(task.errors['Merged supervisor confirmations']['999999'].keys).to eq ['No supervisors row found matching confirmation row']

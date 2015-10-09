@@ -62,7 +62,7 @@ namespace :canvas do
       Rails.logger.error 'Must specify DEV_TEST_CANVASES="https://ucb.beta.example.com,https://ucb.test.example.com"'
     else
       CanvasLti::ReconfigureAuthorizationConfigs.reconfigure(test_cas_url, non_production_canvases)
-      Rails.logger.info "Reconfiguration complete for #{dev_test_canvases_string}"
+      Rails.logger.info "Reconfiguration complete for #{non_production_canvases}"
     end
   end
 
@@ -107,6 +107,17 @@ namespace :canvas do
   desc 'Report TurnItIn usage for a term'
   task :report_turnitin => :environment do
     CanvasCsv::TurnitinReporter.print_term_report(ENV['TERM_ID'])
+  end
+
+  desc 'Report LTI Apps enabled for a term'
+  task :report_lti_usage => :environment do
+    sis_term_id = ENV["TERM_ID"]
+    if sis_term_id.blank?
+      sis_term_id = Canvas::Terms.current_sis_term_ids.first
+    end
+    Rails.logger.warn "Beginning report on LTI configurations in #{sis_term_id}"
+    CanvasCsv::LtiUsageReporter.new(sis_term_id).run
+    Rails.logger.warn "Reports on LTI configurations in #{sis_term_id} generated"
   end
 
 end
