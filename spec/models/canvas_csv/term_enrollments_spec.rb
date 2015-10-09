@@ -1,6 +1,6 @@
 describe CanvasCsv::TermEnrollments do
 
-  let(:frozen_moment_in_time) { Time.at(1388563200) }
+  let(:today) { Time.now.strftime '%F' }
   let(:current_sis_term_ids) { ['TERM:2013-D', 'TERM:2014-B'] }
   let(:export_dir) { subject.instance_eval { @export_dir } }
 
@@ -55,15 +55,11 @@ describe CanvasCsv::TermEnrollments do
   let(:term1_sections_report_csv) { CSV.parse(term1_section_enrollments_csv_string, :headers => :first_row) }
   let(:term2_sections_report_csv) { CSV.parse(term2_section_enrollments_csv_string, :headers => :first_row) }
 
-  let(:expected_term1_filepath) { "#{export_dir}/canvas-2014-01-01-TERM_2013-D-term-enrollments-export.csv" }
-  let(:expected_term2_filepath) { "#{export_dir}/canvas-2014-01-01-TERM_2014-B-term-enrollments-export.csv" }
+  let(:expected_term1_filepath) { "#{export_dir}/canvas-#{today}-TERM_2013-D-term-enrollments-export.csv" }
+  let(:expected_term2_filepath) { "#{export_dir}/canvas-#{today}-TERM_2014-B-term-enrollments-export.csv" }
 
   before do
     allow(Canvas::Terms).to receive(:current_sis_term_ids).and_return(['TERM:2013-D', 'TERM:2014-B'])
-
-    # set static times for consistent testing output
-    allow(Time).to receive(:now).and_return(frozen_moment_in_time)
-    allow(DateTime).to receive(:now).and_return(frozen_moment_in_time.to_datetime)
 
     # stub behavior for Canvas::Report::Sections
     allow_any_instance_of(Canvas::Report::Sections).to receive(:get_csv).and_return(sections_report_csv)
@@ -80,7 +76,7 @@ describe CanvasCsv::TermEnrollments do
 
     # setup default values for global canvas synchronization settings
     CanvasCsv::Synchronization.create(:last_guest_user_sync => 1.weeks.ago.utc)
-    CanvasCsv::Synchronization.get.update(:latest_term_enrollment_csv_set => (frozen_moment_in_time - 1.day))
+    CanvasCsv::Synchronization.get.update(:latest_term_enrollment_csv_set => (Time.now - 1.day))
   end
 
   after do
@@ -133,8 +129,8 @@ describe CanvasCsv::TermEnrollments do
     it 'provides files for current date by default' do
       csv_filepaths = subject.term_enrollments_csv_filepaths
       expect(csv_filepaths).to be_an_instance_of Hash
-      expect(csv_filepaths['TERM:2013-D']).to eq "#{export_dir}/canvas-2014-01-01-TERM_2013-D-term-enrollments-export.csv"
-      expect(csv_filepaths['TERM:2014-B']).to eq "#{export_dir}/canvas-2014-01-01-TERM_2014-B-term-enrollments-export.csv"
+      expect(csv_filepaths['TERM:2013-D']).to eq "#{export_dir}/canvas-#{today}-TERM_2013-D-term-enrollments-export.csv"
+      expect(csv_filepaths['TERM:2014-B']).to eq "#{export_dir}/canvas-#{today}-TERM_2014-B-term-enrollments-export.csv"
     end
 
     it 'provides files for date specified' do
@@ -148,11 +144,12 @@ describe CanvasCsv::TermEnrollments do
   describe '#enrollment_csv_filepath' do
     it 'returns expected filepath for date and term_id provided' do
       result = subject.enrollment_csv_filepath(Time.now, 'TERM:2014-D')
-      expect(result).to eq "#{export_dir}/canvas-2014-01-01-TERM_2014-D-term-enrollments-export.csv"
+      expect(result).to eq "#{export_dir}/canvas-#{today}-TERM_2014-D-term-enrollments-export.csv"
     end
   end
 
   describe '#latest_term_enrollment_set_date' do
+    let(:frozen_moment_in_time) { Time.at(1388563200) }
     let(:sync_setting) { double(:sync_setting, :latest_term_enrollment_csv_set => frozen_moment_in_time.in_time_zone) }
     it 'returns the date for the latest CSV term enrollments set' do
       allow(CanvasCsv::Synchronization).to receive(:get).and_return(sync_setting)
@@ -179,9 +176,11 @@ describe CanvasCsv::TermEnrollments do
     end
 
     it 'updates tracking timestamp when finished exporting enrollments to csv set' do
+      old_timestamp = CanvasCsv::Synchronization.get.latest_term_enrollment_csv_set
       subject.export_enrollments_to_csv_set
-      sync_settings = CanvasCsv::Synchronization.get
-      expect(sync_settings.latest_term_enrollment_csv_set).to eq frozen_moment_in_time.to_datetime.in_time_zone
+      new_timestamp =  CanvasCsv::Synchronization.get.latest_term_enrollment_csv_set
+      expect(new_timestamp).to be > old_timestamp
+      expect(new_timestamp.strftime '%F').to eq today
     end
   end
 
@@ -189,14 +188,14 @@ describe CanvasCsv::TermEnrollments do
     context 'when sections report is empty' do
       before { allow_any_instance_of(Canvas::Report::Sections).to receive(:get_csv).and_return(empty_sections_report_csv) }
       it 'should escape execution' do
-        enrollments_csv = subject.make_enrollment_export_csv("#{export_dir}/canvas-2014-01-01-TERM_2014-D-term-enrollments-export.csv")
+        enrollments_csv = subject.make_enrollment_export_csv("#{export_dir}/canvas-#{today}-TERM_2014-D-term-enrollments-export.csv")
         expect_any_instance_of(Canvas::SectionEnrollments).to_not receive(:new)
         subject.populate_term_csv_file(current_sis_term_ids[0], enrollments_csv)
       end
     end
 
     it 'populates csv export for term specified' do
-      enrollments_csv = subject.make_enrollment_export_csv("#{export_dir}/canvas-2014-01-01-TERM_2014-D-term-enrollments-export.csv")
+      enrollments_csv = subject.make_enrollment_export_csv("#{export_dir}/canvas-#{today}-TERM_2014-D-term-enrollments-export.csv")
       subject.populate_term_csv_file(current_sis_term_ids[0], enrollments_csv)
       enrollments_csv.close
       enrollments_csv = CSV.read(enrollments_csv.path, {headers: true})
@@ -228,7 +227,7 @@ describe CanvasCsv::TermEnrollments do
 
   describe '#make_enrollment_export_csv' do
     it 'returns CSV file object with headers initialized' do
-      export_csv = subject.make_enrollment_export_csv("#{export_dir}/canvas-2014-01-01-TERM_2013-D-term-enrollments-export.csv")
+      export_csv = subject.make_enrollment_export_csv("#{export_dir}/canvas-#{today}-TERM_2013-D-term-enrollments-export.csv")
       expect(export_csv).to be_an_instance_of CSV
       export_csv << [5,'SEC:2013-D-26109',165,'23828759','StudentEnrollment',185]
       expect(export_csv.headers).to eq ['course_id', 'canvas_section_id', 'sis_section_id', 'canvas_user_id', 'sis_login_id', 'sis_user_id', 'role', 'sis_import_id', 'enrollment_state']
