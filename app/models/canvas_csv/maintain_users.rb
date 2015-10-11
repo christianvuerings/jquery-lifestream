@@ -128,10 +128,10 @@ module CanvasCsv
         login_id = inactive_account[1]
       end
       if (ldap_uid = Integer(login_id, 10) rescue nil)
+        @known_uids << login_id
         campus_row = campus_user_rows.select { |r| (r['ldap_uid'].to_i == ldap_uid) && (r['person_type'] != 'Z') }.first
         if campus_row.present?
           logger.warn "Reactivating account for LDAP UID #{ldap_uid}" if inactive_account
-          @known_uids << login_id
           new_account_data = canvas_user_from_campus_row(campus_row)
         else
           return unless Settings.canvas_proxy.inactivate_expired_users
