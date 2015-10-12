@@ -78,16 +78,6 @@ angular.module('calcentral.controllers').controller('TasksController', function(
   });
   getTasks();
 
-  $scope.$on('calcentral.api.user.isAuthenticated', function(event, isAuthenticated) {
-    if (isAuthenticated && apiService.user.profile.features.spamChristian) {
-      $interval(function() {
-        getTasks({
-          refreshCache: true
-        });
-      }, 2000);
-    }
-  });
-
   var toggleStatus = function(task) {
     if (task.status === 'completed') {
       task.status = 'needsAction';
