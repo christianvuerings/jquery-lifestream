@@ -1,14 +1,16 @@
 module Oec
   class SisImportTask < Task
 
+    on_success_run Oec::ReportDiffTask, if: proc { !@opts[:local_write] }
+
     def run_internal
       @dept_forms = {}
       log :info, "Will import SIS data for term #{@term_code}"
       imports_now = find_or_create_now_subfolder('imports')
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
         @term_dates ||= default_term_dates
-        log :info, "Generating #{dept_code}.csv"
         worksheet = Oec::SisImportSheet.new(dept_code: dept_code)
+        log :info, "Generating sheet: '#{worksheet.export_name}'"
         import_courses(worksheet, course_codes)
         export_sheet(worksheet, imports_now)
       end
@@ -151,13 +153,8 @@ module Oec
             worksheet_selection.select { |worksheet_row| worksheet_row[column] == overrides_row[column] }
           end
         end
-        if rows_to_update.any?
-          rows_to_update.each do |row|
-            row.update overrides_row.select { |k,v| update_columns.include?(k) && v.present? }
-          end
-        else
-          row_key = select_columns.map { |col| overrides_row[col] }.join('-')
-          worksheet[row_key] = overrides_row
+        rows_to_update.each do |row|
+          row.update overrides_row.select { |k,v| update_columns.include?(k) && v.present? }
         end
       end
 

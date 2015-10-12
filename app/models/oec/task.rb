@@ -1,11 +1,22 @@
 module Oec
   class Task
+    extend Cache::Cacheable
     include ClassLogger
 
-    LOG_DIRECTORY = Rails.root.join('tmp', 'oec')
+    LOG_DIRECTORY = Pathname.new Settings.oec.local_write_directory
+
+    class << self; attr_accessor :success_callback; end
+
+    def self.on_success_run(task_class, opts={})
+      self.success_callback = opts.merge(class: task_class)
+    end
 
     def self.date_format
       '%F'
+    end
+
+    def self.cache_key(id)
+      "Oec::Task/#{id}"
     end
 
     def self.timestamp_format
@@ -13,29 +24,37 @@ module Oec
     end
 
     def initialize(opts)
-      @log = []
-      @remote_drive = Oec::RemoteDrive.new
-      @term_code = opts.delete :term_code
-      @date_time = opts[:date_time] || default_date_time
       @opts = opts
+      @log = []
+      @status = 'In progress'
+      @api_task_id = opts[:api_task_id]
+      write_status_to_cache if opts[:log_to_cache]
+
+      @remote_drive = Oec::RemoteDrive.new
+      @term_code = opts[:term_code]
+      @date_time = opts[:date_time] || default_date_time
       @course_code_filter = if opts[:dept_names]
                              {dept_name: opts[:dept_names].split.map { |name| name.tr('_', ' ') }}
                            elsif opts[:dept_codes]
                              {dept_code: opts[:dept_codes].split}
                            else
-                             {dept_name: Oec::CourseCode.included_dept_names}
+                             {include_in_oec: true}
                            end
     end
 
     def run
       log :info, "Starting #{self.class.name}"
       run_internal
+      @status = 'Success' unless (@status == 'Error' || self.class.success_callback)
       true
     rescue => e
       log :error, "#{self.class.name} aborted with error: #{e.message}\n#{e.backtrace.join "\n\t"}"
+      @status = 'Error'
       nil
     ensure
       write_log
+      write_status_to_cache if @opts[:log_to_cache]
+      run_success_callback if self.class.success_callback && @status != 'Error'
     end
 
     private
@@ -139,7 +158,14 @@ module Oec
 
     def log(level, message)
       logger.send level, message
-      @log << "[#{Time.now}] #{message}"
+      @log << "[#{Time.now.strftime '%T'}] #{message}"
+      write_status_to_cache if @opts[:log_to_cache]
+    end
+
+    def run_success_callback
+      return if (condition = self.class.success_callback[:if]) && !instance_eval(&condition)
+      task_opts = @opts.merge(previous_task_log: @log)
+      self.class.success_callback[:class].new(task_opts).run
     end
 
     def timestamp(arg = @date_time)
@@ -176,7 +202,16 @@ module Oec
         end
       end
     rescue => e
-      logger.error "Could not write log: #{e.message}\n#{e.backtrace.join "\n\t"}"
+      log :error, "Could not write log: #{e.message}\n#{e.backtrace.join "\n\t"}"
+    end
+
+    def write_status_to_cache
+      previous_log_if_any = @opts[:previous_task_log] || []
+      log = previous_log_if_any + @log
+      self.class.write_cache(
+        {status: @status, log: log},
+        @api_task_id
+      )
     end
 
   end

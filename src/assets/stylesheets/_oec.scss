@@ -22,7 +22,28 @@
     margin-right: 0;
   }
 
+  .cc-oec-log {
+    white-space: pre;
+  }
+
+  .cc-oec-status {
+    background: $cc-color-main-background;
+    border: 1px solid $cc-color-lighter-grey;
+    font-size: 14px;
+    margin-top: 15px;
+    padding: 10px 15px;
+  }
+
+  .cc-oec-status-icon {
+    float: left;
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
   .cc-oec-text {
-    margin: 15px 0;
+    margin-top: 15px;
+    &:last-of-type {
+      margin-bottom: 15px;
+    }
   }
 }

@@ -36,12 +36,14 @@ module Oec
 
         if (course_confirmation_worksheet = confirmation_sheet.worksheets.find { |w| w.title == 'Courses' })
           course_confirmation = Oec::CourseConfirmation.from_csv @remote_drive.export_csv(course_confirmation_worksheet)
+          log :info, "Retrieved course confirmations from department sheet '#{department_item.title}'"
         else
           raise RuntimeError, "Could not find worksheet 'Courses' in sheet '#{confirmation_sheet.title}'"
         end
 
         if (supervisor_confirmation_worksheet = confirmation_sheet.worksheets.find { |w| w.title == 'Report Viewers' })
           supervisor_confirmation = Oec::SupervisorConfirmation.from_csv @remote_drive.export_csv(supervisor_confirmation_worksheet)
+          log :info, "Retrieved supervisor confirmations from department sheet '#{department_item.title}'"
         else
           raise RuntimeError, "Could not find worksheet 'Report Viewers' in sheet '#{confirmation_sheet.title}'"
         end
@@ -73,6 +75,8 @@ module Oec
             end
           end
         end
+
+        log :info, "Merged all rows from department sheet '#{department_item.title}'"
       end
 
       if !valid?

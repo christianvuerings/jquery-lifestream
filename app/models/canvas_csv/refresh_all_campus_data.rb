@@ -8,12 +8,15 @@ module CanvasCsv
     def initialize(batch_or_incremental)
       super()
       @users_csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-users-#{batch_or_incremental}.csv"
-      @term_to_memberships_csv_filename = {}
-      @batch_mode = (batch_or_incremental == 'batch')
-      term_ids = Canvas::Terms.current_sis_term_ids
-      term_ids.each do |term_id|
-        csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{file_safe(term_id)}-enrollments-#{batch_or_incremental}.csv"
-        @term_to_memberships_csv_filename[term_id] = csv_filename
+      @accounts_only = (batch_or_incremental == 'accounts')
+      unless @accounts_only
+        @term_to_memberships_csv_filename = {}
+        @batch_mode = (batch_or_incremental == 'batch')
+        term_ids = Canvas::Terms.current_sis_term_ids
+        term_ids.each do |term_id|
+          csv_filename = "#{@export_dir}/canvas-#{DateTime.now.strftime('%F')}-#{file_safe(term_id)}-enrollments-#{batch_or_incremental}.csv"
+          @term_to_memberships_csv_filename[term_id] = csv_filename
+        end
       end
     end
 
@@ -28,14 +31,16 @@ module CanvasCsv
       user_maintainer = MaintainUsers.new(known_uids, users_csv)
       user_maintainer.refresh_existing_user_accounts
       original_user_count = known_uids.length
-      cached_enrollments_provider = CanvasCsv::TermEnrollments.new
-      @term_to_memberships_csv_filename.each do |term, csv_filename|
-        enrollments_csv = make_enrollments_csv(csv_filename)
-        refresh_existing_term_sections(term, enrollments_csv, known_uids, users_csv, cached_enrollments_provider, user_maintainer.sis_user_id_changes)
-        enrollments_csv.close
-        enrollments_count = csv_count(csv_filename)
-        logger.warn "Will upload #{enrollments_count} Canvas enrollment records for #{term}"
-        @term_to_memberships_csv_filename[term] = nil if enrollments_count == 0
+      unless @accounts_only
+        cached_enrollments_provider = CanvasCsv::TermEnrollments.new
+        @term_to_memberships_csv_filename.each do |term, csv_filename|
+          enrollments_csv = make_enrollments_csv(csv_filename)
+          refresh_existing_term_sections(term, enrollments_csv, known_uids, users_csv, cached_enrollments_provider, user_maintainer.sis_user_id_changes)
+          enrollments_csv.close
+          enrollments_count = csv_count(csv_filename)
+          logger.warn "Will upload #{enrollments_count} Canvas enrollment records for #{term}"
+          @term_to_memberships_csv_filename[term] = nil if enrollments_count == 0
+        end
       end
       new_user_count = known_uids.length - original_user_count
       users_csv.close
@@ -70,15 +75,18 @@ module CanvasCsv
       import_proxy = Canvas::SisImport.new
       if @users_csv_filename.blank? || import_proxy.import_users(@users_csv_filename)
         logger.warn 'User import succeeded'
-        @term_to_memberships_csv_filename.each do |term_id, csv_filename|
-          if csv_filename.present?
-            if @batch_mode
-              import_proxy.import_batch_term_enrollments(term_id, csv_filename)
-            else
-              import_proxy.import_all_term_enrollments(term_id, csv_filename)
+        unless @accounts_only
+          @term_to_memberships_csv_filename.each do |term_id, csv_filename|
+            if csv_filename.present?
+              if @batch_mode
+                import_proxy.import_batch_term_enrollments(term_id, csv_filename)
+                logger.warn "Batch enrollment import for #{term_id} succeeded"
+              else
+                import_proxy.import_all_term_enrollments(term_id, csv_filename)
+                logger.warn "Incremental enrollment import for #{term_id} succeeded"
+              end
             end
           end
-          logger.warn "Enrollment import for #{term_id} succeeded"
         end
       end
     end

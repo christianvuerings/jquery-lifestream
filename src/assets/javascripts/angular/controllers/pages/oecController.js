@@ -5,13 +5,13 @@ var angular = require('angular');
 /**
  * OEC Control Panel app controller
  */
-angular.module('calcentral.controllers').controller('OecController', function(apiService, oecFactory, $scope) {
+angular.module('calcentral.controllers').controller('OecController', function(apiService, oecFactory, $scope, $timeout) {
   $scope.initialize = function() {
     oecFactory.getOecTasks().success(function(data) {
       apiService.util.setTitle('OEC Control Panel');
       angular.extend($scope, data);
       $scope.displayError = null;
-      $scope.taskInProgress = false;
+      $scope.oecTaskStatus = null;
       $scope.taskParameters = {
         selectedTask: {
           name: null
@@ -30,6 +30,26 @@ angular.module('calcentral.controllers').controller('OecController', function(ap
     });
   };
 
+  var handleTaskStatus = function(data) {
+    angular.extend($scope.oecTaskStatus, data.oecTaskStatus);
+    if ($scope.oecTaskStatus.status === 'In progress') {
+      pollTaskStatus();
+    } else {
+      $timeout.cancel(timeoutPromise);
+      $scope.oecTaskStatus.log.push('Task completed with status \'' + $scope.oecTaskStatus.status + '.\'');
+    }
+  };
+
+  var timeoutPromise;
+  var pollTaskStatus = function() {
+    timeoutPromise = $timeout(function() {
+      return oecFactory.oecTaskStatus($scope.oecTaskStatus.id)
+        .success(handleTaskStatus).error(function() {
+          $scope.displayError = 'failure';
+        });
+    }, 2000);
+  };
+
   var sanitizeTaskOptions = function() {
     if (!$scope.taskParameters.selectedTask.acceptsDepartmentOptions) {
       $scope.taskParameters.options.departmentCode = null;
@@ -39,10 +59,8 @@ angular.module('calcentral.controllers').controller('OecController', function(ap
   $scope.runOecTask = function() {
     sanitizeTaskOptions();
     return oecFactory.runOecTask($scope.taskParameters.selectedTask.name, $scope.taskParameters.options).success(function(data) {
-      if (data.success) {
-        $scope.taskInProgress = true;
-        $scope.oecDriveUrl = data.oecDriveUrl;
-      }
+      angular.extend($scope, data);
+      pollTaskStatus();
     }).error(function() {
       $scope.displayError = 'failure';
     });
