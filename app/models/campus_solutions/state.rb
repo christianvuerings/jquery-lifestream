@@ -22,7 +22,6 @@ module CampusSolutions
         states: []
       }
       return feed if response.parsed_response.blank?
-      # TODO does front-end need to lookup by name/abbv, or is an array sufficient?
       response.parsed_response['STATES'].each do |state|
         feed[:states] << state
       end
