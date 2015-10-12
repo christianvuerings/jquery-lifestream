@@ -45,7 +45,7 @@ module Oec
     def run
       log :info, "Starting #{self.class.name}"
       run_internal
-      @status = 'Success' unless self.class.success_callback
+      @status = 'Success' unless (@status == 'Error' || self.class.success_callback)
       true
     rescue => e
       log :error, "#{self.class.name} aborted with error: #{e.message}\n#{e.backtrace.join "\n\t"}"
