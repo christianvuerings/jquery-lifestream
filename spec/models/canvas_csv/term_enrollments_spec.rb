@@ -1,6 +1,6 @@
 describe CanvasCsv::TermEnrollments do
 
-  let(:today) { Time.now.strftime '%F' }
+  let(:today) { Time.now.in_time_zone.strftime '%F' }
   let(:current_sis_term_ids) { ['TERM:2013-D', 'TERM:2014-B'] }
   let(:export_dir) { subject.instance_eval { @export_dir } }
 
