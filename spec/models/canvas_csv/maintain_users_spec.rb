@@ -246,7 +246,7 @@ describe CanvasCsv::MaintainUsers do
         expect(account_changes[0]['user_id']).to eq "UID:#{uid}"
         expect(account_changes[0]['email']).to be_blank
         expect(subject.sis_user_id_changes).to eq({"sis_login_id:#{uid}" => "UID:#{uid}"})
-        expect(known_uids.length).to eq(0)
+        expect(known_uids.length).to eq(1)
         expect(subject.user_email_deletions).to eq [canvas_user_id]
       end
     end
@@ -258,7 +258,7 @@ describe CanvasCsv::MaintainUsers do
         expect(account_changes[0]['user_id']).to eq "UID:#{uid}"
         expect(account_changes[0]['email']).to be_blank
         expect(subject.sis_user_id_changes).to eq({"sis_login_id:#{uid}" => "UID:#{uid}"})
-        expect(known_uids.length).to eq(0)
+        expect(known_uids.length).to eq(1)
         expect(subject.user_email_deletions).to eq [canvas_user_id]
       end
     end
@@ -267,7 +267,7 @@ describe CanvasCsv::MaintainUsers do
       it 'does nothing' do
         expect(account_changes.length).to eq(0)
         expect(subject.sis_user_id_changes).to eq({})
-        expect(known_uids.length).to eq(0)
+        expect(known_uids.length).to eq(1)
         expect(subject.user_email_deletions).to eq []
       end
     end
@@ -283,7 +283,7 @@ describe CanvasCsv::MaintainUsers do
       it 'does nothing' do
         expect(account_changes.length).to eq(0)
         expect(subject.sis_user_id_changes).to eq({})
-        expect(known_uids.length).to eq(0)
+        expect(known_uids.length).to eq(1)
         expect(subject.user_email_deletions).to eq []
       end
     end
