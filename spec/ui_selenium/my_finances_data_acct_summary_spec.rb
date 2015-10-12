@@ -55,9 +55,9 @@ describe 'My Finances Billing Summary', :testui => true do
             fin_api_page.get_json(driver)
             my_finances_page = CalCentralPages::MyFinancesPages::MyFinancesDetailsPage.new(driver)
             my_finances_page.load_page(driver)
-            my_finances_page.wait_for_billing_summary(driver)
+            my_finances_page.billing_summary_spinner_element.when_not_present(timeout=WebDriverUtils.page_load_timeout)
 
-            my_fin_no_cars_msg = my_finances_page.has_no_cars_data_msg?
+            my_fin_no_cars_msg = my_finances_page.no_cars_data_msg?
 
             if fin_api_page.has_cars_data?
               testable_users.push(uid)

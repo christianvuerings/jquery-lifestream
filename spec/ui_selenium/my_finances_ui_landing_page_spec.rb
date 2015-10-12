@@ -36,8 +36,8 @@ describe 'My Finances landing page', :testui => true do
       @cal_net_page.login(UserUtils.oski_username, UserUtils.oski_password)
       @my_finances_page = CalCentralPages::MyFinancesPages::MyFinancesLandingPage.new(@driver)
       @my_finances_page.load_page(@driver)
-      @my_finances_page.wait_for_billing_summary(@driver)
-      @my_finances_page.wait_for_fin_resources_links
+      @my_finances_page.billing_summary_spinner_element.when_not_visible(timeout=WebDriverUtils.page_load_timeout)
+      @my_finances_page.fin_resources_list_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     end
 
     context 'Billing Summary card' do

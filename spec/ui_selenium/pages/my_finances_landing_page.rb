@@ -75,22 +75,10 @@ module CalCentralPages
         activity_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       end
 
-      def wait_for_cal_1_card
-        cal_1_card_content_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      end
-
-      def wait_for_fin_resources_links
-        fin_resources_list_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      end
-
-      def wait_for_fin_aid
-        fin_messages_list_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      end
-
       def all_fin_aid_message_titles
         titles = []
         finaid_message_title_elements.each do |msg|
-          title = msg.text.gsub(/\s+/, "")
+          title = msg.text.gsub(/\s+/, '')
           titles.push(title)
         end
         titles
@@ -154,7 +142,7 @@ module CalCentralPages
       def all_fin_aid_message_links
         links = []
         finaid_message_link_elements.each do |msg|
-          link_url = msg.attribute('href').gsub(/\/\s*\z/, "")
+          link_url = msg.attribute('href').gsub(/\/\s*\z/, '')
           links.push(link_url)
         end
         links
@@ -178,7 +166,7 @@ module CalCentralPages
         messages.each do |msg|
           begin
             summary_on_page = driver.find_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{messages.index(msg) + 1}]//p[@data-ng-bind-html='activity.summary | linky']").text
-            summary = summary_on_page.gsub(/\s+/, "")
+            summary = summary_on_page.gsub(/\s+/, '')
           rescue => e
             logger.error e.message + "\n" + e.backtrace.join("\n")
             summary = nil

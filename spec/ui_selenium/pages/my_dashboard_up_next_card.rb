@@ -103,8 +103,7 @@ module CalCentralPages
 
     def click_bcal_link(driver, id)
       driver.find_element(:xpath, "//ul[@class='cc-widget-list cc-widget-mycalendar-datelist']//span[contains(.,'#{id}')]//following-sibling::div").click
-      view_in_bcal_button_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-      view_in_bcal_button
+      WebDriverUtils.wait_for_element_and_click view_in_bcal_button_element
     end
   end
 end

@@ -43,7 +43,7 @@ describe 'My Dashboard bConnected live updates', :testui => true do
 
       # On To Do card, get initial count of unscheduled tasks
       @to_do_card = CalCentralPages::MyDashboardPage::MyDashboardToDoCard.new(@driver)
-      @to_do_card.click_unscheduled_tasks_tab
+      WebDriverUtils.wait_for_page_and_click @to_do_card.unsched_tasks_tab_element
       @to_do_card.unsched_task_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       @initial_task_count = @to_do_card.unsched_task_count.to_i
       logger.info("Unscheduled task count is #{@initial_task_count.to_s}")
@@ -85,13 +85,13 @@ describe 'My Dashboard bConnected live updates', :testui => true do
       end
 
       it 'shows an updated count of tasks' do
-        @to_do_card.click_unscheduled_tasks_tab
+        WebDriverUtils.wait_for_page_and_click @to_do_card.unsched_tasks_tab_element
         @to_do_card.unsched_task_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
         expect(@to_do_card.unsched_task_count).to eql((@initial_task_count + 1).to_s)
       end
 
       it 'shows the content of a new task' do
-        @to_do_card.click_unscheduled_tasks_tab
+        WebDriverUtils.wait_for_page_and_click @to_do_card.unsched_tasks_tab_element
         expect(@to_do_card.unsched_task_one_title).to eql(@task_title)
         expect(@to_do_card.unsched_task_one_date).to eql(today.strftime("%m/%d"))
       end

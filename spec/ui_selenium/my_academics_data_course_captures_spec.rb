@@ -96,7 +96,7 @@ describe 'My Academics course captures card', :testui => true do
                 logger.info 'No HTML5 player present'
               end
               unless video_itunes.nil?
-                itunes_video_link_present = WebDriverUtils.verify_external_link(driver, my_academics.itunes_video_link_element, "#{course} - Download free content from UC Berkeley on iTunes")
+                itunes_video_link_present = WebDriverUtils.verify_external_link(driver, my_academics.itunes_video_link_element, "#{course} - Free Podcast by UC Berkeley on iTunes")
                 it "shows an iTunes video URL for UID #{uid}" do
                   expect(itunes_video_link_present).to be true
                 end
@@ -124,7 +124,7 @@ describe 'My Academics course captures card', :testui => true do
                 end
               end
               unless audio_itunes.nil?
-                itunes_audio_link_present = WebDriverUtils.verify_external_link(driver, my_academics.itunes_audio_link_element, "#{course} - Download free content from UC Berkeley on iTunes")
+                itunes_audio_link_present = WebDriverUtils.verify_external_link(driver, my_academics.itunes_audio_link_element, "#{course} - Free Podcast by UC Berkeley on iTunes")
                 it "shows an iTunes audio URL for UID #{uid}" do
                   expect(itunes_audio_link_present).to be true
                 end

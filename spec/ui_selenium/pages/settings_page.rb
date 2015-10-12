@@ -47,8 +47,7 @@ module CalCentralPages
       if disconnect_button_element.visible?
         logger.info('User is connected, so disconnecting from Google')
         disconnect_button
-        disconnect_yes_button_element.when_visible(timeout = WebDriverUtils.page_event_timeout)
-        disconnect_yes_button
+        WebDriverUtils.wait_for_element_and_click disconnect_yes_button_element
         disconnect_yes_button_element.when_not_present(timeout=WebDriverUtils.page_event_timeout)
         connect_button_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
         logger.info('Pausing so that OAuth token is revoked')
@@ -61,17 +60,13 @@ module CalCentralPages
     # VIEW-AS
 
     def view_as_user(id)
-      view_as_input_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      self.view_as_input = id
+      WebDriverUtils.wait_for_element_and_type(view_as_input_element, id)
       view_as_submit_button
     end
 
     def clear_all_saved_users
       saved_users_element.when_present(timeout=WebDriverUtils.page_load_timeout)
-      if clear_saved_users_button?
-        clear_saved_users_button_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-        clear_saved_users_button
-      end
+      WebDriverUtils.wait_for_element_and_click clear_saved_users_button_element if clear_saved_users_button?
     end
 
     def view_as_first_saved_user
@@ -81,9 +76,7 @@ module CalCentralPages
 
     def clear_all_recent_users
       recent_users_element.when_present(timeout=WebDriverUtils.page_load_timeout)
-      if clear_recent_users_button?
-        clear_recent_users_button
-      end
+      clear_recent_users_button if clear_recent_users_button?
     end
 
     def view_as_first_recent_user

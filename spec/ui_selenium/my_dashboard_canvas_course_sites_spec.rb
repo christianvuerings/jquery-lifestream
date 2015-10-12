@@ -265,7 +265,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@to_do_card.overdue_task_one_time).to eql('11 PM')
         end
         it 'shows a link to an overdue Canvas assignment on a To Do task' do
-          @to_do_card.toggle_overdue_task_one_detail
+          WebDriverUtils.wait_for_page_and_click @to_do_card.overdue_task_one_toggle_element
           @to_do_card.overdue_task_one_bcourses_link_element.when_visible timeout
           expect(@to_do_card.overdue_task_one_bcourses_link_element.attribute('href')).to eql(@past_assignment_url)
         end
@@ -281,7 +281,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@to_do_card.today_task_one_time).to eql('11 PM')
         end
         it 'shows a link to a currently due Canvas assignment on a To Do task' do
-          @to_do_card.toggle_today_task_one_detail
+          WebDriverUtils.wait_for_page_and_click @to_do_card.today_task_one_toggle_element
           @to_do_card.today_task_one_bcourses_link_element.when_visible timeout
           expect(@to_do_card.today_task_one_bcourses_link_element.attribute('href')).to eql(@current_assignment_url)
         end
@@ -297,7 +297,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@to_do_card.future_task_one_time).to eql('11 PM')
         end
         it 'shows a link to a future due Canvas assignment on a To Do task' do
-          @to_do_card.toggle_future_task_one_detail
+          WebDriverUtils.wait_for_page_and_click @to_do_card.future_task_one_toggle_element
           @to_do_card.future_task_one_bcourses_link_element.when_visible timeout
           expect(@to_do_card.future_task_one_bcourses_link_element.attribute('href')).to eql(@future_assignment_url)
         end
