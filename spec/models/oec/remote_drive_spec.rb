@@ -30,6 +30,7 @@ describe Oec::RemoteDrive do
       before {
         worksheet = Oec::SisImportSheet.new(dept_code: dept_code)
         course_codes = [Oec::CourseCode.new(dept_name: 'SPANISH', catalog_id: '', dept_code: dept_code, include_in_oec: true)]
+        # Import of '2015-D' is intentional because we want valid data as input.
         Oec::SisImportTask.new(:term_code => '2015-D').import_courses(worksheet, course_codes)
         @folder = subject.create_folder transient_folder_name
         subject.check_conflicts_and_upload(worksheet, dept_code, Oec::Worksheet, @folder)
