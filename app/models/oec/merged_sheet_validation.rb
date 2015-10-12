@@ -98,7 +98,8 @@ module Oec
         log :info, 'Validation passed.'
         [instructors, course_instructors, courses, students, course_students, supervisors, course_supervisors]
       else
-        log :error, "Validation failed!"
+        @status = 'Error'
+        log :error, 'Validation failed!'
         log_validation_errors
         nil
       end
