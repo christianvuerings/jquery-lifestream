@@ -64,32 +64,27 @@ module CalCentralPages
 
   def click_my_dashboard_link
     logger.info('Clicking My Dashboard link')
-    my_dashboard_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    my_dashboard_link
+    WebDriverUtils.wait_for_page_and_click my_dashboard_link_element
   end
 
   def click_my_academics_link
     logger.info('Clicking My Academics link')
-    my_academics_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    my_academics_link
+    WebDriverUtils.wait_for_page_and_click my_academics_link_element
   end
 
   def click_my_campus_link
     logger.info('Clicking My Campus link')
-    my_campus_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    my_campus_link
+    WebDriverUtils.wait_for_page_and_click my_campus_link_element
   end
 
   def click_my_finances_link
     logger.info('Clicking My Finances link')
-    my_finances_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    my_finances_link
+    WebDriverUtils.wait_for_page_and_click my_finances_link_element
   end
 
   def click_email_badge
     logger.info('Clicking email badge on Dashboard')
-    email_badge_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    email_badge
+    WebDriverUtils.wait_for_page_and_click email_badge_element
   end
 
   def show_unread_email
@@ -105,12 +100,10 @@ module CalCentralPages
   end
 
   def status_popover_visible?
-    begin
-      status_icon_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-      true
-    rescue
-      false
-    end
+    status_icon_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
+    true
+  rescue
+    false
   end
 
   def open_status_popover
@@ -123,27 +116,23 @@ module CalCentralPages
   end
 
   def click_reg_status_alert
-    reg_status_alert_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-    reg_status_alert_link
+    WebDriverUtils.wait_for_page_and_click reg_status_alert_element
   end
 
   def click_block_status_alert
-    block_status_alert_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-    block_status_alert_link
+    WebDriverUtils.wait_for_element_and_click block_status_alert_element
   end
 
   def click_settings_link
     logger.info('Clicking the link to the Settings page')
-    gear_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    gear_link
-    settings_link
+    WebDriverUtils.wait_for_page_and_click gear_link_element
+    WebDriverUtils.wait_for_element_and_click settings_link_element
   end
 
   def click_logout_link
     logger.info('Logging out of CalCentral')
-    gear_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    gear_link
-    logout_link
+    WebDriverUtils.wait_for_page_and_click gear_link_element
+    WebDriverUtils.wait_for_element_and_click logout_link_element
   end
 
   def log_out(splash_page)
@@ -159,10 +148,8 @@ module CalCentralPages
     logger.info('Opting out of CalCentral')
     toggle_footer_link_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     driver.find_element(:xpath, '//div[@class=\'cc-footer-berkeley\']').click
-    opt_out_button_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-    opt_out_button
-    opt_out_yes_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-    opt_out_yes
+    WebDriverUtils.wait_for_element_and_click opt_out_button_element
+    WebDriverUtils.wait_for_element_and_click opt_out_yes_element
   end
 
   def basic_auth(driver, uid)

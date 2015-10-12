@@ -114,14 +114,9 @@ class GooglePage
   def send_email(recipient, subject, body)
     logger.info("Sending an email with the subject #{subject}")
     sleep(WebDriverUtils.page_load_timeout)
-    compose_email_button_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    compose_email_button
-    new_message_heading_element.when_present(timeout=WebDriverUtils.page_event_timeout)
-    new_message_heading
-    new_message_heading
-    if self.recipient_element.visible?
-      self.recipient
-    end
+    WebDriverUtils.wait_for_page_and_click compose_email_button_element
+    WebDriverUtils.wait_for_element_and_click new_message_heading_element
+    self.recipient if self.recipient_element.visible?
     to_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     self.to_element.value = recipient
     self.subject_element.value = subject
@@ -133,14 +128,11 @@ class GooglePage
 
   def send_invite(event_name, location)
     logger.info("Creating event with the subject #{event_name}")
-    create_event_button_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    create_event_button
-    event_title_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-    event_title
+    WebDriverUtils.wait_for_page_and_click create_event_button_element
+    WebDriverUtils.wait_for_element_and_click event_title_element
     self.event_title_element.value = event_name
     sleep(WebDriverUtils.page_event_timeout)
-    event_location_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-    event_location
+    WebDriverUtils.wait_for_element_and_click event_location_element
     self.event_location_element.value = location
     sleep(WebDriverUtils.page_event_timeout)
     add_video_link
@@ -162,8 +154,7 @@ class GooglePage
     wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_event_timeout)
     wait.until { driver.find_element(:xpath, '//h2[contains(.,"Tasks")]/following-sibling::div//iframe') }
     driver.switch_to.frame driver.find_element(:xpath, '//h2[contains(.,"Tasks")]/following-sibling::div//iframe')
-    add_task_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-    add_task
+    WebDriverUtils.wait_for_element_and_click add_task_element
     wait_until(timeout=WebDriverUtils.page_event_timeout, nil) { task_one_title_input == nil }
     self.task_one_title_input_element.value = title
     edit_task_details
