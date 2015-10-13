@@ -121,7 +121,7 @@ describe 'MyTasks' do
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     my_tasks = MyTasks::Merged.new @user_id
     expect {
-      my_tasks.update_task({'type' => 'sometype', 'emitter' => GoogleApps::Proxy::APP_ID, 'status' => 'completed' })
+      my_tasks.update_task({'type' => 'sometype', 'emitter' => GoogleApps::Proxy::APP_NAME, 'status' => 'completed' })
     }.to raise_error { |error|
       error.should be_a(ArgumentError)
       error.message.should == 'Missing parameter(s). Required: ["id"]'

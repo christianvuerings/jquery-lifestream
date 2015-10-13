@@ -38,7 +38,7 @@ module MyTasks
         status = 'completed'
       end
       {
-        emitter: CampusSolutions::Proxy::APP_ID,
+        emitter: CampusSolutions::Proxy::APP_NAME,
         linkDescription: result[:checkListDocMgmt][:linkUrlLbl],
         linkUrl: result[:checkListDocMgmt][:linkUrl],
         sourceUrl: 'http://sis-project.berkeley.edu',
