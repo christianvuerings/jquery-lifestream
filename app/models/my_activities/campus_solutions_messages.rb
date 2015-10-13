@@ -14,7 +14,7 @@ module MyActivities
         feed[:commMessagePendingResponse].each do |message|
           if message[:descr].present?
             results << {
-              emitter: 'Campus Solutions',
+              emitter: CampusSolutions::Proxy::APP_NAME,
               id: '',
               linkText: message[:descr],
               source: message[:commCatgDescr],
