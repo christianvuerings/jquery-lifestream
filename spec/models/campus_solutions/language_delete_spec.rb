@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::LanguageDelete do
 
   let(:user_id) { '12346' }

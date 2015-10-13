@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::PersonName do
 
   let(:user_id) { '12345' }

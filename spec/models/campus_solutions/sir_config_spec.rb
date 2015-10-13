@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::SirConfig do
 
   shared_examples 'a proxy that gets data' do

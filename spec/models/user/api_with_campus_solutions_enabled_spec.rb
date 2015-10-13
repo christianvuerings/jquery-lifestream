@@ -6,7 +6,7 @@ describe User::Api do
     @random_id = Time.now.to_f.to_s.gsub(".", "")
     @default_name = "Joe Default"
     HubEdos::UserAttributes.stub(:new).and_return(double(get: {
-      'person_name' => @default_name,
+      :person_name => @default_name,
       :roles => {
         :student => true,
         :exStudent => false,

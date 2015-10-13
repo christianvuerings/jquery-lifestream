@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::EthnicityPost do
 
   let(:user_id) { '12346' }
