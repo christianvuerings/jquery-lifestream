@@ -41,12 +41,16 @@ class BootstrapController < ApplicationController
   end
 
   def check_cache_clear_flag
-    if (flag = params['ucUpdateCache'])
-      if flag == 'finaid'
+    # Sent from Campus Solutions Fluid UI when returning to CalCentral from
+    # a Fluid activity that may have changed some data.
+    flag = params['ucUpdateCache']
+    case flag
+      when 'finaid'
         CampusSolutions::FinancialAidExpiry.expire current_user.user_id
-      elsif flag == 'profile'
+      when 'profile'
         CampusSolutions::PersonDataExpiry.expire current_user.user_id
-      end
+      else
+        # no-op
     end
   end
 

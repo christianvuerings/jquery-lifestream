@@ -1,5 +1,4 @@
 module CampusSolutions
-
   class DirectProxy < Proxy
 
     def initialize(options = {})

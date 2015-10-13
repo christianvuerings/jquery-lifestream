@@ -6,16 +6,16 @@ module CampusSolutions
     before_filter :api_authenticate_401
 
     def json_passthrough(classname, params={})
-      render(json: (classname.new(params).get))
+      render json: classname.new(params).get
     end
 
     def post_passthrough(classname)
-      model = classname.from_session(session)
+      model = classname.from_session session
       render json: model.update(request.request_parameters)
     end
 
     def delete_passthrough(classname)
-      model = classname.from_session(session)
+      model = classname.from_session session
       render json: model.delete(params)
     end
 
