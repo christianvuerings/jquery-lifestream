@@ -318,6 +318,7 @@ features:
   slate_checklist: false
   webcast_sign_up_on_calcentral: false
   service_alerts_rss: true
+  prevent_acting_as_users_from_posting: true
 
 youtube_splash_id: 'EQ-a7xrfVag'
 
