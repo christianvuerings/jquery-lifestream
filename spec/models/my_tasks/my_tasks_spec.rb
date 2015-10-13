@@ -121,7 +121,7 @@ describe 'MyTasks' do
     GoogleApps::Proxy.stub(:access_granted?).and_return(true)
     my_tasks = MyTasks::Merged.new @user_id
     expect {
-      my_tasks.update_task({'type' => 'sometype', 'emitter' => GoogleApps::Proxy::APP_NAME, 'status' => 'completed' })
+      my_tasks.update_task({'type' => 'sometype', 'emitter' => GoogleApps::Proxy::APP_ID, 'status' => 'completed' })
     }.to raise_error { |error|
       error.should be_a(ArgumentError)
       error.message.should == 'Missing parameter(s). Required: ["id"]'
@@ -182,7 +182,7 @@ describe 'MyTasks' do
     tasks = my_tasks_model.get_feed[:tasks]
     tasks.size.should be > 0
     tasks.each do |task|
-      expect([GoogleApps::Proxy::APP_ID, Slate::Checklist::APP_ID, CampusSolutions::Proxy::APP_ID]).to include task[:emitter]
+      expect([GoogleApps::Proxy::APP_ID, Slate::Checklist::APP_ID, CampusSolutions::Proxy::APP_NAME]).to include task[:emitter]
     end
   end
 
