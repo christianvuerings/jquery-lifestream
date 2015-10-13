@@ -49,7 +49,7 @@ module MyTasks
         subTitle: result[:responsibleCntctName],
         showStatus: result[:itemStatus],
         responsibleContactEmail: result[:responsibleCntctEmail],
-        organisation: result[:associationIdName]
+        organization: result[:associationIdName]
       }
     end
 
