@@ -2,12 +2,8 @@
   <div class="cc-page-widget-profile-section-label">Gender Identity</div>
   <div class="cc-page-widget-profile-section-content">
     <div class="cc-page-widget-profile-section-content-item">
-      <div data-ng-bind="gender.content.sexAtBirth.description"></div>
+      <div data-ng-if="gender.content.sexAtBirth.description" data-ng-bind="gender.content.sexAtBirth.description"></div>
+      <div data-ng-if="!gender.content.sexAtBirth.description" class="cc-page-widget-profile-section-not-available">Not available</div>
     </div>
-  </div>
-  <div class="cc-page-widget-profile-section-add">
-    <button class="cc-button-link" data-ng-click="">
-      Edit
-    </button>
   </div>
 </div>

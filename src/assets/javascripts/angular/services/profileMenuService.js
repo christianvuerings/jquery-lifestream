@@ -52,11 +52,12 @@ angular.module('calcentral.services').factory('profileMenuService', function() {
         {
           'id': 'languages',
           'name': 'Languages'
-        },
+        }
+        /* TODO - Work experience is currently not part of the EDO - see SISRP-7184 for progress
         {
           'id': 'work-experience',
           'name': 'Work Experience'
-        }
+        }*/
       ]
     }
     /* TODO - After the profile sprint
