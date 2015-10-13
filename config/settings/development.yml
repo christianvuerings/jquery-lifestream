@@ -72,6 +72,7 @@ features:
   cs_fin_aid: true
   cs_profile: true
   cs_sir: true
+  prevent_acting_as_users_from_posting: false
 
 advising_proxy:
   fake: true
