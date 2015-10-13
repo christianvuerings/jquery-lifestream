@@ -232,24 +232,16 @@ describe Webcast::Merged do
 
   context 'a real, non-fake proxy with user in view-as mode', :testext => true do
     context 'course with zero recordings is different than course not scheduled for recordings' do
-      let(:feed) do
+      let(:media) do
         user_id = rand(99999).to_s
         view_as_mode = AuthenticationState.new('user_id' => user_id, 'original_user_id' => rand(99999).to_s)
         policy = AuthenticationStatePolicy.new(view_as_mode, nil)
-        Webcast::Merged.new(user_id, policy, 2015, 'B', [1, 58301, 56745]).get_feed
+        Webcast::Merged.new(user_id, policy, 2015, 'B', [1, 56742, 56745]).get_feed[:media]
       end
       it 'identifies course that is scheduled for recordings' do
-        media = feed[:media]
-        recordings_planned = media[0]
-        expect(recordings_planned).not_to be_nil
-        expect(recordings_planned[:ccn]).to eq '58301'
-        expect(recordings_planned[:videos]).to be_empty
-        expect(recordings_planned[:body]).to be_nil
-
-        recordings_exist = media[1]
-        expect(recordings_exist[:ccn]).to eq '56745'
-        expect(recordings_exist[:videos]).to have_at_least(10).items
-        expect(recordings_exist[:body]).to be_nil
+        expect(media).to have(2).items
+        expect([media[0][:ccn], media[1][:ccn]]).to contain_exactly('56742', '56745')
+        media.each { |r| expect(r[:videos]).to have_at_least(10).items, "#{r[:ccn]} only has #{r[:videos].length} recordings" }
       end
     end
   end
