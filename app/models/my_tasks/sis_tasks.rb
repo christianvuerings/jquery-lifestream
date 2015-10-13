@@ -45,7 +45,11 @@ module MyTasks
         status: status,
         title: result[:checkListDescr],
         notes: result[:itemComment],
-        type: 'task'
+        type: 'task',
+        subTitle: result[:responsibleCntctName],
+        showStatus: result[:itemStatus],
+        responsibleContactEmail: result[:responsibleCntctEmail],
+        organisation: result[:associationIdName]
       }
     end
 
