@@ -197,12 +197,27 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
     return data;
   };
 
+  /**
+   * Loads the main & finaid activities
+   * We need to make sure we load this after the profile has been loaded since
+   * some of these items are behind feature flags.
+   */
+  var getActivityAll = function(options, url) {
+    return apiService.user.fetch()
+      // Load the activities
+      .then(function() {
+        return apiService.http.request(options, url);
+      })
+      // Parse the activities
+      .then(parseActivities);
+  };
+
   var getActivity = function(options) {
-    return apiService.http.request(options, activityUrl).then(parseActivities);
+    return getActivityAll(options, activityUrl);
   };
 
   var getFinaidActivity = function(options) {
-    return apiService.http.request(options, finaidUrl).then(parseActivities);
+    return getActivityAll(options, finaidUrl);
   };
 
   return {
