@@ -22,7 +22,7 @@ module HubEdos
 
     def get_internal
       edo_feed = Student.new(user_id: @uid).get
-      result = ActiveSupport::HashWithIndifferentAccess.new
+      result = {}
       if (feed = edo_feed[:feed])
         edo = HashConverter.symbolize feed['student'] # TODO will have to dynamically switch student/person EDO somehow
         set_ids(result)
@@ -155,6 +155,9 @@ module HubEdos
         else
           result[:cal_residency_flag] = 'N'
         end
+        # TODO The term-transition check in CampusOracle::UserAttributes had to do with residency information
+        # from Oracle being unavailable during term transitions. Revisit whether this next code is necessary
+        # in the GoLive5 era.
         if term_transition?
           result[:california_residency] = nil
           result[:reg_status][:transitionTerm] = true

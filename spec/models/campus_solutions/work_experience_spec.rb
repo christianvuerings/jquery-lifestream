@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::WorkExperience do
 
   let(:user_id) { '12351' }
