@@ -7,6 +7,7 @@ describe User::Api do
     @default_name = "Joe Default"
     HubEdos::UserAttributes.stub(:new).and_return(double(get: {
       :person_name => @default_name,
+      :student_id => 1234567890,
       :roles => {
         :student => true,
         :exStudent => false,
@@ -42,6 +43,8 @@ describe User::Api do
     user_data[:preferred_name].should == @default_name
     user_data[:hasCanvasAccount].should_not be_nil
     user_data[:isCalendarOptedIn].should_not be_nil
+    user_data[:sid].should == 1234567890
+    user_data[:isCampusSolutionsStudent].should be_truthy
   end
   it "should return whether the user is registered with Canvas" do
     Canvas::Proxy.stub(:has_account?).and_return(true, false)
