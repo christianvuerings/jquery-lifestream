@@ -14,10 +14,10 @@ module MyActivities
         feed[:commMessagePendingResponse].each do |message|
           if message[:descr].present?
             results << {
-              emitter: 'Campus Solutions', # TODO what's the right emitter?
+              emitter: 'Campus Solutions',
               id: '',
               linkText: message[:descr],
-              source: message[:commCategory], # TODO is this right?
+              source: message[:commCatgDescr],
               summary: message[:commCenterDescr],
               type: 'campusSolutions',
               title: message[:descr],
