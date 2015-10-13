@@ -9,7 +9,8 @@ module HubEdos
 
     def get_feed_internal
       cs_id = lookup_campus_solutions_id
-      cs_id.present? ? HubEdos::Student.new({user_id: @uid}).get : HubEdos::Person.new({user_id: @uid}).get
+      person_klass = cs_id.present? ? HubEdos::Student : HubEdos::Person
+      person_klass.new({user_id: @uid}).get
     end
 
   end

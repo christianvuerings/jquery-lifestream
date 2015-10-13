@@ -63,7 +63,7 @@ module HubEdos
 
     def find_name(type, edo, result)
       edo[:names].each do |name|
-        if name[:type][:code] == type
+        if name[:type].present? && name[:type][:code].present? && name[:type][:code].upcase == type.upcase
           result[:first_name] = name[:givenName]
           result[:last_name] = name[:familyName]
           result[:person_name] = name[:formattedName]
