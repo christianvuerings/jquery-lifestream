@@ -109,14 +109,14 @@ module HubEdos
     end
 
     def extract_education_level(edo, result)
-      # TODO this data only supported in GoLive5
+      return # TODO this data only supported in GoLive5
       if edo[:currentRegistration].present?
         result[:education_level] = edo[:currentRegistration][:academicLevel][:level][:description]
       end
     end
 
     def extract_total_units(edo, result)
-      # TODO this data only supported in GoLive5
+      return # TODO this data only supported in GoLive5
       if edo[:currentRegistration].present?
         edo[:currentRegistration][:termUnits].each do |term_unit|
           if term_unit[:type][:description] == 'Total'
@@ -128,8 +128,8 @@ module HubEdos
     end
 
     def extract_special_program_code(edo, result)
+      return # TODO this data only supported in GoLive5
       if edo[:currentRegistration].present?
-        # TODO this data only supported in GoLive5
         result[:education_abroad] = false
         # TODO verify business correctness of this conversion based on more examples of study-abroad students
         edo[:currentRegistration][:specialStudyPrograms].each do |pgm|
@@ -142,14 +142,14 @@ module HubEdos
     end
 
     def extract_reg_status(edo, result)
+      return # TODO this data only supported in GoLive5
       # TODO populate based on SISRP-7581 explanation. Incorporate full structure from RegStatusTranslator.
-      # TODO this data only supported in GoLive5
       result[:reg_status] = {}
     end
 
     def extract_residency(edo, result)
+      return # TODO this data only supported in GoLive5
       if edo[:residency].present?
-        # TODO this data only supported in GoLive5
         if edo[:residency][:official][:code] == 'RES'
           result[:cal_residency_flag] = 'Y'
         else
