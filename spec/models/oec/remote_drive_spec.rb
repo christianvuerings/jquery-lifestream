@@ -1,7 +1,7 @@
 describe Oec::RemoteDrive do
 
   subject { described_class.new }
-  let(:william_the_conqueror_term_code) { '1066-D' }
+  let(:william_the_conqueror_term_code) { '2525-D' }
   let(:dept_code) { 'IQBBB' }
   let(:now) { DateTime.now }
 
