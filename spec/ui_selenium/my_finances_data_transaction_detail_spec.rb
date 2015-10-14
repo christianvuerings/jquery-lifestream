@@ -35,15 +35,15 @@ describe 'My Finances activity details', :testui => true do
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
-            splash_page.load_page(driver)
-            splash_page.basic_auth(driver, uid)
+            splash_page.load_page
+            splash_page.basic_auth uid
             status_api_page = ApiMyStatusPage.new(driver)
             status_api_page.get_json(driver)
             fin_api_page = ApiMyFinancialsPage.new(driver)
             fin_api_page.get_json(driver)
             my_finances_page = CalCentralPages::MyFinancesPages::MyFinancesDetailsPage.new(driver)
-            my_finances_page.load_page(driver)
-            my_finances_page.wait_for_billing_summary(driver)
+            my_finances_page.load_page
+            my_finances_page.billing_summary_spinner_element.when_not_visible(timeout=WebDriverUtils.page_load_timeout)
 
             if fin_api_page.has_cars_data?
               has_adjustment = false
@@ -58,14 +58,14 @@ describe 'My Finances activity details', :testui => true do
               threw_error = false
               testable_users.push(uid)
 
-              my_finances_page.select_transactions_filter('All Transactions')
+              WebDriverUtils.wait_for_element_and_select(my_finances_page.activity_filter_select_element, 'All Transactions')
               my_finances_page.keep_showing_more
               api_all_transactions = fin_api_page.all_transactions
               my_finances_all_transactions = my_finances_page.visible_transaction_count
               it "shows all the transactions for UID #{uid}" do
                 expect(my_finances_all_transactions).to eql(api_all_transactions.length)
               end
-              my_finances_page.select_transactions_filter('Date Range')
+              WebDriverUtils.wait_for_element_and_select(my_finances_page.activity_filter_select_element, 'Date Range')
 
               adjustments = fin_api_page.all_transactions_by_type('Adjustment')
               if adjustments.length > 0
@@ -161,7 +161,7 @@ describe 'My Finances activity details', :testui => true do
                   api_award_dept = fin_api_page.trans_dept(award)
                   api_award_term = fin_api_page.trans_term(award)
                   api_award_status = fin_api_page.trans_status(award)
-                  it "shows he award date for UID #{uid}" do
+                  it "shows the award date for UID #{uid}" do
                     expect(my_fin_award_date).to eql(api_award_date)
                   end
                   it "shows the award description for UID #{uid}" do

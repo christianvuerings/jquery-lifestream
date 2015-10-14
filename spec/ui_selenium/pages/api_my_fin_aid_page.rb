@@ -11,7 +11,7 @@ class ApiMyFinAidPage
 
   def get_json(driver)
     logger.info('Parsing JSON from /api/my/finaid')
-    driver.get(WebDriverUtils.base_url + '/api/my/finaid')
+    navigate_to "#{WebDriverUtils.base_url}/api/my/finaid"
     wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
     wait.until { driver.find_element(:xpath => '//pre[contains(.,"Finaid::MyFinAid")]') }
     body = driver.find_element(:xpath, '//pre').text

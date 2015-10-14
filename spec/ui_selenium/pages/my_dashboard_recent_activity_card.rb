@@ -14,6 +14,7 @@ module CalCentralPages
     h2(:activity_heading, :xpath => '//h2[text()="Recent Activity"]')
     div(:spinner, :xpath => '//div[@data-ng-include="widgets/activity_list.html"]/div[@class="cc-spinner"]')
     select_list(:activities_select, :xpath => '//div[@class="cc-widget cc-widget-activities ng-scope"]//select')
+    unordered_list(:activity_list, :class => 'cc-widget-activities-list')
     elements(:activity_item, :list_item, :xpath => '//ul[@class="cc-widget-activities-list"]/li')
     elements(:activity_item_toggle, :div, :xpath => '//ul[@class="cc-widget-activities-list"]/li/div')
     elements(:activity_item_summary, :div, :xpath => '//ul[@class="cc-widget-activities-list"]/li//strong')
@@ -28,12 +29,12 @@ module CalCentralPages
       spinner_element.when_not_present timeout=WebDriverUtils.academics_timeout if spinner?
     end
 
-    def wait_for_course_activity(driver, course_site_name)
+    def wait_for_course_activity(course_site_name)
       tries ||= 5
       logger.info("Waiting for #{course_site_name} to appear on recent activity select")
       WebDriverUtils.wait_for_element_and_select(activities_select_element, course_site_name)
     rescue
-      load_page driver
+      load_page
       retry unless (tries -= 1).zero?
     end
 
@@ -41,13 +42,13 @@ module CalCentralPages
       activity_item_toggle_elements[index].click unless activity_more_info_link_elements[index].visible?
     end
 
-    def sub_activity_toggle_elements(driver, activity_list_node)
-      driver.find_elements(:xpath, "//ul[@class='cc-widget-activities-list']/li[#{activity_list_node.to_s}]//ul/li/div")
+    def sub_activity_toggle_elements(activity_list_node)
+      activity_list_elements.div_element(:xpath => "/li[#{activity_list_node.to_s}]//ul/li/div")
     end
 
-    def sub_activity_text(driver, activity_list_node, elements)
+    def sub_activity_text(activity_list_node, elements)
       elements_text = []
-      toggles = sub_activity_toggle_elements(driver, activity_list_node)
+      toggles = sub_activity_toggle_elements activity_list_node
       toggles.each do |toggle|
         unless toggle.displayed?
           activity_item_toggle_elements[activity_list_node - 1].click
@@ -61,14 +62,14 @@ module CalCentralPages
       elements_text
     end
 
-    def sub_activity_summaries(driver, activity_list_node)
-      elements = driver.find_elements(:xpath, "//ul[@class='cc-widget-activities-list']/li[#{activity_list_node.to_s}]//ul/li//div[contains(@class,'cc-widget-activities-sub-activity ng-binding')]")
-      sub_activity_text(driver, activity_list_node, elements)
+    def sub_activity_summaries(activity_list_node)
+      elements = activity_list_element.div_element(:xpath => "/li[#{activity_list_node.to_s}]//ul/li//div[contains(@class,'cc-widget-activities-sub-activity ng-binding')]")
+      sub_activity_text(activity_list_node, elements)
     end
 
-    def sub_activity_descriptions(driver, activity_list_node)
-      elements = driver.find_elements(:xpath, "//ul[@class='cc-widget-activities-list']/li[#{activity_list_node.to_s}]//ul/li//p")
-      sub_activity_text(driver, activity_list_node, elements)
+    def sub_activity_descriptions(activity_list_node)
+      elements = activity_list_element.paragraph_element(:xpath => "/li[#{activity_list_node.to_s}]//ul/li//p")
+      sub_activity_text(activity_list_node, elements)
     end
   end
 end

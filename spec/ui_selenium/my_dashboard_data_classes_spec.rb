@@ -42,8 +42,8 @@ describe 'My Dashboard My Classes card', :testui => true do
 
           begin
             splash_page = CalCentralPages::SplashPage.new driver
-            splash_page.load_page driver
-            splash_page.basic_auth(driver, uid)
+            splash_page.load_page
+            splash_page.basic_auth uid
             status_api = ApiMyStatusPage.new driver
             status_api.get_json driver
             academics_api = ApiMyAcademicsPageSemesters.new driver
@@ -51,7 +51,7 @@ describe 'My Dashboard My Classes card', :testui => true do
             classes_api = ApiMyClassesPage.new driver
             classes_api.get_json driver
             my_classes = CalCentralPages::MyDashboardMyClassesCard.new driver
-            my_classes.load_page driver
+            my_classes.load_page
             my_classes.term_name_element.when_visible WebDriverUtils.academics_timeout
             term = my_classes.term_name.capitalize
             my_classes.enrolled_classes_div_element.when_present WebDriverUtils.page_event_timeout
@@ -113,7 +113,7 @@ describe 'My Dashboard My Classes card', :testui => true do
                 if academics_api.multiple_primaries?(course)
                   academics_api.course_primary_sections(course).each do |prim_section|
                     class_page_url = academics_api.section_url prim_section
-                    my_classes.click_class_link_by_url(driver, class_page_url)
+                    my_classes.click_class_link_by_url class_page_url
                     class_page = CalCentralPages::MyAcademicsClassPage.new(driver)
                     class_page.class_info_heading_element.when_visible(WebDriverUtils.page_load_timeout)
                     class_page_course_title = class_page.course_title
@@ -122,12 +122,12 @@ describe 'My Dashboard My Classes card', :testui => true do
                       expect(class_page_course_title).to eql(api_course_title)
                     end
 
-                    my_classes.load_page driver
+                    my_classes.load_page
                   end
 
                 else
                   class_page_url = academics_api.course_url(course)
-                  my_classes.click_class_link_by_url(driver, class_page_url)
+                  my_classes.click_class_link_by_url class_page_url
                   class_page = CalCentralPages::MyAcademicsClassPage.new(driver)
                   class_page.class_info_heading_element.when_visible(WebDriverUtils.page_load_timeout)
                   class_page_course_title = class_page.course_title
@@ -136,7 +136,7 @@ describe 'My Dashboard My Classes card', :testui => true do
                     expect(class_page_course_title).to eql(api_course_title)
                   end
 
-                  my_classes.load_page driver
+                  my_classes.load_page
                 end
 
 
@@ -190,7 +190,7 @@ describe 'My Dashboard My Classes card', :testui => true do
               teaching_classes.each do |course|
 
                 class_page_url = academics_api.course_url(course)
-                my_classes.click_class_link_by_url(driver, class_page_url)
+                my_classes.click_class_link_by_url class_page_url
                 class_page = CalCentralPages::MyAcademicsClassPage.new(driver)
                 class_page.class_info_heading_element.when_visible(WebDriverUtils.page_load_timeout)
 
@@ -201,7 +201,7 @@ describe 'My Dashboard My Classes card', :testui => true do
                   expect(class_page_course_title).to eql(api_course_title)
                 end
 
-                my_classes.load_page driver
+                my_classes.load_page
 
               end
             end

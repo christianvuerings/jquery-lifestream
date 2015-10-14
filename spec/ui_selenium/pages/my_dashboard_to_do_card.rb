@@ -126,33 +126,7 @@ module CalCentralPages
     button(:completed_show_more_button, :xpath => '//div[@data-cc-show-more-limit="completedLimit"]/button')
     elements(:completed_task_titles, :list_item, :xpath => '//li[@data-ng-repeat="task in completedTasks | limitTo:completedLimit"]//div[@data-ng-hide="editorEnabled"]//strong')
 
-    # TASK TABS
-
-    def click_scheduled_tasks_tab
-      logger.info('Clicking the scheduled tasks tab')
-      scheduled_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      scheduled_tasks_tab
-    end
-
-    def click_unscheduled_tasks_tab
-      logger.info('Clicking the unscheduled tasks tab')
-      unsched_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      unsched_tasks_tab
-    end
-
-    def click_completed_tasks_tab
-      logger.info('Clicking the completed tasks tab')
-      completed_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      completed_tasks_tab
-    end
-
     # ADD NEW TASK
-
-    def click_new_task_button
-      logger.info('Clicking new task button')
-      new_task_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      new_task_button
-    end
 
     def edit_new_task(title, date, note)
       new_task_title_input_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
@@ -172,29 +146,11 @@ module CalCentralPages
 
     def click_add_task_button
       logger.info('Clicking add task button')
-      add_new_task_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      add_new_task_button
+      WebDriverUtils.wait_for_page_and_click add_new_task_button_element
       add_new_task_button_element.when_not_visible(timeout=WebDriverUtils.google_task_timeout)
-      logger.info('Task added')
-    end
-
-    def click_cancel_new_task_button
-      logger.info('Clicking cancel task button')
-      cancel_new_task_button
     end
 
     # OVERDUE TASKS
-
-    def toggle_overdue_task_one_detail
-      overdue_task_one_toggle_element.when_present(timeout=WebDriverUtils.google_task_timeout)
-      overdue_task_one_toggle
-    end
-
-    def click_overdue_task_one_edit_button
-      logger.info('Clicking edit button for the first overdue task')
-      overdue_task_one_edit_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      overdue_task_one_edit_button
-    end
 
     def edit_overdue_task_one(title, date, note)
       overdue_task_one_title_input_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
@@ -212,54 +168,26 @@ module CalCentralPages
       end
     end
 
-    def save_overdue_task_one_edits
-      logger.info('Clicking save button for the first overdue task')
-      overdue_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      overdue_task_one_save_button
-      logger.info('Task edited')
-    end
-
-    def cancel_overdue_task_one_edits
-      logger.info('Clicking cancel button for the first overdue task')
-      overdue_task_one_cancel_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      overdue_task_one_cancel_button
-    end
-
     def complete_overdue_task_one
       logger.info('Completing first overdue task')
       overdue_task_one_cbx_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       task_count = overdue_task_count.to_i
       check_overdue_task_one_cbx
       wait_until(WebDriverUtils.google_task_timeout, nil) { overdue_task_count.to_i == (task_count - 1) }
-      logger.info('Task completed')
     end
 
-    def delete_all_overdue_tasks(driver)
-      scheduled_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      scheduled_tasks_tab
+    def delete_all_overdue_tasks
+      WebDriverUtils.wait_for_page_and_click scheduled_tasks_tab_element
       while overdue_task_one_toggle? do
         logger.info('Deleting task')
         task_count = overdue_task_count.to_i
-        toggle_overdue_task_one_detail
-        overdue_task_one_delete_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-        overdue_task_one_delete_button
+        WebDriverUtils.wait_for_page_and_click overdue_task_one_toggle_element
+        WebDriverUtils.wait_for_page_and_click overdue_task_one_delete_button_element
         wait_until(WebDriverUtils.google_task_timeout, nil) { overdue_task_count.to_i == (task_count - 1) }
-        logger.info('Task deleted')
       end
     end
 
     # TODAY'S TASKS
-
-    def toggle_today_task_one_detail
-      today_task_one_toggle_element.when_present(timeout=WebDriverUtils.google_task_timeout)
-      today_task_one_toggle
-    end
-
-    def click_today_task_one_edit_button
-      logger.info('Clicking edit button for the first task due today')
-      today_task_one_edit_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      today_task_one_edit_button
-    end
 
     def edit_today_task_one(title, date, note)
       today_task_one_title_input_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
@@ -277,54 +205,26 @@ module CalCentralPages
       end
     end
 
-    def save_today_task_one_edits
-      logger.info('Clicking save button for the first task due today')
-      today_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      today_task_one_save_button
-      logger.info('Task edited')
-    end
-
-    def cancel_today_task_one_edits
-      logger.info('Clicking cancel button for the first task due today')
-      today_task_one_cancel_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      today_task_one_cancel_button
-    end
-
     def complete_today_task_one
       logger.info('Completing first task due today')
       today_task_one_cbx_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       task_count = today_task_count.to_i
       check_today_task_one_cbx
       wait_until(WebDriverUtils.google_task_timeout, nil) { today_task_count.to_i == (task_count - 1) }
-      logger.info('Task completed')
     end
 
-    def delete_all_today_tasks(driver)
-      scheduled_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      scheduled_tasks_tab
+    def delete_all_today_tasks
+      WebDriverUtils.wait_for_page_and_click scheduled_tasks_tab_element
       while today_task_one_toggle? do
         logger.info('Deleting task')
         task_count = today_task_count.to_i
-        toggle_today_task_one_detail
-        today_task_one_delete_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-        today_task_one_delete_button
+        WebDriverUtils.wait_for_page_and_click today_task_one_toggle_element
+        WebDriverUtils.wait_for_page_and_click today_task_one_delete_button_element
         wait_until(WebDriverUtils.google_task_timeout, nil) { today_task_count.to_i == (task_count - 1) }
-        logger.info('Task deleted')
       end
     end
 
     # FUTURE TASKS
-
-    def toggle_future_task_one_detail
-      future_task_one_toggle_element.when_present(timeout=WebDriverUtils.google_task_timeout)
-      future_task_one_toggle
-    end
-
-    def click_future_task_one_edit_button
-      logger.info('Clicking edit button for the first future task')
-      future_task_one_edit_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      future_task_one_edit_button
-    end
 
     def edit_future_task_one(title, date, note)
       future_task_one_title_input_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
@@ -342,54 +242,26 @@ module CalCentralPages
       end
     end
 
-    def save_future_task_one_edits
-      logger.info('Clicking save button for the first future task')
-      future_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      future_task_one_save_button
-      logger.info('Task edited')
-    end
-
-    def cancel_future_task_one_edits
-      logger.info('Clicking cancel button for the first future task')
-      future_task_one_cancel_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      future_task_one_cancel_button
-    end
-
     def complete_future_task_one
       logger.info('Completing first future task')
       future_task_one_cbx_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       task_count = future_task_count.to_i
       check_future_task_one_cbx
       wait_until(WebDriverUtils.google_task_timeout, nil) { future_task_count.to_i == (task_count - 1) }
-      logger.info('Task edited')
     end
 
-    def delete_all_future_tasks(driver)
-      scheduled_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      scheduled_tasks_tab
+    def delete_all_future_tasks
+      WebDriverUtils.wait_for_page_and_click scheduled_tasks_tab_element
       while future_task_one_toggle? do
         logger.info('Deleting task')
         task_count = future_task_count.to_i
-        toggle_future_task_one_detail
-        future_task_one_delete_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-        future_task_one_delete_button
+        WebDriverUtils.wait_for_page_and_click future_task_one_toggle_element
+        WebDriverUtils.wait_for_page_and_click future_task_one_delete_button_element
         wait_until(WebDriverUtils.google_task_timeout, nil) { future_task_count.to_i == (task_count - 1) }
-        logger.info('Task deleted')
       end
     end
 
     # UNSCHEDULED TASKS
-
-    def toggle_unsched_task_one_detail
-      unsched_task_one_toggle_element.when_present(timeout=WebDriverUtils.google_task_timeout)
-      unsched_task_one_toggle
-    end
-
-    def click_unsched_task_one_edit_button
-      logger.info('Clicking edit button for the first unscheduled task')
-      unsched_task_one_edit_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      unsched_task_one_edit_button
-    end
 
     def edit_unsched_task_one(title, date, note)
       unsched_task_one_title_input_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
@@ -407,19 +279,6 @@ module CalCentralPages
       end
     end
 
-    def save_unsched_task_one_edits
-      logger.info('Clicking save button for the first unscheduled task')
-      unsched_task_one_save_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      unsched_task_one_save_button
-      logger.info('Task edited')
-    end
-
-    def cancel_unsched_task_one_edits
-      logger.info('Clicking cancel button for the first unscheduled task')
-      unsched_task_one_cancel_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-      unsched_task_one_cancel_button
-    end
-
     def complete_unsched_task_one
       logger.info('Completing first unscheduled task')
       unsched_task_one_cbx_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
@@ -429,17 +288,14 @@ module CalCentralPages
       logger.info('Task completed')
     end
 
-    def delete_all_unscheduled_tasks(driver)
-      unsched_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      unsched_tasks_tab
+    def delete_all_unscheduled_tasks
+      WebDriverUtils.wait_for_page_and_click unsched_tasks_tab_element
       while unsched_task_one_toggle? do
         logger.info('Deleting task')
         task_count = unsched_task_count.to_i
-        toggle_unsched_task_one_detail
-        unsched_task_one_delete_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-        unsched_task_one_delete_button
+        WebDriverUtils.wait_for_page_and_click unsched_task_one_toggle_element
+        WebDriverUtils.wait_for_page_and_click unsched_task_one_delete_button_element
         wait_until(WebDriverUtils.google_task_timeout, nil) { unsched_task_count.to_i == (task_count - 1) }
-        logger.info('Task deleted')
       end
     end
 
@@ -449,7 +305,6 @@ module CalCentralPages
       logger.info('Un-completing the first completed task')
       completed_task_one_cbx_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
       uncheck_completed_task_one_cbx
-      logger.info('Task un-completed')
     end
 
     def all_completed_task_titles
@@ -458,26 +313,24 @@ module CalCentralPages
       titles
     end
 
-    def delete_all_completed_tasks(driver)
-      completed_tasks_tab_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      completed_tasks_tab
+    def delete_all_completed_tasks
+      WebDriverUtils.wait_for_page_and_click completed_tasks_tab_element
       while completed_task_one_toggle? do
         logger.info('Deleting task')
-        delete_completed_tasks_button_element.when_visible(timeout=WebDriverUtils.google_task_timeout)
-        delete_completed_tasks_button
+        WebDriverUtils.wait_for_page_and_click delete_completed_tasks_button_element
         wait_until(WebDriverUtils.google_task_timeout, nil) { !completed_task_one_toggle? }
         logger.info('Task deleted')
       end
     end
 
-    def delete_all_tasks(driver)
+    def delete_all_tasks
       logger.info('Deleting all existing tasks')
-      load_page(driver)
-      self.delete_all_unscheduled_tasks(driver)
-      self.delete_all_today_tasks(driver)
-      self.delete_all_future_tasks(driver)
-      self.delete_all_overdue_tasks(driver)
-      self.delete_all_completed_tasks(driver)
+      load_page
+      self.delete_all_unscheduled_tasks
+      self.delete_all_today_tasks
+      self.delete_all_future_tasks
+      self.delete_all_overdue_tasks
+      self.delete_all_completed_tasks
     end
   end
 end

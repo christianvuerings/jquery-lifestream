@@ -36,10 +36,10 @@ describe 'My Academics course captures card', :testui => true do
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
-            splash_page.load_page(driver)
-            splash_page.basic_auth(driver, uid)
+            splash_page.load_page
+            splash_page.basic_auth uid
             my_academics = CalCentralPages::MyAcademicsClassPage.new(driver)
-            my_academics.load_class_page(driver, class_page)
+            my_academics.load_class_page class_page
             my_academics.course_capture_heading_element.when_visible(WebDriverUtils.academics_timeout)
             testable_users.push(uid)
 

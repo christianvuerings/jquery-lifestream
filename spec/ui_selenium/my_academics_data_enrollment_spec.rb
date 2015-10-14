@@ -39,8 +39,8 @@ describe 'My Academics enrollments', :testui => true do
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
-            splash_page.load_page(driver)
-            splash_page.basic_auth(driver, uid)
+            splash_page.load_page
+            splash_page.basic_auth uid
             status_api_page = ApiMyStatusPage.new(driver)
             status_api_page.get_json(driver)
             if status_api_page.has_student_history? && status_api_page.has_academics_tab?
@@ -49,7 +49,7 @@ describe 'My Academics enrollments', :testui => true do
               all_semesters = academics_api_page.all_student_semesters
 
               my_academics = CalCentralPages::MyAcademicsSemestersCard.new(driver)
-              my_academics.load_page(driver)
+              my_academics.load_page
               my_academics.page_heading_element.when_visible(timeout=WebDriverUtils.academics_timeout)
 
               # MY ACADEMICS PAGE SEMESTER CARDS
@@ -138,7 +138,7 @@ describe 'My Academics enrollments', :testui => true do
                     # SEMESTER PAGES
 
                     if academics_api_page.has_enrollment_data?(semester)
-                      my_academics.click_student_semester_link(driver, semester_name)
+                      my_academics.click_student_semester_link semester_name
                       semester_page = CalCentralPages::MyAcademicsPage::MyAcademicsClassesCard.new(driver)
                       wait_list_courses = academics_api_page.wait_list_courses(semester_courses)
                       enrolled_courses = (semester_courses - wait_list_courses)
@@ -241,7 +241,7 @@ describe 'My Academics enrollments', :testui => true do
                               api_grade_options = academics_api_page.sections_grade_options(api_sections)
 
                               class_page_url = academics_api_page.section_url(prim_section)
-                              semester_page.click_class_link_by_url(driver, class_page_url)
+                              semester_page.click_class_link_by_url class_page_url
                               class_page = CalCentralPages::MyAcademicsClassPage.new(driver)
                               class_page.class_info_heading_element.when_visible(WebDriverUtils.page_load_timeout)
 
@@ -324,7 +324,7 @@ describe 'My Academics enrollments', :testui => true do
                             api_grade_options = academics_api_page.sections_grade_options(api_sections)
 
                             class_page_url = academics_api_page.course_url(course)
-                            semester_page.click_class_link_by_url(driver, class_page_url)
+                            semester_page.click_class_link_by_url class_page_url
                             class_page = CalCentralPages::MyAcademicsClassPage.new(driver)
                             class_page.class_info_heading_element.when_visible(WebDriverUtils.page_load_timeout)
 

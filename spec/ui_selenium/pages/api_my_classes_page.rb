@@ -9,7 +9,7 @@ class ApiMyClassesPage
 
   def get_json(driver)
     logger.info('Parsing JSON from /api/my/classes')
-    driver.get(WebDriverUtils.base_url + '/api/my/classes')
+    navigate_to "#{WebDriverUtils.base_url}/api/my/classes"
     wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.academics_timeout)
     wait.until { driver.find_element(:xpath => '//pre[contains(.,"MyClasses::Merged")]') }
     body = driver.find_element(:xpath, '//pre').text

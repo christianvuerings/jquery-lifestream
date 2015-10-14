@@ -41,8 +41,8 @@ describe 'My Academics Final Exams card', :testui => true do
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
-            splash_page.load_page(driver)
-            splash_page.basic_auth(driver, uid)
+            splash_page.load_page
+            splash_page.basic_auth uid
             status_api = ApiMyStatusPage.new(driver)
             status_api.get_json(driver)
             academics_api = ApiMyAcademicsPage.new(driver)
@@ -52,7 +52,7 @@ describe 'My Academics Final Exams card', :testui => true do
               classes_api.get_json(driver)
               current_term = classes_api.current_term
               my_academics_page = CalCentralPages::MyAcademicsPage::MyAcademicsFinalExamsCard.new driver
-              my_academics_page.load_page(driver)
+              my_academics_page.load_page
               my_academics_page.page_heading_element.when_visible(WebDriverUtils.academics_timeout)
               if academics_api.has_exam_schedules
                 has_exams = true
@@ -90,7 +90,7 @@ describe 'My Academics Final Exams card', :testui => true do
                 end
 
                 # EXAM SCHEDULES ON SEMESTER PAGE
-                my_academics_page.click_student_semester_link(driver, current_term)
+                my_academics_page.click_student_semester_link current_term
                 my_academics_page.final_exams_card_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
                 semester_exam_dates = my_academics_page.all_exam_dates
                 semester_exam_times = my_academics_page.all_exam_times
