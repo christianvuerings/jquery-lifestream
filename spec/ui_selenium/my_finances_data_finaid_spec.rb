@@ -46,8 +46,8 @@ describe 'My Finances financial aid messages', :testui => true do
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
-            splash_page.load_page(driver)
-            splash_page.basic_auth(driver, uid)
+            splash_page.load_page
+            splash_page.basic_auth uid
             status_api_page = ApiMyStatusPage.new(driver)
             status_api_page.get_json(driver)
             has_finances_tab = status_api_page.has_finances_tab?
@@ -55,7 +55,7 @@ describe 'My Finances financial aid messages', :testui => true do
             finaid_api_page.get_json(driver)
             if has_finances_tab
               my_finances_page = CalCentralPages::MyFinancesPages::MyFinancesLandingPage.new(driver)
-              my_finances_page.load_page(driver)
+              my_finances_page.load_page
               my_finances_page.fin_messages_list_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
               has_no_messages_message = my_finances_page.no_messages_element.visible?
               fin_api_message_total = finaid_api_page.all_activity.length
@@ -81,8 +81,8 @@ describe 'My Finances financial aid messages', :testui => true do
                   end
                   my_fin_message_titles = my_finances_page.all_fin_aid_message_titles
                   my_fin_message_sources = my_finances_page.all_fin_aid_message_sources
-                  my_fin_message_dates = my_finances_page.all_fin_aid_message_dates(driver, my_fin_messages)
-                  my_fin_message_statuses = my_finances_page.all_fin_aid_message_statuses(driver, my_fin_messages)
+                  my_fin_message_dates = my_finances_page.all_fin_aid_message_dates my_fin_messages
+                  my_fin_message_statuses = my_finances_page.all_fin_aid_message_statuses my_fin_messages
                   my_fin_message_icons = my_finances_page.all_fin_aid_message_icons
                   fin_api_message_titles = finaid_api_page.all_message_titles_sorted
                   fin_api_message_sources = finaid_api_page.all_message_sources_sorted
@@ -153,7 +153,7 @@ describe 'My Finances financial aid messages', :testui => true do
                     index = finaid_api_page.all_messages_sorted.index(message)
                     my_finances_page.finaid_message_toggle_elements[index].click
                     my_fin_message_year = my_finances_page.all_fin_aid_message_years[index]
-                    my_fin_message_summary = my_finances_page.all_fin_aid_message_summaries(driver, my_fin_messages)[index]
+                    my_fin_message_summary = my_finances_page.all_fin_aid_message_summaries(my_fin_messages)[index]
                     my_fin_message_url = my_finances_page.all_fin_aid_message_links[index]
                     fin_api_message_year = finaid_api_page.all_message_years_sorted[index]
                     fin_api_message_summary = finaid_api_page.all_message_summaries_sorted[index]

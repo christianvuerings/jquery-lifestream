@@ -40,15 +40,15 @@ describe 'My Academics profile and university requirements cards', :testui => tr
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
-            splash_page.load_page(driver)
-            splash_page.basic_auth(driver, uid)
+            splash_page.load_page
+            splash_page.basic_auth uid
             status_api_page = ApiMyStatusPage.new(driver)
             status_api_page.get_json(driver)
             academics_api_page= ApiMyAcademicsPageSemesters.new(driver)
             academics_api_page.get_json(driver)
             profile_card = CalCentralPages::MyAcademicsProfileCard.new(driver)
             reqts_card = CalCentralPages::MyAcademicsUniversityReqtsCard.new(driver)
-            profile_card.load_page(driver)
+            profile_card.load_page
 
             if (status_api_page.has_academics_tab? && status_api_page.is_student?) || status_api_page.has_student_history?
               profile_card.profile_card_element.when_visible(timeout=WebDriverUtils.academics_timeout)

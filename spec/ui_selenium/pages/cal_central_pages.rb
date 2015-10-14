@@ -144,35 +144,30 @@ module CalCentralPages
     end
   end
 
-  def opt_out(driver)
+  def opt_out
     logger.info('Opting out of CalCentral')
-    toggle_footer_link_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-    driver.find_element(:xpath, '//div[@class=\'cc-footer-berkeley\']').click
+    WebDriverUtils.wait_for_page_and_click toggle_footer_link_element
     WebDriverUtils.wait_for_element_and_click opt_out_button_element
     WebDriverUtils.wait_for_element_and_click opt_out_yes_element
   end
 
-  def basic_auth(driver, uid)
+  def basic_auth(uid)
     logger.info('Logging in using basic auth')
-    toggle_footer_link_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    driver.find_element(:xpath, '//div[@class=\'cc-footer-berkeley\']').click
-    basic_auth_uid_input_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-    self.basic_auth_uid_input = uid
-    self.basic_auth_password_input = UserUtils.basic_auth_pass
+    WebDriverUtils.wait_for_page_and_click toggle_footer_link_element
+    WebDriverUtils.wait_for_element_and_type(basic_auth_uid_input_element, uid)
+    WebDriverUtils.wait_for_element_and_type(basic_auth_password_input_element, UserUtils.basic_auth_pass)
     login = basic_auth_login_button_element
     basic_auth_login_button
     login.when_not_present(timeout=WebDriverUtils.page_load_timeout)
     basic_auth_login_button_element.when_present(timeout=WebDriverUtils.page_load_timeout)
   end
 
-  def click_class_link_by_text(driver, link_text)
-    wait_until(timeout=WebDriverUtils.page_load_timeout) { driver.find_element(:link_text => link_text) }
-    driver.find_element(:link_text => link_text).click
+  def click_class_link_by_text(link_text)
+    WebDriverUtils.wait_for_page_and_click link_element(:link_text => link_text)
   end
 
-  def click_class_link_by_url(driver, url)
-    wait_until(timeout=WebDriverUtils.page_load_timeout) { driver.find_element(:xpath => "//a[@href='#{url}']") }
-    driver.find_element(:xpath => "//a[@href='#{url}']").click
+  def click_class_link_by_url(url)
+    WebDriverUtils.wait_for_page_and_click link_element(:xpath => "//a[@href='#{url}']")
   end
 
 end

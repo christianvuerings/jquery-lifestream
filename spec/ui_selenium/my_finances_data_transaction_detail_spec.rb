@@ -35,14 +35,14 @@ describe 'My Finances activity details', :testui => true do
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
-            splash_page.load_page(driver)
-            splash_page.basic_auth(driver, uid)
+            splash_page.load_page
+            splash_page.basic_auth uid
             status_api_page = ApiMyStatusPage.new(driver)
             status_api_page.get_json(driver)
             fin_api_page = ApiMyFinancialsPage.new(driver)
             fin_api_page.get_json(driver)
             my_finances_page = CalCentralPages::MyFinancesPages::MyFinancesDetailsPage.new(driver)
-            my_finances_page.load_page(driver)
+            my_finances_page.load_page
             my_finances_page.billing_summary_spinner_element.when_not_present(timeout=WebDriverUtils.page_load_timeout)
 
             if fin_api_page.has_cars_data?
@@ -161,7 +161,7 @@ describe 'My Finances activity details', :testui => true do
                   api_award_dept = fin_api_page.trans_dept(award)
                   api_award_term = fin_api_page.trans_term(award)
                   api_award_status = fin_api_page.trans_status(award)
-                  it "shows he award date for UID #{uid}" do
+                  it "shows the award date for UID #{uid}" do
                     expect(my_fin_award_date).to eql(api_award_date)
                   end
                   it "shows the award description for UID #{uid}" do

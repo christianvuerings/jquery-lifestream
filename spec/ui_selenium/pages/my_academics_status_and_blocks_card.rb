@@ -34,13 +34,11 @@ module CalCentralPages
     paragraph(:no_inactive_blocks_message, :xpath => '//p[contains(text(),"No block history")]')
 
     def show_block_history
-      show_block_history_button_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-      show_block_history_button
+      WebDriverUtils.wait_for_page_and_click show_block_history_button_element
     end
 
     def hide_block_history
-      hide_block_history_button_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-      hide_block_history_button
+      WebDriverUtils.wait_for_page_and_click hide_block_history_button_element
     end
 
     def active_block_count

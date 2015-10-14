@@ -13,9 +13,9 @@ module CalCentralPages
     wait_for_expected_title('Home | CalCentral', WebDriverUtils.page_load_timeout)
     button(:sign_in, :xpath => '//button[@data-ng-click="api.user.signIn()"]')
 
-    def load_page(driver)
+    def load_page
       logger.info('Loading splash page')
-      driver.get(WebDriverUtils.base_url)
+      navigate_to WebDriverUtils.base_url
     end
 
     def click_sign_in_button

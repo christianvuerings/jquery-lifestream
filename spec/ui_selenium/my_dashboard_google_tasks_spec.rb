@@ -29,15 +29,15 @@ describe 'The My Dashboard task manager', :testui => true do
 
     before(:context) do
       splash_page = CalCentralPages::SplashPage.new(@driver)
-      splash_page.load_page(@driver)
+      splash_page.load_page
       splash_page.click_sign_in_button
       cal_net_auth_page = CalNetAuthPage.new(@driver)
       cal_net_auth_page.login(UserUtils.qa_username, UserUtils.qa_password)
       settings_page = CalCentralPages::SettingsPage.new(@driver)
-      settings_page.load_page(@driver)
+      settings_page.load_page
       settings_page.disconnect_bconnected
       google_page = GooglePage.new(@driver)
-      google_page.connect_calcentral_to_google(@driver, UserUtils.qa_gmail_username, UserUtils.qa_gmail_password)
+      google_page.connect_calcentral_to_google(UserUtils.qa_gmail_username, UserUtils.qa_gmail_password)
       @to_do_card = CalCentralPages::MyDashboardPage::MyDashboardToDoCard.new(@driver)
       @to_do_card.scheduled_tasks_tab_element.when_present(timeout=WebDriverUtils.page_load_timeout)
     end

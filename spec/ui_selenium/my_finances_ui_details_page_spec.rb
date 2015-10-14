@@ -29,7 +29,7 @@ describe 'My Finances details page', :testui => true do
 
     before(:context) do
       splash_page = CalCentralPages::SplashPage.new(@driver)
-      splash_page.load_page(@driver)
+      splash_page.load_page
       splash_page.click_sign_in_button
       @cal_net_page = CalNetAuthPage.new(@driver)
       @cal_net_page.login(UserUtils.oski_username, UserUtils.oski_password)
@@ -38,7 +38,7 @@ describe 'My Finances details page', :testui => true do
       @fin_api_page = ApiMyFinancialsPage.new(@driver)
       @fin_api_page.get_json(@driver)
       @my_finances_details_page = CalCentralPages::MyFinancesPages::MyFinancesDetailsPage.new(@driver)
-      @my_finances_details_page.load_page(@driver)
+      @my_finances_details_page.load_page
       @my_finances_details_page.billing_summary_spinner_element.when_not_visible(timeout=WebDriverUtils.page_load_timeout)
     end
 

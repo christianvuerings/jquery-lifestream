@@ -20,9 +20,9 @@ module CalCentralPages
     div(:live_update_notice, :xpath => '//div[contains(.,"New data is available.")]')
     button(:live_update_load_button, :xpath => '//button[text()="Load"]')
 
-    def load_page(driver)
+    def load_page
       logger.info('Loading My Dashboard page')
-      driver.get("#{WebDriverUtils.base_url}/dashboard")
+      navigate_to "#{WebDriverUtils.base_url}/dashboard"
     end
 
     def click_live_update_button(timeout)

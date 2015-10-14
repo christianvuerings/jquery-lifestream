@@ -45,8 +45,8 @@ describe 'My Finances Cal1Card', :testui => true do
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
-            splash_page.load_page(driver)
-            splash_page.basic_auth(driver, uid)
+            splash_page.load_page
+            splash_page.basic_auth uid
             status_api_page = ApiMyStatusPage.new(driver)
             status_api_page.get_json(driver)
             has_finances_tab = status_api_page.has_finances_tab?
@@ -54,7 +54,7 @@ describe 'My Finances Cal1Card', :testui => true do
             cal1card_api.get_json(driver)
             if has_finances_tab
               my_finances_page = CalCentralPages::MyFinancesPages::MyFinancesLandingPage.new(driver)
-              my_finances_page.load_page(driver)
+              my_finances_page.load_page
               my_finances_page.cal_1_card_content_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
 
               # Debit account:

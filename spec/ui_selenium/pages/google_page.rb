@@ -56,59 +56,43 @@ class GooglePage
   link(:edit_task_details, :xpath => '//td[@title="Edit Details"]')
   link(:back_to_tasks, :xpath => '//span[contains(.,"Back to list")]')
 
-  def connect_calcentral_to_google(driver, gmail_user, gmail_pass)
+  def connect_calcentral_to_google(gmail_user, gmail_pass)
     logger.info('Connecting Google account to CalCentral')
-    driver.get(WebDriverUtils.base_url + WebDriverUtils.google_auth_url)
+    navigate_to "#{WebDriverUtils.base_url}#{WebDriverUtils.google_auth_url}"
     log_into_google(gmail_user, gmail_pass)
-    if driver.current_url.include? 'oauth2'
+    if current_url.include? 'oauth2'
       logger.info('Google permissions page loaded as expected')
-      wait_until(timeout=WebDriverUtils.page_load_timeout, 'Auth page does not include expected content') { auth_mail_element.present? }
-      wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_event_timeout)
-      wait.until { auth_address_element.present? }
-      wait.until { auth_profile_element.present? }
-      wait.until { auth_calendar_element.present? }
-      wait.until { auth_drive_element.present? }
-      wait.until { auth_tasks_element.present? }
-      wait.until { approve_access_button_element.present? }
-      wait.until { approve_access_button_element.enabled? }
-      approve_access_button
+      sleep WebDriverUtils.page_event_timeout
+      WebDriverUtils.wait_for_element_and_click approve_access_button_element
     else
       logger.warn('Google permissions page did not load')
     end
   end
 
-  def load_gmail(driver)
+  def load_gmail
     logger.info('Loading Gmail')
-    driver.get('https://mail.google.com')
+    navigate_to 'https://mail.google.com'
   end
 
-  def load_calendar(driver)
+  def load_calendar
     logger.info('Loading Google calendar')
-    driver.get('https://calendar.google.com')
+    navigate_to 'https://calendar.google.com'
   end
 
   def log_into_google(gmail_user, gmail_pass)
     logger.info('Logging into Google')
-    if remove_account_link_element.visible?
-      remove_account_link
-    end
-    username_input_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    self.username_input = gmail_user
-    next_button_element.when_visible(timeout)
-    next_button
-    password_input_element.when_visible(timeout)
-    self.password_input = gmail_pass
-    if stay_signed_in_element.exists?
-      uncheck_stay_signed_in
-    end
+    remove_account_link if remove_account_link_element.visible?
+    WebDriverUtils.wait_for_element_and_type(username_input_element, gmail_user)
+    WebDriverUtils.wait_for_element_and_click next_button_element
+    WebDriverUtils.wait_for_element_and_type(password_input_element, gmail_pass)
+    uncheck_stay_signed_in if stay_signed_in?
     sign_in_button
   end
 
-  def log_out_google(driver, gmail_user)
+  def log_out_google(gmail_user)
     logger.info('Logging out of Google')
-    driver.find_element(:xpath, "//a[contains(@title,#{gmail_user})]").click
-    sign_out_link_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-    sign_out_link
+    link_element(:xpath, "//a[contains(@title,#{gmail_user})]").click
+    WebDriverUtils.wait_for_element_and_click sign_out_link_element
   end
 
   def send_email(recipient, subject, body)
@@ -116,9 +100,9 @@ class GooglePage
     sleep(WebDriverUtils.page_load_timeout)
     WebDriverUtils.wait_for_page_and_click compose_email_button_element
     WebDriverUtils.wait_for_element_and_click new_message_heading_element
+    new_message_heading
     self.recipient if self.recipient_element.visible?
-    to_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-    self.to_element.value = recipient
+    WebDriverUtils.wait_for_element_and_type(to_element, recipient)
     self.subject_element.value = subject
     self.body_element.value = body
     sleep(WebDriverUtils.page_event_timeout)

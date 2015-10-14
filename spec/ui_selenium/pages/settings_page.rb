@@ -37,9 +37,9 @@ module CalCentralPages
     button(:lookup_button, :xpath => '//button[text()="Look Up"]')
     table(:lookup_results_table, :xpath => '//form[@data-ng-submit="admin.lookupUser()"]//table')
 
-    def load_page(driver)
+    def load_page
       logger.info('Loading settings page')
-      driver.get("#{WebDriverUtils.base_url}/settings")
+      navigate_to "#{WebDriverUtils.base_url}/settings"
     end
 
     def disconnect_bconnected
@@ -92,8 +92,7 @@ module CalCentralPages
     # LOOK UP USER
 
     def look_up_user(id)
-      lookup_input_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      self.lookup_input = id
+      WebDriverUtils.wait_for_element_and_type(lookup_input_element, id)
       lookup_button
     end
   end
