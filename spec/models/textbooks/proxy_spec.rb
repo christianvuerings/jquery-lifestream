@@ -18,7 +18,7 @@ describe Textbooks::Proxy do
   end
 
   describe '#get' do
-    describe 'live testext tests enabled for order-independent expectations', testext: true do
+    describe 'live testext tests enabled for order-independent expectations', testext: true, ignore: true do
       subject { Textbooks::Proxy.new({
         course_catalog: course_catalog,
         dept: dept,
