@@ -77,15 +77,13 @@ describe 'My Dashboard Up Next card', :testui => true do
       @up_next_card.load_page
       @up_next_card.events_list_element.when_present(timeout=WebDriverUtils.google_task_timeout)
       sleep(WebDriverUtils.page_event_timeout)
-      # unless @up_next_card.all_event_summaries.include?(@event_title)
-        @up_next_card.log_out splash_page
-        UserUtils.clear_cache(@driver, splash_page, @up_next_card)
-        splash_page.click_sign_in_button
-        cal_net_auth_page.login(UserUtils.qa_username, UserUtils.qa_password)
-        @up_next_card.load_page
-        @up_next_card.events_list_element.when_present(timeout=WebDriverUtils.page_load_timeout)
-        @up_next_card.day_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-      # end
+      @up_next_card.log_out splash_page
+      UserUtils.clear_cache(@driver, splash_page, @up_next_card)
+      splash_page.click_sign_in_button
+      cal_net_auth_page.login(UserUtils.qa_username, UserUtils.qa_password)
+      @up_next_card.load_page
+      @up_next_card.events_list_element.when_present(timeout=WebDriverUtils.page_load_timeout)
+      @up_next_card.day_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
     end
 
     it 'shows the current date' do

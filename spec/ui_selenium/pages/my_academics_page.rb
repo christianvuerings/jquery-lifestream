@@ -33,7 +33,7 @@ module CalCentralPages
     end
 
     def has_student_semester_link(semester)
-      student_semesters_element.link_element(:xpath => "//a[contains(.,'#{semester}')]").exists? ? true : false
+      student_semesters_element.link_element(:xpath => "//a[contains(.,'#{semester}')]").exists?
     end
 
     def click_student_semester_link(semester_name)

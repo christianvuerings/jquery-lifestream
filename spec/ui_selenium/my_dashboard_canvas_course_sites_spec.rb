@@ -129,10 +129,10 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@recent_activity_card.activity_item_date_elements[0].text).to eql("#{Date.today.strftime("%b %-d")}")
         end
         it 'show individual Recent Activity notifications if a combined one is expanded' do
-          expect(@recent_activity_card.sub_activity_summaries  1).to eql(@assignment_summaries)
+          expect(@recent_activity_card.sub_activity_summaries 1).to eql(@assignment_summaries)
         end
         it 'show overdue, current, and future assignment activity detail' do
-          expect(@recent_activity_card.sub_activity_descriptions 1.sort).to eql(@assignment_descriptions.sort)
+          expect(@recent_activity_card.sub_activity_descriptions(1).sort).to eql(@assignment_descriptions.sort)
         end
         it 'shows an announcement title on a Recent Activity item' do
           expect(@recent_activity_card.activity_item_summary_elements[1].text).to eql(@announcement_title)

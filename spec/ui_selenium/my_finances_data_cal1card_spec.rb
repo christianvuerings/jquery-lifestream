@@ -55,7 +55,7 @@ describe 'My Finances Cal1Card', :testui => true do
             if has_finances_tab
               my_finances_page = CalCentralPages::MyFinancesPages::MyFinancesLandingPage.new(driver)
               my_finances_page.load_page
-              my_finances_page.cal_1_card_content_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+              my_finances_page.cal_1_card_content_element.when_visible(WebDriverUtils.page_load_timeout)
 
               # Debit account:
               if cal1card_api.has_debit_account?

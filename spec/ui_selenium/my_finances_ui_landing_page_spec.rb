@@ -37,7 +37,7 @@ describe 'My Finances landing page', :testui => true do
       @my_finances_page = CalCentralPages::MyFinancesPages::MyFinancesLandingPage.new(@driver)
       @my_finances_page.load_page
       @my_finances_page.billing_summary_spinner_element.when_not_visible(timeout=WebDriverUtils.page_load_timeout)
-      @my_finances_page.fin_resources_list_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+      @my_finances_page.fin_resources_list_element.when_visible(timeout)
     end
 
     context 'Billing Summary card' do
