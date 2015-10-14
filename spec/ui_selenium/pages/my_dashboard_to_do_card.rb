@@ -325,7 +325,7 @@ module CalCentralPages
 
     def delete_all_tasks
       logger.info('Deleting all existing tasks')
-      load_page(driver)
+      load_page
       self.delete_all_unscheduled_tasks
       self.delete_all_today_tasks
       self.delete_all_future_tasks

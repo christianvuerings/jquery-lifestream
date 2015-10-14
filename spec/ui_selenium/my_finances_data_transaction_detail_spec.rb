@@ -43,7 +43,7 @@ describe 'My Finances activity details', :testui => true do
             fin_api_page.get_json(driver)
             my_finances_page = CalCentralPages::MyFinancesPages::MyFinancesDetailsPage.new(driver)
             my_finances_page.load_page
-            my_finances_page.billing_summary_spinner_element.when_not_present(timeout=WebDriverUtils.page_load_timeout)
+            my_finances_page.billing_summary_spinner_element.when_not_visible(timeout=WebDriverUtils.page_load_timeout)
 
             if fin_api_page.has_cars_data?
               has_adjustment = false

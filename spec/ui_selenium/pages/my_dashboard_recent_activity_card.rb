@@ -14,6 +14,7 @@ module CalCentralPages
     h2(:activity_heading, :xpath => '//h2[text()="Recent Activity"]')
     div(:spinner, :xpath => '//div[@data-ng-include="widgets/activity_list.html"]/div[@class="cc-spinner"]')
     select_list(:activities_select, :xpath => '//div[@class="cc-widget cc-widget-activities ng-scope"]//select')
+    unordered_list(:activity_list, :class => 'cc-widget-activities-list')
     elements(:activity_item, :list_item, :xpath => '//ul[@class="cc-widget-activities-list"]/li')
     elements(:activity_item_toggle, :div, :xpath => '//ul[@class="cc-widget-activities-list"]/li/div')
     elements(:activity_item_summary, :div, :xpath => '//ul[@class="cc-widget-activities-list"]/li//strong')
@@ -42,7 +43,7 @@ module CalCentralPages
     end
 
     def sub_activity_toggle_elements(activity_list_node)
-      elements(:xpath, "//ul[@class='cc-widget-activities-list']/li[#{activity_list_node.to_s}]//ul/li/div")
+      activity_list_elements.div_element(:xpath => "/li[#{activity_list_node.to_s}]//ul/li/div")
     end
 
     def sub_activity_text(activity_list_node, elements)
@@ -62,12 +63,12 @@ module CalCentralPages
     end
 
     def sub_activity_summaries(activity_list_node)
-      elements = elements(:xpath, "//ul[@class='cc-widget-activities-list']/li[#{activity_list_node.to_s}]//ul/li//div[contains(@class,'cc-widget-activities-sub-activity ng-binding')]")
+      elements = activity_list_element.div_element(:xpath => "/li[#{activity_list_node.to_s}]//ul/li//div[contains(@class,'cc-widget-activities-sub-activity ng-binding')]")
       sub_activity_text(activity_list_node, elements)
     end
 
     def sub_activity_descriptions(activity_list_node)
-      elements = elements(:xpath, "//ul[@class='cc-widget-activities-list']/li[#{activity_list_node.to_s}]//ul/li//p")
+      elements = activity_list_element.paragraph_element(:xpath => "/li[#{activity_list_node.to_s}]//ul/li//p")
       sub_activity_text(activity_list_node, elements)
     end
   end
