@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::PendingMessages do
   let(:user_id) { '12348' }
   shared_examples 'a proxy that gets data' do

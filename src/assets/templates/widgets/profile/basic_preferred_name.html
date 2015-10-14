@@ -2,5 +2,6 @@
   <div class="cc-page-widget-profile-section-label">Preferred Name</div>
   <div class="cc-page-widget-profile-section-content">
     <div data-ng-bind="preferredName.content.formattedName"></div>
+    <div data-ng-if="!preferredName.content.formattedName" class="cc-page-widget-profile-section-not-available">Not available</div>
   </div>
 </div>

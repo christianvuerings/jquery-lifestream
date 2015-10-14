@@ -20,15 +20,19 @@ module User
       @first_name ||= get_campus_attribute('first_name') || ""
       @last_name ||= get_campus_attribute('last_name') || ""
       @override_name ||= @calcentral_user_data ? @calcentral_user_data.preferred_name : nil
+      @student_id = get_campus_attribute('student_id')
     end
 
     # split brain until SIS GoLive5 makes registration data available
     def get_campus_attribute(field)
+      value = nil
       if is_cs_profile_feature_enabled && @edo_attributes[:noStudentId].blank?
-        @edo_attributes[field]
-      else
-        @oracle_attributes[field]
+        value = @edo_attributes[field.to_sym]
       end
+      if value.nil?
+        value = @oracle_attributes[field]
+      end
+      value
     end
 
     def preferred_name
@@ -104,6 +108,8 @@ module User
       is_calendar_opted_in = Calendar::User.where(:uid => @uid).first.present?
       has_student_history = CampusOracle::UserCourses::HasStudentHistory.new({:user_id => @uid}).has_student_history?
       has_instructor_history = CampusOracle::UserCourses::HasInstructorHistory.new({:user_id => @uid}).has_instructor_history?
+      # no, really, BCS users are identified by having 10-digit IDs.
+      is_campus_solutions_student = @student_id.to_s.length >= 10
       roles = (get_campus_attribute(:roles)) ? get_campus_attribute(:roles) : {}
       {
         :isSuperuser => current_user_policy.can_administrate?,
@@ -130,7 +136,8 @@ module User
         :preferred_name => self.preferred_name,
         :roles => get_campus_attribute(:roles),
         :uid => @uid,
-        :sid => get_campus_attribute('student_id')
+        :sid => @student_id,
+        :isCampusSolutionsStudent => is_campus_solutions_student
       }
     end
 

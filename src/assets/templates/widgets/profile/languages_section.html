@@ -7,15 +7,12 @@
         <strong data-ng-bind="language.name"></strong>
         <span data-ng-if="language.native">(native)</span>
       </div>
-      <div data-ng-bind-template="Speaking Proficiency: {{language.speakingProficiency.description}}"></div>
-      <div data-ng-bind-template="Reading Proficiency: {{language.readingProficiency.description}}"></div>
-      <div data-ng-bind-template="Writing Proficiency: {{language.writingProficiency.description}}"></div>
-      <div>
-        <button class="cc-button-link">Edit</button>
-      </div>
+      <div data-ng-if="language.speakingProficiency.description" data-ng-bind-template="Speaking Proficiency: {{language.speakingProficiency.description}}"></div>
+      <div data-ng-if="language.readingProficiency.description" data-ng-bind-template="Reading Proficiency: {{language.readingProficiency.description}}"></div>
+      <div data-ng-if="language.writingProficiency.description" data-ng-bind-template="Writing Proficiency: {{language.writingProficiency.description}}"></div>
     </div>
-  </div>
-  <div class="cc-page-widget-profile-section-add">
-    <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
+    <div data-ng-if="!languages.content.length" class="cc-page-widget-profile-section-not-available">
+      There are no languages available.
+    </div>
   </div>
 </div>

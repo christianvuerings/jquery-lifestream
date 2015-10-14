@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::AddressDelete do
 
   let(:user_id) { '12346' }

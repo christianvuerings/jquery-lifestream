@@ -13,9 +13,10 @@
         class="cc-widget-tasks-status-{{task.status}}"
         data-ng-class="{'cc-ellipsis':(!task.show),'cc-alert':(task.bucket == 'Overdue' && tasksMode != 'completed'), 'cc-strikethrough':(task.editorIsProcessing)}">
         <strong data-ng-bind="task.title"></strong>
-        <div data-ng-if="task.emitter === 'bCourses' && task.course_code" class="cc-widget-tasks-bcourses-name">
+        <div data-ng-if="task.emitter === 'bCourses' && task.course_code" class="cc-widget-tasks-title-sub">
           <span data-ng-bind="task.course_code"></span>
         </div>
+        <div data-ng-if="task.subTitle" class="cc-widget-tasks-title-sub" data-ng-bind="task.subTitle"></div>
       </div>
     </div>
 
@@ -42,7 +43,7 @@
       </div>
       <div
         class="cc-icon cc-icon-campussolutions"
-        data-ng-if="task.emitter=='campussolutions'">
+        data-ng-if="task.emitter=='Campus Solutions'">
       </div>
       <div
         class="cc-icon cc-icon-slate"
@@ -58,6 +59,7 @@
       <div data-ng-if="task.emitter=='bCourses' && task.dueDate.hasTime"
         class="cc-widget-tasks-timestamp" data-ng-bind="task.dueDate.epoch * 1000 | date:'h a'">
       </div>
+      <div data-ng-if="task.emitter === 'Campus Solutions' && task.showStatus" data-ng-bind="task.showStatus" class="cc-widget-tasks-title-sub"></div>
       <span data-ng-if="tasksMode=='completed'" data-ng-bind="task.completedDate.epoch * 1000 | dateInYearFilter:'MM/dd'"></span>
     </div>
     <div
@@ -73,6 +75,16 @@
         <span data-ng-bind="task.dueDate.epoch * 1000 | dateInYearFilter:'MM/dd'"></span>
       </div>
       <div data-ng-bind-html="task.notes | linky" class="cc-break-word cc-clearfix"></div>
+
+      <div class="cc-clearfix" data-ng-if="task.responsibleContactEmail && task.emitter === 'Campus Solutions'">
+        <strong>Contact:</strong>
+        <a data-ng-href="mailto:{{task.responsibleContactEmail}}" data-ng-bind="task.responsibleContactEmail"></a>
+      </div>
+
+      <div class="cc-clearfix" data-ng-if="task.organization && task.emitter === 'Campus Solutions'">
+        <strong>Organization:</strong>
+        <span data-ng-bind="task.organization"></span>
+      </div>
 
       <div class="cc-clearfix">
         <a class="cc-button"

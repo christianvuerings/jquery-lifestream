@@ -22,7 +22,7 @@ module HubEdos
 
     def get_internal
       edo_feed = Student.new(user_id: @uid).get
-      result = ActiveSupport::HashWithIndifferentAccess.new
+      result = {}
       if (feed = edo_feed[:feed])
         edo = HashConverter.symbolize feed['student'] # TODO will have to dynamically switch student/person EDO somehow
         set_ids(result)
@@ -63,7 +63,7 @@ module HubEdos
 
     def find_name(type, edo, result)
       edo[:names].each do |name|
-        if name[:type][:code] == type
+        if name[:type].present? && name[:type][:code].present? && name[:type][:code].upcase == type.upcase
           result[:first_name] = name[:givenName]
           result[:last_name] = name[:familyName]
           result[:person_name] = name[:formattedName]
@@ -109,14 +109,14 @@ module HubEdos
     end
 
     def extract_education_level(edo, result)
-      # TODO this data only supported in GoLive5
+      return # TODO this data only supported in GoLive5
       if edo[:currentRegistration].present?
         result[:education_level] = edo[:currentRegistration][:academicLevel][:level][:description]
       end
     end
 
     def extract_total_units(edo, result)
-      # TODO this data only supported in GoLive5
+      return # TODO this data only supported in GoLive5
       if edo[:currentRegistration].present?
         edo[:currentRegistration][:termUnits].each do |term_unit|
           if term_unit[:type][:description] == 'Total'
@@ -128,8 +128,8 @@ module HubEdos
     end
 
     def extract_special_program_code(edo, result)
+      return # TODO this data only supported in GoLive5
       if edo[:currentRegistration].present?
-        # TODO this data only supported in GoLive5
         result[:education_abroad] = false
         # TODO verify business correctness of this conversion based on more examples of study-abroad students
         edo[:currentRegistration][:specialStudyPrograms].each do |pgm|
@@ -142,19 +142,22 @@ module HubEdos
     end
 
     def extract_reg_status(edo, result)
+      return # TODO this data only supported in GoLive5
       # TODO populate based on SISRP-7581 explanation. Incorporate full structure from RegStatusTranslator.
-      # TODO this data only supported in GoLive5
       result[:reg_status] = {}
     end
 
     def extract_residency(edo, result)
+      return # TODO this data only supported in GoLive5
       if edo[:residency].present?
-        # TODO this data only supported in GoLive5
         if edo[:residency][:official][:code] == 'RES'
           result[:cal_residency_flag] = 'Y'
         else
           result[:cal_residency_flag] = 'N'
         end
+        # TODO The term-transition check in CampusOracle::UserAttributes had to do with residency information
+        # from Oracle being unavailable during term transitions. Revisit whether this next code is necessary
+        # in the GoLive5 era.
         if term_transition?
           result[:california_residency] = nil
           result[:reg_status][:transitionTerm] = true

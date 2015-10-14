@@ -1,6 +1,6 @@
 {
   "studentResponse": {
-    "correlationId": "e0f7bb33-daa5-4ec9-9e45-61819d8a8612",
+    "correlationId": "b785f826-5405-432e-850c-2b6a487ab0a5",
     "source": "UCB-SIS-STUDENT",
     "students": {
       "students": [
@@ -20,7 +20,7 @@
               "disclose": false
             },
             {
-              "type": "SIS",
+              "type": "DB2",
               "id": "11667051",
               "disclose": false,
               "fromDate": "1902-02-01"
@@ -88,38 +88,10 @@
           "addresses": [
             {
               "type": {
-                "code": "DIPL",
-                "description": "Diploma"
-              },
-              "address1": "1234 56TH ST",
-              "address2": "APT 789, BOX 101112",
-              "address3": "",
-              "address4": "",
-              "num1": "",
-              "num2": "",
-              "addrField1": "",
-              "addrField2": "",
-              "addrField3": "",
-              "houseType": "",
-              "city": "BERKELEY",
-              "county": "",
-              "stateCode": "CA",
-              "postalCode": "94708",
-              "countryCode": "USA",
-              "formattedAddress": "1234 56TH ST\nAPT 789, BOX 101112\nBERKELEY, CA 94708",
-              "disclose": false,
-              "uiControl": {
-                "code": "N",
-                "description": "Do Not Display"
-              },
-              "fromDate": "2015-01-12"
-            },
-            {
-              "type": {
                 "code": "HOME",
                 "description": "Home"
               },
-              "address1": "2111 BANCROFT WAY  #550",
+              "address1": "2121 BANCROFT WAY  #550",
               "address2": "",
               "address3": "",
               "address4": "",
@@ -132,22 +104,22 @@
               "city": "BERKELEY",
               "county": "",
               "stateCode": "CA",
-              "postalCode": "94720",
+              "postalCode": "454554",
               "countryCode": "USA",
-              "formattedAddress": "2111 BANCROFT WAY  #550\nBERKELEY, CA 94720",
+              "formattedAddress": "2121 BANCROFT WAY  #550\nBERKELEY, CA 454554",
               "disclose": false,
               "uiControl": {
                 "code": "U",
                 "description": "Edit - No Delete"
               },
-              "fromDate": "2013-10-31"
+              "fromDate": "2015-10-07"
             },
             {
               "type": {
                 "code": "LOCL",
                 "description": "Local"
               },
-              "address1": "Test",
+              "address1": "1001 Hearst",
               "address2": "",
               "address3": "",
               "address4": "",
@@ -157,18 +129,18 @@
               "addrField2": "",
               "addrField3": "",
               "houseType": "",
-              "city": "",
+              "city": "Berkeley",
               "county": "",
-              "stateCode": "",
+              "stateCode": "CA",
               "postalCode": "0",
-              "countryCode": "WAL",
-              "formattedAddress": "",
+              "countryCode": "USA",
+              "formattedAddress": "1001 Hearst\nBerkeley, CA",
               "disclose": false,
               "uiControl": {
                 "code": "F",
                 "description": "Full Edit"
               },
-              "fromDate": "2015-10-06"
+              "fromDate": "2015-10-12"
             }
           ],
           "phones": [
@@ -194,7 +166,7 @@
               },
               "number": "510/642-9505",
               "countryCode": "",
-              "extension": "",
+              "extension": "114",
               "primary": true,
               "disclose": false,
               "uiControl": {

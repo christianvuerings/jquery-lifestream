@@ -6,14 +6,7 @@
         <span data-ng-bind="ethnicity.group"></span>
       </div>
       <div data-ng-bind="email.emailAddress"></div>
-      <div>
-        <button class="cc-button-link" data-ng-click="">Edit</button>
-      </div>
     </div>
-  </div>
-  <div class="cc-page-widget-profile-section-add">
-    <button class="cc-button-link" data-ng-click="">
-      <i class="fa fa-plus"></i> Add
-    </button>
+    <div data-ng-if="!ethnicities.content.length" class="cc-page-widget-profile-section-not-available">Not available</div>
   </div>
 </div>

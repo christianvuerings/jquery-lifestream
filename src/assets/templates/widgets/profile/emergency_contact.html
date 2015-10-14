@@ -4,18 +4,14 @@
   <div class="cc-page-widget-profile-section-content">
     <div data-ng-repeat="emergencyContact in emergencyContacts.content" class="cc-page-widget-profile-section-content-item">
       <div>
-        <strong data-ng-bind="emergencyContact.name.formattedName"></strong>
-        <span data-ng-bind-template="- {{emergencyContact.relationship.description}}"></span>
+        <strong data-ng-bind="emergencyContact.name"></strong>
         <span data-ng-if="emergencyContact.primary">(primary contact)</span>
       </div>
       <div data-ng-bind="emergencyContact.phone.number"></div>
       <div data-ng-bind="emergencyContact.email.emailAddress"></div>
-      <div>
-        <button class="cc-button-link">Edit</button>
-      </div>
     </div>
-  </div>
-  <div class="cc-page-widget-profile-section-add">
-    <button class="cc-button-link"><i class="fa fa-plus"></i> Add</button>
+    <div data-ng-if="!emergencyContacts.content.length" class="cc-page-widget-profile-section-not-available">
+      There are no emergency contacts available.
+    </div>
   </div>
 </div>

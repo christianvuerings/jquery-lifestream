@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::EmailDelete do
 
   let(:user_id) { '12345' }

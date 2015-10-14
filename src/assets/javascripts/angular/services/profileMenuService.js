@@ -52,13 +52,14 @@ angular.module('calcentral.services').factory('profileMenuService', function() {
         {
           'id': 'languages',
           'name': 'Languages'
-        },
+        }
+        /* TODO - Work experience is currently not part of the EDO - see SISRP-7184 for progress
         {
           'id': 'work-experience',
           'name': 'Work Experience'
-        }
+        }*/
       ]
-    },
+    }
     /* TODO - After the profile sprint
     {
       'label': 'Awards',
@@ -75,13 +76,18 @@ angular.module('calcentral.services').factory('profileMenuService', function() {
       ]
     },
     */
+    /* TODO - After profile sprint - see SISRP-8835
     {
-    'label': 'Alerts & Notifications',
-    'categories': [{
-      'id': 'bconnected',
-      'name': 'bConnected'
-    }]
-  }];
+      'label': 'Alerts & Notifications',
+      'categories': [
+        {
+          'id': 'bconnected',
+          'name': 'bConnected'
+        }
+      ]
+    }
+    */
+  ];
 
   return {
     navigation: navigation

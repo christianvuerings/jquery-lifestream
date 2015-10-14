@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::PhoneDelete do
 
   let(:user_id) { '12345' }

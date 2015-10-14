@@ -2,13 +2,8 @@
   <div class="cc-page-widget-profile-section-label">Veteran Status</div>
   <div class="cc-page-widget-profile-section-content">
     <div class="cc-page-widget-profile-section-content-item">
-
       <div data-ng-bind="veteranStatus.content.description"></div>
+      <div data-ng-if="!veteranStatus.content.description" class="cc-page-widget-profile-section-not-available">Not available</div>
     </div>
-  </div>
-  <div class="cc-page-widget-profile-section-add">
-    <button class="cc-button-link" data-ng-click="">
-      Edit
-    </button>
   </div>
 </div>

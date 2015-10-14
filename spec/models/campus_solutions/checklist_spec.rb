@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::Checklist do
   let(:user_id) { '12347' }
   shared_examples 'a proxy that gets data' do

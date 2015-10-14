@@ -13,7 +13,7 @@
       <h4 data-ng-bind="api.user.profile.fullName"></h4>
     </div>
     <ul class="cc-popover-items">
-      <li class="cc-popover-item" data-ng-if="api.user.profile.features.csProfile">
+      <li class="cc-popover-item" data-ng-if="api.user.profile.features.csProfile && api.user.profile.roles.student">
         <button class="cc-button-link cc-popover-link"
           data-ng-click="api.popover.clickThrough('Gear - Profile');api.util.redirect('profile')">Profile
         </button>

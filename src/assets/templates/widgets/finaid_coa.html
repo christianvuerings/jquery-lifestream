@@ -4,7 +4,7 @@
   </div>
   <div class="cc-widget-text" data-cc-spinner-directive="coa.isLoading">
     <div data-ng-if="errored">
-      An error occurred while trying to receive your data.
+      An error occurred while trying to retrieve your data.
     </div>
     <div data-ng-if="!errored">
       <div data-ng-bind="coa.message"></div>
@@ -40,7 +40,7 @@
               </tr>
               <tr data-ng-if="item.show && item.subItems.length" data-ng-repeat="subItem in item.subItems">
                 <td>
-                  &#8226; <span data-ng-bind="subItem.title"></span>
+                  &bull; <span data-ng-bind="subItem.title"></span>
                 </td>
                 <td data-ng-repeat="amount in subItem.amounts track by $index" data-cc-amount-directive="amount" data-cc-amount-directive-color="false" class="cc-table-right"></td>
                 <td data-cc-amount-directive="subItem.total" data-cc-amount-directive-color="false" class="cc-table-right"></td>
