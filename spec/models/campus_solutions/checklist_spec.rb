@@ -21,7 +21,7 @@ describe CampusSolutions::Checklist do
     end
   end
 
-  context 'real proxy', testext: true do
+  context 'real proxy', testext: true, ignore: true do
     let(:proxy) { CampusSolutions::Checklist.new(fake: false, user_id: user_id) }
     it_should_behave_like 'a proxy that gets data'
   end
