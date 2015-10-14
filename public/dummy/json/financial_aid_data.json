@@ -1,0 +1,415 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "coa": {
+      "fullyear": null,
+      "message": "Your budget is the estimated average and reasonable cost of completing an academic year at UC Berkeley",
+      "semesterOptions": [
+        {
+          "data": [
+            {
+              "headers": [
+                "Fall",
+                "Spring",
+                "Summer",
+                "Total"
+              ],
+              "items": [
+                {
+                  "amounts": [
+                    6657,
+                    6657,
+                    710
+                  ],
+                  "total": 14024,
+                  "title": "Tuition/Fees",
+                  "subitems": [
+                    {
+                      "amounts": [
+                        6120,
+                        6120,
+                        0
+                      ],
+                      "total": 12240,
+                      "title": "Fees"
+                    },
+                    {
+                      "amounts": [
+                        537,
+                        537,
+                        0
+                      ],
+                      "total": 1074,
+                      "title": "Campus Fees & Class Pass"
+                    },
+                    {
+                      "amounts": [
+                        0,
+                        0,
+                        710
+                      ],
+                      "total": 710,
+                      "title": "Summer Course Fees"
+                    }
+                  ]
+                },
+                {
+                  "amounts": [
+                    7711,
+                    7711,
+                    0
+                  ],
+                  "total": 15422,
+                  "title": "Housing",
+                  "subitems": [
+                    {
+                      "amounts": [
+                        7194,
+                        7194,
+                        0
+                      ],
+                      "total": 14388,
+                      "title": "Room & Board - Res. Hall"
+                    },
+                    {
+                      "amounts": [
+                        517,
+                        517,
+                        0
+                      ],
+                      "total": 1034,
+                      "title": "Food - Res. Hall"
+                    }
+                  ]
+                },
+                {
+                  "amounts": [
+                    620,
+                    620,
+                    0
+                  ],
+                  "total": 1240,
+                  "title": "Books and Supplies",
+                  "subitems": [
+                    {
+                      "amounts": [
+                        620,
+                        620,
+                        0
+                      ],
+                      "total": 1240,
+                      "title": "Books & Supplies"
+                    }
+                  ]
+                },
+                {
+                  "amounts": [
+                    267,
+                    267,
+                    0
+                  ],
+                  "total": 534,
+                  "title": "Transportation",
+                  "subitems": [
+                    {
+                      "amounts": [
+                        267,
+                        267,
+                        0
+                      ],
+                      "total": 534,
+                      "title": "Transportation-Res. Hall"
+                    }
+                  ]
+                },
+                {
+                  "amounts": [
+                    1290,
+                    1290,
+                    0
+                  ],
+                  "total": 2580,
+                  "title": "Health Insurance",
+                  "subitems": [
+                    {
+                      "amounts": [
+                        1290,
+                        1290,
+                        0
+                      ],
+                      "total": 2580,
+                      "title": "Health Insurance - UG"
+                    }
+                  ]
+                },
+                {
+                  "amounts": [
+                    1009,
+                    1009,
+                    0
+                  ],
+                  "total": 2018,
+                  "title": "Personal Expenses",
+                  "subitems": [
+                    {
+                      "amounts": [
+                        1009,
+                        1009,
+                        0
+                      ],
+                      "total": 2018,
+                      "title": "Personal - Res. Hall"
+                    }
+                  ]
+                },
+                {
+                  "totals": [
+                    17554,
+                    17554,
+                    710,
+                    35818
+                  ]
+                }
+              ],
+              "title": "Standard Budget Items"
+            },
+            {
+              "headers": [
+                "Fall",
+                "Spring",
+                "Summer",
+                "Total"
+              ],
+              "items": [
+                {
+                  "amounts": [
+                    17554,
+                    17554,
+                    710
+                  ],
+                  "total": 35818
+                }
+              ],
+              "title": "Term Grand Total"
+            }
+          ],
+          "id": "fall-spring-summer"
+        }
+      ],
+      "title": "Estimated Cost of Attendance"
+    },
+    "status": {
+      "message": "We take many factors into consideration when determining your funding package. Updates made elsewhere to your personal information may affect the amount of aid provided to you.",
+      "categories": [
+        {
+          "title": "Aid Package Factors",
+          "itemGroups": [
+            [
+              {
+                "title": "Student Standing",
+                "value": "Undergraduate"
+              },
+              {
+                "title": "Level",
+                "values": [
+                  {
+                    "subvalue": [
+                      "Fall",
+                      "1st Year - Never Attended"
+                    ]
+                  },
+                  {
+                    "subvalue": [
+                      "Spring",
+                      "1st Year - Previously Attended"
+                    ]
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "title": "SAP Status",
+                "value": "SAP Undetermined"
+              },
+              {
+                "title": "Candidacy Status",
+                "value": "To Be Determined"
+              },
+              {
+                "title": "Filing Fee Status",
+                "value": "To Be Determined"
+              },
+              {
+                "title": "Verification Status",
+                "value": "Required to be Performed|Incomplete"
+              }
+            ],
+            [
+              {
+                "title": "Residency",
+                "values": []
+              },
+              {
+                "title": "Tax Withholding (GLACIER)",
+                "value": "To Be Determined"
+              }
+            ],
+            [
+              {
+                "title": "Enrollment",
+                "values": [
+                  {
+                    "subvalue": [
+                      "Fall",
+                      "0"
+                    ]
+                  },
+                  {
+                    "subvalue": [
+                      "Spring",
+                      "0"
+                    ]
+                  },
+                  {
+                    "subvalue": [
+                      "Summer",
+                      "6"
+                    ]
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "title": "Housing",
+                "values": [
+                  {
+                    "subvalue": [
+                      "Fall",
+                      "Room & Board - Res. Hall"
+                    ]
+                  },
+                  {
+                    "subvalue": [
+                      "Spring",
+                      "Room & Board - Res. Hall"
+                    ]
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "title": "SHIP Health Insurance",
+                "values": [
+                  {
+                    "subvalue": [
+                      "Fall",
+                      "To Be Determined"
+                    ]
+                  }
+                ]
+              }
+            ],
+            [
+              {
+                "title": "Package Status",
+                "value": "Packaged"
+              },
+              {
+                "title": "Dependency Status",
+                "value": "Dependent w/Primary EFC"
+              },
+              {
+                "title": "Family Members in College",
+                "value": "4"
+              },
+              {
+                "title": "Expected Family Contribution (EFC)",
+                "value": "1059"
+              },
+              {
+                "title": "Berkeley Parent Contribution",
+                "value": "To Be Determined"
+              }
+            ]
+          ]
+        },
+        {
+          "title": "Terms and Conditions",
+          "itemGroups": [
+            [
+              {
+                "title": "Title IV",
+                "value": "Authorized"
+              },
+              {
+                "title": "Terms & Conditions",
+                "value": "Accepted"
+              }
+            ]
+          ]
+        }
+      ]
+    },
+    "shoppingSheet": {
+      "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/s/WEBLIB_SFA.SFA_SHOPPING_SHEET.FieldFormula.IScript_ShoppingSheet"
+    },
+    "financialAidSummary": {
+      "netCost": {
+        "items": [
+          {
+            "amount": 35108,
+            "title": "Estimated Cost of Attendance"
+          },
+          {
+            "amount": 5725,
+            "title": "Gift Aid",
+            "subTitle": "(MONEY YOU DON'T REPAY)"
+          }
+        ],
+        "total": {
+          "amount": 29383,
+          "title": "Net Cost",
+          "subTitle": "(YOUR ESTIMATED COST)"
+        }
+      },
+      "fundingOffered": {
+        "total": {
+          "amount": 8225,
+          "title": "Funding Offered"
+        }
+      }
+    },
+    "fundingSources": {
+      "links": [
+        {
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_ADDL_SRC_FLU.UC_FA_ADDL_SRC_FLU.GBL?ucInstitution=UCB01&ucAidYear=2016",
+          "title": "Additional Resources"
+        },
+        {
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID.GBL?ucInstitution=UCB01&ucAidYear=2016&ucConvertType=LoanToWKS",
+          "title": "Convert Loan to Workstudy"
+        },
+        {
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_CONV_AID_FLU.UC_FA_CONV_AID.GBL?ucInstitution=UCB01&ucAidYear=2016&ucConvertType=WKSToLoan",
+          "title": "Convert Workstudy to Loan"
+        },
+        {
+          "url": "https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/UC_FA_AWD_MGT_FLU.UC_FA_AWD_MGT_FLU.GBL?ucInstitution=UCB01&ucAidYear=2016",
+          "title": "Award Management (Accept/Decline Loan)"
+        }
+      ]
+    }
+  },
+  "lastModified": {
+    "hash": "e9f994649c374cbcd98bbac58d2860f3a0203d17",
+    "timestamp": {
+      "epoch": 1439938741,
+      "dateTime": "2015-08-18T15:59:01-07:00",
+      "dateString": "8/18"
+    }
+  },
+  "feedName": "CampusSolutions::MyFinancialAidData"
+}

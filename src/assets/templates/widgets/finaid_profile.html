@@ -1,0 +1,41 @@
+<div class="cc-widget cc-widget-finaid-profile" data-ng-controller="FinaidProfileController">
+  <div class="cc-widget-title">
+    <h2>Financial Aid &amp; Scholarships Profile</h2>
+  </div>
+  <div class="cc-widget-text" data-cc-spinner-directive="finaidProfileLoading.isLoading">
+    <div data-ng-if="errored">
+      An error occurred while trying to receive your data.
+    </div>
+    <div data-ng-if="!errored">
+      <div class="cc-widget-finaid-profile-message" data-ng-bind="finaidProfile.message"></div>
+      <div data-ng-if="!finaidProfile.categories.length">
+        There is no profile available for you.
+      </div>
+      <div data-ng-if="finaidProfile.categories.length">
+        <div data-ng-repeat="category in finaidProfile.categories" class="cc-clearfix-container">
+          <div class="cc-clearfix-container">
+            <h3 class="cc-widget-finaid-profile-category-title cc-left" data-ng-bind="category.title"></h3>
+            <button class="cc-button-link cc-widget-finaid-profile-button-toggle" data-ng-click="api.widget.toggleShow($event, finaidProfile.categories, category, 'Financial Aid - Profile')">
+              <span data-ng-if="!category.show">Show</span>
+              <span data-ng-if="category.show">Hide</span>
+            </button>
+          </div>
+          <div data-ng-if="category.show" data-ng-repeat="items in category.itemGroups" class="cc-widget-finaid-profile-itemgroup">
+            <div data-ng-repeat="item in items" class="cc-clearfix-container">
+              <div class="cc-left">
+                <strong data-ng-bind="item.title"></strong>
+              </div>
+              <div class="cc-right" data-ng-bind="item.value" data-ng-if="item.value"></div>
+              <div class="cc-right" data-ng-if="item.values">
+                <div data-ng-repeat="value in item.values" class="cc-text-right">
+                  <div data-ng-bind="value.subvalue.join(' &#8226; ')"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr data-ng-if="!$last" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

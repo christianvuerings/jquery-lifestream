@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<EMAIL_ADDRESS_DELETE_RESPONSE xmlns="http://bcs.is.berkeley.edu">
+  <STATUS>Successfully deleted the email address for Individual 25738808 for email address type OTHR</STATUS>
+</EMAIL_ADDRESS_DELETE_RESPONSE>

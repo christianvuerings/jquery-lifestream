@@ -1,0 +1,30 @@
+<div class="cc-page-finaid" data-ng-controller="FinaidController" data-cc-spinner-directive="finaid.isLoading" data-ng-if="api.user.profile.features.csFinAid">
+  <div class="row collapse">
+    <div class="column">
+      <h1 class="cc-heading-page-title cc-print-hide">
+        <a href="/finances">My Finances</a> &raquo; Financial Aid
+      </h1>
+      <h1 class="cc-heading-page-title cc-hidden cc-print-show">
+        Financial aid for <span data-ng-bind="api.user.profile.fullName"></span>
+      </h1>
+    </div>
+
+    <div data-ng-if="!canSeeFinaidData">
+      <div data-ng-include="'widgets/finaid_approvals.html'"></div>
+    </div>
+
+    <div data-ng-if="canSeeFinaidData">
+      <div class="medium-4 columns">
+        <div data-ng-include="'widgets/finaid_summary.html'"></div>
+        <div data-ng-include="'widgets/finaid_profile.html'"></div>
+      </div>
+      <div class="medium-4 columns">
+        <div data-ng-include="'widgets/finaid_coa.html'"></div>
+      </div>
+      <div class="medium-4 columns cc-column-last">
+        <div data-ng-include="'widgets/finaid_funding_sources.html'"></div>
+      </div>
+    </div>
+
+  </div>
+</div>

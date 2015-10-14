@@ -1,3 +1,4 @@
+require('lodash');
 require('moment');
 require('js-natural-sort');
 require('raven-js');

@@ -28,10 +28,7 @@
             <p data-ng-switch-when="Bear Facts" data-cc-compile-directive="activity.summary" class="cc-widget-activities-summary"></p>
             <p data-ng-switch-default data-ng-bind-html="activity.summary | linky" class="cc-widget-activities-summary"></p>
           </div>
-          <a class="cc-widget-activities-info-link" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', activity.source, activity.sourceUrl)" data-ng-if="activity.sourceUrl" data-ng-href="{{activity.sourceUrl}}">
-            <span data-ng-bind="activity.linkText || 'More info'"></span>
-            <span class="cc-visuallyhidden">View more info about {{ activity.title }} in {{ activity.source }}</span>
-          </a>
+          <div data-ng-include="'widgets/activity_list_link.html'" data-onload="activityItem=activity"></div>
         </div>
         <div class="cc-widget-activities-sub-text-margin" data-ng-show="activity.show && activity.elements">
           <ul class="cc-widget-activities-sub-activity-list">
@@ -48,10 +45,7 @@
                   </div>
                   <p class="cc-widget-activities-sub-activity-summary cc-break-word" data-ng-bind-html="subActivity.summary | linky">
                   </p>
-                  <a class="cc-widget-activities-info-link" data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', subActivity.source, subActivity.sourceUrl)" data-ng-href="{{subActivity.sourceUrl}}">
-                    <span data-ng-bind="subActivity.linkText || 'More info'"></span>
-                    <span class="cc-visuallyhidden">View more info about {{ subActivity.title }} in {{ subActivity.source }}</span>
-                  </a>
+                  <div data-ng-include="'widgets/activity_list_link.html'" data-onload="activityItem=subActivity"></div>
                 </div>
               </div>
             </li>
@@ -62,6 +56,6 @@
   </ul>
   <div data-cc-show-more-directive data-cc-show-more-list="filteredList" data-cc-show-more-watch="search.source" data-cc-show-more-limit="activitiesLimit"></div>
   <div data-ng-show="!list.length" class="cc-widget-text">
-    You have no recent activity at this time.
+    You have no notifications at this time.
   </div>
 </div>

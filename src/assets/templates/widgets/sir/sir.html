@@ -1,0 +1,7 @@
+<div data-ng-controller="SirController">
+  <div data-ng-repeat="item in sir.checklistItems" data-ng-if="sir.checklistItems.length">
+    <div data-ng-include="'widgets/sir/sir_item.html'" data-ng-if="item.itemStatusCode === 'I'"></div>
+    <div data-ng-include="'widgets/sir/sir_item_received.html'" data-ng-if="item.itemStatusCode === 'R'"></div>
+    <div data-ng-include="'widgets/sir/sir_item_completed.html'" data-ng-if="item.itemStatusCode === 'C'"></div>
+  </div>
+</div>

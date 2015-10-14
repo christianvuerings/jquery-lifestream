@@ -11,5 +11,9 @@ angular.module('calcentral.config').config(function(calcentralConfig, $httpProvi
   if (token) {
     $httpProvider.defaults.headers.post['X-CSRF-Token'] = token;
     $httpProvider.defaults.headers.put['X-CSRF-Token'] = token;
+
+    $httpProvider.defaults.headers.delete = {
+      'X-CSRF-Token': token
+    };
   }
 });

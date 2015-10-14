@@ -31,6 +31,9 @@ features:
   cal1card: true
   audio: true
   advising: true
+  cs_fin_aid: true
+  cs_profile: true
+  cs_sir: true
   webcast_sign_up_on_calcentral: true
 
 cache:
@@ -50,3 +53,6 @@ cache:
     MyTasks::Merged: <%= 1.day %>
     UpNext::MyUpNext: <%= 1.day %>
     User::Api: <%= 1.day %>
+
+calnet_crosswalk_proxy:
+  fake: true

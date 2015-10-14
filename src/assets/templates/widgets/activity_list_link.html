@@ -1,0 +1,9 @@
+<a class="cc-widget-activities-info-link"
+   data-ng-click="api.util.preventBubble($event);api.analytics.trackExternalLink('Activities', activityItem.source, activityItem.sourceUrl)"
+   data-ng-if="activityItem.sourceUrl"
+   data-cc-campus-solutions-link-directive="activityItem.sourceUrl"
+   data-cc-campus-solutions-link-directive-enabled="{{activityItem.emitter === 'Campus Solutions'}}"
+   data-cc-outbound-enabled="{{activityItem.emitter !== 'Campus Solutions'}}">
+  <span data-ng-bind="activityItem.linkText || 'More info'"></span>
+  <span class="cc-visuallyhidden">View more info about {{ activityItem.title }} in {{ activityItem.source }}</span>
+</a>

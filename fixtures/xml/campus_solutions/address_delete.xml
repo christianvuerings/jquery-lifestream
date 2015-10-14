@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<ADDRESS_DELETE_RESPONSE xmlns="http://bcs.is.berkeley.edu">
+  <STATUS>Successfully made the address for individual 25753380 with the address type HOME inactive</STATUS>
+</ADDRESS_DELETE_RESPONSE>

@@ -1,0 +1,66 @@
+<div class="cc-page-widget-profile-section-content-item-editing">
+  <div class="cc-page-widget-profile-section-content-error cc-text-red" data-ng-if="errorMessage">
+    <i class="cc-icon-red fa fa-exclamation-circle"></i>
+    <span data-ng-bind="errorMessage"></span>
+  </div>
+  <div data-ng-if="!isDeleting">
+    <form data-ng-submit="save(currentObject.data)" name="cc_page_widget_profile_address">
+      <div data-ng-if="currentObject.isAdding">
+        <div>
+          <label for="cc-page-widget-profile-address-type">
+            Address Type <span class="cc-text-light">(Required)</span>
+          </label>
+        </div>
+        <div class="cc-select">
+          <select data-ng-options="type.fieldvalue as type.descr for type in types" data-ng-model="currentObject.data.type.code" id="cc-page-widget-profile-address-type" required aria-required="true" />
+        </div>
+      </div>
+      <div data-ng-if="!currentObject.isAdding">
+        <strong data-ng-bind-template="{{item.type.description}} Address"></strong>
+      </div>
+
+      <div>
+        <div>
+          <label for="cc-page-widget-profile-address-country">
+            Country <span class="cc-text-light">(Required)</span>
+          </label>
+        </div>
+        <div class="cc-select">
+          <select data-ng-options="country.country as country.descr for country in countries" data-ng-model="currentObject.data.country" id="cc-page-widget-profile-address-country" required aria-required="true" />
+        </div>
+      </div>
+
+      <div  data-cc-spinner-directive="currentObject.stateFieldLoading">
+        <div data-ng-repeat="field in currentObject.fields" data-ng-if="field.field !== 'country'">
+          <div>
+            <label data-ng-attr-for="cc-page-widget-profile-field-{{$index}}">
+              <span data-ng-bind="field.label"></span>
+            </label>
+          </div>
+          <div data-ng-if="field.field !== 'state' || !states.length">
+            <input type="text" data-ng-attr-id="cc-page-widget-profile-field-{{$index}}" data-ng-model="currentObject.data[field.field]" />
+          </div>
+          <div data-ng-if="field.field === 'state' && states.length">
+            <div class="cc-select">
+              <select data-ng-options="state.state as state.descr for state in states" data-ng-attr-id="cc-page-widget-profile-field-{{$index}}" data-ng-attr-id="cc-page-widget-profile-field-{{$index}}" data-ng-model="currentObject.data[field.field]" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="cc_page_widget_profile_address.$invalid || isSaving">
+          <span data-ng-if="!isSaving">Save</span>
+          <span data-ng-if="isSaving">Updating...</span>
+        </button>
+        <button class="cc-button" data-ng-click="closeEditor()" data-ng-disabled="isSaving">Cancel</button>
+      </div>
+    </form>
+    <form data-ng-submit="delete(currentObject.data)" data-ng-if="!currentObject.isAdding && item.uiControl.code !== 'U'">
+      (<button class="cc-button-link" type="submit" data-ng-disabled="isDeleting">Delete address</button>)
+    </form>
+  </div>
+  <div data-ng-if="isDeleting">
+    <i class="fa fa-spinner fa-spin"></i> Deleting...
+  </div>
+</div>

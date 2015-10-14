@@ -1,0 +1,14 @@
+<div class="cc-widget cc-widget-sir" data-ng-controller="SirItemController">
+  <div data-ng-include="'widgets/sir/sir_item_header.html'" data-ng-if="item.studentResponse.option.progAction !== 'WAPP'"></div>
+  <div class="cc-widget-title" data-ng-if="item.studentResponse.option.progAction === 'WAPP'">
+    <h2>Enrollment Declined</h2>
+  </div>
+  <div class="cc-widget-text" data-ng-if="item.studentResponse.option.progReason === 'MAYB'">
+    <h3>You have tentativlely accepted enrollment at UC Berkeley for <span data-ng-bind="item.studentResponse.programDescription">.</h3>
+    <div data-ng-bind-html="item.studentResponse.option.messageText | linky"></div>
+  </div>
+  <div class="cc-widget-text" data-ng-if="item.studentResponse.option.progAction === 'WAPP'">
+    <h3>You have confirmed that you are declining enrollment at UC Berkeley for <span data-ng-bind="item.studentResponse.programDescription">.</h3>
+    <div data-ng-bind-html="item.studentResponse.option.messageText | linky"></div>
+  </div>
+</div>

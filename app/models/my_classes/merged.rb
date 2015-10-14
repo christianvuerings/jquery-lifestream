@@ -8,7 +8,7 @@ module MyClasses
       campus = Campus.new(@uid)
       campus_courses = campus.fetch
       site_emitters = [
-        Canvas.new(@uid)
+        MyClasses::Canvas.new(@uid)
       ]
       feed = {
         classes: merge_sites(campus_courses[:current], campus.current_term, site_emitters),

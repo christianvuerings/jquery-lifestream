@@ -18,7 +18,10 @@ describe 'MyTasks' do
     @fake_canvas_upcoming_events_proxy = Canvas::UpcomingEvents.new({fake: true})
     @fake_canvas_todo_proxy = Canvas::Todo.new({fake: true})
     @fake_canvas_courses = Canvas::UserCourses.new({fake: true}).courses
-
+    @fake_campus_solutions_checklist_proxy = CampusSolutions::Checklist.new({fake: true})
+    @fake_calnet_crosswalk_proxy = CalnetCrosswalk::Proxy.new({fake: true, user_id: '12345'})
+    allow(CampusSolutions::Checklist).to receive(:new).and_return(@fake_campus_solutions_checklist_proxy)
+    allow(CalnetCrosswalk::Proxy).to receive(:new).and_return(@fake_calnet_crosswalk_proxy)
   end
 
   context 'pre-recorded fake Google and Canvas proxy feeds using the server\'s timezone' do
@@ -40,17 +43,17 @@ describe 'MyTasks' do
     let(:tasks) { my_tasks_model.get_feed[:tasks] }
 
     it 'should sort tasks into the right buckets' do
-      expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 5
+      expect(tasks.count{|task| task[:bucket] == 'Overdue'}).to eq 6
       expect(tasks.count{|task| task[:bucket] == 'Unscheduled'}).to eq 2
 
       # On Sundays, no "later in the week" tasks can escape the "Today" bucket. Since this moves
       # some "Future" tasks to "Today", more total tasks will be in the feed on Sunday.
       if Time.zone.today.sunday?
         expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 7
-        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 9
+        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 8
       else
         expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 2
-        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 14
+        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 17
       end
 
       expect(tasks.count{|task| %w(Overdue Today Future Unscheduled).exclude? task[:bucket]}).to eq 0
@@ -179,7 +182,7 @@ describe 'MyTasks' do
     tasks = my_tasks_model.get_feed[:tasks]
     tasks.size.should be > 0
     tasks.each do |task|
-      task[:emitter].should == GoogleApps::Proxy::APP_ID
+      expect([GoogleApps::Proxy::APP_ID, Slate::Checklist::APP_ID, CampusSolutions::Proxy::APP_ID]).to include task[:emitter]
     end
   end
 
@@ -224,7 +227,7 @@ describe 'MyTasks' do
 
     my_tasks_model = MyTasks::Merged.new(@user_id)
     valid_feed = my_tasks_model.get_feed
-    valid_feed[:tasks].length.should == 0
+    valid_feed[:tasks].length.should == 4
   end
 
   it 'should include an updatedDate for unscheduled Canvas tasks' do

@@ -1,0 +1,523 @@
+{
+  "student": {
+    "identifiers": [
+      {
+        "type": "campus-uid",
+        "id": "61889",
+        "disclose": true,
+        "fromDate": "2017-02-17"
+      },
+      {
+        "type": "student-id",
+        "id": "11667051",
+        "disclose": false,
+        "fromDate": "2016-05-28"
+      },
+      {
+        "type": "ssn",
+        "id": "123-45-6789",
+        "disclose": false,
+        "fromDate": "1975-02-05"
+      }
+    ],
+    "names": [
+      {
+        "type": {
+          "code": "PRI",
+          "description": "Primary"
+        },
+        "familyName": "Bear",
+        "givenName": "Oski",
+        "middleName": "Q.",
+        "suffixName": "III",
+        "formattedName": "Oski Q. Bear III",
+        "preferred": false,
+        "disclose": false,
+        "uiControl": {
+          "code": "D",
+          "description": "Display Only"
+        },
+        "fromDate": "1975-02-05"
+      },
+      {
+        "type": {
+          "code": "PRF",
+          "description": "Preferred"
+        },
+        "familyName": "Bear",
+        "givenName": "Oski",
+        "formattedName": "Oski Bear",
+        "preferred": true,
+        "disclose": true,
+        "uiControl": {
+          "code": "U",
+          "description": "Edit - No Delete"
+        },
+        "fromDate": "1975-02-05"
+      }
+    ],
+    "gender": {
+      "genderOfRecord": {
+        "code": "M",
+        "description": "Male"
+      },
+      "discloseGenderOfRecord": true,
+      "sexAtBirth": {
+        "code": "M",
+        "description": "Male"
+      },
+      "discloseSexAtBirth": true,
+      "fromDate": "1975-02-05"
+    },
+    "affiliations": [
+      {
+        "type": {
+          "code": "UNDERGRAD",
+          "description": "Undergraduate"
+        },
+        "statusCode": "ACT",
+        "statusDescription": "Active",
+        "fromDate": "2014-05-15"
+      }
+    ],
+    "addresses": [
+      {
+        "type": {
+          "code": "MAIL",
+          "description": "Mailing"
+        },
+        "address1": "120 Sproul Hall",
+        "city": "Berkeley",
+        "stateCode": "CA",
+        "postalCode": "94720",
+        "countryCode": "USA",
+        "formattedAddress": "120 Sproul Hall\\nBerkeley, CA 94720",
+        "primary": true,
+        "disclose": false,
+        "uiControl": {
+          "code": "U",
+          "description": "Edit - No Delete"
+        },
+        "fromDate": "2014-08-18"
+      },
+      {
+        "type": {
+          "code": "HOME",
+          "description": "Home"
+        },
+        "address1": "2111 Bancroft Way #550",
+        "city": "Berkeley",
+        "stateCode": "CA",
+        "postalCode": "94720",
+        "countryCode": "USA",
+        "formattedAddress": "2111 Bancroft Way #550\\nBerkeley, CA 94720",
+        "primary": false,
+        "disclose": false,
+        "uiControl": {
+          "code": "U",
+          "description": "Edit - No Delete"
+        },
+        "fromDate": "2013-10-31"
+      }
+    ],
+    "phones": [
+      {
+        "type": {
+          "code": "LOCL",
+          "description": "Local"
+        },
+        "number": "510-555-1212",
+        "primary": true,
+        "disclose": false,
+        "uiControl": {
+          "code": "F",
+          "description": "Full Edit"
+        },
+        "fromDate": "2014-08-18"
+      },
+      {
+        "type": {
+          "code": "HOME",
+          "description": "Home"
+        },
+        "number": "510-555-9500",
+        "primary": false,
+        "disclose": false,
+        "uiControl": {
+          "code": "F",
+          "description": "Full Edit"
+        },
+        "fromDate": "2013-10-31"
+      }
+    ],
+    "emails": [
+      {
+        "type": {
+          "code": "CAMP",
+          "description": "Campus"
+        },
+        "emailAddress": "oski@berkeley.edu",
+        "primary": true,
+        "disclose": true,
+        "uiControl": {
+          "code": "DU",
+          "description": "Display Only"
+        },
+        "fromDate": "2013-10-31"
+      },
+      {
+        "type": {
+          "code": "OTHR",
+          "description": "Other"
+        },
+        "emailAddress": "oskibear@gmail.com",
+        "primary": false,
+        "disclose": false,
+        "uiControl": {
+          "code": "F",
+          "description": "Full Edit"
+        },
+        "fromDate": "2000-08-15"
+      }
+    ],
+    "urls": [
+      {
+        "type": {
+          "description": "Social"
+        },
+        "url": "https://www.facebook.com/cal.oski.bear",
+        "primary": false,
+        "disclose": true,
+        "fromDate": "2014-08-01"
+      }
+    ],
+    "photos": [
+      {
+        "type": {
+          "description": "Profile"
+        },
+        "url": "http://calspirit.berkeley.edu/oski/images/oskibio.jpg",
+        "primary": false,
+        "disclose": true,
+        "fromDate": "2014-08-01"
+      }
+    ],
+    "ethnicities": [
+      {
+        "group": {
+          "code": "101",
+          "description": "Grizzly"
+        },
+        "hispanicLatino": false
+      }
+    ],
+    "languages": [
+      {
+        "code": "LEN",
+        "name": "English",
+        "native": true,
+        "translate": false,
+        "teach": true,
+        "speakingProficiency": {
+          "description": "high"
+        },
+        "readingProficiency": {
+          "description": "high"
+        },
+        "writingProficiency": {
+          "description": "medium"
+        },
+        "evaluationDate": "2012-11-27"
+      }
+    ],
+    "usaCountry": {
+      "citizenshipStatus": {
+        "description": "Native"
+      },
+      "militaryStatus": {
+        "description": "Veteran"
+      },
+      "passport": {
+        "type": {
+          "description": "USA Passport"
+        },
+        "identifier": "496978123",
+        "status": "Active",
+        "dateIssued": "2012-09-27",
+        "issuingAuthority": "US Dept. of State",
+        "expirationDate": "2022-09-27"
+      }
+    },
+    "emergencyContacts": [
+      {
+        "name": "Ursa Bear",
+        "address": {
+          "address1": "656 H St.",
+          "city": "Arcata",
+          "stateCode": "CA",
+          "postalCode": "95521",
+          "countryCode": "USA",
+          "formattedAddress": "656 H St.\\nArcata, CA 95521"
+        },
+        "phones": {
+          "phone": {
+            "number": "707-825-3865"
+          }
+        },
+        "email": {
+          "emailAddress": "ursa-bear@redwoods.edu"
+        },
+        "relationship": {
+          "code": "SIB",
+          "description": "Sibling"
+        },
+        "preferred": true
+      }
+    ],
+    "birth": {
+      "date": "1975-02-05",
+      "locality": "Yosemite",
+      "stateCode": "CA",
+      "countryCode": "USA"
+    },
+    "confidential": false,
+    "studentPlans": [
+      {
+        "academicPlan": {
+          "plan": {
+            "code": "25430U",
+            "description": "History of Art BA"
+          },
+          "type": {
+            "code": "MAJ",
+            "description": "Major"
+          },
+          "ownedBy": [
+            {
+              "organization": {
+                "code": "HISTART",
+                "description": "History of Art"
+              },
+              "percentage": 100
+            }
+          ],
+          "academicProgram": {
+            "program": {
+              "code": "UCLS",
+              "description": "Undergrad Letters & Science"
+            },
+            "ownedBy": [
+              {
+                "organization": {
+                  "code": "CLS",
+                  "description": "College of Letters and Science"
+                },
+                "percentage": 100
+              }
+            ],
+            "academicCareer": {
+              "code": "UGRD",
+              "description": "Undergraduate"
+            }
+          }
+        },
+        "primary": true,
+        "matriculation": {
+          "term": {
+            "id": "2158",
+            "name": "2015 Fall"
+          },
+          "type": {
+            "code": "FYR",
+            "description": "First Year Student"
+          },
+          "homeLocation": {
+            "type": "county",
+            "location": "Alameda"
+          }
+        }
+      }
+    ],
+    "termsInResidence": 2,
+    "cumulativeGPA": {
+      "type": {
+        "code": "CUM",
+        "description": "Cumulative"
+      },
+      "average": 3.873
+    },
+    "cumulativeUnits": [
+      {
+        "type": {
+          "description": "Total"
+        },
+        "unitsTaken": 30,
+        "unitsPassed": 30,
+        "unitsTransferred": 5.3
+      },
+      {
+        "type": {
+          "description": "For GPA"
+        },
+        "unitsTaken": 26,
+        "unitsPassed": 26,
+        "unitsTransferred": 5.3
+      },
+      {
+        "type": {
+          "description": "Not for GPA"
+        },
+        "unitsTaken": 4,
+        "unitsPassed": 4
+      }
+    ],
+    "currentRegistration": {
+      "term": {
+        "id": 2168,
+        "name": "2016 Fall",
+        "academicYear": 2017
+      },
+      "eligibleToRegister": true,
+      "registered": true,
+      "new": false,
+      "disabled": false,
+      "athlete": false,
+      "intendsToGraduate": false,
+      "academicLevel": {
+        "type": {
+          "description": "Beginning of term"
+        },
+        "level": {
+          "code": "SO",
+          "description": "Sophomore"
+        }
+      },
+      "academicStanding": {
+        "standing": {
+          "code": "GS",
+          "description": "Good Standing"
+        },
+        "status": "GST",
+        "fromDate": "2015-08-15"
+      },
+      "termUnits": [
+        {
+          "type": {
+            "description": "Total"
+          },
+          "unitsMin": 13,
+          "unitsMax": 20.5,
+          "unitsEnrolled": 10,
+          "unitsWaitlisted": 5
+        },
+        {
+          "type": {
+            "description": "For GPA"
+          },
+          "unitsEnrolled": 6,
+          "unitsWaitlisted": 5
+        },
+        {
+          "type": {
+            "description": "Not for GPA"
+          },
+          "unitsMax": 8,
+          "unitsEnrolled": 4
+        }
+      ],
+      "specialStudyPrograms": [
+        {
+          "type": {
+            "code": "EAP",
+            "description": "Education Abroad Program"
+          },
+          "institution": {
+            "code": "UCEAP",
+            "name": "UC Education Abroad Program"
+          },
+          "country": {
+            "code": "ESP",
+            "description": "Spain"
+          },
+          "fromDate": "2016-07-25",
+          "toDate": "2016-12-20"
+        }
+      ]
+    },
+    "residency": {
+      "source": {
+        "description": "Official"
+      },
+      "fromTerm": {
+        "id": "2158",
+        "name": "2015 Fall"
+      },
+      "fromDate": "2006-05-04",
+      "official": {
+        "code": "RES",
+        "description": "Resident"
+      },
+      "financialAid": {
+        "code": "RES",
+        "description": "Resident"
+      },
+      "tuition": {
+        "code": "RES",
+        "description": "Resident"
+      },
+      "county": "Alameda"
+    },
+    "holds": [
+      {
+        "type": {
+          "code": "LF",
+          "description": "Library Fine"
+        },
+        "reason": {
+          "code": "FINAN",
+          "description": "Financial"
+        },
+        "impacts": [
+          {
+            "code": "GRADE",
+            "description": "Block viewing or printing grades"
+          },
+          {
+            "code": "IENR",
+            "description": "Block initial enrollment activity"
+          }
+        ],
+        "fromTerm": {
+          "id": "2168",
+          "name": "2016 Fall"
+        },
+        "fromDate": "2015-10-04",
+        "reference": "QL737.C27 S73 1996",
+        "amountRequired": 67.85,
+        "department": {
+          "code": "BPS",
+          "description": "Billing and Payment Services"
+        }
+      }
+    ],
+    "awardHonors": [
+      {
+        "type": {
+          "code": "DNSL",
+          "description": "Dean's List"
+        },
+        "awardDate": "2015-12-20",
+        "academicProgram": {
+          "program": {
+            "code": "UCLS",
+            "description": "Undergrad Letters & Science"
+          }
+        },
+        "term": {
+          "id": "2158",
+          "name": "2015 Fall"
+        }
+      }
+    ]
+  }
+}

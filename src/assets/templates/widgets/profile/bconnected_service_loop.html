@@ -1,0 +1,54 @@
+<div class="cc-widget-padding row">
+  <div class="medium-9 column">
+    <span class="cc-settings-service-description" data-ng-if="!api.user.profile.googleEmail || !api.user.profile.hasGoogleAccessToken">
+      <p>Connect your Google Apps for Education account in order to access your drive, mail and calendar.</p>
+      <p>Be sure you have logged out of any personal Google accounts before you perform this operation.</p>
+    </span>
+    <div data-ng-if="api.user.profile.googleEmail && api.user.profile.hasGoogleAccessToken" class="cc-text-light">
+      Connected as:
+      <span class="cc-ellipsis hide-for-medium-up" data-ng-bind="api.user.profile.googleEmail"></span>
+      <span class="cc-hide-for-small" data-ng-bind="api.user.profile.googleEmail"></span>
+    </div>
+    <div data-ng-if="api.user.profile.roles.student">
+      <input type="checkbox"
+          id="cc-settings-service-calendar-optin"
+          data-ng-change="settings.isCalendarOptedIn ? api.user.calendarOptIn() : api.user.calendarOptOut()"
+          data-ng-disabled="!api.user.profile.hasGoogleAccessToken"
+          data-ng-model="settings.isCalendarOptedIn"
+        />
+      <label data-ng-class="{'cc-text-light':(!api.user.profile.hasGoogleAccessToken)}" for="cc-settings-service-calendar-optin">Add my class schedule to my bConnected calendar. (Changes take effect within a day)</label>
+    </div>
+  </div>
+
+  <div class="medium-3 column" data-ng-if="loopname === 'connected'">
+    <div class="cc-text-center">
+      <button
+        data-ng-click="showValidation = true"
+        data-ng-disabled="api.user.profile['actingAsUid']"
+        data-ng-show="!showValidation"
+        class="cc-button">
+        Disconnect <span class="cc-visuallyhidden">Google access</span>
+      </button>
+    </div>
+    <div data-ng-show="showValidation">
+      <strong class="cc-settings-service-sure-question">Are you sure?</strong>
+      <div class="cc-settings-service-sure-buttons">
+        <button class="cc-button cc-button-blue" data-ng-click="api.user.removeOAuth(service)">Yes</button>
+        <button class="cc-button" data-ng-click="showValidation = false">No</button>
+      </div>
+      <p class="cc-settings-service-sure-disclaimer" data-ng-if="api.user.profile.roles.student && settings.isCalendarOptedIn">
+        Disconnecting bConnected will remove your class schedule from your calendar.
+      </p>
+    </div>
+  </div>
+  <div class="medium-3 column" data-ng-if="loopname === 'disconnected'">
+    <div class="cc-text-center">
+      <button
+        data-ng-disabled="api.user.profile['actingAsUid']"
+        class="cc-button cc-button-blue" data-ng-click="api.user.enableOAuth(service)">
+        Connect <span class="cc-visuallyhidden">Google Access</span>
+      </button>
+    </div>
+  </div>
+</div>
+

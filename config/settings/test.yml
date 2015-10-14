@@ -25,6 +25,8 @@ cal1card_proxy:
   fake: true
 calmail_proxy:
   fake: true
+calnet_crosswalk_proxy:
+  fake: true
 
 # To avoid "Illegal key size" errors on systems which we can't modify (e.g., Travis),
 # lower the security of the encryption algorithm.
@@ -51,6 +53,9 @@ features:
   cal1card: true
   audio: true
   advising: true
+  cs_fin_aid: true
+  cs_profile: true
+  cs_sir: true
   webcast_sign_up_on_calcentral: true
   service_alerts_rss: true
 

@@ -1,0 +1,48 @@
+<div class="cc-page-widget-profile-section-content-item-editing">
+  <div class="cc-page-widget-profile-section-content-error cc-text-red" data-ng-if="errorMessage">
+    <i class="cc-icon-red fa fa-exclamation-circle"></i>
+    <span data-ng-bind="errorMessage"></span>
+  </div>
+  <div data-ng-if="!isDeleting">
+    <form data-ng-submit="save(currentObject.data)" name="cc_page_widget_profile_email">
+      <div data-ng-if="currentObject.isAdding">
+        <div>
+          <label for="cc-page-widget-profile-email-type">
+            Email Type <span class="cc-text-light">(Required)</span>
+          </label>
+        </div>
+        <div class="cc-select">
+          <select data-ng-options="type.fieldvalue as type.xlatlongname for type in types" data-ng-model="currentObject.data.type.code"  id="cc-page-widget-profile-email-type" required aria-required="true" />
+        </div>
+      </div>
+      <div data-ng-if="!currentObject.isAdding">
+        <strong data-ng-bind-template="{{item.type.description}} Email"></strong>
+      </div>
+      <div>
+        <label for="cc-page-widget-profile-email-address">
+          Email Address <span class="cc-text-light">(Required)</span>
+        </label>
+      </div>
+      <div>
+        <input type="text" id="cc-page-widget-profile-email-address" data-ng-model="currentObject.data.emailAddress" required aria-required="true" />
+      </div>
+      <div>
+        <input type="checkbox" id="cc-page-widget-profile-email-preferred" data-ng-model="currentObject.data.primary" />
+        <label for="cc-page-widget-profile-email-preferred">Preferred email address</label>
+      </div>
+      <div>
+        <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="cc_page_widget_profile_email.$invalid || isSaving">
+          <span data-ng-if="!isSaving">Save</span>
+          <span data-ng-if="isSaving">Updating...</span>
+        </button>
+        <button class="cc-button" data-ng-click="closeEditor()" data-ng-disabled="isSaving">Cancel</button>
+      </div>
+    </form>
+    <form data-ng-submit="delete(currentObject.data)" data-ng-if="!currentObject.isAdding && item.uiControl.code !== 'U'">
+      (<button class="cc-button-link" type="submit" data-ng-disabled="isDeleting">Delete email</button>)
+    </form>
+  </div>
+  <div data-ng-if="isDeleting">
+    <i class="fa fa-spinner fa-spin"></i> Deleting...
+  </div>
+</div>
