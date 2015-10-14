@@ -78,7 +78,7 @@ angular.module('calcentral.directives').directive('a', function() {
       var observe = function(value) {
         // Check whether the element actually has an href
         // and whether we disabled the outbound directive
-        if (value && !attr.ccOutboundDisable) {
+        if (value && scope.$eval(attr.ccOutboundEnabled) !== false) {
           updateAnchorTag(value);
         }
       };

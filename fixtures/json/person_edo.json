@@ -1,0 +1,258 @@
+{
+  "person": {
+    "identifiers": [
+      {
+        "type": "CalNet UID",
+        "id": "61889",
+        "disclose": true,
+        "fromDate": "2017-02-17"
+      },
+      {
+        "type": "Student ID",
+        "id": "11667051",
+        "disclose": false,
+        "fromDate": "2016-05-28"
+      },
+      {
+        "type": "SSN",
+        "id": "123-45-6789",
+        "disclose": false,
+        "fromDate": "1975-02-05"
+      }
+    ],
+    "names": [
+      {
+        "type": {
+          "code": "PRI",
+          "description": "Primary"
+        },
+        "familyName": "Bear",
+        "givenName": "Oski",
+        "middleName": "Q.",
+        "suffixName": "III",
+        "formattedName": "Oski Q. Bear III",
+        "preferred": false,
+        "disclose": false,
+        "fromDate": "1975-02-05"
+      },
+      {
+        "type": {
+          "code": "PRF",
+          "description": "Preferred"
+        },
+        "familyName": "Bear",
+        "givenName": "Oski",
+        "formattedName": "Oski Bear",
+        "preferred": true,
+        "disclose": true,
+        "fromDate": "1975-02-05"
+      }
+    ],
+    "gender": {
+      "sexAtBirth": {
+        "code": "M",
+        "description": "Male"
+      },
+      "disclose": true
+    },
+    "affiliations": [
+      {
+        "type": {
+          "code": "UNDERGRAD",
+          "description": "Undergraduate"
+        },
+        "statusCode": "ACT",
+        "statusDescription": "Active",
+        "fromDate": "2014-05-15"
+      }
+    ],
+    "addresses": [
+      {
+        "type": {
+          "code": "MAIL",
+          "description": "Mailing"
+        },
+        "street1": "120 Sproul Hall",
+        "locality": "Berkeley",
+        "region": "CA",
+        "postalCode": "94720",
+        "country": "USA",
+        "formattedAddress": "120 Sproul Hall\\nBerkeley, CA 94720",
+        "primary": true,
+        "disclose": false,
+        "fromDate": "2014-08-18"
+      },
+      {
+        "type": {
+          "code": "HOME",
+          "description": "Home"
+        },
+        "street1": "2111 Bancroft Way #550",
+        "locality": "Berkeley",
+        "region": "CA",
+        "postalCode": "94720",
+        "country": "USA",
+        "formattedAddress": "2111 Bancroft Way #550\\nBerkeley, CA 94720",
+        "primary": false,
+        "disclose": false,
+        "fromDate": "2013-10-31"
+      }
+    ],
+    "phones": [
+      {
+        "type": {
+          "code": "LOCL",
+          "description": "Local"
+        },
+        "number": "510-555-1212",
+        "primary": true,
+        "disclose": false,
+        "fromDate": "2014-08-18"
+      },
+      {
+        "type": {
+          "code": "HOME",
+          "description": "Home"
+        },
+        "number": "510-555-9500",
+        "primary": false,
+        "disclose": false,
+        "fromDate": "2013-10-31"
+      }
+    ],
+    "emails": [
+      {
+        "type": {
+          "code": "CAMP",
+          "description": "Campus"
+        },
+        "emailAddress": "oski@berkeley.edu",
+        "primary": true,
+        "disclose": true,
+        "fromDate": "2013-10-31"
+      },
+      {
+        "type": {
+          "code": "OTHR",
+          "description": "Other"
+        },
+        "emailAddress": "oskibear@gmail.com",
+        "primary": false,
+        "disclose": false,
+        "fromDate": "2000-08-15"
+      }
+    ],
+    "urls": [
+      {
+        "type": {
+          "description": "Social"
+        },
+        "url": "https://www.facebook.com/cal.oski.bear",
+        "primary": false,
+        "disclose": true,
+        "fromDate": "2014-08-01"
+      }
+    ],
+    "photos": [
+      {
+        "type": {
+          "description": "Profile"
+        },
+        "url": "http://calspirit.berkeley.edu/oski/images/oskibio.jpg",
+        "primary": false,
+        "disclose": true,
+        "fromDate": "2014-08-01"
+      }
+    ],
+    "ethnicities": [
+      {
+        "code": "101",
+        "group": "Grizzly",
+        "hispLatino": false
+      }
+    ],
+    "languages": [
+      {
+        "code": "LEN",
+        "name": "English",
+        "native": true,
+        "translate": false,
+        "teach": true,
+        "speakingProficiency": {
+          "description": "high"
+        },
+        "readingProficiency": {
+          "description": "high"
+        },
+        "writingProficiency": {
+          "description": "medium"
+        },
+        "evaluationDate": "2012-11-27"
+      }
+    ],
+    "usaCountry": {
+      "citizenshipStatus": {
+        "description": "Native"
+      },
+      "militaryStatus": {
+        "description": "Veteran"
+      },
+      "passport": {
+        "type": {
+          "description": "USA Passport"
+        },
+        "identifier": "496978123",
+        "status": "Active",
+        "dateIssued": "2012-09-27",
+        "issuingAuthority": "US Dept. of State",
+        "expirationDate": "2022-09-27"
+      }
+    },
+    "emergencyContacts": [
+      {
+        "name": {
+          "type": {
+            "description": "Emergency"
+          },
+          "familyName": "Bear",
+          "givenName": "Ursa",
+          "formattedName": "Ursa Bear"
+        },
+        "address": {
+          "type": {
+            "description": "Emergency"
+          },
+          "street1": "656 H St.",
+          "locality": "Arcata",
+          "region": "CA",
+          "postalCode": "95521",
+          "country": "USA",
+          "formattedAddress": "656 H St.\\nArcata, CA 95521"
+        },
+        "phone": {
+          "type": {
+            "description": "Emergency"
+          },
+          "number": "707-825-3865"
+        },
+        "email": {
+          "type": {
+            "description": "Emergency"
+          },
+          "emailAddress": "ursa-bear@redwoods.edu"
+        },
+        "relationship": {
+          "code": "SIB",
+          "description": "Sibling"
+        },
+        "preferred": true
+      }
+    ],
+    "birth": {
+      "date": "1975-02-05",
+      "locality": "Yosemite",
+      "region": "California",
+      "country": "USA"
+    }
+  }
+}

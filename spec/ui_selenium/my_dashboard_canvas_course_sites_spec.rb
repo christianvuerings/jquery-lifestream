@@ -35,7 +35,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
       before(:all) do
         # Admin creates course site in the current term
         @splash_page = CalCentralPages::SplashPage.new @driver
-        @splash_page.load_page @driver
+        @splash_page.load_page
         @splash_page.click_sign_in_button
         @cal_net = CalNetAuthPage.new @driver
         @cal_net.login(UserUtils.qa_username, UserUtils.qa_password)
@@ -119,7 +119,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
 
         # Recent Activity - announcement, discussion
         it 'shows the course in the Recent Activity drop-down' do
-          @recent_activity_card.wait_for_course_activity(@driver, site_name)
+          @recent_activity_card.wait_for_course_activity site_name
         end
         it 'show a combined Recent Activity notification for similar activity on the same course site on the same date' do
           @recent_activity_card.wait_until(timeout) { @recent_activity_card.activity_item_summary_elements[0].text == '3 Assignments' }
@@ -129,10 +129,10 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@recent_activity_card.activity_item_date_elements[0].text).to eql("#{Date.today.strftime("%b %-d")}")
         end
         it 'show individual Recent Activity notifications if a combined one is expanded' do
-          expect(@recent_activity_card.sub_activity_summaries(@driver, 1)).to eql(@assignment_summaries)
+          expect(@recent_activity_card.sub_activity_summaries 1).to eql(@assignment_summaries)
         end
         it 'show overdue, current, and future assignment activity detail' do
-          expect(@recent_activity_card.sub_activity_descriptions(@driver, 1).sort).to eql(@assignment_descriptions.sort)
+          expect(@recent_activity_card.sub_activity_descriptions(1).sort).to eql(@assignment_descriptions.sort)
         end
         it 'shows an announcement title on a Recent Activity item' do
           expect(@recent_activity_card.activity_item_summary_elements[1].text).to eql(@announcement_title)
@@ -184,7 +184,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
       context 'viewed by a student' do
 
         before(:all) do
-          @splash_page.load_page @driver
+          @splash_page.load_page
           @splash_page.click_sign_in_button
           @cal_net.login("test-#{student['uid']}", UserUtils.test_password)
         end
@@ -201,12 +201,12 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           WebDriverUtils.verify_external_link(@driver, @my_classes_card.other_course_site_link_elements[0], site_descrip)
         end
         it 'shows the course in the Recent Activity drop-down' do
-          @recent_activity_card.wait_for_course_activity(@driver, site_name)
+          @recent_activity_card.wait_for_course_activity site_name
         end
 
         # Recent Activity - assignments, announcement, discussion
         it 'shows the course in the Recent Activity drop-down' do
-          @recent_activity_card.wait_for_course_activity(@driver, site_name)
+          @recent_activity_card.wait_for_course_activity site_name
         end
         it 'show a combined Recent Activity notification for similar activity on the same course site on the same date' do
           @recent_activity_card.wait_until(timeout) { @recent_activity_card.activity_item_summary_elements[0].text == '3 Assignments' }
@@ -216,10 +216,10 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@recent_activity_card.activity_item_date_elements[0].text).to eql("#{Date.today.strftime("%b %-d")}")
         end
         it 'show individual Recent Activity notifications if a combined one is expanded' do
-          expect(@recent_activity_card.sub_activity_summaries(@driver, 1)).to eql(@assignment_summaries)
+          expect(@recent_activity_card.sub_activity_summaries 1).to eql(@assignment_summaries)
         end
         it 'show overdue, current, and future assignment activity detail' do
-          expect(@recent_activity_card.sub_activity_descriptions(@driver, 1).sort).to eql(@assignment_descriptions.sort)
+          expect(@recent_activity_card.sub_activity_descriptions(1).sort).to eql(@assignment_descriptions.sort)
         end
         it 'shows an announcement title on a Recent Activity item' do
           expect(@recent_activity_card.activity_item_summary_elements[1].text).to eql(@announcement_title)
@@ -265,7 +265,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@to_do_card.overdue_task_one_time).to eql('11 PM')
         end
         it 'shows a link to an overdue Canvas assignment on a To Do task' do
-          @to_do_card.toggle_overdue_task_one_detail
+          WebDriverUtils.wait_for_page_and_click @to_do_card.overdue_task_one_toggle_element
           @to_do_card.overdue_task_one_bcourses_link_element.when_visible timeout
           expect(@to_do_card.overdue_task_one_bcourses_link_element.attribute('href')).to eql(@past_assignment_url)
         end
@@ -281,7 +281,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@to_do_card.today_task_one_time).to eql('11 PM')
         end
         it 'shows a link to a currently due Canvas assignment on a To Do task' do
-          @to_do_card.toggle_today_task_one_detail
+          WebDriverUtils.wait_for_page_and_click @to_do_card.today_task_one_toggle_element
           @to_do_card.today_task_one_bcourses_link_element.when_visible timeout
           expect(@to_do_card.today_task_one_bcourses_link_element.attribute('href')).to eql(@current_assignment_url)
         end
@@ -297,7 +297,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@to_do_card.future_task_one_time).to eql('11 PM')
         end
         it 'shows a link to a future due Canvas assignment on a To Do task' do
-          @to_do_card.toggle_future_task_one_detail
+          WebDriverUtils.wait_for_page_and_click @to_do_card.future_task_one_toggle_element
           @to_do_card.future_task_one_bcourses_link_element.when_visible timeout
           expect(@to_do_card.future_task_one_bcourses_link_element.attribute('href')).to eql(@future_assignment_url)
         end

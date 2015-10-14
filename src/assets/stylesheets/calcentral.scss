@@ -68,6 +68,7 @@
 @import "oec";
 
 // Dashboard
+@import "sir_item";
 @import "classes";
 @import "mycalendar";
 @import "activities";
@@ -95,6 +96,15 @@
 // My Finances
 @import "cal1card";
 @import "myfinances";
+
+// Finaid
+@import "finaid_coa";
+@import "finaid_summary";
+@import "finaid_profile";
+@import "finaid_permissions";
+
+// Profile
+@import "profile_page";
 
 // Settings
 @import "settings";

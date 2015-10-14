@@ -11,7 +11,7 @@ module CanvasCsv
 
     # Provides term enrollments CSV file path for given date and term_id
     def enrollment_csv_filepath(date, term_id)
-      "#{@export_dir}/canvas-#{date.to_date.strftime('%F')}-#{file_safe(term_id)}-term-enrollments-export.csv"
+      "#{@export_dir}/canvas-#{date.in_time_zone.to_date.strftime('%F')}-#{file_safe(term_id)}-term-enrollments-export.csv"
     end
 
     # Returns hash containing generate CSV file paths intended for each term

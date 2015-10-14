@@ -22,7 +22,11 @@ module MyTasks
         Canvas::Proxy::APP_NAME => {access_granted: Canvas::Proxy.access_granted?(@uid),
                                 source: MyTasks::CanvasTasks.new(@uid, @starting_date)},
         GoogleApps::Proxy::APP_ID => {access_granted: GoogleApps::Proxy.access_granted?(@uid),
-                                source: MyTasks::GoogleTasks.new(@uid, @starting_date)}
+                                source: MyTasks::GoogleTasks.new(@uid, @starting_date)},
+        CampusSolutions::Proxy::APP_ID => {access_granted: true,
+                                source: MyTasks::SisTasks.new(@uid, @starting_date)},
+        Slate::Checklist::APP_ID => {access_granted: true,
+                                source: MyTasks::SlateTasks.new(@uid, @starting_date)}
       }
       @enabled_sources.select!{|k,v| v[:access_granted] == true}
     end

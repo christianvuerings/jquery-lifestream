@@ -16,15 +16,14 @@ require_relative '../util/user_utils'
     button(:submit, :value => 'Sign In')
     link(:logout_link, :link => 'Log Out')
 
-    def load_page(driver)
-      driver.get(WebDriverUtils.cal_net_url)
+    def load_page
+      navigate_to WebDriverUtils.cal_net_url
       page_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
     end
 
     def login(username, password)
-      self.username_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      self.username = username
-      self.password = password
+      WebDriverUtils.wait_for_element_and_type(username_element, username)
+      WebDriverUtils.wait_for_element_and_type(password_element, password)
       submit
     end
 

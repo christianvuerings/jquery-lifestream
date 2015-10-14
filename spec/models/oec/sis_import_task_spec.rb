@@ -1,6 +1,6 @@
 describe Oec::SisImportTask do
   let(:term_code) { '2015-B' }
-  let(:task) { Oec::SisImportTask.new(term_code: term_code, local_write: true) }
+  let(:task) { Oec::SisImportTask.new(term_code: term_code, local_write: local_write) }
 
   let(:fake_remote_drive) { double() }
   let(:course_overrides_row) { Oec::Courses.new.headers.join(',') }
@@ -17,6 +17,23 @@ describe Oec::SisImportTask do
     allow(fake_remote_drive).to receive(:export_csv).with(instructor_overrides).and_return instructor_overrides_row
 
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
+  end
+
+  shared_context 'local-write mode and no follow-up diff' do
+    let(:local_write) { true }
+    before do
+      expect(Oec::ReportDiffTask).not_to receive(:new)
+    end
+  end
+
+  shared_context 'follow-up diff and no local-write mode' do
+    let(:local_write) { false }
+    before do
+      expect(Oec::ReportDiffTask).to receive(:new).and_call_original
+      expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
+        .with(kind_of(Pathname), report_diff_logfile, 'text/plain', logs_today_folder, anything)
+        .and_return mock_google_drive_item(report_diff_logfile)
+    end
   end
 
   describe 'CSV export' do
@@ -71,6 +88,8 @@ describe Oec::SisImportTask do
     end
 
     shared_examples 'expected CSV structure' do
+      include_context 'local-write mode and no follow-up diff'
+
       it { expect(course_id_column).to contain_exactly(*expected_ids) }
       it 'should include dept_form only for non-crosslisted courses' do
         subject.each do |row|
@@ -156,14 +175,8 @@ describe Oec::SisImportTask do
             csv << "\n,,,,,FRENCH,215,,,,,,,Y,01-20-2015,05-16-2015"
           end
 
-          it 'appends unmatched row with course code matching worksheet' do
-            expect(subject.last['DEPT_NAME']).to eq 'POL SCI'
-            expect(subject.last['CATALOG_ID']).to eq '215'
-            expect(subject.last['MODULAR_COURSE']).to eq 'Y'
-            expect(subject.last['COURSE_ID']).to be_blank
-          end
-
-          it 'does not append unmatched row with course code not matching worksheet' do
+          it 'ignores unmatched rows' do
+            expect(subject.find { |row| row['DEPT_NAME'] == 'POL SCI' && row['CATALOG_ID'] == '215' }).to be_nil
             expect(subject.find { |row| row['DEPT_NAME'] == 'FRENCH' }).to be_nil
           end
         end
@@ -241,9 +254,12 @@ describe Oec::SisImportTask do
     describe 'expected network operations' do
       subject { Oec::SisImportTask.new(term_code: term_code) }
 
+      include_context 'follow-up diff and no local-write mode'
+
       let(:today) { '2015-04-01' }
       let(:now) { '09:22:22' }
-      let(:logfile) { "#{now} sis import task.log" }
+      let(:sis_import_logfile) { "#{now} sis import task.log" }
+      let(:report_diff_logfile) { "#{now} report diff task.log" }
       let(:dept_name) { 'MATH' }
       let(:sheet_name) { 'Mathematics' }
 
@@ -263,13 +279,14 @@ describe Oec::SisImportTask do
           .and_return(imports_today_folder)
         expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
           .with(today, anything, anything)
+          .at_least(1).times
           .and_return(logs_today_folder)
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
           .with(kind_of(Oec::Worksheet), sheet_name, (Oec::Worksheet), imports_today_folder, anything)
           .and_return mock_google_drive_item(sheet_name)
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
-          .with(kind_of(Pathname), logfile, 'text/plain', logs_today_folder, anything)
-          .and_return mock_google_drive_item(logfile)
+          .with(kind_of(Pathname), sis_import_logfile, 'text/plain', logs_today_folder, anything)
+          .and_return mock_google_drive_item(sis_import_logfile)
         subject.run
       end
     end
@@ -281,6 +298,8 @@ describe Oec::SisImportTask do
       task.set_cross_listed_values([ course ], course_codes)
       course['CROSS_LISTED_NAME']
     end
+
+    include_context 'local-write mode and no follow-up diff'
 
     context 'departments sharing catalog id and section code' do
       let(:course_codes) do
@@ -349,14 +368,16 @@ describe Oec::SisImportTask do
     let(:null_sheets_manager) { double.as_null_object }
     before(:each) { allow(Oec::RemoteDrive).to receive(:new).and_return null_sheets_manager }
 
+    include_context 'local-write mode and no follow-up diff'
+
     it 'filters by course-code department names' do
       expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_name: %w(BIOLOGY MCELLBI)).and_return({})
-      Oec::SisImportTask.new(term_code: term_code, dept_names: 'BIOLOGY MCELLBI').run
+      Oec::SisImportTask.new(term_code: term_code, dept_names: 'BIOLOGY MCELLBI', local_write: true).run
     end
 
     it 'filters by department codes' do
       expect(Oec::CourseCode).to receive(:by_dept_code).with(dept_code: %w(IBIBI IMMCB)).and_return({})
-      Oec::SisImportTask.new(term_code: term_code, dept_codes: 'IBIBI IMMCB').run
+      Oec::SisImportTask.new(term_code: term_code, dept_codes: 'IBIBI IMMCB', local_write: true).run
     end
   end
 

@@ -5,7 +5,7 @@ var angular = require('angular');
 /**
  * Tasks controller
  */
-angular.module('calcentral.controllers').controller('TasksController', function(apiService, tasksFactory, $filter, $scope) {
+angular.module('calcentral.controllers').controller('TasksController', function(apiService, tasksFactory, $http, $interval, $filter, $scope) {
   // Initial mode for Tasks view
   $scope.currentTaskMode = 'scheduled';
   $scope.taskModes = ['scheduled', 'unscheduled', 'completed'];

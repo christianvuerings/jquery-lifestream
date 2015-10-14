@@ -41,8 +41,8 @@ describe 'My Academics Status and Blocks', :testui => true do
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
-            splash_page.load_page(driver)
-            splash_page.basic_auth(driver, uid)
+            splash_page.load_page
+            splash_page.basic_auth uid
             status_api_page = ApiMyStatusPage.new(driver)
             status_api_page.get_json(driver)
             academics_api_page = ApiMyAcademicsPage.new(driver)
@@ -50,7 +50,7 @@ describe 'My Academics Status and Blocks', :testui => true do
             badges_api_page = ApiMyBadgesPage.new(driver)
             badges_api_page.get_json(driver)
             my_academics_page = CalCentralPages::MyAcademicsStatusAndBlocksCard.new(driver)
-            my_academics_page.load_page(driver)
+            my_academics_page.load_page
 
             # STATUS POPOVER
 
@@ -315,7 +315,7 @@ describe 'My Academics Status and Blocks', :testui => true do
               dashboard_page = CalCentralPages::MyDashboardPage.new(driver)
 
               if has_reg_alert
-                dashboard_page.load_page(driver)
+                dashboard_page.load_page
                 dashboard_page.wait_for_status_popover
                 dashboard_page.open_status_popover
                 dashboard_page.click_reg_status_alert
@@ -328,7 +328,7 @@ describe 'My Academics Status and Blocks', :testui => true do
               end
 
               if has_block_alert
-                dashboard_page.load_page(driver)
+                dashboard_page.load_page
                 dashboard_page.wait_for_status_popover
                 dashboard_page.open_status_popover
                 dashboard_page.click_block_status_alert

@@ -40,8 +40,8 @@ describe 'My Academics L&S Advising card', :testui => true do
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
-            splash_page.load_page(driver)
-            splash_page.basic_auth(driver, uid)
+            splash_page.load_page
+            splash_page.basic_auth uid
             status_api = ApiMyStatusPage.new(driver)
             status_api.get_json(driver)
             academics_api = ApiMyAcademicsPage.new(driver)
@@ -54,7 +54,7 @@ describe 'My Academics L&S Advising card', :testui => true do
                 no_data = true
               else
                 my_academics = CalCentralPages::MyAcademicsPage::MyAcademicsAdvisingCard.new(driver)
-                my_academics.load_page(driver)
+                my_academics.load_page
                 my_academics.page_heading_element.when_visible(WebDriverUtils.academics_timeout)
                 has_advising_card = my_academics.advising_card_heading?
                 if academics_api.colleges.include?('College of Letters & Science')

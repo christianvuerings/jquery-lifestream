@@ -15,9 +15,9 @@ module CalCentralPages
     h3(:academic_heading, :xpath => '//h3[text()="Academic"]')
     h3(:administrative_heading, :xpath => '//h3[text()="Administrative"]')
 
-    def load_page(driver)
+    def load_page
       logger.info('Loading the My Campus page')
-      driver.get(WebDriverUtils.base_url + '/campus')
+      navigate_to "#{WebDriverUtils.base_url}/campus"
     end
 
   end

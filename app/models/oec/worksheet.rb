@@ -2,7 +2,7 @@ module Oec
   class Worksheet
     include Enumerable
 
-    DEFAULT_EXPORT_PATH = Rails.root.join('tmp', 'oec')
+    DEFAULT_EXPORT_PATH = Pathname.new Settings.oec.local_write_directory
     WORKSHEET_DATE_FORMAT = '%m-%d-%Y'
 
     attr_accessor :export_directory

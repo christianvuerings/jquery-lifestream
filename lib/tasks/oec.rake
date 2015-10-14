@@ -14,20 +14,14 @@ namespace :oec do
     term_code = ENV['term_code']
     raise ArgumentError, 'term_code required' unless term_code
     date_time = DateTime.now
-    [Oec::SisImportTask, Oec::ReportDiffTask].each do |klass|
-      success = klass.new(
-        term_code: term_code,
-        date_time: date_time,
-        local_write: ENV['local_write'].present?,
-        import_all: ENV['import_all'].present?,
-        dept_names: ENV['dept_names'],
-        dept_codes: ENV['dept_codes']
-      ).run
-      unless success
-        Rails.logger.error "Abort due to fatal error in #{klass}. Any remaining tasks will not run."
-        break
-      end
-    end
+    Oec::SisImportTask.new(
+      term_code: term_code,
+      date_time: date_time,
+      local_write: ENV['local_write'].present?,
+      import_all: ENV['import_all'].present?,
+      dept_names: ENV['dept_names'],
+      dept_codes: ENV['dept_codes']
+    ).run
   end
 
   desc 'Generate SIS data sheets, one per dept_code, to be shared with department admins'

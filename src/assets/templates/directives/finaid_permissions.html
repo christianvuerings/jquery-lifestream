@@ -1,0 +1,17 @@
+<div class="medium-8 medium-centered columns cc-column-last cc-clearfix-container">
+  <div class="cc-widget cc-widget-finaid-permissions">
+    <div class="cc-widget-title">
+      <h2 data-ng-bind="title"></h2>
+    </div>
+    <div class="cc-widget-text">
+      <h3 data-ng-bind="header" data-ng-if="header"></h3>
+      <div class="cc-widget-finaid-permissions-text" data-ng-bind="text" data-ng-if="text"></div>
+      <hr>
+      <div class="cc-text-center">
+        <button class="cc-button" data-ng-if="buttonTextDontApprove" data-ng-bind="buttonTextDontApprove" data-ng-click="buttonActionDontApprove()"></button>
+        <button class="cc-button cc-button-blue" data-ng-if="buttonTextApprove" data-ng-bind="buttonTextApprove" data-ng-click="buttonActionApprove()"></button>
+        <a class="cc-button cc-button-blue" data-ng-if="buttonGoBack" href="/finances">Go Back to My Finances</a>
+      </div>
+    </div>
+  </div>
+</div>

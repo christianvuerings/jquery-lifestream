@@ -1,0 +1,7827 @@
+{
+  "statusCode": 200,
+  "feed": {
+    "states": [
+      {
+        "country": "AUS",
+        "state": "QLD",
+        "descr": "Queensland"
+      },
+      {
+        "country": "AUS",
+        "state": "SA",
+        "descr": "South Australia"
+      },
+      {
+        "country": "AUS",
+        "state": "TAS",
+        "descr": "Tasmania"
+      },
+      {
+        "country": "AUS",
+        "state": "VIC",
+        "descr": "Victoria"
+      },
+      {
+        "country": "AUS",
+        "state": "WA",
+        "descr": "Western Australia"
+      },
+      {
+        "country": "BEL",
+        "state": "AN",
+        "descr": "Antwerpen"
+      },
+      {
+        "country": "BEL",
+        "state": "BC",
+        "descr": "Brussels-Capital Region"
+      },
+      {
+        "country": "BEL",
+        "state": "HE",
+        "descr": "Henegouwen"
+      },
+      {
+        "country": "BEL",
+        "state": "LI",
+        "descr": "Limburg"
+      },
+      {
+        "country": "BEL",
+        "state": "LU",
+        "descr": "Luik"
+      },
+      {
+        "country": "BEL",
+        "state": "LX",
+        "descr": "Luxemburg"
+      },
+      {
+        "country": "BEL",
+        "state": "NA",
+        "descr": "Namen"
+      },
+      {
+        "country": "BEL",
+        "state": "OV",
+        "descr": "Oost Vlaanderen"
+      },
+      {
+        "country": "BEL",
+        "state": "VB",
+        "descr": "Vlaams Brabant"
+      },
+      {
+        "country": "BEL",
+        "state": "WB",
+        "descr": "Waals Brabant"
+      },
+      {
+        "country": "BEL",
+        "state": "WV",
+        "descr": "West Vlaanderen"
+      },
+      {
+        "country": "BOL",
+        "state": "BE",
+        "descr": "Beni"
+      },
+      {
+        "country": "BOL",
+        "state": "CH",
+        "descr": "Chuquisaca"
+      },
+      {
+        "country": "BOL",
+        "state": "CO",
+        "descr": "Cochabamba"
+      },
+      {
+        "country": "BOL",
+        "state": "LP",
+        "descr": "La Paz"
+      },
+      {
+        "country": "BOL",
+        "state": "OR",
+        "descr": "Oruro"
+      },
+      {
+        "country": "BOL",
+        "state": "PA",
+        "descr": "Pando"
+      },
+      {
+        "country": "BOL",
+        "state": "PO",
+        "descr": "Potosi"
+      },
+      {
+        "country": "BOL",
+        "state": "SC",
+        "descr": "Santa Cruz"
+      },
+      {
+        "country": "BOL",
+        "state": "TA",
+        "descr": "Tarija"
+      },
+      {
+        "country": "BRA",
+        "state": "AC",
+        "descr": "Acre"
+      },
+      {
+        "country": "BRA",
+        "state": "AL",
+        "descr": "Alagoas"
+      },
+      {
+        "country": "BRA",
+        "state": "AM",
+        "descr": "Amazonas"
+      },
+      {
+        "country": "BRA",
+        "state": "AP",
+        "descr": "Amapa"
+      },
+      {
+        "country": "BRA",
+        "state": "BA",
+        "descr": "Bahia"
+      },
+      {
+        "country": "BRA",
+        "state": "CE",
+        "descr": "Ceara"
+      },
+      {
+        "country": "BRA",
+        "state": "DF",
+        "descr": "Distrito Federal"
+      },
+      {
+        "country": "BRA",
+        "state": "ES",
+        "descr": "Espirito Santo"
+      },
+      {
+        "country": "BRA",
+        "state": "FN",
+        "descr": "Fernando de Noronha"
+      },
+      {
+        "country": "BRA",
+        "state": "GO",
+        "descr": "Goias"
+      },
+      {
+        "country": "BRA",
+        "state": "MA",
+        "descr": "Maranhao"
+      },
+      {
+        "country": "BRA",
+        "state": "MG",
+        "descr": "Minas Gerais"
+      },
+      {
+        "country": "BRA",
+        "state": "MS",
+        "descr": "Mato Grosso do Sul"
+      },
+      {
+        "country": "BRA",
+        "state": "MT",
+        "descr": "Mato Grosso"
+      },
+      {
+        "country": "BRA",
+        "state": "PA",
+        "descr": "Para"
+      },
+      {
+        "country": "BRA",
+        "state": "PB",
+        "descr": "Paraiba"
+      },
+      {
+        "country": "BRA",
+        "state": "PE",
+        "descr": "Pernambuco"
+      },
+      {
+        "country": "BRA",
+        "state": "PI",
+        "descr": "Piaui"
+      },
+      {
+        "country": "BRA",
+        "state": "PR",
+        "descr": "Parana"
+      },
+      {
+        "country": "BRA",
+        "state": "RJ",
+        "descr": "Rio do Janeiro"
+      },
+      {
+        "country": "BRA",
+        "state": "RN",
+        "descr": "Rio Grande Do Norte"
+      },
+      {
+        "country": "BRA",
+        "state": "RO",
+        "descr": "Rondonia"
+      },
+      {
+        "country": "BRA",
+        "state": "RR",
+        "descr": "Roraima"
+      },
+      {
+        "country": "BRA",
+        "state": "RS",
+        "descr": "Rio Grande Do Sul"
+      },
+      {
+        "country": "BRA",
+        "state": "SC",
+        "descr": "Santa Catarina"
+      },
+      {
+        "country": "BRA",
+        "state": "SE",
+        "descr": "Sergipe"
+      },
+      {
+        "country": "BRA",
+        "state": "SP",
+        "descr": "Sao Paulo"
+      },
+      {
+        "country": "BRA",
+        "state": "TO",
+        "descr": "Tocantins"
+      },
+      {
+        "country": "CAN",
+        "state": "AB",
+        "descr": "Alberta"
+      },
+      {
+        "country": "CAN",
+        "state": "BC",
+        "descr": "British Columbia"
+      },
+      {
+        "country": "CAN",
+        "state": "MB",
+        "descr": "Manitoba"
+      },
+      {
+        "country": "CAN",
+        "state": "NB",
+        "descr": "New Brunswick"
+      },
+      {
+        "country": "CAN",
+        "state": "NF",
+        "descr": "Newfoundland (NF)"
+      },
+      {
+        "country": "CAN",
+        "state": "NL",
+        "descr": "Newfoundland (NL)"
+      },
+      {
+        "country": "CAN",
+        "state": "NN",
+        "descr": "Nunavut (NN)"
+      },
+      {
+        "country": "CAN",
+        "state": "NS",
+        "descr": "Nova Scotia"
+      },
+      {
+        "country": "CAN",
+        "state": "NT",
+        "descr": "Northwest Territories"
+      },
+      {
+        "country": "CAN",
+        "state": "NU",
+        "descr": "Nunavut (NU)"
+      },
+      {
+        "country": "CAN",
+        "state": "ON",
+        "descr": "Ontario"
+      },
+      {
+        "country": "CAN",
+        "state": "PE",
+        "descr": "Prince Edward Island"
+      },
+      {
+        "country": "CAN",
+        "state": "QC",
+        "descr": "Quebec"
+      },
+      {
+        "country": "CAN",
+        "state": "SK",
+        "descr": "Saskatchewan"
+      },
+      {
+        "country": "CAN",
+        "state": "YT",
+        "descr": "Yukon"
+      },
+      {
+        "country": "CHE",
+        "state": "AG",
+        "descr": "Argovia"
+      },
+      {
+        "country": "CHE",
+        "state": "AI",
+        "descr": "Appenzell Inner-Rhodes"
+      },
+      {
+        "country": "CHE",
+        "state": "AR",
+        "descr": "Appenzell Outer-Rhodes"
+      },
+      {
+        "country": "CHE",
+        "state": "BE",
+        "descr": "Berne"
+      },
+      {
+        "country": "CHE",
+        "state": "BL",
+        "descr": "Basle-Country"
+      },
+      {
+        "country": "CHE",
+        "state": "BS",
+        "descr": "Basle-Town"
+      },
+      {
+        "country": "CHE",
+        "state": "FR",
+        "descr": "Fribourg"
+      },
+      {
+        "country": "CHE",
+        "state": "GE",
+        "descr": "Geneva"
+      },
+      {
+        "country": "CHE",
+        "state": "GL",
+        "descr": "Glarus"
+      },
+      {
+        "country": "CHE",
+        "state": "GR",
+        "descr": "Grisons"
+      },
+      {
+        "country": "CHE",
+        "state": "JU",
+        "descr": "Jura"
+      },
+      {
+        "country": "CHE",
+        "state": "LU",
+        "descr": "Lucerne"
+      },
+      {
+        "country": "CHE",
+        "state": "NE",
+        "descr": "Neuchatel"
+      },
+      {
+        "country": "CHE",
+        "state": "NW",
+        "descr": "Nidwalden"
+      },
+      {
+        "country": "CHE",
+        "state": "OW",
+        "descr": "Obwalden"
+      },
+      {
+        "country": "CHE",
+        "state": "SG",
+        "descr": "St. Gall"
+      },
+      {
+        "country": "CHE",
+        "state": "SH",
+        "descr": "Schaffhausen"
+      },
+      {
+        "country": "CHE",
+        "state": "SO",
+        "descr": "Solothurn"
+      },
+      {
+        "country": "CHE",
+        "state": "SZ",
+        "descr": "Schwyz"
+      },
+      {
+        "country": "CHE",
+        "state": "TG",
+        "descr": "Thurgovia"
+      },
+      {
+        "country": "CHE",
+        "state": "TI",
+        "descr": "Ticino"
+      },
+      {
+        "country": "CHE",
+        "state": "UR",
+        "descr": "Uri"
+      },
+      {
+        "country": "CHE",
+        "state": "VD",
+        "descr": "Vaud"
+      },
+      {
+        "country": "CHE",
+        "state": "VS",
+        "descr": "Valais"
+      },
+      {
+        "country": "CHE",
+        "state": "ZG",
+        "descr": "Zug"
+      },
+      {
+        "country": "CHE",
+        "state": "ZH",
+        "descr": "Zurich"
+      },
+      {
+        "country": "CHL",
+        "state": "AG",
+        "descr": "Aisen del Gral. C.I. del Campo"
+      },
+      {
+        "country": "CHL",
+        "state": "AN",
+        "descr": "Antofagasta"
+      },
+      {
+        "country": "CHL",
+        "state": "AR",
+        "descr": "Araucania"
+      },
+      {
+        "country": "CHL",
+        "state": "AT",
+        "descr": "Atacama"
+      },
+      {
+        "country": "CHL",
+        "state": "BB",
+        "descr": "Bio-Bio"
+      },
+      {
+        "country": "CHL",
+        "state": "CO",
+        "descr": "Coquimbo"
+      },
+      {
+        "country": "CHL",
+        "state": "LL",
+        "descr": "Los Lagos"
+      },
+      {
+        "country": "CHL",
+        "state": "LO",
+        "descr": "Lib. Gral. Bernardo O'Higgins"
+      },
+      {
+        "country": "CHL",
+        "state": "MA",
+        "descr": "Magallanes y Antartica Chilena"
+      },
+      {
+        "country": "CHL",
+        "state": "MU",
+        "descr": "Maule"
+      },
+      {
+        "country": "CHL",
+        "state": "RM",
+        "descr": "Region Metropolitana"
+      },
+      {
+        "country": "CHL",
+        "state": "TA",
+        "descr": "Tarapaca"
+      },
+      {
+        "country": "CHL",
+        "state": "VA",
+        "descr": "Valparaiso"
+      },
+      {
+        "country": "DEU",
+        "state": "BE",
+        "descr": "Berlin"
+      },
+      {
+        "country": "DEU",
+        "state": "BR",
+        "descr": "Brandenburg"
+      },
+      {
+        "country": "DEU",
+        "state": "BW",
+        "descr": "Baden Wurttemberg"
+      },
+      {
+        "country": "DEU",
+        "state": "BY",
+        "descr": "Bayern"
+      },
+      {
+        "country": "DEU",
+        "state": "HB",
+        "descr": "Bremen"
+      },
+      {
+        "country": "DEU",
+        "state": "HE",
+        "descr": "Hessen"
+      },
+      {
+        "country": "DEU",
+        "state": "HH",
+        "descr": "Hamburg"
+      },
+      {
+        "country": "DEU",
+        "state": "MV",
+        "descr": "Mecklenburg Vorpommern"
+      },
+      {
+        "country": "DEU",
+        "state": "NI",
+        "descr": "Niedersachsen"
+      },
+      {
+        "country": "DEU",
+        "state": "NW",
+        "descr": "Nordrhein Westfalen"
+      },
+      {
+        "country": "DEU",
+        "state": "RP",
+        "descr": "Rheinland Pfalz"
+      },
+      {
+        "country": "DEU",
+        "state": "SH",
+        "descr": "Schleswig Holstein"
+      },
+      {
+        "country": "DEU",
+        "state": "SL",
+        "descr": "Saarland"
+      },
+      {
+        "country": "DEU",
+        "state": "SN",
+        "descr": "Sachsen"
+      },
+      {
+        "country": "DEU",
+        "state": "ST",
+        "descr": "Sachsen Anhalt"
+      },
+      {
+        "country": "DEU",
+        "state": "TH",
+        "descr": "Thuringen"
+      },
+      {
+        "country": "ESP",
+        "state": "01",
+        "descr": "Alava"
+      },
+      {
+        "country": "ESP",
+        "state": "02",
+        "descr": "Albacete"
+      },
+      {
+        "country": "ESP",
+        "state": "03",
+        "descr": "Alicante"
+      },
+      {
+        "country": "ESP",
+        "state": "04",
+        "descr": "Almeria"
+      },
+      {
+        "country": "ESP",
+        "state": "05",
+        "descr": "Avila"
+      },
+      {
+        "country": "ESP",
+        "state": "06",
+        "descr": "Badajoz"
+      },
+      {
+        "country": "ESP",
+        "state": "07",
+        "descr": "Baleares"
+      },
+      {
+        "country": "ESP",
+        "state": "08",
+        "descr": "Barcelona"
+      },
+      {
+        "country": "ESP",
+        "state": "09",
+        "descr": "Burgos"
+      },
+      {
+        "country": "ESP",
+        "state": "10",
+        "descr": "Caceres"
+      },
+      {
+        "country": "ESP",
+        "state": "11",
+        "descr": "Cadiz"
+      },
+      {
+        "country": "ESP",
+        "state": "12",
+        "descr": "Castellon"
+      },
+      {
+        "country": "ESP",
+        "state": "13",
+        "descr": "Ciudad Real"
+      },
+      {
+        "country": "ESP",
+        "state": "14",
+        "descr": "Cordoba"
+      },
+      {
+        "country": "ESP",
+        "state": "15",
+        "descr": "La Coruna"
+      },
+      {
+        "country": "ESP",
+        "state": "16",
+        "descr": "Cuenca"
+      },
+      {
+        "country": "ESP",
+        "state": "17",
+        "descr": "Gerona"
+      },
+      {
+        "country": "ESP",
+        "state": "18",
+        "descr": "Granada"
+      },
+      {
+        "country": "ESP",
+        "state": "19",
+        "descr": "Guadalajara"
+      },
+      {
+        "country": "ESP",
+        "state": "20",
+        "descr": "Guipuzcoa"
+      },
+      {
+        "country": "ESP",
+        "state": "21",
+        "descr": "Huelva"
+      },
+      {
+        "country": "ESP",
+        "state": "22",
+        "descr": "Huesca"
+      },
+      {
+        "country": "ESP",
+        "state": "23",
+        "descr": "Jaen"
+      },
+      {
+        "country": "ESP",
+        "state": "24",
+        "descr": "Leon"
+      },
+      {
+        "country": "ESP",
+        "state": "25",
+        "descr": "Lerida"
+      },
+      {
+        "country": "ESP",
+        "state": "26",
+        "descr": "La Rioja"
+      },
+      {
+        "country": "ESP",
+        "state": "27",
+        "descr": "Lugo"
+      },
+      {
+        "country": "ESP",
+        "state": "28",
+        "descr": "Madrid"
+      },
+      {
+        "country": "ESP",
+        "state": "29",
+        "descr": "Malaga"
+      },
+      {
+        "country": "ESP",
+        "state": "30",
+        "descr": "Murcia"
+      },
+      {
+        "country": "ESP",
+        "state": "31",
+        "descr": "Navarra"
+      },
+      {
+        "country": "ESP",
+        "state": "32",
+        "descr": "Orense"
+      },
+      {
+        "country": "ESP",
+        "state": "33",
+        "descr": "Asturias"
+      },
+      {
+        "country": "ESP",
+        "state": "34",
+        "descr": "Palencia"
+      },
+      {
+        "country": "ESP",
+        "state": "35",
+        "descr": "Las Palmas"
+      },
+      {
+        "country": "ESP",
+        "state": "36",
+        "descr": "Pontevedra"
+      },
+      {
+        "country": "ESP",
+        "state": "37",
+        "descr": "Salamanca"
+      },
+      {
+        "country": "ESP",
+        "state": "38",
+        "descr": "Sta.Cruz de Tenerife"
+      },
+      {
+        "country": "ESP",
+        "state": "39",
+        "descr": "Cantabria"
+      },
+      {
+        "country": "ESP",
+        "state": "40",
+        "descr": "Segovia"
+      },
+      {
+        "country": "ESP",
+        "state": "41",
+        "descr": "Sevilla"
+      },
+      {
+        "country": "ESP",
+        "state": "42",
+        "descr": "Soria"
+      },
+      {
+        "country": "ESP",
+        "state": "43",
+        "descr": "Tarragona"
+      },
+      {
+        "country": "ESP",
+        "state": "44",
+        "descr": "Teruel"
+      },
+      {
+        "country": "ESP",
+        "state": "45",
+        "descr": "Toledo"
+      },
+      {
+        "country": "ESP",
+        "state": "46",
+        "descr": "Valencia"
+      },
+      {
+        "country": "ESP",
+        "state": "47",
+        "descr": "Valladolid"
+      },
+      {
+        "country": "ESP",
+        "state": "48",
+        "descr": "Vizcaya"
+      },
+      {
+        "country": "ESP",
+        "state": "49",
+        "descr": "Zamora"
+      },
+      {
+        "country": "ESP",
+        "state": "50",
+        "descr": "Zaragoza"
+      },
+      {
+        "country": "ESP",
+        "state": "51",
+        "descr": "Ceuta"
+      },
+      {
+        "country": "ESP",
+        "state": "52",
+        "descr": "Melilla"
+      },
+      {
+        "country": "FRA",
+        "state": "01",
+        "descr": "Ain"
+      },
+      {
+        "country": "FRA",
+        "state": "02",
+        "descr": "Aisne"
+      },
+      {
+        "country": "FRA",
+        "state": "03",
+        "descr": "Allier"
+      },
+      {
+        "country": "FRA",
+        "state": "04",
+        "descr": "Alpes de Haute Provence"
+      },
+      {
+        "country": "FRA",
+        "state": "05",
+        "descr": "Hautes Alpes"
+      },
+      {
+        "country": "FRA",
+        "state": "06",
+        "descr": "Alpes Maritimes"
+      },
+      {
+        "country": "FRA",
+        "state": "07",
+        "descr": "Ardeche"
+      },
+      {
+        "country": "FRA",
+        "state": "08",
+        "descr": "Ardennes"
+      },
+      {
+        "country": "FRA",
+        "state": "09",
+        "descr": "Ariege"
+      },
+      {
+        "country": "FRA",
+        "state": "10",
+        "descr": "Aube"
+      },
+      {
+        "country": "FRA",
+        "state": "11",
+        "descr": "Aude"
+      },
+      {
+        "country": "FRA",
+        "state": "12",
+        "descr": "Aveyron"
+      },
+      {
+        "country": "FRA",
+        "state": "13",
+        "descr": "Bouches du Rhone"
+      },
+      {
+        "country": "FRA",
+        "state": "14",
+        "descr": "Calvados"
+      },
+      {
+        "country": "FRA",
+        "state": "15",
+        "descr": "Cantal"
+      },
+      {
+        "country": "FRA",
+        "state": "16",
+        "descr": "Charente"
+      },
+      {
+        "country": "FRA",
+        "state": "17",
+        "descr": "Charente Maritime"
+      },
+      {
+        "country": "FRA",
+        "state": "18",
+        "descr": "Cher"
+      },
+      {
+        "country": "FRA",
+        "state": "19",
+        "descr": "Correze"
+      },
+      {
+        "country": "FRA",
+        "state": "20",
+        "descr": "Corse"
+      },
+      {
+        "country": "FRA",
+        "state": "21",
+        "descr": "Cote d'Or"
+      },
+      {
+        "country": "FRA",
+        "state": "22",
+        "descr": "Cotes d'Armor"
+      },
+      {
+        "country": "FRA",
+        "state": "23",
+        "descr": "Creuse"
+      },
+      {
+        "country": "FRA",
+        "state": "24",
+        "descr": "Dordogne"
+      },
+      {
+        "country": "FRA",
+        "state": "25",
+        "descr": "Doubs"
+      },
+      {
+        "country": "FRA",
+        "state": "26",
+        "descr": "Drome"
+      },
+      {
+        "country": "FRA",
+        "state": "27",
+        "descr": "Eure"
+      },
+      {
+        "country": "FRA",
+        "state": "28",
+        "descr": "Eure et Loir"
+      },
+      {
+        "country": "FRA",
+        "state": "29",
+        "descr": "Finistere"
+      },
+      {
+        "country": "FRA",
+        "state": "2A",
+        "descr": "Corse du Sud"
+      },
+      {
+        "country": "FRA",
+        "state": "2B",
+        "descr": "Haute Corse"
+      },
+      {
+        "country": "FRA",
+        "state": "30",
+        "descr": "Gard"
+      },
+      {
+        "country": "FRA",
+        "state": "31",
+        "descr": "Haute Garonne"
+      },
+      {
+        "country": "FRA",
+        "state": "32",
+        "descr": "Gers"
+      },
+      {
+        "country": "FRA",
+        "state": "33",
+        "descr": "Gironde"
+      },
+      {
+        "country": "FRA",
+        "state": "34",
+        "descr": "Herault"
+      },
+      {
+        "country": "FRA",
+        "state": "35",
+        "descr": "Ille et Vilaine"
+      },
+      {
+        "country": "FRA",
+        "state": "36",
+        "descr": "Indre"
+      },
+      {
+        "country": "FRA",
+        "state": "37",
+        "descr": "Indre et Loire"
+      },
+      {
+        "country": "FRA",
+        "state": "38",
+        "descr": "Isere"
+      },
+      {
+        "country": "FRA",
+        "state": "39",
+        "descr": "Jura"
+      },
+      {
+        "country": "FRA",
+        "state": "40",
+        "descr": "Landes"
+      },
+      {
+        "country": "FRA",
+        "state": "41",
+        "descr": "Loir et Cher"
+      },
+      {
+        "country": "FRA",
+        "state": "42",
+        "descr": "Loire"
+      },
+      {
+        "country": "FRA",
+        "state": "43",
+        "descr": "Haute Loire"
+      },
+      {
+        "country": "FRA",
+        "state": "44",
+        "descr": "Loire Atlantique"
+      },
+      {
+        "country": "FRA",
+        "state": "45",
+        "descr": "Loiret"
+      },
+      {
+        "country": "FRA",
+        "state": "46",
+        "descr": "Lot"
+      },
+      {
+        "country": "FRA",
+        "state": "47",
+        "descr": "Lot et Garonne"
+      },
+      {
+        "country": "FRA",
+        "state": "48",
+        "descr": "Lozere"
+      },
+      {
+        "country": "FRA",
+        "state": "49",
+        "descr": "Maine et Loire"
+      },
+      {
+        "country": "FRA",
+        "state": "50",
+        "descr": "Manche"
+      },
+      {
+        "country": "FRA",
+        "state": "51",
+        "descr": "Marne"
+      },
+      {
+        "country": "FRA",
+        "state": "52",
+        "descr": "Haute Marne"
+      },
+      {
+        "country": "FRA",
+        "state": "53",
+        "descr": "Mayenne"
+      },
+      {
+        "country": "FRA",
+        "state": "54",
+        "descr": "Meurthe et Moselle"
+      },
+      {
+        "country": "FRA",
+        "state": "55",
+        "descr": "Meuse"
+      },
+      {
+        "country": "FRA",
+        "state": "56",
+        "descr": "Morbihan"
+      },
+      {
+        "country": "FRA",
+        "state": "57",
+        "descr": "Moselle"
+      },
+      {
+        "country": "FRA",
+        "state": "58",
+        "descr": "Nievre"
+      },
+      {
+        "country": "FRA",
+        "state": "59",
+        "descr": "Nord"
+      },
+      {
+        "country": "FRA",
+        "state": "60",
+        "descr": "Oise"
+      },
+      {
+        "country": "FRA",
+        "state": "61",
+        "descr": "Orne"
+      },
+      {
+        "country": "FRA",
+        "state": "62",
+        "descr": "Pas de Calais"
+      },
+      {
+        "country": "THA",
+        "state": "10",
+        "descr": "Bangkok"
+      },
+      {
+        "country": "THA",
+        "state": "11",
+        "descr": "Samut Prakan"
+      },
+      {
+        "country": "THA",
+        "state": "12",
+        "descr": "Nonthaburi"
+      },
+      {
+        "country": "THA",
+        "state": "13",
+        "descr": "Pathum Thani"
+      },
+      {
+        "country": "ITA",
+        "state": "MI",
+        "descr": "Milano"
+      },
+      {
+        "country": "ITA",
+        "state": "MN",
+        "descr": "Mantova"
+      },
+      {
+        "country": "ITA",
+        "state": "MO",
+        "descr": "Modena"
+      },
+      {
+        "country": "ITA",
+        "state": "MS",
+        "descr": "Massa"
+      },
+      {
+        "country": "ITA",
+        "state": "MT",
+        "descr": "Matera"
+      },
+      {
+        "country": "ITA",
+        "state": "NA",
+        "descr": "Napoli"
+      },
+      {
+        "country": "ITA",
+        "state": "NO",
+        "descr": "Novara"
+      },
+      {
+        "country": "ITA",
+        "state": "NU",
+        "descr": "Nuoro"
+      },
+      {
+        "country": "ITA",
+        "state": "OR",
+        "descr": "Oristano"
+      },
+      {
+        "country": "ITA",
+        "state": "PA",
+        "descr": "Palermo"
+      },
+      {
+        "country": "ITA",
+        "state": "PC",
+        "descr": "Piacenza"
+      },
+      {
+        "country": "ITA",
+        "state": "PD",
+        "descr": "Padova"
+      },
+      {
+        "country": "ITA",
+        "state": "PE",
+        "descr": "Pescara"
+      },
+      {
+        "country": "ITA",
+        "state": "PG",
+        "descr": "Perugia"
+      },
+      {
+        "country": "ITA",
+        "state": "PI",
+        "descr": "Pisa"
+      },
+      {
+        "country": "ITA",
+        "state": "PN",
+        "descr": "Pordenone"
+      },
+      {
+        "country": "ITA",
+        "state": "PO",
+        "descr": "Prato"
+      },
+      {
+        "country": "ITA",
+        "state": "PR",
+        "descr": "Parma"
+      },
+      {
+        "country": "ITA",
+        "state": "PS",
+        "descr": "Pesaro"
+      },
+      {
+        "country": "ITA",
+        "state": "PT",
+        "descr": "Pistoia"
+      },
+      {
+        "country": "ITA",
+        "state": "PV",
+        "descr": "Pavia"
+      },
+      {
+        "country": "ITA",
+        "state": "PZ",
+        "descr": "Potenza"
+      },
+      {
+        "country": "ITA",
+        "state": "RA",
+        "descr": "Ravenna"
+      },
+      {
+        "country": "ITA",
+        "state": "RC",
+        "descr": "Reggio Di Calabria"
+      },
+      {
+        "country": "ITA",
+        "state": "RE",
+        "descr": "Reggio Nell' Emilia"
+      },
+      {
+        "country": "NLD",
+        "state": "0608",
+        "descr": "Schoonhoven"
+      },
+      {
+        "country": "NLD",
+        "state": "0610",
+        "descr": "Sliedrecht"
+      },
+      {
+        "country": "NLD",
+        "state": "0611",
+        "descr": "Cromstrijen"
+      },
+      {
+        "country": "NLD",
+        "state": "0612",
+        "descr": "Spijkenisse"
+      },
+      {
+        "country": "NLD",
+        "state": "0613",
+        "descr": "Albrandswaard"
+      },
+      {
+        "country": "NLD",
+        "state": "0614",
+        "descr": "Westvoorne"
+      },
+      {
+        "country": "NLD",
+        "state": "0617",
+        "descr": "Strijen"
+      },
+      {
+        "country": "NLD",
+        "state": "0619",
+        "descr": "Valkenburg (Z.H.)"
+      },
+      {
+        "country": "NLD",
+        "state": "0620",
+        "descr": "Vianen"
+      },
+      {
+        "country": "NLD",
+        "state": "0622",
+        "descr": "Vlaardingen"
+      },
+      {
+        "country": "NLD",
+        "state": "0623",
+        "descr": "Vlist"
+      },
+      {
+        "country": "NLD",
+        "state": "0624",
+        "descr": "Voorburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0625",
+        "descr": "Voorhout"
+      },
+      {
+        "country": "NLD",
+        "state": "0626",
+        "descr": "Voorschoten"
+      },
+      {
+        "country": "NLD",
+        "state": "0627",
+        "descr": "Waddinxveen"
+      },
+      {
+        "country": "NLD",
+        "state": "0628",
+        "descr": "Warmond"
+      },
+      {
+        "country": "NLD",
+        "state": "0629",
+        "descr": "Wassenaar"
+      },
+      {
+        "country": "NLD",
+        "state": "0630",
+        "descr": "Wateringen"
+      },
+      {
+        "country": "NLD",
+        "state": "0632",
+        "descr": "Woerden"
+      },
+      {
+        "country": "NLD",
+        "state": "0637",
+        "descr": "Zoetermeer"
+      },
+      {
+        "country": "NLD",
+        "state": "0638",
+        "descr": "Zoeterwoude"
+      },
+      {
+        "country": "NLD",
+        "state": "0642",
+        "descr": "Zwijndrecht"
+      },
+      {
+        "country": "NLD",
+        "state": "0643",
+        "descr": "Nederlek"
+      },
+      {
+        "country": "NLD",
+        "state": "0644",
+        "descr": "Ouderkerk"
+      },
+      {
+        "country": "NLD",
+        "state": "0645",
+        "descr": "Jacobswoude"
+      },
+      {
+        "country": "NLD",
+        "state": "0648",
+        "descr": "Aardenburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0649",
+        "descr": "Arnemuiden"
+      },
+      {
+        "country": "NLD",
+        "state": "0650",
+        "descr": "Axel"
+      },
+      {
+        "country": "NLD",
+        "state": "0653",
+        "descr": "Gaasterlan-Sleat"
+      },
+      {
+        "country": "NLD",
+        "state": "0654",
+        "descr": "Borsele"
+      },
+      {
+        "country": "NLD",
+        "state": "0656",
+        "descr": "Brouwershaven"
+      },
+      {
+        "country": "NLD",
+        "state": "0657",
+        "descr": "Bruinisse"
+      },
+      {
+        "country": "NLD",
+        "state": "0660",
+        "descr": "Domburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0662",
+        "descr": "Duiveland"
+      },
+      {
+        "country": "NLD",
+        "state": "0664",
+        "descr": "Goes"
+      },
+      {
+        "country": "NLD",
+        "state": "0668",
+        "descr": "West Maas En Waal"
+      },
+      {
+        "country": "NLD",
+        "state": "0675",
+        "descr": "Hontenisse"
+      },
+      {
+        "country": "NLD",
+        "state": "0677",
+        "descr": "Hulst"
+      },
+      {
+        "country": "NLD",
+        "state": "0678",
+        "descr": "Kapelle"
+      },
+      {
+        "country": "NLD",
+        "state": "0682",
+        "descr": "Kortgene"
+      },
+      {
+        "country": "NLD",
+        "state": "0683",
+        "descr": "Wymbritseradiel"
+      },
+      {
+        "country": "NLD",
+        "state": "0686",
+        "descr": "Mariekerke"
+      },
+      {
+        "country": "NLD",
+        "state": "0687",
+        "descr": "Middelburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0688",
+        "descr": "Middenschouwen"
+      },
+      {
+        "country": "NLD",
+        "state": "0689",
+        "descr": "Giessenlanden"
+      },
+      {
+        "country": "NLD",
+        "state": "0692",
+        "descr": "Oostburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0693",
+        "descr": "Graafstroom"
+      },
+      {
+        "country": "NLD",
+        "state": "0694",
+        "descr": "Liesveld"
+      },
+      {
+        "country": "NLD",
+        "state": "0703",
+        "descr": "Reimerswaal"
+      },
+      {
+        "country": "NLD",
+        "state": "0704",
+        "descr": "Sas Van Gent"
+      },
+      {
+        "country": "NLD",
+        "state": "0707",
+        "descr": "Zederik"
+      },
+      {
+        "country": "NLD",
+        "state": "0710",
+        "descr": "Wunseradiel"
+      },
+      {
+        "country": "NLD",
+        "state": "0712",
+        "descr": "Sint Philipsland"
+      },
+      {
+        "country": "NLD",
+        "state": "0713",
+        "descr": "Sluis"
+      },
+      {
+        "country": "NLD",
+        "state": "0715",
+        "descr": "Terneuzen"
+      },
+      {
+        "country": "NLD",
+        "state": "0716",
+        "descr": "Tholen"
+      },
+      {
+        "country": "NLD",
+        "state": "0717",
+        "descr": "Veere"
+      },
+      {
+        "country": "NLD",
+        "state": "0718",
+        "descr": "Vlissingen"
+      },
+      {
+        "country": "NLD",
+        "state": "0720",
+        "descr": "Valkenisse"
+      },
+      {
+        "country": "NLD",
+        "state": "0725",
+        "descr": "Westerschouwen"
+      },
+      {
+        "country": "NLD",
+        "state": "0726",
+        "descr": "Westkapelle"
+      },
+      {
+        "country": "NLD",
+        "state": "0727",
+        "descr": "Wissenkerke"
+      },
+      {
+        "country": "NLD",
+        "state": "0732",
+        "descr": "Zierikzee"
+      },
+      {
+        "country": "NLD",
+        "state": "0733",
+        "descr": "Lingewaal"
+      },
+      {
+        "country": "NLD",
+        "state": "0736",
+        "descr": "De Ronde Venen"
+      },
+      {
+        "country": "NLD",
+        "state": "0737",
+        "descr": "Tytsjerksteradiel"
+      },
+      {
+        "country": "NLD",
+        "state": "0738",
+        "descr": "Aalburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0739",
+        "descr": "Aarle-Rixtel"
+      },
+      {
+        "country": "NLD",
+        "state": "0741",
+        "descr": "Alphen En Riel"
+      },
+      {
+        "country": "NLD",
+        "state": "0743",
+        "descr": "Asten"
+      },
+      {
+        "country": "NLD",
+        "state": "0744",
+        "descr": "Baarle-Nassau"
+      },
+      {
+        "country": "NLD",
+        "state": "0745",
+        "descr": "Bakel En Milheeze"
+      },
+      {
+        "country": "NLD",
+        "state": "0746",
+        "descr": "Beek En Donk"
+      },
+      {
+        "country": "NLD",
+        "state": "0748",
+        "descr": "Bergen Op Zoom"
+      },
+      {
+        "country": "NLD",
+        "state": "0749",
+        "descr": "Bergeyk"
+      },
+      {
+        "country": "NLD",
+        "state": "0751",
+        "descr": "Berkel-Enschot"
+      },
+      {
+        "country": "NLD",
+        "state": "0752",
+        "descr": "Berlicum"
+      },
+      {
+        "country": "NLD",
+        "state": "0753",
+        "descr": "Best"
+      },
+      {
+        "country": "NLD",
+        "state": "0754",
+        "descr": "Bladel En Netersel"
+      },
+      {
+        "country": "NLD",
+        "state": "0755",
+        "descr": "Boekel"
+      },
+      {
+        "country": "NLD",
+        "state": "0756",
+        "descr": "Boxmeer"
+      },
+      {
+        "country": "NLD",
+        "state": "0757",
+        "descr": "Boxtel"
+      },
+      {
+        "country": "NLD",
+        "state": "0758",
+        "descr": "Breda"
+      },
+      {
+        "country": "NLD",
+        "state": "0759",
+        "descr": "Budel"
+      },
+      {
+        "country": "NLD",
+        "state": "0760",
+        "descr": "Chaam"
+      },
+      {
+        "country": "NLD",
+        "state": "0762",
+        "descr": "Deurne"
+      },
+      {
+        "country": "NLD",
+        "state": "0763",
+        "descr": "Diessen"
+      },
+      {
+        "country": "NLD",
+        "state": "0764",
+        "descr": "Dinteloord En Prinsenlan"
+      },
+      {
+        "country": "NLD",
+        "state": "0765",
+        "descr": "Pekela"
+      },
+      {
+        "country": "NLD",
+        "state": "0766",
+        "descr": "Dongen"
+      },
+      {
+        "country": "NLD",
+        "state": "0767",
+        "descr": "Drunen"
+      },
+      {
+        "country": "NLD",
+        "state": "0768",
+        "descr": "Den Dungen"
+      },
+      {
+        "country": "NLD",
+        "state": "0769",
+        "descr": "Dussen"
+      },
+      {
+        "country": "NLD",
+        "state": "0770",
+        "descr": "Eersel"
+      },
+      {
+        "country": "NLD",
+        "state": "0772",
+        "descr": "Eindhoven"
+      },
+      {
+        "country": "NLD",
+        "state": "0776",
+        "descr": "Esch"
+      },
+      {
+        "country": "NLD",
+        "state": "0777",
+        "descr": "Etten-Leur"
+      },
+      {
+        "country": "NLD",
+        "state": "0778",
+        "descr": "Fijnaart En Heijningen"
+      },
+      {
+        "country": "NLD",
+        "state": "0779",
+        "descr": "Geertruidenberg"
+      },
+      {
+        "country": "NLD",
+        "state": "0781",
+        "descr": "Geldrop"
+      },
+      {
+        "country": "NLD",
+        "state": "0782",
+        "descr": "Gemert"
+      },
+      {
+        "country": "NLD",
+        "state": "0784",
+        "descr": "Gilze En Rijen"
+      },
+      {
+        "country": "NLD",
+        "state": "0785",
+        "descr": "Goirle"
+      },
+      {
+        "country": "NLD",
+        "state": "0786",
+        "descr": "Grave"
+      },
+      {
+        "country": "NLD",
+        "state": "0787",
+        "descr": "'s-Gravenmoer"
+      },
+      {
+        "country": "NLD",
+        "state": "0788",
+        "descr": "Haaren"
+      },
+      {
+        "country": "NLD",
+        "state": "0789",
+        "descr": "Halsteren"
+      },
+      {
+        "country": "NLD",
+        "state": "0791",
+        "descr": "Heesch"
+      },
+      {
+        "country": "NLD",
+        "state": "0793",
+        "descr": "Heeze"
+      },
+      {
+        "country": "NLD",
+        "state": "0794",
+        "descr": "Helmond"
+      },
+      {
+        "country": "NLD",
+        "state": "0795",
+        "descr": "Helvoirt"
+      },
+      {
+        "country": "NLD",
+        "state": "0796",
+        "descr": "'s-Hertogenbosch"
+      },
+      {
+        "country": "NLD",
+        "state": "0797",
+        "descr": "Heusden"
+      },
+      {
+        "country": "NLD",
+        "state": "0798",
+        "descr": "Hilvarenbeek"
+      },
+      {
+        "country": "NLD",
+        "state": "0799",
+        "descr": "Hoeven"
+      },
+      {
+        "country": "NLD",
+        "state": "0800",
+        "descr": "Hoogeloon,Hapert En Cast"
+      },
+      {
+        "country": "NLD",
+        "state": "0801",
+        "descr": "Hooge En Lage Mierde"
+      },
+      {
+        "country": "NLD",
+        "state": "0802",
+        "descr": "Hooge En Lage Zwaluwe"
+      },
+      {
+        "country": "NLD",
+        "state": "0803",
+        "descr": "Huijbergen"
+      },
+      {
+        "country": "NLD",
+        "state": "0804",
+        "descr": "Klundert"
+      },
+      {
+        "country": "NLD",
+        "state": "0805",
+        "descr": "Leende"
+      },
+      {
+        "country": "NLD",
+        "state": "0806",
+        "descr": "Liempde"
+      },
+      {
+        "country": "NLD",
+        "state": "0807",
+        "descr": "Lieshout"
+      },
+      {
+        "country": "NLD",
+        "state": "0808",
+        "descr": "Lith"
+      },
+      {
+        "country": "NLD",
+        "state": "0809",
+        "descr": "Loon Op Zand"
+      },
+      {
+        "country": "NLD",
+        "state": "0810",
+        "descr": "Luyksgestel"
+      },
+      {
+        "country": "NLD",
+        "state": "0811",
+        "descr": "Maarheeze"
+      },
+      {
+        "country": "NLD",
+        "state": "0812",
+        "descr": "Made En Drimmelen"
+      },
+      {
+        "country": "NLD",
+        "state": "0814",
+        "descr": "Mierlo"
+      },
+      {
+        "country": "NLD",
+        "state": "0815",
+        "descr": "Mill En Sint Hubert"
+      },
+      {
+        "country": "NLD",
+        "state": "0816",
+        "descr": "Moergestel"
+      },
+      {
+        "country": "NLD",
+        "state": "0817",
+        "descr": "Nieuw-Ginneken"
+      },
+      {
+        "country": "NLD",
+        "state": "0818",
+        "descr": "Nieuw-Vossemeer"
+      },
+      {
+        "country": "NLD",
+        "state": "0820",
+        "descr": "Nuenen,Gerwen En Nederwe"
+      },
+      {
+        "country": "NLD",
+        "state": "0823",
+        "descr": "Oirschot"
+      },
+      {
+        "country": "NLD",
+        "state": "0824",
+        "descr": "Oisterwijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0825",
+        "descr": "Oost-,West-En Middelbeer"
+      },
+      {
+        "country": "NLD",
+        "state": "0826",
+        "descr": "Oosterhout"
+      },
+      {
+        "country": "NLD",
+        "state": "0828",
+        "descr": "Oss"
+      },
+      {
+        "country": "NLD",
+        "state": "0829",
+        "descr": "Ossendrecht"
+      },
+      {
+        "country": "NLD",
+        "state": "0830",
+        "descr": "Oudenbosch"
+      },
+      {
+        "country": "NLD",
+        "state": "0831",
+        "descr": "Oud En Nieuw Gastel"
+      },
+      {
+        "country": "NLD",
+        "state": "0832",
+        "descr": "Prinsenbeek"
+      },
+      {
+        "country": "NLD",
+        "state": "0833",
+        "descr": "Putte"
+      },
+      {
+        "country": "NLD",
+        "state": "0834",
+        "descr": "Raamsdonk"
+      },
+      {
+        "country": "NLD",
+        "state": "0835",
+        "descr": "Ravenstein"
+      },
+      {
+        "country": "NLD",
+        "state": "0836",
+        "descr": "Reusel"
+      },
+      {
+        "country": "NLD",
+        "state": "0837",
+        "descr": "Riethoven"
+      },
+      {
+        "country": "NLD",
+        "state": "0838",
+        "descr": "Roosendaal En Nispen"
+      },
+      {
+        "country": "NLD",
+        "state": "0839",
+        "descr": "Rosmalen"
+      },
+      {
+        "country": "NLD",
+        "state": "0840",
+        "descr": "Rucphen"
+      },
+      {
+        "country": "NLD",
+        "state": "0841",
+        "descr": "Rijsbergen"
+      },
+      {
+        "country": "NLD",
+        "state": "0844",
+        "descr": "Schijndel"
+      },
+      {
+        "country": "NLD",
+        "state": "0845",
+        "descr": "Sint Michielsgestel"
+      },
+      {
+        "country": "NLD",
+        "state": "0846",
+        "descr": "Sint Oedenrode"
+      },
+      {
+        "country": "NLD",
+        "state": "0847",
+        "descr": "Someren"
+      },
+      {
+        "country": "NLD",
+        "state": "0848",
+        "descr": "Son En Breugel"
+      },
+      {
+        "country": "NLD",
+        "state": "0849",
+        "descr": "Sprang-Capelle"
+      },
+      {
+        "country": "NLD",
+        "state": "0850",
+        "descr": "Standdaarbuiten"
+      },
+      {
+        "country": "NLD",
+        "state": "0851",
+        "descr": "Steenbergen"
+      },
+      {
+        "country": "NLD",
+        "state": "0852",
+        "descr": "Waterland"
+      },
+      {
+        "country": "NLD",
+        "state": "0853",
+        "descr": "Terheijden"
+      },
+      {
+        "country": "NLD",
+        "state": "0854",
+        "descr": "Teteringen"
+      },
+      {
+        "country": "NLD",
+        "state": "0855",
+        "descr": "Tilburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0856",
+        "descr": "Uden"
+      },
+      {
+        "country": "NLD",
+        "state": "0857",
+        "descr": "Udenhout"
+      },
+      {
+        "country": "NLD",
+        "state": "0858",
+        "descr": "Valkenswaard"
+      },
+      {
+        "country": "NLD",
+        "state": "0860",
+        "descr": "Veghel"
+      },
+      {
+        "country": "NLD",
+        "state": "0861",
+        "descr": "Veldhoven"
+      },
+      {
+        "country": "NLD",
+        "state": "0862",
+        "descr": "Vessem,Wintelre En Knegs"
+      },
+      {
+        "country": "NLD",
+        "state": "0863",
+        "descr": "Vierlingsbeek"
+      },
+      {
+        "country": "NLD",
+        "state": "0864",
+        "descr": "Vlijmen"
+      },
+      {
+        "country": "NLD",
+        "state": "0865",
+        "descr": "Vught"
+      },
+      {
+        "country": "NLD",
+        "state": "0866",
+        "descr": "Waalre"
+      },
+      {
+        "country": "NLD",
+        "state": "0867",
+        "descr": "Waalwijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0869",
+        "descr": "Waspik"
+      },
+      {
+        "country": "NLD",
+        "state": "0870",
+        "descr": "Werkendam"
+      },
+      {
+        "country": "NLD",
+        "state": "0871",
+        "descr": "Westerhoven"
+      },
+      {
+        "country": "NLD",
+        "state": "0872",
+        "descr": "Willemstad"
+      },
+      {
+        "country": "NLD",
+        "state": "0873",
+        "descr": "Woensdrecht"
+      },
+      {
+        "country": "NLD",
+        "state": "0874",
+        "descr": "Woudrichem"
+      },
+      {
+        "country": "NLD",
+        "state": "0875",
+        "descr": "Wouw"
+      },
+      {
+        "country": "NLD",
+        "state": "0878",
+        "descr": "Zevenbergen"
+      },
+      {
+        "country": "NLD",
+        "state": "0879",
+        "descr": "Zundert"
+      },
+      {
+        "country": "NLD",
+        "state": "0880",
+        "descr": "Wormerland"
+      },
+      {
+        "country": "NLD",
+        "state": "0881",
+        "descr": "Onderbanken"
+      },
+      {
+        "country": "NLD",
+        "state": "0882",
+        "descr": "Landgraaf"
+      },
+      {
+        "country": "NLD",
+        "state": "0885",
+        "descr": "Arcen En Velden"
+      },
+      {
+        "country": "NLD",
+        "state": "0888",
+        "descr": "Beek (L)"
+      },
+      {
+        "country": "NLD",
+        "state": "0889",
+        "descr": "Beesel"
+      },
+      {
+        "country": "NLD",
+        "state": "0890",
+        "descr": "Belfeld"
+      },
+      {
+        "country": "NLD",
+        "state": "0893",
+        "descr": "Bergen (L)"
+      },
+      {
+        "country": "NLD",
+        "state": "0897",
+        "descr": "Born"
+      },
+      {
+        "country": "NLD",
+        "state": "0898",
+        "descr": "Broekhuizen"
+      },
+      {
+        "country": "NLD",
+        "state": "0899",
+        "descr": "Brunssum"
+      },
+      {
+        "country": "NLD",
+        "state": "0902",
+        "descr": "Echt"
+      },
+      {
+        "country": "NLD",
+        "state": "0905",
+        "descr": "Eijsden"
+      },
+      {
+        "country": "NLD",
+        "state": "0906",
+        "descr": "Geleen"
+      },
+      {
+        "country": "NLD",
+        "state": "0907",
+        "descr": "Gennep"
+      },
+      {
+        "country": "NLD",
+        "state": "0912",
+        "descr": "Grubbenvorst"
+      },
+      {
+        "country": "NLD",
+        "state": "0913",
+        "descr": "Gulpen"
+      },
+      {
+        "country": "NLD",
+        "state": "0914",
+        "descr": "Haelen"
+      },
+      {
+        "country": "NLD",
+        "state": "0917",
+        "descr": "Heerlen"
+      },
+      {
+        "country": "NLD",
+        "state": "0918",
+        "descr": "Helden"
+      },
+      {
+        "country": "NLD",
+        "state": "0920",
+        "descr": "Heythuysen"
+      },
+      {
+        "country": "NLD",
+        "state": "0923",
+        "descr": "Horst"
+      },
+      {
+        "country": "NLD",
+        "state": "0925",
+        "descr": "Hunsel"
+      },
+      {
+        "country": "NLD",
+        "state": "0928",
+        "descr": "Kerkrade"
+      },
+      {
+        "country": "NLD",
+        "state": "0929",
+        "descr": "Kessel"
+      },
+      {
+        "country": "NLD",
+        "state": "0933",
+        "descr": "Maasbracht"
+      },
+      {
+        "country": "NLD",
+        "state": "0934",
+        "descr": "Maasbree"
+      },
+      {
+        "country": "NLD",
+        "state": "0935",
+        "descr": "Maastricht"
+      },
+      {
+        "country": "NLD",
+        "state": "0936",
+        "descr": "Margraten"
+      },
+      {
+        "country": "NLD",
+        "state": "0938",
+        "descr": "Meerssen"
+      },
+      {
+        "country": "NLD",
+        "state": "0941",
+        "descr": "Meijel"
+      },
+      {
+        "country": "NLD",
+        "state": "0944",
+        "descr": "Mook En Middelaar"
+      },
+      {
+        "country": "NLD",
+        "state": "0946",
+        "descr": "Nederweert"
+      },
+      {
+        "country": "NLD",
+        "state": "0951",
+        "descr": "Nuth"
+      },
+      {
+        "country": "NLD",
+        "state": "0957",
+        "descr": "Roermond"
+      },
+      {
+        "country": "NLD",
+        "state": "0962",
+        "descr": "Schinnen"
+      },
+      {
+        "country": "NLD",
+        "state": "0964",
+        "descr": "Sevenum"
+      },
+      {
+        "country": "NLD",
+        "state": "0965",
+        "descr": "Simpelveld"
+      },
+      {
+        "country": "NLD",
+        "state": "0968",
+        "descr": "Sittard"
+      },
+      {
+        "country": "NLD",
+        "state": "0971",
+        "descr": "Stein"
+      },
+      {
+        "country": "NLD",
+        "state": "0973",
+        "descr": "Stramproy"
+      },
+      {
+        "country": "NLD",
+        "state": "0974",
+        "descr": "Susteren"
+      },
+      {
+        "country": "NLD",
+        "state": "0975",
+        "descr": "Swalmen"
+      },
+      {
+        "country": "NLD",
+        "state": "0158",
+        "descr": "Haaksbergen"
+      },
+      {
+        "country": "NLD",
+        "state": "0159",
+        "descr": "Den Ham"
+      },
+      {
+        "country": "NLD",
+        "state": "0160",
+        "descr": "Hardenberg"
+      },
+      {
+        "country": "NLD",
+        "state": "0161",
+        "descr": "Hasselt"
+      },
+      {
+        "country": "FRA",
+        "state": "63",
+        "descr": "Puy de Dome"
+      },
+      {
+        "country": "FRA",
+        "state": "64",
+        "descr": "Pyrenees Atlantiques"
+      },
+      {
+        "country": "FRA",
+        "state": "65",
+        "descr": "Haute Pyrenees"
+      },
+      {
+        "country": "FRA",
+        "state": "66",
+        "descr": "Pyrenees Orientales"
+      },
+      {
+        "country": "FRA",
+        "state": "67",
+        "descr": "Bas Rhin"
+      },
+      {
+        "country": "FRA",
+        "state": "68",
+        "descr": "Haut Rhin"
+      },
+      {
+        "country": "FRA",
+        "state": "69",
+        "descr": "Rhone"
+      },
+      {
+        "country": "FRA",
+        "state": "70",
+        "descr": "Haute Saone"
+      },
+      {
+        "country": "FRA",
+        "state": "71",
+        "descr": "Saone et Loire"
+      },
+      {
+        "country": "FRA",
+        "state": "72",
+        "descr": "Sarthe"
+      },
+      {
+        "country": "FRA",
+        "state": "73",
+        "descr": "Savoie"
+      },
+      {
+        "country": "FRA",
+        "state": "74",
+        "descr": "Haute Savoie"
+      },
+      {
+        "country": "FRA",
+        "state": "75",
+        "descr": "Paris"
+      },
+      {
+        "country": "FRA",
+        "state": "76",
+        "descr": "Seine Maritime"
+      },
+      {
+        "country": "FRA",
+        "state": "77",
+        "descr": "Seine et Marne"
+      },
+      {
+        "country": "FRA",
+        "state": "78",
+        "descr": "Yvelines"
+      },
+      {
+        "country": "FRA",
+        "state": "79",
+        "descr": "Deux Serves"
+      },
+      {
+        "country": "FRA",
+        "state": "80",
+        "descr": "Somme"
+      },
+      {
+        "country": "FRA",
+        "state": "81",
+        "descr": "Tarn"
+      },
+      {
+        "country": "FRA",
+        "state": "82",
+        "descr": "Tarn et Garonne"
+      },
+      {
+        "country": "FRA",
+        "state": "83",
+        "descr": "Var"
+      },
+      {
+        "country": "FRA",
+        "state": "84",
+        "descr": "Vaculuse"
+      },
+      {
+        "country": "FRA",
+        "state": "85",
+        "descr": "Vendee"
+      },
+      {
+        "country": "FRA",
+        "state": "86",
+        "descr": "Vienne"
+      },
+      {
+        "country": "FRA",
+        "state": "87",
+        "descr": "Haute Vienne"
+      },
+      {
+        "country": "FRA",
+        "state": "88",
+        "descr": "Vosges"
+      },
+      {
+        "country": "FRA",
+        "state": "89",
+        "descr": "Yonne"
+      },
+      {
+        "country": "FRA",
+        "state": "90",
+        "descr": "Territoire de Belfort"
+      },
+      {
+        "country": "FRA",
+        "state": "91",
+        "descr": "Essonne"
+      },
+      {
+        "country": "FRA",
+        "state": "92",
+        "descr": "Hauts de Seine"
+      },
+      {
+        "country": "FRA",
+        "state": "93",
+        "descr": "Seine St Denis"
+      },
+      {
+        "country": "FRA",
+        "state": "94",
+        "descr": "Val de Marne"
+      },
+      {
+        "country": "FRA",
+        "state": "95",
+        "descr": "Val d'Oise"
+      },
+      {
+        "country": "FRA",
+        "state": "971",
+        "descr": "Guadeloupe"
+      },
+      {
+        "country": "FRA",
+        "state": "972",
+        "descr": "Martinique"
+      },
+      {
+        "country": "FRA",
+        "state": "973",
+        "descr": "Guyane"
+      },
+      {
+        "country": "FRA",
+        "state": "974",
+        "descr": "Reunion"
+      },
+      {
+        "country": "FRA",
+        "state": "975",
+        "descr": "Saint Pierre et Miquelon"
+      },
+      {
+        "country": "FRA",
+        "state": "984",
+        "descr": "Terres Australes Francaises"
+      },
+      {
+        "country": "FRA",
+        "state": "985",
+        "descr": "Mayotte"
+      },
+      {
+        "country": "FRA",
+        "state": "986",
+        "descr": "Wallis et Futuna"
+      },
+      {
+        "country": "FRA",
+        "state": "987",
+        "descr": "Polynesie Francaise"
+      },
+      {
+        "country": "FRA",
+        "state": "988",
+        "descr": "Nouvelle Caledonie"
+      },
+      {
+        "country": "FRA",
+        "state": "99",
+        "descr": "Etranger (Hors France)"
+      },
+      {
+        "country": "GBR",
+        "state": "ANT",
+        "descr": "Antrim"
+      },
+      {
+        "country": "GBR",
+        "state": "ARD",
+        "descr": "Ards"
+      },
+      {
+        "country": "GBR",
+        "state": "ARM",
+        "descr": "Armagh"
+      },
+      {
+        "country": "GBR",
+        "state": "BEDS",
+        "descr": "Bedfordshire"
+      },
+      {
+        "country": "GBR",
+        "state": "BERKS",
+        "descr": "Berkshire"
+      },
+      {
+        "country": "GBR",
+        "state": "BFS",
+        "descr": "Belfast"
+      },
+      {
+        "country": "GBR",
+        "state": "BLA",
+        "descr": "Ballymena"
+      },
+      {
+        "country": "GBR",
+        "state": "BLY",
+        "descr": "Ballymoney"
+      },
+      {
+        "country": "GBR",
+        "state": "BNB",
+        "descr": "Banbridge"
+      },
+      {
+        "country": "GBR",
+        "state": "BRIST",
+        "descr": "Bristol"
+      },
+      {
+        "country": "GBR",
+        "state": "BUCKS",
+        "descr": "Buckinghamshire"
+      },
+      {
+        "country": "GBR",
+        "state": "CAMBS",
+        "descr": "Cambridgeshire"
+      },
+      {
+        "country": "GBR",
+        "state": "CENT",
+        "descr": "Central Region"
+      },
+      {
+        "country": "GBR",
+        "state": "CFK",
+        "descr": "Carrickfergus"
+      },
+      {
+        "country": "GBR",
+        "state": "CGV",
+        "descr": "Craigavon"
+      },
+      {
+        "country": "GBR",
+        "state": "CHES",
+        "descr": "Cheshire"
+      },
+      {
+        "country": "GBR",
+        "state": "CHL IS",
+        "descr": "Channel Is"
+      },
+      {
+        "country": "GBR",
+        "state": "CKT",
+        "descr": "Cookstown"
+      },
+      {
+        "country": "GBR",
+        "state": "CLR",
+        "descr": "Coleraine"
+      },
+      {
+        "country": "GBR",
+        "state": "CLWYD",
+        "descr": "Clwyd"
+      },
+      {
+        "country": "GBR",
+        "state": "CNWLL",
+        "descr": "Cornwall"
+      },
+      {
+        "country": "GBR",
+        "state": "CSR",
+        "descr": "Castlereagh"
+      },
+      {
+        "country": "GBR",
+        "state": "CUMB",
+        "descr": "Cumbria"
+      },
+      {
+        "country": "GBR",
+        "state": "D\u0026G",
+        "descr": "Dumfries \u0026 Galloway Region"
+      },
+      {
+        "country": "GBR",
+        "state": "DERBY",
+        "descr": "Derbyshire"
+      },
+      {
+        "country": "GBR",
+        "state": "DEVON",
+        "descr": "Devon"
+      },
+      {
+        "country": "GBR",
+        "state": "DGN",
+        "descr": "Dungannon"
+      },
+      {
+        "country": "GBR",
+        "state": "DORSET",
+        "descr": "Dorset"
+      },
+      {
+        "country": "GBR",
+        "state": "DOW",
+        "descr": "Down"
+      },
+      {
+        "country": "GBR",
+        "state": "DRY",
+        "descr": "Derry"
+      },
+      {
+        "country": "GBR",
+        "state": "DUR",
+        "descr": "Durham"
+      },
+      {
+        "country": "GBR",
+        "state": "DYFED",
+        "descr": "Dyfed"
+      },
+      {
+        "country": "GBR",
+        "state": "E YORK",
+        "descr": "East Riding of Yorkshire"
+      },
+      {
+        "country": "GBR",
+        "state": "E.SUSX",
+        "descr": "East Sussex"
+      },
+      {
+        "country": "GBR",
+        "state": "ESSEX",
+        "descr": "Essex"
+      },
+      {
+        "country": "GBR",
+        "state": "FER",
+        "descr": "Fermanagh"
+      },
+      {
+        "country": "GBR",
+        "state": "FIFE",
+        "descr": "Fife Region"
+      },
+      {
+        "country": "GBR",
+        "state": "GLOUCS",
+        "descr": "Gloucestershire"
+      },
+      {
+        "country": "GBR",
+        "state": "GRAMP",
+        "descr": "Grampian Region"
+      },
+      {
+        "country": "GBR",
+        "state": "GT LON",
+        "descr": "Greater London"
+      },
+      {
+        "country": "GBR",
+        "state": "GT MAN",
+        "descr": "Greater Manchester"
+      },
+      {
+        "country": "GBR",
+        "state": "GWENT",
+        "descr": "Gwent"
+      },
+      {
+        "country": "GBR",
+        "state": "GWYND",
+        "descr": "Gwynedd"
+      },
+      {
+        "country": "GBR",
+        "state": "HANTS",
+        "descr": "Hampshire"
+      },
+      {
+        "country": "GBR",
+        "state": "HERTS",
+        "descr": "Hertfordshire"
+      },
+      {
+        "country": "GBR",
+        "state": "HFORD",
+        "descr": "Herefordshire"
+      },
+      {
+        "country": "GBR",
+        "state": "HIGHLD",
+        "descr": "Highland Region"
+      },
+      {
+        "country": "GBR",
+        "state": "IOM",
+        "descr": "Isle of Man"
+      },
+      {
+        "country": "GBR",
+        "state": "IOS",
+        "descr": "Isles of Scilly"
+      },
+      {
+        "country": "GBR",
+        "state": "IOW",
+        "descr": "Isle of Wight"
+      },
+      {
+        "country": "GBR",
+        "state": "KENT",
+        "descr": "Kent"
+      },
+      {
+        "country": "GBR",
+        "state": "LANCS",
+        "descr": "Lancashire"
+      },
+      {
+        "country": "GBR",
+        "state": "LEICS",
+        "descr": "Leicestershire"
+      },
+      {
+        "country": "GBR",
+        "state": "LINCS",
+        "descr": "Lincolnshire"
+      },
+      {
+        "country": "GBR",
+        "state": "LMV",
+        "descr": "Limavady"
+      },
+      {
+        "country": "GBR",
+        "state": "LOTH",
+        "descr": "Lothian Region"
+      },
+      {
+        "country": "GBR",
+        "state": "LRN",
+        "descr": "Larne"
+      },
+      {
+        "country": "GBR",
+        "state": "LSB",
+        "descr": "Lisburn"
+      },
+      {
+        "country": "GBR",
+        "state": "M GLAM",
+        "descr": "Mid Glamorgan"
+      },
+      {
+        "country": "GBR",
+        "state": "MDDSX",
+        "descr": "Middlesex"
+      },
+      {
+        "country": "GBR",
+        "state": "MERSYD",
+        "descr": "Merseyside"
+      },
+      {
+        "country": "GBR",
+        "state": "MFT",
+        "descr": "Magherafelt"
+      },
+      {
+        "country": "GBR",
+        "state": "MYL",
+        "descr": "Moyle"
+      },
+      {
+        "country": "GBR",
+        "state": "N YORK",
+        "descr": "North Yorkshire"
+      },
+      {
+        "country": "GBR",
+        "state": "NDN",
+        "descr": "North Down"
+      },
+      {
+        "country": "GBR",
+        "state": "NHANTS",
+        "descr": "Northamptonshire"
+      },
+      {
+        "country": "GBR",
+        "state": "NORFLK",
+        "descr": "Norfolk"
+      },
+      {
+        "country": "GBR",
+        "state": "NOTTS",
+        "descr": "Nottinghamshire"
+      },
+      {
+        "country": "GBR",
+        "state": "NTA",
+        "descr": "Newtownabbey"
+      },
+      {
+        "country": "GBR",
+        "state": "NTHUMB",
+        "descr": "Northumberland"
+      },
+      {
+        "country": "GBR",
+        "state": "NYM",
+        "descr": "Newry and Mourne"
+      },
+      {
+        "country": "GBR",
+        "state": "OMH",
+        "descr": "Omagh"
+      },
+      {
+        "country": "GBR",
+        "state": "OXON",
+        "descr": "Oxfordshire"
+      },
+      {
+        "country": "GBR",
+        "state": "POWYS",
+        "descr": "Powys"
+      },
+      {
+        "country": "GBR",
+        "state": "RUTLND",
+        "descr": "Rutland"
+      },
+      {
+        "country": "GBR",
+        "state": "S GLAM",
+        "descr": "South Glamorgan"
+      },
+      {
+        "country": "GBR",
+        "state": "SHROPS",
+        "descr": "Shropshire"
+      },
+      {
+        "country": "GBR",
+        "state": "SOMER",
+        "descr": "Somerset"
+      },
+      {
+        "country": "GBR",
+        "state": "STAFFS",
+        "descr": "Staffordshire"
+      },
+      {
+        "country": "GBR",
+        "state": "STB",
+        "descr": "Strabane"
+      },
+      {
+        "country": "GBR",
+        "state": "STRATH",
+        "descr": "Strathclyde Region"
+      },
+      {
+        "country": "GBR",
+        "state": "SUFFK",
+        "descr": "Suffolk"
+      },
+      {
+        "country": "GBR",
+        "state": "SURREY",
+        "descr": "Surrey"
+      },
+      {
+        "country": "GBR",
+        "state": "SYORKS",
+        "descr": "South Yorkshire"
+      },
+      {
+        "country": "GBR",
+        "state": "T\u0026W",
+        "descr": "Tyne \u0026 Wear"
+      },
+      {
+        "country": "GBR",
+        "state": "TAYS",
+        "descr": "Tayside Region"
+      },
+      {
+        "country": "GBR",
+        "state": "W GLAM",
+        "descr": "West Glamorgan"
+      },
+      {
+        "country": "GBR",
+        "state": "W SUSX",
+        "descr": "West Sussex"
+      },
+      {
+        "country": "GBR",
+        "state": "WARWKS",
+        "descr": "Warwickshire"
+      },
+      {
+        "country": "GBR",
+        "state": "WILTS",
+        "descr": "Wiltshire"
+      },
+      {
+        "country": "GBR",
+        "state": "WOR",
+        "descr": "Worcestershire"
+      },
+      {
+        "country": "GBR",
+        "state": "WSTMID",
+        "descr": "West Midlands"
+      },
+      {
+        "country": "GBR",
+        "state": "WYORKS",
+        "descr": "West Yorkshire"
+      },
+      {
+        "country": "HKG",
+        "state": "H",
+        "descr": "Hong Kong Island"
+      },
+      {
+        "country": "HKG",
+        "state": "K",
+        "descr": "Kowloon"
+      },
+      {
+        "country": "HKG",
+        "state": "N",
+        "descr": "New Territories"
+      },
+      {
+        "country": "IND",
+        "state": "AN",
+        "descr": "Andaman and Nicobar Islands"
+      },
+      {
+        "country": "IND",
+        "state": "AP",
+        "descr": "Andhra Pradesh"
+      },
+      {
+        "country": "IND",
+        "state": "AR",
+        "descr": "Arunachal Pradesh"
+      },
+      {
+        "country": "IND",
+        "state": "AS",
+        "descr": "Assam"
+      },
+      {
+        "country": "IND",
+        "state": "BR",
+        "descr": "Bihar"
+      },
+      {
+        "country": "IND",
+        "state": "CH",
+        "descr": "Chandigarh (UT)"
+      },
+      {
+        "country": "IND",
+        "state": "CT",
+        "descr": "Chhattisgarh"
+      },
+      {
+        "country": "IND",
+        "state": "DD",
+        "descr": "Daman and Diu (UT)"
+      },
+      {
+        "country": "IND",
+        "state": "DL",
+        "descr": "Delhi (UT)"
+      },
+      {
+        "country": "IND",
+        "state": "DN",
+        "descr": "Dadra and Nagar Haveli (UT)"
+      },
+      {
+        "country": "IND",
+        "state": "GA",
+        "descr": "Goa"
+      },
+      {
+        "country": "IND",
+        "state": "GJ",
+        "descr": "Gujarat"
+      },
+      {
+        "country": "IND",
+        "state": "HP",
+        "descr": "Himachal Pradesh"
+      },
+      {
+        "country": "IND",
+        "state": "HR",
+        "descr": "Haryana"
+      },
+      {
+        "country": "IND",
+        "state": "JH",
+        "descr": "Jharkhand"
+      },
+      {
+        "country": "IND",
+        "state": "JK",
+        "descr": "Jammu and Kashmir"
+      },
+      {
+        "country": "IND",
+        "state": "KA",
+        "descr": "Karnataka"
+      },
+      {
+        "country": "IND",
+        "state": "KL",
+        "descr": "Kerala"
+      },
+      {
+        "country": "IND",
+        "state": "LA",
+        "descr": "Lashwadeep(UT)"
+      },
+      {
+        "country": "IND",
+        "state": "MH",
+        "descr": "Maharashtra"
+      },
+      {
+        "country": "IND",
+        "state": "ML",
+        "descr": "Meghalaya"
+      },
+      {
+        "country": "IND",
+        "state": "MN",
+        "descr": "Manipur"
+      },
+      {
+        "country": "IND",
+        "state": "MP",
+        "descr": "Madhya Pradesh"
+      },
+      {
+        "country": "IND",
+        "state": "MZ",
+        "descr": "Mizoram"
+      },
+      {
+        "country": "IND",
+        "state": "NG",
+        "descr": "Nagaland"
+      },
+      {
+        "country": "IND",
+        "state": "OR",
+        "descr": "Orissa"
+      },
+      {
+        "country": "IND",
+        "state": "PB",
+        "descr": "Punjab"
+      },
+      {
+        "country": "IND",
+        "state": "PY",
+        "descr": "Pondicherry (UT)"
+      },
+      {
+        "country": "IND",
+        "state": "RJ",
+        "descr": "Rajasthan"
+      },
+      {
+        "country": "IND",
+        "state": "SK",
+        "descr": "Sikkim"
+      },
+      {
+        "country": "IND",
+        "state": "TN",
+        "descr": "Tamil Nadu"
+      },
+      {
+        "country": "IND",
+        "state": "TR",
+        "descr": "Tripura"
+      },
+      {
+        "country": "IND",
+        "state": "UP",
+        "descr": "Uttar Pradesh"
+      },
+      {
+        "country": "IND",
+        "state": "UT",
+        "descr": "Uttaranchal"
+      },
+      {
+        "country": "IND",
+        "state": "WB",
+        "descr": "West Bengal"
+      },
+      {
+        "country": "IRL",
+        "state": "ANTRIM",
+        "descr": "Antrim"
+      },
+      {
+        "country": "IRL",
+        "state": "ARMAGH",
+        "descr": "Armagh"
+      },
+      {
+        "country": "IRL",
+        "state": "CARLOW",
+        "descr": "Carlow"
+      },
+      {
+        "country": "IRL",
+        "state": "CAVAN",
+        "descr": "Cavan"
+      },
+      {
+        "country": "IRL",
+        "state": "CLARE",
+        "descr": "Clare"
+      },
+      {
+        "country": "IRL",
+        "state": "CORK",
+        "descr": "Cork"
+      },
+      {
+        "country": "IRL",
+        "state": "DERRY",
+        "descr": "Derry"
+      },
+      {
+        "country": "IRL",
+        "state": "DNEGAL",
+        "descr": "Donegal"
+      },
+      {
+        "country": "IRL",
+        "state": "DOWN",
+        "descr": "Down"
+      },
+      {
+        "country": "IRL",
+        "state": "DUBLIN",
+        "descr": "Dublin"
+      },
+      {
+        "country": "IRL",
+        "state": "FERMAN",
+        "descr": "Fermanagh"
+      },
+      {
+        "country": "IRL",
+        "state": "GALWAY",
+        "descr": "Galway"
+      },
+      {
+        "country": "IRL",
+        "state": "KERRY",
+        "descr": "Kerry"
+      },
+      {
+        "country": "IRL",
+        "state": "KLDARE",
+        "descr": "Kildare"
+      },
+      {
+        "country": "IRL",
+        "state": "KLKENY",
+        "descr": "Kilkenny"
+      },
+      {
+        "country": "IRL",
+        "state": "LAOIS",
+        "descr": "Laois"
+      },
+      {
+        "country": "IRL",
+        "state": "LIMRCK",
+        "descr": "Limerick"
+      },
+      {
+        "country": "IRL",
+        "state": "LNGFRD",
+        "descr": "Longford"
+      },
+      {
+        "country": "IRL",
+        "state": "LOUTH",
+        "descr": "Louth"
+      },
+      {
+        "country": "IRL",
+        "state": "LTRIM",
+        "descr": "Leitrim"
+      },
+      {
+        "country": "IRL",
+        "state": "MAYO",
+        "descr": "Mayo"
+      },
+      {
+        "country": "IRL",
+        "state": "MEATH",
+        "descr": "Meath"
+      },
+      {
+        "country": "IRL",
+        "state": "MONGHN",
+        "descr": "Monaghan"
+      },
+      {
+        "country": "IRL",
+        "state": "OFFALY",
+        "descr": "Offaly"
+      },
+      {
+        "country": "IRL",
+        "state": "ROSCMN",
+        "descr": "Roscommon"
+      },
+      {
+        "country": "IRL",
+        "state": "SLIGO",
+        "descr": "Sligo"
+      },
+      {
+        "country": "IRL",
+        "state": "TPPRRY",
+        "descr": "Tipperary"
+      },
+      {
+        "country": "IRL",
+        "state": "TYRONE",
+        "descr": "Tyrone"
+      },
+      {
+        "country": "IRL",
+        "state": "WCKLOW",
+        "descr": "Wicklow"
+      },
+      {
+        "country": "IRL",
+        "state": "WSTMTH",
+        "descr": "Westmeath"
+      },
+      {
+        "country": "IRL",
+        "state": "WTRFRD",
+        "descr": "Waterford"
+      },
+      {
+        "country": "IRL",
+        "state": "WXFORD",
+        "descr": "Wexford"
+      },
+      {
+        "country": "ITA",
+        "state": "AG",
+        "descr": "Agrigento"
+      },
+      {
+        "country": "ITA",
+        "state": "AL",
+        "descr": "Alessandria"
+      },
+      {
+        "country": "ITA",
+        "state": "AN",
+        "descr": "Ancona"
+      },
+      {
+        "country": "ITA",
+        "state": "AO",
+        "descr": "Aosta"
+      },
+      {
+        "country": "ITA",
+        "state": "AP",
+        "descr": "Ascoli Piceno"
+      },
+      {
+        "country": "ITA",
+        "state": "AQ",
+        "descr": "L' Aquila"
+      },
+      {
+        "country": "ITA",
+        "state": "AR",
+        "descr": "Arezzo"
+      },
+      {
+        "country": "ITA",
+        "state": "AT",
+        "descr": "Asti"
+      },
+      {
+        "country": "ITA",
+        "state": "AV",
+        "descr": "Avellino"
+      },
+      {
+        "country": "ITA",
+        "state": "BA",
+        "descr": "Bari"
+      },
+      {
+        "country": "ITA",
+        "state": "BG",
+        "descr": "Bergamo"
+      },
+      {
+        "country": "ITA",
+        "state": "BI",
+        "descr": "Biella"
+      },
+      {
+        "country": "ITA",
+        "state": "BL",
+        "descr": "Belluno"
+      },
+      {
+        "country": "ITA",
+        "state": "BN",
+        "descr": "Benevento"
+      },
+      {
+        "country": "ITA",
+        "state": "BO",
+        "descr": "Bologna"
+      },
+      {
+        "country": "ITA",
+        "state": "BR",
+        "descr": "Brindisi"
+      },
+      {
+        "country": "ITA",
+        "state": "BS",
+        "descr": "Brescia"
+      },
+      {
+        "country": "ITA",
+        "state": "BZ",
+        "descr": "Bolzano"
+      },
+      {
+        "country": "ITA",
+        "state": "CA",
+        "descr": "Cagliari"
+      },
+      {
+        "country": "ITA",
+        "state": "CB",
+        "descr": "Campobasso"
+      },
+      {
+        "country": "ITA",
+        "state": "CE",
+        "descr": "Caserta"
+      },
+      {
+        "country": "ITA",
+        "state": "CH",
+        "descr": "Chieti"
+      },
+      {
+        "country": "ITA",
+        "state": "CL",
+        "descr": "Caltanissetta"
+      },
+      {
+        "country": "ITA",
+        "state": "CN",
+        "descr": "Cuneo"
+      },
+      {
+        "country": "ITA",
+        "state": "CO",
+        "descr": "Como"
+      },
+      {
+        "country": "ITA",
+        "state": "CR",
+        "descr": "Cremona"
+      },
+      {
+        "country": "ITA",
+        "state": "CS",
+        "descr": "Cosenza"
+      },
+      {
+        "country": "ITA",
+        "state": "CT",
+        "descr": "Catania"
+      },
+      {
+        "country": "ITA",
+        "state": "CZ",
+        "descr": "Catanzaro"
+      },
+      {
+        "country": "ITA",
+        "state": "EN",
+        "descr": "Enna"
+      },
+      {
+        "country": "ITA",
+        "state": "FE",
+        "descr": "Ferrara"
+      },
+      {
+        "country": "ITA",
+        "state": "FG",
+        "descr": "Foggia"
+      },
+      {
+        "country": "ITA",
+        "state": "FI",
+        "descr": "Firenze"
+      },
+      {
+        "country": "ITA",
+        "state": "FO",
+        "descr": "Forli'"
+      },
+      {
+        "country": "ITA",
+        "state": "FR",
+        "descr": "Frosinone"
+      },
+      {
+        "country": "ITA",
+        "state": "GE",
+        "descr": "Genova"
+      },
+      {
+        "country": "ITA",
+        "state": "GO",
+        "descr": "Gorizia"
+      },
+      {
+        "country": "ITA",
+        "state": "GR",
+        "descr": "Grosseto"
+      },
+      {
+        "country": "ITA",
+        "state": "IM",
+        "descr": "Imperia"
+      },
+      {
+        "country": "ITA",
+        "state": "IS",
+        "descr": "Isernia"
+      },
+      {
+        "country": "ITA",
+        "state": "KR",
+        "descr": "Crotone"
+      },
+      {
+        "country": "ITA",
+        "state": "LC",
+        "descr": "Lecco"
+      },
+      {
+        "country": "ITA",
+        "state": "LE",
+        "descr": "Lecce"
+      },
+      {
+        "country": "ITA",
+        "state": "LI",
+        "descr": "Livorno"
+      },
+      {
+        "country": "ITA",
+        "state": "LO",
+        "descr": "Lodi"
+      },
+      {
+        "country": "ITA",
+        "state": "LT",
+        "descr": "Latina"
+      },
+      {
+        "country": "ITA",
+        "state": "LU",
+        "descr": "Lucca"
+      },
+      {
+        "country": "ITA",
+        "state": "MC",
+        "descr": "Macerata"
+      },
+      {
+        "country": "ITA",
+        "state": "ME",
+        "descr": "Messina"
+      },
+      {
+        "country": "VEN",
+        "state": "AN",
+        "descr": "Anzoategui"
+      },
+      {
+        "country": "VEN",
+        "state": "AP",
+        "descr": "Apure"
+      },
+      {
+        "country": "VEN",
+        "state": "AR",
+        "descr": "Aragua"
+      },
+      {
+        "country": "VEN",
+        "state": "BA",
+        "descr": "Barinas"
+      },
+      {
+        "country": "VEN",
+        "state": "BO",
+        "descr": "Bolivar"
+      },
+      {
+        "country": "VEN",
+        "state": "CA",
+        "descr": "Carabobo"
+      },
+      {
+        "country": "VEN",
+        "state": "CO",
+        "descr": "Cojedes"
+      },
+      {
+        "country": "VEN",
+        "state": "DA",
+        "descr": "Delta Amacuro"
+      },
+      {
+        "country": "VEN",
+        "state": "FA",
+        "descr": "Falcon"
+      },
+      {
+        "country": "VEN",
+        "state": "GU",
+        "descr": "Guarico"
+      },
+      {
+        "country": "VEN",
+        "state": "LA",
+        "descr": "Lara"
+      },
+      {
+        "country": "VEN",
+        "state": "ME",
+        "descr": "Merida"
+      },
+      {
+        "country": "VEN",
+        "state": "MI",
+        "descr": "Miranda"
+      },
+      {
+        "country": "VEN",
+        "state": "MO",
+        "descr": "Monagas"
+      },
+      {
+        "country": "ITA",
+        "state": "RG",
+        "descr": "Ragusa"
+      },
+      {
+        "country": "ITA",
+        "state": "RI",
+        "descr": "Rieti"
+      },
+      {
+        "country": "ITA",
+        "state": "RM",
+        "descr": "Roma"
+      },
+      {
+        "country": "ITA",
+        "state": "RN",
+        "descr": "Rimini"
+      },
+      {
+        "country": "ITA",
+        "state": "RO",
+        "descr": "Rovigo"
+      },
+      {
+        "country": "ITA",
+        "state": "SA",
+        "descr": "Salerno"
+      },
+      {
+        "country": "ITA",
+        "state": "SI",
+        "descr": "Siena"
+      },
+      {
+        "country": "ITA",
+        "state": "SO",
+        "descr": "Sondrio"
+      },
+      {
+        "country": "ITA",
+        "state": "SP",
+        "descr": "La Spezia"
+      },
+      {
+        "country": "ITA",
+        "state": "SR",
+        "descr": "Siracusa"
+      },
+      {
+        "country": "ITA",
+        "state": "SS",
+        "descr": "Sassari"
+      },
+      {
+        "country": "ITA",
+        "state": "SV",
+        "descr": "Savona"
+      },
+      {
+        "country": "ITA",
+        "state": "TA",
+        "descr": "Taranto"
+      },
+      {
+        "country": "ITA",
+        "state": "TE",
+        "descr": "Teramo"
+      },
+      {
+        "country": "ITA",
+        "state": "TN",
+        "descr": "Trento"
+      },
+      {
+        "country": "ITA",
+        "state": "TO",
+        "descr": "Torino"
+      },
+      {
+        "country": "ITA",
+        "state": "TP",
+        "descr": "Trapani"
+      },
+      {
+        "country": "ITA",
+        "state": "TR",
+        "descr": "Terni"
+      },
+      {
+        "country": "ITA",
+        "state": "TS",
+        "descr": "Trieste"
+      },
+      {
+        "country": "ITA",
+        "state": "TV",
+        "descr": "Treviso"
+      },
+      {
+        "country": "ITA",
+        "state": "UD",
+        "descr": "Udine"
+      },
+      {
+        "country": "ITA",
+        "state": "VA",
+        "descr": "Varese"
+      },
+      {
+        "country": "ITA",
+        "state": "VB",
+        "descr": "Verbania"
+      },
+      {
+        "country": "ITA",
+        "state": "VC",
+        "descr": "Vercelli"
+      },
+      {
+        "country": "ITA",
+        "state": "VE",
+        "descr": "Venezia"
+      },
+      {
+        "country": "ITA",
+        "state": "VI",
+        "descr": "Vicenza"
+      },
+      {
+        "country": "ITA",
+        "state": "VR",
+        "descr": "Verona"
+      },
+      {
+        "country": "ITA",
+        "state": "VT",
+        "descr": "Viterbo"
+      },
+      {
+        "country": "ITA",
+        "state": "VV",
+        "descr": "Vibo Valentia"
+      },
+      {
+        "country": "JPN",
+        "state": "01",
+        "descr": "Hokkaido"
+      },
+      {
+        "country": "JPN",
+        "state": "02",
+        "descr": "Aomori-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "03",
+        "descr": "Iwate-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "04",
+        "descr": "Miyagi-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "05",
+        "descr": "Akita-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "06",
+        "descr": "Yamagata-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "07",
+        "descr": "Fukushima-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "08",
+        "descr": "Ibaraki-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "09",
+        "descr": "Tochigi-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "10",
+        "descr": "Gunma-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "11",
+        "descr": "Saitama-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "12",
+        "descr": "Chiba-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "13",
+        "descr": "Tokyo-To"
+      },
+      {
+        "country": "JPN",
+        "state": "14",
+        "descr": "Kanagawa-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "15",
+        "descr": "Niigata-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "16",
+        "descr": "Toyama-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "17",
+        "descr": "Ishikawa-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "18",
+        "descr": "Fukui-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "19",
+        "descr": "Yamanashi-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "20",
+        "descr": "Nagano-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "21",
+        "descr": "Gifu-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "22",
+        "descr": "Shizuoka-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "23",
+        "descr": "Aichi-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "24",
+        "descr": "Mie-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "25",
+        "descr": "Shiga-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "26",
+        "descr": "Kyoto-Fu"
+      },
+      {
+        "country": "JPN",
+        "state": "27",
+        "descr": "Osaka-Fu"
+      },
+      {
+        "country": "JPN",
+        "state": "28",
+        "descr": "Hyogo-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "29",
+        "descr": "Nara-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "30",
+        "descr": "Wakayama-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "31",
+        "descr": "Tottori-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "32",
+        "descr": "Shimane-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "33",
+        "descr": "Okayama-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "34",
+        "descr": "Hiroshima-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "35",
+        "descr": "Yamaguchi-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "36",
+        "descr": "Tokushima-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "37",
+        "descr": "Kagawa-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "38",
+        "descr": "Ehime-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "39",
+        "descr": "Kochi-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "40",
+        "descr": "Fukuoka-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "41",
+        "descr": "Saga-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "42",
+        "descr": "Nagasaki-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "43",
+        "descr": "Kumamoto-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "44",
+        "descr": "Oita-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "45",
+        "descr": "Miyazaki-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "46",
+        "descr": "Kagoshima-Ken"
+      },
+      {
+        "country": "JPN",
+        "state": "47",
+        "descr": "Okinawa-Ken"
+      },
+      {
+        "country": "MEX",
+        "state": "AGS",
+        "descr": "Aguascalientes"
+      },
+      {
+        "country": "MEX",
+        "state": "BCN",
+        "descr": "Baja California Norte"
+      },
+      {
+        "country": "MEX",
+        "state": "BCS",
+        "descr": "Baja California Sur"
+      },
+      {
+        "country": "MEX",
+        "state": "CAMP",
+        "descr": "Campeche"
+      },
+      {
+        "country": "MEX",
+        "state": "CHIH",
+        "descr": "Chihuahua"
+      },
+      {
+        "country": "MEX",
+        "state": "CHPS",
+        "descr": "Chiapas"
+      },
+      {
+        "country": "MEX",
+        "state": "COAH",
+        "descr": "Coahuila"
+      },
+      {
+        "country": "MEX",
+        "state": "COLI",
+        "descr": "Colima"
+      },
+      {
+        "country": "MEX",
+        "state": "DF",
+        "descr": "Distrito Federal"
+      },
+      {
+        "country": "MEX",
+        "state": "DGO",
+        "descr": "Durango"
+      },
+      {
+        "country": "MEX",
+        "state": "EMEX",
+        "descr": "Estado de Mexico"
+      },
+      {
+        "country": "MEX",
+        "state": "GRO",
+        "descr": "Guerrero"
+      },
+      {
+        "country": "MEX",
+        "state": "GTO",
+        "descr": "Guanajuato"
+      },
+      {
+        "country": "MEX",
+        "state": "HGO",
+        "descr": "Hidalgo"
+      },
+      {
+        "country": "MEX",
+        "state": "JAL",
+        "descr": "Jalisco"
+      },
+      {
+        "country": "MEX",
+        "state": "MICH",
+        "descr": "Michoacan"
+      },
+      {
+        "country": "MEX",
+        "state": "MOR",
+        "descr": "Morelos"
+      },
+      {
+        "country": "MEX",
+        "state": "NAY",
+        "descr": "Nayarit"
+      },
+      {
+        "country": "MEX",
+        "state": "NL",
+        "descr": "Nuevo Leon"
+      },
+      {
+        "country": "MEX",
+        "state": "OAX",
+        "descr": "Oaxaca"
+      },
+      {
+        "country": "MEX",
+        "state": "PUE",
+        "descr": "Puebla"
+      },
+      {
+        "country": "MEX",
+        "state": "QRO",
+        "descr": "Queretaro"
+      },
+      {
+        "country": "MEX",
+        "state": "QROO",
+        "descr": "Quintana Roo"
+      },
+      {
+        "country": "MEX",
+        "state": "SIN",
+        "descr": "Sinaloa"
+      },
+      {
+        "country": "MEX",
+        "state": "SLP",
+        "descr": "San Luis Potos"
+      },
+      {
+        "country": "MEX",
+        "state": "SON",
+        "descr": "Sonora"
+      },
+      {
+        "country": "MEX",
+        "state": "TAB",
+        "descr": "Tabasco"
+      },
+      {
+        "country": "MEX",
+        "state": "TAMP",
+        "descr": "Tamaulipas"
+      },
+      {
+        "country": "MEX",
+        "state": "TLAX",
+        "descr": "Tlaxcala"
+      },
+      {
+        "country": "MEX",
+        "state": "VER",
+        "descr": "Veracruz"
+      },
+      {
+        "country": "MEX",
+        "state": "YUC",
+        "descr": "Yucatan"
+      },
+      {
+        "country": "MEX",
+        "state": "ZAC",
+        "descr": "Zacatecas"
+      },
+      {
+        "country": "MYS",
+        "state": "JH",
+        "descr": "Johor"
+      },
+      {
+        "country": "MYS",
+        "state": "KD",
+        "descr": "Kedah"
+      },
+      {
+        "country": "MYS",
+        "state": "KT",
+        "descr": "Kelantan"
+      },
+      {
+        "country": "MYS",
+        "state": "LB",
+        "descr": "Labuan"
+      },
+      {
+        "country": "MYS",
+        "state": "ML",
+        "descr": "Melaka"
+      },
+      {
+        "country": "MYS",
+        "state": "NS",
+        "descr": "Negeri Sembilan"
+      },
+      {
+        "country": "MYS",
+        "state": "PG",
+        "descr": "Pulau Pinang"
+      },
+      {
+        "country": "MYS",
+        "state": "PH",
+        "descr": "Pahang"
+      },
+      {
+        "country": "MYS",
+        "state": "PL",
+        "descr": "Perlis"
+      },
+      {
+        "country": "MYS",
+        "state": "PR",
+        "descr": "Perak"
+      },
+      {
+        "country": "MYS",
+        "state": "SB",
+        "descr": "Sabah"
+      },
+      {
+        "country": "MYS",
+        "state": "SL",
+        "descr": "Selangor"
+      },
+      {
+        "country": "MYS",
+        "state": "SR",
+        "descr": "Sarawak"
+      },
+      {
+        "country": "MYS",
+        "state": "TR",
+        "descr": "Trengganu"
+      },
+      {
+        "country": "MYS",
+        "state": "WP",
+        "descr": "Wilayah Persekutuan"
+      },
+      {
+        "country": "NLD",
+        "state": "0003",
+        "descr": "Appingedam"
+      },
+      {
+        "country": "NLD",
+        "state": "0005",
+        "descr": "Bedum"
+      },
+      {
+        "country": "NLD",
+        "state": "0007",
+        "descr": "Bellingwedde"
+      },
+      {
+        "country": "NLD",
+        "state": "0009",
+        "descr": "Ten Boer"
+      },
+      {
+        "country": "NLD",
+        "state": "0010",
+        "descr": "Delfzijl"
+      },
+      {
+        "country": "NLD",
+        "state": "0014",
+        "descr": "Groningen"
+      },
+      {
+        "country": "NLD",
+        "state": "0015",
+        "descr": "Grootegast"
+      },
+      {
+        "country": "NLD",
+        "state": "0017",
+        "descr": "Haren (Gr.)"
+      },
+      {
+        "country": "NLD",
+        "state": "0018",
+        "descr": "Hoogezand-Sappemeer"
+      },
+      {
+        "country": "NLD",
+        "state": "0022",
+        "descr": "Leek"
+      },
+      {
+        "country": "NLD",
+        "state": "0024",
+        "descr": "Loppersum"
+      },
+      {
+        "country": "NLD",
+        "state": "0025",
+        "descr": "Marum"
+      },
+      {
+        "country": "NLD",
+        "state": "0034",
+        "descr": "Almere"
+      },
+      {
+        "country": "NLD",
+        "state": "0037",
+        "descr": "Stadskanaal"
+      },
+      {
+        "country": "NLD",
+        "state": "0039",
+        "descr": "Scheemda"
+      },
+      {
+        "country": "NLD",
+        "state": "0040",
+        "descr": "Slochteren"
+      },
+      {
+        "country": "NLD",
+        "state": "0047",
+        "descr": "Veendam"
+      },
+      {
+        "country": "NLD",
+        "state": "0048",
+        "descr": "Vlagtwedde"
+      },
+      {
+        "country": "NLD",
+        "state": "0050",
+        "descr": "Zeewolde"
+      },
+      {
+        "country": "NLD",
+        "state": "0051",
+        "descr": "Skarsterlan"
+      },
+      {
+        "country": "NLD",
+        "state": "0052",
+        "descr": "Winschoten"
+      },
+      {
+        "country": "NLD",
+        "state": "0053",
+        "descr": "Winsum"
+      },
+      {
+        "country": "NLD",
+        "state": "0055",
+        "descr": "Boarnsterhim"
+      },
+      {
+        "country": "NLD",
+        "state": "0056",
+        "descr": "Zuidhorn"
+      },
+      {
+        "country": "NLD",
+        "state": "0058",
+        "descr": "Dongeradeel"
+      },
+      {
+        "country": "NLD",
+        "state": "0059",
+        "descr": "Achtkarspelen"
+      },
+      {
+        "country": "NLD",
+        "state": "0060",
+        "descr": "Ameland"
+      },
+      {
+        "country": "NLD",
+        "state": "0063",
+        "descr": "Het Bildt"
+      },
+      {
+        "country": "NLD",
+        "state": "0064",
+        "descr": "Bolsward"
+      },
+      {
+        "country": "NLD",
+        "state": "0065",
+        "descr": "Dantumadeel"
+      },
+      {
+        "country": "NLD",
+        "state": "0068",
+        "descr": "Ferwerderadeel"
+      },
+      {
+        "country": "NLD",
+        "state": "0070",
+        "descr": "Franekeradeel"
+      },
+      {
+        "country": "NLD",
+        "state": "0072",
+        "descr": "Harlingen"
+      },
+      {
+        "country": "NLD",
+        "state": "0074",
+        "descr": "Heerenveen"
+      },
+      {
+        "country": "NLD",
+        "state": "0079",
+        "descr": "Kollumerland C.A."
+      },
+      {
+        "country": "NLD",
+        "state": "0080",
+        "descr": "Leeuwarden"
+      },
+      {
+        "country": "NLD",
+        "state": "0081",
+        "descr": "Leeuwarderadeel"
+      },
+      {
+        "country": "NLD",
+        "state": "0082",
+        "descr": "Lemsterland"
+      },
+      {
+        "country": "NLD",
+        "state": "0083",
+        "descr": "Menaldumadeel"
+      },
+      {
+        "country": "NLD",
+        "state": "0085",
+        "descr": "Ooststellingwerf"
+      },
+      {
+        "country": "NLD",
+        "state": "0086",
+        "descr": "Opsterland"
+      },
+      {
+        "country": "NLD",
+        "state": "0088",
+        "descr": "Schiermonnikoog"
+      },
+      {
+        "country": "NLD",
+        "state": "0090",
+        "descr": "Smallingerland"
+      },
+      {
+        "country": "NLD",
+        "state": "0091",
+        "descr": "Sneek"
+      },
+      {
+        "country": "NLD",
+        "state": "0093",
+        "descr": "Terschelling"
+      },
+      {
+        "country": "NLD",
+        "state": "0096",
+        "descr": "Vlieland"
+      },
+      {
+        "country": "NLD",
+        "state": "0098",
+        "descr": "Weststellingwerf"
+      },
+      {
+        "country": "NLD",
+        "state": "0104",
+        "descr": "Nijefurd"
+      },
+      {
+        "country": "NLD",
+        "state": "0105",
+        "descr": "Anloo"
+      },
+      {
+        "country": "NLD",
+        "state": "0106",
+        "descr": "Assen"
+      },
+      {
+        "country": "NLD",
+        "state": "0107",
+        "descr": "Beilen"
+      },
+      {
+        "country": "NLD",
+        "state": "0108",
+        "descr": "Borger"
+      },
+      {
+        "country": "NLD",
+        "state": "0109",
+        "descr": "Coevorden"
+      },
+      {
+        "country": "NLD",
+        "state": "0110",
+        "descr": "Dalen"
+      },
+      {
+        "country": "NLD",
+        "state": "0111",
+        "descr": "Diever"
+      },
+      {
+        "country": "NLD",
+        "state": "0112",
+        "descr": "Dwingeloo"
+      },
+      {
+        "country": "NLD",
+        "state": "0113",
+        "descr": "Eelde"
+      },
+      {
+        "country": "NLD",
+        "state": "0114",
+        "descr": "Emmen"
+      },
+      {
+        "country": "NLD",
+        "state": "0115",
+        "descr": "Gasselte"
+      },
+      {
+        "country": "NLD",
+        "state": "0116",
+        "descr": "Gieten"
+      },
+      {
+        "country": "NLD",
+        "state": "0117",
+        "descr": "Havelte"
+      },
+      {
+        "country": "NLD",
+        "state": "0118",
+        "descr": "Hoogeveen"
+      },
+      {
+        "country": "NLD",
+        "state": "0119",
+        "descr": "Meppel"
+      },
+      {
+        "country": "NLD",
+        "state": "0120",
+        "descr": "Norg"
+      },
+      {
+        "country": "NLD",
+        "state": "0121",
+        "descr": "Nijeveen"
+      },
+      {
+        "country": "NLD",
+        "state": "0122",
+        "descr": "Odoorn"
+      },
+      {
+        "country": "NLD",
+        "state": "0123",
+        "descr": "Oosterhesselen"
+      },
+      {
+        "country": "NLD",
+        "state": "0124",
+        "descr": "Peize"
+      },
+      {
+        "country": "NLD",
+        "state": "0125",
+        "descr": "Roden"
+      },
+      {
+        "country": "NLD",
+        "state": "0126",
+        "descr": "Rolde"
+      },
+      {
+        "country": "NLD",
+        "state": "0127",
+        "descr": "Ruinen"
+      },
+      {
+        "country": "NLD",
+        "state": "0128",
+        "descr": "Ruinerwold"
+      },
+      {
+        "country": "NLD",
+        "state": "0129",
+        "descr": "Schoonebeek"
+      },
+      {
+        "country": "NLD",
+        "state": "0130",
+        "descr": "Sleen"
+      },
+      {
+        "country": "NLD",
+        "state": "0131",
+        "descr": "Smilde"
+      },
+      {
+        "country": "NLD",
+        "state": "0132",
+        "descr": "Vledder"
+      },
+      {
+        "country": "NLD",
+        "state": "0133",
+        "descr": "Vries"
+      },
+      {
+        "country": "NLD",
+        "state": "0134",
+        "descr": "Westerbork"
+      },
+      {
+        "country": "NLD",
+        "state": "0135",
+        "descr": "De Wijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0136",
+        "descr": "Zuidlaren"
+      },
+      {
+        "country": "NLD",
+        "state": "0137",
+        "descr": "Zuidwolde"
+      },
+      {
+        "country": "NLD",
+        "state": "0138",
+        "descr": "Zweeloo"
+      },
+      {
+        "country": "NLD",
+        "state": "0140",
+        "descr": "Littenseradiel"
+      },
+      {
+        "country": "NLD",
+        "state": "0141",
+        "descr": "Almelo"
+      },
+      {
+        "country": "NLD",
+        "state": "0142",
+        "descr": "Ambt Delden"
+      },
+      {
+        "country": "NLD",
+        "state": "0143",
+        "descr": "Avereest"
+      },
+      {
+        "country": "NLD",
+        "state": "0144",
+        "descr": "Bathmen"
+      },
+      {
+        "country": "NLD",
+        "state": "0147",
+        "descr": "Borne"
+      },
+      {
+        "country": "NLD",
+        "state": "0148",
+        "descr": "Dalfsen"
+      },
+      {
+        "country": "NLD",
+        "state": "0149",
+        "descr": "Denekamp"
+      },
+      {
+        "country": "NLD",
+        "state": "0150",
+        "descr": "Deventer"
+      },
+      {
+        "country": "NLD",
+        "state": "0151",
+        "descr": "Diepenheim"
+      },
+      {
+        "country": "NLD",
+        "state": "0152",
+        "descr": "Diepenveen"
+      },
+      {
+        "country": "NLD",
+        "state": "0153",
+        "descr": "Enschede"
+      },
+      {
+        "country": "NLD",
+        "state": "0154",
+        "descr": "Genemuiden"
+      },
+      {
+        "country": "NLD",
+        "state": "0156",
+        "descr": "Goor"
+      },
+      {
+        "country": "NLD",
+        "state": "0157",
+        "descr": "Gramsbergen"
+      },
+      {
+        "country": "NLD",
+        "state": "0565",
+        "descr": "Naaldwijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0567",
+        "descr": "Nieuwerkerk Aan Den Ijss"
+      },
+      {
+        "country": "NLD",
+        "state": "0568",
+        "descr": "Bernisse"
+      },
+      {
+        "country": "NLD",
+        "state": "0569",
+        "descr": "Nieuwkoop"
+      },
+      {
+        "country": "NLD",
+        "state": "0571",
+        "descr": "Nieuw-Lekkerland"
+      },
+      {
+        "country": "NLD",
+        "state": "0575",
+        "descr": "Noordwijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0576",
+        "descr": "Noordwijkerhout"
+      },
+      {
+        "country": "NLD",
+        "state": "0577",
+        "descr": "Nootdorp"
+      },
+      {
+        "country": "NLD",
+        "state": "0579",
+        "descr": "Oegstgeest"
+      },
+      {
+        "country": "NLD",
+        "state": "0580",
+        "descr": "Oostflakkee"
+      },
+      {
+        "country": "NLD",
+        "state": "0584",
+        "descr": "Oud-Beijerland"
+      },
+      {
+        "country": "NLD",
+        "state": "0585",
+        "descr": "Binnenmaas"
+      },
+      {
+        "country": "NLD",
+        "state": "0588",
+        "descr": "Korendijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0589",
+        "descr": "Oudewater"
+      },
+      {
+        "country": "NLD",
+        "state": "0590",
+        "descr": "Papendrecht"
+      },
+      {
+        "country": "NLD",
+        "state": "0594",
+        "descr": "Pijnacker"
+      },
+      {
+        "country": "NLD",
+        "state": "0595",
+        "descr": "Reeuwijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0597",
+        "descr": "Ridderkerk"
+      },
+      {
+        "country": "NLD",
+        "state": "0599",
+        "descr": "Rotterdam"
+      },
+      {
+        "country": "NLD",
+        "state": "0600",
+        "descr": "Rozenburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0602",
+        "descr": "Rijnsburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0603",
+        "descr": "Rijswijk (Z.H.)"
+      },
+      {
+        "country": "NLD",
+        "state": "0604",
+        "descr": "Sassenheim"
+      },
+      {
+        "country": "NLD",
+        "state": "0606",
+        "descr": "Schiedam"
+      },
+      {
+        "country": "NLD",
+        "state": "0607",
+        "descr": "Schipluiden"
+      },
+      {
+        "country": "NLD",
+        "state": "0162",
+        "descr": "Heino"
+      },
+      {
+        "country": "NLD",
+        "state": "0163",
+        "descr": "Hellendoorn"
+      },
+      {
+        "country": "NLD",
+        "state": "0164",
+        "descr": "Hengelo (Ov)"
+      },
+      {
+        "country": "NLD",
+        "state": "0165",
+        "descr": "Holten"
+      },
+      {
+        "country": "NLD",
+        "state": "0166",
+        "descr": "Kampen"
+      },
+      {
+        "country": "NLD",
+        "state": "0168",
+        "descr": "Losser"
+      },
+      {
+        "country": "NLD",
+        "state": "0169",
+        "descr": "Markelo"
+      },
+      {
+        "country": "NLD",
+        "state": "0170",
+        "descr": "Nieuwleusen"
+      },
+      {
+        "country": "NLD",
+        "state": "0171",
+        "descr": "Noordoostpolder"
+      },
+      {
+        "country": "NLD",
+        "state": "0173",
+        "descr": "Oldenzaal"
+      },
+      {
+        "country": "NLD",
+        "state": "0174",
+        "descr": "Olst"
+      },
+      {
+        "country": "NLD",
+        "state": "0175",
+        "descr": "Ommen"
+      },
+      {
+        "country": "NLD",
+        "state": "0176",
+        "descr": "Ootmarsum"
+      },
+      {
+        "country": "NLD",
+        "state": "0177",
+        "descr": "Raalte"
+      },
+      {
+        "country": "NLD",
+        "state": "0178",
+        "descr": "Rijssen"
+      },
+      {
+        "country": "NLD",
+        "state": "0179",
+        "descr": "Stad Delden"
+      },
+      {
+        "country": "NLD",
+        "state": "0180",
+        "descr": "Staphorst"
+      },
+      {
+        "country": "NLD",
+        "state": "0181",
+        "descr": "Steenwijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0183",
+        "descr": "Tubbergen"
+      },
+      {
+        "country": "NLD",
+        "state": "0184",
+        "descr": "Urk"
+      },
+      {
+        "country": "NLD",
+        "state": "0186",
+        "descr": "Vriezenveen"
+      },
+      {
+        "country": "NLD",
+        "state": "0188",
+        "descr": "Weerselo"
+      },
+      {
+        "country": "NLD",
+        "state": "0189",
+        "descr": "Wierden"
+      },
+      {
+        "country": "NLD",
+        "state": "0190",
+        "descr": "Wijhe"
+      },
+      {
+        "country": "NLD",
+        "state": "0191",
+        "descr": "Ijsselmuiden"
+      },
+      {
+        "country": "NLD",
+        "state": "0192",
+        "descr": "Zwartsluis"
+      },
+      {
+        "country": "NLD",
+        "state": "0193",
+        "descr": "Zwolle"
+      },
+      {
+        "country": "NLD",
+        "state": "0194",
+        "descr": "Brederwiede"
+      },
+      {
+        "country": "NLD",
+        "state": "0195",
+        "descr": "Ijsselham"
+      },
+      {
+        "country": "NLD",
+        "state": "0196",
+        "descr": "Rijnwaarden"
+      },
+      {
+        "country": "NLD",
+        "state": "0197",
+        "descr": "Aalten"
+      },
+      {
+        "country": "NLD",
+        "state": "0198",
+        "descr": "Ammerzoden"
+      },
+      {
+        "country": "NLD",
+        "state": "0199",
+        "descr": "Angerlo"
+      },
+      {
+        "country": "NLD",
+        "state": "0200",
+        "descr": "Apeldoorn"
+      },
+      {
+        "country": "NLD",
+        "state": "0202",
+        "descr": "Arnhem"
+      },
+      {
+        "country": "NLD",
+        "state": "0203",
+        "descr": "Barneveld"
+      },
+      {
+        "country": "NLD",
+        "state": "0206",
+        "descr": "Bemmel"
+      },
+      {
+        "country": "NLD",
+        "state": "0207",
+        "descr": "Bergh"
+      },
+      {
+        "country": "NLD",
+        "state": "0209",
+        "descr": "Beuningen"
+      },
+      {
+        "country": "NLD",
+        "state": "0211",
+        "descr": "Borculo"
+      },
+      {
+        "country": "NLD",
+        "state": "0212",
+        "descr": "Brakel"
+      },
+      {
+        "country": "NLD",
+        "state": "0213",
+        "descr": "Brummen"
+      },
+      {
+        "country": "NLD",
+        "state": "0214",
+        "descr": "Buren"
+      },
+      {
+        "country": "NLD",
+        "state": "0216",
+        "descr": "Culemborg"
+      },
+      {
+        "country": "NLD",
+        "state": "0218",
+        "descr": "Didam"
+      },
+      {
+        "country": "NLD",
+        "state": "0219",
+        "descr": "Dinxperlo"
+      },
+      {
+        "country": "NLD",
+        "state": "0220",
+        "descr": "Dodewaard"
+      },
+      {
+        "country": "NLD",
+        "state": "0221",
+        "descr": "Doesburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0222",
+        "descr": "Doetinchem"
+      },
+      {
+        "country": "NLD",
+        "state": "0225",
+        "descr": "Druten"
+      },
+      {
+        "country": "NLD",
+        "state": "0226",
+        "descr": "Duiven"
+      },
+      {
+        "country": "NLD",
+        "state": "0227",
+        "descr": "Echteld"
+      },
+      {
+        "country": "NLD",
+        "state": "0228",
+        "descr": "Ede"
+      },
+      {
+        "country": "NLD",
+        "state": "0229",
+        "descr": "Eibergen"
+      },
+      {
+        "country": "NLD",
+        "state": "0230",
+        "descr": "Elburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0231",
+        "descr": "Elst"
+      },
+      {
+        "country": "NLD",
+        "state": "0232",
+        "descr": "Epe"
+      },
+      {
+        "country": "NLD",
+        "state": "0233",
+        "descr": "Ermelo"
+      },
+      {
+        "country": "NLD",
+        "state": "0236",
+        "descr": "Geldermalsen"
+      },
+      {
+        "country": "NLD",
+        "state": "0237",
+        "descr": "Gendringen"
+      },
+      {
+        "country": "NLD",
+        "state": "0238",
+        "descr": "Gendt"
+      },
+      {
+        "country": "NLD",
+        "state": "0239",
+        "descr": "Gorssel"
+      },
+      {
+        "country": "NLD",
+        "state": "0240",
+        "descr": "Groenlo"
+      },
+      {
+        "country": "NLD",
+        "state": "0241",
+        "descr": "Groesbeek"
+      },
+      {
+        "country": "NLD",
+        "state": "0243",
+        "descr": "Harderwijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0244",
+        "descr": "Hattem"
+      },
+      {
+        "country": "NLD",
+        "state": "0245",
+        "descr": "Hedel"
+      },
+      {
+        "country": "NLD",
+        "state": "0246",
+        "descr": "Heerde"
+      },
+      {
+        "country": "NLD",
+        "state": "0247",
+        "descr": "Heerewaarden"
+      },
+      {
+        "country": "NLD",
+        "state": "0248",
+        "descr": "Hengelo (Gld)"
+      },
+      {
+        "country": "NLD",
+        "state": "0251",
+        "descr": "Heteren"
+      },
+      {
+        "country": "NLD",
+        "state": "0252",
+        "descr": "Heumen"
+      },
+      {
+        "country": "NLD",
+        "state": "0253",
+        "descr": "Hoevelaken"
+      },
+      {
+        "country": "NLD",
+        "state": "0255",
+        "descr": "Huissen"
+      },
+      {
+        "country": "NLD",
+        "state": "0256",
+        "descr": "Hummelo En Keppel"
+      },
+      {
+        "country": "NLD",
+        "state": "0257",
+        "descr": "Kerkwijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0258",
+        "descr": "Kesteren"
+      },
+      {
+        "country": "NLD",
+        "state": "0260",
+        "descr": "Lichtenvoorde"
+      },
+      {
+        "country": "NLD",
+        "state": "0261",
+        "descr": "Lienden"
+      },
+      {
+        "country": "NLD",
+        "state": "0262",
+        "descr": "Lochem"
+      },
+      {
+        "country": "NLD",
+        "state": "0263",
+        "descr": "Maasdriel"
+      },
+      {
+        "country": "NLD",
+        "state": "0264",
+        "descr": "Maurik"
+      },
+      {
+        "country": "NLD",
+        "state": "0265",
+        "descr": "Millingen Aan De Rijn"
+      },
+      {
+        "country": "NLD",
+        "state": "0266",
+        "descr": "Neede"
+      },
+      {
+        "country": "NLD",
+        "state": "0267",
+        "descr": "Nijkerk"
+      },
+      {
+        "country": "NLD",
+        "state": "0268",
+        "descr": "Nijmegen"
+      },
+      {
+        "country": "NLD",
+        "state": "0269",
+        "descr": "Oldebroek"
+      },
+      {
+        "country": "NLD",
+        "state": "0273",
+        "descr": "Putten"
+      },
+      {
+        "country": "NLD",
+        "state": "0274",
+        "descr": "Renkum"
+      },
+      {
+        "country": "NLD",
+        "state": "0275",
+        "descr": "Rheden"
+      },
+      {
+        "country": "NLD",
+        "state": "0276",
+        "descr": "Rossum"
+      },
+      {
+        "country": "NLD",
+        "state": "0277",
+        "descr": "Rozendaal"
+      },
+      {
+        "country": "NLD",
+        "state": "0278",
+        "descr": "Ruurlo"
+      },
+      {
+        "country": "NLD",
+        "state": "0279",
+        "descr": "Scherpenzeel"
+      },
+      {
+        "country": "NLD",
+        "state": "0280",
+        "descr": "Steenderen"
+      },
+      {
+        "country": "NLD",
+        "state": "0281",
+        "descr": "Tiel"
+      },
+      {
+        "country": "NLD",
+        "state": "0282",
+        "descr": "Ubbergen"
+      },
+      {
+        "country": "NLD",
+        "state": "0283",
+        "descr": "Valburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0285",
+        "descr": "Voorst"
+      },
+      {
+        "country": "NLD",
+        "state": "0286",
+        "descr": "Vorden"
+      },
+      {
+        "country": "NLD",
+        "state": "0289",
+        "descr": "Wageningen"
+      },
+      {
+        "country": "NLD",
+        "state": "0291",
+        "descr": "Warnsveld"
+      },
+      {
+        "country": "NLD",
+        "state": "0292",
+        "descr": "Wehl"
+      },
+      {
+        "country": "NLD",
+        "state": "0293",
+        "descr": "Westervoort"
+      },
+      {
+        "country": "NLD",
+        "state": "0294",
+        "descr": "Winterswijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0295",
+        "descr": "Wisch"
+      },
+      {
+        "country": "NLD",
+        "state": "0296",
+        "descr": "Wijchen"
+      },
+      {
+        "country": "NLD",
+        "state": "0297",
+        "descr": "Zaltbommel"
+      },
+      {
+        "country": "NLD",
+        "state": "0298",
+        "descr": "Zelhem"
+      },
+      {
+        "country": "NLD",
+        "state": "0299",
+        "descr": "Zevenaar"
+      },
+      {
+        "country": "NLD",
+        "state": "0301",
+        "descr": "Zutphen"
+      },
+      {
+        "country": "NLD",
+        "state": "0302",
+        "descr": "Nunspeet"
+      },
+      {
+        "country": "NLD",
+        "state": "0303",
+        "descr": "Dronten"
+      },
+      {
+        "country": "NLD",
+        "state": "0304",
+        "descr": "Neerijnen"
+      },
+      {
+        "country": "NLD",
+        "state": "0305",
+        "descr": "Abcoude"
+      },
+      {
+        "country": "NLD",
+        "state": "0306",
+        "descr": "Amerongen"
+      },
+      {
+        "country": "NLD",
+        "state": "0307",
+        "descr": "Amersfoort"
+      },
+      {
+        "country": "NLD",
+        "state": "0308",
+        "descr": "Baarn"
+      },
+      {
+        "country": "NLD",
+        "state": "0310",
+        "descr": "De Bilt"
+      },
+      {
+        "country": "NLD",
+        "state": "0311",
+        "descr": "Breukelen"
+      },
+      {
+        "country": "NLD",
+        "state": "0312",
+        "descr": "Bunnik"
+      },
+      {
+        "country": "NLD",
+        "state": "0313",
+        "descr": "Bunschoten"
+      },
+      {
+        "country": "NLD",
+        "state": "0314",
+        "descr": "Cothen"
+      },
+      {
+        "country": "NLD",
+        "state": "0315",
+        "descr": "Doorn"
+      },
+      {
+        "country": "NLD",
+        "state": "0316",
+        "descr": "Driebergen-Rijsenburg"
+      },
+      {
+        "country": "NLD",
+        "state": "0317",
+        "descr": "Eemnes"
+      },
+      {
+        "country": "NLD",
+        "state": "0318",
+        "descr": "Harmelen"
+      },
+      {
+        "country": "NLD",
+        "state": "0321",
+        "descr": "Houten"
+      },
+      {
+        "country": "NLD",
+        "state": "0325",
+        "descr": "Langbroek"
+      },
+      {
+        "country": "NLD",
+        "state": "0326",
+        "descr": "Leersum"
+      },
+      {
+        "country": "NLD",
+        "state": "0327",
+        "descr": "Leusden"
+      },
+      {
+        "country": "NLD",
+        "state": "0329",
+        "descr": "Loenen"
+      },
+      {
+        "country": "NLD",
+        "state": "0330",
+        "descr": "Loosdrecht"
+      },
+      {
+        "country": "NLD",
+        "state": "0331",
+        "descr": "Lopik"
+      },
+      {
+        "country": "NLD",
+        "state": "0332",
+        "descr": "Maarn"
+      },
+      {
+        "country": "NLD",
+        "state": "0333",
+        "descr": "Maarssen"
+      },
+      {
+        "country": "NLD",
+        "state": "0334",
+        "descr": "Maartensdijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0335",
+        "descr": "Montfoort"
+      },
+      {
+        "country": "NLD",
+        "state": "0339",
+        "descr": "Renswoude"
+      },
+      {
+        "country": "NLD",
+        "state": "0340",
+        "descr": "Rhenen"
+      },
+      {
+        "country": "NLD",
+        "state": "0342",
+        "descr": "Soest"
+      },
+      {
+        "country": "NLD",
+        "state": "0344",
+        "descr": "Utrecht"
+      },
+      {
+        "country": "NLD",
+        "state": "0345",
+        "descr": "Veenendaal"
+      },
+      {
+        "country": "NLD",
+        "state": "0347",
+        "descr": "Vleuten-De Meern"
+      },
+      {
+        "country": "NLD",
+        "state": "0351",
+        "descr": "Woudenberg"
+      },
+      {
+        "country": "NLD",
+        "state": "0352",
+        "descr": "Wijk Bij Duurstede"
+      },
+      {
+        "country": "NLD",
+        "state": "0353",
+        "descr": "Ijsselstein"
+      },
+      {
+        "country": "NLD",
+        "state": "0355",
+        "descr": "Zeist"
+      },
+      {
+        "country": "NLD",
+        "state": "0356",
+        "descr": "Nieuwegein"
+      },
+      {
+        "country": "NLD",
+        "state": "0357",
+        "descr": "Egmond"
+      },
+      {
+        "country": "NLD",
+        "state": "0358",
+        "descr": "Aalsmeer"
+      },
+      {
+        "country": "NLD",
+        "state": "0360",
+        "descr": "Akersloot"
+      },
+      {
+        "country": "NLD",
+        "state": "0361",
+        "descr": "Alkmaar"
+      },
+      {
+        "country": "NLD",
+        "state": "0362",
+        "descr": "Amstelveen"
+      },
+      {
+        "country": "NLD",
+        "state": "0363",
+        "descr": "Amsterdam"
+      },
+      {
+        "country": "NLD",
+        "state": "0364",
+        "descr": "Andijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0365",
+        "descr": "Graft-De Rijp"
+      },
+      {
+        "country": "NLD",
+        "state": "0366",
+        "descr": "Anna Paulowna"
+      },
+      {
+        "country": "NLD",
+        "state": "0370",
+        "descr": "Beemster"
+      },
+      {
+        "country": "NLD",
+        "state": "0372",
+        "descr": "Bennebroek"
+      },
+      {
+        "country": "NLD",
+        "state": "0373",
+        "descr": "Bergen Nh"
+      },
+      {
+        "country": "NLD",
+        "state": "0375",
+        "descr": "Beverwijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0376",
+        "descr": "Blaricum"
+      },
+      {
+        "country": "NLD",
+        "state": "0377",
+        "descr": "Bloemendaal"
+      },
+      {
+        "country": "NLD",
+        "state": "0381",
+        "descr": "Bussum"
+      },
+      {
+        "country": "NLD",
+        "state": "0383",
+        "descr": "Castricum"
+      },
+      {
+        "country": "NLD",
+        "state": "0384",
+        "descr": "Diemen"
+      },
+      {
+        "country": "NLD",
+        "state": "0385",
+        "descr": "Edam-Volendam"
+      },
+      {
+        "country": "NLD",
+        "state": "0388",
+        "descr": "Enkhuizen"
+      },
+      {
+        "country": "NLD",
+        "state": "0390",
+        "descr": "'s-Graveland"
+      },
+      {
+        "country": "NLD",
+        "state": "0392",
+        "descr": "Haarlem"
+      },
+      {
+        "country": "NLD",
+        "state": "0393",
+        "descr": "Haarlemmerliede En Spaar"
+      },
+      {
+        "country": "NLD",
+        "state": "0394",
+        "descr": "Haarlemmermeer"
+      },
+      {
+        "country": "NLD",
+        "state": "0395",
+        "descr": "Harenkarspel"
+      },
+      {
+        "country": "NLD",
+        "state": "0396",
+        "descr": "Heemskerk"
+      },
+      {
+        "country": "NLD",
+        "state": "0397",
+        "descr": "Heemstede"
+      },
+      {
+        "country": "NLD",
+        "state": "0398",
+        "descr": "Heerhugowaard"
+      },
+      {
+        "country": "NLD",
+        "state": "0399",
+        "descr": "Heiloo"
+      },
+      {
+        "country": "NLD",
+        "state": "0400",
+        "descr": "Den Helder"
+      },
+      {
+        "country": "NLD",
+        "state": "0402",
+        "descr": "Hilversum"
+      },
+      {
+        "country": "NLD",
+        "state": "0405",
+        "descr": "Hoorn"
+      },
+      {
+        "country": "NLD",
+        "state": "0406",
+        "descr": "Huizen"
+      },
+      {
+        "country": "NLD",
+        "state": "0412",
+        "descr": "Niedorp"
+      },
+      {
+        "country": "NLD",
+        "state": "0415",
+        "descr": "Landsmeer"
+      },
+      {
+        "country": "NLD",
+        "state": "0416",
+        "descr": "Langedijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0417",
+        "descr": "Laren Nh"
+      },
+      {
+        "country": "NLD",
+        "state": "0418",
+        "descr": "Limmen"
+      },
+      {
+        "country": "NLD",
+        "state": "0420",
+        "descr": "Medemblik"
+      },
+      {
+        "country": "NLD",
+        "state": "0424",
+        "descr": "Muiden"
+      },
+      {
+        "country": "NLD",
+        "state": "0425",
+        "descr": "Naarden"
+      },
+      {
+        "country": "NLD",
+        "state": "0426",
+        "descr": "Nederhorst Den Berg"
+      },
+      {
+        "country": "NLD",
+        "state": "0429",
+        "descr": "Obdam"
+      },
+      {
+        "country": "NLD",
+        "state": "0431",
+        "descr": "Oostzaan"
+      },
+      {
+        "country": "NLD",
+        "state": "0432",
+        "descr": "Opmeer"
+      },
+      {
+        "country": "NLD",
+        "state": "0437",
+        "descr": "Ouder-Amstel"
+      },
+      {
+        "country": "NLD",
+        "state": "0439",
+        "descr": "Purmerend"
+      },
+      {
+        "country": "NLD",
+        "state": "0441",
+        "descr": "Schagen"
+      },
+      {
+        "country": "NLD",
+        "state": "0444",
+        "descr": "Schoorl"
+      },
+      {
+        "country": "NLD",
+        "state": "0448",
+        "descr": "Texel"
+      },
+      {
+        "country": "NLD",
+        "state": "0450",
+        "descr": "Uitgeest"
+      },
+      {
+        "country": "NLD",
+        "state": "0451",
+        "descr": "Uithoorn"
+      },
+      {
+        "country": "NLD",
+        "state": "0453",
+        "descr": "Velsen"
+      },
+      {
+        "country": "NLD",
+        "state": "0454",
+        "descr": "Venhuizen"
+      },
+      {
+        "country": "NLD",
+        "state": "0457",
+        "descr": "Weesp"
+      },
+      {
+        "country": "NLD",
+        "state": "0458",
+        "descr": "Schermer"
+      },
+      {
+        "country": "NLD",
+        "state": "0459",
+        "descr": "Wervershoof"
+      },
+      {
+        "country": "NLD",
+        "state": "0462",
+        "descr": "Wieringen"
+      },
+      {
+        "country": "NLD",
+        "state": "0463",
+        "descr": "Wieringermeer"
+      },
+      {
+        "country": "NLD",
+        "state": "0466",
+        "descr": "Wognum"
+      },
+      {
+        "country": "NLD",
+        "state": "0473",
+        "descr": "Zandvoort"
+      },
+      {
+        "country": "NLD",
+        "state": "0476",
+        "descr": "Zijpe"
+      },
+      {
+        "country": "NLD",
+        "state": "0478",
+        "descr": "Zeevang"
+      },
+      {
+        "country": "NLD",
+        "state": "0479",
+        "descr": "Zaanstad"
+      },
+      {
+        "country": "NLD",
+        "state": "0480",
+        "descr": "Ter Aar"
+      },
+      {
+        "country": "NLD",
+        "state": "0482",
+        "descr": "Alblasserdam"
+      },
+      {
+        "country": "NLD",
+        "state": "0483",
+        "descr": "Alkemade"
+      },
+      {
+        "country": "NLD",
+        "state": "0484",
+        "descr": "Alphen Aan Den Rijn"
+      },
+      {
+        "country": "NLD",
+        "state": "0489",
+        "descr": "Barendrecht"
+      },
+      {
+        "country": "NLD",
+        "state": "0491",
+        "descr": "Bergambacht"
+      },
+      {
+        "country": "NLD",
+        "state": "0492",
+        "descr": "Bergschenhoek"
+      },
+      {
+        "country": "NLD",
+        "state": "0493",
+        "descr": "Berkel En Rodenrijs"
+      },
+      {
+        "country": "NLD",
+        "state": "0495",
+        "descr": "Bleiswijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0497",
+        "descr": "Bodegraven"
+      },
+      {
+        "country": "NLD",
+        "state": "0498",
+        "descr": "Drechterland"
+      },
+      {
+        "country": "NLD",
+        "state": "0499",
+        "descr": "Boskoop"
+      },
+      {
+        "country": "NLD",
+        "state": "0501",
+        "descr": "Brielle"
+      },
+      {
+        "country": "NLD",
+        "state": "0502",
+        "descr": "Capelle Aan Den Ijssel"
+      },
+      {
+        "country": "NLD",
+        "state": "0503",
+        "descr": "Delft"
+      },
+      {
+        "country": "NLD",
+        "state": "0504",
+        "descr": "Dirksland"
+      },
+      {
+        "country": "NLD",
+        "state": "0505",
+        "descr": "Dordrecht"
+      },
+      {
+        "country": "NLD",
+        "state": "0511",
+        "descr": "Goedereede"
+      },
+      {
+        "country": "NLD",
+        "state": "0512",
+        "descr": "Gorinchem"
+      },
+      {
+        "country": "NLD",
+        "state": "0513",
+        "descr": "Gouda"
+      },
+      {
+        "country": "NLD",
+        "state": "0517",
+        "descr": "'s-Gravendeel"
+      },
+      {
+        "country": "NLD",
+        "state": "0518",
+        "descr": "'s-Gravenhage"
+      },
+      {
+        "country": "NLD",
+        "state": "0519",
+        "descr": "'s-Gravenzande"
+      },
+      {
+        "country": "NLD",
+        "state": "0523",
+        "descr": "Hardinxveld-Giessendam"
+      },
+      {
+        "country": "NLD",
+        "state": "0526",
+        "descr": "Heerjansdam"
+      },
+      {
+        "country": "NLD",
+        "state": "0529",
+        "descr": "Noorder-Koggenland"
+      },
+      {
+        "country": "NLD",
+        "state": "0530",
+        "descr": "Hellevoetsluis"
+      },
+      {
+        "country": "NLD",
+        "state": "0531",
+        "descr": "Hendrik-Ido-Ambacht"
+      },
+      {
+        "country": "NLD",
+        "state": "0532",
+        "descr": "Stede Broec"
+      },
+      {
+        "country": "NLD",
+        "state": "0534",
+        "descr": "Hillegom"
+      },
+      {
+        "country": "NLD",
+        "state": "0537",
+        "descr": "Katwijk"
+      },
+      {
+        "country": "NLD",
+        "state": "0542",
+        "descr": "Krimpen Aan Den Ijssel"
+      },
+      {
+        "country": "NLD",
+        "state": "0545",
+        "descr": "Leerdam"
+      },
+      {
+        "country": "NLD",
+        "state": "0546",
+        "descr": "Leiden"
+      },
+      {
+        "country": "NLD",
+        "state": "0547",
+        "descr": "Leiderdorp"
+      },
+      {
+        "country": "NLD",
+        "state": "0548",
+        "descr": "Leidschendam"
+      },
+      {
+        "country": "NLD",
+        "state": "0552",
+        "descr": "De Lier"
+      },
+      {
+        "country": "NLD",
+        "state": "0553",
+        "descr": "Lisse"
+      },
+      {
+        "country": "NLD",
+        "state": "0555",
+        "descr": "Maasland"
+      },
+      {
+        "country": "NLD",
+        "state": "0556",
+        "descr": "Maassluis"
+      },
+      {
+        "country": "NLD",
+        "state": "0558",
+        "descr": "Wester-Koggenland"
+      },
+      {
+        "country": "NLD",
+        "state": "0559",
+        "descr": "Middelharnis"
+      },
+      {
+        "country": "NLD",
+        "state": "0562",
+        "descr": "Monster"
+      },
+      {
+        "country": "NLD",
+        "state": "0563",
+        "descr": "Moordrecht"
+      },
+      {
+        "country": "AUS",
+        "state": "ACT",
+        "descr": "Austl. Cap. Terr."
+      },
+      {
+        "country": "AUS",
+        "state": "NSW",
+        "descr": "New South Wales"
+      },
+      {
+        "country": "AUS",
+        "state": "NT",
+        "descr": "Northern Territory"
+      },
+      {
+        "country": "USA",
+        "state": "MT",
+        "descr": "Montana"
+      },
+      {
+        "country": "USA",
+        "state": "NC",
+        "descr": "North Carolina"
+      },
+      {
+        "country": "USA",
+        "state": "ND",
+        "descr": "North Dakota"
+      },
+      {
+        "country": "USA",
+        "state": "NE",
+        "descr": "Nebraska"
+      },
+      {
+        "country": "USA",
+        "state": "NH",
+        "descr": "New Hampshire"
+      },
+      {
+        "country": "USA",
+        "state": "NJ",
+        "descr": "New Jersey"
+      },
+      {
+        "country": "USA",
+        "state": "NM",
+        "descr": "New Mexico"
+      },
+      {
+        "country": "USA",
+        "state": "NV",
+        "descr": "Nevada"
+      },
+      {
+        "country": "USA",
+        "state": "NY",
+        "descr": "New York"
+      },
+      {
+        "country": "USA",
+        "state": "OH",
+        "descr": "Ohio"
+      },
+      {
+        "country": "USA",
+        "state": "OK",
+        "descr": "Oklahoma"
+      },
+      {
+        "country": "USA",
+        "state": "OR",
+        "descr": "Oregon"
+      },
+      {
+        "country": "USA",
+        "state": "PA",
+        "descr": "Pennsylvania"
+      },
+      {
+        "country": "USA",
+        "state": "PR",
+        "descr": "Puerto Rico"
+      },
+      {
+        "country": "USA",
+        "state": "RI",
+        "descr": "Rhode Island"
+      },
+      {
+        "country": "USA",
+        "state": "SC",
+        "descr": "South Carolina"
+      },
+      {
+        "country": "USA",
+        "state": "SD",
+        "descr": "South Dakota"
+      },
+      {
+        "country": "USA",
+        "state": "TN",
+        "descr": "Tennessee"
+      },
+      {
+        "country": "USA",
+        "state": "TX",
+        "descr": "Texas"
+      },
+      {
+        "country": "USA",
+        "state": "UT",
+        "descr": "Utah"
+      },
+      {
+        "country": "USA",
+        "state": "VA",
+        "descr": "Virginia"
+      },
+      {
+        "country": "USA",
+        "state": "VI",
+        "descr": "Virgin Islands"
+      },
+      {
+        "country": "USA",
+        "state": "VT",
+        "descr": "Vermont"
+      },
+      {
+        "country": "USA",
+        "state": "WA",
+        "descr": "Washington"
+      },
+      {
+        "country": "USA",
+        "state": "WI",
+        "descr": "Wisconsin"
+      },
+      {
+        "country": "USA",
+        "state": "WV",
+        "descr": "West Virginia"
+      },
+      {
+        "country": "USA",
+        "state": "WY",
+        "descr": "Wyoming"
+      },
+      {
+        "country": "ITA",
+        "state": "BT",
+        "descr": "Barletta-Andria-Trani"
+      },
+      {
+        "country": "ITA",
+        "state": "CI",
+        "descr": "Carbonia-Iglesias"
+      },
+      {
+        "country": "ITA",
+        "state": "FC",
+        "descr": "Forlì-Cesena"
+      },
+      {
+        "country": "ITA",
+        "state": "FM",
+        "descr": "Fermo"
+      },
+      {
+        "country": "ITA",
+        "state": "MB",
+        "descr": "Monza e Brianza"
+      },
+      {
+        "country": "ITA",
+        "state": "OG",
+        "descr": "Ogliastra"
+      },
+      {
+        "country": "ITA",
+        "state": "OT",
+        "descr": "Olbia-Tempio"
+      },
+      {
+        "country": "ITA",
+        "state": "PU",
+        "descr": "Pesaro e Urbino"
+      },
+      {
+        "country": "ITA",
+        "state": "VS",
+        "descr": "Medio Campidano"
+      },
+      {
+        "country": "USA",
+        "state": "MP",
+        "descr": "Northern Mariana Islands"
+      },
+      {
+        "country": "VEN",
+        "state": "NE",
+        "descr": "Nueva Esparta"
+      },
+      {
+        "country": "VEN",
+        "state": "PO",
+        "descr": "Portuguesa"
+      },
+      {
+        "country": "VEN",
+        "state": "SU",
+        "descr": "Sucre"
+      },
+      {
+        "country": "VEN",
+        "state": "TA",
+        "descr": "Tachira"
+      },
+      {
+        "country": "VEN",
+        "state": "TR",
+        "descr": "Trujillo"
+      },
+      {
+        "country": "VEN",
+        "state": "YA",
+        "descr": "Yaracuy"
+      },
+      {
+        "country": "VEN",
+        "state": "ZU",
+        "descr": "Zulia"
+      },
+      {
+        "country": "ARG",
+        "state": "BA",
+        "descr": "Buenos Aires"
+      },
+      {
+        "country": "ARG",
+        "state": "CB",
+        "descr": "Chubut"
+      },
+      {
+        "country": "ARG",
+        "state": "CF",
+        "descr": "Capital Federal"
+      },
+      {
+        "country": "ARG",
+        "state": "CH",
+        "descr": "Chaco"
+      },
+      {
+        "country": "ARG",
+        "state": "CO",
+        "descr": "Cordoba"
+      },
+      {
+        "country": "ARG",
+        "state": "CR",
+        "descr": "Corrientes"
+      },
+      {
+        "country": "ARG",
+        "state": "CT",
+        "descr": "Catamarca"
+      },
+      {
+        "country": "ARG",
+        "state": "ER",
+        "descr": "Entre Rios"
+      },
+      {
+        "country": "ARG",
+        "state": "FO",
+        "descr": "Formosa"
+      },
+      {
+        "country": "ARG",
+        "state": "JU",
+        "descr": "Jujuy"
+      },
+      {
+        "country": "ARG",
+        "state": "LP",
+        "descr": "La Pampa"
+      },
+      {
+        "country": "ARG",
+        "state": "LR",
+        "descr": "La Rioja"
+      },
+      {
+        "country": "ARG",
+        "state": "MI",
+        "descr": "Misiones"
+      },
+      {
+        "country": "ARG",
+        "state": "MZ",
+        "descr": "Mendoza"
+      },
+      {
+        "country": "ARG",
+        "state": "NQ",
+        "descr": "Neuquen"
+      },
+      {
+        "country": "ARG",
+        "state": "RN",
+        "descr": "Rio Negro"
+      },
+      {
+        "country": "ARG",
+        "state": "SA",
+        "descr": "Salta"
+      },
+      {
+        "country": "ARG",
+        "state": "SC",
+        "descr": "Santa Cruz"
+      },
+      {
+        "country": "ARG",
+        "state": "SE",
+        "descr": "Santiago del Estero"
+      },
+      {
+        "country": "ARG",
+        "state": "SF",
+        "descr": "Santa Fe"
+      },
+      {
+        "country": "ARG",
+        "state": "SJ",
+        "descr": "San Juan"
+      },
+      {
+        "country": "ARG",
+        "state": "SL",
+        "descr": "San Luis"
+      },
+      {
+        "country": "ARG",
+        "state": "TF",
+        "descr": "Tierra del Fuego"
+      },
+      {
+        "country": "ARG",
+        "state": "TU",
+        "descr": "Tucuman"
+      },
+      {
+        "country": "THA",
+        "state": "14",
+        "descr": "Phra Nakhon Si Ayutthaya"
+      },
+      {
+        "country": "THA",
+        "state": "15",
+        "descr": "Ang Thong"
+      },
+      {
+        "country": "THA",
+        "state": "16",
+        "descr": "Lop Buri"
+      },
+      {
+        "country": "THA",
+        "state": "17",
+        "descr": "Sing Buri"
+      },
+      {
+        "country": "THA",
+        "state": "18",
+        "descr": "Chai Nat"
+      },
+      {
+        "country": "THA",
+        "state": "19",
+        "descr": "Saraburi"
+      },
+      {
+        "country": "THA",
+        "state": "20",
+        "descr": "Chon Buri"
+      },
+      {
+        "country": "THA",
+        "state": "21",
+        "descr": "Rayong"
+      },
+      {
+        "country": "THA",
+        "state": "22",
+        "descr": "Chanthaburi"
+      },
+      {
+        "country": "THA",
+        "state": "23",
+        "descr": "Trat"
+      },
+      {
+        "country": "THA",
+        "state": "24",
+        "descr": "Chachoengsao"
+      },
+      {
+        "country": "THA",
+        "state": "25",
+        "descr": "Prachin Buri"
+      },
+      {
+        "country": "THA",
+        "state": "26",
+        "descr": "Nakhon Nayok"
+      },
+      {
+        "country": "THA",
+        "state": "27",
+        "descr": "Sa Kaeo"
+      },
+      {
+        "country": "THA",
+        "state": "30",
+        "descr": "Nakhon Ratchasima"
+      },
+      {
+        "country": "THA",
+        "state": "31",
+        "descr": "Buri Ram"
+      },
+      {
+        "country": "THA",
+        "state": "32",
+        "descr": "Surin"
+      },
+      {
+        "country": "THA",
+        "state": "33",
+        "descr": "Si Sa Ket"
+      },
+      {
+        "country": "THA",
+        "state": "34",
+        "descr": "Ubon Ratchathani"
+      },
+      {
+        "country": "THA",
+        "state": "35",
+        "descr": "Yasothon"
+      },
+      {
+        "country": "THA",
+        "state": "36",
+        "descr": "Chaiyaphum"
+      },
+      {
+        "country": "THA",
+        "state": "37",
+        "descr": "Amnat Charoen"
+      },
+      {
+        "country": "THA",
+        "state": "39",
+        "descr": "Nong Bua Lam Phu"
+      },
+      {
+        "country": "THA",
+        "state": "40",
+        "descr": "Khon Kaen"
+      },
+      {
+        "country": "THA",
+        "state": "41",
+        "descr": "Udon Thani"
+      },
+      {
+        "country": "THA",
+        "state": "42",
+        "descr": "Loei"
+      },
+      {
+        "country": "THA",
+        "state": "43",
+        "descr": "Nong Khai"
+      },
+      {
+        "country": "THA",
+        "state": "44",
+        "descr": "Maha Sarakham"
+      },
+      {
+        "country": "THA",
+        "state": "45",
+        "descr": "Roi Et"
+      },
+      {
+        "country": "THA",
+        "state": "46",
+        "descr": "Kalasin"
+      },
+      {
+        "country": "THA",
+        "state": "47",
+        "descr": "Sakon Nakhon"
+      },
+      {
+        "country": "THA",
+        "state": "48",
+        "descr": "Nakhon Phanom"
+      },
+      {
+        "country": "THA",
+        "state": "49",
+        "descr": "Mukdahan"
+      },
+      {
+        "country": "THA",
+        "state": "50",
+        "descr": "Chiang Mai"
+      },
+      {
+        "country": "THA",
+        "state": "51",
+        "descr": "Lamphun"
+      },
+      {
+        "country": "THA",
+        "state": "52",
+        "descr": "Lampang"
+      },
+      {
+        "country": "THA",
+        "state": "53",
+        "descr": "Uttaradit"
+      },
+      {
+        "country": "THA",
+        "state": "54",
+        "descr": "Phrae"
+      },
+      {
+        "country": "THA",
+        "state": "55",
+        "descr": "Nan"
+      },
+      {
+        "country": "THA",
+        "state": "56",
+        "descr": "Phayao"
+      },
+      {
+        "country": "THA",
+        "state": "57",
+        "descr": "Chiang Rai"
+      },
+      {
+        "country": "THA",
+        "state": "58",
+        "descr": "Mae Hong Son"
+      },
+      {
+        "country": "THA",
+        "state": "60",
+        "descr": "Nakhon Sawan"
+      },
+      {
+        "country": "THA",
+        "state": "61",
+        "descr": "Uthai Thani"
+      },
+      {
+        "country": "THA",
+        "state": "62",
+        "descr": "Kamphaeng Phet"
+      },
+      {
+        "country": "THA",
+        "state": "63",
+        "descr": "Tak"
+      },
+      {
+        "country": "THA",
+        "state": "64",
+        "descr": "Sukhothai"
+      },
+      {
+        "country": "THA",
+        "state": "65",
+        "descr": "Phitsanulok"
+      },
+      {
+        "country": "THA",
+        "state": "66",
+        "descr": "Phichit"
+      },
+      {
+        "country": "THA",
+        "state": "67",
+        "descr": "Phetchabun"
+      },
+      {
+        "country": "THA",
+        "state": "70",
+        "descr": "Ratchaburi"
+      },
+      {
+        "country": "THA",
+        "state": "71",
+        "descr": "Kanchanaburi"
+      },
+      {
+        "country": "THA",
+        "state": "72",
+        "descr": "Suphanburi"
+      },
+      {
+        "country": "THA",
+        "state": "73",
+        "descr": "Nakhon Pathom"
+      },
+      {
+        "country": "THA",
+        "state": "74",
+        "descr": "Samut Sakhon"
+      },
+      {
+        "country": "THA",
+        "state": "75",
+        "descr": "Samut Songkhram"
+      },
+      {
+        "country": "THA",
+        "state": "76",
+        "descr": "Phetchaburi"
+      },
+      {
+        "country": "THA",
+        "state": "77",
+        "descr": "Prachuap Khiri Khan"
+      },
+      {
+        "country": "THA",
+        "state": "80",
+        "descr": "Nakhon Si Thammarat"
+      },
+      {
+        "country": "THA",
+        "state": "81",
+        "descr": "Krabi"
+      },
+      {
+        "country": "THA",
+        "state": "82",
+        "descr": "Phang Nga"
+      },
+      {
+        "country": "THA",
+        "state": "83",
+        "descr": "Phuket"
+      },
+      {
+        "country": "THA",
+        "state": "84",
+        "descr": "Surat Thani"
+      },
+      {
+        "country": "THA",
+        "state": "85",
+        "descr": "Ranong"
+      },
+      {
+        "country": "THA",
+        "state": "86",
+        "descr": "Chumpon"
+      },
+      {
+        "country": "THA",
+        "state": "90",
+        "descr": "Songkhla"
+      },
+      {
+        "country": "THA",
+        "state": "91",
+        "descr": "Satun"
+      },
+      {
+        "country": "THA",
+        "state": "92",
+        "descr": "Trang"
+      },
+      {
+        "country": "THA",
+        "state": "93",
+        "descr": "Phattalung"
+      },
+      {
+        "country": "THA",
+        "state": "94",
+        "descr": "Pattani"
+      },
+      {
+        "country": "THA",
+        "state": "95",
+        "descr": "Yala"
+      },
+      {
+        "country": "THA",
+        "state": "96",
+        "descr": "Narathiwat"
+      },
+      {
+        "country": "THA",
+        "state": "S",
+        "descr": "Pattaya"
+      },
+      {
+        "country": "CHN",
+        "state": "11",
+        "descr": "Beijing"
+      },
+      {
+        "country": "CHN",
+        "state": "12",
+        "descr": "Tianjin"
+      },
+      {
+        "country": "CHN",
+        "state": "13",
+        "descr": "Hebei"
+      },
+      {
+        "country": "CHN",
+        "state": "14",
+        "descr": "Shanxi"
+      },
+      {
+        "country": "CHN",
+        "state": "15",
+        "descr": "Neimenggu"
+      },
+      {
+        "country": "CHN",
+        "state": "21",
+        "descr": "Liaoning"
+      },
+      {
+        "country": "CHN",
+        "state": "22",
+        "descr": "Jilin"
+      },
+      {
+        "country": "CHN",
+        "state": "23",
+        "descr": "Heilongjiang"
+      },
+      {
+        "country": "CHN",
+        "state": "31",
+        "descr": "Shanghai"
+      },
+      {
+        "country": "CHN",
+        "state": "32",
+        "descr": "Jiangsu"
+      },
+      {
+        "country": "CHN",
+        "state": "33",
+        "descr": "Zhejiang"
+      },
+      {
+        "country": "CHN",
+        "state": "34",
+        "descr": "Anhui"
+      },
+      {
+        "country": "CHN",
+        "state": "35",
+        "descr": "Fujian"
+      },
+      {
+        "country": "CHN",
+        "state": "36",
+        "descr": "Jiangxi"
+      },
+      {
+        "country": "CHN",
+        "state": "37",
+        "descr": "Shandong"
+      },
+      {
+        "country": "CHN",
+        "state": "41",
+        "descr": "Henan"
+      },
+      {
+        "country": "CHN",
+        "state": "42",
+        "descr": "Hubei"
+      },
+      {
+        "country": "CHN",
+        "state": "43",
+        "descr": "Hunan"
+      },
+      {
+        "country": "CHN",
+        "state": "44",
+        "descr": "Guangdong"
+      },
+      {
+        "country": "CHN",
+        "state": "45",
+        "descr": "Guangxi"
+      },
+      {
+        "country": "CHN",
+        "state": "46",
+        "descr": "Hainan"
+      },
+      {
+        "country": "CHN",
+        "state": "50",
+        "descr": "Chongqing"
+      },
+      {
+        "country": "CHN",
+        "state": "51",
+        "descr": "Sichuan"
+      },
+      {
+        "country": "CHN",
+        "state": "52",
+        "descr": "Guizhou"
+      },
+      {
+        "country": "CHN",
+        "state": "53",
+        "descr": "Yunnan"
+      },
+      {
+        "country": "CHN",
+        "state": "54",
+        "descr": "Xizang"
+      },
+      {
+        "country": "CHN",
+        "state": "61",
+        "descr": "Shaanxi"
+      },
+      {
+        "country": "CHN",
+        "state": "62",
+        "descr": "Gansu"
+      },
+      {
+        "country": "CHN",
+        "state": "63",
+        "descr": "Qinghai"
+      },
+      {
+        "country": "CHN",
+        "state": "64",
+        "descr": "Ningxia"
+      },
+      {
+        "country": "CHN",
+        "state": "65",
+        "descr": "Xinjiang"
+      },
+      {
+        "country": "CHN",
+        "state": "71",
+        "descr": "Taiwan"
+      },
+      {
+        "country": "CHN",
+        "state": "91",
+        "descr": "Xianggang"
+      },
+      {
+        "country": "CHN",
+        "state": "92",
+        "descr": "Aomen"
+      },
+      {
+        "country": "GBR",
+        "state": "ABC",
+        "descr": "Aberdeen City"
+      },
+      {
+        "country": "GBR",
+        "state": "ABS",
+        "descr": "Aberdeenshire"
+      },
+      {
+        "country": "GBR",
+        "state": "ANG",
+        "descr": "Angus"
+      },
+      {
+        "country": "GBR",
+        "state": "ARG",
+        "descr": "Argyll and Bute"
+      },
+      {
+        "country": "GBR",
+        "state": "BORDER",
+        "descr": "Scottish Borders"
+      },
+      {
+        "country": "GBR",
+        "state": "CEB",
+        "descr": "City of Edinburgh"
+      },
+      {
+        "country": "GBR",
+        "state": "CMS",
+        "descr": "Clackmannanshire"
+      },
+      {
+        "country": "GBR",
+        "state": "DDC",
+        "descr": "Dundee City"
+      },
+      {
+        "country": "GBR",
+        "state": "EAY",
+        "descr": "East Ayrshire"
+      },
+      {
+        "country": "GBR",
+        "state": "EDB",
+        "descr": "East Dunbartonshire"
+      },
+      {
+        "country": "QAT",
+        "state": "AD",
+        "descr": "Ad Dawhah"
+      },
+      {
+        "country": "QAT",
+        "state": "AG",
+        "descr": "Al Ghuwariyah"
+      },
+      {
+        "country": "QAT",
+        "state": "AJ",
+        "descr": "Al Jumaliyah"
+      },
+      {
+        "country": "QAT",
+        "state": "AK",
+        "descr": "Al Khawr"
+      },
+      {
+        "country": "QAT",
+        "state": "AR",
+        "descr": "Ar Rayyan"
+      },
+      {
+        "country": "QAT",
+        "state": "AS",
+        "descr": "Ash Shamal"
+      },
+      {
+        "country": "QAT",
+        "state": "AW",
+        "descr": "Al Wakrah"
+      },
+      {
+        "country": "QAT",
+        "state": "JB",
+        "descr": "Jariyan al Batnah"
+      },
+      {
+        "country": "QAT",
+        "state": "ME",
+        "descr": "Mesaieed"
+      },
+      {
+        "country": "QAT",
+        "state": "US",
+        "descr": "Umm Salal"
+      },
+      {
+        "country": "GBR",
+        "state": "ELT",
+        "descr": "East Lothian"
+      },
+      {
+        "country": "GBR",
+        "state": "ERF",
+        "descr": "East Renfrewshire"
+      },
+      {
+        "country": "GBR",
+        "state": "FAL",
+        "descr": "Falkirk"
+      },
+      {
+        "country": "GBR",
+        "state": "GLC",
+        "descr": "Glasgow City"
+      },
+      {
+        "country": "GBR",
+        "state": "INV",
+        "descr": "Inverclyde"
+      },
+      {
+        "country": "GBR",
+        "state": "MLT",
+        "descr": "Midlothian"
+      },
+      {
+        "country": "GBR",
+        "state": "MOR",
+        "descr": "Moray"
+      },
+      {
+        "country": "GBR",
+        "state": "NAY",
+        "descr": "North Ayrshire"
+      },
+      {
+        "country": "GBR",
+        "state": "NLN",
+        "descr": "North Lanarkshire"
+      },
+      {
+        "country": "GBR",
+        "state": "ORK",
+        "descr": "Orkney Islands"
+      },
+      {
+        "country": "GBR",
+        "state": "PER",
+        "descr": "Perth and Kinross"
+      },
+      {
+        "country": "GBR",
+        "state": "REN",
+        "descr": "Renfrewshire"
+      },
+      {
+        "country": "GBR",
+        "state": "SAY",
+        "descr": "South Ayrshire"
+      },
+      {
+        "country": "GBR",
+        "state": "SHET",
+        "descr": "Shetland Islands"
+      },
+      {
+        "country": "GBR",
+        "state": "SLN",
+        "descr": "South Lanarkshire"
+      },
+      {
+        "country": "GBR",
+        "state": "STI",
+        "descr": "Stirling"
+      },
+      {
+        "country": "GBR",
+        "state": "W ISLS",
+        "descr": "Eilean Siar (Western Isles)"
+      },
+      {
+        "country": "GBR",
+        "state": "WDB",
+        "descr": "West Dunbartonshire"
+      },
+      {
+        "country": "GBR",
+        "state": "WLT",
+        "descr": "West Lothian"
+      },
+      {
+        "country": "NLD",
+        "state": "0976",
+        "descr": "Tegelen"
+      },
+      {
+        "country": "NLD",
+        "state": "0977",
+        "descr": "Thorn"
+      },
+      {
+        "country": "NLD",
+        "state": "0981",
+        "descr": "Vaals"
+      },
+      {
+        "country": "NLD",
+        "state": "0983",
+        "descr": "Venlo"
+      },
+      {
+        "country": "NLD",
+        "state": "0984",
+        "descr": "Venray"
+      },
+      {
+        "country": "NLD",
+        "state": "0986",
+        "descr": "Voerendaal"
+      },
+      {
+        "country": "NLD",
+        "state": "0988",
+        "descr": "Weert"
+      },
+      {
+        "country": "NLD",
+        "state": "0990",
+        "descr": "Wittem"
+      },
+      {
+        "country": "NLD",
+        "state": "0993",
+        "descr": "Meerlo-Wanssum"
+      },
+      {
+        "country": "NLD",
+        "state": "0994",
+        "descr": "Valkenburg A/D Geul"
+      },
+      {
+        "country": "NLD",
+        "state": "0995",
+        "descr": "Lelystad"
+      },
+      {
+        "country": "NLD",
+        "state": "0996",
+        "descr": "Zuidelijke Ijsselmeerpol"
+      },
+      {
+        "country": "NLD",
+        "state": "1651",
+        "descr": "Eemsmond"
+      },
+      {
+        "country": "NLD",
+        "state": "1661",
+        "descr": "Reiderland"
+      },
+      {
+        "country": "NLD",
+        "state": "1663",
+        "descr": "De Marne"
+      },
+      {
+        "country": "NLD",
+        "state": "1666",
+        "descr": "Zevenhuizen-Moerkapelle"
+      },
+      {
+        "country": "NLD",
+        "state": "1669",
+        "descr": "Roerdalen"
+      },
+      {
+        "country": "NLD",
+        "state": "1670",
+        "descr": "Roggel En Neer"
+      },
+      {
+        "country": "NLD",
+        "state": "1671",
+        "descr": "Maasdonk"
+      },
+      {
+        "country": "NLD",
+        "state": "1672",
+        "descr": "Rijnwoude"
+      },
+      {
+        "country": "NLD",
+        "state": "1673",
+        "descr": "Liemeer"
+      },
+      {
+        "country": "NLD",
+        "state": "1679",
+        "descr": "Ambt Montfort"
+      },
+      {
+        "country": "NLD",
+        "state": "1684",
+        "descr": "Cuijk"
+      },
+      {
+        "country": "NLD",
+        "state": "1685",
+        "descr": "Landerd"
+      },
+      {
+        "country": "NLD",
+        "state": "1691",
+        "descr": "Sint Anthonis"
+      },
+      {
+        "country": "NLD",
+        "state": "1937",
+        "descr": "Heel"
+      },
+      {
+        "country": "NLD",
+        "state": "1987",
+        "descr": "Menterwolde"
+      },
+      {
+        "country": "NLD",
+        "state": "8730",
+        "descr": "Beernem"
+      },
+      {
+        "country": "USA",
+        "state": "AA",
+        "descr": "Armed Forces Americas"
+      },
+      {
+        "country": "USA",
+        "state": "AE",
+        "descr": "Armed Forces Europe"
+      },
+      {
+        "country": "USA",
+        "state": "AK",
+        "descr": "Alaska"
+      },
+      {
+        "country": "USA",
+        "state": "AL",
+        "descr": "Alabama"
+      },
+      {
+        "country": "USA",
+        "state": "AP",
+        "descr": "Armed Forces Pacific"
+      },
+      {
+        "country": "USA",
+        "state": "AR",
+        "descr": "Arkansas"
+      },
+      {
+        "country": "USA",
+        "state": "AS",
+        "descr": "American Samoa"
+      },
+      {
+        "country": "USA",
+        "state": "AZ",
+        "descr": "Arizona"
+      },
+      {
+        "country": "USA",
+        "state": "CA",
+        "descr": "California"
+      },
+      {
+        "country": "USA",
+        "state": "CO",
+        "descr": "Colorado"
+      },
+      {
+        "country": "USA",
+        "state": "CT",
+        "descr": "Connecticut"
+      },
+      {
+        "country": "USA",
+        "state": "DC",
+        "descr": "District of Columbia"
+      },
+      {
+        "country": "USA",
+        "state": "DE",
+        "descr": "Delaware"
+      },
+      {
+        "country": "USA",
+        "state": "FL",
+        "descr": "Florida"
+      },
+      {
+        "country": "USA",
+        "state": "GA",
+        "descr": "Georgia"
+      },
+      {
+        "country": "USA",
+        "state": "GU",
+        "descr": "Guam"
+      },
+      {
+        "country": "USA",
+        "state": "HI",
+        "descr": "Hawaii"
+      },
+      {
+        "country": "USA",
+        "state": "IA",
+        "descr": "Iowa"
+      },
+      {
+        "country": "USA",
+        "state": "ID",
+        "descr": "Idaho"
+      },
+      {
+        "country": "USA",
+        "state": "IL",
+        "descr": "Illinois"
+      },
+      {
+        "country": "USA",
+        "state": "IN",
+        "descr": "Indiana"
+      },
+      {
+        "country": "USA",
+        "state": "KS",
+        "descr": "Kansas"
+      },
+      {
+        "country": "USA",
+        "state": "KY",
+        "descr": "Kentucky"
+      },
+      {
+        "country": "USA",
+        "state": "LA",
+        "descr": "Louisiana"
+      },
+      {
+        "country": "USA",
+        "state": "MA",
+        "descr": "Massachusetts"
+      },
+      {
+        "country": "USA",
+        "state": "MD",
+        "descr": "Maryland"
+      },
+      {
+        "country": "USA",
+        "state": "ME",
+        "descr": "Maine"
+      },
+      {
+        "country": "USA",
+        "state": "MI",
+        "descr": "Michigan"
+      },
+      {
+        "country": "USA",
+        "state": "MN",
+        "descr": "Minnesota"
+      },
+      {
+        "country": "USA",
+        "state": "MO",
+        "descr": "Missouri"
+      },
+      {
+        "country": "USA",
+        "state": "MS",
+        "descr": "Mississippi"
+      },
+      {
+        "country": "KOR",
+        "state": "26",
+        "descr": "Busan"
+      },
+      {
+        "country": "KOR",
+        "state": "43",
+        "descr": "Chungcheongbuk-do"
+      },
+      {
+        "country": "KOR",
+        "state": "44",
+        "descr": "Chungcheongnam-do"
+      },
+      {
+        "country": "KOR",
+        "state": "30",
+        "descr": "Daejeon"
+      },
+      {
+        "country": "KOR",
+        "state": "42",
+        "descr": "Gangwon-do"
+      },
+      {
+        "country": "KOR",
+        "state": "41",
+        "descr": "Gyeonggi-do"
+      },
+      {
+        "country": "KOR",
+        "state": "48",
+        "descr": "Gyeongsangnam-do"
+      },
+      {
+        "country": "KOR",
+        "state": "49",
+        "descr": "Jeju-do"
+      },
+      {
+        "country": "KOR",
+        "state": "46",
+        "descr": "Jeollanam-do"
+      },
+      {
+        "country": "KOR",
+        "state": "11",
+        "descr": "Seoul"
+      },
+      {
+        "country": "KOR",
+        "state": "31",
+        "descr": "Ulsan"
+      },
+      {
+        "country": "KOR",
+        "state": "27",
+        "descr": "Daegu"
+      },
+      {
+        "country": "KOR",
+        "state": "29",
+        "descr": "Gwangju"
+      },
+      {
+        "country": "KOR",
+        "state": "47",
+        "descr": "Gyeongsangbuk-do"
+      },
+      {
+        "country": "KOR",
+        "state": "28",
+        "descr": "Incheon"
+      },
+      {
+        "country": "KOR",
+        "state": "45",
+        "descr": "Jeollabuk-do"
+      },
+      {
+        "country": "KOR",
+        "state": "50",
+        "descr": "Sejong"
+      }
+    ]
+  }
+}

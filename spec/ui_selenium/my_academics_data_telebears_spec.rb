@@ -38,12 +38,12 @@ describe 'My Academics Tele-BEARS card', :testui => true do
 
           begin
             splash_page = CalCentralPages::SplashPage.new(driver)
-            splash_page.load_page(driver)
-            splash_page.basic_auth(driver, uid)
+            splash_page.load_page
+            splash_page.basic_auth uid
             academics_api = ApiMyAcademicsPage.new(driver)
             academics_api.get_json(driver)
             my_academics_page = CalCentralPages::MyAcademicsPage::MyAcademicsTeleBearsCard.new driver
-            my_academics_page.load_page(driver)
+            my_academics_page.load_page
             my_academics_page.page_heading_element.when_visible(WebDriverUtils.academics_timeout)
             api_all_appts = academics_api.tele_bears
             if api_all_appts.length > 0
@@ -82,7 +82,7 @@ describe 'My Academics Tele-BEARS card', :testui => true do
                 term_year = academics_api.tele_bears_term_year(term)
                 term_appts = []
                 term_appts.push(term)
-                if my_academics_page.has_student_semester_link(driver, term_year)
+                if my_academics_page.has_student_semester_link term_year
                   my_academics_page.load_semester_page(driver, academics_api.tele_bears_semester_slug(term))
                   my_academics_page.tele_bears_card_heading_element.when_visible WebDriverUtils.academics_timeout
                   api_semester_adv_code_reqts = academics_api.tele_bears_advisor_codes(term_appts)

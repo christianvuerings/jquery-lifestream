@@ -38,6 +38,7 @@ describe OecTasksController do
   end
 
   describe '#run' do
+    let(:task_id) { Oec::ApiTaskWrapper.generate_task_id }
     let(:task_name) { 'TermSetupTask' }
     let(:term_name) { 'Summer 2013' }
     let(:make_request) { post :run, task_name: task_name, term: term_name }
@@ -49,13 +50,17 @@ describe OecTasksController do
       end
     end
 
-    it 'should start task wrapper and return success' do
-      expect_any_instance_of(Oec::ApiTaskWrapper).to receive(:start_in_background)
+    it 'should start task wrapper and return status' do
+      expect_any_instance_of(Oec::ApiTaskWrapper).to receive(:start_in_background).and_return({
+        id: task_id,
+        status: 'In progress'
+      })
       make_request
       expect(response.status).to eq 200
       response_body = JSON.parse response.body
-      expect(response_body['success']).to eq true
       expect(response_body['oecDriveUrl']).to eq Oec::RemoteDrive::HUMAN_URL
+      expect(response_body['oecTaskStatus']['id']).to eq task_id
+      expect(response_body['oecTaskStatus']['status']).to eq 'In progress'
     end
 
     context 'missing term name' do
@@ -77,4 +82,37 @@ describe OecTasksController do
     end
   end
 
+  describe '#task_status' do
+    let(:make_request) { get :task_status, task_id: task_id }
+    let(:task_id) { Oec::ApiTaskWrapper.generate_task_id }
+
+    it_should_behave_like 'an api endpoint' do
+      before { allow(Oec::Task).to receive(:fetch_from_cache).and_raise RuntimeError, 'Something went wrong' }
+    end
+
+    context 'task not found for id' do
+      before { expect(Oec::Task).to receive(:fetch_from_cache).with(task_id).and_return nil }
+
+      it 'should return bad request error' do
+        make_request
+        expect(response.status).to eq 400
+      end
+    end
+
+    context 'task found for id' do
+      before do
+        allow(Oec::RemoteDrive).to receive(:new).and_return double
+        Oec::TermSetupTask.new(term_code: '2013-C', api_task_id: task_id, log_to_cache: true)
+      end
+
+      it 'should return task status and log' do
+        make_request
+        expect(response.status).to eq 200
+        response_body = JSON.parse response.body
+        expect(response_body['oecTaskStatus']['status']).to eq 'In progress'
+        expect(response_body['oecTaskStatus']['log']).to eq []
+      end
+    end
+  end
 end
+

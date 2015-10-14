@@ -26,15 +26,15 @@ describe 'Google apps', :testui => true do
 
       before(:example) do
         @splash_page = CalCentralPages::SplashPage.new(@driver)
-        @splash_page.load_page(@driver)
+        @splash_page.load_page
         @splash_page.click_sign_in_button
         @cal_net = CalNetAuthPage.new(@driver)
         @cal_net.login(UserUtils.qa_username, UserUtils.qa_password)
         @settings_page = CalCentralPages::SettingsPage.new(@driver)
-        @settings_page.load_page(@driver)
+        @settings_page.load_page
         @settings_page.disconnect_bconnected
         google = GooglePage.new(@driver)
-        google.connect_calcentral_to_google(@driver, UserUtils.qa_gmail_username, UserUtils.qa_gmail_password)
+        google.connect_calcentral_to_google(UserUtils.qa_gmail_username, UserUtils.qa_gmail_password)
       end
 
       context 'when connected' do
@@ -44,7 +44,7 @@ describe 'Google apps', :testui => true do
           expect(my_dashboard.connect_bconnected_button_element.visible?).to be false
         end
         it 'shows "connected" on Settings' do
-          @settings_page.load_page(@driver)
+          @settings_page.load_page
           @settings_page.disconnect_button_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
           expect(@settings_page.connect_button?).to be false
           expect(@settings_page.connected_as).to include("#{UserUtils.qa_gmail_username}")
@@ -53,7 +53,7 @@ describe 'Google apps', :testui => true do
 
       context 'when disconnecting' do
         it 'keeps you connected if you\'re not sure' do
-          @settings_page.load_page(@driver)
+          @settings_page.load_page
           @settings_page.connected_as_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
           @settings_page.disconnect_button
           @settings_page.disconnect_no_button_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
@@ -64,7 +64,7 @@ describe 'Google apps', :testui => true do
           expect(@settings_page.connected_as).to include("#{UserUtils.qa_gmail_username}")
         end
         it 'disconnects you if you\'re sure' do
-          @settings_page.load_page(@driver)
+          @settings_page.load_page
           @settings_page.connected_as_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
           @settings_page.disconnect_button
           @settings_page.disconnect_yes_button_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
@@ -74,7 +74,7 @@ describe 'Google apps', :testui => true do
           expect(@settings_page.connect_button?).to be true
           expect(@settings_page.connected_as?).to be false
           my_dashboard = CalCentralPages::MyDashboardPage.new(@driver)
-          my_dashboard.load_page(@driver)
+          my_dashboard.load_page
           my_dashboard.connect_bconnected_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
           expect(my_dashboard.connect_bconnected_button?).to be true
         end
@@ -83,7 +83,7 @@ describe 'Google apps', :testui => true do
       context 'when a connected but opting out of CalCentral' do
         it 'disconnects the user from Google apps' do
           my_dashboard = CalCentralPages::MyDashboardPage.new(@driver)
-          my_dashboard.opt_out(@driver)
+          my_dashboard.opt_out
           @splash_page.wait_for_expected_title?
           @splash_page.click_sign_in_button
           @cal_net.login(UserUtils.qa_username, UserUtils.qa_password)
@@ -94,7 +94,7 @@ describe 'Google apps', :testui => true do
 
       context 'when connected as a user without current student classes' do
         it 'shows no "class calendar" option for a non-student' do
-          @settings_page.load_page(@driver)
+          @settings_page.load_page
           @settings_page.connected_as_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
           expect(@settings_page.calendar_opt_in?).to be false
         end
@@ -107,18 +107,18 @@ describe 'Google apps', :testui => true do
       context 'when connected' do
         before(:example) do
           @splash_page = CalCentralPages::SplashPage.new(@driver)
-          @splash_page.load_page(@driver)
+          @splash_page.load_page
           @splash_page.click_sign_in_button
           cal_net = CalNetAuthPage.new(@driver)
           cal_net.login(UserUtils.oski_username, UserUtils.oski_password)
           @settings_page = CalCentralPages::SettingsPage.new(@driver)
-          @settings_page.load_page(@driver)
+          @settings_page.load_page
           @settings_page.disconnect_bconnected
           google = GooglePage.new(@driver)
-          google.connect_calcentral_to_google(@driver, UserUtils.oski_gmail_username, UserUtils.oski_gmail_password)
+          google.connect_calcentral_to_google(UserUtils.oski_gmail_username, UserUtils.oski_gmail_password)
         end
         it 'shows a "class calendar" option' do
-          @settings_page.load_page(@driver)
+          @settings_page.load_page
           @settings_page.connected_as_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
           expect(@settings_page.calendar_opt_in_element.enabled?).to be true
           expect(@settings_page.calendar_opt_in_element.checked?).to be false

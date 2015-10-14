@@ -63,9 +63,9 @@ module CalCentralPages
 
       span(:last_update_date, :xpath => '//span[@data-ng-bind="myfinances.summary.lastUpdateDate | date:\'MM/dd/yy\'"]')
 
-      def load_page(driver)
+      def load_page
         logger.info('Loading My Finances details page')
-        driver.get(WebDriverUtils.base_url + '/finances/details')
+        navigate_to "#{WebDriverUtils.base_url}/finances/details"
         if activity_spinner_element.visible?
           activity_spinner_element.when_not_visible(timeout=WebDriverUtils.page_load_timeout)
         end
@@ -132,41 +132,10 @@ module CalCentralPages
         transaction_table_row_one
       end
 
-      # TRANSACTION FILTERING
-
-      def select_transactions_filter(filter)
-        logger.debug('Filtering by ' + filter)
-        wait_until(timeout=WebDriverUtils.page_event_timeout, nil) { self.activity_filter_select != '' }
-        self.activity_filter_select = filter
-      end
-
-      def select_term_filter(term)
-        logger.debug('Filtering by ' + term)
-        self.activity_filter_term_select = term
-      end
-
-      def enter_search_start_date(date)
-        logger.debug('Search start date is ' + date)
-        search_start_date_input_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-        self.search_start_date_input = date
-      end
-
-      def enter_search_end_date(date)
-        logger.debug('Search end date is ' + date)
-        search_end_date_input_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-        self.search_end_date_input = date
-      end
-
-      def enter_search_string(string)
-        logger.debug('Searching for "' + string + '"')
-        search_string_input_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
-        self.search_string_input = string
-      end
-
       def search_by_dates_and_string(start_date, end_date, string)
-        enter_search_start_date(start_date)
-        enter_search_end_date(end_date)
-        enter_search_string(string)
+        WebDriverUtils.wait_for_element_and_type(search_start_date_input_element, start_date)
+        WebDriverUtils.wait_for_element_and_type(search_end_date_input_element, end_date)
+        WebDriverUtils.wait_for_element_and_type(search_string_input_element, string)
       end
 
       # TRANSACTION SORTING
@@ -174,65 +143,49 @@ module CalCentralPages
       def sort_by_date_asc
         logger.info('Sorting by date ascending')
         sort_by_date
-        if sort_descending?
-          sort_by_date
-        end
+        sort_by_date if sort_descending?
       end
 
       def sort_by_date_desc
         logger.info('Sorting by date descending')
         sort_by_date
-        if sort_ascending?
-          sort_by_date
-        end
+        sort_by_date if sort_ascending?
       end
 
       def sort_by_descrip_asc
         logger.info('Sorting by description ascending')
         sort_by_descrip
-        if sort_descending?
-          sort_by_descrip
-        end
+        sort_by_descrip if sort_descending?
       end
 
       def sort_by_descrip_desc
         logger.info('Sorting by description descending')
         sort_by_descrip
-        if sort_ascending?
-          sort_by_descrip
-        end
+        sort_by_descrip if sort_ascending?
       end
 
       def sort_by_amount_asc
         logger.info('Sorting by amount ascending')
         sort_by_amount
-        if sort_descending?
-          sort_by_amount
-        end
+        sort_by_amount if sort_descending?
       end
 
       def sort_by_amount_desc
         logger.info('Sorting by amount descending')
         sort_by_amount
-        if sort_ascending?
-          sort_by_amount
-        end
+        sort_by_amount if sort_ascending?
       end
 
       def sort_by_trans_type_asc
         logger.info('Sorting by transaction type ascending')
         sort_by_trans_type
-        if sort_descending?
-          sort_by_trans_type
-        end
+        sort_by_trans_type if sort_descending?
       end
 
       def sort_by_trans_type_desc
         logger.info('Sorting by transaction type descending')
         sort_by_trans_type
-        if sort_ascending?
-          sort_by_trans_type
-        end
+        sort_by_trans_type if sort_ascending?
       end
     end
   end

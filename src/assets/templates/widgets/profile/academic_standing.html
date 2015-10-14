@@ -1,0 +1,50 @@
+<div class="cc-widget-text cc-page-widget-profile-sections" data-ng-controller="AcademicStandingController" data-cc-spinner-directive>
+
+  <div class="cc-page-widget-profile-section">
+    <div class="cc-page-widget-profile-section-label" data-ng-pluralize count="academicStanding.careers.length" when="{'1': 'Career', 'other': 'Careers'}">
+    </div>
+    <div class="cc-page-widget-profile-section-content">
+      <div data-ng-bind="career.career.description" data-ng-repeat="career in academicStanding.careers" class="cc-page-widget-profile-section-content-item"></div>
+    </div>
+  </div>
+
+  <div class="cc-page-widget-profile-section">
+    <div class="cc-page-widget-profile-section-label">GPA</div>
+    <div class="cc-page-widget-profile-section-content">
+      <div data-ng-bind="academicStanding.gpa.average"></div>
+    </div>
+  </div>
+
+  <div class="cc-page-widget-profile-section">
+    <div class="cc-page-widget-profile-section-label" data-ng-pluralize count="academicStanding.programPlans.length" when="{'1': 'Program Plan', 'other': 'Program Plans'}">
+    </div>
+    <div class="cc-page-widget-profile-section-content">
+      <div data-ng-repeat="programPlan in academicStanding.programPlans" class="cc-page-widget-profile-section-content-item">
+        <div data-ng-bind="programPlan.plan.description"></div>
+        <div data-ng-bind="programPlan.academicProgram.program.description"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cc-page-widget-profile-section">
+    <div class="cc-page-widget-profile-section-label">Standing</div>
+    <div class="cc-page-widget-profile-section-content">
+      <div data-ng-bind="academicStanding.standing.description"></div>
+    </div>
+  </div>
+
+  <div class="cc-page-widget-profile-section">
+    <div class="cc-page-widget-profile-section-label">Units</div>
+    <div class="cc-page-widget-profile-section-content">
+      <div data-ng-bind="academicStanding.units.unitsTaken"></div>
+    </div>
+  </div>
+
+  <div class="cc-page-widget-profile-section">
+    <div class="cc-page-widget-profile-section-label">Level</div>
+    <div class="cc-page-widget-profile-section-content">
+      <div data-ng-bind="academicStanding.level.description"></div>
+    </div>
+  </div>
+
+</div>

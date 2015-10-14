@@ -1,0 +1,66 @@
+<div class="cc-widget cc-widget-sir" data-ng-controller="SirItemController">
+  <div data-ng-include="'widgets/sir/sir_item_header.html'"></div>
+  <div class="cc-widget-text cc-widget-sir-error" data-ng-if="sirItem.hasError">
+    <i class="fa fa-exclamation-triangle cc-icon-red cc-widget-sir-error-icon"></i>There was an error in submitting your admissions response. Please try again later.
+  </div>
+  <div class="cc-widget-text" data-ng-if="!sirItem.hasError">
+    <div data-ng-if="item.config.descrProgramLong" class="cc-widget-sir-program-description">
+      <strong data-ng-bind="item.config.descrProgramLong"></strong>
+    </div>
+    <div data-ng-bind="item.config.descrLong"></div>
+    <hr />
+    <h3>Next Steps</h3>
+    <div>
+      The next step for you to take is formal acceptance of our admission offer. Let us know your decision by <span data-ng-bind="api.date.moment(item.dueDt, 'YYYY-MM-DD').format('MMMM Do, YYYY')"></span>.
+    </div>
+    <!-- SIR Options -->
+    <form class="cc-widget-sir-form" data-ng-submit="submitSirReponse()">
+      <fieldset class="cc-widget-sir-form-fieldset" data-ng-disabled="sirItem.isSubmitting">
+        <div data-ng-repeat="sirOption in item.config.sirOptions">
+          <label class="cc-widget-sir-form-label">
+            <input class="cc-widget-sir-form-radio" type="radio" data-ng-model="sirItem.form.option" data-ng-value="sirOption"></input>
+            <div class="cc-widget-sir-form-description" data-ng-bind="sirOption.descrLong"></div>
+          </label>
+          <!-- Show conditions when the user accepts SIR -->
+          <div data-ng-if="sirOption.progAction === 'DEIN' && sirItem.form.option.progAction === 'DEIN'" class="cc-widget-sir-form-subcontainer">
+            <div data-ng-repeat="sirCondition in item.config.sirConditions">
+              <label class="cc-widget-sir-form-label">
+                <input class="cc-widget-sir-form-check" type="checkbox" data-ng-model="sirItem.form.check[sirCondition.seqnum].valid" data-ng-attr-id="cc-widget-sir-form-check-{{$index}}"></input>
+                <label class="cc-widget-sir-form-description cc-widget-sir-form-label" data-ng-bind="sirCondition.messageText" data-ng-attr-for="cc-widget-sir-form-check-{{$index}}"></label>
+              </label>
+            </div>
+          </div>
+          <div data-ng-if="sirOption.progAction === 'WAPP' && sirItem.form.option.progAction === 'WAPP'" class="cc-widget-sir-form-subcontainer">
+            <div class="cc-widget-sir-form-decline-explanation">
+              You have indicated that you wish to <strong>decline</strong> our offer of admission. We understand that your decision is an important one and we'd appreciate your reason for doing so.
+            </div>
+            <label for="cc-widget-sir-form-reasons" class="cc-visuallyhidden">Select your reason:</label>
+            <div class="cc-select">
+              <select id="cc-widget-sir-form-reasons" data-ng-model="sirItem.form.decline.reasonCode" data-ng-options="r.responseReason as r.descr for r in item.responseReasons">
+              </select>
+            </div>
+            <div class="cc-widget-sir-form-reason-description">
+              <label for="cc-widget-sir-form-reason-description" class="cc-visuallyhidden">Specify:</label>
+              <input type="text" id="cc-widget-sir-form-reason-description" placeholder="Specify" data-ng-model="sirItem.form.decline.reasonDescription" maxlength="30"></input>
+            </div>
+            <hr />
+            <div class="cc-text-small">
+              To confirm this decision, please select the <strong>I Decline This Offer</strong> button.
+            </div>
+          </div>
+        </div>
+        <div class="cc-widget-sir-button-container">
+          <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="!sirItem.isFormValid || sirItem.isSubmitting">
+            <span data-ng-if="!sirItem.isSubmitting">
+              <span data-ng-if="sirItem.form.option.progAction !== 'WAPP'">Continue</span>
+              <span data-ng-if="sirItem.form.option.progAction === 'WAPP'">I Decline This Offer</span>
+            </span>
+            <span data-ng-if="sirItem.isSubmitting">
+              Submitting...
+            </span>
+          </button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

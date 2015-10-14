@@ -1,0 +1,14 @@
+<div class="cc-page-widget-profile-section" data-ng-controller="HonorsAwardsSectionController">
+  <div class="cc-page-widget-profile-section-label cc-page-widget-profile-section-label-wide">
+    Honors &amp; Awards
+  </div>
+  <div class="cc-page-widget-profile-section-content">
+    <div data-ng-repeat="awardHonor in awardHonors.content" class="cc-page-widget-profile-section-content-item">
+      <div>
+        <strong data-ng-bind="awardHonor.type.description"></strong>
+        <span data-ng-bind-template="- {{awardHonor.academicProgram.program.description}}"></span>
+      </div>
+      <div data-ng-bind="awardHonor.awardDate | date:'MM/dd/yyyy'"></div>
+    </div>
+  </div>
+</div>

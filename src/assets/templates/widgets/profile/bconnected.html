@@ -1,0 +1,12 @@
+<div data-ng-controller="bConnectedController">
+  <section data-ng-if='connectedServices.length' class="cc-settings-section row collapse">
+    <div data-ng-repeat="service in connectedServices">
+      <div class="row collapse cc-settings-service-row" data-ng-init="loopname='connected'" data-ng-include src="'widgets/profile/bconnected_service_loop.html'"></div>
+    </div>
+  </section>
+  <section data-ng-if='disConnectedServices.length' class="cc-settings-section row collapse">
+    <div data-ng-repeat="service in disConnectedServices">
+      <div class="row collapse cc-settings-service-row" data-ng-init="loopname='disconnected'" data-ng-include src="'widgets/profile/bconnected_service_loop.html'"></div>
+    </div>
+  </section>
+</div>

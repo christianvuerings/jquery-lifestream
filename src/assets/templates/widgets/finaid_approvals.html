@@ -1,0 +1,34 @@
+<div data-ng-controller="FinaidApprovalsController" class="columns">
+  <div data-ng-if="approvalMessage.ucHeaderDecline">
+    <div
+      data-cc-finaid-permissions-directive
+      data-title="approvalMessage.ucHeaderDecline"
+      data-text="approvalMessage.ucLongTextDecline"
+      data-button-go-back="true"
+    ></div>
+  </div>
+  <div data-ng-if="!approvalMessage.ucHeaderDecline">
+    <div
+      data-ng-if="!finaidYear.termsAndConditions.approved"
+      data-cc-finaid-permissions-directive
+      data-title="'Financial Aid Terms and Conditions'"
+      data-header="finaidYear.termsAndConditions.longTitle"
+      data-text="finaidYear.termsAndConditions.longMessage"
+      data-button-text-dont-approve="'I Do Not Agree'"
+      data-button-text-approve="'I Do Agree'"
+      data-button-action-dont-approve="sendResponseTC(finaidYear.id, 'N')"
+      data-button-action-approve="sendResponseTC(finaidYear.id, 'Y')"
+    ></div>
+    <div
+      data-ng-if="finaidYear.termsAndConditions.approved && finaidSummary.title4.approved === null"
+      data-cc-finaid-permissions-directive
+      data-title="'Title IV Authorization'"
+      data-header="finaidSummary.title4.longTitle"
+      data-text="finaidSummary.title4.longMessage"
+      data-button-text-dont-approve="'I Do Not Authorize'"
+      data-button-text-approve="'Authorize'"
+      data-button-action-dont-approve="sendResponseT4('N')"
+      data-button-action-approve="sendResponseT4('Y')"
+    ></div>
+  </div>
+</div>

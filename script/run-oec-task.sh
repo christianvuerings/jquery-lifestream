@@ -11,16 +11,16 @@ TASK_OPTIONS=(term_setup sis_import create_confirmation_sheets report_diff merge
 TASK="$1"
 
 WORKING_DIR="${PWD}"
-THIS_SCRIPT=$(basename '$0')
+THIS_SCRIPT=$(basename $0)
 LOG=$(date +"${WORKING_DIR}/log/${THIS_SCRIPT}_%F_%H:%M:%S.log")
 LOGIT="tee -a ${LOG}"
 
 echo | ${LOGIT}
 echo "------------------------------------------" | ${LOGIT}
-echo | ${LOGIT}
 
 if [[ " ${TASK_OPTIONS[*]} " == *" ${TASK} "* ]]
 then
+  echo | ${LOGIT}
   # Enable rvm and use the correct Ruby version and gem set.
   [[ -s "${HOME}/.rvm/scripts/rvm" ]] && . "${HOME}/.rvm/scripts/rvm"
   source .rvmrc
@@ -38,9 +38,13 @@ then
   echo "[$(date +"%F %H:%M:%S")] [INFO] Finished oec:${TASK} on $(hostname -s)" | ${LOGIT}
 
 else
-  echo "Usage:" | ${LOGIT}
   PSV=`( IFS=$'|'; echo "${TASK_OPTIONS[*]}" )`
-  echo "  $0 [${PSV}] [term_code='2015-D' ...]" | ${LOGIT}
+  read -d '' usage << EOF
+Usage:
+
+[term_code='2015-D'] [local_write='Y'] [dept_codes='IMMCB PMATH ...'] ...  ${0} [${PSV}]
+EOF
+  echo "${usage}" | ${LOGIT}
 fi
 
 echo | ${LOGIT}

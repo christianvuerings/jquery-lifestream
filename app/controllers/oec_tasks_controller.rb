@@ -15,10 +15,9 @@ class OecTasksController < ApplicationController
   # GET /api/oec_tasks
 
   def index
-    departments = Berkeley::Departments.department_map.map { |k,v| {code: k, name: Berkeley::Departments.shortened(v)} }
     render json: {
       currentTerm: Berkeley::Terms.fetch.current.to_english,
-      oecDepartments: departments.sort_by { |dept| dept[:name] },
+      oecDepartments: Oec::ApiTaskWrapper.department_list,
       oecTasks: Oec::ApiTaskWrapper::TASK_LIST,
       oecTerms: Berkeley::Terms.fetch.campus.values.map { |term| term.to_english }
     }
@@ -30,8 +29,21 @@ class OecTasksController < ApplicationController
     task_class = "Oec::#{params['task_name']}".constantize
     params.require('term')
     task_opts = params.slice('term', 'departmentCode')
-    Oec::ApiTaskWrapper.new(task_class, task_opts).start_in_background
-    render json: {success: true, oecDriveUrl: Oec::RemoteDrive::HUMAN_URL}
+    task_status = Oec::ApiTaskWrapper.new(task_class, task_opts).start_in_background
+    render json: {
+      oecDriveUrl: Oec::RemoteDrive::HUMAN_URL,
+      oecTaskStatus: task_status
+    }
+  end
+
+  # GET /api/oec_tasks/status/:task_id
+
+  def task_status
+    task_status = Oec::Task.fetch_from_cache params['task_id']
+    raise Errors::BadRequestError, "OEC task id '#{params['task_id']}' not found" unless task_status
+    render json: {
+      oecTaskStatus: task_status
+    }
   end
 
 end

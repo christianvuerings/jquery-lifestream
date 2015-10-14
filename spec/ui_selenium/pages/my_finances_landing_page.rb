@@ -65,9 +65,9 @@ module CalCentralPages
       elements(:finaid_message_icon, :image, :xpath => '//ul[@class="cc-widget-activities-list"]/li//i')
       elements(:finaid_message_link, :link, :xpath => '//ul[@class="cc-widget-activities-list"]/li//a[@data-ng-if="activity.sourceUrl"]')
 
-      def load_page(driver)
+      def load_page
         logger.info('Loading My Finances landing page')
-        driver.get(WebDriverUtils.base_url + '/finances')
+        navigate_to "#{WebDriverUtils.base_url}/finances"
       end
 
       def click_details_link
@@ -75,22 +75,10 @@ module CalCentralPages
         activity_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
       end
 
-      def wait_for_cal_1_card
-        cal_1_card_content_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      end
-
-      def wait_for_fin_resources_links
-        fin_resources_list_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      end
-
-      def wait_for_fin_aid
-        fin_messages_list_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      end
-
       def all_fin_aid_message_titles
         titles = []
         finaid_message_title_elements.each do |msg|
-          title = msg.text.gsub(/\s+/, "")
+          title = msg.text.gsub(/\s+/, '')
           titles.push(title)
         end
         titles
@@ -135,11 +123,11 @@ module CalCentralPages
         years
       end
 
-      def all_fin_aid_message_dates(driver, messages)
+      def all_fin_aid_message_dates(messages)
         dates = []
         messages.each do |msg|
           begin
-            date_on_page = driver.find_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{messages.index(msg) + 1}]//span[@data-ng-if='activity.date']").text
+            date_on_page = span_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{messages.index(msg) + 1}]//span[@data-ng-if='activity.date']").text
             date = Time.parse(date_on_page).strftime("%-m/%d")
           rescue
             date = nil
@@ -154,17 +142,17 @@ module CalCentralPages
       def all_fin_aid_message_links
         links = []
         finaid_message_link_elements.each do |msg|
-          link_url = msg.attribute('href').gsub(/\/\s*\z/, "")
+          link_url = msg.attribute('href').gsub(/\/\s*\z/, '')
           links.push(link_url)
         end
         links
       end
 
-      def all_fin_aid_message_statuses(driver, messages)
+      def all_fin_aid_message_statuses(messages)
         statuses = []
         messages.each do |msg|
           begin
-            status = driver.find_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{messages.index(msg) + 1}]//span[@data-ng-bind='activity.status']").text
+            status = span_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{messages.index(msg) + 1}]//span[@data-ng-bind='activity.status']").text
           rescue
             status = nil
           end
@@ -173,12 +161,12 @@ module CalCentralPages
         statuses
       end
 
-      def all_fin_aid_message_summaries(driver, messages)
+      def all_fin_aid_message_summaries(messages)
         summaries = []
         messages.each do |msg|
           begin
-            summary_on_page = driver.find_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{messages.index(msg) + 1}]//p[@data-ng-bind-html='activity.summary | linky']").text
-            summary = summary_on_page.gsub(/\s+/, "")
+            summary_on_page = paragraph_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{messages.index(msg) + 1}]//p[@data-ng-bind-html='activity.summary | linky']").text
+            summary = summary_on_page.gsub(/\s+/, '')
           rescue => e
             logger.error e.message + "\n" + e.backtrace.join("\n")
             summary = nil

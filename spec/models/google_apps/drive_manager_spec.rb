@@ -6,7 +6,7 @@ describe GoogleApps::DriveManager do
       settings = Settings.oec.google.marshal_dump
       @drive = GoogleApps::DriveManager.new Settings.oec.google.uid, settings
       now = DateTime.now.strftime('%m/%d/%Y at %I:%M%p')
-      title = "GoogleDriveInsert tested on #{now}"
+      title = "#{described_class} tested on #{now}"
       csv_file = 'fixtures/oec_legacy/courses.csv'
       text_file = 'fixtures/jms_recordings/ist_jms.txt'
       @folder = @drive.create_folder title

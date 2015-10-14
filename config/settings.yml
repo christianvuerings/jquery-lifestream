@@ -254,6 +254,24 @@ cache:
     EtsBlog::Alerts: <%= 2.minutes %>
     EtsBlog::ServiceAlerts: <%= 2.minutes %>
 
+    CampusSolutions::AddressLabel: <%= 29.days %>
+    CampusSolutions::AddressType: <%= 29.days %>
+    CampusSolutions::Checklist: <%= 15.minutes %>
+    CampusSolutions::Country: <%= 29.days %>
+    CampusSolutions::CurrencyCode: <%= 29.days %>
+    CampusSolutions::Deposit: <%= 15.minutes %>
+    CampusSolutions::EthnicitySetup: <%= 29.days %>
+    CampusSolutions::LanguageCode: <%= 29.days %>
+    CampusSolutions::ListOfValues: <%= 24.hours %>
+    CampusSolutions::HigherOneUrl: <%= 1.seconds %>
+    CampusSolutions::MyHigherOneUrl: <%= 1.seconds %>
+    CampusSolutions::NameType: <%= 29.days %>
+    CampusSolutions::SirConfig: <%= 24.hours %>
+    CampusSolutions::State: <%= 29.days %>
+    CampusSolutions::Translate: <%= 24.hours %>
+
+    CalnetCrosswalk::Proxy: <%= 29.days %>
+
 # Cache warmer settings
 cache_warmer:
   # Number to decrement db pool to limit the number of warmer threads
@@ -294,13 +312,19 @@ features:
   background_jobs_check: true
   course_manage_official_sections: false
   manage_site_mailing_lists: false
+  cs_fin_aid: false
+  cs_profile: false
+  cs_sir: false
+  slate_checklist: false
   webcast_sign_up_on_calcentral: false
   service_alerts_rss: true
+  prevent_acting_as_users_from_posting: true
 
 youtube_splash_id: 'EQ-a7xrfVag'
 
 oec:
   administrator_uid: ''
+  local_write_directory: 'tmp/oec'
   explorance:
     sftp_server: ''
     sftp_port: 22
@@ -329,7 +353,7 @@ class_calendar:
 ui_selenium:
   baseUrl: https://calcentral-dev.berkeley.edu
   calNetUrl: https://auth-test.berkeley.edu
-  canvas_base_url: https://ucberkeley.beta.instructure.edu
+  canvas_base_url: https://ucberkeley.beta.instructure.com
   canvas_qa_sub_account: secret
   googleAuthUrl: /api/google/request_authorization?force_domain=false
   layer: development
@@ -357,5 +381,29 @@ ui_selenium:
 advising_proxy:
   fake: false
   base_url: 'https://bhive.berkeley.edu/api'
+  username: secret
+  password: secret
+
+campus_solutions_proxy:
+  fake: true
+  base_url: 'http://sis-demo-02.is.berkeley.edu'
+  username: secret
+  password: secret
+
+slate_checklist_proxy:
+  fake: true
+  base_url: 'https://ucb.test.technolutions.net/manage/query/process?id=3c37bfd5-a42d-42d7-9f66-86dd87d41b7f&h=df64a234-1365-6a1a-0084-685307371123&output=raw.xml'
+  username: secret
+  password: secret
+
+hub_edos_proxy:
+  fake: true
+  base_url: 'https://apis.berkeley.edu/something'
+  username: secret
+  password: secret
+
+calnet_crosswalk_proxy:
+  fake: true
+  base_url: 'https://registry-d1.calnet.1918.berkeley.edu:8453/registry-service/api/v1/identifiers/UID'
   username: secret
   password: secret

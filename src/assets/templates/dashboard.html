@@ -8,6 +8,7 @@
 </div>
 
 <div class="medium-3 columns medium-pull-9 cc-page-dashboard-column-a">
+  <div data-ng-include="'widgets/sir/sir.html'" data-ng-if="api.user.profile.features.csSir"></div>
   <div data-ng-include="'widgets/up_next.html'"></div>
   <div data-ng-include="'widgets/my_classes.html'"></div>
   <div data-ng-include="'widgets/my_groups.html'"></div>

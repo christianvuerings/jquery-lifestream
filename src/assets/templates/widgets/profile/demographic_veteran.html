@@ -1,0 +1,9 @@
+<div class="cc-page-widget-profile-section" data-ng-controller="DemographicVeteranController" data-cc-spinner-directive>
+  <div class="cc-page-widget-profile-section-label">Veteran Status</div>
+  <div class="cc-page-widget-profile-section-content">
+    <div class="cc-page-widget-profile-section-content-item">
+      <div data-ng-bind="veteranStatus.content.description"></div>
+      <div data-ng-if="!veteranStatus.content.description" class="cc-page-widget-profile-section-not-available">Not available</div>
+    </div>
+  </div>
+</div>

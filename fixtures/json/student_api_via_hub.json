@@ -1,0 +1,220 @@
+{
+  "studentResponse": {
+    "correlationId": "b785f826-5405-432e-850c-2b6a487ab0a5",
+    "source": "UCB-SIS-STUDENT",
+    "students": {
+      "students": [
+        {
+          "identifiers": [
+            {
+              "type": "student-id",
+              "disclose": false
+            },
+            {
+              "type": "campus-uid",
+              "disclose": false
+            },
+            {
+              "type": "Social-Security-Number",
+              "id": "XXXXXXXXX",
+              "disclose": false
+            },
+            {
+              "type": "DB2",
+              "id": "11667051",
+              "disclose": false,
+              "fromDate": "1902-02-01"
+            }
+          ],
+          "names": [
+            {
+              "type": {
+                "code": "PRF",
+                "description": "Preferred"
+              },
+              "familyName": "Bear",
+              "givenName": "Osk",
+              "middleName": "",
+              "prefixName": "",
+              "suffixName": "",
+              "formattedName": "Osk Bear",
+              "preferred": true,
+              "disclose": false,
+              "uiControl": {
+                "code": "U",
+                "description": "Edit - No Delete"
+              },
+              "fromDate": "2015-10-02"
+            },
+            {
+              "type": {
+                "code": "PRI",
+                "description": "Primary"
+              },
+              "familyName": "Bear",
+              "givenName": "Oski",
+              "middleName": "",
+              "prefixName": "",
+              "suffixName": "",
+              "formattedName": "Oski Bear",
+              "preferred": false,
+              "disclose": false,
+              "uiControl": {
+                "code": "D",
+                "description": "Display Only"
+              },
+              "fromDate": "1902-02-01"
+            }
+          ],
+          "gender": {
+            "genderOfRecord": {
+              "code": "M",
+              "description": "Male"
+            },
+            "discloseGenderOfRecord": false,
+            "sexAtBirth": {
+              "code": "",
+              "description": ""
+            },
+            "discloseSexAtBirth": false,
+            "genderIdentity": {
+              "code": "",
+              "description": ""
+            },
+            "discloseGenderIdentity": false,
+            "fromDate": "1902-02-01"
+          },
+          "affiliations": [],
+          "addresses": [
+            {
+              "type": {
+                "code": "HOME",
+                "description": "Home"
+              },
+              "address1": "2121 BANCROFT WAY  #550",
+              "address2": "",
+              "address3": "",
+              "address4": "",
+              "num1": "",
+              "num2": "",
+              "addrField1": "",
+              "addrField2": "",
+              "addrField3": "",
+              "houseType": "",
+              "city": "BERKELEY",
+              "county": "",
+              "stateCode": "CA",
+              "postalCode": "454554",
+              "countryCode": "USA",
+              "formattedAddress": "2121 BANCROFT WAY  #550\nBERKELEY, CA 454554",
+              "disclose": false,
+              "uiControl": {
+                "code": "U",
+                "description": "Edit - No Delete"
+              },
+              "fromDate": "2015-10-07"
+            },
+            {
+              "type": {
+                "code": "LOCL",
+                "description": "Local"
+              },
+              "address1": "1001 Hearst",
+              "address2": "",
+              "address3": "",
+              "address4": "",
+              "num1": "",
+              "num2": "",
+              "addrField1": "",
+              "addrField2": "",
+              "addrField3": "",
+              "houseType": "",
+              "city": "Berkeley",
+              "county": "",
+              "stateCode": "CA",
+              "postalCode": "0",
+              "countryCode": "USA",
+              "formattedAddress": "1001 Hearst\nBerkeley, CA",
+              "disclose": false,
+              "uiControl": {
+                "code": "F",
+                "description": "Full Edit"
+              },
+              "fromDate": "2015-10-12"
+            }
+          ],
+          "phones": [
+            {
+              "type": {
+                "code": "CELL",
+                "description": "Mobile"
+              },
+              "number": "415/123-4567",
+              "countryCode": "",
+              "extension": "123",
+              "primary": false,
+              "disclose": false,
+              "uiControl": {
+                "code": "D",
+                "description": "Display Only"
+              }
+            },
+            {
+              "type": {
+                "code": "HOME",
+                "description": "Home/Permanent"
+              },
+              "number": "510/642-9505",
+              "countryCode": "",
+              "extension": "114",
+              "primary": true,
+              "disclose": false,
+              "uiControl": {
+                "code": "U",
+                "description": "Edit - No Delete"
+              }
+            }
+          ],
+          "emails": [
+            {
+              "type": {
+                "code": "CAMP",
+                "description": "Campus"
+              },
+              "emailAddress": "oski@berkeley.edu",
+              "primary": true,
+              "disclose": false,
+              "uiControl": {
+                "code": "D",
+                "description": "Display Only"
+              }
+            }
+          ],
+          "urls": [],
+          "ethnicities": [],
+          "languages": [],
+          "usaCountry": {
+            "citizenshipStatus": {
+              "code": "1",
+              "description": "Native"
+            },
+            "militaryStatus": {
+              "code": "",
+              "description": "",
+              "fromDate": "1902-02-01"
+            }
+          },
+          "emergencyContacts": [],
+          "birth": {
+            "date": "1975-02-05",
+            "description": "United States",
+            "locality": "YOSEMITE,CA",
+            "stateCode": "",
+            "countryCode": "USA"
+          },
+          "confidential": false
+        }
+      ]
+    }
+  }
+}

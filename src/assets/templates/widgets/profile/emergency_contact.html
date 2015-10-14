@@ -1,0 +1,17 @@
+<div class="cc-page-widget-profile-section" data-ng-controller="EmergencyContactController">
+  <div class="cc-page-widget-profile-section-label" data-ng-pluralize count="emergencyContacts.content.length" when="{'1': 'Emergency Contact', 'other': 'Emergency Contacts'}">
+    </div>
+  <div class="cc-page-widget-profile-section-content">
+    <div data-ng-repeat="emergencyContact in emergencyContacts.content" class="cc-page-widget-profile-section-content-item">
+      <div>
+        <strong data-ng-bind="emergencyContact.name"></strong>
+        <span data-ng-if="emergencyContact.primary">(primary contact)</span>
+      </div>
+      <div data-ng-bind="emergencyContact.phone.number"></div>
+      <div data-ng-bind="emergencyContact.email.emailAddress"></div>
+    </div>
+    <div data-ng-if="!emergencyContacts.content.length" class="cc-page-widget-profile-section-not-available">
+      There are no emergency contacts available.
+    </div>
+  </div>
+</div>

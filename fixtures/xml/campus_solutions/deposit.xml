@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<DEPOSIT_RESPONSE xmlns="http://bcs.is.berkeley.edu">
+  <DEPOSIT>
+    <EMPLID>24188949</EMPLID>
+    <ADM_APPL_NBR>00000087</ADM_APPL_NBR>
+    <DUE_DT>2015-09-01</DUE_DT>
+    <DUE_AMT>100</DUE_AMT>
+  </DEPOSIT>
+</DEPOSIT_RESPONSE>

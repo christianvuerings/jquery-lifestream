@@ -106,7 +106,7 @@ module Oec
           hash[id] = row
         rescue => e
           log :error, "\nThis row with bad data in #{folder_titles} will be ignored: \n#{row}."
-          log :error, "We will NOT abort; the error is NOT fatal: #{e.message}\n#{e.backtrace.join "\n\t"}"
+          log :error, "We will NOT abort; the error is NOT fatal: #{e.message}"
         end
       end
       hash

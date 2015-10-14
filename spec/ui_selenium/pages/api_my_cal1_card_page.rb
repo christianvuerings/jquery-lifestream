@@ -11,7 +11,7 @@ class ApiMyCal1CardPage
 
   def get_json(driver)
     logger.info('Parsing JSON from /api/my/cal1card')
-    driver.get(WebDriverUtils.base_url + '/api/my/cal1card')
+    navigate_to "#{WebDriverUtils.base_url}/api/my/cal1card"
     body = driver.find_element(:xpath, '//pre').text
     @parsed = JSON.parse(body)
   end
