@@ -25,11 +25,14 @@ module User
 
     # split brain until SIS GoLive5 makes registration data available
     def get_campus_attribute(field)
+      value = nil
       if is_cs_profile_feature_enabled && @edo_attributes[:noStudentId].blank?
-        @edo_attributes[field.to_sym]
-      else
-        @oracle_attributes[field]
+        value = @edo_attributes[field.to_sym]
       end
+      if value.nil?
+        value = @oracle_attributes[field]
+      end
+      value
     end
 
     def preferred_name
