@@ -22,5 +22,14 @@
     },
     "default_view": "feed",
     "id": 833382
+  },
+  {
+    "id": 1913,
+    "name": "Temps Perdu",
+    "access_restricted_by_date": true
+  },
+  {
+    "id": "0xDEAD",
+    "name": "Noise versus Signal"
   }
 ]
