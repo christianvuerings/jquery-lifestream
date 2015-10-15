@@ -3,6 +3,14 @@ describe Canvas::UserCourses do
   context 'working against test data' do
     subject {Canvas::UserCourses.new(fake: true).courses}
     its(:size) {should eq 2}
+
+    it 'should not include access-restricted entries' do
+      expect(subject.select { |course| course['name'] == 'Temps Perdu' }).to be_empty
+    end
+
+    it 'should not include inexplicably malformed entries' do
+      expect(subject.select { |course| course['id'] == '0xDEAD' }).to be_empty
+    end
   end
 
   it 'should get courses as known student' do

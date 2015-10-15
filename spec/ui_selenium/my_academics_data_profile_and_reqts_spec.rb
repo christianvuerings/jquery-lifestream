@@ -86,14 +86,14 @@ describe 'My Academics profile and university requirements cards', :testui => tr
                 gpa_revealed = profile_card.gpa_element.when_visible(timeout=WebDriverUtils.page_event_timeout)
                 my_academics_gpa = profile_card.gpa
                 it "show the GPA for UID #{uid} when a user clicks 'Show'" do
-                  expect(gpa_revealed).to be true
+                  expect(gpa_revealed).to be_truthy
                   expect(my_academics_gpa).to eql(api_gpa)
                 end
 
                 profile_card.hide_gpa
-                gpa_hidden = profile_card.gpa_element.when_not_visible(timeout=WebDriverUtils.page_event_timeout)
+                gpa_hidden = profile_card.gpa_element.when_not_visible(timeout)
                 it "hide the GPA for UID #{uid} when a user clicks 'Hide'" do
-                  expect(gpa_hidden).to be true
+                  expect(gpa_hidden).to be_truthy
                 end
               end
 

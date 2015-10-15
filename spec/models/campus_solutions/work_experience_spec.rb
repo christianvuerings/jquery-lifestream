@@ -48,7 +48,7 @@ describe CampusSolutions::WorkExperience do
     end
   end
 
-  context 'with a real external service', testext: true do
+  context 'with a real external service', testext: true, ignore: true  do
     let(:params) { {
       extOrganizationId: '9000000008',
       isRetired: 'N',
