@@ -23,7 +23,7 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
       alert: ' Status Alerts',
       assignment: ' Assignments',
       announcement: ' Announcements',
-      campusSolutions: ' Campus Solutions Items',
+      campusSolutions: ' Notifications',
       discussion: ' Discussions',
       gradePosting: ' Grades Posted',
       message: ' Status Changes',
