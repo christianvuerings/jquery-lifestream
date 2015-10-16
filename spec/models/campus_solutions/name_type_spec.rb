@@ -7,7 +7,8 @@ describe CampusSolutions::NameType do
     it_behaves_like 'a proxy that got data successfully'
     it 'returns data with the expected structure' do
       expect(subject[:feed][:nameTypes]).to be
-      expect(subject[:feed][:nameTypes][0][:nameTypeDescr]).to eq 'Preferred'
+      expect(subject[:feed][:nameTypes][0][:nameTypeDescr]).to eq 'Diploma'
+      expect(subject[:feed][:nameTypes][1][:nameTypeDescr]).to eq 'Preferred'
     end
   end
 
