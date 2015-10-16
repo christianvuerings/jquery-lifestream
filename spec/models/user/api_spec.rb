@@ -48,6 +48,7 @@ describe User::Api do
     user_data[:hasCanvasAccount].should_not be_nil
     user_data[:isCalendarOptedIn].should_not be_nil
     user_data[:isCampusSolutionsStudent].should be_falsey
+    user_data[:showSisProfileUI].should be_falsey
   end
   it "should return whether the user is registered with Canvas" do
     Canvas::Proxy.stub(:has_account?).and_return(true, false)
