@@ -45,6 +45,28 @@ describe User::Api do
     user_data[:isCalendarOptedIn].should_not be_nil
     user_data[:sid].should == 1234567890
     user_data[:isCampusSolutionsStudent].should be_truthy
+    user_data[:showSisProfileUI].should be_truthy
+  end
+  context "with a legacy student" do
+    before do
+      HubEdos::UserAttributes.stub(:new).and_return(
+        double(
+        get: {
+          :person_name => @default_name,
+          :student_id => 12345678,    # note: 8-digit ID means legacy
+          :roles => {
+            :student => true,
+            :exStudent => false,
+            :faculty => false,
+            :staff => false
+          }
+        }))
+    end
+    it "should hide SIS profile for legacy students" do
+      user_data = User::Api.new(@random_id).get_feed
+      user_data[:isCampusSolutionsStudent].should be_falsey
+      user_data[:showSisProfileUI].should be_falsey
+    end
   end
   it "should return whether the user is registered with Canvas" do
     Canvas::Proxy.stub(:has_account?).and_return(true, false)

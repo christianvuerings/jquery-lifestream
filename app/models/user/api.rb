@@ -137,7 +137,8 @@ module User
         :roles => get_campus_attribute(:roles),
         :uid => @uid,
         :sid => @student_id,
-        :isCampusSolutionsStudent => is_campus_solutions_student
+        :isCampusSolutionsStudent => is_campus_solutions_student,
+        :showSisProfileUI => (is_campus_solutions_student && is_cs_profile_feature_enabled)
       }
     end
 
