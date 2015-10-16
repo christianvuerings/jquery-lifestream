@@ -47,7 +47,7 @@ describe User::Api do
     user_data[:isCampusSolutionsStudent].should be_truthy
     user_data[:showSisProfileUI].should be_truthy
   end
-  context "with a legacy student" do
+  context 'with a legacy student' do
     before do
       HubEdos::UserAttributes.stub(:new).and_return(
         double(
@@ -62,10 +62,25 @@ describe User::Api do
           }
         }))
     end
-    it "should hide SIS profile for legacy students" do
-      user_data = User::Api.new(@random_id).get_feed
-      user_data[:isCampusSolutionsStudent].should be_falsey
-      user_data[:showSisProfileUI].should be_falsey
+    context 'with the fallback enabled' do
+      before do
+        allow(Settings.features).to receive(:cs_profile_hidden_for_legacy_users).and_return(true)
+      end
+      it "should hide SIS profile for legacy students" do
+        user_data = User::Api.new(@random_id).get_feed
+        user_data[:isCampusSolutionsStudent].should be_falsey
+        user_data[:showSisProfileUI].should be_falsey
+      end
+    end
+    context 'with the fallback disabled' do
+      before do
+        allow(Settings.features).to receive(:cs_profile_hidden_for_legacy_users).and_return(false)
+      end
+      it "should show SIS profile for legacy students" do
+        user_data = User::Api.new(@random_id).get_feed
+        user_data[:isCampusSolutionsStudent].should be_falsey
+        user_data[:showSisProfileUI].should be_truthy
+      end
     end
   end
   it "should return whether the user is registered with Canvas" do
