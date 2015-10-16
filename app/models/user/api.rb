@@ -138,7 +138,7 @@ module User
         :uid => @uid,
         :sid => @student_id,
         :isCampusSolutionsStudent => is_campus_solutions_student,
-        :showSisProfileUI => (is_profile_hidden_for_legacy_users ? (is_campus_solutions_student && is_cs_profile_feature_enabled) : is_cs_profile_feature_enabled)
+        :showSisProfileUI => is_cs_profile_feature_enabled && (is_campus_solutions_student || is_profile_visible_for_legacy_users)
       }
     end
 

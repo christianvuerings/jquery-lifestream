@@ -5,8 +5,8 @@ module CampusSolutions
     end
     alias_method(:is_cs_profile_feature_enabled, :is_feature_enabled)
 
-    def is_profile_hidden_for_legacy_users
-      Settings.features.cs_profile_hidden_for_legacy_users
+    def is_profile_visible_for_legacy_users
+      Settings.features.cs_profile_visible_for_legacy_users
     end
   end
 end

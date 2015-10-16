@@ -64,7 +64,7 @@ describe User::Api do
     end
     context 'with the fallback enabled' do
       before do
-        allow(Settings.features).to receive(:cs_profile_hidden_for_legacy_users).and_return(true)
+        allow(Settings.features).to receive(:cs_profile_visible_for_legacy_users).and_return(false)
       end
       it "should hide SIS profile for legacy students" do
         user_data = User::Api.new(@random_id).get_feed
@@ -74,7 +74,7 @@ describe User::Api do
     end
     context 'with the fallback disabled' do
       before do
-        allow(Settings.features).to receive(:cs_profile_hidden_for_legacy_users).and_return(false)
+        allow(Settings.features).to receive(:cs_profile_visible_for_legacy_users).and_return(true)
       end
       it "should show SIS profile for legacy students" do
         user_data = User::Api.new(@random_id).get_feed

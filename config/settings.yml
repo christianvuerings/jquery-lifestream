@@ -314,7 +314,7 @@ features:
   manage_site_mailing_lists: false
   cs_fin_aid: false
   cs_profile: false
-  cs_profile_hidden_for_legacy_users: false
+  cs_profile_visible_for_legacy_users: true
   cs_sir: false
   slate_checklist: false
   webcast_sign_up_on_calcentral: false
