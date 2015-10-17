@@ -44,9 +44,7 @@ module CampusSolutions
     def default_post_params
       super.merge(
         {
-          EFFDT: '27-JUL-15', # TODO fix hardcoding
-          EFF_STATUS: 'A',
-          COUNTRY_NM_FORMAT: '' # TODO ask Babu what this is
+          COUNTRY_NM_FORMAT: ''
         })
     end
 

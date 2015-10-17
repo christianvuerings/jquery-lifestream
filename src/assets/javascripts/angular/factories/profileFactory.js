@@ -17,6 +17,7 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
 
   var urlPostAddress = '/api/campus_solutions/address';
   var urlPostEmail = '/api/campus_solutions/email';
+  var urlPostName = '/api/campus_solutions/person_name';
   var urlPostPhone = '/api/campus_solutions/phone';
 
   // Delete
@@ -62,6 +63,9 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
   var postEmail = function(options) {
     return $http.post(urlPostEmail, options);
   };
+  var postName = function(options) {
+    return $http.post(urlPostName, options);
+  };
   var postPhone = function(options) {
     return $http.post(urlPostPhone, options);
   };
@@ -79,6 +83,7 @@ angular.module('calcentral.factories').factory('profileFactory', function(apiSer
     getTypesPhone: getTypesPhone,
     postAddress: postAddress,
     postEmail: postEmail,
+    postName: postName,
     postPhone: postPhone
   };
 });

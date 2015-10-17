@@ -4,31 +4,81 @@ var angular = require('angular');
 var _ = require('lodash');
 
 /**
- * Name Controller
+ * Preferred Name Controller
  */
-angular.module('calcentral.controllers').controller('BasicPreferredNameController', function(profileFactory, $scope, $q) {
-  var findPreferred = function(names) {
-    return _.find(names, function(name) {
-      return name.type.code === 'PRF';
-    });
-  };
+angular.module('calcentral.controllers').controller('BasicPreferredNameController', function(apiService, profileFactory, $scope) {
+  angular.extend($scope, {
+    emptyObject: {},
+    items: {
+      content: [],
+      editorEnabled: false
+    },
+    types: [],
+    currentObject: {},
+    isSaving: false,
+    errorMessage: '',
+    primary: {}
+  });
 
   var parsePerson = function(data) {
     var person = data.data.feed.student;
-    var preferredName = findPreferred(person.names);
+    var preferredName = apiService.profile.findPreferred(person.names);
+    $scope.primary = apiService.profile.findPrimary(person.names);
     angular.extend($scope, {
-      preferredName: {
-        content: preferredName
+      items: {
+        content: [preferredName]
       }
     });
   };
 
-  var getPerson = profileFactory.getPerson().then(parsePerson);
+  var getPerson = profileFactory.getPerson;
 
-  var loadInformation = function() {
-    $q.all(getPerson).then(function() {
+  var loadInformation = function(options) {
+    $scope.isLoading = true;
+    getPerson({
+      refreshCache: _.get(options, 'refresh')
+    })
+    .then(parsePerson)
+    .then(function() {
       $scope.isLoading = false;
     });
+  };
+
+  var actionCompleted = function(data) {
+    apiService.profile.actionCompleted($scope, data, loadInformation);
+  };
+
+  var saveCompleted = function(data) {
+    $scope.isSaving = false;
+    actionCompleted(data);
+  };
+
+  $scope.save = function(item) {
+    apiService.profile.save($scope, profileFactory.postName, {
+      type: 'PRF',
+      firstName: item.givenName,
+      middleName: item.middleName,
+      lastName: item.familyName,
+      suffix: item.suffixName,
+      countryNameFormat: '001'
+    }).then(saveCompleted);
+  };
+
+  $scope.showAdd = function() {
+    apiService.profile.showAdd($scope, {
+      givenName: $scope.primary.givenName,
+      middleName: $scope.primary.middleName,
+      familyName: $scope.primary.familyName,
+      suffixName: $scope.primary.suffixName
+    });
+  };
+
+  $scope.showEdit = function(item) {
+    apiService.profile.showEdit($scope, item);
+  };
+
+  $scope.closeEditor = function() {
+    apiService.profile.closeEditor($scope);
   };
 
   loadInformation();

@@ -1,0 +1,47 @@
+<div class="cc-page-widget-profile-section-content-item-editing">
+  <div class="cc-page-widget-profile-section-content-error cc-text-red" data-ng-if="errorMessage">
+    <i class="cc-icon-red fa fa-exclamation-circle"></i>
+    <span data-ng-bind="errorMessage"></span>
+  </div>
+  <div data-ng-if="!isDeleting">
+    <form data-ng-submit="save(currentObject.data)" name="cc_page_widget_basic_preferred_name">
+      <div>
+        <label for="cc-page-widget-basic-preferred-first-name">
+          <strong>First Name</strong>
+        </label>
+      </div>
+      <div>
+        <input type="text" id="cc-page-widget-basic-preferred-first-name" data-ng-model="currentObject.data.givenName" required aria-required="true" />
+      </div>
+      <div>
+        <strong>Middle Name</strong>
+      </div>
+      <div>
+        <span data-ng-bind="currentObject.data.middleName" data-ng-if="currentObject.data.middleName"></span>
+        <span data-ng-if="!currentObject.data.middleName" class="cc-page-widget-profile-section-not-available">Not Available</span>
+      </div>
+      <div>
+        <strong>Last Name</strong>
+      </div>
+      <div>
+        <span data-ng-bind="currentObject.data.familyName" data-ng-if="currentObject.data.familyName"></span>
+        <span data-ng-if="!currentObject.data.familyName" class="cc-page-widget-profile-section-not-available">Not Available</span>
+      </div>
+      <div>
+        <strong>Suffix</strong>
+      </div>
+      <div>
+        <span data-ng-bind="currentObject.data.suffixName" data-ng-if="currentObject.data.suffixName"></span>
+        <span data-ng-if="!currentObject.data.suffixName" class="cc-page-widget-profile-section-not-available">Not Available</span>
+      </div>
+
+      <div>
+        <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="cc_page_widget_basic_preferred_name.$invalid || isSaving">
+          <span data-ng-if="!isSaving">Save</span>
+          <span data-ng-if="isSaving">Updating...</span>
+        </button>
+        <button class="cc-button" data-ng-click="closeEditor()" data-ng-disabled="isSaving">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

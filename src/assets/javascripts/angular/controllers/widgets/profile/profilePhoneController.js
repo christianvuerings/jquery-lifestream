@@ -83,7 +83,7 @@ angular.module('calcentral.controllers').controller('ProfilePhoneController', fu
   };
 
   $scope.showAdd = function() {
-    apiService.profile.showAdd($scope);
+    apiService.profile.showAdd($scope, $scope.emptyObject);
   };
 
   $scope.showEdit = function(item) {
