@@ -50,8 +50,7 @@ describe CampusSolutions::NameDelete do
       preferredFirstName: '',
       partnerLastName: '',
       partnerRoyalPrefix: '',
-      lastNamePrefNld: '',
-      countryNameFormat: '001'
+      lastNamePrefNld: ''
     } }
     before {
       CampusSolutions::PersonName.new(fake: false, user_id: user_id, params: create_params).get

@@ -27,8 +27,7 @@ module CampusSolutions
           FieldMapping.required(:preferredFirstName, :PREF_FIRST_NAME),
           FieldMapping.required(:partnerLastName, :PARTNER_LAST_NAME),
           FieldMapping.required(:partnerRoyalPrefix, :PARTNER_ROY_PREFIX),
-          FieldMapping.required(:lastNamePrefNld, :LAST_NAME_PREF_NLD),
-          FieldMapping.required(:countryNameFormat, :COUNTRY_NM_FORMAT)
+          FieldMapping.required(:lastNamePrefNld, :LAST_NAME_PREF_NLD)
         ]
       )
     end
@@ -44,7 +43,7 @@ module CampusSolutions
     def default_post_params
       super.merge(
         {
-          COUNTRY_NM_FORMAT: ''
+          COUNTRY_NM_FORMAT: '001'
         })
     end
 
