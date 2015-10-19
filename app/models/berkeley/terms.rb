@@ -77,8 +77,8 @@ module Berkeley
       @current = @running || future_terms.pop
       if (@next = future_terms.pop)
         if (@future = future_terms.pop)
-          if !future_terms.empty?
-            logger.info("Found more than two future terms: #{future_terms}")
+          unless future_terms.empty?
+            logger.info("Found more than two future terms: #{future_terms.map(&:slug).join(', ')}")
             future_terms.each {|t| terms.delete(t.slug)}
           end
         end
