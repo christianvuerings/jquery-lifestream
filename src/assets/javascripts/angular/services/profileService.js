@@ -62,7 +62,7 @@ angular.module('calcentral.services').service('profileService', function() {
   };
 
   /**
-   * Find a certain item in with a specific code
+   * Find a certain item with a specific code
    */
   var findItem = function(items, code) {
     return _.find(items, function(item) {
