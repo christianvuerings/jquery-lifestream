@@ -1,0 +1,119 @@
+{
+  "studentResponse": {
+    "correlationId": "5713af86-b04e-4e03-bef5-6a6196040e0d",
+    "source": "UCB-SIS-STUDENT",
+    "students": {
+      "students": [
+        {
+          "identifiers": [
+            {
+              "type": "student-id",
+              "id": "CC00000001",
+              "primary": true,
+              "disclose": false
+            }
+          ],
+          "confidential": false,
+          "workExperiences": {
+            "workExperiences": [
+              {
+                "employer": "Mat-Su Youth Facility",
+                "sicCode": "",
+                "address": {
+                  "type": {
+                    "code": ""
+                  },
+                  "city": "PALMER",
+                  "stateCode": "AK",
+                  "countryCode": "USA"
+                },
+                "phone": {
+                  "type": {
+                    "code": ""
+                  },
+                  "number": ""
+                },
+                "socCode": "",
+                "fullTimePercentage": 0,
+                "weeklyHours": 0,
+                "payRate": 0,
+                "payCurrency": {
+                  "code": "USD",
+                  "description": "US Dollar"
+                },
+                "payFrequency": {
+                  "code": "M",
+                  "description": "Month"
+                },
+                "description": ""
+              },
+              {
+                "employer": "Mat-Su Youth Facility",
+                "sicCode": "",
+                "address": {
+                  "type": {
+                    "code": ""
+                  },
+                  "city": "PALMER",
+                  "stateCode": "AK",
+                  "countryCode": "USA"
+                },
+                "phone": {
+                  "type": {
+                    "code": ""
+                  },
+                  "number": ""
+                },
+                "socCode": "",
+                "fullTimePercentage": 0,
+                "weeklyHours": 0,
+                "payRate": 0,
+                "payCurrency": {
+                  "code": "USD",
+                  "description": "US Dollar"
+                },
+                "payFrequency": {
+                  "code": "M",
+                  "description": "Month"
+                },
+                "description": ""
+              },
+              {
+                "employer": "Planet Express",
+                "sicCode": "",
+                "address": {
+                  "type": {
+                    "code": ""
+                  },
+                  "city": "",
+                  "stateCode": "",
+                  "countryCode": "USA"
+                },
+                "phone": {
+                  "type": {
+                    "code": ""
+                  },
+                  "number": ""
+                },
+                "socCode": "",
+                "fullTimePercentage": 1,
+                "weeklyHours": 40,
+                "payRate": 0,
+                "payCurrency": {
+                  "code": "USD",
+                  "description": "US Dollar"
+                },
+                "payFrequency": {
+                  "code": "M",
+                  "description": "Month",
+                  "fromDate": "2015-10-01"
+                },
+                "description": "picks up and drops off boxes and packages."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
