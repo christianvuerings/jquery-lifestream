@@ -59,8 +59,7 @@ angular.module('calcentral.controllers').controller('BasicPreferredNameControlle
       firstName: item.givenName,
       middleName: item.middleName,
       lastName: item.familyName,
-      suffix: item.suffixName,
-      countryNameFormat: '001'
+      suffix: item.suffixName
     }).then(saveCompleted);
   };
 
