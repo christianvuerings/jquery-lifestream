@@ -36,6 +36,9 @@ describe Oec::MergeConfirmationSheetsTask do
   let(:gws_confirmation_spreadsheet) { mock_google_drive_item 'Gender and Women\'s Studies' }
   let(:mcellbi_confirmation_spreadsheet) { mock_google_drive_item 'Molecular and Cell Biology' }
 
+  let(:merged_course_confirmation) { Oec::SisImportSheet.from_csv(File.read Rails.root.join('tmp', 'oec', 'Merged course confirmations.csv')) }
+  let(:merged_supervisor_confirmation) { Oec::Supervisors.from_csv(File.read Rails.root.join('tmp', 'oec', 'Merged supervisor confirmations.csv')) }
+
   before(:each) do
     @mock_sheets = []
 
@@ -82,8 +85,6 @@ describe Oec::MergeConfirmationSheetsTask do
 
   context 'generated sheet structure' do
     let(:local_write) { 'Y' }
-    let(:merged_course_confirmation) { Oec::SisImportSheet.from_csv(File.read Rails.root.join('tmp', 'oec', 'Merged course confirmations.csv')) }
-    let(:merged_supervisor_confirmation) { Oec::Supervisors.from_csv(File.read Rails.root.join('tmp', 'oec', 'Merged supervisor confirmations.csv')) }
 
     let(:gws_course_confirmation_worksheet) { Oec::CourseConfirmation.from_csv gws_course_confirmation[:csv] }
     let(:mcellbi_course_confirmation_worksheet) { Oec::CourseConfirmation.from_csv mcellbi_course_confirmation[:csv] }
@@ -136,7 +137,7 @@ describe Oec::MergeConfirmationSheetsTask do
     end
   end
 
-  context 'when two departments mark a course for evaluation with conflicting data' do
+  context 'when course confirmation sheets include conflicting data' do
     let(:local_write) { 'Y' }
     before do
       gws_import[:csv].concat '2015-B-91111,2015-B-91111,GWS 165 LEC 001 MEIOSIS AND GENDER TROUBLE,Y,GWS/MCELLBI 165 LEC 001,GWS,165,LEC,001,P,100008,Instructor,Eight,instructor8@berkeley.edu,,,F,,1/20/2015,5/8/2015'
@@ -150,6 +151,13 @@ describe Oec::MergeConfirmationSheetsTask do
       task.run
       expect(task.errors['Merged course confirmations']['2015-B-91111-100008'].keys).to eq ["Conflicting values found under DEPT_FORM: 'GWS', 'MCELLBI'"]
     end
+
+    it 'should include both rows in merged sheet' do
+      task.run
+      conflicting_rows = merged_course_confirmation.select { |row| row['COURSE_ID'] == '2015-B-91111' }
+      expect(conflicting_rows).to have(2).items
+      expect(conflicting_rows.map { |row| row['DEPT_FORM'] }).to match_array %w(GWS MCELLBI)
+    end
   end
 
   context 'when confirmed course data cannot be matched to SIS import' do
@@ -162,6 +170,15 @@ describe Oec::MergeConfirmationSheetsTask do
       expect(Rails.logger).to receive(:error).at_least(1).times
       task.run
       expect(task.errors['Merged course confirmations']['2015-B-91111-100008'].keys).to eq ['No SIS import row found matching confirmation row']
+    end
+
+    it 'should export a row with blank values for SIS data' do
+      task.run
+      rows_without_sis_data = merged_course_confirmation.select { |row| row['COURSE_ID'] == '2015-B-91111' }
+      expect(rows_without_sis_data).to have(1).items
+      %w(COURSE_ID_2 DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM PRIMARY_SECONDARY_CD).each do |sis_column|
+        expect(rows_without_sis_data.first[sis_column]).to be_blank
+      end
     end
   end
 
@@ -182,6 +199,13 @@ describe Oec::MergeConfirmationSheetsTask do
         "Conflicting values found under LAST_NAME: 'Sheldon', 'Tiptree'",
       ])
     end
+
+    it 'should include both rows in merged sheet' do
+      task.run
+      conflicting_rows = merged_supervisor_confirmation.select { |row| row['LDAP_UID'] == '999999' }
+      expect(conflicting_rows).to have(2).items
+      expect(conflicting_rows.map { |row| row['LAST_NAME'] }).to match_array %w(Sheldon Tiptree)
+    end
   end
 
   context 'when confirmed supervisor data cannot be matched to supervisors sheet' do
@@ -193,7 +217,14 @@ describe Oec::MergeConfirmationSheetsTask do
     it 'should record errors' do
       expect(Rails.logger).to receive(:error).at_least(1).times
       task.run
-      expect(task.errors['Merged supervisor confirmations']['999999'].keys).to eq ['No supervisors row found matching confirmation row']
+      expect(task.errors['Merged supervisor confirmations']['999999'].keys).to include 'No supervisors row found matching confirmation row'
+    end
+
+    it 'should export a row with blank values for SIS data' do
+      task.run
+      rows_without_sis_data = merged_supervisor_confirmation.select { |row| row['LDAP_UID'] == '999999' }
+      expect(rows_without_sis_data).to have(1).items
+      expect(rows_without_sis_data.first['SIS_ID']).to be_blank
     end
   end
 end
