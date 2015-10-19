@@ -195,7 +195,7 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
   };
 
   $scope.showAdd = function() {
-    apiService.profile.showAdd($scope);
+    apiService.profile.showAdd($scope, $scope.emptyObject);
   };
 
   $scope.showEdit = function(item) {
