@@ -14,7 +14,7 @@ describe CampusSolutions::PersonName do
       } }
       subject { proxy.filter_updateable_params(params) }
       it 'should strip out invalid fields' do
-        expect(subject.keys.length).to eq 17
+        expect(subject.keys.length).to eq 16
         expect(subject[:bogus]).to be_nil
         expect(subject[:invalid]).to be_nil
         expect(subject[:firstName]).to eq 'Joe'
@@ -67,8 +67,7 @@ describe CampusSolutions::PersonName do
       preferredFirstName: '',
       partnerLastName: '',
       partnerRoyalPrefix: '',
-      lastNamePrefNld: '',
-      countryNameFormat: '001'
+      lastNamePrefNld: ''
     } }
     let(:proxy) { CampusSolutions::PersonName.new(fake: false, user_id: user_id, params: params) }
 
