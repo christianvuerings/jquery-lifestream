@@ -8,6 +8,12 @@
     word-break: break-word;
   }
 
+  .cc-widget-activities-info-link {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 3px;
+  }
+
   .cc-widget-activities-list {
     font-size: 12px;
     margin: 0;
@@ -102,11 +108,6 @@
   }
   .cc-widget-activities-text-margin {
     margin-left: 30px;
-    .cc-widget-activities-info-link {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 3px;
-    }
     .cc-widget-activities-status-line {
       margin-top: 4px;
     }
