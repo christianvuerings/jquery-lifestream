@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe MyAcademics::Semesters do
 
   let(:feed) { feed = {}; MyAcademics::Semesters.new(random_id).merge(feed); feed }

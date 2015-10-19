@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe MyFinaidController do
 
   before(:each) do

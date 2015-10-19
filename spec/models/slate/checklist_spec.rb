@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Slate::Checklist do
 
   context 'mock proxy' do

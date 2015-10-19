@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusOracle::UserCourses::Transcripts do
   let (:transcripts) { CampusOracle::UserCourses::Transcripts.new(user_id: random_id).get_all_transcripts }
 

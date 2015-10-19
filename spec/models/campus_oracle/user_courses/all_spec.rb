@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusOracle::UserCourses::All do
 
   it 'should be accessible if non-null user' do

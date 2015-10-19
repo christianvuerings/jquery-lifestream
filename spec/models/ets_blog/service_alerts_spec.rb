@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require 'spec_helper'
-
 describe EtsBlog::ServiceAlerts do
 
   let(:fake_proxy) { EtsBlog::ServiceAlerts.new({fake: true}) }

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::EthnicitySetupController do
   context 'ethnicity setup feed' do
     let(:feed) { :get }

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe HubEdos::UserAttributes do
 
   let(:user_id) { '61889' }

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe SessionsController do
   let(:user_id) { random_id }
   let(:cookie_hash) { {} }

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'MyAcademics::Regblocks' do
 
   it 'should get properly formatted data from fake Bearfacts' do

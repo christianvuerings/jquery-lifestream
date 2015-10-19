@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Notifications::RegBlockCodeTranslator do
   it "should be able to handle unknown reason_code and/or office_code during translation" do
     result = Notifications::RegBlockCodeTranslator.new().translate_bearfacts_proxy("foo", "baz")

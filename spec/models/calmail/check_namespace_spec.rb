@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Calmail::CheckNamespace do
   let(:list_name) { "site-#{random_id}" }
 

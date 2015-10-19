@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::CountryController do
   context 'country feed' do
     let(:feed) { :get }

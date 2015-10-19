@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::SirResponseController do
 
   let(:user_id) { '12350' }

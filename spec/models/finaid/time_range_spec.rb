@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Finaid::TimeRange do
   before {allow(Settings.terms).to receive(:fake_now).and_return(fake_now)}
 

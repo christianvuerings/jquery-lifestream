@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::HigherOneUrlController do
 
   let(:user_id) { '12349' }

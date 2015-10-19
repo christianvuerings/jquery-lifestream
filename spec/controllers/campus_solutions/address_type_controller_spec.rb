@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::AddressTypeController do
   context 'address type feed' do
     let(:feed) { :get }

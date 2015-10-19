@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe MyEventsController do
   let!(:valid_input) { {
     format: 'json',

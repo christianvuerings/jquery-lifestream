@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::AddressLabelController do
   context 'address label feed' do
     let(:feed) { :get }

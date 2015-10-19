@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Financials::Proxy do
 
   context 'when Oski gets his feed' do
