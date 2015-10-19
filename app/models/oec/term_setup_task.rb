@@ -40,7 +40,8 @@ module Oec
         end
         if (previous_exports =  @remote_drive.find_first_matching_folder('exports', previous_term_folder))
           if (most_recent_export = @remote_drive.find_folders(previous_exports.id).sort_by(&:title).last)
-            @previous_term_csvs[Oec::CourseSupervisors] =  @remote_drive.find_first_matching_item('course_supervisors', most_recent_export)
+            csv_file = @remote_drive.find_items_by_title('course_supervisors', parent_id: most_recent_export.id, mime_type: 'text/csv').first
+            @previous_term_csvs[Oec::CourseSupervisors] = Oec::CourseSupervisors.from_csv(csv_file) if csv_file
           end
         end
       end
