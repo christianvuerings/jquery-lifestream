@@ -40,8 +40,11 @@ module Oec
           sftp_stdout_to_log sftp_stdout
 
           exports_now = find_or_create_now_subfolder 'exports'
-          export_sheets.each do |sheet|
-            export_sheet(sheet, exports_now)
+          # Write files to archive ('exports' folder at Google Drive). No need to use fancy Sheets format.
+          files_to_publish.each do |file_name|
+            path = "#{csv_staging_dir.expand_path}/#{file_name}"
+            raise RuntimeError, "file_to_publish does not exist: #{path}" unless File.exists? path
+            upload_file(path, file_name, 'text/csv', exports_now)
           end
         else
           raise RuntimeError, "System command failed: \n----\n#{cmd}\n----\n"

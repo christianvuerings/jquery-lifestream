@@ -26,6 +26,13 @@ module GoogleApps
       find_items options.merge({ :title => title })
     end
 
+    def download(file)
+      result = get_google_api.execute(:uri => file.download_url)
+      log_response result
+      raise Errors::ProxyError, "Failed to download '#{file.title}' (id: #{file.id}).\nError: #{result.data['error']}" if result.error?
+      result.body
+    end
+
     def find_items(options = {})
       client = get_google_api
       drive_api = client.discovered_api('drive', 'v2')
