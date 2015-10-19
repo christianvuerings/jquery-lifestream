@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe EtsBlog::ReleaseNotes do
 
   describe 'with fake proxy' do

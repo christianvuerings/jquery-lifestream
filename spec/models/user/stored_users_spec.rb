@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe User::StoredUsers do
 
   let(:owner_uid) { '1234' }

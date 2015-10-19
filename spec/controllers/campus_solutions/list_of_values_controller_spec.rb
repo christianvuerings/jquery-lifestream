@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::ListOfValuesController do
   context 'list of values feed' do
     it 'should not let an unauthenticated user post' do

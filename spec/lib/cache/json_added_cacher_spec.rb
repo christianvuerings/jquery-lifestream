@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Cache::JsonAddedCacher do
   class JsonCachingTestClass
     include Cache::CachedFeed

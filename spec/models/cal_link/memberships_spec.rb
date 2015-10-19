@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CalLink::Memberships do
   let! (:uid) { '300846' }
 

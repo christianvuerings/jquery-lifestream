@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe MyAdvisingController do
 
   it 'should be an empty advising feed on non-authenticated user' do

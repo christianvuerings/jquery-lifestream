@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Calendar::ScheduleTranslator do
 
   describe '#recurrence_rule' do

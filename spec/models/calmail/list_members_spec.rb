@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Calmail::ListMembers do
   subject { described_class.new(fake: true) }
   let(:list_name) { "site-#{random_id}" }

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe BackgroundJobsCheck do
   before do
     allow(Settings.cache).to receive(:servers).and_return(cache_servers)

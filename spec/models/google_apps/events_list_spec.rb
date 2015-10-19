@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Events(events_list)' do
 
   before(:each) do

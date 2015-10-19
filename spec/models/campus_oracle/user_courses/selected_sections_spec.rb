@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusOracle::UserCourses::SelectedSections do
 
   it 'mimics normal My Academics feed', :if => CampusOracle::Connection.test_data? do

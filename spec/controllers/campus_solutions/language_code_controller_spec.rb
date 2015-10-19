@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::LanguageCodeController do
   context 'language feed' do
     let(:feed) { :get }

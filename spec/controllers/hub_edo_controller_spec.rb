@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe HubEdoController do
   let(:user_id) { '61889' }
   context 'person feed' do

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::StateController do
   context 'state feed' do
     let(:feed) { :get }

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe MyActivities::RegBlocks do
   let!(:oski_uid) { '61889' }
   let!(:oski_bearfacts_proxy) { Bearfacts::Regblocks.new({user_id: oski_uid, fake: true}) }

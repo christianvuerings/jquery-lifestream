@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::TranslateController do
   context 'translate feed' do
     let(:feed) { :get }

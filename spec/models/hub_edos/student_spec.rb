@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe HubEdos::Student do
 
   context 'mock proxy' do

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe HubEdos::WorkExperience do
 
   context 'mock proxy' do

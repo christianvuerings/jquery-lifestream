@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 # Full-stack test used to test performance of the calendar integration. This is not
 # meant to be run in the normal course of testing!
 describe 'Calendar Integration Scaling Test', ignore: true do

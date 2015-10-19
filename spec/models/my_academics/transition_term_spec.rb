@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe MyAcademics::TransitionTerm do
   let(:oski_uid) { '61889' }
   let(:feed) { {collegeAndLevel: college_and_level_data} }

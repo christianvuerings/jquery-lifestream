@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Cache::LiveUpdatesEnabled do
   class DefaultTestClass < UserSpecificModel
     include Cache::LiveUpdatesEnabled

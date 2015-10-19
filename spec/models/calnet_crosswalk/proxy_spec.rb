@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CalnetCrosswalk::Proxy do
 
   shared_examples 'a proxy that returns data' do

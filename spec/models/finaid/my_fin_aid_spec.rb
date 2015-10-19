@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Finaid::MyFinAid do
   let!(:oski_uid) { '61889' }
   let!(:non_student_uid) { '212377' }

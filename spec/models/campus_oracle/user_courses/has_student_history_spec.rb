@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusOracle::UserCourses::HasStudentHistory do
 
   it 'should say that Tammi has student history', :if => CampusOracle::Connection.test_data? do

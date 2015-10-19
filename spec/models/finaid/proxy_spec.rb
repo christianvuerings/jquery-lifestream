@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Finaid::Proxy do
 
   let(:this_year){ 2013 }

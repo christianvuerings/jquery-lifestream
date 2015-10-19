@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusOracle::UserCourses::Base do
 
   describe '#merge_enrollments' do
