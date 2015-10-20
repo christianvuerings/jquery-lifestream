@@ -15,7 +15,6 @@ describe CampusSolutions::DashboardUrl do
     it_should_behave_like 'a proxy that gets data'
     subject { proxy.get }
     it 'should properly camelize the fields' do
-      p "subj=#{subject}"
       expect(subject[:feed][:url]).to eq('https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/CCI_COMMUNICATION_CENTER_SS.CCI_COMM_CENTER_FL.GBL')
     end
   end
