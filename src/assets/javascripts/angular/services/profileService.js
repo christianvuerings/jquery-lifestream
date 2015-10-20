@@ -85,6 +85,13 @@ angular.module('calcentral.services').service('profileService', function() {
   };
 
   /**
+   * We need to replace the \n with <br /> in the formattedAddress
+   */
+  var fixFormattedAddress = function(formattedAddress) {
+    return formattedAddress.replace(/\\n/g, '<br />');
+  };
+
+  /**
    * Delete a certain item in a section
    */
   var deleteItem = function($scope, action, item) {
@@ -158,6 +165,7 @@ angular.module('calcentral.services').service('profileService', function() {
     filterTypes: filterTypes,
     findPreferred: findPreferred,
     findPrimary: findPrimary,
+    fixFormattedAddress: fixFormattedAddress,
     parseSection: parseSection,
     save: save,
     showAdd: showAdd,
