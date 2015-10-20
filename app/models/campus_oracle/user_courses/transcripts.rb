@@ -67,7 +67,7 @@ module CampusOracle
           semester[:courses] << {
             dept: row['dept_name'],
             courseCatalog: row['catalog_id'],
-            title: row['memo_or_title'],
+            title: handle_memo_or_title(row['memo_or_title']),
             units: row['transcript_unit'],
             grade: row['grade']
           }
@@ -88,12 +88,19 @@ module CampusOracle
       def credit_row?(row)
         row['transcript_unit'] > 0 &&
           !row['memo_or_title'].nil? &&
-          !row['memo_or_title'].include?('LAPSED') &&
-          !row['memo_or_title'].include?('REMOVED')
+          !row['memo_or_title'].include?('LAPSED')
       end
 
       def heading_row?(row)
         row['line_type'] == 'V' && row['memo_or_title'].present?
+      end
+
+      def handle_memo_or_title(memo_or_title)
+        if memo_or_title.include? 'REMOVED'
+          'Incomplete Removed'
+        else
+          memo_or_title
+        end
       end
 
     end
