@@ -35,11 +35,11 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
   var countryWatcher;
 
   /**
-   * We need to replace the \n with <br /> in the formattedAddresses
+   * Fix the formatted addresses
    */
   var fixFormattedAddresses = function() {
     $scope.items.content = $scope.items.content.map(function(element) {
-      element.formattedAddress = element.formattedAddress.replace(/\\n/g, '<br />');
+      element.formattedAddress = apiService.profile.fixFormattedAddress(element.formattedAddress);
       return element;
     });
   };
