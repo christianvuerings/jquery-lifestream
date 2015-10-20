@@ -269,6 +269,7 @@ cache:
     CampusSolutions::SirConfig: <%= 24.hours %>
     CampusSolutions::State: <%= 29.days %>
     CampusSolutions::Translate: <%= 24.hours %>
+    CampusSolutions::DashboardUrl: <%= 29.days %>
 
     CalnetCrosswalk::Proxy: <%= 29.days %>
 
