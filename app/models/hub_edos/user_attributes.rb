@@ -46,6 +46,7 @@ module HubEdos
     def set_ids(result)
       result[:ldap_uid] = @uid
       result[:student_id] = lookup_student_id_from_crosswalk
+      result[:campus_solutions_id] = lookup_campus_solutions_id
     end
 
     def extract_passthrough_elements(edo, result)

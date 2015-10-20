@@ -8,6 +8,7 @@ describe User::Api do
     HubEdos::UserAttributes.stub(:new).and_return(double(get: {
       :person_name => @default_name,
       :student_id => 1234567890,
+      :campus_solutions_id => 'CC12345678',
       :roles => {
         :student => true,
         :exStudent => false,
@@ -44,6 +45,7 @@ describe User::Api do
     user_data[:hasCanvasAccount].should_not be_nil
     user_data[:isCalendarOptedIn].should_not be_nil
     user_data[:sid].should == 1234567890
+    user_data[:campusSolutionsID].should == 'CC12345678'
     user_data[:isCampusSolutionsStudent].should be_truthy
     user_data[:showSisProfileUI].should be_truthy
   end
@@ -53,7 +55,7 @@ describe User::Api do
         double(
         get: {
           :person_name => @default_name,
-          :student_id => 12345678,    # note: 8-digit ID means legacy
+          :campus_solutions_id => 12345678,    # note: 8-digit ID means legacy
           :roles => {
             :student => true,
             :exStudent => false,
