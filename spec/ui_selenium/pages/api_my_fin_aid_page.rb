@@ -13,7 +13,7 @@ class ApiMyFinAidPage
     logger.info('Parsing JSON from /api/my/finaid')
     navigate_to "#{WebDriverUtils.base_url}/api/my/finaid"
     wait = Selenium::WebDriver::Wait.new(:timeout => WebDriverUtils.page_load_timeout)
-    wait.until { driver.find_element(:xpath => '//pre[contains(.,"Finaid::MyFinAid")]') }
+    wait.until { driver.find_element(:xpath => '//pre[contains(.,"Finaid::Merged")]') }
     body = driver.find_element(:xpath, '//pre').text
     @parsed = JSON.parse(body)
   end
