@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe SearchUsersController do
   before do
     session['user_id'] = "1234"

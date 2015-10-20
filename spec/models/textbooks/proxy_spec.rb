@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Textbooks::Proxy do
 
   # We do not use shared_examples so as to avoid hammering an external data source

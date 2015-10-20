@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe MyAcademics::CanvasSites do
   let(:uid) {rand(99999).to_s}
   let(:ccn) {rand(99999)}

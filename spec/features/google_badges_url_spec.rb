@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'headless'
 require 'selenium-webdriver'
 

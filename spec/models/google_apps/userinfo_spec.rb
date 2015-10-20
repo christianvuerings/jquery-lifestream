@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe GoogleApps::Userinfo do
 
   it 'Should return a valid user profile from fake data' do

@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe "LiveUpdatesWarmer" do
 
   before(:each) do

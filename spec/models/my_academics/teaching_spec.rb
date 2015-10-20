@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe 'MyAcademics::Teaching' do
 
   it "should get properly formatted data from fake Oracle MV", :if => CampusOracle::Connection.test_data? do

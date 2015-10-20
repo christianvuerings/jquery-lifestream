@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe 'User::Data' do
 
   it "should report DB outage" do

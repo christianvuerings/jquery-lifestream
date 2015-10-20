@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe "GoogleTaskList" do
 
   before do

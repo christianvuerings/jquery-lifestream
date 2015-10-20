@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Berkeley::TermCodes do
 
   it "should convert code and year into nice English" do

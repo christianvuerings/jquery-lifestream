@@ -1,5 +1,3 @@
-require "spec_helper"
-
 feature "act_as_user" do
   before do
     @target_uid = "978966"

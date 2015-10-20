@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe MyAcademics::Merged do
 
   # TODO: this test needs more bite, not that familiar about the underlying implementation but

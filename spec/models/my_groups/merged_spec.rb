@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe MyGroups::Merged do
   subject { MyGroups::Merged.new(uid).get_feed[:groups] }
 
