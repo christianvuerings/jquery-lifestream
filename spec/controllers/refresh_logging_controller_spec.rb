@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe RefreshLoggingController do
   before(:each) do
     @user_id = rand(99999).to_s

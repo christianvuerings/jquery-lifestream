@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Bearfacts::Telebears do
   let!(:fake_oski) { Bearfacts::Telebears.new({:user_id => "61889", :fake => true}) }
 

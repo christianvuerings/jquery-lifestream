@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe RoutesListController do
 
   before do

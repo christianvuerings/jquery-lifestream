@@ -1,4 +1,3 @@
-require "spec_helper"
 require "support/canvas_shared_examples"
 
 describe CampusRostersController do

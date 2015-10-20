@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe "User::Auth" do
   before do
     Rails.env.stub(:production?).and_return(true)

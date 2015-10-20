@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Cache::Cacheable do
   class TestCacheable
     extend Cache::Cacheable

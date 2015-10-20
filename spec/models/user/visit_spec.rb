@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe "User::Visit" do
 
   before do

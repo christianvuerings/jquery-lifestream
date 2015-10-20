@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Rosters::Common do
 
   let(:teacher_login_id) { rand(99999).to_s }

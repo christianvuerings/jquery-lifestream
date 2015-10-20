@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe ActAsController do
 
   def it_succeeds

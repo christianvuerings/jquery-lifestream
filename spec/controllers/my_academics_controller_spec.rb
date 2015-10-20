@@ -1,4 +1,3 @@
-require "spec_helper"
 require "support/shared_examples"
 
 describe MyAcademicsController do

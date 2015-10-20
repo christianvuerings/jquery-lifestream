@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Berkeley::GradeOptions do
   subject {Berkeley::GradeOptions.grade_option_for_enrollment(credit_code, pnp_flag)}
 

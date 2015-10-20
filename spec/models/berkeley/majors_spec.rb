@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Berkeley::Majors do
 
   it "should look up a couple of real majors" do

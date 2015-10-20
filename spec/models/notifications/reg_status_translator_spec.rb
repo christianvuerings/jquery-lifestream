@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Notifications::RegStatusTranslator do
 
   it "should translate a reg-status event properly" do

@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'selenium-webdriver'
 require 'page-object'
 require 'csv'
@@ -501,7 +500,7 @@ describe 'My Finances activity details', :testui => true do
                   my_fin_waiver_term = my_finances_page.trans_term
                   my_fin_waiver_has_disburse = my_finances_page.trans_disburse_date?
                   my_fin_waiver_has_ref_method = my_finances_page.trans_ref_method?
-                  my_fin_waiver_has_ref_date = my_finances_page.trans_ref_date? 
+                  my_fin_waiver_has_ref_date = my_finances_page.trans_ref_date?
                   my_fin_waiver_has_ref_action = my_finances_page.trans_ref_action?
                   my_fin_waiver_has_ref_void = my_finances_page.trans_ref_void?
                   api_waiver_date = Time.parse(fin_api_page.trans_date(waiver)).strftime('%m/%d/%y')
