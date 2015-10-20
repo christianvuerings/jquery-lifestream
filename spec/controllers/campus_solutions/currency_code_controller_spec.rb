@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::CurrencyCodeController do
   context 'currency code feed' do
     let(:feed) { :get }

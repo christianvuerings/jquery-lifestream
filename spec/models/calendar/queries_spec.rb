@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Calendar::Queries do
 
   describe '#get_all_courses' do

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Calendar::Exporter do
 
   describe '#ship_entries' do

@@ -35,8 +35,8 @@ module GoogleApps
           raise Errors::ProxyError, "spreadsheet_by_id failed with id=#{id}. Error: #{result.data['error']}"
       end
       file
-    rescue Google::APIClient::ClientError => e
-      logger.error "spreadsheet_by_id failed with id=#{id}. Exception: #{e}"
+    rescue Google::APIClient::TransmissionError => e
+      log_transmission_error(e, "spreadsheet_by_id failed with id=#{id}")
       nil
     end
 
@@ -46,8 +46,8 @@ module GoogleApps
       spreadsheets = @session.spreadsheets(:q => query)
       logger.debug "No spreadsheets found. Query: #{query}" if spreadsheets.nil? || spreadsheets.none?
       spreadsheets
-    rescue Google::APIClient::ClientError => e
-      logger.error "spreadsheets_by_title failed with query: #{query}. Exception: #{e}"
+    rescue Google::APIClient::TransmissionError => e
+      log_transmission_error(e, "spreadsheets_by_title failed with query: #{query}")
       nil
     end
 
@@ -131,6 +131,16 @@ module GoogleApps
       log_response result
       raise Errors::ProxyError, "upload failed with title=#{title}. Error: #{result.data['error']}" if result.error?
       @session.wrap_api_file result.data
+    rescue Google::APIClient::TransmissionError => e
+      log_transmission_error(e, "upload_to_spreadsheet failed with: #{[title, description, path_or_io, parent_id].to_s}")
+      raise e
+    end
+
+    private
+
+    def log_transmission_error(e, message_prefix)
+      # Log error message and Google::APIClient::Result body
+      logger.error "#{message_prefix}\n  Exception: #{e}\n  Google error_message: #{e.result.error_message}\n  Google response.data: #{e.result.body}\n"
     end
 
   end

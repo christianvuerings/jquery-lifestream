@@ -23,7 +23,9 @@ angular.module('calcentral.services').service('profileService', function() {
    */
   var closeEditors = function($scope) {
     angular.forEach($scope.items.content, function(item) {
-      item.isModifying = false;
+      if (item && item.isModifying) {
+        item.isModifying = false;
+      }
     });
   };
 
@@ -57,6 +59,29 @@ angular.module('calcentral.services').service('profileService', function() {
     return _.filter(values, function(value) {
       return currentTypes.indexOf(value.fieldvalue) === -1 && value.typeControl !== 'D';
     });
+  };
+
+  /**
+   * Find a certain item with a specific code
+   */
+  var findItem = function(items, code) {
+    return _.find(items, function(item) {
+      return item.type.code === code;
+    });
+  };
+
+  /**
+   * Find a preferred item
+   */
+  var findPreferred = function(items) {
+    return findItem(items, 'PRF');
+  };
+
+  /**
+   * Find a primary item
+   */
+  var findPrimary = function(items) {
+    return findItem(items, 'PRI');
   };
 
   /**
@@ -105,15 +130,17 @@ angular.module('calcentral.services').service('profileService', function() {
   /**
    * Show the add editor
    */
-  var showAdd = function($scope) {
-    var emptyObject = angular.copy($scope.emptyObject);
-    angular.merge(emptyObject, {
-      type: {
-        // Select the first item in the dropdown
-        code: $scope.types[0].fieldvalue
-      }
-    });
-    showSaveAdd($scope, emptyObject, true);
+  var showAdd = function($scope, item) {
+    var initObject = angular.copy(item);
+    if (_.get($scope, 'types[0].fieldvalue')) {
+      angular.merge(initObject, {
+        type: {
+          // Select the first item in the dropdown
+          code: _.get($scope, 'types[0].fieldvalue')
+        }
+      });
+    }
+    showSaveAdd($scope, initObject, true);
   };
 
   /**
@@ -129,6 +156,8 @@ angular.module('calcentral.services').service('profileService', function() {
     closeEditor: closeEditor,
     delete: deleteItem,
     filterTypes: filterTypes,
+    findPreferred: findPreferred,
+    findPrimary: findPrimary,
     parseSection: parseSection,
     save: save,
     showAdd: showAdd,

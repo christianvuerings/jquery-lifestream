@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::NameTypeController do
   context 'name type feed' do
     let(:feed) { :get }

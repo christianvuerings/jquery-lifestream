@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Financials::MyFinancials do
 
   let(:uid) { '61889' }

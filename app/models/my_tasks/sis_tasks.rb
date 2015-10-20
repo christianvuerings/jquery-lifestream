@@ -37,7 +37,7 @@ module MyTasks
       if %w(Completed Paidoff Waived Cancelled).include?(result[:itemStatus])
         status = 'completed'
       end
-      {
+      formatted_entry = {
         emitter: CampusSolutions::Proxy::APP_NAME,
         linkDescription: result[:checkListDocMgmt][:linkUrlLbl],
         linkUrl: result[:checkListDocMgmt][:linkUrl],
@@ -51,6 +51,11 @@ module MyTasks
         responsibleContactEmail: result[:responsibleCntctEmail],
         organization: result[:associationIdName]
       }
+      if status == 'completed'
+        format_date_into_entry!(convert_date(result[:statusDt]), formatted_entry, :completedDate)
+        formatted_entry[:completedDate][:hasTime] = false # CS dates never have times
+      end
+      formatted_entry
     end
 
     def format_date_and_bucket(formatted_entry, date)

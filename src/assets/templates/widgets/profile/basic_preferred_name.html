@@ -1,7 +1,16 @@
 <div class="cc-page-widget-profile-section" data-ng-controller="BasicPreferredNameController" data-cc-spinner-directive>
   <div class="cc-page-widget-profile-section-label">Preferred Name</div>
   <div class="cc-page-widget-profile-section-content">
-    <div data-ng-bind="preferredName.content.formattedName"></div>
-    <div data-ng-if="!preferredName.content.formattedName" class="cc-page-widget-profile-section-not-available">Not available</div>
+    <div data-ng-if="items.editorEnabled" class="cc-page-widget-profile-section-content-item">
+      <div data-ng-include="'widgets/profile/basic_preferred_name_editor.html'"></div>
+    </div>
+    <div data-ng-if="!items.editorEnabled">
+      <div data-ng-bind="items.content[0].givenName"></div>
+      <div data-ng-if="!items.content[0].givenName" class="cc-page-widget-profile-section-not-available">Not available</div>
+    </div>
+  </div>
+  <div class="cc-page-widget-profile-section-add" data-ng-if="!items.editorEnabled">
+    <button class="cc-button-link" data-ng-click="showEdit(items.content[0])" data-ng-if="items.content[0].givenName">Edit</button>
+    <button class="cc-button-link" data-ng-click="showAdd()" data-ng-if="!items.content[0].givenName">Add</button>
   </div>
 </div>

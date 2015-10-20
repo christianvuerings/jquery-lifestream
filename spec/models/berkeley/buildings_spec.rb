@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Berkeley::Buildings do
 
   it 'should look up Hearst Mining' do

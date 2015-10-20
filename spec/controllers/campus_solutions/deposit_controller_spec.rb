@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::DepositController do
 
   let(:user_id) { '12348' }

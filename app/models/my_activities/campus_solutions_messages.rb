@@ -16,7 +16,7 @@ module MyActivities
             results << {
               emitter: CampusSolutions::Proxy::APP_NAME,
               id: '',
-              linkText: message[:descr],
+              linkText: 'Read more',
               source: message[:commCatgDescr],
               summary: message[:commCenterDescr],
               type: 'campusSolutions',

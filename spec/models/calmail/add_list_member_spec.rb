@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Calmail::AddListMember do
   subject { described_class.new(fake: true) }
 

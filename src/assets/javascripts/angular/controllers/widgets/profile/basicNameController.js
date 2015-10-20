@@ -1,21 +1,14 @@
 'use strict';
 
 var angular = require('angular');
-var _ = require('lodash');
 
 /**
  * Name Controller
  */
-angular.module('calcentral.controllers').controller('BasicNameController', function(profileFactory, $scope, $q) {
-  var findPrimary = function(names) {
-    return _.find(names, function(name) {
-      return name.type.code === 'PRI';
-    });
-  };
-
+angular.module('calcentral.controllers').controller('BasicNameController', function(apiService, profileFactory, $scope, $q) {
   var parsePerson = function(data) {
     var person = data.data.feed.student;
-    var name = findPrimary(person.names);
+    var name = apiService.profile.findPrimary(person.names);
     angular.extend($scope, {
       name: {
         content: name

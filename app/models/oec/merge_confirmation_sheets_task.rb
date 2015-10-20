@@ -53,11 +53,13 @@ module Oec
             sis_import_rows = sis_import.select { |row| row['LDAP_UID'] == course_confirmation_row['LDAP_UID'] && row['COURSE_ID'] == course_confirmation_row['COURSE_ID']  }
             if sis_import_rows.none?
               errors.add 'No SIS import row found matching confirmation row'
-            elsif sis_import_rows.count > 1
-              errors.add 'Multiple SIS import rows found matching confirmation row'
+              validate_and_add(merged_course_confirmations, course_confirmation_row, %w(COURSE_ID LDAP_UID), strict: false)
             else
-              merged_row = sis_import_rows.first.merge course_confirmation_row
-              validate_and_add(merged_course_confirmations, merged_row, %w(COURSE_ID LDAP_UID), strict: false)
+              errors.add 'Multiple SIS import rows found matching confirmation row' if sis_import_rows.count > 1
+              sis_import_rows.each do |sis_import_row|
+                merged_row = sis_import_row.merge course_confirmation_row
+                validate_and_add(merged_course_confirmations, merged_row, %w(COURSE_ID LDAP_UID), strict: false)
+              end
             end
           end
         end
@@ -67,11 +69,13 @@ module Oec
             supervisor_rows = supervisors.select { |row| row['LDAP_UID'] == supervisor_confirmation_row['LDAP_UID']}
             if supervisor_rows.none?
               errors.add 'No supervisors row found matching confirmation row'
-            elsif supervisor_rows.count > 1
-              errors.add 'Multiple supervisor rows found matching confirmation row'
+              validate_and_add(merged_supervisor_confirmations, supervisor_confirmation_row, %w(LDAP_UID), strict: false)
             else
-              merged_row = supervisor_rows.first.merge supervisor_confirmation_row
-              validate_and_add(merged_supervisor_confirmations, merged_row, %w(LDAP_UID), strict: false)
+              errors.add 'Multiple supervisor rows found matching confirmation row' if supervisor_rows.count > 1
+              supervisor_rows.each do |supervisor_row|
+                merged_row = supervisor_row.merge supervisor_confirmation_row
+                validate_and_add(merged_supervisor_confirmations, merged_row, %w(LDAP_UID), strict: false)
+              end
             end
           end
         end

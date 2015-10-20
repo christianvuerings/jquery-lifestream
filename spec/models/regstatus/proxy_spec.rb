@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Regstatus::Proxy do
 
   it_should_behave_like 'a student data proxy' do

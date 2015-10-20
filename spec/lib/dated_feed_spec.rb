@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe DatedFeed do
 
   describe '#strptime_in_time_zone' do

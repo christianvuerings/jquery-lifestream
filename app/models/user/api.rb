@@ -26,7 +26,7 @@ module User
     # split brain until SIS GoLive5 makes registration data available
     def get_campus_attribute(field)
       value = nil
-      if is_cs_profile_feature_enabled && @edo_attributes[:noStudentId].blank?
+      if is_sis_profile_visible? && @edo_attributes[:noStudentId].blank?
         value = @edo_attributes[field.to_sym]
       end
       if value.nil?
@@ -99,6 +99,15 @@ module User
       save
     end
 
+    def is_campus_solutions_student?
+      # no, really, BCS users are identified by having 10-digit IDs.
+      @student_id.to_s.length >= 10
+    end
+
+    def is_sis_profile_visible?
+      is_cs_profile_feature_enabled && (is_campus_solutions_student? || is_profile_visible_for_legacy_users)
+    end
+
     def get_feed_internal
       google_mail = User::Oauth2Data.get_google_email(@uid)
       canvas_mail = User::Oauth2Data.get_canvas_email(@uid)
@@ -108,8 +117,6 @@ module User
       is_calendar_opted_in = Calendar::User.where(:uid => @uid).first.present?
       has_student_history = CampusOracle::UserCourses::HasStudentHistory.new({:user_id => @uid}).has_student_history?
       has_instructor_history = CampusOracle::UserCourses::HasInstructorHistory.new({:user_id => @uid}).has_instructor_history?
-      # no, really, BCS users are identified by having 10-digit IDs.
-      is_campus_solutions_student = @student_id.to_s.length >= 10
       roles = (get_campus_attribute(:roles)) ? get_campus_attribute(:roles) : {}
       {
         :isSuperuser => current_user_policy.can_administrate?,
@@ -137,7 +144,8 @@ module User
         :roles => get_campus_attribute(:roles),
         :uid => @uid,
         :sid => @student_id,
-        :isCampusSolutionsStudent => is_campus_solutions_student
+        :isCampusSolutionsStudent => is_campus_solutions_student?,
+        :showSisProfileUI => is_sis_profile_visible?
       }
     end
 

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe UserApiController do
   let (:user_id) { random_id }
   before do

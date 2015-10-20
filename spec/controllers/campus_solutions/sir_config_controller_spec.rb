@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CampusSolutions::SirConfigController do
   context 'sir config feed' do
     let(:feed) { :get }

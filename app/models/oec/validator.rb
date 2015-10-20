@@ -14,7 +14,7 @@ module Oec
     end
 
     def validate_and_add(sheet, row, key_columns, opts={})
-      opts[:strict] = true unless opts[:strict].present?
+      opts[:strict] = true unless opts.has_key? :strict
       key = key_columns.map { |col| row[col] }.join('-')
       candidate_row = row.slice(*sheet.headers)
       validate(sheet.export_name, key) do |errors|

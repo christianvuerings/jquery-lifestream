@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'MyAcademics::Exams' do
 
   it 'should format fake Bearfacts exam data correctly' do

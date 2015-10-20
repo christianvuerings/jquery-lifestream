@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe CalLink::Organization do
 
   subject { CalLink::Organization.new(org_id: '65797', fake: false).get_organization }

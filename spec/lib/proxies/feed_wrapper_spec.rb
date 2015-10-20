@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe FeedWrapper do
   subject do
     FeedWrapper.new(MultiXml.parse('

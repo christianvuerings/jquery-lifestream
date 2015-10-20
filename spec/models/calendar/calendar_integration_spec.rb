@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'Calendar Integration Full Stack', testext: true do
   before do
     Calendar::Queries.stub(:get_all_courses).and_return(

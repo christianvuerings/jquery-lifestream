@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe HashConverter do
 
   context "hash conversion" do

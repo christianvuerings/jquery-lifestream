@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Calendar::Preprocessor do
 
   shared_examples 'it has a non-empty array of ClassCalendarQueue entries' do

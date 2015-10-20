@@ -14,8 +14,12 @@ module Oec
       find_previous_term_csvs
 
       [Oec::CourseSupervisors, Oec::Instructors, Oec::Supervisors].each do |worksheet_class|
-        if @previous_term_csvs[worksheet_class]
-          copy_file(@previous_term_csvs[worksheet_class], overrides)
+        file = @previous_term_csvs[worksheet_class]
+        if file && (file.mime_type == 'text/csv') && file.download_url
+          content = StringIO.new @remote_drive.download(file)
+          @remote_drive.upload_to_spreadsheet(file.title.chomp('.csv'), file.description, content, overrides.id)
+        elsif file
+          copy_file(file, overrides)
         else
           log :info, "Could not find previous sheet '#{worksheet_class.export_name}' for copying; will create header-only file"
           export_sheet_headers(worksheet_class, overrides)
@@ -40,7 +44,8 @@ module Oec
         end
         if (previous_exports =  @remote_drive.find_first_matching_folder('exports', previous_term_folder))
           if (most_recent_export = @remote_drive.find_folders(previous_exports.id).sort_by(&:title).last)
-            @previous_term_csvs[Oec::CourseSupervisors] =  @remote_drive.find_first_matching_item('course_supervisors', most_recent_export)
+            item = @remote_drive.find_items_by_title('course_supervisors.csv', parent_id: most_recent_export.id, mime_type: 'text/csv').first
+            @previous_term_csvs[Oec::CourseSupervisors] = item if item
           end
         end
       end

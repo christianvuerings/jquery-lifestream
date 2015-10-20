@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe 'GoogleEventsList (Recent Items)' do
 
   before do

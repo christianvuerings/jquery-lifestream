@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Calendar::LoggedEntry do
   describe '#lookup' do
     before do

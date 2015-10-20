@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Cal1card::MyCal1card do
 
   let!(:oski_uid) { '61889' }
