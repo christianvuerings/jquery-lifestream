@@ -28,9 +28,13 @@ module MyActivities
     def get_feed_internal
       activities = []
       dashboard_sites = MyActivities::DashboardSites.fetch(@uid, @options)
+      campus_solutions_dashboard_url = CampusSolutions::DashboardUrl.new.get
       self.site_proxies.each { |proxy| proxy.append!(@uid, dashboard_sites, activities) }
       self.proxies.each { |proxy| proxy.append!(@uid, activities) }
-      { :activities => activities }
+      {
+        activities: activities,
+        archiveUrl: campus_solutions_dashboard_url[:feed][:url]
+      }
     end
 
   end
