@@ -283,6 +283,35 @@ describe MyAcademics::Semesters do
       include_examples 'grades from transcript'
       include_examples 'grading not in progress'
     end
-  end
 
+    context 'semester with removed incomplete notation' do
+      let(:fake_now) {DateTime.parse('2013-12-30')}
+      let(:enrolled_courses) { enrollment_data["#{term_yr}-#{term_cd}"] }
+      let(:removed_incomplete) do
+        {
+          dept: 'BRYOLOGY',
+          courseCatalog: '1A',
+          title: 'Incomplete Removed',
+          units: 3.0,
+          grade: 'A-'
+        }
+      end
+      before do
+        transcript_data[:semesters]["#{term_yr}-#{term_cd}"][:courses] << removed_incomplete
+      end
+
+      it 'should append removed incomplete to semester class list' do
+        expect(feed_semester[:classes]).to have(enrolled_courses.count + 1).items
+        last_semester_item = feed_semester[:classes].last
+        expect(last_semester_item[:dept]).to eq removed_incomplete[:dept]
+        expect(last_semester_item[:courseCatalog]).to eq removed_incomplete[:courseCatalog]
+        expect(last_semester_item[:course_code]).to eq "#{removed_incomplete[:dept]} #{removed_incomplete[:courseCatalog]}"
+        expect(last_semester_item[:sections]).to eq []
+        expect(last_semester_item[:transcript]).to eq [{
+          units: removed_incomplete[:units],
+          grade: removed_incomplete[:grade]
+        }]
+      end
+    end
+  end
 end

@@ -67,6 +67,13 @@ module MyAcademics
         end
         course[:transcript] = grade_sources.map { |e| e.slice(:units, :grade) } if grade_sources.present?
       end
+
+      if transcript_term
+        incomplete_removals = transcript_term[:courses].select { |t| t[:title] == 'Incomplete Removed' }
+        if incomplete_removals.any?
+          semester[:classes].concat map_transcripts(incomplete_removals)
+        end
+      end
     end
 
     def translate_notation(transcript_notations)
