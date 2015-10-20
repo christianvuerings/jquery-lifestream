@@ -40,7 +40,7 @@ describe 'Google apps', :testui => true do
       context 'when connected' do
         it 'shows no "connect" UI' do
           my_dashboard = CalCentralPages::MyDashboardPage.new(@driver)
-          my_dashboard.recent_activity_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+          my_dashboard.notifications_heading_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
           expect(my_dashboard.connect_bconnected_button_element.visible?).to be false
         end
         it 'shows "connected" on Settings' do

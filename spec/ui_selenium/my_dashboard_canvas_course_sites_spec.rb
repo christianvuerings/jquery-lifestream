@@ -10,8 +10,8 @@ require_relative 'pages/cal_central_pages'
 require_relative 'pages/splash_page'
 require_relative 'pages/my_dashboard_page'
 require_relative 'pages/my_dashboard_my_classes_card'
-require_relative 'pages/my_dashboard_recent_activity_card'
-require_relative 'pages/my_dashboard_to_do_card'
+require_relative 'pages/my_dashboard_notifications_card'
+require_relative 'pages/my_dashboard_tasks_card'
 require_relative 'pages/api_my_classes_page'
 
 describe 'My Dashboard', :testui => true, :order => :defined do
@@ -30,7 +30,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
 
     before(:all) { @driver = WebDriverUtils.launch_browser }
 
-    describe 'Canvas activity' do
+    describe 'Canvas activities' do
 
       before(:all) do
         # Admin creates course site in the current term
@@ -41,9 +41,9 @@ describe 'My Dashboard', :testui => true, :order => :defined do
         @cal_net.login(UserUtils.qa_username, UserUtils.qa_password)
         @my_dashboard = CalCentralPages::MyDashboardPage.new @driver
         @my_classes_card = CalCentralPages::MyDashboardMyClassesCard.new @driver
-        @recent_activity_card = CalCentralPages::MyDashboardRecentActivityCard.new @driver
-        @to_do_card = CalCentralPages::MyDashboardToDoCard.new(@driver)
-        @my_dashboard.recent_activity_heading_element.when_visible timeout
+        @notifications_card = CalCentralPages::MyDashboardNotificationsCard.new @driver
+        @tasks_card = CalCentralPages::MyDashboardTasksCard.new(@driver)
+        @notifications_card.notifications_heading_element.when_visible timeout
         classes_api = ApiMyClassesPage.new @driver
         classes_api.get_json @driver
         current_term = classes_api.current_term
@@ -103,77 +103,83 @@ describe 'My Dashboard', :testui => true, :order => :defined do
         before(:all) do
           @splash_page.click_sign_in_button
           @cal_net.login("test-#{teacher['uid']}", UserUtils.test_password)
+          @notifications_card.wait_for_notifications site_name
+
+          # The ordering of the Canvas notifications is unpredictable, so find out which is where on the activities list
+          notifications = []
+          @notifications_card.notification_summary_elements.each { |summary| notifications << summary.text }
+          @discussion_index = notifications.index(notifications.find { |summary| summary.include? 'Discussion' })
+          @announcement_index = notifications.index(notifications.find { |summary| summary.include? 'Announcement' })
+          @assignment_index = notifications.index(notifications.find { |summary| summary.include? 'Assignment' })
+          logger.info "Discussion is at #{@discussion_index.to_s}, Announcement is at #{@announcement_index.to_s}, and Assignments are at #{@assignment_index.to_s}"
         end
 
         # My Classes
-        it 'shows the course site name in My Classes' do
+        it 'show the course site name in My Classes' do
           @my_classes_card.other_sites_div_element.when_visible WebDriverUtils.academics_timeout
           expect(@my_classes_card.other_course_site_names).to include(site_name)
         end
-        it 'shows the course site description in My Classes' do
+        it 'show the course site description in My Classes' do
           expect(@my_classes_card.other_course_site_descrips).to include(site_descrip)
         end
-        it 'shows a link to the course site in My Classes' do
+        it 'show a link to the course site in My Classes' do
           WebDriverUtils.verify_external_link(@driver, @my_classes_card.other_course_site_link_elements[0], site_descrip)
         end
 
-        # Recent Activity - announcement, discussion
-        it 'shows the course in the Recent Activity drop-down' do
-          @recent_activity_card.wait_for_course_activity site_name
+        # Notifications - announcement, discussion
+        it 'show a combined notification for similar notifications on the same course site on the same date' do
+          @notifications_card.wait_until(timeout) { @notifications_card.notification_summary_elements[@assignment_index].text == '3 Assignments' }
         end
-        it 'show a combined Recent Activity notification for similar activity on the same course site on the same date' do
-          @recent_activity_card.wait_until(timeout) { @recent_activity_card.activity_item_summary_elements[0].text == '3 Assignments' }
+        it 'show an assignment\'s course site name and creation date on a notification' do
+          expect(@notifications_card.notification_source_elements[@assignment_index].text).to eql("#{site_name}")
+          expect(@notifications_card.notification_date_elements[@assignment_index].text).to eql("#{Date.today.strftime("%b %-d")}")
         end
-        it 'show an assignment\'s course site name and creation date on a Recent Activity item' do
-          expect(@recent_activity_card.activity_item_source_elements[0].text).to eql("#{site_name}")
-          expect(@recent_activity_card.activity_item_date_elements[0].text).to eql("#{Date.today.strftime("%b %-d")}")
+        it 'show individual notifications if a combined one is expanded' do
+          expect(@notifications_card.sub_notification_summaries(@assignment_index)).to eql(@assignment_summaries)
         end
-        it 'show individual Recent Activity notifications if a combined one is expanded' do
-          expect(@recent_activity_card.sub_activity_summaries 1).to eql(@assignment_summaries)
+        it 'show overdue, current, and future assignment notification detail' do
+          expect(@notifications_card.sub_notification_descrips(@assignment_index).sort).to eql(@assignment_descriptions.sort)
         end
-        it 'show overdue, current, and future assignment activity detail' do
-          expect(@recent_activity_card.sub_activity_descriptions(1).sort).to eql(@assignment_descriptions.sort)
+        it 'show an announcement title on a notification' do
+          expect(@notifications_card.notification_summary_elements[@announcement_index].text).to eql(@announcement_title)
         end
-        it 'shows an announcement title on a Recent Activity item' do
-          expect(@recent_activity_card.activity_item_summary_elements[1].text).to eql(@announcement_title)
+        it 'show an announcement source on a notification' do
+          @notifications_card.expand_notification_detail @announcement_index
+          expect(@notifications_card.notification_source_elements[@announcement_index].text).to eql(site_name)
         end
-        it 'shows an announcement source on a Recent Activity item' do
-          @recent_activity_card.expand_activity_detail 1
-          expect(@recent_activity_card.activity_item_source_elements[1].text).to eql(site_name)
+        it 'show an announcement date on a notification' do
+          expect(@notifications_card.notification_date_elements[@announcement_index].text).to eql(WebDriverUtils.ui_alphanumeric_date_format Date.today)
         end
-        it 'shows an announcement date on a Recent Activity item' do
-          expect(@recent_activity_card.activity_item_date_elements[1].text).to eql(WebDriverUtils.ui_alphanumeric_date_format Date.today)
+        it 'show announcement detail on a notification' do
+          expect(@notifications_card.notification_desc_elements[@announcement_index].text).to eql(@announcement_body)
         end
-        it 'shows an announcement detail on a Recent Activity item' do
-          expect(@recent_activity_card.activity_item_desc_elements[1].text).to eql(@announcement_body)
+        it 'show a link to an announcement on a notification' do
+          expect(@notifications_card.notification_more_info_link(@announcement_index).attribute('href')).to eql(@announcement_url)
         end
-        it 'shows a link to an announcement on a Recent Activity item' do
-          expect(@recent_activity_card.activity_more_info_link_elements[3].attribute('href')).to eql(@announcement_url)
+        it 'show a discussion title on a notification' do
+          expect(@notifications_card.notification_summary_elements[@discussion_index].text).to eql(@discussion_title)
         end
-        it 'shows a discussion title on a Recent Activity item' do
-          expect(@recent_activity_card.activity_item_summary_elements[2].text).to eql(@discussion_title)
+        it 'show a discussion source on a notification' do
+          @notifications_card.expand_notification_detail @discussion_index
+          expect(@notifications_card.notification_source_elements[@discussion_index].text).to eql(site_name)
         end
-        it 'shows a discussion source on a Recent Activity item' do
-          @recent_activity_card.expand_activity_detail 2
-          expect(@recent_activity_card.activity_item_source_elements[2].text).to eql(site_name)
+        it 'show a discussion date on a notification' do
+          expect(@notifications_card.notification_date_elements[@discussion_index].text).to eql(WebDriverUtils.ui_alphanumeric_date_format Date.today)
         end
-        it 'shows a discussion date on a Recent Activity item' do
-          expect(@recent_activity_card.activity_item_date_elements[2].text).to eql(WebDriverUtils.ui_alphanumeric_date_format Date.today)
-        end
-        it 'shows a link to a discussion on a Recent Activity item' do
-          expect(@recent_activity_card.activity_more_info_link_elements[4].attribute('href')).to eql(@discussion_url)
+        it 'show a link to a discussion on a notification' do
+          expect(@notifications_card.notification_more_info_link(@discussion_index).attribute('href')).to eql(@discussion_url)
         end
 
-        # To Do - assignments
-        it 'show no assignment tasks on To Do' do
-          @to_do_card.scheduled_tasks_tab_element.when_present(timeout=WebDriverUtils.page_load_timeout)
-          expect(@to_do_card.overdue_task_count).to eql('')
-          expect(@to_do_card.today_task_count).to eql('')
-          expect(@to_do_card.future_task_count).to eql('')
+        # Tasks - assignments
+        it 'show no assignment tasks' do
+          @tasks_card.scheduled_tasks_tab_element.when_present(timeout=WebDriverUtils.page_load_timeout)
+          expect(@tasks_card.overdue_task_count).to eql('')
+          expect(@tasks_card.today_task_count).to eql('')
+          expect(@tasks_card.future_task_count).to eql('')
         end
 
         after(:all) do
-          if @my_dashboard.recent_activity_heading?
+          if @notifications_card.notifications_heading?
             @my_dashboard.click_logout_link
             @splash_page.sign_in_element.when_visible timeout
           end
@@ -187,119 +193,122 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           @splash_page.load_page
           @splash_page.click_sign_in_button
           @cal_net.login("test-#{student['uid']}", UserUtils.test_password)
+          @notifications_card.wait_for_notifications site_name
+
+          # The ordering of the Canvas notifications is unpredictable, so find out which is where on the activities list
+          notifications = []
+          @notifications_card.notification_summary_elements.each { |summary| notifications << summary.text }
+          @discussion_index = notifications.index(notifications.find { |summary| summary.include? 'Discussion' })
+          @announcement_index = notifications.index(notifications.find { |summary| summary.include? 'Announcement' })
+          @assignment_index = notifications.index(notifications.find { |summary| summary.include? 'Assignments' })
+          logger.info "Discussion is at #{@discussion_index.to_s}, Announcement is at #{@announcement_index.to_s}, and Assignments are at #{@assignment_index.to_s}"
         end
 
         # My Classes
-        it 'shows the course name in My Classes' do
+        it 'show the course name in My Classes' do
           @my_classes_card.other_sites_div_element.when_visible WebDriverUtils.academics_timeout
           expect(@my_classes_card.other_course_site_names).to include(site_name)
         end
-        it 'shows the course description in My Classes' do
+        it 'show the course description in My Classes' do
           expect(@my_classes_card.other_course_site_descrips).to include(site_descrip)
         end
-        it 'shows a link to the course site in My Classes' do
+        it 'show a link to the course site in My Classes' do
           WebDriverUtils.verify_external_link(@driver, @my_classes_card.other_course_site_link_elements[0], site_descrip)
         end
-        it 'shows the course in the Recent Activity drop-down' do
-          @recent_activity_card.wait_for_course_activity site_name
+
+        # Notifications - assignments, announcement, discussion
+        it 'show a combined notification for similar notifications on the same course site on the same date' do
+          @notifications_card.wait_until(timeout) { @notifications_card.notification_summary_elements[@assignment_index].text == '3 Assignments' }
+        end
+        it 'show an assignment\'s course site name and creation date on a notification' do
+          expect(@notifications_card.notification_source_elements[@assignment_index].text).to eql("#{site_name}")
+          expect(@notifications_card.notification_date_elements[@assignment_index].text).to eql("#{Date.today.strftime("%b %-d")}")
+        end
+        it 'show individual notifications if a combined one is expanded' do
+          expect(@notifications_card.sub_notification_summaries(@assignment_index)).to eql(@assignment_summaries)
+        end
+        it 'show overdue, current, and future assignment notifications detail' do
+          expect(@notifications_card.sub_notification_descrips(@assignment_index).sort).to eql(@assignment_descriptions.sort)
+        end
+        it 'show an announcement title on a notification' do
+          expect(@notifications_card.notification_summary_elements[@announcement_index].text).to eql(@announcement_title)
+        end
+        it 'show an announcement source on a notification' do
+          @notifications_card.expand_notification_detail @announcement_index
+          expect(@notifications_card.notification_source_elements[@announcement_index].text).to eql(site_name)
+        end
+        it 'show an announcement date on a notification' do
+          expect(@notifications_card.notification_date_elements[@announcement_index].text).to eql(WebDriverUtils.ui_alphanumeric_date_format Date.today)
+        end
+        it 'show an announcement detail on a notification' do
+          expect(@notifications_card.notification_desc_elements[@announcement_index].text).to eql(@announcement_body)
+        end
+        it 'show a link to an announcement on a notification' do
+          expect(@notifications_card.notification_more_info_link(@announcement_index).attribute('href')).to eql(@announcement_url)
+        end
+        it 'show a discussion title on a notification' do
+          expect(@notifications_card.notification_summary_elements[@discussion_index].text).to eql(@discussion_title)
+        end
+        it 'show a discussion source on a notification' do
+          @notifications_card.expand_notification_detail @discussion_index
+          expect(@notifications_card.notification_source_elements[@discussion_index].text).to eql(site_name)
+        end
+        it 'show a discussion date on a notification' do
+          expect(@notifications_card.notification_date_elements[@discussion_index].text).to eql(WebDriverUtils.ui_alphanumeric_date_format Date.today)
+        end
+        it 'show a link to a discussion on a notification' do
+          expect(@notifications_card.notification_more_info_link(@discussion_index).attribute('href')).to eql(@discussion_url)
         end
 
-        # Recent Activity - assignments, announcement, discussion
-        it 'shows the course in the Recent Activity drop-down' do
-          @recent_activity_card.wait_for_course_activity site_name
+        # Tasks - assignments
+        it 'show an overdue assignment as an overdue task' do
+          @tasks_card.scheduled_tasks_tab_element.when_present(timeout=WebDriverUtils.page_load_timeout)
+          expect(@tasks_card.overdue_task_count).to eql('1')
+          expect(@tasks_card.overdue_task_one_title).to eql(@past_assignment_title)
         end
-        it 'show a combined Recent Activity notification for similar activity on the same course site on the same date' do
-          @recent_activity_card.wait_until(timeout) { @recent_activity_card.activity_item_summary_elements[0].text == '3 Assignments' }
+        it 'show an overdue assignment\'s course site name on a task' do
+          expect(@tasks_card.overdue_task_one_course).to eql(site_name)
         end
-        it 'show an assignment\'s course site name and creation date on a Recent Activity item' do
-          expect(@recent_activity_card.activity_item_source_elements[0].text).to eql("#{site_name}")
-          expect(@recent_activity_card.activity_item_date_elements[0].text).to eql("#{Date.today.strftime("%b %-d")}")
+        it 'show an overdue assignment\'s due date and time on a task' do
+          expect(@tasks_card.overdue_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format @past_assignment_due_date)
+          expect(@tasks_card.overdue_task_one_time).to eql('11 PM')
         end
-        it 'show individual Recent Activity notifications if a combined one is expanded' do
-          expect(@recent_activity_card.sub_activity_summaries 1).to eql(@assignment_summaries)
+        it 'show a link to an overdue Canvas assignment on a task' do
+          WebDriverUtils.wait_for_page_and_click @tasks_card.overdue_task_one_toggle_element
+          @tasks_card.overdue_task_one_bcourses_link_element.when_visible timeout
+          expect(@tasks_card.overdue_task_one_bcourses_link_element.attribute('href')).to eql(@past_assignment_url)
         end
-        it 'show overdue, current, and future assignment activity detail' do
-          expect(@recent_activity_card.sub_activity_descriptions(1).sort).to eql(@assignment_descriptions.sort)
+        it 'show a currently due assignment as a Today task' do
+          expect(@tasks_card.today_task_count).to eql('1')
+          expect(@tasks_card.today_task_one_title).to eql(@current_assignment_title)
         end
-        it 'shows an announcement title on a Recent Activity item' do
-          expect(@recent_activity_card.activity_item_summary_elements[1].text).to eql(@announcement_title)
+        it 'show a currently due assignment\'s course site name on a task' do
+          expect(@tasks_card.today_task_one_course).to eql(site_name)
         end
-        it 'shows an announcement source on a Recent Activity item' do
-          @recent_activity_card.expand_activity_detail 1
-          expect(@recent_activity_card.activity_item_source_elements[1].text).to eql(site_name)
+        it 'show a currently due assignment\'s due date and date on a task' do
+          expect(@tasks_card.today_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format @current_assignment_due_date)
+          expect(@tasks_card.today_task_one_time).to eql('11 PM')
         end
-        it 'shows an announcement date on a Recent Activity item' do
-          expect(@recent_activity_card.activity_item_date_elements[1].text).to eql(WebDriverUtils.ui_alphanumeric_date_format Date.today)
+        it 'show a link to a currently due Canvas assignment on a task' do
+          WebDriverUtils.wait_for_page_and_click @tasks_card.today_task_one_toggle_element
+          @tasks_card.today_task_one_bcourses_link_element.when_visible timeout
+          expect(@tasks_card.today_task_one_bcourses_link_element.attribute('href')).to eql(@current_assignment_url)
         end
-        it 'shows an announcement detail on a Recent Activity item' do
-          expect(@recent_activity_card.activity_item_desc_elements[1].text).to eql(@announcement_body)
+        it 'show a future assignment as a future task' do
+          expect(@tasks_card.future_task_count).to eql('1')
+          expect(@tasks_card.future_task_one_title).to eql(@future_assignment_title)
         end
-        it 'shows a link to an announcement on a Recent Activity item' do
-          expect(@recent_activity_card.activity_more_info_link_elements[3].attribute('href')).to eql(@announcement_url)
+        it 'show a future assignment\'s course site name on a task' do
+          expect(@tasks_card.future_task_one_course).to eql(site_name)
         end
-        it 'shows a discussion title on a Recent Activity item' do
-          expect(@recent_activity_card.activity_item_summary_elements[2].text).to eql(@discussion_title)
+        it 'show a future assignment\'s due date and time on a task' do
+          expect(@tasks_card.future_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format @future_assignment_due_date)
+          expect(@tasks_card.future_task_one_time).to eql('11 PM')
         end
-        it 'shows a discussion source on a Recent Activity item' do
-          @recent_activity_card.expand_activity_detail 2
-          expect(@recent_activity_card.activity_item_source_elements[2].text).to eql(site_name)
-        end
-        it 'shows a discussion date on a Recent Activity item' do
-          expect(@recent_activity_card.activity_item_date_elements[2].text).to eql(WebDriverUtils.ui_alphanumeric_date_format Date.today)
-        end
-        it 'shows a link to a discussion on a Recent Activity item' do
-          expect(@recent_activity_card.activity_more_info_link_elements[4].attribute('href')).to eql(@discussion_url)
-        end
-
-        # To Do - assignments
-        it 'shows an overdue assignment as an overdue To Do task' do
-          @to_do_card.scheduled_tasks_tab_element.when_present(timeout=WebDriverUtils.page_load_timeout)
-          expect(@to_do_card.overdue_task_count).to eql('1')
-          expect(@to_do_card.overdue_task_one_title).to eql(@past_assignment_title)
-        end
-        it 'shows an overdue assignment\'s course site name on a To Do task' do
-          expect(@to_do_card.overdue_task_one_course).to eql(site_name)
-        end
-        it 'shows an overdue assignment\'s due date and time on a To Do task' do
-          expect(@to_do_card.overdue_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format @past_assignment_due_date)
-          expect(@to_do_card.overdue_task_one_time).to eql('11 PM')
-        end
-        it 'shows a link to an overdue Canvas assignment on a To Do task' do
-          WebDriverUtils.wait_for_page_and_click @to_do_card.overdue_task_one_toggle_element
-          @to_do_card.overdue_task_one_bcourses_link_element.when_visible timeout
-          expect(@to_do_card.overdue_task_one_bcourses_link_element.attribute('href')).to eql(@past_assignment_url)
-        end
-        it 'shows a currently due assignment as a Today To Do task' do
-          expect(@to_do_card.today_task_count).to eql('1')
-          expect(@to_do_card.today_task_one_title).to eql(@current_assignment_title)
-        end
-        it 'shows a currently due assignment\'s course site name on a To Do task' do
-          expect(@to_do_card.today_task_one_course).to eql(site_name)
-        end
-        it 'shows a currently due assignment\'s due date and date on a To Do task' do
-          expect(@to_do_card.today_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format @current_assignment_due_date)
-          expect(@to_do_card.today_task_one_time).to eql('11 PM')
-        end
-        it 'shows a link to a currently due Canvas assignment on a To Do task' do
-          WebDriverUtils.wait_for_page_and_click @to_do_card.today_task_one_toggle_element
-          @to_do_card.today_task_one_bcourses_link_element.when_visible timeout
-          expect(@to_do_card.today_task_one_bcourses_link_element.attribute('href')).to eql(@current_assignment_url)
-        end
-        it 'shows a future assignment as a future To Do task' do
-          expect(@to_do_card.future_task_count).to eql('1')
-          expect(@to_do_card.future_task_one_title).to eql(@future_assignment_title)
-        end
-        it 'shows a future assignment\'s course site name on a To Do task' do
-          expect(@to_do_card.future_task_one_course).to eql(site_name)
-        end
-        it 'shows a future assignment\'s due date and time on a To Do task' do
-          expect(@to_do_card.future_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format @future_assignment_due_date)
-          expect(@to_do_card.future_task_one_time).to eql('11 PM')
-        end
-        it 'shows a link to a future due Canvas assignment on a To Do task' do
-          WebDriverUtils.wait_for_page_and_click @to_do_card.future_task_one_toggle_element
-          @to_do_card.future_task_one_bcourses_link_element.when_visible timeout
-          expect(@to_do_card.future_task_one_bcourses_link_element.attribute('href')).to eql(@future_assignment_url)
+        it 'show a link to a future due Canvas assignment on a task' do
+          WebDriverUtils.wait_for_page_and_click @tasks_card.future_task_one_toggle_element
+          @tasks_card.future_task_one_bcourses_link_element.when_visible timeout
+          expect(@tasks_card.future_task_one_bcourses_link_element.attribute('href')).to eql(@future_assignment_url)
         end
       end
 

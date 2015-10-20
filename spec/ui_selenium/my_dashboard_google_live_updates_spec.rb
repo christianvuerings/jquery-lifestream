@@ -7,7 +7,7 @@ require_relative 'pages/cal_net_auth_page'
 require_relative 'pages/cal_central_pages'
 require_relative 'pages/splash_page'
 require_relative 'pages/my_dashboard_page'
-require_relative 'pages/my_dashboard_to_do_card'
+require_relative 'pages/my_dashboard_tasks_card'
 require_relative 'pages/my_dashboard_up_next_card'
 require_relative 'pages/google_page'
 
@@ -42,10 +42,10 @@ describe 'My Dashboard bConnected live updates', :testui => true do
       @google.connect_calcentral_to_google(UserUtils.qa_gmail_username, UserUtils.qa_gmail_password)
 
       # On To Do card, get initial count of unscheduled tasks
-      @to_do_card = CalCentralPages::MyDashboardPage::MyDashboardToDoCard.new(@driver)
-      WebDriverUtils.wait_for_page_and_click @to_do_card.unsched_tasks_tab_element
-      @to_do_card.unsched_task_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-      @initial_task_count = @to_do_card.unsched_task_count.to_i
+      @tasks_card = CalCentralPages::MyDashboardPage::MyDashboardTasksCard.new(@driver)
+      WebDriverUtils.wait_for_page_and_click @tasks_card.unsched_tasks_tab_element
+      @tasks_card.unsched_task_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+      @initial_task_count = @tasks_card.unsched_task_count.to_i
       logger.info("Unscheduled task count is #{@initial_task_count.to_s}")
 
       # On email badge, get initial count of unread emails
@@ -88,15 +88,15 @@ describe 'My Dashboard bConnected live updates', :testui => true do
       end
 
       it 'shows an updated count of tasks' do
-        WebDriverUtils.wait_for_page_and_click @to_do_card.unsched_tasks_tab_element
-        @to_do_card.unsched_task_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
-        expect(@to_do_card.unsched_task_count).to eql((@initial_task_count + 1).to_s)
+        WebDriverUtils.wait_for_page_and_click @tasks_card.unsched_tasks_tab_element
+        @tasks_card.unsched_task_count_element.when_visible(timeout=WebDriverUtils.page_load_timeout)
+        expect(@tasks_card.unsched_task_count).to eql((@initial_task_count + 1).to_s)
       end
 
       it 'shows the content of a new task' do
-        WebDriverUtils.wait_for_page_and_click @to_do_card.unsched_tasks_tab_element
-        expect(@to_do_card.unsched_task_one_title).to eql(@task_title)
-        expect(@to_do_card.unsched_task_one_date).to eql(today.strftime("%m/%d"))
+        WebDriverUtils.wait_for_page_and_click @tasks_card.unsched_tasks_tab_element
+        expect(@tasks_card.unsched_task_one_title).to eql(@task_title)
+        expect(@tasks_card.unsched_task_one_date).to eql(today.strftime("%m/%d"))
       end
     end
   end

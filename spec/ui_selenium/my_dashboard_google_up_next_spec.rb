@@ -7,7 +7,7 @@ require_relative 'pages/cal_net_auth_page'
 require_relative 'pages/cal_central_pages'
 require_relative 'pages/splash_page'
 require_relative 'pages/my_dashboard_page'
-require_relative 'pages/my_dashboard_to_do_card'
+require_relative 'pages/my_dashboard_tasks_card'
 require_relative 'pages/my_dashboard_up_next_card'
 require_relative 'pages/google_page'
 
