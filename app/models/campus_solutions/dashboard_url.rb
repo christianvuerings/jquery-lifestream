@@ -1,8 +1,6 @@
 module CampusSolutions
   class DashboardUrl < DirectProxy
 
-    include ProfileFeatureFlagged
-
     def initialize(options = {})
       super options
       initialize_mocks if @fake
@@ -22,6 +20,10 @@ module CampusSolutions
 
     def url
       "#{@settings.base_url}/UC_CC_COMM_DB_URL.v1/dashboard/url/"
+    end
+
+    def is_feature_enabled
+      Settings.features.show_notifications_archive_link
     end
 
   end
