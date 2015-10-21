@@ -9,16 +9,17 @@ class SessionsController < ApplicationController
 
     # Save crosswalk some work by caching critical IDs if they were asserted to us via SAML.
     if auth.respond_to?(:extra)
-      logger.error "Omniauth extra = #{auth.extra.inspect}"
+      logger.debug "Omniauth extra from SAML = #{auth.extra.inspect}"
       crosswalk = CalnetCrosswalk::Proxy.new(user_id: auth_uid)
       sid = auth.extra['berkeleyEduStuID']
-      cs_id = auth.extra['campusSolutionsID']
+      cs_id = auth.extra['berkeleyEduStuCSID']
       if sid.present?
-        logger.error "Caching student ID #{sid} for UID #{auth_uid} based on SAML assertion"
+        logger.debug "Caching student ID #{sid} for UID #{auth_uid} based on SAML assertion"
         crosswalk.cache_student_id sid
       end
       if cs_id.present?
-        logger.error "Caching Campus Solutions ID #{cs_id} for UID #{auth_uid} based on SAML assertion"
+        # TODO reduce this log level once CAS reliably sends us the CS ID
+        logger.warn "Caching Campus Solutions ID #{cs_id} for UID #{auth_uid} based on SAML assertion"
         crosswalk.cache_campus_solutions_id cs_id
       end
     end
