@@ -68,7 +68,7 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
     if ($scope.states && $scope.states.length) {
       angular.merge($scope.currentObject, {
         data: {
-          state: initialEdit.state || $scope.states[0].state
+          state: initialEdit.state
         }
       });
       initialEdit.state = '';
