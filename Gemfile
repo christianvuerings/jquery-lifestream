@@ -26,9 +26,9 @@ gem 'activerecord-jdbch2-adapter', '~> 1.3.16'
 # http://flori.github.com/json/
 gem 'json', '~> 1.8.0'
 
-# CAS Strategy for OmniAuth
-# https://rubygems.org/gems/omniauth-cas
-gem 'omniauth-cas', '~> 1.1.0'
+# CAS Strategy for OmniAuth. ETS maintains its own fork with SAML Ticket Validator capability,
+# provided by Steven Hansen.
+gem 'omniauth-cas', '~> 1.1.0', git: 'https://github.com/ets-berkeley-edu/omniauth-cas.git'
 
 # LDAP
 gem 'net-ldap', '~> 0.11.0'

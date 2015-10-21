@@ -2,9 +2,7 @@ module CalnetCrosswalk
   class Proxy < BaseProxy
 
     include ClassLogger
-    include Cache::UserCacheExpiry
     include Proxies::Mockable
-    include Cache::RelatedCacheKeyTracker
 
     APP_ID = 'calnetcrosswalk'
     APP_NAME = 'Calnet Crosswalk'
@@ -73,13 +71,20 @@ module CalnetCrosswalk
       lookup_id 'CAMPUS_SOLUTIONS_ID'
     end
 
+    def cache_campus_solutions_id(value)
+      cache_id('CAMPUS_SOLUTIONS_ID', value)
+    end
+
     def lookup_student_id
       lookup_id 'LEGACY_SIS_STUDENT_ID'
     end
 
+    def cache_student_id(value)
+      cache_id('LEGACY_SIS_STUDENT_ID', value)
+    end
+
     def lookup_id(id_type)
       self.class.fetch_from_cache("#{@uid}/#{id_type}") do
-        self.class.save_related_cache_key(@uid, self.class.cache_key("#{@uid}/#{id_type}"))
         id = nil
         feed = get[:feed]
         if feed.present?
@@ -91,6 +96,12 @@ module CalnetCrosswalk
           end
         end
         id
+      end
+    end
+
+    def cache_id(id_type, id_value)
+      self.class.fetch_from_cache("#{@uid}/#{id_type}", true) do
+        id_value
       end
     end
 
