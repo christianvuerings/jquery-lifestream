@@ -75,6 +75,21 @@ module Oec
         end
       end
 
+      courses.group_by { |course| course['CROSS_LISTED_NAME'] }.each do |cross_listed_name, courses|
+        next if cross_listed_name.blank?
+        course_ids = courses.map { |course| course['COURSE_ID'] }
+        comparison_course_id = course_ids.shift
+        expected_instructor_ids = course_instructors.uids_for_course_id(comparison_course_id).sort
+        course_ids.each do |course_id|
+          validate('courses', course_id) do |errors|
+            instructor_ids = course_instructors.uids_for_course_id(course_id).sort
+            if instructor_ids != expected_instructor_ids
+              errors.add "Instructor list (#{instructor_ids.join ', '}) differs from instructor list (#{expected_instructor_ids.join ', '}) of cross-listed course #{comparison_course_id}"
+            end
+          end
+        end
+      end
+
       Oec::Queries.students_for_cntl_nums(@term_code, ccns).each do |student_row|
         validate_and_add(students, Oec::Worksheet.capitalize_keys(student_row), %w(LDAP_UID))
       end
