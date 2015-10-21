@@ -42,7 +42,9 @@
           </div>
           <div data-ng-if="field.field === 'state' && states.length">
             <div class="cc-select">
-              <select data-ng-options="state.state as state.descr for state in states" data-ng-attr-id="cc-page-widget-profile-field-{{$index}}" data-ng-attr-id="cc-page-widget-profile-field-{{$index}}" data-ng-model="currentObject.data[field.field]" />
+              <select data-ng-options="state.state as state.descr for state in states" data-ng-attr-id="cc-page-widget-profile-field-{{$index}}" data-ng-attr-id="cc-page-widget-profile-field-{{$index}}" data-ng-model="currentObject.data[field.field]">
+                <option value="" data-ng-bind-template="-- Choose {{field.label}} --"></option>
+              </select>
             </div>
           </div>
         </div>
