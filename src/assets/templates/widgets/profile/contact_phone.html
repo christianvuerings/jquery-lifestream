@@ -10,7 +10,10 @@
           <strong data-ng-bind-template="{{item.type.description}} Phone"></strong>
           <span data-ng-if="item.primary">(preferred)</span>
         </div>
-        <div data-ng-bind="item.number"></div>
+        <div>
+          <span data-ng-bind="item.number"></span>
+          <span data-ng-if="item.extension" data-ng-bind-template="ext. {{item.extension}}"></span>
+        </div>
         <div data-ng-if="item.uiControl.code !== 'D'">
           <button class="cc-button-link" data-ng-click="showEdit(item)">Edit</button>
         </div>
