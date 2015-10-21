@@ -6,8 +6,7 @@ describe CampusSolutions::PendingMessages do
     it_behaves_like 'a proxy that properly observes the profile feature flag'
     it_behaves_like 'a proxy that got data successfully'
     it 'returns data with the expected structure' do
-      expect(subject[:feed][:commMessagePendingResponse][0][:emplid]).to be
-      expect(subject[:feed][:commMessagePendingResponse][0][:descr]).to be
+      expect(subject[:feed][:commMessagePendingResponse][0]).to be
     end
   end
 

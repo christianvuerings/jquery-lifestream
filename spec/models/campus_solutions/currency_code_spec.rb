@@ -7,8 +7,8 @@ describe CampusSolutions::CurrencyCode do
     it_behaves_like 'a proxy that got data successfully'
     it 'returns data with the expected structure' do
       expect(subject[:feed][:currencyCodes]).to be
-      expect(subject[:feed][:currencyCodes][0][:currencyCd]).to eq 'AWG'
-      expect(subject[:feed][:currencyCodes][0][:descr]).to eq 'Aruban Guilder'
+      expect(subject[:feed][:currencyCodes][0][:currencyCd]).to be
+      expect(subject[:feed][:currencyCodes][0][:descr]).to be
     end
   end
 

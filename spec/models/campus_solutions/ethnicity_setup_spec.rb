@@ -7,7 +7,7 @@ describe CampusSolutions::EthnicitySetup do
     it_behaves_like 'a proxy that got data successfully'
     it 'returns data with the expected structure' do
       expect(subject[:feed][:ethnictySetup]).to be
-      expect(subject[:feed][:ethnictySetup][:answerMapping][:sccHispMap]).to eq 'Hispanic/Latino'
+      expect(subject[:feed][:ethnictySetup][:answerMapping]).to be
     end
   end
 
