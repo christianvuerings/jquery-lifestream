@@ -156,8 +156,6 @@ module GoogleApps
       Settings.google_proxy.fake || (User::Oauth2Data.get(user_id, APP_ID)["access_token"].present?)
     end
 
-    private
-
     def update_access_tokens!
       if @current_token && @uid && @authorization.access_token != @current_token
         logger.info "Will update token for #{@uid} from #{@current_token} => #{@authorization.access_token}"

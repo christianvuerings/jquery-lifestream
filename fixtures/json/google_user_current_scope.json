@@ -1,0 +1,10 @@
+{
+ "issued_to": "999.apps.googleusercontent.com",
+ "audience": "999.apps.googleusercontent.com",
+ "user_id": "114856790171836979104",
+ "scope": "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/tasks https://www.googleapis.com/auth/drive.readonly.metadata https://spreadsheets.google.com/feeds https://mail.google.com/mail/feed/atom/",
+ "expires_in": 3098,
+ "email": "tammi.chang.clc@gmail.com",
+ "verified_email": true,
+ "access_type": "offline"
+}
