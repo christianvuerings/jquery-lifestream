@@ -201,7 +201,6 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           @discussion_index = notifications.index(notifications.find { |summary| summary.include? 'Discussion' })
           @announcement_index = notifications.index(notifications.find { |summary| summary.include? 'Announcement' })
           @assignment_index = notifications.index(notifications.find { |summary| summary.include? 'Assignments' })
-          logger.info "Discussion is at #{@discussion_index.to_s}, Announcement is at #{@announcement_index.to_s}, and Assignments are at #{@assignment_index.to_s}"
         end
 
         # My Classes

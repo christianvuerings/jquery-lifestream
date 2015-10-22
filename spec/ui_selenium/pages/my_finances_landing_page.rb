@@ -58,12 +58,12 @@ module CalCentralPages
       unordered_list(:fin_messages_list, :xpath => '//ul[@class="cc-widget-activities-list"]')
       elements(:finaid_message, :list_item, :xpath => '//ul[@class="cc-widget-activities-list"]/li')
       elements(:finaid_message_sub_activity, :list_item, :xpath => '//ul[@class="cc-widget-activities-list"]/li//li[@data-ng-repeat="subActivity in activity.elements"]')
-      elements(:finaid_message_title, :div, :xpath => '//ul[@class="cc-widget-activities-list"]/li//strong[@class="ng-binding"][1]')
+      elements(:finaid_message_title, :div, :xpath => '//ul[@class="cc-widget-activities-list"]/li//strong[@class="ng-binding"]')
       elements(:finaid_message_source, :span, :xpath => '//ul[@class="cc-widget-activities-list"]/li//span[@data-ng-bind="activity.source"]')
       elements(:finaid_message_toggle, :link, :xpath => '//ul[@class="cc-widget-activities-list"]/li//div[@data-ng-click="api.widget.toggleShow($event, filteredList, activity, \'Recent Activity\')"]')
       elements(:finaid_message_year, :div, :xpath => '//ul[@class="cc-widget-activities-list"]/li//div[@data-ng-if="activity.termYear"]')
       elements(:finaid_message_icon, :image, :xpath => '//ul[@class="cc-widget-activities-list"]/li//i')
-      elements(:finaid_message_link, :link, :xpath => '//ul[@class="cc-widget-activities-list"]/li//a[@data-ng-if="activity.sourceUrl"]')
+      elements(:finaid_message_link, :link, :xpath => '//ul[@class="cc-widget-activities-list"]/li//a[@data-ng-if="activityItem.sourceUrl"]')
 
       def load_page
         logger.info('Loading My Finances landing page')
@@ -123,18 +123,15 @@ module CalCentralPages
         years
       end
 
-      def all_fin_aid_message_dates(messages)
+      def all_fin_aid_message_dates(driver, messages)
         dates = []
         messages.each do |msg|
           begin
-            date_on_page = span_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{messages.index(msg) + 1}]//span[@data-ng-if='activity.date']").text
-            date = Time.parse(date_on_page).strftime("%-m/%d")
-          rescue
+            date = driver.find_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{(messages.index(msg) + 1).to_s}]//span[@data-ng-if='activity.date']").text
+          rescue Selenium::WebDriver::Error::NoSuchElementError
             date = nil
           end
-          unless date == nil
-            dates.push(date)
-          end
+          dates.push(date) unless date.nil?
         end
         dates
       end
@@ -148,12 +145,12 @@ module CalCentralPages
         links
       end
 
-      def all_fin_aid_message_statuses(messages)
+      def all_fin_aid_message_statuses(driver, messages)
         statuses = []
         messages.each do |msg|
           begin
-            status = span_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{messages.index(msg) + 1}]//span[@data-ng-bind='activity.status']").text
-          rescue
+            status = driver.find_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{(messages.index(msg) + 1).to_s}]//span[@data-ng-bind='activity.status']").text
+          rescue Selenium::WebDriver::Error::NoSuchElementError
             status = nil
           end
           statuses.push(status)

@@ -29,11 +29,11 @@ module CalCentralPages
     end
 
     def expand_notification_detail(index)
-      notification_toggle_elements[index].click unless notification_desc_elements[index].visible?
+      notification_elements[index].div_element.click unless notification_elements[index].paragraph_element(:class => 'cc-widget-activities-summary' ).visible?
     end
 
     def notification_more_info_link(index)
-      notification_elements[index].div_element(:xpath => '//div[@data-onload="activityItem=activity"]').link_element(:xpath => '//div[@data-onload="activityItem=activity"]/a')
+      notification_elements[index].link_element(:xpath => '//div[@data-onload="activityItem=activity"]/a')
     end
 
     def expand_sub_notification_list(index)
