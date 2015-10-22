@@ -62,13 +62,13 @@ module MyAcademics
         grade_sources = nil
         if use_enrollment_grades?(semester)
           grade_sources = course[:sections].select { |s| s[:is_primary_section] && s[:grade] }
-        elsif use_transcript_grades?(semester) && transcript_term
+        elsif use_transcript_grades?(semester) && transcript_term && transcript_term[:courses]
           grade_sources = transcript_term[:courses].select { |t| t[:dept] == course[:dept] && t[:courseCatalog] == course[:courseCatalog] }
         end
         course[:transcript] = grade_sources.map { |e| e.slice(:units, :grade) } if grade_sources.present?
       end
 
-      if transcript_term
+      if transcript_term && transcript_term[:courses]
         incomplete_removals = transcript_term[:courses].select { |t| t[:title] == 'Incomplete Removed' }
         if incomplete_removals.any?
           semester[:classes].concat map_transcripts(incomplete_removals)
