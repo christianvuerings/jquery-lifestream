@@ -103,7 +103,7 @@ Calcentral::Application.routes.draw do
   get '/api/cache/warm/:uid' => 'cache#warm', :defaults => { :format => 'json' }
   get '/api/config' => 'config#get', :via => :get, :defaults => { :format => 'json' }
   get '/api/ping' => 'ping#do', :defaults => {:format => 'json'}
-  get '/api/refresh_logging' => 'refresh_logging#refresh_logging', :defaults => { :format => 'json' }
+  get '/api/reload_yaml_settings' => 'yaml_settings#reload', :defaults => { :format => 'json' }
   get '/api/tools/styles' => 'tools#get_styles', :via => :get
   get '/api/server_info' => 'server_runtime#get_info', :via => :get
   get '/api/stats' => 'stats#get_stats', :via => :get, :defaults => { :format => 'json' }
