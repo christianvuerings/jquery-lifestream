@@ -10,7 +10,10 @@ class GoogleAuthController < ApplicationController
   def request_authorization
     expire
     @scope = Settings.google_proxy.scope
-    @scope += " #{params['scope']}" if params['scope'].present?
+    if params['scope'].present?
+      additional_scope = params['scope'].is_a?(Array) ? params['scope'].join(' ') : params['scope']
+      @scope += " #{additional_scope}"
+    end
     final_redirect = params['final_redirect'] || '/'
     if params['force_domain'].present? && params['force_domain'] == 'false'
       client = get_client(final_redirect, force_domain = false)
