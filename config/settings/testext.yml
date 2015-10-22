@@ -35,6 +35,7 @@ features:
   cs_profile: true
   cs_sir: true
   webcast_sign_up_on_calcentral: true
+  show_notifications_archive_link: true
 
 cache:
   store: "memory"
