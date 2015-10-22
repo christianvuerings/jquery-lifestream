@@ -37,11 +37,17 @@ module CanvasCsv
       })
     end
 
+    def search(args = {})
+      ActiveSupport::Notifications.instrument('proxy', {class: self.class, search: args}) do
+        client.search args
+      end
+    end
+
     def search_by_uid(uid)
       filter = Net::LDAP::Filter.eq('uid', uid.to_s)
-      results = client.search(base: PEOPLE_DN, filter: filter)
+      results = search(base: PEOPLE_DN, filter: filter)
       if results.empty?
-        results = client.search(base: GUEST_DN, filter: filter)
+        results = search(base: GUEST_DN, filter: filter)
       end
       results.first
     end
@@ -50,7 +56,7 @@ module CanvasCsv
     def search_updated_guests(timestamp)
       ldap_timestamp = timestamp.to_time.utc.strftime(TIMESTAMP_FORMAT)
       modified_timestamp_filter = Net::LDAP::Filter.ge('modifytimestamp', ldap_timestamp)
-      client.search(base: GUEST_DN, filter: modified_timestamp_filter)
+      search(base: GUEST_DN, filter: modified_timestamp_filter)
     end
 
     # Transforms guest user array into data structure intended for Canvas CSV Import
