@@ -4,7 +4,7 @@ class YamlSettingsController < ApplicationController
   respond_to :json
 
   def reload
-    authorize(current_user, :can_clear_cache?)
+    authorize(current_user, :can_reload_yaml_settings?)
     begin
       is_success = CalcentralConfig.reload_settings
       # Give user a snippet of the settings
