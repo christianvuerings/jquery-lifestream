@@ -59,6 +59,9 @@ module MyTasks
     end
 
     def format_date_and_bucket(formatted_entry, date)
+      # Tasks are not overdue until the end of the day. Advance forward one day and back one second to cover
+      # the possibility of daylight savings transitions.
+      date = Time.at((date + 1).in_time_zone.to_datetime.to_i - 1).to_datetime
       format_date_into_entry!(date, formatted_entry, :dueDate)
       formatted_entry[:bucket] = determine_bucket(date, formatted_entry, @now_time, @starting_date)
     end
