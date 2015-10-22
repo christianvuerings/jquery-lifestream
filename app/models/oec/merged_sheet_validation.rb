@@ -7,14 +7,15 @@ module Oec
       course_confirmations_file = @remote_drive.find_nested [@term_code, 'departments', 'Merged course confirmations'], on_failure: :error
       course_confirmations = Oec::SisImportSheet.from_csv(@remote_drive.export_csv(course_confirmations_file), dept_code: nil)
 
+      supervisor_confirmations_file = @remote_drive.find_nested [@term_code, 'departments', 'Merged supervisor confirmations'], on_failure: :error
+      supervisor_confirmations = Oec::Supervisors.from_csv @remote_drive.export_csv(supervisor_confirmations_file)
+
       instructors = Oec::Instructors.new
       course_instructors = Oec::CourseInstructors.new
       courses = Oec::Courses.new
       students = Oec::Students.new
       course_students = Oec::CourseStudents.new
-
-      supervisor_confirmations_file = @remote_drive.find_nested [@term_code, 'departments', 'Merged supervisor confirmations'], on_failure: :error
-      supervisors = Oec::Supervisors.from_csv @remote_drive.export_csv(supervisor_confirmations_file)
+      supervisors = Oec::Supervisors.new
 
       if (previous_course_supervisors = @remote_drive.find_nested [@term_code, 'overrides', 'course_supervisors'])
         course_supervisors = Oec::CourseSupervisors.from_csv @remote_drive.export_csv(previous_course_supervisors)
@@ -26,6 +27,10 @@ module Oec
       suffixed_ccns = {}
 
       default_dates = default_term_dates
+
+      supervisor_confirmations.each do |confirmation|
+        validate_and_add(supervisors, confirmation, %w(LDAP_UID))
+      end
 
       course_confirmations.each do |confirmation|
         next unless confirmation['EVALUATE'] && confirmation['EVALUATE'].casecmp('Y') == 0
