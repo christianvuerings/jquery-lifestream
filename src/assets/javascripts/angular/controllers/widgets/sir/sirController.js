@@ -29,10 +29,56 @@ angular.module('calcentral.controllers').controller('SirController', function(si
   };
 
   /**
+   * We find the header for the the current config object
+   * If dont' find it, use the default one.
+   */
+  var findHeader = function(imageCode) {
+    var header = sirLookupService.lookup[imageCode];
+    if (!header) {
+      header = sirLookupService.lookup.DEFAULT;
+    }
+    return header;
+  };
+
+  /**
+   * Map an individual checklist item to the SIR Config to
+   *   the specific SIR form
+   *   the specific response reasons
+   *   lookup the header name / image & title
+   * They should map on the Checklist Item Code - chklstItemCd
+   */
+  var mapChecklistItem = function(checklistItem) {
+    // Map the correct config object
+    var config = _.find(sirConfig.sirForms, function(form) {
+      return checklistItem.chklstItemCd === form.chklstItemCd;
+    });
+
+    if (!config) {
+      return;
+    }
+    checklistItem.config = config;
+
+    // Map to the correct header information (e.g. image / name)
+    checklistItem.header = findHeader(config.ucSirImageCd);
+
+    // Map to the correct response codes
+    checklistItem.responseReasons = sirConfig.responseReasons.filter(function(reason) {
+      return reason.acadCareer === config.acadCareer;
+    });
+
+    return checklistItem;
+  };
+
+  /**
    * Update the checklist items that need to be updated
    * We should only update the items that already are in the current scope & have an updated status.
    */
   var updateChecklistItems = function(checklistItems, studentResponse) {
+    // Map the checklist items to the SIR Config & remove them when they don't have a config or checklist code
+    checklistItems = checklistItems.map(mapChecklistItem).filter(function(checklistItem) {
+      return checklistItem && checklistItem.chklstItemCd;
+    });
+
     // If we don't have any checklist items yet, we should definitely update the scope
     if (!$scope.sir.checklistItems.length) {
       $scope.sir.checklistItems = checklistItems;
@@ -91,50 +137,6 @@ angular.module('calcentral.controllers').controller('SirController', function(si
   };
 
   /**
-   * We find the header for the the current config object
-   * If dont' find it, use the default one.
-   */
-  var findHeader = function(imageCode) {
-    var header = sirLookupService.lookup[imageCode];
-    if (!header) {
-      header = sirLookupService.lookup.DEFAULT;
-    }
-    return header;
-  };
-
-  /**
-   * Map an individual checklist item to the SIR Config to
-   *   the specific SIR form
-   *   the specific response reasons
-   *   lookup the header name / image & title
-   * They should map on the Checklist Item Code - chklstItemCd
-   */
-  var mapChecklistItem = function(checklistItem) {
-    // Map the correct config object
-    var config = _.find(sirConfig.sirForms, function(form) {
-      return checklistItem.chklstItemCd === form.chklstItemCd;
-    });
-    checklistItem.config = config;
-
-    // Map to the correct header information (e.g. image / name)
-    checklistItem.header = findHeader(config.ucSirImageCd);
-
-    // Map to the correct response codes
-    checklistItem.responseReasons = sirConfig.responseReasons.filter(function(reason) {
-      return reason.acadCareer === config.acadCareer;
-    });
-
-    return checklistItem;
-  };
-
-  /**
-   * Map the checklist items to the SIR Config
-   */
-  var mapChecklistItems = function() {
-    $scope.sir.checklistItems = $scope.sir.checklistItems.map(mapChecklistItem);
-  };
-
-  /**
    * Parse the SIR configuration object.
    * This contains information for each checklist item
    */
@@ -143,7 +145,6 @@ angular.module('calcentral.controllers').controller('SirController', function(si
     if (!sirConfig) {
       return $q.reject('No SIR Config');
     }
-    mapChecklistItems();
     return $q.resolve(sirConfig);
   };
 
@@ -160,14 +161,16 @@ angular.module('calcentral.controllers').controller('SirController', function(si
    *   - If it's in the 'Received status' and there is a deposit > 0, show the deposit part.
    */
   var initWorkflow = function(options) {
-    getChecklist({
-      refreshCache: _.get(options, 'refresh')
+    getSirConfig()
+    .then(parseSirConfig)
+    .then(function() {
+      return getChecklist({
+        refreshCache: _.get(options, 'refresh')
+      });
     })
     .then(function(data) {
       return parseChecklist(data, _.get(options, 'studentResponse'));
-    })
-    .then(getSirConfig)
-    .then(parseSirConfig);
+    });
   };
 
   initWorkflow();
