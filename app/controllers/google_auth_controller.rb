@@ -9,6 +9,8 @@ class GoogleAuthController < ApplicationController
 
   def request_authorization
     expire
+    @scope = Settings.google_proxy.scope
+    @scope += " #{params['scope']}" if params['scope'].present?
     final_redirect = params['final_redirect'] || '/'
     if params['force_domain'].present? && params['force_domain'] == 'false'
       client = get_client(final_redirect, force_domain = false)
@@ -52,6 +54,16 @@ class GoogleAuthController < ApplicationController
     end
   end
 
+  def current_scope
+    uid = session['user_id']
+    if GoogleApps::Proxy.access_granted?(uid)
+      scope = GoogleApps::Userinfo.new(user_id: uid).current_scope
+    else
+      scope = []
+    end
+    render json: {'currentScope' => scope}
+  end
+
   def remove_authorization
     logger.warn "Deleting #{app_id} access token for user #{session['user_id']} at the user's request."
     GoogleApps::Revoke.new(user_id: session['user_id']).revoke
@@ -91,7 +103,13 @@ class GoogleAuthController < ApplicationController
       :controller => 'google_auth',
       :action => 'handle_callback')
     client.state = Base64.encode64 final_redirect
-    client.scope = Settings.google_proxy.scope
+    if @scope.present?
+      client.scope = @scope
+      # Do not lose any manually added authorizations when refreshing the more generic list.
+      client.update!(
+        :additional_parameters => {'include_granted_scopes' => 'true'}
+      )
+    end
     client
   end
 

@@ -112,6 +112,7 @@ Calcentral::Application.routes.draw do
   # Oauth endpoints: Google
   get '/api/google/request_authorization'=> 'google_auth#request_authorization'
   get '/api/google/handle_callback' => 'google_auth#handle_callback'
+  get '/api/google/current_scope' => 'google_auth#current_scope'
   post '/api/google/remove_authorization' => 'google_auth#remove_authorization', :via => :post
   post '/api/google/dismiss_reminder' => 'google_auth#dismiss_reminder', :defaults => { :format => 'json'}, :via => :post
 
