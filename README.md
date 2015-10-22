@@ -102,7 +102,7 @@ Use `make target` and replace _target_ with the target you want to use.
 
 ## Usage
 
-Add the following to the &lt;head&gt; or &lt;body&gt; tag of your HTML page.
+Add the following to the `<head>` or `<body>` tag of your HTML page.
 
 ``` html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
