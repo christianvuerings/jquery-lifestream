@@ -99,7 +99,7 @@ module Oec
       headers = remote_sheet.rows.last
       offset = remote_sheet.rows.count + 1
       cell_updates = {}
-      local_sheet.each_with_index do |local_sheet_row, y|
+      local_sheet.each_sorted_with_index do |local_sheet_row, y|
         headers.each_with_index { |header, x| cell_updates[[y+offset, x+1]] = local_sheet_row[header] }
       end
       begin

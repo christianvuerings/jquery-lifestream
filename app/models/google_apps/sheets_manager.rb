@@ -101,7 +101,7 @@ module GoogleApps
       content = CSV.generate do |csv|
         headers = worksheet.headers
         csv << headers
-        worksheet.each do |row|
+        worksheet.each_sorted do |row|
           if opts[:format_numbers] == :text
             csv_row = headers.map do |header|
               # A trick to force plaintext formatting in Google Sheets.

@@ -44,6 +44,7 @@ describe Oec::MergeConfirmationSheetsTask do
 
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
     allow(Oec::CourseCode).to receive(:by_dept_code).and_return({'SWOME' => [], 'IMMCB' => []})
+    allow(Oec::CourseCode).to receive(:participating_dept_names).and_return %w(GWS MCELLBI LGBT)
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')
 
     allow(fake_remote_drive).to receive(:check_conflicts_and_create_folder).and_return mock_google_drive_item
@@ -98,6 +99,14 @@ describe Oec::MergeConfirmationSheetsTask do
 
     it 'should produce a merged course confirmation' do
       expect(merged_course_confirmation.first).to_not be_empty
+    end
+
+    it 'should group cross-listings together' do
+      cross_listed_names = merged_course_confirmation.map { |row| row['CROSS_LISTED_NAME'] }.compact.uniq
+      cross_listed_names.each do |name|
+        index_of_first_listing = merged_course_confirmation.find_index { |row| row['CROSS_LISTED_NAME'] == name }
+        expect(merged_course_confirmation[index_of_first_listing + 1]['CROSS_LISTED_NAME']).to eq name
+      end
     end
 
     it 'should overwrite SIS import data when confirmed course data includes column' do

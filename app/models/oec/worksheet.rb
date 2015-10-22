@@ -58,7 +58,7 @@ module Oec
       @export_directory = opts[:export_path] || DEFAULT_EXPORT_PATH
       FileUtils.mkdir_p @export_directory unless File.exists? @export_directory
       @opts = opts
-      @rows = {}
+      @rows = ActiveSupport::OrderedHash.new
     end
 
     def [](key)
@@ -74,7 +74,15 @@ module Oec
     end
 
     def each
-      @rows.each { |key, row| yield row }
+      @rows.values.each { |row| yield row }
+    end
+
+    def each_sorted
+      sorted_rows.each { |row| yield row }
+    end
+
+    def each_sorted_with_index
+      sorted_rows.each_with_index { |row, i| yield row, i }
     end
 
     def export_name
@@ -100,10 +108,15 @@ module Oec
       parsed_row
     end
 
+    def sorted_rows
+      # Subclasses may override to define an ordering.
+      @rows.values
+    end
+
     def write_csv
       if @rows.any?
         output = CSV.open(csv_export_path, 'wb', headers: headers, write_headers: true)
-        @rows.values.each { |row| output << row }
+        sorted_rows.each { |row| output << row }
       else
         output = CSV.open(csv_export_path, 'wb')
         output << headers

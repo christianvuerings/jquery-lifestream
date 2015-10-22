@@ -39,6 +39,8 @@ describe Oec::SisImportTask do
   describe 'CSV export' do
     subject do
       allow(Oec::CourseCode).to receive(:by_dept_code).and_return({ dept_code: fake_code_mapping })
+      allow(Oec::CourseCode).to receive(:dept_names_for_code).and_return([dept_name])
+      allow(Oec::CourseCode).to receive(:participating_dept_names).and_return(l4_codes.keys)
       allow(Oec::SisImportSheet).to receive(:new).and_return courses
       task.run_internal
       courses.write_csv
@@ -200,6 +202,20 @@ describe Oec::SisImportTask do
         crosslisting = subject.select{ |row| row['CROSS_LISTED_NAME'] == 'POL SCI/STAT C236A LEC 001' }
         expect(crosslisting.count).to eq 2
         expect(crosslisting).to all include({'CROSS_LISTED_FLAG' => 'Y'})
+      end
+
+      it 'groups cross-listings together' do
+        cross_listed_names = subject.map { |row| row['CROSS_LISTED_NAME'] }.compact.uniq
+        subject.each {  }
+        cross_listed_names.each do |name|
+          index_of_first_listing = subject.index { |row| row['CROSS_LISTED_NAME'] == name }
+          expect(subject[index_of_first_listing + 1]['CROSS_LISTED_NAME']).to eq name
+        end
+      end
+
+      it 'sorts within home department by numeric portion of catalog id' do
+        stat_catalog_ids = subject.map { |row| row['CATALOG_ID'] if row['DEPT_NAME'] == 'STAT' }.compact
+        expect(stat_catalog_ids).to eq %w(65 65 C205A 206A C236A)
       end
 
       it 'flags non-student academic employees as faculty' do
