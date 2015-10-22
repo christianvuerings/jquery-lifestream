@@ -5,7 +5,6 @@ describe YamlSettingsController do
     session['user_id'] = @user_id
     expect(Rails.env).to receive(:production?).at_least(1).times.and_return true
     expect(User::Auth).to receive(:where).and_return [user_auth]
-    # allow(Settings.features).to receive(:reauthentication).and_return true
   end
 
   context 'unauthorized user' do
