@@ -55,11 +55,6 @@ class AuthenticationStatePolicy
     Canvas::CurrentTeacher.new(@user.user_id).user_currently_teaching?
   end
 
-  def can_refresh_log_settings?
-    # Only superusers are allowed to change logging settings in production, but in development mode, anyone can.
-    !Rails.env.production? || can_administrate?
-  end
-
   def can_view_as?
     @user.real_user_auth.active? && (@user.real_user_auth.is_superuser? || @user.real_user_auth.is_viewer?)
   end
