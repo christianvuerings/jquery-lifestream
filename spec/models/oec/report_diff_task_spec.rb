@@ -66,14 +66,14 @@ describe Oec::ReportDiffTask do
         '2015-B-87672-10316' => {
           '+/-' => ' ',
           'COURSE_NAME' => 'different_course_name',
-          'sis:COURSE_NAME' => 'STAT C205A LEC 001 - PROB THEORY',
+          'sis:COURSE_NAME' => 'STAT C205A LEC 001 PROB THEORY',
           'EMAIL_ADDRESS' => 'different_email_address@berkeley.edu',
           'sis:EMAIL_ADDRESS' => 'blanco@berkeley.edu'
         },
         '2015-B-87690-12345678' => {
           '+/-' => '-',
           'COURSE_NAME' => nil,
-          'sis:COURSE_NAME' => 'STAT C236A LEC 001 - STATS SOCI SCI',
+          'sis:COURSE_NAME' => 'STAT C236A LEC 001 STATS SOCI SCI',
           'EMAIL_ADDRESS' => nil,
           'sis:EMAIL_ADDRESS' => 'stat_supervisor@berkeley.edu'
         },

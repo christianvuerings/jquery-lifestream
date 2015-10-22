@@ -14,9 +14,17 @@ module Oec
       @catalog_id_specific_mappings.find { |m| m.dept_name == dept_name && m.catalog_id == catalog_id }
     end
 
+    def self.dept_names_for_code(dept_code)
+      self.where(dept_code: dept_code).pluck(:dept_name)
+    end
+
     def self.included?(dept_name, catalog_id)
       course_code = find_code(dept_name, catalog_id)
       course_code.present? && course_code.include_in_oec
+    end
+
+    def self.participating_dept_names
+      self.where(include_in_oec: true).pluck(:dept_name).uniq
     end
 
     def self.find_code(dept_name, catalog_id)
