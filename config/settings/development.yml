@@ -73,6 +73,7 @@ features:
   cs_profile: true
   cs_sir: true
   prevent_acting_as_users_from_posting: false
+  show_notifications_archive_link: true
 
 advising_proxy:
   fake: true
