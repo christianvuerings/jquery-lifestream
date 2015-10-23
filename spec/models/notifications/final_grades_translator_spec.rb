@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Notifications::FinalGradesTranslator do
 
   it "should translate a final-grades event properly" do

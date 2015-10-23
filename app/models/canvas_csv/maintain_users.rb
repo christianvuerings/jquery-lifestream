@@ -95,7 +95,15 @@ module CanvasCsv
       else
         logger.warn "About to change #{@sis_user_id_changes.length} SIS user IDs"
         @sis_user_id_changes.each do |canvas_user_id, new_sis_id|
-          self.class.change_sis_user_id(canvas_user_id, new_sis_id)
+          succeeded = self.class.change_sis_user_id(canvas_user_id, new_sis_id)
+          unless succeeded
+            # If we had ideal data sources, it would be prudent to remove any mention of the no-longer-going-to-be-changed
+            # SIS User ID from the import CSVs. However, the failure was likely triggered by Canvas's inconsistent
+            # handling of deleted records, with a deleted user login being completely invisible and yet still capable
+            # of blocking new records. The only way to make the deleted record available for inspection and clean-up is
+            # to go on with the import.
+            logger.error "Canvas user #{canvas_user_id} did not successfully have its SIS ID changed to #{new_sis_id}! Check for duplicated LDAP UIDs in bCourses."
+          end
         end
       end
     end
@@ -163,7 +171,10 @@ module CanvasCsv
     end
 
     def compare_to_campus(accounts_batch)
-      campus_user_rows = CampusOracle::Queries.get_basic_people_attributes(accounts_batch.collect { |r| r['login_id'] })
+      campus_user_rows = CampusOracle::Queries.get_basic_people_attributes(accounts_batch.collect do |r|
+          r['login_id'].to_s.gsub(/^inactive-/, '')
+        end
+      )
       accounts_batch.each do |existing_account|
         categorize_user_account(existing_account, campus_user_rows)
       end

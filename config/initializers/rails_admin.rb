@@ -221,7 +221,8 @@ RailsAdmin.config do |config|
   config.navigation_static_label = 'Tools'
 
   config.navigation_static_links = {
-    'Expire Campus Links Cache' => '/api/my/campuslinks/expire'
+    'Expire Campus Links Cache' => '/api/my/campuslinks/expire',
+    'Reload YAML Settings' => '/api/reload_yaml_settings'
   }
 
 end

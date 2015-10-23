@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe UserSpecificModel do
 
   describe '#from_session' do

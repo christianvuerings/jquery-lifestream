@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe MyClassesController do
 
   before(:each) do

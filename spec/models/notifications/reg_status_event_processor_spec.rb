@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Notifications::RegStatusEventProcessor do
 
   before do

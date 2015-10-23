@@ -1,5 +1,3 @@
-require "spec_helper"
-
 feature "authentication" do
   scenario "Working authentication, login and logout" do
     # Logging in and out quickly also triggers a rapid cache warming and expiration issue.

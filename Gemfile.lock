@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/ets-berkeley-edu/omniauth-cas.git
+  revision: 0c740de3a3c8b297df88453ec89a3875301d5458
+  specs:
+    omniauth-cas (1.1.0)
+      addressable (~> 2.3)
+      nokogiri (~> 1.5)
+      omniauth (~> 1.2.0)
+
+GIT
   remote: https://github.com/instructure/ims-lti.git
   revision: 016adac413022a451f722b25fb6574cc4f9899ae
   specs:
@@ -180,7 +189,7 @@ GEM
       spork (>= 0.8.4)
     haml (4.0.5)
       tilt
-    hashie (3.3.1)
+    hashie (3.4.2)
     headless (1.0.2)
     highline (1.6.21)
     hike (1.2.3)
@@ -254,10 +263,6 @@ GEM
     omniauth (1.2.2)
       hashie (>= 1.2, < 4)
       rack (~> 1.0)
-    omniauth-cas (1.1.0)
-      addressable (~> 2.3)
-      nokogiri (~> 1.5)
-      omniauth (~> 1.2.0)
     page-object (1.1.0)
       page_navigation (>= 0.9)
       selenium-webdriver (>= 2.44.0)
@@ -481,7 +486,7 @@ DEPENDENCIES
   minitest-reporters (~> 1.0.8)
   net-ldap (~> 0.11.0)
   nokogiri (~> 1.5.9)
-  omniauth-cas (~> 1.1.0)
+  omniauth-cas (~> 1.1.0)!
   page-object (~> 1.1.0)
   protected_attributes (~> 1.0.8)
   pundit (~> 0.3.0)

@@ -13,4 +13,7 @@
     </div>
   </div>
   <div data-ng-include="'widgets/activity_list.html'"></div>
+  <div data-ng-if="archiveUrl && api.user.profile.roles.student" class="cc-text-center cc-widget-padding">
+    <a data-cc-campus-solutions-link-directive="archiveUrl" data-cc-outbound-enabled="false">Archive of Official Communications</a>
+  </div>
 </div>

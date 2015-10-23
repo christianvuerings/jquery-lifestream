@@ -30,7 +30,11 @@ module Oec
     validate('END_DATE') do |row|
       start_date = Date.strptime(row['START_DATE'], WORKSHEET_DATE_FORMAT)
       end_date = Date.strptime(row['END_DATE'], WORKSHEET_DATE_FORMAT)
-      "Mismatched START_DATE #{row['START_DATE']}," unless start_date < end_date && start_date.year == end_date.year
+      if start_date > end_date
+        "START_DATE #{row['START_DATE']} later than"
+      elsif start_date == end_date
+        "START_DATE #{row['START_DATE']} equal to"
+      end
     end
 
   end

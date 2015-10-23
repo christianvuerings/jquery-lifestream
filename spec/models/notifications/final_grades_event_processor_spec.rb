@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Notifications::FinalGradesEventProcessor do
 
   before do

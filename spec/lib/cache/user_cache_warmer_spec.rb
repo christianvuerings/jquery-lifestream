@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Cache::UserCacheWarmer do
 
   before(:each) do

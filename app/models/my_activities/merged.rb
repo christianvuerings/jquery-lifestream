@@ -30,7 +30,14 @@ module MyActivities
       dashboard_sites = MyActivities::DashboardSites.fetch(@uid, @options)
       self.site_proxies.each { |proxy| proxy.append!(@uid, dashboard_sites, activities) }
       self.proxies.each { |proxy| proxy.append!(@uid, activities) }
-      { :activities => activities }
+      result = {
+        activities: activities
+      }
+      cs_dashboard_url_feed = CampusSolutions::DashboardUrl.new.get
+      if cs_dashboard_url_feed.present? && cs_dashboard_url_feed[:feed].present? && cs_dashboard_url_feed[:feed][:url].present?
+        result.merge!({archiveUrl: cs_dashboard_url_feed[:feed][:url]})
+      end
+      result
     end
 
   end

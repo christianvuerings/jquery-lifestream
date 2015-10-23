@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe GoogleApps::EventsInsert do
   let(:user_id) { rand(999999).to_s }
   let!(:valid_payload) do

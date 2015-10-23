@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe User::Api do
   before(:each) do
     Settings.features.cs_profile = false

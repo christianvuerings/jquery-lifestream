@@ -24,7 +24,8 @@ describe CampusSolutions::Address do
     context 'converting params to Campus Solutions field names' do
       let(:params) { {
         addressType: 'HOME',
-        address1: '1 Test Lane'
+        address1: '1 Test Lane',
+        state: nil
       } }
       subject {
         result = proxy.construct_cs_post(params)
@@ -33,6 +34,7 @@ describe CampusSolutions::Address do
       it 'should convert the CalCentral params to Campus Solutions params without exploding on bogus fields' do
         expect(subject['ADDRESS1']).to eq '1 Test Lane'
         expect(subject['ADDRESS_TYPE']).to eq 'HOME'
+        expect(subject['STATE']).to be_nil
       end
     end
 

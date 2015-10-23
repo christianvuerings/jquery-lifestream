@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe MyActivities::NotificationActivities do
   let!(:oski_uid) { "61889" }
   let(:documented_types) { %w(alert) }

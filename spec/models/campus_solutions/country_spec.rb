@@ -7,9 +7,9 @@ describe CampusSolutions::Country do
     it_behaves_like 'a proxy that got data successfully'
     it 'returns data with the expected structure' do
       expect(subject[:feed][:countries]).to be
-      expect(subject[:feed][:countries][0][:country]).to eq 'BGD'
-      expect(subject[:feed][:countries][0][:descr]).to eq 'Bangladesh'
-      expect(subject[:feed][:countries][0][:country2char]).to eq 'BD'
+      expect(subject[:feed][:countries][0][:country]).to be
+      expect(subject[:feed][:countries][0][:descr]).to be
+      expect(subject[:feed][:countries][0][:country2char]).to be
     end
   end
 

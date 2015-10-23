@@ -30,6 +30,7 @@ angular.module('calcentral.controllers').controller('SirItemController', functio
       studentCarNbr: admissionsManagement.stdntCarNbr,
       admApplNbr: admissionsManagement.admApplNbr,
       applProgNbr: admissionsManagement.applProgNbr,
+      chklstItemCd: $scope.item.chklstItemCd,
       actionReason: option.progReason,
       progAction: option.progAction
     };

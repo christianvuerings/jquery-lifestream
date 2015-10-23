@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<UC_CC_COMM_DB_URL_GET xmlns="http://bcs.is.berkeley.edu">
+  <DASHBOARD_URL>
+    <URL>
+      https://bcs-web-dev-03.is.berkeley.edu:8443/psc/bcsdev/EMPLOYEE/HRMS/c/CCI_COMMUNICATION_CENTER_SS.CCI_COMM_CENTER_FL.GBL
+    </URL>
+  </DASHBOARD_URL>
+</UC_CC_COMM_DB_URL_GET>

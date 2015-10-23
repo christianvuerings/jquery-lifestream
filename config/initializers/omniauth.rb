@@ -1,5 +1,7 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :cas, url: Settings.cas_server
+  provider :cas,
+           url: Settings.cas_server,
+           service_validate_url: '/samlValidate'
 end
 
 # More configurable logging.

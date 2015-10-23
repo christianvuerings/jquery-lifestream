@@ -81,17 +81,24 @@ describe Oec::ValidationTask do
       include_examples 'validation error logging'
     end
 
-    context 'end date before start date' do
-      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,Y,GWS,F,Y,03-26-2015,03-11-2015' }
+    context 'start and end date equal' do
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,Y,GWS,F,Y,03-11-2015,03-11-2015' }
       let(:key) { '2015-B-99999' }
-      let(:expected_message) { 'Mismatched START_DATE 03-26-2015, END_DATE 03-11-2015' }
+      let(:expected_message) { 'START_DATE 03-11-2015 equal to END_DATE 03-11-2015' }
       include_examples 'validation error logging'
     end
 
-    context 'start and end date in different years' do
+    context 'end date before start date' do
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,Y,GWS,F,Y,03-26-2015,03-11-2015' }
+      let(:key) { '2015-B-99999' }
+      let(:expected_message) { 'START_DATE 03-26-2015 later than END_DATE 03-11-2015' }
+      include_examples 'validation error logging'
+    end
+
+    context 'date not matching term code' do
       let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,Y,GWS,F,Y,01-26-2015,05-11-2016' }
       let(:key) { '2015-B-99999' }
-      let(:expected_message) { 'Mismatched START_DATE 01-26-2015, END_DATE 05-11-2016' }
+      let(:expected_message) { 'END_DATE 05-11-2016 does not match term code 2015-B' }
       include_examples 'validation error logging'
     end
 
@@ -120,6 +127,21 @@ describe Oec::ValidationTask do
       let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,Y,GWS,F,F12,01-26-2015,05-11-2015' }
       let(:key) { '2015-B-99999' }
       let(:expected_message) { 'Unexpected MODULAR_COURSE value F12' }
+      include_examples 'validation error logging'
+    end
+
+    context 'conflicting instructor data across cross-listings' do
+      let(:invalid_row) { '2015-B-34821,2015-B-34821,LGBT C146A LEC 001 REP SEXUALITY/LIT,Y,GWS/LGBT C146A LEC 001,LGBT,C146A,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,Y,LGBT,F,,01-26-2015,05-11-2015' }
+      let(:key) { '2015-B-34821' }
+      let(:expected_message) { 'Instructor list (155555, 942792) differs from instructor list (942792) of cross-listed course 2015-B-32984' }
+      include_examples 'validation error logging'
+    end
+
+    context 'DEPT_FORM specifies non-participating department' do
+      before { allow(Oec::CourseCode).to receive(:participating_dept_names).and_return %w(BIOLOGY INTEGBI MCELLBI) }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,Y,GWS,F,,01-26-2015,05-11-2015' }
+      let(:key) { '2015-B-99999' }
+      let(:expected_message) { 'DEPT_FORM GWS not found among participating departments' }
       include_examples 'validation error logging'
     end
   end

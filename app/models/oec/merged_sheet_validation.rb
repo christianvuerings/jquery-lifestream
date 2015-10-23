@@ -7,14 +7,15 @@ module Oec
       course_confirmations_file = @remote_drive.find_nested [@term_code, 'departments', 'Merged course confirmations'], on_failure: :error
       course_confirmations = Oec::SisImportSheet.from_csv(@remote_drive.export_csv(course_confirmations_file), dept_code: nil)
 
+      supervisor_confirmations_file = @remote_drive.find_nested [@term_code, 'departments', 'Merged supervisor confirmations'], on_failure: :error
+      supervisor_confirmations = Oec::Supervisors.from_csv @remote_drive.export_csv(supervisor_confirmations_file)
+
       instructors = Oec::Instructors.new
       course_instructors = Oec::CourseInstructors.new
       courses = Oec::Courses.new
       students = Oec::Students.new
       course_students = Oec::CourseStudents.new
-
-      supervisor_confirmations_file = @remote_drive.find_nested [@term_code, 'departments', 'Merged supervisor confirmations'], on_failure: :error
-      supervisors = Oec::Supervisors.from_csv @remote_drive.export_csv(supervisor_confirmations_file)
+      supervisors = Oec::Supervisors.new
 
       if (previous_course_supervisors = @remote_drive.find_nested [@term_code, 'overrides', 'course_supervisors'])
         course_supervisors = Oec::CourseSupervisors.from_csv @remote_drive.export_csv(previous_course_supervisors)
@@ -26,6 +27,11 @@ module Oec
       suffixed_ccns = {}
 
       default_dates = default_term_dates
+      participating_dept_names = Oec::CourseCode.participating_dept_names
+
+      supervisor_confirmations.each do |confirmation|
+        validate_and_add(supervisors, confirmation, %w(LDAP_UID))
+      end
 
       course_confirmations.each do |confirmation|
         next unless confirmation['EVALUATE'] && confirmation['EVALUATE'].casecmp('Y') == 0
@@ -40,6 +46,8 @@ module Oec
             elsif confirmation['MODULAR_COURSE'] == 'Y'
               errors.add "Default term dates #{confirmation['START_DATE']} to #{confirmation['END_DATE']} for modular course" if course_dates == default_dates
             end
+            errors.add "START_DATE #{confirmation['START_DATE']} does not match term code #{@term_code}" unless confirmation['START_DATE'].end_with? @term_code[0..3]
+            errors.add "END_DATE #{confirmation['END_DATE']} does not match term code #{@term_code}" unless confirmation['END_DATE'].end_with? @term_code[0..3]
           end
           errors.add "Unexpected MODULAR_COURSE value #{confirmation['MODULAR_COURSE']}" unless confirmation['MODULAR_COURSE'].blank? || confirmation['MODULAR_COURSE'] == 'Y'
           validate_and_add(courses, confirmation, %w(COURSE_ID))
@@ -53,6 +61,7 @@ module Oec
         if confirmation['DEPT_FORM'].present?
           dept_supervisors = supervisors.matching_dept_name(confirmation['DEPT_FORM'])
           validate('courses', confirmation['COURSE_ID']) do |errors|
+            errors.add "DEPT_FORM #{confirmation['DEPT_FORM']} not found among participating departments" unless participating_dept_names.include? confirmation['DEPT_FORM']
             errors.add "No supervisors found for DEPT_FORM #{confirmation['DEPT_FORM']}" if dept_supervisors.none?
             dept_supervisors.each do |supervisor|
               course_supervisor_row = {
@@ -72,6 +81,21 @@ module Oec
           suffixed_ccns[ccn] << suffix
         else
           ccns << ccn
+        end
+      end
+
+      courses.group_by { |course| course['CROSS_LISTED_NAME'] }.each do |cross_listed_name, courses|
+        next if cross_listed_name.blank?
+        course_ids = courses.map { |course| course['COURSE_ID'] }
+        comparison_course_id = course_ids.shift
+        expected_instructor_ids = course_instructors.uids_for_course_id(comparison_course_id).sort
+        course_ids.each do |course_id|
+          validate('courses', course_id) do |errors|
+            instructor_ids = course_instructors.uids_for_course_id(course_id).sort
+            if instructor_ids != expected_instructor_ids
+              errors.add "Instructor list (#{instructor_ids.join ', '}) differs from instructor list (#{expected_instructor_ids.join ', '}) of cross-listed course #{comparison_course_id}"
+            end
+          end
         end
       end
 

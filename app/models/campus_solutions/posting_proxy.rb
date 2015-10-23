@@ -52,7 +52,7 @@ module CampusSolutions
       cs_post = default_post_params
       filtered_params.each do |calcentral_param_name, value|
         mapping = self.class.field_mappings[calcentral_param_name]
-        next if mapping.blank?
+        next if mapping.blank? || value.nil?
         cs_param_name = mapping[:campus_solutions_name]
         cs_post[cs_param_name] = value
       end

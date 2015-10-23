@@ -39,7 +39,7 @@ describe GoogleApps::SheetsManager do
       csv_export = @sheet_manager.export_csv spreadsheet_file
       parsed_csv = CSV.parse csv_export
       expect(parsed_csv[0]).to eq @sis_import_sheet.headers
-      @sis_import_sheet.each_with_index do |row, i|
+      @sis_import_sheet.each_sorted_with_index do |row, i|
         expect(parsed_csv[i+1][0]).to eq row['COURSE_ID']
         expect(parsed_csv[i+1][@sis_import_sheet.headers.index('EVALUATION_TYPE')]).to eq row['EVALUATION_TYPE']
       end
@@ -60,7 +60,7 @@ describe GoogleApps::SheetsManager do
       expect(parsed_csv[1][2]).to eq 'was'
       expect(parsed_csv[3][3]).to eq 'here'
       # Other cells are unmodified.
-      @sis_import_sheet.each_with_index do |row, i|
+      @sis_import_sheet.each_sorted_with_index do |row, i|
         expect(parsed_csv[i+1][0]).to eq row['COURSE_ID']
       end
     end

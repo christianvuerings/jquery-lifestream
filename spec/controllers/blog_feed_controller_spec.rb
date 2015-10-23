@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe BlogFeedController do
 
   describe 'with legacy alerts feed' do

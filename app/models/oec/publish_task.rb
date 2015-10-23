@@ -59,14 +59,15 @@ module Oec
       # SFTP batch-mode reads a series of commands from an input batch-file
       batch_file = "#{@staging_dir.expand_path}/batch_file.sftp"
       open(batch_file, 'w') { |f|
-        f << "ls -la \n"
         files_to_publish.map do |file_to_put|
           f << "put #{csv_staging_dir.expand_path}/#{file_to_put} \n"
         end
+        f << "!echo 'Contents of Explorance directory after upload:' \n"
+        f << "ls -la \n"
         f << "exit \n"
       }
       settings = Settings.oec.explorance
-      "sftp -v -b '#{batch_file}' -oPort=#{settings.sftp_port} -oIdentityFile=#{settings.ssh_private_key_file} #{settings.sftp_user}@#{settings.sftp_server}"
+      "sftp -b '#{batch_file}' -oPort=#{settings.sftp_port} -oIdentityFile=#{settings.ssh_private_key_file} #{settings.sftp_user}@#{settings.sftp_server}"
     end
 
     def sftp_stdout_to_log(sftp_output)

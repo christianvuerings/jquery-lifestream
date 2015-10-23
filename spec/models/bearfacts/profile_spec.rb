@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Bearfacts::Profile do
 
   it_should_behave_like 'a student data proxy' do

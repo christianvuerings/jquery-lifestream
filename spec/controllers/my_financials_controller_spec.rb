@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe MyFinancialsController do
 
   before(:each) do

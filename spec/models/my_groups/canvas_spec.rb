@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe MyGroups::Canvas do
   let(:uid) {rand(99999).to_s}
   subject {MyGroups::Canvas.new(uid).fetch}

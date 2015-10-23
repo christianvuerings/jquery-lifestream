@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe PingController do
 
   context 'User database unavailable' do

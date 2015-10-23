@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe User::Oauth2Data do
 
   before do

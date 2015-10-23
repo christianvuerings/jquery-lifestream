@@ -16,6 +16,7 @@ module CampusSolutions
           FieldMapping.required(:studentCarNbr, :STDNT_CAR_NBR),
           FieldMapping.required(:admApplNbr, :ADM_APPL_NBR),
           FieldMapping.required(:applProgNbr, :APPL_PROG_NBR),
+          FieldMapping.required(:chklstItemCd, :CHKLST_ITEM_CD),
           FieldMapping.required(:actionReason, :ACTION_REASON),
           FieldMapping.required(:progAction, :PROG_ACTION),
           FieldMapping.required(:responseReason, :RESPONSE_REASON),

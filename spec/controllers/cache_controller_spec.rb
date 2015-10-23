@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe CacheController do
 
   let (:user_id) { rand(99999).to_s }

@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'selenium-webdriver'
 require 'page-object'
 require_relative 'cal_central_pages'

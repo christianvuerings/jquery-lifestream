@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe GoogleApps::Proxy do
 
   before(:each) do

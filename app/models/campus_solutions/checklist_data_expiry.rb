@@ -1,7 +1,7 @@
 module CampusSolutions
   module ChecklistDataExpiry
     def self.expire(uid=nil)
-      [CampusSolutions::Checklist, MyTasks::Merged].each do |klass|
+      [CampusSolutions::Checklist, CampusSolutions::MyChecklist, MyTasks::Merged].each do |klass|
         klass.expire uid
       end
     end

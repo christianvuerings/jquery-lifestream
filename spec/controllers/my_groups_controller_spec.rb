@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe MyGroupsController do
 
   before(:each) do

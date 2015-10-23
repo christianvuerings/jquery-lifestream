@@ -1,16 +1,20 @@
 <div class="cc-page-widget-profile-section" data-ng-controller="EmergencyContactController">
-  <div class="cc-page-widget-profile-section-label" data-ng-pluralize count="emergencyContacts.content.length" when="{'1': 'Emergency Contact', 'other': 'Emergency Contacts'}">
+  <div class="cc-page-widget-profile-section-label" data-ng-pluralize count="items.content.length" when="{'1': 'Emergency Contact', 'other': 'Emergency Contacts'}">
     </div>
   <div class="cc-page-widget-profile-section-content">
-    <div data-ng-repeat="emergencyContact in emergencyContacts.content" class="cc-page-widget-profile-section-content-item">
+    <div data-ng-repeat="emergencyContact in items.content" class="cc-page-widget-profile-section-content-item">
       <div>
         <strong data-ng-bind="emergencyContact.name"></strong>
-        <span data-ng-if="emergencyContact.primary">(primary contact)</span>
+        <span data-ng-if="emergencyContact.relationship.description" data-ng-bind-template="- {{emergencyContact.relationship.description}}"><span>
+        <span data-ng-if="emergencyContact.preferred">(primary contact)</span>
       </div>
-      <div data-ng-bind="emergencyContact.phone.number"></div>
+      <div data-ng-repeat="phone in emergencyContact.phones">
+        <span data-ng-bind="phone.number"></span>
+      </div>
       <div data-ng-bind="emergencyContact.email.emailAddress"></div>
+      <div data-ng-bind-html="emergencyContact.address.formattedAddress" class="cc-page-widget-profile-section-content-item-margin-top"></div>
     </div>
-    <div data-ng-if="!emergencyContacts.content.length" class="cc-page-widget-profile-section-not-available">
+    <div data-ng-if="!items.content.length" class="cc-page-widget-profile-section-not-available">
       There are no emergency contacts available.
     </div>
   </div>

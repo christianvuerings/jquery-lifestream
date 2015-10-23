@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe "MyBadges::bMail" do
 
   before(:each) do

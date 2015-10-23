@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe User::SearchUsersBySid do
 
   let(:users_found) do

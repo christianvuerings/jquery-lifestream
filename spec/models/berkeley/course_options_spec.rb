@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Berkeley::CourseOptions do
   subject { Berkeley::CourseOptions.nested?(primary['course_option'], primary['section_num'], secondary['section_num'], secondary['instruction_format']) }
 

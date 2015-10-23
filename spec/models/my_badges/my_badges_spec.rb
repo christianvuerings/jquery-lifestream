@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe "MyBadges" do
   before(:each) do
     @user_id = rand(999999).to_s

@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe "HotPlate" do
 
   before(:each) do

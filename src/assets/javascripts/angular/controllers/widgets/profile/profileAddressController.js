@@ -35,11 +35,11 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
   var countryWatcher;
 
   /**
-   * We need to replace the \n with <br /> in the formattedAddresses
+   * Fix the formatted addresses
    */
   var fixFormattedAddresses = function() {
     $scope.items.content = $scope.items.content.map(function(element) {
-      element.formattedAddress = element.formattedAddress.replace(/\\n/g, '<br />');
+      element.formattedAddress = apiService.profile.fixFormattedAddress(element.formattedAddress);
       return element;
     });
   };
@@ -68,7 +68,7 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
     if ($scope.states && $scope.states.length) {
       angular.merge($scope.currentObject, {
         data: {
-          state: initialEdit.state || $scope.states[0].state
+          state: initialEdit.state
         }
       });
       initialEdit.state = '';
@@ -177,7 +177,7 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
     var returnObject = {};
     _.forEach(item, function(value, key) {
       if (_.contains(fieldIds, key)) {
-        returnObject[key] = value;
+        returnObject[key] = value || '';
       }
     });
     return returnObject;

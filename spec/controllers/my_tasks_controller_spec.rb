@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe MyTasksController do
 
   before(:each) do

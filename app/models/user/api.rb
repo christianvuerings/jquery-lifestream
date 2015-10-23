@@ -101,7 +101,7 @@ module User
 
     def is_campus_solutions_student?
       # no, really, BCS users are identified by having 10-digit IDs.
-      @student_id.to_s.length >= 10
+      @edo_attributes.present? && @edo_attributes[:campus_solutions_id].present? && @edo_attributes[:campus_solutions_id].to_s.length >= 10
     end
 
     def is_sis_profile_visible?
@@ -144,6 +144,7 @@ module User
         :roles => get_campus_attribute(:roles),
         :uid => @uid,
         :sid => @student_id,
+        :campusSolutionsID => get_campus_attribute('campus_solutions_id'),
         :isCampusSolutionsStudent => is_campus_solutions_student?,
         :showSisProfileUI => is_sis_profile_visible?
       }

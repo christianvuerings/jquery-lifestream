@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Berkeley::Term do
   subject {Berkeley::Term.new(db_row)}
   context 'Summer Sessions' do

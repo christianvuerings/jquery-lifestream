@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Berkeley::Terms do
   let(:options) {{fake_now: fake_now}}
   subject {Berkeley::Terms.fetch(options)}

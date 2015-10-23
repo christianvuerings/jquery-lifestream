@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Cache::FeedUpdateWhiteboard do
 
   before :each do
