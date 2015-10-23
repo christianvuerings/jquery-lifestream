@@ -99,8 +99,10 @@ class CanvasPage
 
   def log_out(cal_net_page)
     navigate_to "#{WebDriverUtils.canvas_base_url}/logout"
-    WebDriverUtils.wait_for_page_and_click logout_confirm_element
-    cal_net_page.logout_conf_heading_element.when_visible timeout=WebDriverUtils.page_load_timeout
+    unless cal_net_page.username_element.visible?
+      WebDriverUtils.wait_for_page_and_click logout_confirm_element
+      cal_net_page.logout_conf_heading_element.when_visible timeout=WebDriverUtils.page_load_timeout
+    end
   end
 
   def load_sub_account
