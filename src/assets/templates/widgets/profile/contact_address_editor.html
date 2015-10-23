@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div  data-cc-spinner-directive="currentObject.stateFieldLoading">
+      <div data-cc-spinner-directive="currentObject.stateFieldLoading">
         <div data-ng-repeat="field in currentObject.fields" data-ng-if="field.field !== 'country'">
           <div>
             <label data-ng-attr-for="cc-page-widget-profile-field-{{$index}}">
@@ -51,7 +51,7 @@
       </div>
 
       <div>
-        <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="cc_page_widget_profile_address.$invalid || isSaving">
+        <button class="cc-button cc-button-blue" type="submit" data-ng-disabled="cc_page_widget_profile_address.$invalid || isSaving || currentObject.stateFieldLoading">
           <span data-ng-if="!isSaving">Save</span>
           <span data-ng-if="isSaving">Updating...</span>
         </button>
