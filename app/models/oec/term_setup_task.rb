@@ -13,7 +13,7 @@ module Oec
 
       find_previous_term_csvs
 
-      [Oec::CourseSupervisors, Oec::Instructors, Oec::Supervisors].each do |worksheet_class|
+      [Oec::CourseInstructors, Oec::CourseSupervisors, Oec::Instructors, Oec::Supervisors].each do |worksheet_class|
         file = @previous_term_csvs[worksheet_class]
         if file && (file.mime_type == 'text/csv') && file.download_url
           content = StringIO.new @remote_drive.download(file)
@@ -44,8 +44,8 @@ module Oec
         end
         if (previous_exports =  @remote_drive.find_first_matching_folder('exports', previous_term_folder))
           if (most_recent_export = @remote_drive.find_folders(previous_exports.id).sort_by(&:title).last)
-            item = @remote_drive.find_items_by_title('course_supervisors.csv', parent_id: most_recent_export.id, mime_type: 'text/csv').first
-            @previous_term_csvs[Oec::CourseSupervisors] = item if item
+            @previous_term_csvs[Oec::CourseInstructors] = @remote_drive.find_items_by_title('course_instructors.csv', parent_id: most_recent_export.id, mime_type: 'text/csv').first
+            @previous_term_csvs[Oec::CourseSupervisors] = @remote_drive.find_items_by_title('course_supervisors.csv', parent_id: most_recent_export.id, mime_type: 'text/csv').first
           end
         end
       end
