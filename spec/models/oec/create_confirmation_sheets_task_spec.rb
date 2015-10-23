@@ -23,7 +23,7 @@ describe Oec::CreateConfirmationSheetsTask do
     allow(fake_remote_drive).to receive(:get_items_in_folder).and_return [import_sheet]
 
     allow(fake_remote_drive).to receive(:find_first_matching_item).and_return mock_google_drive_item
-    allow(fake_remote_drive).to receive(:find_first_matching_item).with('departments', anything).and_return departments_folder
+    allow(fake_remote_drive).to receive(:find_first_matching_item).with(Oec::Folder.confirmations, anything).and_return departments_folder
     allow(fake_remote_drive).to receive(:find_first_matching_item).with('Molecular and Cell Biology', departments_folder).and_return nil
     allow(fake_remote_drive).to receive(:find_first_matching_item).with('supervisors', anything).and_return supervisors_sheet
 

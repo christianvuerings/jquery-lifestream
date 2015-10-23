@@ -18,20 +18,21 @@ describe Oec::TermSetupTask do
 
     let(:term_folder) { mock_google_drive_item term_code }
     let(:logs_today_folder) { mock_google_drive_item today }
-    let(:overrides_folder) { mock_google_drive_item 'overrides' }
+    let(:overrides_folder) { mock_google_drive_item Oec::Folder.overrides }
 
     before do
       expect(fake_remote_drive).to receive(:find_folders).with(no_args).and_return []
       expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
         .with(term_code, nil, anything).and_return term_folder
 
-      %w(departments exports imports logs).each do |title|
+      [:confirmations, :logs, :published, :sis_imports].each do |folder_type|
         expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
-          .with(title, term_folder, anything).and_return mock_google_drive_item(title)
+          .with(Oec::Folder::FOLDER_TITLES[folder_type], term_folder, anything)
+          .and_return mock_google_drive_item(Oec::Folder::FOLDER_TITLES[folder_type])
       end
 
       expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
-        .with('overrides', term_folder, anything).and_return overrides_folder
+        .with(Oec::Folder.overrides, term_folder, anything).and_return overrides_folder
 
       expect(fake_remote_drive).to receive(:copy_item_to_folder)
         .with(anything, 'departments_id', 'TEMPLATE').and_return mock_google_drive_item

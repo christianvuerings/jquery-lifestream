@@ -5,14 +5,16 @@ module Oec
 
     def run_internal
       term_folder = @remote_drive.find_first_matching_item @term_code
-      imports_folder = @remote_drive.find_first_matching_item('imports', term_folder)
+      imports_folder = @remote_drive.find_first_matching_item(Oec::Folder.sis_imports, term_folder)
       most_recent_import = @remote_drive.find_folders(imports_folder.id).sort_by(&:title).last
       raise RuntimeError, "No SIS imports found for term #{@term_code}" unless most_recent_import
 
-      departments_folder = @remote_drive.find_first_matching_item('departments', term_folder)
-      raise RuntimeError, "No departments folder found for term #{@term_code}" unless departments_folder
+      confirmations_folder = @remote_drive.find_first_matching_item(Oec::Folder.confirmations, term_folder)
+      raise RuntimeError, "No '#{Oec::Folder.confirmations}' folder found for term #{@term_code}" unless confirmations_folder
+      merged_confirmations_folder = @remote_drive.find_first_matching_item(Oec::Folder.merged_confirmations, term_folder)
+      raise RuntimeError, "No '#{Oec::Folder.merged_confirmations}' folder found for term #{@term_code}" unless merged_confirmations_folder
 
-      overrides = @remote_drive.find_first_matching_item('overrides', term_folder)
+      overrides = @remote_drive.find_first_matching_item(Oec::Folder.overrides, term_folder)
       supervisors_sheet = @remote_drive.find_first_matching_item('supervisors', overrides)
       raise RuntimeError, "No supervisor sheet found in overrides for term #{@term_code}" unless supervisors_sheet
 
@@ -23,7 +25,7 @@ module Oec
 
       department_names = Oec::CourseCode.by_dept_code(@course_code_filter).keys.map { |code| Berkeley::Departments.get(code, concise: true) }
 
-      @remote_drive.get_items_in_folder(departments_folder.id).each do |department_item|
+      @remote_drive.get_items_in_folder(confirmations_folder.id).each do |department_item|
         next unless department_names.include? department_item.title
 
         if (sis_import_sheet = @remote_drive.find_first_matching_item(department_item.title, most_recent_import))
@@ -87,8 +89,8 @@ module Oec
         log :warn, 'Confirmation sheets generated validation errors:'
         log_validation_errors
       end
-      export_sheet(merged_course_confirmations, departments_folder)
-      export_sheet(merged_supervisor_confirmations, departments_folder)
+      export_sheet(merged_course_confirmations, merged_confirmations_folder)
+      export_sheet(merged_supervisor_confirmations, merged_confirmations_folder)
     end
 
   end

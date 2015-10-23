@@ -136,7 +136,7 @@ module Oec
     end
 
     def get_overrides_worksheet(klass)
-      if (overrides_sheet = @remote_drive.find_nested [@term_code, 'overrides', klass.export_name])
+      if (overrides_sheet = @remote_drive.find_nested [@term_code, Oec::Folder.overrides, klass.export_name])
         klass.from_csv @remote_drive.export_csv overrides_sheet
       end
     end
@@ -193,7 +193,7 @@ module Oec
       if @opts[:local_write]
         logger.debug "Wrote log file to path #{log_path}"
       else
-        if (logs_today = find_or_create_today_subfolder('logs', now))
+        if (logs_today = find_or_create_today_subfolder(Oec::Folder.logs, now))
           begin
             upload_file(log_path, log_name, 'text/plain', logs_today)
           ensure
