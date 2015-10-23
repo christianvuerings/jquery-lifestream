@@ -177,7 +177,7 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
     var returnObject = {};
     _.forEach(item, function(value, key) {
       if (_.contains(fieldIds, key)) {
-        returnObject[key] = value;
+        returnObject[key] = value || '';
       }
     });
     return returnObject;
