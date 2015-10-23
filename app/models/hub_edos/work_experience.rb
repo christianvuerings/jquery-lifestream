@@ -21,5 +21,9 @@ module HubEdos
       }
     end
 
+    def request_options
+      super.merge({on_error: {rescue_status: 404}})
+    end
+
   end
 end
