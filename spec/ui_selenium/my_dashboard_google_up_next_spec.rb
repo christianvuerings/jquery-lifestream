@@ -74,10 +74,6 @@ describe 'My Dashboard Up Next card', :testui => true do
       logger.info("Event end time is #{@event_end_time}")
 
       # On the Dashboard, wait a moment for the new event.  If not there, clear the cache and reload.
-      @up_next_card.load_page
-      @up_next_card.events_list_element.when_present(timeout=WebDriverUtils.google_task_timeout)
-      sleep(WebDriverUtils.page_event_timeout)
-      @up_next_card.log_out splash_page
       UserUtils.clear_cache(@driver, splash_page, @up_next_card)
       splash_page.click_sign_in_button
       cal_net_auth_page.login(UserUtils.qa_username, UserUtils.qa_password)
