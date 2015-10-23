@@ -111,7 +111,6 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           @discussion_index = notifications.index(notifications.find { |summary| summary.include? 'Discussion' })
           @announcement_index = notifications.index(notifications.find { |summary| summary.include? 'Announcement' })
           @assignment_index = notifications.index(notifications.find { |summary| summary.include? 'Assignment' })
-          logger.info "Discussion is at #{@discussion_index.to_s}, Announcement is at #{@announcement_index.to_s}, and Assignments are at #{@assignment_index.to_s}"
         end
 
         # My Classes
@@ -154,7 +153,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@notifications_card.notification_desc_elements[@announcement_index].text).to eql(@announcement_body)
         end
         it 'show a link to an announcement on a notification' do
-          expect(@notifications_card.notification_more_info_link(@announcement_index).attribute('href')).to eql(@announcement_url)
+          expect(@notifications_card.notification_more_info_link(@driver, @announcement_index).attribute('href')).to eql(@announcement_url)
         end
         it 'show a discussion title on a notification' do
           expect(@notifications_card.notification_summary_elements[@discussion_index].text).to eql(@discussion_title)
@@ -167,7 +166,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@notifications_card.notification_date_elements[@discussion_index].text).to eql(WebDriverUtils.ui_alphanumeric_date_format Date.today)
         end
         it 'show a link to a discussion on a notification' do
-          expect(@notifications_card.notification_more_info_link(@discussion_index).attribute('href')).to eql(@discussion_url)
+          expect(@notifications_card.notification_more_info_link(@driver, @discussion_index).attribute('href')).to eql(@discussion_url)
         end
 
         # Tasks - assignments
@@ -243,7 +242,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@notifications_card.notification_desc_elements[@announcement_index].text).to eql(@announcement_body)
         end
         it 'show a link to an announcement on a notification' do
-          expect(@notifications_card.notification_more_info_link(@announcement_index).attribute('href')).to eql(@announcement_url)
+          expect(@notifications_card.notification_more_info_link(@driver, @announcement_index).attribute('href')).to eql(@announcement_url)
         end
         it 'show a discussion title on a notification' do
           expect(@notifications_card.notification_summary_elements[@discussion_index].text).to eql(@discussion_title)
@@ -256,7 +255,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@notifications_card.notification_date_elements[@discussion_index].text).to eql(WebDriverUtils.ui_alphanumeric_date_format Date.today)
         end
         it 'show a link to a discussion on a notification' do
-          expect(@notifications_card.notification_more_info_link(@discussion_index).attribute('href')).to eql(@discussion_url)
+          expect(@notifications_card.notification_more_info_link(@driver, @discussion_index).attribute('href')).to eql(@discussion_url)
         end
 
         # Tasks - assignments
@@ -266,7 +265,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@tasks_card.overdue_task_one_title).to eql(@past_assignment_title)
         end
         it 'show an overdue assignment\'s course site name on a task' do
-          expect(@tasks_card.overdue_task_one_course).to eql(site_name)
+          expect(@tasks_card.overdue_task_one_course).to eql(site_name.upcase!)
         end
         it 'show an overdue assignment\'s due date and time on a task' do
           expect(@tasks_card.overdue_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format @past_assignment_due_date)

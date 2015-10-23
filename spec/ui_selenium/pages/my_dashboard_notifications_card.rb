@@ -32,8 +32,8 @@ module CalCentralPages
       notification_elements[index].div_element.click unless notification_elements[index].paragraph_element(:class => 'cc-widget-activities-summary' ).visible?
     end
 
-    def notification_more_info_link(index)
-      notification_elements[index].link_element(:xpath => '//div[@data-onload="activityItem=activity"]/a')
+    def notification_more_info_link(driver, index)
+      driver.find_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{(index + 1).to_s}]//div[@data-onload='activityItem=activity']/a")
     end
 
     def expand_sub_notification_list(index)
