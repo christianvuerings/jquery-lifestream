@@ -43,8 +43,9 @@ describe YamlSettingsController do
       end
 
       context 'settings change detected' do
+        let(:original_textbooks_value) { Settings.features.textbooks }
         before {
-          Settings.features.textbooks = !Settings.features.textbooks
+          Settings.features.textbooks = !original_textbooks_value
         }
 
         it 'should succeed' do
@@ -52,6 +53,8 @@ describe YamlSettingsController do
           expect(response.status).to eq 200
           json = JSON.parse response.body
           expect(json['message']).to include 'Settings reloaded'
+          # Was the value actually restored?
+          expect(Settings.features.textbooks).to eq original_textbooks_value
         end
       end
     end

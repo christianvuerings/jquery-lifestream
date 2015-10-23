@@ -18,16 +18,7 @@ module CalcentralConfig
       new_settings = load_settings
       Rails.logger.warn 'Preparing to reload application settings via Kernel'
       Kernel.const_set(:Settings, new_settings)
-      new_level = Log4r::LNAMES.index Settings.logger.level
-      old_level = Rails.logger.level
-      if new_level.nil?
-        Rails.logger.warn "The new logger level is invalid: #{Settings.logger.level}"
-      elsif new_level == old_level
-        Rails.logger.warn "No change to logger level: #{Log4r::LNAMES[Rails.logger.level]}"
-      else
-        Rails.logger.level = new_level
-        Rails.logger.warn "Logger level changed (old -> new): #{Log4r::LNAMES[old_level]} -> #{Log4r::LNAMES[Rails.logger.level]}"
-      end
+      update_rails_logger_level Settings.logger.level
       Rails.logger.warn 'YAML settings reloaded. Ask yourself, should I clear the cache?'
     end
   end
@@ -64,6 +55,8 @@ module CalcentralConfig
     File.exists?(dir) ? File.expand_path(dir) : nil
   end
 
+  private
+
   def calcentral_settings_files(standard_dir, extension)
     files = [
         Rails.root.join('config', "settings.#{extension}"),
@@ -79,4 +72,18 @@ module CalcentralConfig
     end
     files
   end
+
+  def update_rails_logger_level(level_name)
+    new_level = Log4r::LNAMES.index level_name
+    old_level = Rails.logger.level
+    if new_level.nil?
+      Rails.logger.warn "The new logger level is invalid: #{Settings.logger.level}"
+    elsif new_level == old_level
+      Rails.logger.warn "No change to logger level: #{Log4r::LNAMES[Rails.logger.level]}"
+    else
+      Rails.logger.level = new_level
+      Rails.logger.warn "Logger level changed (old -> new): #{Log4r::LNAMES[old_level]} -> #{Log4r::LNAMES[Rails.logger.level]}"
+    end
+  end
+
 end
