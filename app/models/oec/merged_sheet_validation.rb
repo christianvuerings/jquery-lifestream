@@ -46,6 +46,8 @@ module Oec
             elsif confirmation['MODULAR_COURSE'] == 'Y'
               errors.add "Default term dates #{confirmation['START_DATE']} to #{confirmation['END_DATE']} for modular course" if course_dates == default_dates
             end
+            errors.add "START_DATE #{confirmation['START_DATE']} does not match term code #{@term_code}" unless confirmation['START_DATE'].end_with? @term_code[0..3]
+            errors.add "END_DATE #{confirmation['END_DATE']} does not match term code #{@term_code}" unless confirmation['END_DATE'].end_with? @term_code[0..3]
           end
           errors.add "Unexpected MODULAR_COURSE value #{confirmation['MODULAR_COURSE']}" unless confirmation['MODULAR_COURSE'].blank? || confirmation['MODULAR_COURSE'] == 'Y'
           validate_and_add(courses, confirmation, %w(COURSE_ID))
