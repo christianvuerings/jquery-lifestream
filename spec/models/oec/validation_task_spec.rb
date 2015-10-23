@@ -129,6 +129,14 @@ describe Oec::ValidationTask do
       let(:expected_message) { 'Instructor list (155555, 942792) differs from instructor list (942792) of cross-listed course 2015-B-32984' }
       include_examples 'validation error logging'
     end
+
+    context 'DEPT_FORM specifies non-participating department' do
+      before { allow(Oec::CourseCode).to receive(:participating_dept_names).and_return %w(BIOLOGY INTEGBI MCELLBI) }
+      let(:invalid_row) { '2015-B-99999,2015-B-99999,GWS 150 LEC 001 VINDICATION OF RIGHTS,,,GWS,150,LEC,001,P,155555,UID:155555,Zachary,Zzzz,zzzz@berkeley.edu,Y,GWS,F,,01-26-2015,05-11-2015' }
+      let(:key) { '2015-B-99999' }
+      let(:expected_message) { 'DEPT_FORM GWS not found among participating departments' }
+      include_examples 'validation error logging'
+    end
   end
 
   context 'instructors sheet validations' do
