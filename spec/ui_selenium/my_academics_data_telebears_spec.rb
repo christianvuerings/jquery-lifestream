@@ -83,7 +83,7 @@ describe 'My Academics Tele-BEARS card', :testui => true do
                 term_appts = []
                 term_appts.push(term)
                 if my_academics_page.has_student_semester_link term_year
-                  my_academics_page.load_semester_page(driver, academics_api.tele_bears_semester_slug(term))
+                  my_academics_page.load_semester_page(academics_api.tele_bears_semester_slug(term))
                   my_academics_page.tele_bears_card_heading_element.when_visible WebDriverUtils.academics_timeout
                   api_semester_adv_code_reqts = academics_api.tele_bears_advisor_codes(term_appts)
                   api_semester_adv_code_msg = academics_api.tele_bears_advisor_code_msgs(term_appts)
