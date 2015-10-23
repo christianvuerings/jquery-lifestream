@@ -13,7 +13,7 @@ class YamlSettingsController < ApplicationController
       feature_flags_after = Settings.features.marshal_dump
       msg = (feature_flags_before.to_a - feature_flags_after.to_a).any? ?
         'Settings reloaded. Please consider clearing the cache.' :
-        'Warning: No change detected in feature flags. Please verify that your settings changes loaded.'
+        'Warning: No change detected in feature flags. Please verify that your settings were loaded.'
       # Give user a snippet of the settings for the sake of his/her own verification
       json = {
         message: msg,

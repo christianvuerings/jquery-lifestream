@@ -14,8 +14,8 @@ module CalcentralConfig
   end
 
   def reload_settings
-    new_settings = load_settings
     if Kernel.const_defined? :Settings
+      new_settings = load_settings
       Rails.logger.warn 'Preparing to reload application settings via Kernel'
       Kernel.const_set(:Settings, new_settings)
       new_level = Log4r::LNAMES.index Settings.logger.level
@@ -31,7 +31,6 @@ module CalcentralConfig
       Rails.logger.warn 'YAML settings reloaded. Ask yourself, should I clear the cache?'
     end
   end
-
 
   def deep_open_struct(hash_recursive)
     require 'ostruct'

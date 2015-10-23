@@ -27,6 +27,8 @@ describe YamlSettingsController do
         expect(Kernel).to receive(:const_set).with(anything, anything).and_raise RuntimeError
         get :reload, { :format => 'json' }
         expect(response.status).to eq 500
+        json = JSON.parse response.body
+        expect(json['message']).to include 'RuntimeError'
       end
     end
 
