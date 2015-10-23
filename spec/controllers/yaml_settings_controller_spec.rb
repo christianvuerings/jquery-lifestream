@@ -20,37 +20,42 @@ describe YamlSettingsController do
 
   context 'authorized user' do
     let(:user_auth) { User::Auth.new(uid: @user_id, is_superuser: true, active: true) }
-    before {
-      settings = OpenStruct.new(
-        {
-          logger: OpenStruct.new(
-            {
-              level: log_level
-            }
-          )
-        }
-      )
-      expect(CalcentralConfig).to receive(:load_settings).and_return(settings)
-    }
 
-    context 'corrupt settings' do
-      let(:log_level) { 'invalid_log_level' }
-
+    context 'Kernel raises error' do
       it 'should abort the reload action if settings are corrupt' do
+        Rails.logger.warn 'EXPECT this test to generate RuntimeError in logs'
+        expect(Kernel).to receive(:const_set).with(anything, anything).and_raise RuntimeError
         get :reload, { :format => 'json' }
-        expect(response.status).to eq 400
+        expect(response.status).to eq 500
+        json = JSON.parse response.body
+        expect(json['message']).to include 'RuntimeError'
       end
     end
 
     context 'valid settings' do
-      let(:log_level) { 2 }
+      context 'settings change not detected' do
+        it 'should warn user of a possible problem' do
+          get :reload, { :format => 'json' }
+          expect(response.status).to eq 200
+          json = JSON.parse response.body
+          expect(json['message']).to include 'Warning: No change detected in feature flags'
+        end
+      end
 
-      it 'should succeed in changing the log level' do
-        allow(Rails.logger).to receive(:level).and_return 1
-        get :reload, { :format => 'json' }
-        expect(response.status).to eq 200
-        json = JSON.parse response.body
-        expect(json['reloaded']).to be true
+      context 'settings change detected' do
+        let(:original_textbooks_value) { Settings.features.textbooks }
+        before {
+          Settings.features.textbooks = !original_textbooks_value
+        }
+
+        it 'should succeed' do
+          get :reload, { :format => 'json' }
+          expect(response.status).to eq 200
+          json = JSON.parse response.body
+          expect(json['message']).to include 'Settings reloaded'
+          # Was the value actually restored?
+          expect(Settings.features.textbooks).to eq original_textbooks_value
+        end
       end
     end
   end
