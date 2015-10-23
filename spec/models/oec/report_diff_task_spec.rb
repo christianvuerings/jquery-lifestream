@@ -30,15 +30,15 @@ describe Oec::ReportDiffTask do
         fake_csv_hash[dept_name] = [ sis_data, dept_data]
       end
       # Behave as if there is no previous diff report on remote drive
-      expect(fake_remote_drive).to receive(:find_nested).with([term_code, 'departments']).and_return (departments_folder = double)
+      expect(fake_remote_drive).to receive(:find_nested).with([term_code, Oec::Folder.confirmations]).and_return (departments_folder = double)
       expect(fake_remote_drive).to receive(:find_first_matching_item).with('2015-D diff report', departments_folder).and_return nil
       dept_code_mappings.each do |dept_code, dept_name|
         friendly_name = Berkeley::Departments.get(dept_code, concise: true)
-        imports_path = [term_code, 'imports', now.strftime('%F %H:%M:%S'), friendly_name]
+        imports_path = [term_code, Oec::Folder.sis_imports, now.strftime('%F %H:%M:%S'), friendly_name]
         if dept_name.nil?
           expect(fake_remote_drive).to receive(:find_nested).with(imports_path, anything).and_return nil
         else
-          courses_path = [term_code, 'departments', friendly_name]
+          courses_path = [term_code, Oec::Folder.confirmations, friendly_name]
           sheet_classes = [Oec::SisImportSheet, Oec::CourseConfirmation]
           [ imports_path, courses_path ].each_with_index do |path, index|
             expect(fake_remote_drive).to receive(:find_nested).with(path, anything).and_return (remote_file = double)

@@ -15,23 +15,23 @@ module Oec
     private
 
     def update_remote_drive
-      departments_folder = @remote_drive.find_nested([@term_code, 'departments'])
-      raise RuntimeError, "No departments folder found for term #{@term_code}" unless departments_folder
+      confirmations_folder = @remote_drive.find_nested([@term_code, Oec::Folder.confirmations])
+      raise RuntimeError, "No department confirmations folder found for term #{@term_code}" unless confirmations_folder
       title = "#{@term_code} diff report"
-      if (remote_file = @remote_drive.find_first_matching_item(title, departments_folder))
+      if (remote_file = @remote_drive.find_first_matching_item(title, confirmations_folder))
         # TODO: Be transactional, implement @remote_drive.update_worksheet(). For now, the benefit is not worth the risk of refactor.
         log :info, "Permanently delete the old diff report #{remote_file.id}"
         @remote_drive.trash_item(remote_file, permanently_delete: true)
       end
-      upload_worksheet(@diff_report, title, departments_folder)
+      upload_worksheet(@diff_report, title, confirmations_folder)
     end
 
     def analyze(dept_code)
       dept_name = Berkeley::Departments.get(dept_code, concise: true)
       validate(dept_code, @term_code) do |errors|
-        sis_data = csv_row_hash([@term_code, 'imports', "#{datestamp} #{timestamp}", dept_name], dept_code, Oec::SisImportSheet)
-        errors.add("#{dept_name} has no 'imports' '#{datestamp} #{timestamp}' spreadsheet") && return unless sis_data
-        dept_data = csv_row_hash([@term_code, 'departments', dept_name], dept_code, Oec::CourseConfirmation)
+        sis_data = csv_row_hash([@term_code, Oec::Folder.sis_imports, "#{datestamp} #{timestamp}", dept_name], dept_code, Oec::SisImportSheet)
+        errors.add("#{dept_name} has no '#{Oec::Folder.sis_imports}' '#{datestamp} #{timestamp}' spreadsheet") && return unless sis_data
+        dept_data = csv_row_hash([@term_code, Oec::Folder.confirmations, dept_name], dept_code, Oec::CourseConfirmation)
         errors.add("#{dept_name} has no department confirmation spreadsheet") && return unless dept_data
         keys_of_rows_with_diff = []
         intersection = (sis_keys = sis_data.keys) & (dept_keys = dept_data.keys)
@@ -54,7 +54,7 @@ module Oec
     end
 
     def default_date_time
-      date_time_of_most_recent 'imports'
+      date_time_of_most_recent Oec::Folder.sis_imports
     end
 
     def report_diff(dept_code, sis_data, dept_data, keys)

@@ -5,11 +5,12 @@ module Oec
       log :info, "Will create initial folders and files for term #{@term_code}"
 
       term_folder = create_folder @term_code
-      %w(exports imports logs).each do |folder_name|
-        create_folder(folder_name, term_folder)
+      term_subfolders = {}
+      Oec::Folder::FOLDER_TITLES.each do |folder_type, folder_name|
+        # TODO Remove once confirmations and merged_confirmations folders are separated
+        next if folder_type == :merged_confirmations
+        term_subfolders[folder_type] = create_folder(folder_name, term_folder)
       end
-      departments = create_folder('departments', term_folder)
-      overrides = create_folder('overrides', term_folder)
 
       find_previous_term_csvs
 
@@ -17,32 +18,32 @@ module Oec
         file = @previous_term_csvs[worksheet_class]
         if file && (file.mime_type == 'text/csv') && file.download_url
           content = StringIO.new @remote_drive.download(file)
-          @remote_drive.upload_to_spreadsheet(file.title.chomp('.csv'), file.description, content, overrides.id)
+          @remote_drive.upload_to_spreadsheet(file.title.chomp('.csv'), file.description, content, term_subfolders[:overrides].id)
         elsif file
-          copy_file(file, overrides)
+          copy_file(file, term_subfolders[:overrides])
         else
           log :info, "Could not find previous sheet '#{worksheet_class.export_name}' for copying; will create header-only file"
-          export_sheet_headers(worksheet_class, overrides)
+          export_sheet_headers(worksheet_class, term_subfolders[:overrides])
         end
       end
 
       courses = Oec::Courses.new
       set_default_term_dates courses
-      export_sheet(courses, overrides)
+      export_sheet(courses, term_subfolders[:overrides])
 
       if !@opts[:local_write] && (department_template = @remote_drive.find_nested ['templates', 'Department confirmations'])
-        @remote_drive.copy_item_to_folder(department_template, departments.id, 'TEMPLATE')
+        @remote_drive.copy_item_to_folder(department_template, term_subfolders[:confirmations].id, 'TEMPLATE')
       end
     end
 
     def find_previous_term_csvs
       @previous_term_csvs = {}
       if (previous_term_folder = find_previous_term_folder)
-        if (previous_overrides = @remote_drive.find_first_matching_folder('overrides', previous_term_folder))
+        if (previous_overrides = @remote_drive.find_first_matching_folder(Oec::Folder.overrides, previous_term_folder))
           @previous_term_csvs[Oec::Instructors] = @remote_drive.find_first_matching_item('instructors', previous_overrides)
           @previous_term_csvs[Oec::Supervisors] = @remote_drive.find_first_matching_item('supervisors', previous_overrides)
         end
-        if (previous_exports =  @remote_drive.find_first_matching_folder('exports', previous_term_folder))
+        if (previous_exports =  @remote_drive.find_first_matching_folder(Oec::Folder.published, previous_term_folder))
           if (most_recent_export = @remote_drive.find_folders(previous_exports.id).sort_by(&:title).last)
             @previous_term_csvs[Oec::CourseInstructors] = @remote_drive.find_items_by_title('course_instructors.csv', parent_id: most_recent_export.id, mime_type: 'text/csv').first
             @previous_term_csvs[Oec::CourseSupervisors] = @remote_drive.find_items_by_title('course_supervisors.csv', parent_id: most_recent_export.id, mime_type: 'text/csv').first

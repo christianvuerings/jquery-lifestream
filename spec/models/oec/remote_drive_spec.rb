@@ -9,17 +9,17 @@ describe Oec::RemoteDrive do
 
     context 'find no match' do
       it 'should return nil when term not found' do
-        spreadsheet = subject.find_dept_courses_spreadsheet(william_the_conqueror_term_code, dept_code)
+        spreadsheet = subject.find_nested ['1000-A', Oec::Folder.confirmations, dept_code]
         expect(spreadsheet).to be_nil
       end
 
-      it 'should return nil when dept \'Courses\' spreadsheet is not found' do
-        spreadsheet = subject.find_dept_courses_spreadsheet(william_the_conqueror_term_code, dept_code)
+      it 'should return nil when department confirmation spreadsheet is not found' do
+        spreadsheet = subject.find_nested [william_the_conqueror_term_code, Oec::Folder.confirmations, dept_code]
         expect(spreadsheet).to be_nil
       end
 
       it 'should return nil when dept not found' do
-        spreadsheet = subject.find_nested [william_the_conqueror_term_code, 'imports', now.strftime('%F'), dept_code]
+        spreadsheet = subject.find_nested [william_the_conqueror_term_code, Oec::Folder.sis_imports, now.strftime('%F'), dept_code]
         expect(spreadsheet).to be_nil
       end
     end
