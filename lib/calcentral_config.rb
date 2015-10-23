@@ -14,23 +14,24 @@ module CalcentralConfig
   end
 
   def reload_settings
-    settings_hash = CalcentralConfig.load_settings
-    old_level = Rails.logger.level
-    new_level = (settings_hash && settings_hash.logger && settings_hash.logger.level)
-    valid = !new_level.nil? &&
-      new_level != old_level &&
-      new_level.is_a?(Integer) &&
-      (0...Log4r::LNAMES.length).include?(new_level)
-    if valid
-      old_level_name = Log4r::LNAMES[old_level]
-      new_level_name = Log4r::LNAMES[new_level]
-      Rails.logger.level = new_level
-      Rails.logger.warn "Rails.logger.level changed (old -> new): #{old_level_name} -> #{new_level_name}"
-    else
-      Rails.logger.warn "Do nothing. Log levels have not changed (old -> new): #{old_level} -> #{new_level}"
+    new_settings = load_settings
+    if Kernel.const_defined? :Settings
+      Rails.logger.warn 'Preparing to reload application settings via Kernel'
+      Kernel.const_set(:Settings, new_settings)
+      new_level = Log4r::LNAMES.index Settings.logger.level
+      old_level = Rails.logger.level
+      if new_level.nil?
+        Rails.logger.warn "The new logger level is invalid: #{Settings.logger.level}"
+      elsif new_level == old_level
+        Rails.logger.warn "No change to logger level: #{Log4r::LNAMES[Rails.logger.level]}"
+      else
+        Rails.logger.level = new_level
+        Rails.logger.warn "Logger level changed (old -> new): #{Log4r::LNAMES[old_level]} -> #{Log4r::LNAMES[Rails.logger.level]}"
+      end
+      Rails.logger.warn 'YAML settings reloaded. Ask yourself, should I clear the cache?'
     end
-    valid
   end
+
 
   def deep_open_struct(hash_recursive)
     require 'ostruct'
