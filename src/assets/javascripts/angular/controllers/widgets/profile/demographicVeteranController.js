@@ -1,6 +1,7 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * Demographic veteran status controller
@@ -10,7 +11,7 @@ angular.module('calcentral.controllers').controller('DemographicVeteranControlle
     var person = data.data.feed.student;
     angular.extend($scope, {
       veteranStatus: {
-        content: person.usaCountry.militaryStatus
+        content: _.get(person, 'usaCountry.militaryStatus')
       }
     });
   };
