@@ -7,8 +7,6 @@ module Oec
       term_folder = create_folder @term_code
       term_subfolders = {}
       Oec::Folder::FOLDER_TITLES.each do |folder_type, folder_name|
-        # TODO Remove once confirmations and merged_confirmations folders are separated
-        next if folder_type == :merged_confirmations
         term_subfolders[folder_type] = create_folder(folder_name, term_folder)
       end
 

@@ -25,7 +25,7 @@ describe Oec::TermSetupTask do
       expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
         .with(term_code, nil, anything).and_return term_folder
 
-      [:confirmations, :logs, :published, :sis_imports].each do |folder_type|
+      [:confirmations, :logs, :merged_confirmations, :published, :sis_imports].each do |folder_type|
         expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder)
           .with(Oec::Folder::FOLDER_TITLES[folder_type], term_folder, anything)
           .and_return mock_google_drive_item(Oec::Folder::FOLDER_TITLES[folder_type])
@@ -35,7 +35,7 @@ describe Oec::TermSetupTask do
         .with(Oec::Folder.overrides, term_folder, anything).and_return overrides_folder
 
       expect(fake_remote_drive).to receive(:copy_item_to_folder)
-        .with(anything, 'departments_id', 'TEMPLATE').and_return mock_google_drive_item
+        .with(anything, "#{Oec::Folder.confirmations}_id", 'TEMPLATE').and_return mock_google_drive_item
 
       %w(courses course_instructors course_supervisors instructors supervisors).each do |sheet|
         expect(fake_remote_drive).to receive(:check_conflicts_and_upload)
