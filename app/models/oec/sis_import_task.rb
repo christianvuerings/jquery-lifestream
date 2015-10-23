@@ -6,7 +6,7 @@ module Oec
     def run_internal
       @dept_forms = {}
       log :info, "Will import SIS data for term #{@term_code}"
-      imports_now = find_or_create_now_subfolder('imports')
+      imports_now = find_or_create_now_subfolder Oec::Folder.sis_imports
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
         @term_dates ||= default_term_dates
         worksheet = Oec::SisImportSheet.new(dept_code: dept_code)

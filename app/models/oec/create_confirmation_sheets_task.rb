@@ -5,25 +5,25 @@ module Oec
 
     def run_internal
       term_folder = @remote_drive.find_first_matching_item @term_code
-      imports_folder = @remote_drive.find_first_matching_item('imports', term_folder)
+      imports_folder = @remote_drive.find_first_matching_item(Oec::Folder.sis_imports, term_folder)
       most_recent_import = @remote_drive.find_folders(imports_folder.id).sort_by(&:title).last
       raise RuntimeError, "No SIS imports found for term #{@term_code}" unless most_recent_import
 
-      overrides = @remote_drive.find_first_matching_item('overrides', term_folder)
+      overrides = @remote_drive.find_first_matching_item(Oec::Folder.overrides, term_folder)
       supervisors_sheet = @remote_drive.find_first_matching_item('supervisors', overrides)
-      raise RuntimeError, "No supervisor sheet found in overrides for term #{@term_code}" unless supervisors_sheet
+      raise RuntimeError, "No supervisor sheet found in #{Oec::Folder.overrides} folder for term #{@term_code}" unless supervisors_sheet
       supervisors = Oec::Supervisors.from_csv @remote_drive.export_csv(supervisors_sheet)
 
       confirmations = generate_confirmations(most_recent_import, supervisors)
 
       if valid?
-        departments_folder = @remote_drive.find_first_matching_item('departments', term_folder)
-        raise RuntimeError, "No departments folder found for term #{@term_code}" unless departments_folder
-        template = @remote_drive.find_first_matching_item('TEMPLATE', departments_folder)
+        confirmations_folder = @remote_drive.find_first_matching_item(Oec::Folder.confirmations, term_folder)
+        raise RuntimeError, "No '#{Oec::Folder.confirmations}' folder found for term #{@term_code}" unless confirmations_folder
+        template = @remote_drive.find_first_matching_item('TEMPLATE', confirmations_folder)
 
         confirmations.each do |dept_name, dept_confirmations|
-          if @remote_drive.find_first_matching_item(dept_name, departments_folder)
-            log :warn, "File '#{dept_name}' exists in departments folder, will not create confirmation sheet"
+          if @remote_drive.find_first_matching_item(dept_name, confirmations_folder)
+            log :warn, "File '#{dept_name}' exists in department confirmations folder, will not create new confirmation sheet"
             next
           end
 

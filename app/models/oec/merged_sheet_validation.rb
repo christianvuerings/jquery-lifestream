@@ -4,10 +4,10 @@ module Oec
     include Validator
 
     def build_and_validate_export_sheets
-      course_confirmations_file = @remote_drive.find_nested [@term_code, 'departments', 'Merged course confirmations'], on_failure: :error
+      course_confirmations_file = @remote_drive.find_nested [@term_code, Oec::Folder.merged_confirmations, 'Merged course confirmations'], on_failure: :error
       course_confirmations = Oec::SisImportSheet.from_csv(@remote_drive.export_csv(course_confirmations_file), dept_code: nil)
 
-      supervisor_confirmations_file = @remote_drive.find_nested [@term_code, 'departments', 'Merged supervisor confirmations'], on_failure: :error
+      supervisor_confirmations_file = @remote_drive.find_nested [@term_code, Oec::Folder.merged_confirmations, 'Merged supervisor confirmations'], on_failure: :error
       supervisor_confirmations = Oec::Supervisors.from_csv @remote_drive.export_csv(supervisor_confirmations_file)
 
       instructors = Oec::Instructors.new
@@ -17,7 +17,7 @@ module Oec
       course_students = Oec::CourseStudents.new
       supervisors = Oec::Supervisors.new
 
-      if (previous_course_supervisors = @remote_drive.find_nested [@term_code, 'overrides', 'course_supervisors'])
+      if (previous_course_supervisors = @remote_drive.find_nested [@term_code, Oec::Folder.overrides, 'course_supervisors'])
         course_supervisors = Oec::CourseSupervisors.from_csv @remote_drive.export_csv(previous_course_supervisors)
       else
         course_supervisors = Oec::CourseSupervisors.new

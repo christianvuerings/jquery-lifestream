@@ -9,11 +9,11 @@ describe Oec::SisImportTask do
   before(:each) do
     allow(Oec::RemoteDrive).to receive(:new).and_return fake_remote_drive
     course_overrides = mock_google_drive_item 'course_overrides'
-    allow(fake_remote_drive).to receive(:find_nested).with([term_code, 'overrides', Oec::Courses.export_name]).and_return course_overrides
+    allow(fake_remote_drive).to receive(:find_nested).with([term_code, Oec::Folder.overrides, Oec::Courses.export_name]).and_return course_overrides
     allow(fake_remote_drive).to receive(:export_csv).with(course_overrides).and_return course_overrides_row
 
     instructor_overrides = mock_google_drive_item 'instructor_overrides'
-    allow(fake_remote_drive).to receive(:find_nested).with([term_code, 'overrides', Oec::Instructors.export_name]).and_return instructor_overrides
+    allow(fake_remote_drive).to receive(:find_nested).with([term_code, Oec::Folder.overrides, Oec::Instructors.export_name]).and_return instructor_overrides
     allow(fake_remote_drive).to receive(:export_csv).with(instructor_overrides).and_return instructor_overrides_row
 
     allow(Settings.terms).to receive(:fake_now).and_return DateTime.parse('2015-03-09')

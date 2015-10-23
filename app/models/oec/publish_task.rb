@@ -39,7 +39,7 @@ module Oec
           # Now copy the command's output to remote drive.
           sftp_stdout_to_log sftp_stdout
 
-          exports_now = find_or_create_now_subfolder 'exports'
+          exports_now = find_or_create_now_subfolder Oec::Folder.published
           # Write files to archive ('exports' folder at Google Drive). No need to use fancy Sheets format.
           files_to_publish.each do |file_name|
             path = "#{csv_staging_dir.expand_path}/#{file_name}"

@@ -6,13 +6,13 @@ require_relative '../util/web_driver_utils'
 
 module CalCentralPages
 
-  class MyDashboardToDoCard < MyDashboardPage
+  class MyDashboardTasksCard < MyDashboardPage
 
     include PageObject
     include CalCentralPages
     include ClassLogger
 
-    # TO DO
+    # TASKS
     button(:completed_tasks_tab, :xpath => '//button[contains(.,"completed")]')
     paragraph(:no_tasks_message, :xpath => '//p[contains(.,"You have no tasks and assignments.")]')
     button(:scheduled_tasks_tab, :xpath => '//button[contains(.,"scheduled")]')

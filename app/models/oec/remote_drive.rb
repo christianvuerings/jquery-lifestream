@@ -48,11 +48,6 @@ module Oec
       item
     end
 
-    def find_dept_courses_spreadsheet(term_code, dept_code)
-      dept_name = Berkeley::Departments.get(dept_code, concise: true)
-      find_nested [term_code, 'departments', dept_name, 'Courses']
-    end
-
     def find_first_matching_folder(title, parent=nil)
       find_folders_by_title(title, folder_id(parent)).first
     end

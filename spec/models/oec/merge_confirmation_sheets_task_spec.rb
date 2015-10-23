@@ -57,7 +57,7 @@ describe Oec::MergeConfirmationSheetsTask do
     allow(gws_confirmation_spreadsheet).to receive(:worksheets).and_return [gws_course_confirmation[:sheet], gws_supervisor_confirmation[:sheet]]
     allow(mcellbi_confirmation_spreadsheet).to receive(:worksheets).and_return [mcellbi_course_confirmation[:sheet], mcellbi_supervisor_confirmation[:sheet]]
 
-    allow(fake_remote_drive).to receive(:find_first_matching_item).with('departments', anything).and_return departments_folder
+    allow(fake_remote_drive).to receive(:find_first_matching_item).with(Oec::Folder.confirmations, anything).and_return departments_folder
     allow(fake_remote_drive).to receive(:find_first_matching_item).with('supervisors', anything).and_return supervisors[:sheet]
     allow(fake_remote_drive).to receive(:find_first_matching_item).with('Gender and Women\'s Studies', last_import_folder).and_return gws_import[:sheet]
     allow(fake_remote_drive).to receive(:find_first_matching_item).with('Molecular and Cell Biology', last_import_folder).and_return mcellbi_import[:sheet]

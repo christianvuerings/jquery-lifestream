@@ -14,7 +14,7 @@ module CalCentralPages
 
     h3(:connect_bconnected_heading, :xpath => '//h3[contains(.,"Connect to bConnected")]')
     button(:connect_bconnected_button, :xpath => '//button[contains(.,"Connect")]')
-    h2(:recent_activity_heading, :xpath => '//h2[contains(.,"Recent Activity")]')
+    h2(:notifications_heading, :xpath => '//h2[contains(.,"Notifications")]')
 
     # LIVE UPDATES
     div(:live_update_notice, :xpath => '//div[contains(.,"New data is available.")]')
