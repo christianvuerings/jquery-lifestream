@@ -80,8 +80,8 @@ describe 'My Finances financial aid messages', :testui => true do
                   end
                   my_fin_message_titles = my_finances_page.all_fin_aid_message_titles
                   my_fin_message_sources = my_finances_page.all_fin_aid_message_sources
-                  my_fin_message_dates = my_finances_page.all_fin_aid_message_dates my_fin_messages
-                  my_fin_message_statuses = my_finances_page.all_fin_aid_message_statuses my_fin_messages
+                  my_fin_message_dates = my_finances_page.all_fin_aid_message_dates(driver, my_fin_messages)
+                  my_fin_message_statuses = my_finances_page.all_fin_aid_message_statuses(driver, my_fin_messages)
                   my_fin_message_icons = my_finances_page.all_fin_aid_message_icons
                   fin_api_message_titles = finaid_api_page.all_message_titles_sorted
                   fin_api_message_sources = finaid_api_page.all_message_sources_sorted
