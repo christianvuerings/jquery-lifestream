@@ -68,15 +68,27 @@ module HubEdos
     end
 
     def request_options
-      {
-        basic_auth: {
-          username: @settings.username,
-          password: @settings.password
-        },
+      opts = {
         headers: {
           'Accept' => 'application/json'
         }
       }
+      if @settings.app_id.present? && @settings.app_key.present?
+        # app ID and token are used on the prod/staging Hub servers
+        opts[:headers].merge!({
+                                'app_id' => @settings.app_id,
+                                'app_key' => @settings.app_key
+                              })
+      else
+        # basic auth is used on Hub dev servers
+        opts.merge!({
+                      basic_auth: {
+                        username: @settings.username,
+                        password: @settings.password
+                      }
+                    })
+      end
+      opts
     end
 
     def build_feed(response)

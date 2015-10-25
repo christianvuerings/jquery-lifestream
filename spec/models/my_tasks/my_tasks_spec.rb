@@ -47,14 +47,16 @@ describe 'MyTasks' do
       expect(tasks.count{|task| task[:bucket] == 'Unscheduled'}).to eq 2
 
       # On Sundays, no "later in the week" tasks can escape the "Today" bucket. Since this moves
-      # some "Future" tasks to "Today", more total tasks will be in the feed on Sunday.
+      # some "Future" tasks to "Today", more total tasks will be in the Today feed on Sunday.
       if Time.zone.today.sunday?
         expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 8
-        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 8
+        expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 12
       else
         expect(tasks.count{|task| task[:bucket] == 'Today'}).to eq 3
         expect(tasks.count{|task| task[:bucket] == 'Future'}).to eq 17
       end
+      # The total of Today + Future should be 20 no matter which day it's run on.
+      expect(tasks.count{|task| task[:bucket] == 'Today' || task[:bucket] == 'Future'}).to eq 20
 
       expect(tasks.count{|task| %w(Overdue Today Future Unscheduled).exclude? task[:bucket]}).to eq 0
     end
