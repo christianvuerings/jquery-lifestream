@@ -1,7 +1,3 @@
-require 'selenium-webdriver'
-require 'page-object'
-require_relative 'api_my_academics_page'
-
 class ApiMyAcademicsPageSemesters < ApiMyAcademicsPage
 
   include PageObject

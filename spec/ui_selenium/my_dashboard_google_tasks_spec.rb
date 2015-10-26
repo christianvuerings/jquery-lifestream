@@ -1,14 +1,3 @@
-require 'selenium-webdriver'
-require 'page-object'
-require_relative 'util/web_driver_utils'
-require_relative 'util/user_utils'
-require_relative 'pages/cal_net_auth_page'
-require_relative 'pages/cal_central_pages'
-require_relative 'pages/splash_page'
-require_relative 'pages/my_dashboard_page'
-require_relative 'pages/my_dashboard_tasks_card'
-require_relative 'pages/google_page'
-
 describe 'The My Dashboard task manager', :testui => true do
 
   if ENV["UI_TEST"]

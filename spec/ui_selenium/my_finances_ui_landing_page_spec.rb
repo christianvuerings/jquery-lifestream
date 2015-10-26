@@ -1,16 +1,3 @@
-require 'selenium-webdriver'
-require 'page-object'
-require_relative 'util/web_driver_utils'
-require_relative 'util/user_utils'
-require_relative 'pages/cal_central_pages'
-require_relative 'pages/my_finances_pages'
-require_relative 'pages/my_finances_landing_page'
-require_relative 'pages/cal_net_auth_page'
-require_relative 'pages/splash_page'
-require_relative 'pages/settings_page'
-
-# TEST DOES NOT INCLUDE CAL 1 CARD OR FIN AID, TO BE TESTED SEPARATELY.
-
 describe 'My Finances landing page', :testui => true do
 
   if ENV["UI_TEST"] && Settings.ui_selenium.layer != 'production'

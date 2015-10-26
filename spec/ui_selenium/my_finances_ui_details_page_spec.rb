@@ -1,15 +1,3 @@
-require 'selenium-webdriver'
-require 'page-object'
-require 'json'
-require_relative 'util/web_driver_utils'
-require_relative 'util/user_utils'
-require_relative 'pages/cal_central_pages'
-require_relative 'pages/splash_page'
-require_relative 'pages/my_dashboard_page'
-require_relative 'pages/api_my_financials_page'
-require_relative 'pages/my_finances_pages'
-require_relative 'pages/my_finances_details_page'
-
 describe 'My Finances details page', :testui => true do
 
   if ENV["UI_TEST"]
