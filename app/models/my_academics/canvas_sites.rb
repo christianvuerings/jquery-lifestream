@@ -14,9 +14,11 @@ module MyAcademics
           if (linked_id = group_site[:course_id]) && (linked_classes = included_course_sites[linked_id])
             group_entry = group_site_entry(group_site, linked_classes[:source])
             linked_classes[:role_and_slugs].each do |role_and_slug|
-              linked_term = data[role_and_slug[:role_key]][linked_classes[:term_idx]][:classes]
-              linked_class = linked_term.select {|c| c[:slug] == role_and_slug[:slug]}.first
-              linked_class[:class_sites] << group_entry
+              if (linked_term = data[role_and_slug[:role_key]].find { |term| term[:slug] == linked_classes[:term_slug] })
+                if linked_term[:classes] && (linked_class = linked_term[:classes].select { |c| c[:slug] == role_and_slug[:slug] }.first)
+                  linked_class[:class_sites] << group_entry
+                end
+              end
             end
           end
         end
@@ -33,10 +35,10 @@ module MyAcademics
         if (site_sections = course_site[:sections])
           [:semesters, :teachingSemesters].each do |role_key|
             campus_terms = data[role_key]
-            if campus_terms.present? && (matching_term_idx = campus_terms.index {|t| t[:slug] == term_slug})
+            if campus_terms.present? && (matching_term = campus_terms.find { |t| t[:slug] == term_slug })
               # Compare CCNs as parsed integers to avoid mismatches on prefixed zeroes.
               site_ccns = site_sections.collect {|s| s[:ccn].to_i}
-              campus_courses = campus_terms[matching_term_idx][:classes]
+              campus_courses = matching_term[:classes]
               campus_courses.each do |course|
                 linked_ccns = []
                 course[:sections].each do |s|
@@ -60,7 +62,7 @@ module MyAcademics
                   site_entry[:sections] = linked_ccns if role_key == :teachingSemesters
                   course[:class_sites] << site_entry
                   merged_courses ||= {
-                    term_idx: matching_term_idx,
+                    term_slug: matching_term[:slug],
                     source: course_site[:name],
                     role_and_slugs: []
                   }
