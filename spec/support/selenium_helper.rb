@@ -11,6 +11,8 @@ if ENV["UI_TEST"]
     require f
   end
 
+  require_relative '../ui_selenium/pages/api_my_academics_page'
+
   Dir[Rails.root.join('spec', 'ui_selenium', 'pages', "api**.rb")].each do |f|
     require f
   end
