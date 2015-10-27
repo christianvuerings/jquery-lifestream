@@ -1,8 +1,3 @@
-require 'selenium-webdriver'
-require 'page-object'
-require_relative 'cal_central_pages'
-require_relative 'my_academics_page'
-
 module CalCentralPages
 
   class MyAcademicsClassPage < MyAcademicsPage

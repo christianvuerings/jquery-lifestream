@@ -1,18 +1,3 @@
-require 'selenium-webdriver'
-require 'page-object'
-require 'json'
-require_relative 'util/web_driver_utils'
-require_relative 'util/user_utils'
-require_relative 'pages/cal_net_auth_page'
-require_relative 'pages/canvas_page'
-require_relative 'pages/cal_central_pages'
-require_relative 'pages/splash_page'
-require_relative 'pages/my_dashboard_page'
-require_relative 'pages/my_dashboard_my_classes_card'
-require_relative 'pages/my_dashboard_notifications_card'
-require_relative 'pages/my_dashboard_tasks_card'
-require_relative 'pages/api_my_classes_page'
-
 describe 'My Dashboard', :testui => true, :order => :defined do
 
   if ENV["UI_TEST"] && Settings.ui_selenium.layer != 'production'

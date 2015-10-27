@@ -1,10 +1,5 @@
-require 'selenium-webdriver'
-require 'page-object'
-require_relative 'cal_central_pages'
-require_relative 'my_academics_page'
-require_relative '../util/web_driver_utils'
-
 module CalCentralPages
+
   class MyAcademicsAdvisingCard < MyAcademicsPage
 
     include PageObject

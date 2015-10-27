@@ -1,8 +1,3 @@
-require 'selenium-webdriver'
-require 'page-object'
-require_relative '../util/web_driver_utils'
-require_relative '../util/user_utils'
-
 module CalCentralPages
 
   include PageObject

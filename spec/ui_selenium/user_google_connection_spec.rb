@@ -1,14 +1,3 @@
-require 'selenium-webdriver'
-require 'page-object'
-require_relative 'util/web_driver_utils'
-require_relative 'util/user_utils'
-require_relative 'pages/cal_net_auth_page'
-require_relative 'pages/cal_central_pages'
-require_relative 'pages/splash_page'
-require_relative 'pages/my_dashboard_page'
-require_relative 'pages/settings_page'
-require_relative 'pages/google_page'
-
 describe 'Google apps', :testui => true do
 
   if ENV["UI_TEST"]

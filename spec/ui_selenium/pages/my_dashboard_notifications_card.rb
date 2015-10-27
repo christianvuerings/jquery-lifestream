@@ -1,10 +1,3 @@
-require 'rubygems'
-require 'selenium-webdriver'
-require 'page-object'
-require_relative 'my_dashboard_page'
-require_relative '../util/web_driver_utils'
-require_relative '../util/user_utils'
-
 module CalCentralPages
 
   class MyDashboardNotificationsCard < MyDashboardPage

@@ -1,14 +1,3 @@
-require 'selenium-webdriver'
-require 'page-object'
-require_relative 'util/web_driver_utils'
-require_relative 'util/user_utils'
-require_relative 'pages/cal_central_pages'
-require_relative 'pages/my_academics_profile_card'
-require_relative 'pages/my_academics_university_reqts_card'
-require_relative 'pages/splash_page'
-require_relative 'pages/api_my_status_page'
-require_relative 'pages/api_my_academics_page_semesters'
-
 describe 'My Academics profile and university requirements cards', :testui => true do
 
   if ENV["UI_TEST"]

@@ -1,8 +1,3 @@
-require 'selenium-webdriver'
-require 'page-object'
-require 'json'
-require_relative '../util/web_driver_utils'
-
 class ApiMyCal1CardPage
 
   include PageObject

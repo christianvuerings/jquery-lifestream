@@ -1,17 +1,3 @@
-require 'selenium-webdriver'
-require 'page-object'
-require_relative 'util/web_driver_utils'
-require_relative 'util/user_utils'
-require_relative 'pages/cal_net_auth_page'
-require_relative 'pages/cal_central_pages'
-require_relative 'pages/my_dashboard_page'
-require_relative 'pages/my_academics_status_and_blocks_card'
-require_relative 'pages/my_academics_profile_card'
-require_relative 'pages/splash_page'
-require_relative 'pages/api_my_badges_page'
-require_relative 'pages/api_my_status_page'
-require_relative 'pages/api_my_academics_page'
-
 describe 'My Academics Status and Blocks', :testui => true do
 
   if ENV["UI_TEST"]

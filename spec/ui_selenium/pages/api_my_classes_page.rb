@@ -1,7 +1,3 @@
-require 'selenium-webdriver'
-require 'page-object'
-require_relative '../util/web_driver_utils'
-
 class ApiMyClassesPage
 
   include PageObject
