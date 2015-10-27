@@ -519,6 +519,23 @@
       ]
     },
     {
+      "name": "Berkeley Campus Solutions (SIS)",
+      "description": "New Student Information System Administrative Interface",
+      "url": "https://bcsint.is.berkeley.edu",
+      "roles": {
+        "student": false,
+        "staff": true,
+        "faculty": true,
+        "exStudent": false
+      },
+      "categories": [
+        {
+          "topcategory": "Tools \u0026 Resources",
+          "subcategory": "Staff Portal"
+        }
+      ]
+    },
+    {
       "name": "Blu Card",
       "description": "A procurement card, issued to select employees, and used for purchasing work-related items and services",
       "url": "http://supplychain.berkeley.edu/programs/card-program-services/blucard",
