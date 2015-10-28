@@ -84,9 +84,13 @@ module CalnetCrosswalk
     end
 
     def lookup_id(id_type)
-      self.class.fetch_from_cache("#{@uid}/#{id_type}") do
+      self.class.smart_fetch_from_cache({id: "#{@uid}/#{id_type}"}) do
         id = nil
-        feed = get[:feed]
+        response = get
+        if response[:errored]
+          raise Errors::ProxyError.new "Lookup of #{id_type} for #{@uid} from Crosswalk had an error"
+        end
+        feed = response[:feed]
         if feed.present?
           feed['Person']['identifiers'].each do |identifier|
             if identifier['identifierTypeName'] == id_type
