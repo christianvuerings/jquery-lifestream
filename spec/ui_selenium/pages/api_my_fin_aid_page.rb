@@ -102,9 +102,7 @@ class ApiMyFinAidPage
     dates = []
     all_messages_sorted.each do |message|
       date = date_str(message)
-      unless date == nil
-        dates.push(date)
-      end
+      dates.push(Date.parse(date).strftime('%b %-d')) unless date.nil?
     end
     dates
   end
