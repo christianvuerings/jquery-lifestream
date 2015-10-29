@@ -1,0 +1,5 @@
+<div data-ng-switch="activityItem.emitter" class="cc-break-word cc-widget-activities-summary cc-clearfix">
+  <span data-ng-switch-when="Bear Facts" data-cc-compile-directive="activityItem.summary"></span>
+  <span data-ng-switch-when="Campus Solutions" data-ng-bind-html="activityItem.summary"></span>
+  <span data-ng-switch-default data-ng-bind-html="activityItem.summary | linky"></span>
+</div>
