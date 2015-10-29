@@ -24,10 +24,7 @@
           <div class="cc-widget-activities-term-year" data-ng-if="activity.termYear">
             <strong>Academic Year:</strong> <span data-ng-bind="activity.termYear"></span>
           </div>
-          <div data-ng-switch="activity.emitter">
-            <p data-ng-switch-when="Bear Facts" data-cc-compile-directive="activity.summary" class="cc-widget-activities-summary"></p>
-            <p data-ng-switch-default data-ng-bind-html="activity.summary | linky" class="cc-widget-activities-summary"></p>
-          </div>
+          <p data-ng-include="'widgets/activity_list_summary.html'" data-onload="activityItem=activity"></p>
           <div data-ng-include="'widgets/activity_list_link.html'" data-onload="activityItem=activity"></div>
         </div>
         <div class="cc-widget-activities-sub-text-margin" data-ng-show="activity.show && activity.elements">
@@ -43,8 +40,7 @@
                   <div class="cc-widget-activities-sub-activity-date-string">
                     at {{subActivity.date.epoch * 1000 | date:'h:mma'}}
                   </div>
-                  <p class="cc-widget-activities-sub-activity-summary cc-break-word" data-ng-bind-html="subActivity.summary | linky">
-                  </p>
+                  <p data-ng-include="'widgets/activity_list_summary.html'" data-onload="activityItem=subActivity"></p>
                   <div data-ng-include="'widgets/activity_list_link.html'" data-onload="activityItem=subActivity"></div>
                 </div>
               </div>
