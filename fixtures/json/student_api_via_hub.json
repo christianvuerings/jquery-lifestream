@@ -109,8 +109,8 @@
               "formattedAddress": "2121 BANCROFT WAY  #550\nBERKELEY, CA 454554",
               "disclose": false,
               "uiControl": {
-                "code": "U",
-                "description": "Edit - No Delete"
+                "code": "N",
+                "description": "Do Not Display"
               },
               "fromDate": "2015-10-07"
             },
@@ -170,8 +170,8 @@
               "primary": true,
               "disclose": false,
               "uiControl": {
-                "code": "U",
-                "description": "Edit - No Delete"
+                "code": "N",
+                "description": "Do Not Display"
               }
             }
           ],

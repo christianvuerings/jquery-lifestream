@@ -1,6 +1,8 @@
 module HubEdos
   class Student < Proxy
 
+    SENSITIVE_KEYS = ['addresses', 'names', 'phones', 'emails', 'emergencyContacts']
+
     def initialize(options = {})
       super(Settings.hub_edos_proxy, options)
       initialize_mocks if @fake
@@ -17,7 +19,7 @@ module HubEdos
     end
 
     def build_feed(response)
-      transformed_response = transform_address_keys(response.parsed_response)
+      transformed_response = redact_sensitive_keys(transform_address_keys(response.parsed_response))
       {
         'student' => transformed_response['studentResponse']['students']['students'][0]
       }
@@ -30,6 +32,16 @@ module HubEdos
           address['state'] = address.delete('stateCode')
           address['postal'] = address.delete('postalCode')
           address['country'] = address.delete('countryCode')
+        end
+      end
+      response
+    end
+
+    def redact_sensitive_keys(response)
+      # more stuff the Integration Hub should be doing, but the team doesn't have time for.
+      response['studentResponse']['students']['students'].each do |student|
+        SENSITIVE_KEYS.each do |key|
+          student[key].delete_if { |k| k['uiControl'].present? && k['uiControl']['code'] == 'N' }
         end
       end
       response

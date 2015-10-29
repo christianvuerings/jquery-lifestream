@@ -11,8 +11,10 @@ describe HubEdos::Student do
       expect(subject[:feed]['student']).to be
       expect(subject[:feed]['student']['identifiers'][0]['type']).to be
       expect(subject[:feed]['student']['addresses'][0]['state']).to eq 'CA'
-      expect(subject[:feed]['student']['addresses'][0]['postal']).to eq '454554'
+      expect(subject[:feed]['student']['addresses'][0]['postal']).to eq '0'
       expect(subject[:feed]['student']['addresses'][0]['country']).to eq 'USA'
+      expect(subject[:feed]['student']['addresses'][0]['formattedAddress']).to eq "1001 Hearst\nBerkeley, CA"
+      expect(subject[:feed]['student']['phones'].length).to eq 1
     end
   end
 
