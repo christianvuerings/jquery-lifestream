@@ -159,10 +159,9 @@ module CalCentralPages
         summaries = []
         messages.each do |msg|
           begin
-            summary_on_page = paragraph_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{messages.index(msg) + 1}]//p[@data-ng-bind-html='activity.summary | linky']").text
-            summary = summary_on_page.gsub(/\s+/, '')
-          rescue => e
-            logger.error e.message + "\n" + e.backtrace.join("\n")
+            summary_element = span_element(:xpath => "//ul[@class='cc-widget-activities-list']/li[#{(messages.index(msg) + 1).to_s}]//div[@class='cc-break-word cc-widget-activities-summary cc-clearfix ng-scope']")
+            summary = summary_element.text.gsub(/\s+/, '')
+          rescue Selenium::WebDriver::Error::NoSuchElementError
             summary = nil
           end
           summaries.push(summary)
