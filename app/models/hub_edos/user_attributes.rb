@@ -6,19 +6,14 @@ module HubEdos
 
     def initialize(options = {})
       super(Settings.hub_edos_proxy, options)
-      initialize_mocks if @fake
     end
 
     def self.test_data?
-      @fake
+      Settings.hub_edos_proxy.fake.present?
     end
 
-    def url
-      ''
-    end
-
-    def json_filename
-      'user_attributes.json'
+    def initialize_mocks
+      #no-op; this proxy calls no endpoints itself.
     end
 
     def get_internal
@@ -29,7 +24,7 @@ module HubEdos
         set_ids(result)
         extract_passthrough_elements(edo, result)
         extract_names(edo, result)
-        extract_affiliations(edo, result)
+        extract_roles(edo, result)
         extract_emails(edo, result)
         extract_education_level(edo, result)
         extract_total_units(edo, result)
@@ -75,24 +70,16 @@ module HubEdos
       false
     end
 
-    def extract_affiliations(edo, result)
-      # TODO affiliations needs more business analysis and transformation.
-      result[:affiliations] = edo[:affiliations]
-      # TODO fill in roles with UserRoles#roles_from_affiliations logic
-      result[:roles] = {
-        student: true,
-        registered: true,
-        exStudent: false,
-        faculty: false,
-        staff: false,
-        guest: false,
-        concurrentEnrollmentStudent: false
-      }
+    def extract_roles(edo, result)
+      # TODO roles need more business analysis and transformation.
+      result[:roles] = {}
       if edo[:affiliations].present?
-        result[:affiliations].each do |affiliation|
-          if affiliation[:statusCode] == 'UNDERGRAD'
+        edo[:affiliations].each do |affiliation|
+          if affiliation[:type][:code] == 'UNDERGRAD' && affiliation[:statusCode] == 'ACT'
+            result[:roles][:student] = true
             result[:ug_grad_flag] = 'U'
-          elsif affiliation[:statusCode] == 'GRAD'
+          elsif affiliation[:type][:code] == 'GRAD' && affiliation[:statusCode] == 'ACT'
+            result[:roles][:student] = true
             result[:ug_grad_flag] = 'G'
           end
         end
