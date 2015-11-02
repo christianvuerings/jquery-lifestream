@@ -19,10 +19,10 @@ describe CampusSolutions::AddressLabel do
     it 'should properly camelize the fields' do
       expect(subject[:feed][:labels][0][:label]).to eq 'Street Type'
       expect(subject[:feed][:labels][0][:field]).to eq 'addrField1'
-      expect(subject[:feed][:labels][3][:label]).to eq 'Address 1'
-      expect(subject[:feed][:labels][3][:field]).to eq 'address1'
-      expect(subject[:feed][:labels][9][:label]).to eq 'Door'
-      expect(subject[:feed][:labels][9][:field]).to eq 'num2'
+      expect(subject[:feed][:labels][5][:label]).to eq 'Name'
+      expect(subject[:feed][:labels][5][:field]).to eq 'address1'
+      expect(subject[:feed][:labels][10][:label]).to eq 'Door'
+      expect(subject[:feed][:labels][10][:field]).to eq 'num2'
     end
   end
 
