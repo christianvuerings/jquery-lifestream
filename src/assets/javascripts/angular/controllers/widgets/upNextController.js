@@ -1,6 +1,7 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * My Up Next controller
@@ -18,6 +19,9 @@ angular.module('calcentral.controllers').controller('UpNextController', function
 
   var getUpNext = function(options) {
     upNextFactory.getUpNext(options).success(function(data) {
+      if (!_.get(data, 'items')) {
+        return;
+      }
       apiService.updatedFeeds.feedLoaded(data);
       angular.extend($scope, data);
       setLastModifiedDate(data.lastModified.timestamp.epoch);

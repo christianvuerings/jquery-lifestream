@@ -1,6 +1,7 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * Activity Factory
@@ -15,6 +16,9 @@ angular.module('calcentral.factories').factory('activityFactory', function(apiSe
    * @param {Object} activityResponse The response from the server
    */
   var parseActivities = function(activityResponse) {
+    if (!_.get(activityResponse, 'data.activities')) {
+      return;
+    }
     var data = activityResponse.data;
     var activities = activityResponse.data.activities;
 
