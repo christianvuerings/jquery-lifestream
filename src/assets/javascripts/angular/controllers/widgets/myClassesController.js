@@ -1,6 +1,7 @@
 'use strict';
 
 var angular = require('angular');
+var _ = require('lodash');
 
 /**
  * My Classes controller
@@ -50,8 +51,10 @@ angular.module('calcentral.controllers').controller('MyClassesController', funct
 
   var getMyClasses = function(options) {
     myClassesFactory.getClasses(options).then(function(data) {
-      apiService.updatedFeeds.feedLoaded(data.feed);
-      bindScopes(data.classes);
+      if (_.get(data, 'feed')) {
+        apiService.updatedFeeds.feedLoaded(data.feed);
+        bindScopes(data.classes);
+      }
       angular.extend($scope, data);
     });
   };
