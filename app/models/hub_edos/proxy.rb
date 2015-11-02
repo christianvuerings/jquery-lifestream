@@ -6,6 +6,7 @@ module HubEdos
     include Proxies::Mockable
     include CampusSolutions::ProfileFeatureFlagged
     include User::Student
+    include SafeJsonParser
 
     APP_ID = 'integrationhub'
     APP_NAME = 'Integration Hub'
@@ -91,8 +92,12 @@ module HubEdos
       opts
     end
 
+    def parse_response(response)
+      safe_json response.body.force_encoding('UTF-8')
+    end
+
     def build_feed(response)
-      response.parsed_response
+      parse_response response
     end
 
   end

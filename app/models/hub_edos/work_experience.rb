@@ -15,7 +15,7 @@ module HubEdos
     end
 
     def build_feed(response)
-      resp = response.parsed_response
+      resp = parse_response response
       if resp['studentResponse'].present? && resp['studentResponse']['students'].present? && resp['studentResponse']['students'].length > 0
         {
           # yes, the array structure really is this weird.
