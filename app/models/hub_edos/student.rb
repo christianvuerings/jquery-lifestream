@@ -19,7 +19,7 @@ module HubEdos
     end
 
     def build_feed(response)
-      transformed_response = redact_sensitive_keys(transform_address_keys(response.parsed_response))
+      transformed_response = redact_sensitive_keys(transform_address_keys(parse_response(response)))
       {
         'student' => transformed_response['studentResponse']['students']['students'][0]
       }
