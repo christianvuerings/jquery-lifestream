@@ -41,7 +41,9 @@ module HubEdos
       # more stuff the Integration Hub should be doing, but the team doesn't have time for.
       response['studentResponse']['students']['students'].each do |student|
         SENSITIVE_KEYS.each do |key|
-          student[key].delete_if { |k| k['uiControl'].present? && k['uiControl']['code'] == 'N' }
+          if student[key].present?
+            student[key].delete_if { |k| k['uiControl'].present? && k['uiControl']['code'] == 'N' }
+          end
         end
       end
       response
