@@ -55,7 +55,7 @@ module HubEdos
         logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
         initialize_mocks if @fake
         response = get_response(url, request_options)
-        logger.debug "Remote server status #{response.code}, Body = #{response.body}"
+        logger.debug "Remote server status #{response.code}, Body = #{response.body.force_encoding('UTF-8')}"
         feed = build_feed response
         {
           statusCode: response.code,
