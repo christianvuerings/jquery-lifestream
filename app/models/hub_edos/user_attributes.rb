@@ -1,6 +1,7 @@
 module HubEdos
   class UserAttributes < Proxy
 
+    include Cache::UserCacheExpiry
     include User::Student
 
     def initialize(options = {})

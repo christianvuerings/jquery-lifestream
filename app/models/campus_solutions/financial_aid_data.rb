@@ -1,6 +1,7 @@
 module CampusSolutions
   class FinancialAidData < DirectProxy
 
+    include Cache::UserCacheExpiry
     include Cache::RelatedCacheKeyTracker
     include FinaidFeatureFlagged
     include CampusSolutionsIdRequired
