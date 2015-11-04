@@ -149,7 +149,6 @@ angular.module('calcentral.controllers').controller('ProfileAddressController', 
   };
 
   var actionCompleted = function(data) {
-    angular.extend($scope, initialState);
     apiService.profile.actionCompleted($scope, data, loadInformation);
   };
 
