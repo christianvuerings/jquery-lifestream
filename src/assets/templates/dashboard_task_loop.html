@@ -16,7 +16,7 @@
         <div data-ng-if="task.emitter === 'bCourses' && task.course_code" class="cc-widget-tasks-title-sub">
           <span data-ng-bind="task.course_code"></span>
         </div>
-        <div data-ng-if="task.subTitle" class="cc-widget-tasks-title-sub" data-ng-bind="task.subTitle"></div>
+        <div data-ng-if="task.subTitle" class="cc-uppercase cc-widget-tasks-title-sub" data-ng-bind="task.subTitle"></div>
       </div>
     </div>
 
@@ -59,7 +59,7 @@
       <div data-ng-if="task.emitter=='bCourses' && task.dueDate.hasTime"
         class="cc-widget-tasks-timestamp" data-ng-bind="task.dueDate.epoch * 1000 | date:'h a'">
       </div>
-      <div data-ng-if="task.emitter === 'Campus Solutions' && task.showStatus" data-ng-bind="task.showStatus" class="cc-widget-tasks-title-sub"></div>
+      <div data-ng-if="task.emitter === 'Campus Solutions' && task.showStatus" data-ng-bind="task.showStatus" class="cc-uppercase cc-widget-tasks-title-sub"></div>
       <span data-ng-if="tasksMode=='completed'" data-ng-bind="task.completedDate.epoch * 1000 | dateInYearFilter:'MM/dd'"></span>
     </div>
     <div
