@@ -11,6 +11,9 @@ angular.module('calcentral.controllers').controller('EmergencyContactController'
    * Fix the formatted addresseses (if there are any)
    */
   var fixFormattedAddresses = function() {
+    if (!$scope.items.content) {
+      return;
+    }
     $scope.items.content = $scope.items.content.map(function(element) {
       var formattedAddress = _.get(element, 'address.formattedAddress');
       if (formattedAddress) {
