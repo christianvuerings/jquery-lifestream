@@ -1,3 +1,4 @@
+# encoding: UTF-8
 describe CampusSolutions::Address do
 
   let(:user_id) { '12345' }
@@ -53,7 +54,7 @@ describe CampusSolutions::Address do
   context 'with a real external service', testext: true do
     let(:params) { {
       addressType: 'HOME',
-      address1: '1 Test Lane',
+      address1: 'Über dem Faß Rénard',
       address2: 'peters road',
       city: 'ventura',
       state: 'CA',

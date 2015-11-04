@@ -20,7 +20,11 @@ module CampusSolutions
     def request_options
       updateable_params = filter_updateable_params params
       cs_post = construct_cs_post updateable_params
-      super.merge(method: :post, body: cs_post)
+      super.merge(
+        method: :post,
+        body: cs_post,
+        headers: {'Content-Type'=>'application/xml; charset=UTF-8'}
+      )
     end
 
     def default_post_params
