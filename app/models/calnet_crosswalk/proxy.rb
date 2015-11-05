@@ -34,6 +34,12 @@ module CalnetCrosswalk
     end
 
     def get
+      if @uid.blank? && !@fake
+        logger.error "Crosswalk called with empty UID!"
+        return {
+          errored: true
+        }
+      end
       internal_response = self.class.smart_fetch_from_cache(id: instance_key) do
         get_internal
       end

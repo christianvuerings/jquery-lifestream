@@ -43,7 +43,9 @@ module CampusSolutions
     end
 
     def get_internal
-      @campus_solutions_id = lookup_campus_solutions_id
+      if is_cs_id_required?
+        @campus_solutions_id = lookup_campus_solutions_id
+      end
       if is_cs_id_required? && @campus_solutions_id.nil?
         logger.info "Lookup of campus_solutions_id for uid #{@uid} failed, cannot call Campus Solutions API"
         {
