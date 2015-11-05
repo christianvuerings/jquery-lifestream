@@ -17,8 +17,8 @@ module User
       end
       @default_name ||= get_campus_attribute('person_name')
       @first_login_at ||= @calcentral_user_data ? @calcentral_user_data.first_login_at : nil
-      @first_name ||= get_campus_attribute('first_name') || ""
-      @last_name ||= get_campus_attribute('last_name') || ""
+      @first_name ||= get_campus_attribute('first_name') || ''
+      @last_name ||= get_campus_attribute('last_name') || ''
       @override_name ||= @calcentral_user_data ? @calcentral_user_data.preferred_name : nil
       @student_id = get_campus_attribute('student_id')
     end
@@ -35,8 +35,19 @@ module User
       value
     end
 
+    # special-case brain split for roles
+    def get_campus_roles
+      oracle_roles = (@oracle_attributes && @oracle_attributes[:roles]) || {}
+      edo_roles = (@edo_attributes && @edo_attributes[:roles]) || {}
+      if is_sis_profile_visible?
+        oracle_roles.merge edo_roles
+      else
+        oracle_roles
+      end
+    end
+
     def preferred_name
-      @override_name || @default_name || ""
+      @override_name || @default_name || ''
     end
 
     def preferred_name=(val)
@@ -117,7 +128,7 @@ module User
       is_calendar_opted_in = Calendar::User.where(:uid => @uid).first.present?
       has_student_history = CampusOracle::UserCourses::HasStudentHistory.new({:user_id => @uid}).has_student_history?
       has_instructor_history = CampusOracle::UserCourses::HasInstructorHistory.new({:user_id => @uid}).has_instructor_history?
-      roles = (get_campus_attribute(:roles)) ? get_campus_attribute(:roles) : {}
+      roles = get_campus_roles
       {
         :isSuperuser => current_user_policy.can_administrate?,
         :isViewer => current_user_policy.can_view_as?,
@@ -141,7 +152,7 @@ module User
         :canvasEmail => canvas_mail,
         :last_name => @last_name,
         :preferred_name => self.preferred_name,
-        :roles => get_campus_attribute(:roles),
+        :roles => roles,
         :uid => @uid,
         :sid => @student_id,
         :campusSolutionsID => get_campus_attribute('campus_solutions_id'),

@@ -11,6 +11,14 @@ module HubEdos
     APP_ID = 'integrationhub'
     APP_NAME = 'Integration Hub'
 
+    def initialize(settings, options)
+      super
+      if @fake
+        @campus_solutions_id = lookup_campus_solutions_id
+        initialize_mocks
+      end
+    end
+
     def instance_key
       @uid
     end
@@ -45,7 +53,7 @@ module HubEdos
     end
 
     def get_internal
-      @campus_solutions_id = lookup_campus_solutions_id
+      @campus_solutions_id ||= lookup_campus_solutions_id
       if @campus_solutions_id.nil?
         logger.info "Lookup of campus_solutions_id for uid #{@uid} failed, cannot call Campus Solutions API"
         {
@@ -53,7 +61,6 @@ module HubEdos
         }
       else
         logger.info "Fake = #{@fake}; Making request to #{url} on behalf of user #{@uid}; cache expiration #{self.class.expires_in}"
-        initialize_mocks if @fake
         response = get_response(url, request_options)
         logger.debug "Remote server status #{response.code}, Body = #{response.body.force_encoding('UTF-8')}"
         feed = build_feed response

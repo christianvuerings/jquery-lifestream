@@ -7,7 +7,6 @@ module HubEdos
 
     def initialize(options = {})
       super(Settings.hub_edos_proxy, options)
-      initialize_mocks if @fake
     end
 
     def url

@@ -117,22 +117,27 @@ describe User::Api do
     User::Data.where(:uid => @random_id).should == []
   end
 
-  it "should say random student gets the academics tab", if: HubEdos::UserAttributes.test_data? do
+  it 'should say random student gets the academics tab', if: HubEdos::UserAttributes.test_data? do
     user_data = User::Api.new(@random_id).get_feed
-    user_data[:hasAcademicsTab].should be_truthy
+    expect(user_data[:hasAcademicsTab]).to eq true
   end
 
-  it "should say a staff member with no academic history does not get the academics tab", if: HubEdos::UserAttributes.test_data? do
-    HubEdos::UserAttributes.stub(:new).and_return(double(get: {
+  it 'should say a staff member with no academic history does not get the academics tab', if: HubEdos::UserAttributes.test_data? do
+    allow(CampusOracle::UserAttributes).to receive(:new).and_return double(get_feed: {
       'person_name' => @default_name,
       :roles => {
         :student => false,
         :faculty => false,
         :staff => true
       }
-    }))
-    user_data = User::Api.new("904715").get_feed
-    user_data[:hasAcademicsTab].should be_falsey
+    })
+    allow(CampusOracle::UserCourses::HasInstructorHistory).to receive(:new).and_return double(has_instructor_history?: false)
+    allow(HubEdos::UserAttributes).to receive(:new).and_return double(get: {
+      person_name: @default_name,
+      roles: {}
+    })
+    user_data = User::Api.new('904715').get_feed
+    expect(user_data[:hasAcademicsTab]).to eq false
   end
 
   describe "my finances tab" do
