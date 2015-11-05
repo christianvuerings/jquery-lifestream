@@ -1,6 +1,8 @@
 module HubEdos
   class Student < Proxy
 
+    include Cache::UserCacheExpiry
+
     SENSITIVE_KEYS = ['addresses', 'names', 'phones', 'emails', 'emergencyContacts']
 
     def initialize(options = {})

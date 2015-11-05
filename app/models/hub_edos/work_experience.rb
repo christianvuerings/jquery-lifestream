@@ -1,6 +1,8 @@
 module HubEdos
   class WorkExperience < Proxy
 
+    include Cache::UserCacheExpiry
+
     def initialize(options = {})
       super(Settings.hub_edos_proxy, options)
       initialize_mocks if @fake
