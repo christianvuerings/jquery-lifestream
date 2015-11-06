@@ -156,10 +156,14 @@ module Oec
       nil
     end
 
-    def log(level, message)
+    def log(level, message, opts={})
       logger.send level, message
-      @log << "[#{Time.now.strftime '%T'}] #{message}"
-      write_status_to_cache if @opts[:log_to_cache]
+      if opts[:timestamp] == false
+        @log << "           #{message}"
+      else
+        @log << "[#{Time.now.strftime '%T'}] #{message}"
+        write_status_to_cache if @opts[:log_to_cache]
+      end
     end
 
     def run_success_callback
@@ -206,10 +210,13 @@ module Oec
     end
 
     def write_status_to_cache
-      previous_log_if_any = @opts[:previous_task_log] || []
-      log = previous_log_if_any + @log
+      lines_to_cache = []
+      # Cache only timestamped lines for browser display.
+      [@opts[:previous_task_log], @log].each do |log|
+        lines_to_cache.concat log.select { |line| line.start_with? '[' } if log
+      end
       self.class.write_cache(
-        {status: @status, log: log},
+        {status: @status, log: lines_to_cache},
         @api_task_id
       )
     end
