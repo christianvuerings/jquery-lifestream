@@ -10,31 +10,48 @@ module Oec
       Oec::CourseCode.by_dept_code(@course_code_filter).each do |dept_code, course_codes|
         @term_dates ||= default_term_dates
         worksheet = Oec::SisImportSheet.new(dept_code: dept_code)
-        log :info, "Generating sheet: '#{worksheet.export_name}'"
         import_courses(worksheet, course_codes)
         export_sheet(worksheet, imports_now)
       end
     end
 
     def import_courses(worksheet, course_codes)
+      log :info, "Generating sheet: '#{worksheet.export_name}'"
       course_codes_by_ccn = {}
       cross_listed_ccns = Set.new
-      Oec::Queries.courses_for_codes(@term_code, course_codes, @opts[:import_all]).each do |course_row|
+
+      home_dept_rows = Oec::Queries.courses_for_codes(@term_code, course_codes, @opts[:import_all])
+      home_dept_rows_imported = 0
+      log :info, "SIS data returned #{home_dept_rows.count} course-instructor pairings under home department"
+      home_dept_rows.each do |course_row|
         if import_course(worksheet, course_row)
+          home_dept_rows_imported += 1
           cross_listed_ccns.merge [course_row['cross_listed_ccns'], course_row['co_scheduled_ccns']].join(',').split(',').reject(&:blank?)
         end
         course_codes_by_ccn[course_row['course_cntl_num']] ||= course_row.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
       end
+      log :info, "Imported #{home_dept_rows_imported} of #{home_dept_rows.count} pairings"
+
       additional_cross_listings = cross_listed_ccns.reject{ |ccn| course_codes_by_ccn[ccn].present? }
-      Oec::Queries.courses_for_cntl_nums(@term_code, additional_cross_listings).each do |cross_listing|
+
+      cross_listed_rows = Oec::Queries.courses_for_cntl_nums(@term_code, additional_cross_listings)
+      cross_listed_rows_imported = 0
+      log :info, "SIS data returned #{cross_listed_rows.count} course-instructor pairings under cross-listings"
+      cross_listed_rows.each do |cross_listing|
         next unless should_include_cross_listing? cross_listing
-        import_course(worksheet, cross_listing)
+        if import_course(worksheet, cross_listing)
+          cross_listed_rows_imported += 1
+        end
         course_codes_by_ccn[cross_listing['course_cntl_num']] = cross_listing.slice('dept_name', 'catalog_id', 'instruction_format', 'section_num')
       end
+      log :info, "Imported #{cross_listed_rows_imported} of #{cross_listed_rows.count} pairings"
+
       set_cross_listed_values(worksheet, course_codes_by_ccn)
       flag_joint_faculty_gsi worksheet
       apply_overrides(worksheet, Oec::Courses, course_codes, %w(DEPT_NAME CATALOG_ID INSTRUCTION_FORMAT SECTION_NUM))
       apply_overrides(worksheet, Oec::Instructors, course_codes, %w(LDAP_UID SIS_ID))
+
+      log :info, "Finished generating sheet: '#{worksheet.export_name}'"
     end
 
     def import_course(worksheet, course)
@@ -42,16 +59,12 @@ module Oec
       row_key = "#{course_id}-#{course['ldap_uid']})"
       # Avoid duplicate rows
       unless worksheet[row_key]
-        catalog_id = course['catalog_id']
         if course['enrollment_count'].to_i.zero?
-          log :info, "Skipping course without enrollments: #{course_id}, #{course['dept_name']} #{catalog_id}"
-          false
+          skip_course course, 'course without enrollments'
         elsif course['instructor_func'] == '3'
-          log :info, "Skipping supervisor assignment of ID #{course['sis_id']} to #{course_id}, #{course['dept_name']} #{catalog_id}"
-          false
+          skip_course course, "supervisor assignment of ID #{course['sis_id']}"
         elsif %w(CLC GRP IND SUP VOL).include? course['instruction_format']
-          log :info, "Skipping course with non-evaluated instruction format: #{course_id}, #{course['dept_name']} #{catalog_id}"
-          false
+          skip_course course, 'course with non-evaluated instruction format'
         else
           course['course_id_2'] = course['course_id']
           set_dept_form course
@@ -61,12 +74,16 @@ module Oec
       end
     end
 
+    def skip_course(course, description)
+      log :debug, "Skipping #{description}: #{course['course_id']}, #{course['course_name']}", timestamp: false
+      false
+    end
+
     def should_include_cross_listing?(cross_listing)
       if cross_listing['cross_listed_flag'].present? || Oec::CourseCode.included?(cross_listing['dept_name'], cross_listing['catalog_id'])
         true
       else
-        log :info, "Omit cross_listing #{cross_listing['course_id']} under non-participating course code #{cross_listing['dept_name']} #{cross_listing['catalog_id']}"
-        false
+        skip_course cross_listing, 'non-participating cross_listing'
       end
     end
 
