@@ -249,7 +249,7 @@ describe 'My Dashboard', :testui => true, :order => :defined do
           expect(@tasks_card.overdue_task_one_title).to eql(@past_assignment_title)
         end
         it 'show an overdue assignment\'s course site name on a task' do
-          expect(@tasks_card.overdue_task_one_course).to eql(site_name)
+          expect(@tasks_card.overdue_task_one_course).to eql(site_name.upcase!)
         end
         it 'show an overdue assignment\'s due date and time on a task' do
           expect(@tasks_card.overdue_task_one_date).to eql(WebDriverUtils.ui_numeric_date_format @past_assignment_due_date)
