@@ -83,11 +83,9 @@
     transform: rotate(1turn);
   }
 }
-@keyframes spin-extra {
-  to {
-    transform: rotate(1.125turn);
-  }
-}
+
+$cc-spinner-even: 12px;
+$cc-spinner-uneven: 17px;
 
 .cc-spinner {
   display: block;
@@ -95,30 +93,28 @@
   height: 50px;
   position: relative;
   text-align: center;
+  transform: scale(.47);
   * {
     display: none !important;
   }
-  &:before,
-  &:after {
+  &:before {
+    animation: spin-normal 1s infinite steps(8);
     border-radius: 50%;
+    box-shadow: 0 (-$cc-spinner-uneven) $cc-color-spinner1, // Top
+      $cc-spinner-even (-$cc-spinner-even $cc-color-spinner1), // Top right
+      $cc-spinner-uneven 0 $cc-color-spinner3, // Right
+      $cc-spinner-even $cc-spinner-even $cc-color-spinner2, // Bottom right
+      0 $cc-spinner-uneven $cc-color-black, // Bottom
+      (-$cc-spinner-even) $cc-spinner-even $cc-color-spinner1, // Bottom left
+      (-$cc-spinner-uneven) 0 $cc-color-spinner1, // Left
+      (-$cc-spinner-even) (-$cc-spinner-even) $cc-color-spinner1; // Top left
     content: "";
     display: inline-block;
-    height: .5em;
+    height: 10px;
     left: 50%;
     position: absolute;
     top: 50%;
-    width: .5em;
-  }
-  &:before {
-    animation: spin-extra 1s infinite steps(8);
-    // 1 3 5 7
-    box-shadow: 0 1em $cc-color-spinner1, -1em 0 $cc-color-spinner1, 0 -1em $cc-color-spinner1, 1em 0 $cc-color-spinner2;
-    transform: rotate(45deg);
-  }
-  &:after {
-    animation: spin-normal 1s infinite steps(8);
-    // 2 4 6 8
-    box-shadow: -1em 0 $cc-color-spinner1, 0 -1em $cc-color-spinner1, 1em 0 $cc-color-spinner3, 0 1em $cc-color-black;
+    width: 10px;
   }
 }
 
