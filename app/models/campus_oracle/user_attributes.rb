@@ -17,7 +17,8 @@ module CampusOracle
 
     # TODO Eliminate mix of string keys and symbol keys.
     def get_feed_internal
-      result = CampusOracle::Queries.get_person_attributes(@uid)
+      sis_current_term = Berkeley::Terms.fetch.sis_current_term
+      result = CampusOracle::Queries.get_person_attributes(@uid, sis_current_term.year, sis_current_term.code)
       if result
         result[:education_level] = educ_level_translator.translate result['educ_level']
         result[:reg_status] = reg_status_translator.translate_for_feed result['reg_status_cd']

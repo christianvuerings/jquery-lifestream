@@ -31,15 +31,15 @@ describe 'MyAcademics::Exams' do
     feed[:examSchedule][0][:locations][0][:raw].should == 'F295 HAAS'
   end
 
-  it 'should not return any exam schedules for exam information not matching current_year and term' do
-    Berkeley::Terms.stub_chain(:fetch, :current).and_return(double(code: 'B', year: 1984, sis_term_status: 'PT'))
-    proxy = Bearfacts::Exams.new({:user_id => '865826', :fake => true})
-    Bearfacts::Exams.stub(:new).and_return(proxy)
-
-    feed = {}
-    MyAcademics::Exams.new('865826').merge(feed)
-
-    feed[:examSchedule].should be_nil
+  context 'when exam does not match current term' do
+    before { Settings.terms.stub(:fake_now).and_return(DateTime.parse('2013-07-10')) }
+    it 'should not return any exam schedules' do
+      proxy = Bearfacts::Exams.new({:user_id => '865826', :fake => true})
+      Bearfacts::Exams.stub(:new).and_return(proxy)
+      feed = {}
+      MyAcademics::Exams.new('865826').merge(feed)
+      feed[:examSchedule].should be_nil
+    end
   end
 
   it 'should handle badly formatted BearfactsExamProxy XML responses' do

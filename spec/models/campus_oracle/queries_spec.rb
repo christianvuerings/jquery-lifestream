@@ -1,12 +1,13 @@
 describe CampusOracle::Queries do
+  let(:current_term) {Berkeley::Terms.fetch.current}
 
   it 'should find Oliver' do
-    data = CampusOracle::Queries.get_person_attributes 2040
+    data = CampusOracle::Queries.get_person_attributes 2040, current_term.year, current_term.code
     expect(data['first_name']).to eq 'Oliver'
   end
 
   it 'should find a user who has a bunch of blocks' do
-    data = CampusOracle::Queries.get_person_attributes 300847
+    data = CampusOracle::Queries.get_person_attributes 300847, current_term.year, current_term.code
     if CampusOracle::Queries.test_data?
       # we will only have predictable reg_status_cd values in our fake Oracle db.
       expect(data['educ_level']).to eq 'Masters'
@@ -20,7 +21,7 @@ describe CampusOracle::Queries do
   end
 
   it 'should find student registration status' do
-    data = CampusOracle::Queries.get_reg_status 300846
+    data = CampusOracle::Queries.get_reg_status 300846, current_term.year, current_term.code
     if CampusOracle::Queries.test_data?
       expect(data['ldap_uid']).to eq '300846'
       # we will only have predictable reg_status_cd values in our fake Oracle db.
@@ -29,12 +30,12 @@ describe CampusOracle::Queries do
   end
 
   it 'should return nil from get_reg_status if an existing user has no reg status' do
-    data = CampusOracle::Queries.get_reg_status '2040'
+    data = CampusOracle::Queries.get_reg_status '2040', current_term.year, current_term.code
     expect(data).to be_nil
   end
 
   it 'should return nil from get_reg_status if the user does not exist' do
-    data = CampusOracle::Queries.get_reg_status '0'
+    data = CampusOracle::Queries.get_reg_status '0', current_term.year, current_term.code
     expect(data).to be_nil
   end
 
@@ -122,7 +123,6 @@ describe CampusOracle::Queries do
   end
 
   context 'confined to current term' do
-    let(:current_term) {Berkeley::Terms.fetch.current}
     it 'should be able to limit enrollment queries' do
       sections = CampusOracle::Queries.get_enrolled_sections('300939', [current_term])
       expect(sections).to_not be_nil
@@ -269,7 +269,7 @@ describe CampusOracle::Queries do
   end
 
   it 'should find a user with an expired LDAP account', if: CampusOracle::Queries.test_data? do
-    expect(CampusOracle::Queries.get_person_attributes('6188989')['person_type']).to eq 'Z'
+    expect(CampusOracle::Queries.get_person_attributes('6188989', current_term.year, current_term.code)['person_type']).to eq 'Z'
     expect(CampusOracle::Queries.get_basic_people_attributes(['6188989']).first['person_type']).to eq 'Z'
   end
 
