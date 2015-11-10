@@ -18,7 +18,6 @@ describe CampusOracle::UserAttributes do
     context 'working against test data', if: CampusOracle::Queries.test_data? do
       context 'student with blank REG_STATUS_CD' do
         let(:uid) {300847}
-        before { Berkeley::Terms.stub_chain(:fetch, :current).and_return(double(sis_term_status: current_sis_term_status)) }
         shared_examples 'expected feed values' do
           it 'includes expected feed values' do
             expect(subject[:education_level]).to eq 'Masters'
@@ -29,7 +28,6 @@ describe CampusOracle::UserAttributes do
           end
         end
         context 'normal term' do
-          let(:current_sis_term_status) { 'CT' }
           include_examples 'expected feed values'
           it 'does not report term transition' do
             expect(subject[:reg_status]).not_to include(:transitionTerm)
@@ -39,7 +37,7 @@ describe CampusOracle::UserAttributes do
           end
         end
         context 'term transition' do
-          let(:current_sis_term_status) { 'CS' }
+          before { Settings.terms.stub(:fake_now).and_return(DateTime.parse('2013-07-10')) }
           include_examples 'expected feed values'
           it 'reports term transition' do
             expect(subject[:reg_status][:transitionTerm]).to eq true

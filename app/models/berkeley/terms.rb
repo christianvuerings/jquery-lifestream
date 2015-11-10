@@ -31,6 +31,8 @@ module Berkeley
     attr_reader :current
     # The term officially in progress. The academic calendar has gaps, and so this will sometimes be nil.
     attr_reader :running
+    # The "Current Term" (or "CT") in legacy SIS systems such as Bear Facts.
+    attr_reader :sis_current_term
     # The next term (after the current one).
     attr_reader :next
     # The next term after the next term. This will often be nil but is particularly useful
@@ -64,6 +66,7 @@ module Berkeley
       db_terms.each do |db_term|
         term = Term.new(db_term)
         terms[term.slug] = term
+        @sis_current_term = term if term.sis_term_status == 'CT'
         if term.start > current_date
           future_terms.push term
         elsif term.end >= current_date

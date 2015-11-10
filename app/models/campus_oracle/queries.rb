@@ -2,7 +2,7 @@ module CampusOracle
   class Queries < Connection
     include ActiveRecordHelper
 
-    def self.get_person_attributes(person_id)
+    def self.get_person_attributes(person_id, term_yr, term_cd)
       result = {}
       use_pooled_connection {
         log_access(connection, connection_handler, name)
@@ -13,9 +13,8 @@ module CampusOracle
         reg.fin_blk_flag, reg.reg_blk_flag, reg.tot_enroll_unit, reg.cal_residency_flag, reg.reg_special_pgm_cd
       from calcentral_person_info_vw pi
       left outer join calcentral_student_term_vw reg on
-        reg.ldap_uid = pi.ldap_uid
+        reg.ldap_uid = pi.ldap_uid and reg.term_yr = #{term_yr} and reg.term_cd = #{connection.quote(term_cd)}
       where pi.ldap_uid = #{person_id.to_i}
-      order by reg.term_yr desc, reg.term_cd desc
         SQL
         result = connection.select_one(sql)
       }
@@ -148,7 +147,7 @@ module CampusOracle
       string.to_i.to_s == string
     end
 
-    def self.get_reg_status(person_id)
+    def self.get_reg_status(person_id, term_yr, term_cd)
       result = nil
       use_pooled_connection {
         # To date, the student academic status view has always contained data for only one term.
@@ -158,8 +157,7 @@ module CampusOracle
       from calcentral_person_info_vw pi
       left outer join calcentral_student_term_vw reg on
         reg.ldap_uid = pi.ldap_uid
-      where pi.ldap_uid = #{person_id.to_i}
-      order by reg.term_yr desc, reg.term_cd desc
+      where pi.ldap_uid = #{person_id.to_i} and reg.term_yr = #{term_yr} and reg.term_cd = #{connection.quote(term_cd)}
         SQL
         result = connection.select_one(sql)
       }

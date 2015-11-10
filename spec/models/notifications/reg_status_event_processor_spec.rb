@@ -20,12 +20,12 @@ describe Notifications::RegStatusEventProcessor do
   it "should handle an event given to it and save a notification with corresponding data" do
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     timestamp = Time.now.to_datetime
-    CampusOracle::Queries.stub(:get_reg_status).with(300846).and_return(
+    CampusOracle::Queries.stub(:get_reg_status).with(300846, anything, anything).and_return(
         {
             "ldap_uid" => "300846",
             "reg_status_cd" => "C"
         })
-    CampusOracle::Queries.stub(:get_reg_status).with(300847).and_return(nil)
+    CampusOracle::Queries.stub(:get_reg_status).with(300847, anything, anything).and_return(nil)
     User::Api.should_not_receive(:delete)
     Cache::UserCacheExpiry.should_receive(:notify).once
     User::Data.stub(:where).with({:uid =>"300846"}).and_return(MockUserData.new)
@@ -62,12 +62,12 @@ describe Notifications::RegStatusEventProcessor do
 
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":[300846,300847]}}')
     timestamp = Time.now.to_datetime
-    CampusOracle::Queries.stub(:get_reg_status).with(300846).and_return(
+    CampusOracle::Queries.stub(:get_reg_status).with(300846, anything, anything).and_return(
         {
             "ldap_uid" => "300846",
             "reg_status_cd" => "Z"
         })
-    CampusOracle::Queries.stub(:get_reg_status).with(300847).and_return(
+    CampusOracle::Queries.stub(:get_reg_status).with(300847, anything, anything).and_return(
       {
         "ldap_uid" => "300847",
         "reg_status_cd" => "C"
@@ -132,7 +132,7 @@ describe Notifications::RegStatusEventProcessor do
   it "parses an event for a single UID as well as an array" do
     event = JSON.parse('{"topic":"Bearfacts:RegStatus","timestamp":"2013-05-30T07:15:09.191-07:00","payload":{"uid":300846}}')
     timestamp = Time.now.to_datetime
-    CampusOracle::Queries.stub(:get_reg_status).with(300846).and_return(
+    CampusOracle::Queries.stub(:get_reg_status).with(300846, anything, anything).and_return(
       {
         "ldap_uid" => "300846",
         "reg_status_cd" => "C"

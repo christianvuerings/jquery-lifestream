@@ -20,6 +20,10 @@ describe Berkeley::Terms do
   end
 
   context 'working against test data', if: CampusOracle::Queries.test_data? do
+    let(:fake_now) {Settings.terms.fake_now.to_datetime}
+    it 'finds the legacy SIS CT term' do
+      expect(subject.sis_current_term.slug).to eq 'fall-2013'
+    end
     context 'in Fall 2013' do
       let(:fake_now) {DateTime.parse('2013-10-10')}
       it_behaves_like 'a list of campus terms'
