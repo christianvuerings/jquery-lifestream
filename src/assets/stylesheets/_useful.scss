@@ -79,8 +79,11 @@
 
 // Spinner
 @keyframes spin-normal {
+  from {
+    transform: rotate(0turn) scale(.47);
+  }
   to {
-    transform: rotate(1turn);
+    transform: rotate(1turn) scale(.47);
   }
 }
 
@@ -93,7 +96,6 @@ $cc-spinner-uneven: 17px;
   height: 50px;
   position: relative;
   text-align: center;
-  transform: scale(.47);
   * {
     display: none !important;
   }
@@ -113,7 +115,7 @@ $cc-spinner-uneven: 17px;
     height: 10px;
     left: 50%;
     position: absolute;
-    top: 50%;
+    top: 40%;
     width: 10px;
   }
 }
