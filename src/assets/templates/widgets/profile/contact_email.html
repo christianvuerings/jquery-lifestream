@@ -10,7 +10,7 @@
           <strong data-ng-bind-template="{{item.type.description}} Email"></strong>
           <span data-ng-if="item.primary">(preferred)</span>
         </div>
-        <div data-ng-bind="item.emailAddress"></div>
+        <div data-ng-bind="item.emailAddress" class="cc-break-word"></div>
         <div data-ng-if="item.uiControl.code !== 'D'">
           <button class="cc-button-link" data-ng-click="showEdit(item)">Edit</button>
         </div>
