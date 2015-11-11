@@ -29,7 +29,7 @@ module CampusOracle
           result[:california_residency] = nil
           result[:reg_status][:transitionTerm] = true
         else
-          result[:california_residency] = cal_residency_translator.translate result['cal_residency_flag']
+          result[:california_residency] = Berkeley::CalResidency.california_residency_from_campus_row result
         end
 
         result
@@ -44,9 +44,6 @@ module CampusOracle
     end
     def educ_level_translator
       @educ_level_translator ||= Notifications::EducLevelTranslator.new
-    end
-    def cal_residency_translator
-      @cal_residency_translator ||= Notifications::CalResidencyTranslator.new
     end
 
     def is_staff_or_faculty?
