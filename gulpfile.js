@@ -191,7 +191,11 @@
       // Base 64 encode certain images
       .pipe(gulpif(isProduction, base64()))
       // Minify CSS
-      .pipe(gulpif(isProduction, minifyCSS()))
+      .pipe(gulpif(isProduction, minifyCSS({
+        // This is a temporary workaround until the following issue is fixed:
+        // https://github.com/jakubpawlowicz/clean-css/issues/676
+        keepBreaks: true
+      })))
       // Combine the files
       .pipe(concat('application.css'))
       // Output to the correct directory
