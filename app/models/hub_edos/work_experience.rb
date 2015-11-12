@@ -12,16 +12,16 @@ module HubEdos
       "#{@settings.base_url}/#{@campus_solutions_id}/work-experiences"
     end
 
-    def json_filename
-      'work_experience.json'
+    def xml_filename
+      'work_experience.xml'
     end
 
     def build_feed(response)
       resp = parse_response response
-      if resp['studentResponse'].present? && resp['studentResponse']['students'].present? && resp['studentResponse']['students'].length > 0
+      if resp['StudentResponse'].present? && resp['StudentResponse']['students'].present? && resp['StudentResponse']['students']['student'].present?
         {
           # yes, the array structure really is this weird.
-          'workExperiences' => response.parsed_response['studentResponse']['students']['students'][0]['workExperiences']['workExperiences']
+          'workExperiences' => response.parsed_response['StudentResponse']['students']['student']['workExperiences']['workExperience']
         }
       else
         {}

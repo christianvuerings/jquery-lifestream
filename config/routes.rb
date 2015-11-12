@@ -175,7 +175,6 @@ Calcentral::Application.routes.draw do
   delete '/api/campus_solutions/ethnicity/:ethnicGroupCode/:regRegion' => 'campus_solutions/ethnicity#delete', :via => :delete, :defaults => { :format => 'json' }
 
   # EDOs from integration hub
-  get '/api/edos/person' => 'hub_edo#person', :via => :get, :defaults => { :format => 'json' }
   get '/api/edos/student' => 'hub_edo#student', :via => :get, :defaults => { :format => 'json' }
   get '/api/edos/work_experience' => 'hub_edo#work_experience', :via => :get, :defaults => { :format => 'json' }
 

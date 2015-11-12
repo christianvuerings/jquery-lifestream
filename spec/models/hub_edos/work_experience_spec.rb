@@ -9,7 +9,8 @@ describe HubEdos::WorkExperience do
 
     it 'returns data with the expected structure' do
       expect(subject[:feed]['workExperiences']).to be
-      expect(subject[:feed]['workExperiences'][0]['employer']).to eq('Mat-Su Youth Facility')
+      expect(subject[:feed]['workExperiences'][0]['employer']).to eq('Amity Global School-Noida')
+      expect(subject[:feed]['workExperiences'][1]['employer']).to eq('Mat-Su Youth Facility')
       expect(subject[:feed]['workExperiences'].size).to eq(3)
     end
   end
