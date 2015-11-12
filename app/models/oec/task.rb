@@ -28,9 +28,10 @@ module Oec
       @log = []
       @status = 'In progress'
       @api_task_id = opts[:api_task_id]
+
+      initialize_remote_drive
       write_status_to_cache if opts[:log_to_cache]
 
-      @remote_drive = Oec::RemoteDrive.new
       @term_code = opts[:term_code]
       @date_time = opts[:date_time] || default_date_time
       @course_code_filter = if opts[:dept_names]
@@ -43,21 +44,31 @@ module Oec
     end
 
     def run
-      log :info, "Starting #{self.class.name}"
-      run_internal
-      @status = 'Success' unless (@status == 'Error' || self.class.success_callback)
-      true
-    rescue => e
-      log :error, "#{self.class.name} aborted with error: #{e.message}\n#{e.backtrace.join "\n\t"}"
-      @status = 'Error'
-      nil
-    ensure
-      write_log
-      write_status_to_cache if @opts[:log_to_cache]
-      run_success_callback if self.class.success_callback && @status != 'Error'
+      return if @status == 'Error'
+      begin
+        log :info, "Starting #{self.class.name}"
+        run_internal
+        @status = 'Success' unless (@status == 'Error' || self.class.success_callback)
+        true
+      rescue => e
+        log :error, "#{self.class.name} aborted with error: #{e.message}\n#{e.backtrace.join "\n\t"}"
+        @status = 'Error'
+        nil
+      ensure
+        write_log
+        write_status_to_cache if @opts[:log_to_cache]
+        run_success_callback if self.class.success_callback && @status != 'Error'
+      end
     end
 
     private
+
+    def initialize_remote_drive
+      @remote_drive = Oec::RemoteDrive.new
+    rescue => e
+      log :error, "Error connecting to Google Drive: #{e.message}\n#{e.backtrace.join "\n\t"}"
+      @status = 'Error'
+    end
 
     def default_date_time
       DateTime.now
