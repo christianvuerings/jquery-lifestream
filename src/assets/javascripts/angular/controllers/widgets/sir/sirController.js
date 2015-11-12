@@ -87,7 +87,8 @@ angular.module('calcentral.controllers').controller('SirController', function(si
 
     checklistItems.forEach(function(checklistItem) {
       var result = _.findWhere($scope.sir.checklistItems, {
-        chklstItemCd: checklistItem.chklstItemCd
+        chklstItemCd: checklistItem.chklstItemCd,
+        checkListMgmtAdmp: checklistItem.checkListMgmtAdmp
       });
       // If we don't find it in the current scope, it's a new item, so we should add it
       if (!result) {
