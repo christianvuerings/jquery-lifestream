@@ -81,18 +81,28 @@ describe Oec::TermSetupTask do
   end
 
   context 'Google Drive connection error' do
-    before do
-      expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder).at_least(1).times
-        .and_raise Errors::ProxyError, 'A confounding error'
-      expect(fake_remote_drive).to receive(:find_nested).at_least(1).times
-        .and_raise Errors::ProxyError, 'A confounding error'
+    context 'on initialization' do
+      before { allow(Oec::RemoteDrive).to receive(:new).and_raise Signet::AuthorizationError, 'Authorization failed.' }
+      it 'returns a comprehensible error' do
+        expect(Rails.logger).to receive(:error).exactly(1).times.with /Error connecting to Google Drive/
+        subject.run
+      end
     end
 
-    it 'logs errors' do
-      expect(Rails.logger).to receive(:error).at_least(1).times do |error_message|
-        expect(error_message.lines.first).to include 'A confounding error'
+    context 'during run' do
+      before do
+        expect(fake_remote_drive).to receive(:check_conflicts_and_create_folder).at_least(1).times
+          .and_raise Errors::ProxyError, 'A confounding error'
+        expect(fake_remote_drive).to receive(:find_nested).at_least(1).times
+          .and_raise Errors::ProxyError, 'A confounding error'
       end
-      subject.run
+
+      it 'logs errors' do
+        expect(Rails.logger).to receive(:error).at_least(1).times do |error_message|
+          expect(error_message.lines.first).to include 'A confounding error'
+        end
+        subject.run
+      end
     end
   end
 
