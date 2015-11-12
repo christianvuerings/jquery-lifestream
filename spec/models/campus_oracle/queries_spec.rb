@@ -16,7 +16,7 @@ describe CampusOracle::Queries do
       expect(data['fin_blk_flag']).to eq 'Y'
       expect(data['reg_blk_flag']).to eq 'Y'
       expect(data['tot_enroll_unit']).to eq '1'
-      expect(data['cal_residency_flag']).to eq 'N'
+      expect(data['fee_resid_cd']).to eq 'N'
     end
   end
 
