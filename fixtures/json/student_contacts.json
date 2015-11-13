@@ -1,0 +1,205 @@
+{
+  "studentResponse": {
+    "correlationId": "f684c25b-9505-40e1-b695-227d3fe5d876",
+    "source": "UCB-SIS-STUDENT",
+    "students": {
+      "students": [
+        {
+          "identifiers": [
+            {
+              "type": "student-id",
+              "id": "11667051",
+              "disclose": false
+            },
+            {
+              "type": "DB2",
+              "id": "11667051",
+              "disclose": false,
+              "fromDate": "1902-02-01"
+            }
+          ],
+          "names": [
+            {
+              "type": {
+                "code": "PRF",
+                "description": "Preferred"
+              },
+              "familyName": "Bear",
+              "givenName": "René",
+              "middleName": "",
+              "prefixName": "",
+              "suffixName": "",
+              "formattedName": "René  Bear ",
+              "preferred": true,
+              "disclose": false,
+              "uiControl": {
+                "code": "U",
+                "description": "Edit - No Delete"
+              },
+              "fromDate": "2015-11-06"
+            },
+            {
+              "type": {
+                "code": "PRI",
+                "description": "Primary"
+              },
+              "familyName": "Bear",
+              "givenName": "Oski",
+              "middleName": "",
+              "prefixName": "",
+              "suffixName": "",
+              "formattedName": "Oski  Bear ",
+              "preferred": false,
+              "disclose": false,
+              "uiControl": {
+                "code": "D",
+                "description": "Display Only"
+              },
+              "fromDate": "1902-02-01"
+            }
+          ],
+          "addresses": [
+            {
+              "type": {
+                "code": "DIPL",
+                "description": "Diploma"
+              },
+              "address1": "1234 56TH ST",
+              "address2": "APT 789, BOX 101112",
+              "address3": "",
+              "address4": "",
+              "num1": "",
+              "num2": "",
+              "addrField1": "",
+              "addrField2": "",
+              "addrField3": "",
+              "houseType": "",
+              "city": "BERKELEY",
+              "county": "",
+              "stateCode": "CA",
+              "stateName": "California",
+              "postalCode": "94708",
+              "countryCode": "USA",
+              "countryName": "United States",
+              "formattedAddress": "1234 56TH ST\nAPT 789, BOX 101112\nBERKELEY, California 94708",
+              "disclose": false,
+              "uiControl": {
+                "code": "N",
+                "description": "Do Not Display"
+              },
+              "fromDate": "2015-01-12"
+            },
+            {
+              "type": {
+                "code": "HOME",
+                "description": "Home"
+              },
+              "address1": "2111 BANCROFT WAY  #550",
+              "address2": "",
+              "address3": "",
+              "address4": "",
+              "num1": "",
+              "num2": "",
+              "addrField1": "",
+              "addrField2": "",
+              "addrField3": "",
+              "houseType": "",
+              "city": "BERKELEY",
+              "county": "",
+              "stateCode": "CA",
+              "stateName": "California",
+              "postalCode": "94720",
+              "countryCode": "USA",
+              "countryName": "United States",
+              "formattedAddress": "2111 BANCROFT WAY  #550\nBERKELEY, California 94720",
+              "disclose": false,
+              "uiControl": {
+                "code": "U",
+                "description": "Edit - No Delete"
+              },
+              "fromDate": "2013-10-31"
+            },
+            {
+              "type": {
+                "code": "LOCL",
+                "description": "Local"
+              },
+              "address1": "200 SPROUL HALL",
+              "address2": "",
+              "address3": "",
+              "address4": "",
+              "num1": "",
+              "num2": "",
+              "addrField1": "",
+              "addrField2": "",
+              "addrField3": "",
+              "houseType": "",
+              "city": "BERKELEY",
+              "county": "",
+              "stateCode": "CA",
+              "stateName": "California",
+              "postalCode": "94720",
+              "countryCode": "USA",
+              "countryName": "United States",
+              "formattedAddress": "200 SPROUL HALL\nBERKELEY, California 94720",
+              "disclose": false,
+              "uiControl": {
+                "code": "U",
+                "description": "Edit - No Delete"
+              },
+              "fromDate": "2015-07-20"
+            }
+          ],
+          "phones": [
+            {
+              "type": {
+                "code": "HOME",
+                "description": "Home/Permanent"
+              },
+              "number": "44 01698 12345",
+              "countryCode": "",
+              "extension": "888",
+              "primary": true,
+              "disclose": false,
+              "uiControl": {
+                "code": "F",
+                "description": "Full Edit"
+              }
+            }
+          ],
+          "emails": [
+            {
+              "type": {
+                "code": "OTHR",
+                "description": "Other"
+              },
+              "emailAddress": "oski@gmail.com",
+              "primary": true,
+              "disclose": false,
+              "uiControl": {
+                "code": "F",
+                "description": "Full Edit"
+              }
+            },
+            {
+              "type": {
+                "code": "CAMP",
+                "description": "Campus"
+              },
+              "emailAddress": "oski@berkeley.edu",
+              "primary": false,
+              "disclose": false,
+              "uiControl": {
+                "code": "F",
+                "description": "Full Edit"
+              }
+            }
+          ],
+          "urls": [],
+          "emergencyContacts": [],
+          "confidential": false
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "studentResponse": {
+    "correlationId": "d1b3e543-a7a2-4bde-a753-c638a415125e",
+    "source": "UCB-SIS-STUDENT",
+    "students": {
+      "students": [
+        {
+          "identifiers": [
+            {
+              "type": "student-id",
+              "id": "CC00000001",
+              "primary": true,
+              "disclose": false
+            }
+          ],
+          "affiliations": [
+            {
+              "type": {
+                "code": "APPLICANT",
+                "description": "Applicant"
+              },
+              "statusCode": "INA",
+              "statusDescription": "Inactive",
+              "fromDate": "2015-10-02",
+              "toDate": "2015-10-28"
+            }
+          ],
+          "confidential": false
+        }
+      ]
+    }
+  }
+}

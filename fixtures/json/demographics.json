@@ -1,0 +1,91 @@
+{
+  "studentResponse": {
+    "correlationId": "46ecc88c-82d7-48ed-b935-c318e83f43e6",
+    "source": "UCB-SIS-STUDENT",
+    "students": {
+      "students": [
+        {
+          "identifiers": [
+            {
+              "type": "student-id",
+              "id": "11667051",
+              "disclose": false
+            },
+            {
+              "type": "DB2",
+              "id": "11667051",
+              "disclose": false,
+              "fromDate": "1902-02-01"
+            }
+          ],
+          "names": [
+            {
+              "type": {
+                "code": "PRF",
+                "description": "Preferred"
+              },
+              "familyName": "Bear",
+              "givenName": "René",
+              "middleName": "",
+              "prefixName": "",
+              "suffixName": "",
+              "formattedName": "René  Bear ",
+              "preferred": true,
+              "disclose": false,
+              "uiControl": {
+                "code": "U",
+                "description": "Edit - No Delete"
+              },
+              "fromDate": "2015-11-06"
+            },
+            {
+              "type": {
+                "code": "PRI",
+                "description": "Primary"
+              },
+              "familyName": "Bear",
+              "givenName": "Oski",
+              "middleName": "",
+              "prefixName": "",
+              "suffixName": "",
+              "formattedName": "Oski  Bear ",
+              "preferred": false,
+              "disclose": false,
+              "uiControl": {
+                "code": "D",
+                "description": "Display Only"
+              },
+              "fromDate": "1902-02-01"
+            }
+          ],
+          "ethnicities": [
+            {
+              "group": {
+                "code": "2",
+                "description": "Black/African American"
+              },
+              "hispanicLatino": false,
+              "detail": {
+                "code": "BLACK",
+                "description": "African American/Black"
+              }
+            }
+          ],
+          "languages": [],
+          "usaCountry": {
+            "citizenshipStatus": {
+              "code": "1",
+              "description": "Native"
+            },
+            "militaryStatus": {
+              "code": "",
+              "description": "",
+              "fromDate": "1902-02-01"
+            }
+          },
+          "confidential": false
+        }
+      ]
+    }
+  }
+}
