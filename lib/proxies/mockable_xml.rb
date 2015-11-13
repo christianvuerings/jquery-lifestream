@@ -13,8 +13,8 @@ module Proxies
       MockHttpInteraction.new(mock_request.merge(options), mock_response)
     end
 
-    def override_xml(&blk)
-      on_request.override_xml(&blk)
+    def override_xml(root, &blk)
+      on_request.override_xml(root, &blk)
     end
 
     def mock_response

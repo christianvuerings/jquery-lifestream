@@ -253,6 +253,7 @@ GEM
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     nokogiri (1.5.11-java)
+    nori (2.6.0)
     oauth (0.4.7)
     oauth2 (1.0.0)
       faraday (>= 0.8, < 0.10)
@@ -486,6 +487,7 @@ DEPENDENCIES
   minitest-reporters (~> 1.0.8)
   net-ldap (~> 0.11.0)
   nokogiri (~> 1.5.9)
+  nori (~> 2.6)
   omniauth-cas (~> 1.1.0)!
   page-object (~> 1.1.0)
   protected_attributes (~> 1.0.8)

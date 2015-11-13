@@ -67,6 +67,7 @@ gem 'addressable', '~> 2.3.4'
 # for parsing formatted html
 # Do NOT update until https://github.com/sparklemotion/nokogiri/issues/1114 is fixed
 gem 'nokogiri', '~> 1.5.9', :platforms => :jruby
+gem 'nori', '~> 2.6'
 
 # for parsing paged feeds
 gem 'link_header', '~> 0.0.7'

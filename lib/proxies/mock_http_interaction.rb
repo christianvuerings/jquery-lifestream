@@ -18,11 +18,11 @@ module Proxies
       set_response
     end
 
-    def override_xml
+    def override_xml(root)
       if block_given?
         parsed_structure = MultiXml.parse @response[:body]
         yield parsed_structure
-        @response[:body] = parsed_structure
+        @response[:body] = parsed_structure[root].to_xml(dasherize: false, indent: 0, root: root)
       end
       set_response
     end

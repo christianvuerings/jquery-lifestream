@@ -3,10 +3,9 @@ module HubEdos
 
     include ClassLogger
     include Cache::UserCacheExpiry
-    include Proxies::Mockable
+    include Proxies::MockableXml
     include CampusSolutions::ProfileFeatureFlagged
     include User::Student
-    include SafeJsonParser
 
     APP_ID = 'integrationhub'
     APP_NAME = 'Integration Hub'
@@ -23,12 +22,12 @@ module HubEdos
       @uid
     end
 
-    def json_filename
+    def xml_filename
       ''
     end
 
-    def mock_json
-      read_file('fixtures', 'json', json_filename)
+    def mock_xml
+      read_file('fixtures', 'xml', xml_filename)
     end
 
     def mock_request
@@ -78,7 +77,7 @@ module HubEdos
     def request_options
       opts = {
         headers: {
-          'Accept' => 'application/json'
+          'Accept' => 'application/xml'
         }
       }
       if @settings.app_id.present? && @settings.app_key.present?
@@ -100,7 +99,8 @@ module HubEdos
     end
 
     def parse_response(response)
-      safe_json response.body.force_encoding('UTF-8')
+      # Use Nori to parse because it has smart typecasting (necessary to handle booleans in the feed)
+      Nori.new(strip_namespaces: true, empty_tag_value: '').parse(response.body.force_encoding('UTF-8'))
     end
 
     def build_feed(response)
