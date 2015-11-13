@@ -7,7 +7,23 @@ module HubEdos
     include Cache::JsonAddedCacher
 
     def get_feed_internal
-      HubEdos::Student.new({user_id: @uid}).get
+      merged = {
+        feed: {
+          student: {}
+        },
+        statusCode: 200
+      }
+      [HubEdos::Contacts, HubEdos::Demographics, HubEdos::Affiliations].each do |proxy|
+        feed = proxy.new({user_id: @uid}).get
+        if feed[:statusCode] > 400
+          merged[:statusCode] = 500
+          merged[:errored] = true
+          logger.error("Got errors in merged student feed on #{proxy} for uid #{@uid}")
+        else
+          merged[:feed][:student].merge!(feed[:feed]['student'])
+        end
+      end
+      merged
     end
 
   end
