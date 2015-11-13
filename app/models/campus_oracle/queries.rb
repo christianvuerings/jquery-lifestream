@@ -10,7 +10,7 @@ module CampusOracle
       select pi.ldap_uid, pi.student_id, pi.ug_grad_flag, trim(pi.first_name) as first_name, trim(pi.last_name) as last_name,
         pi.person_name, pi.email_address, pi.affiliations, pi.person_type,
         reg.reg_status_cd, reg.educ_level, reg.admin_cancel_flag, reg.acad_blk_flag, reg.admin_blk_flag,
-        reg.fin_blk_flag, reg.reg_blk_flag, reg.tot_enroll_unit, reg.fee_resid_cd, reg.reg_special_pgm_cd
+        reg.fin_blk_flag, reg.reg_blk_flag, reg.tot_enroll_unit, reg.fee_resid_cd, reg.reg_special_pgm_cd, reg.role_cd
       from calcentral_person_info_vw pi
       left outer join calcentral_student_term_vw reg on
         reg.ldap_uid = pi.ldap_uid and reg.term_yr = #{term_yr} and reg.term_cd = #{connection.quote(term_cd)}
@@ -173,7 +173,7 @@ module CampusOracle
         sql = <<-SQL
       select pi.student_id, reg.ldap_uid, reg.fee_resid_cd, reg.educ_level, reg.reg_status_cd, reg.elig_reg_status_cd, reg.admin_cancel_flag,
         reg.admit_special_pgm_grp, reg.reg_special_pgm_cd, reg.cat_cd, reg.acad_blk_flag, reg.admin_blk_flag, reg.fin_blk_flag,
-        reg.tot_enroll_unit, reg.new_trfr_flag, reg.term_yr, reg.term_cd
+        reg.tot_enroll_unit, reg.new_trfr_flag, reg.term_yr, reg.term_cd, reg.role_cd
       from calcentral_person_info_vw pi, calcentral_student_term_vw reg where
         reg.ldap_uid = #{person_id.to_i} and reg.ldap_uid = pi.ldap_uid
       order by reg.term_yr desc, reg.term_cd desc

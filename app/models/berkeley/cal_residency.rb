@@ -28,6 +28,8 @@ module Berkeley
           explanation = Berkeley::CalResidency::RESIDENCY_INCOMPLETE_MESSAGE
           needs_action = true
         when '2'
+          # Repress this message during Fall if the student is in the Fall Program for Freshmen
+          return nil if campus_row['role_cd'] == '6'
           summary = 'SLR submitted but documentation pending'
           explanation = Berkeley::CalResidency::RESIDENCY_INCOMPLETE_MESSAGE
           needs_action = true

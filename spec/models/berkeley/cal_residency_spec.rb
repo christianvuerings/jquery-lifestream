@@ -4,10 +4,10 @@ describe Berkeley::CalResidency do
       'ldap_uid' => random_id,
       'student_id' => random_id,
       'fee_resid_cd' => fee_resid_cd,
-      'admit_special_pgm_grp' => admit_special_pgm_grp
+      'role_cd' => role_cd
     }
   end
-  let(:admit_special_pgm_grp) { nil }
+  let(:role_cd) { '1' }
   subject { Berkeley::CalResidency.california_residency_from_campus_row(db_row) }
 
   context 'no student record for the current semester' do
@@ -63,6 +63,10 @@ describe Berkeley::CalResidency do
       explanation: Berkeley::CalResidency::RESIDENCY_INCOMPLETE_MESSAGE,
       needsAction: true
     }) }
+    context 'Fall Program for Freshmen students during the Fall semester' do
+      let(:role_cd) { '6' }
+      it { should be_nil }
+    end
   end
 
   context 'code "R"' do
