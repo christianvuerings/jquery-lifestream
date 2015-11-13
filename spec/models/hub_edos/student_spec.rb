@@ -10,16 +10,11 @@ describe HubEdos::Student do
     it 'returns data with the expected structure' do
       expect(subject[:feed]['student']).to be
       expect(subject[:feed]['student']['identifiers'][0]['type']).to be
-      expect(subject[:feed]['student']['identifiers'].length).to eq 2
       expect(subject[:feed]['student']['addresses'][0]['state']).to eq 'CA'
-      expect(subject[:feed]['student']['addresses'][0]['postal']).to eq '94720'
+      expect(subject[:feed]['student']['addresses'][0]['postal']).to eq '0'
       expect(subject[:feed]['student']['addresses'][0]['country']).to eq 'USA'
-      expect(subject[:feed]['student']['addresses'][0]['formattedAddress']).to eq "2111 BANCROFT WAY  #550\\nBERKELEY, California 94720"
+      expect(subject[:feed]['student']['addresses'][0]['formattedAddress']).to eq "1001 Hearst\nBerkeley, CA"
       expect(subject[:feed]['student']['phones'].length).to eq 1
-      expect(subject[:feed]['student']['names'].length).to eq 2
-      expect(subject[:feed]['student']['addresses'].length).to eq 2
-      expect(subject[:feed]['student']['emails'].length).to eq 2
-      expect(subject[:feed]['student']['ethnicities'].length).to eq 1
     end
   end
 

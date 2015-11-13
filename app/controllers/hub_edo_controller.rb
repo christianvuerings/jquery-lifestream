@@ -1,6 +1,10 @@
 class HubEdoController < ApplicationController
   before_filter :api_authenticate_401
 
+  def person
+    json_passthrough HubEdos::MyPerson
+  end
+
   def student
     json_passthrough HubEdos::MyStudent
   end

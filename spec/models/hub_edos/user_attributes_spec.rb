@@ -1,4 +1,3 @@
-# encoding: UTF-8
 describe HubEdos::UserAttributes do
 
   let(:user_id) { '61889' }
@@ -10,10 +9,10 @@ describe HubEdos::UserAttributes do
   it 'should provide the converted person data structure' do
     expect(subject[:ldap_uid]).to eq '61889'
     expect(subject[:student_id]).to eq '11667051'
-    expect(subject[:first_name]).to eq 'René'
+    expect(subject[:first_name]).to eq 'Osk'
     expect(subject[:last_name]).to eq 'Bear'
-    expect(subject[:person_name]).to eq 'René  Bear '
-    expect(subject[:email_address]).to eq 'oski@gmail.com'
+    expect(subject[:person_name]).to eq 'Osk Bear'
+    expect(subject[:email_address]).to eq 'oski@berkeley.edu'
     expect(subject[:official_bmail_address]).to eq 'oski@berkeley.edu'
     expect(subject[:names]).to be
     expect(subject[:addresses]).to be
@@ -21,22 +20,20 @@ describe HubEdos::UserAttributes do
 
   context 'role transformation' do
     before do
-      fake_student_proxy.override_xml('StudentResponse') { |xml| xml['StudentResponse']['students']['student']['affiliations'] = affiliations }
+      fake_student_proxy.override_json { |json| json['studentResponse']['students']['students'][0]['affiliations'] = affiliations }
     end
 
     context 'undergraduate student' do
       let(:affiliations) do
-        {'affiliation' =>
-           [{
-              'type' => {
-                'code' => 'UNDERGRAD',
-                'description' => 'Undergraduate'
-              },
-              'statusCode' => 'ACT',
-              'statusDescription' => 'Active',
-              'fromDate' => '2014-05-15'
-            }]
-        }
+        [{
+          'type' => {
+            'code' => 'UNDERGRAD',
+            'description' => 'Undergraduate'
+          },
+          'statusCode' => 'ACT',
+          'statusDescription' => 'Active',
+          'fromDate' => '2014-05-15'
+        }]
       end
       it 'should return undergraduate attributes' do
         expect(subject[:roles][:student]).to eq true
@@ -46,17 +43,15 @@ describe HubEdos::UserAttributes do
 
     context 'graduate student' do
       let(:affiliations) do
-        {'affiliation' =>
-           [{
-              'type' => {
-                'code' => 'GRAD',
-                'description' => 'Graduate'
-              },
-              'statusCode' => 'ACT',
-              'statusDescription' => 'Active',
-              'fromDate' => '2014-05-15'
-            }]
-        }
+        [{
+          'type' => {
+            'code' => 'GRAD',
+            'description' => 'Graduate'
+          },
+          'statusCode' => 'ACT',
+          'statusDescription' => 'Active',
+          'fromDate' => '2014-05-15'
+        }]
       end
       it 'should return graduate attributes' do
         expect(subject[:roles][:student]).to eq true
