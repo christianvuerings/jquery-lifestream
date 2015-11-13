@@ -38,7 +38,7 @@
             </label>
           </div>
           <div data-ng-if="field.field !== 'state' || !states.length">
-            <input type="text" data-ng-attr-id="cc-page-widget-profile-field-{{$index}}" data-ng-model="currentObject.data[field.field]" />
+            <input type="text" data-ng-attr-id="cc-page-widget-profile-field-{{$index}}" data-ng-model="currentObject.data[field.field]" data-ng-attr-maxlength="{{field.length}}" />
           </div>
           <div data-ng-if="field.field === 'state' && states.length">
             <div class="cc-select">
