@@ -4,7 +4,7 @@
  * @version   0.5.2
  * @author    Christian Vuerings et al.
  * @copyright Copyright 2014, Christian Vuerings - http://denbuzze.com
- * @license   https://github.com/christianv/jquery-lifestream/blob/master/LICENSE MIT
+ * @license   https://github.com/christianvuerings/jquery-lifestream/blob/master/LICENSE MIT
  */
 /*global jQuery */
 ;(function( $ ){

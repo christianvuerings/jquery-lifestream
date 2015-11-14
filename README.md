@@ -1,6 +1,6 @@
 # jQuery Lifestream Plug-in
 
-![jQuery Lifestream Logo](http://christianv.github.com/jquery-lifestream/design/logo_v1_64.png)
+![jQuery Lifestream Logo](http://christianvuerings.github.com/jquery-lifestream/design/logo_v1_64.png)
 
 Show a stream of your online activity.
 Check out [the example][example] or create [your own lifestream][melifestream] instantly.
@@ -60,7 +60,7 @@ Currently supports the following feeds:
 * [Zotero](http://zotero.com)
 
 Feel free to fork the project and add your own feeds in.
-Just send a pull request to [christianv/jquery-lifestream][jquery-lifestream] when you're finished.
+Just send a pull request to [christianvuerings/jquery-lifestream][jquery-lifestream] when you're finished.
 
 ## Extensions
 
@@ -106,25 +106,25 @@ Add the following to the `<head>` or `<body>` tag of your HTML page.
 
 ``` html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="//rawgithub.com/christianv/jquery-lifestream/master/jquery.lifestream.min.js"></script>
+<script src="//rawgithub.com/christianvuerings/jquery-lifestream/master/jquery.lifestream.min.js"></script>
 <script>
   $("#lifestream").lifestream({
     list:[
       {
         service: "github",
-        user: "christianv"
+        user: "christianvuerings"
       },
       {
         service: "twitter",
-        user: "denbuzze"
+        user: "christianvuer"
       }
     ]
   });
 </script>
 ```
 The above code will always use the latest version of the script.
-If you want to use it in production, download the [minified](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream.min.js)
-or [uncompressed](https://github.com/christianv/jquery-lifestream/raw/master/jquery.lifestream.js) file and host it yourself.
+If you want to use it in production, download the [minified](https://github.com/christianvuerings/jquery-lifestream/raw/master/jquery.lifestream.min.js)
+or [uncompressed](https://github.com/christianvuerings/jquery-lifestream/raw/master/jquery.lifestream.js) file and host it yourself.
 
 You also need to add a bit of HTML:
 
@@ -135,7 +135,7 @@ You also need to add a bit of HTML:
 ### jQuery Templates
 
 You have the ability to use jQuery templates for your feed.
-Checkout the [template page](http://christianv.github.com/jquery-lifestream/template.html) to see an overview of the current available templates.
+Checkout the [template page](http://christianvuerings.github.com/jquery-lifestream/template.html) to see an overview of the current available templates.
 
 Usage:
 
@@ -161,11 +161,11 @@ $("#lifestream").lifestream({
   list:[
     {
       service: "github",
-      user: "christianv"
+      user: "christianvuerings"
     },
     {
       service: "twitter",
-      user: "denbuzze"
+      user: "christianvuer"
     }
   ]
 });
@@ -186,7 +186,7 @@ For more information about each _service_, check out the [source code][exampleso
 ### Add your own feed
 
 Adding in your own feed is pretty easy.
-Have a look at [this commit](https://github.com/christianv/jquery-lifestream/commit/529a06db159b4123ee3b2cc604f3a3ed698c6e9a) which adds support for the last.fm feed.
+Have a look at [this commit](https://github.com/christianvuerings/jquery-lifestream/commit/529a06db159b4123ee3b2cc604f3a3ed698c6e9a) which adds support for the last.fm feed.
 
 ### Add your favicon
 
@@ -196,7 +196,7 @@ Have a look at [this commit](https://github.com/christianv/jquery-lifestream/com
 ### How to commit?
 
 1. Push the finished code to your own remote repository.
-2. Send a pull request to [christianv/jquery-lifestream][jquery-lifestream].
+2. Send a pull request to [christianvuerings/jquery-lifestream][jquery-lifestream].
 
 ### Code Style Guidelines
 
@@ -284,15 +284,15 @@ A list of sites that use the jQuery Lifestream plug-in:
 
 ## Special Thanks
 
-Special thanks all the [committers](https://raw.github.com/christianv/jquery-lifestream/master/COMMITTERS) and [gabbyd70](http://gabbyd70.deviantart.com/) for letting us use her DeviantART username.
+Special thanks all the [committers](https://raw.github.com/christianvuerings/jquery-lifestream/master/COMMITTERS) and [gabbyd70](http://gabbyd70.deviantart.com/) for letting us use her DeviantART username.
 
 ## Version log
 
-Have a look at [our tags](https://github.com/christianv/jquery-lifestream/tags) to see what we've been working on.
+Have a look at [our tags](https://github.com/christianvuerings/jquery-lifestream/tags) to see what we've been working on.
 
 
-[jquery-lifestream]: https://github.com/christianv/jquery-lifestream
-[melifestream]: http://christianv.github.com/jquery-lifestream/me/
-[example]: http://christianv.github.com/jquery-lifestream/example.html
+[jquery-lifestream]: https://github.com/christianvuerings/jquery-lifestream
+[melifestream]: http://christianvuerings.github.com/jquery-lifestream/me/
+[example]: http://christianvuerings.github.com/jquery-lifestream/example.html
 "Example page"
-[examplesource]: https://github.com/christianv/jquery-lifestream/blob/master/example.html#files "Source code of the example page"
+[examplesource]: https://github.com/christianvuerings/jquery-lifestream/blob/master/example.html#files "Source code of the example page"

@@ -13,7 +13,7 @@
     "social",
     "google"
   ],
-  "homepage": "https://github.com/christianv/jquery-lifestream",
+  "homepage": "https://github.com/christianvuerings/jquery-lifestream",
   "author": {
     "name": "Christian Vuerings",
     "url": "http://denbuzze.com"
@@ -21,13 +21,13 @@
   "licenses" : [
     {
       "type" : "MIT",
-      "url"  : "https://raw.github.com/christianv/jquery-lifestream/master/LICENSE"
+      "url"  : "https://raw.github.com/christianvuerings/jquery-lifestream/master/LICENSE"
     }
   ],
-  "bugs": "https://github.com/christianv/jquery-lifestream/issues",
+  "bugs": "https://github.com/christianvuerings/jquery-lifestream/issues",
   "dependencies": {
     "jquery": ">=1.4.2"
   },
-  "docs": "https://github.com/christianv/jquery-lifestream/blob/master/README.md",
-  "demo": "http://christianv.github.com/jquery-lifestream/me/"
+  "docs": "https://github.com/christianvuerings/jquery-lifestream/blob/master/README.md",
+  "demo": "http://christianvuerings.github.com/jquery-lifestream/me/"
 }
