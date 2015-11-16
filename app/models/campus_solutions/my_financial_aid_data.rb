@@ -6,6 +6,7 @@ module CampusSolutions
     include Cache::FreshenOnWarm
     include Cache::JsonAddedCacher
     include Cache::RelatedCacheKeyTracker
+    include CampusSolutions::ProfileFeatureFlagged
 
     attr_accessor :aid_year
 

@@ -5,6 +5,7 @@ module HubEdos
     include Cache::LiveUpdatesEnabled
     include Cache::FreshenOnWarm
     include Cache::JsonAddedCacher
+    include CampusSolutions::ProfileFeatureFlagged
 
     def get_feed_internal
       HubEdos::WorkExperience.new({user_id: @uid}).get
