@@ -11,6 +11,7 @@ module CampusSolutions
     attr_accessor :adm_appl_nbr
 
     def get_feed_internal
+      return {} unless is_cs_profile_feature_enabled
       logger.debug "User #{@uid}; aid adm_appl_nbr #{adm_appl_nbr}"
       CampusSolutions::Deposit.new({user_id: @uid, adm_appl_nbr: adm_appl_nbr}).get
     end
