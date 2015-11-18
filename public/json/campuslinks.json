@@ -524,8 +524,8 @@
       "url": "https://bcsint.is.berkeley.edu",
       "roles": {
         "student": false,
-        "staff": true,
-        "faculty": true,
+        "staff": false,
+        "faculty": false,
         "exStudent": false
       },
       "categories": [
