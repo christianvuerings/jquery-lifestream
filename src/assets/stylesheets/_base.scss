@@ -17,6 +17,12 @@ body {
   padding: 0;
   position: relative;
 }
+// Make sure printing still works
+@media print {
+  body {
+    overflow-x: visible;
+  }
+}
 
 // HTML & Body
 html, body {
